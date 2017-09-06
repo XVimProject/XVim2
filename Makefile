@@ -23,7 +23,7 @@ clean-debug:
 
 
 uninstall:
-	rm -rf "$(HOME)/Library/Application Support/Developer/Shared/Xcode/Plug-ins/XVim.xcplugin"
+	rm -rf "$(HOME)/Library/Application Support/Developer/Shared/Xcode/Plug-ins/XVim2.xcplugin"
 
 uuid:
 	@xcode_path=`xcode-select -p`; \
