@@ -7,6 +7,7 @@
 //
 
 #import "_TtC22IDEPegasusSourceEditor20SourceCodeEditorView.h"
+#import "SourceEditorViewProxy.h"
 #import "NSObject+Swizzle.h"
 #import "XVimKeyStroke.h"
 #import "Logger.h"
@@ -14,16 +15,58 @@
 #import <QuartzCore/QuartzCore.h>
 #import "NSObject+ExtraData.h"
 
-typedef enum {
-    XVIM_MODE_NORMAL,
-    XVIM_MODE_INSERT,
-} XVimMode;
+#define CONST_STR(_name) NSString *_name = @#_name ;
+
+CONST_STR(EDLastEvent);
+CONST_STR(EDMode);
+CONST_STR(EDProxy);
 
 
 @implementation _TtC22IDEPegasusSourceEditor20SourceCodeEditorView(XVim)
 + (void)xvim_hook{
     [self xvim_swizzleInstanceMethod:@selector(keyDown:) with:@selector(xvim_keyDown:)];
+    [self xvim_swizzleInstanceMethod:@selector(viewWillMoveToWindow:) with:@selector(xvim_viewWillMoveToWindow:)];
+
 }
+
+-(SourceEditorViewProxy*)proxy {
+    SourceEditorViewProxy *p = [self extraDataForName:EDProxy];
+    if (p == nil || (NSNull*)p == NSNull.null) {
+        p = [[SourceEditorViewProxy alloc] initWithSourceEditorView:self];
+        [self setExtraData:p forName:EDProxy];
+    }
+    return p;
+}
+
+-(void)xvim_setupOnFirstAppearance
+{
+    self.xvim_mode = XVIM_MODE_NORMAL;
+}
+
+-(void)xvim_viewWillMoveToWindow:(id)window
+{
+    [self xvim_viewWillMoveToWindow:window];
+    if (window != nil) {
+        [NSOperationQueue.mainQueue addOperationWithBlock:^{
+            [self xvim_setupOnFirstAppearance];
+        }];
+    }
+}
+
+-(XVimMode)xvim_mode {
+    return [self integerForName:EDMode];
+}
+
+-(void)setXvim_mode:(XVimMode)xvim_mode {
+    [self setInteger:xvim_mode forName:EDMode];
+    if (xvim_mode == XVIM_MODE_INSERT) {
+        self.proxy.cursorStyle = CursorStyleVerticalBar;
+    }
+    else {
+        self.proxy.cursorStyle = CursorStyleBlock;
+    }
+}
+
 
 - (NSMutableArray*)xvim_key_queue{
     NSMutableArray* obj;
@@ -47,7 +90,8 @@ typedef enum {
 }
 
 - (void)xvim_keyDown:(NSEvent*)event{
-    [self.xvim_key_queue addObject:[event toXVimKeyStroke]];
+        [self setExtraData:event forName:EDLastEvent];
+        [self.xvim_key_queue addObject:[event toXVimKeyStroke]];
     [self xvim_handleKeys:[XVimCmdArg new]];
     [self xvim_updateCommandLine:[XVimCmdArg new]];
 }
@@ -58,30 +102,37 @@ typedef enum {
     if( 0 != [self.xvim_key_queue count]){
         stroke = [self.xvim_key_queue objectAtIndex:0];
         [self.xvim_key_queue removeObjectAtIndex:0];
-    }else{
-        NSEvent *event = [self.window nextEventMatchingMask:NSEventMaskKeyDown];
-        [self.window discardEventsMatchingMask:NSEventMaskAny beforeEvent:event];
-        stroke = [event toXVimKeyStroke];
+
+            [arg.args appendString:[stroke keyNotation]];
+
+
+
     }
-    [arg.args appendString:[stroke keyNotation]];
     return stroke;
 }
 
 - (void)xvim_insert:(XVimCmdArg*)arg{
-    while(true){
-        XVimKeyStroke *stroke =  [self xvim_nextKey:arg];
+    NSEvent *lastEvent = [self extraDataForName:EDLastEvent];
+    [self setExtraData:nil forName:EDLastEvent];
+    
+    XVimKeyStroke *stroke =  [self xvim_nextKey:arg];
+    if (stroke) {
         switch(stroke.keycode){
             case u'\x1b': //ESC
+                self.xvim_mode = XVIM_MODE_NORMAL;
                 return;
             case XVimMakeKeyCode(XVIM_MOD_CTRL,  u'n'):
                 [self nextCompletion:self];
-                break;
+                return;
             case XVimMakeKeyCode(XVIM_MOD_CTRL,  u'p'):
                 [self previousCompletion:self];
                 return;
         }
         [self xvim_keyDown:[stroke toEvent]];
+        
     }
+    else [self xvim_keyDown:lastEvent];
+    
 }
 
 - (void)xvim_delete:(XVimCmdArg*)arg{
@@ -131,12 +182,24 @@ typedef enum {
 // Normal mode event handling
 - (void)xvim_handleKeys:(XVimCmdArg*)arg{
     // Handle event which can be handled by this
-    XVimKeyStroke *stroke =  [self xvim_nextKey:arg];
+        if ([self unsignedIntegerForName:EDMode] == XVIM_MODE_INSERT) {
+                [self xvim_insert:arg];
+                return;
+        }
+        [self setExtraData:nil forName:EDLastEvent];
+        XVimKeyStroke *stroke =  [self xvim_nextKey:arg];
 
     switch(stroke.keycode){
         // For simple ascii you can just use char here instad of XVimMakeKeyCode(0, u'x')
+        case '0':
+            [self moveToBeginningOfLine:self];
+            break;
+        case '^':
+            [self moveToLeftEndOfLine:self];
+            break;
         case 'a':
             [self moveRight:self];
+            self.xvim_mode = XVIM_MODE_INSERT;
             break;
         case 'b':
             [self moveWordBackward:self];
@@ -148,7 +211,7 @@ typedef enum {
             [self moveWordRight:self];
             break;
         case 'i':
-            [self xvim_insert:arg];
+            self.xvim_mode = XVIM_MODE_INSERT;
             break;
         case 'j':
             [self moveDown:self];
@@ -161,6 +224,11 @@ typedef enum {
             break;
         case 'l':
             [self moveRight:self];
+            break;
+        case 'o':
+            self.xvim_mode = XVIM_MODE_INSERT;
+            [self moveToEndOfLine:self];
+            [self insertNewline:self];
             break;
         case 'D':
             [self deleteToEndOfLine:self];

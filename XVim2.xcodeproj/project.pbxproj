@@ -17,6 +17,8 @@
 		A2B537B11F51C94400D83C0A /* NSObject+Swizzle.m in Sources */ = {isa = PBXBuildFile; fileRef = A2B537B01F51C94400D83C0A /* NSObject+Swizzle.m */; };
 		A2B537B51F51D35000D83C0A /* XVimCmdArg.m in Sources */ = {isa = PBXBuildFile; fileRef = A2B537B41F51D35000D83C0A /* XVimCmdArg.m */; };
 		A2B537B81F51DF3400D83C0A /* XVimKeyStroke.m in Sources */ = {isa = PBXBuildFile; fileRef = A2B537B61F51DF3400D83C0A /* XVimKeyStroke.m */; };
+		EDB7F6031F6D8CE5007E0C41 /* rd_route.c in Sources */ = {isa = PBXBuildFile; fileRef = EDB7F6011F6D8CE5007E0C41 /* rd_route.c */; };
+		EDB7F6061F6D8D36007E0C41 /* SourceEditorViewProxy.m in Sources */ = {isa = PBXBuildFile; fileRef = EDB7F6051F6D8D36007E0C41 /* SourceEditorViewProxy.m */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXCopyFilesBuildPhase section */
@@ -52,6 +54,12 @@
 		A2B537B41F51D35000D83C0A /* XVimCmdArg.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = XVimCmdArg.m; sourceTree = "<group>"; };
 		A2B537B61F51DF3400D83C0A /* XVimKeyStroke.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = XVimKeyStroke.m; sourceTree = "<group>"; };
 		A2B537B71F51DF3400D83C0A /* XVimKeyStroke.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = XVimKeyStroke.h; sourceTree = "<group>"; };
+		EDB7F6011F6D8CE5007E0C41 /* rd_route.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; path = rd_route.c; sourceTree = "<group>"; };
+		EDB7F6021F6D8CE5007E0C41 /* rd_route.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = rd_route.h; sourceTree = "<group>"; };
+		EDB7F6041F6D8D36007E0C41 /* SourceEditorViewProxy.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = SourceEditorViewProxy.h; sourceTree = "<group>"; };
+		EDB7F6051F6D8D36007E0C41 /* SourceEditorViewProxy.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = SourceEditorViewProxy.m; sourceTree = "<group>"; };
+		EDF9A91E1F6DA9190051D9BF /* libffi.tbd */ = {isa = PBXFileReference; lastKnownFileType = "sourcecode.text-based-dylib-definition"; name = libffi.tbd; path = usr/lib/libffi.tbd; sourceTree = SDKROOT; };
+		EDF9A9401F6DBFBB0051D9BF /* libffi.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; name = libffi.a; path = ../../../../../usr/local/lib/libffi.a; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -100,6 +108,8 @@
 		A2B52D391F514CC600D83C0A /* Helper */ = {
 			isa = PBXGroup;
 			children = (
+				EDB7F6011F6D8CE5007E0C41 /* rd_route.c */,
+				EDB7F6021F6D8CE5007E0C41 /* rd_route.h */,
 				A287A8C51F55D636009378BC /* NSObject+ExtraData.h */,
 				A287A8C61F55D636009378BC /* NSObject+ExtraData.m */,
 				A2B537AF1F51C94400D83C0A /* NSObject+Swizzle.h */,
@@ -116,6 +126,8 @@
 				A2B537361F51516C00D83C0A /* _TtC22IDEPegasusSourceEditor20SourceCodeEditorView.h */,
 				A2B537A61F51C70000D83C0A /* _TtC22IDEPegasusSourceEditor20SourceCodeEditorView.m */,
 				A2B5378E1F51516C00D83C0A /* _TtC12SourceEditor16SourceEditorView.h */,
+				EDB7F6041F6D8D36007E0C41 /* SourceEditorViewProxy.h */,
+				EDB7F6051F6D8D36007E0C41 /* SourceEditorViewProxy.m */,
 			);
 			path = Xcode;
 			sourceTree = "<group>";
@@ -123,6 +135,8 @@
 		A2B537A81F51C89A00D83C0A /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
+				EDF9A9401F6DBFBB0051D9BF /* libffi.a */,
+				EDF9A91E1F6DA9190051D9BF /* libffi.tbd */,
 				A2B537AD1F51C8D200D83C0A /* IDEPegasusSourceEditor */,
 				A2B537A91F51C89A00D83C0A /* SourceEditor */,
 			);
@@ -213,8 +227,10 @@
 				A2B537B81F51DF3400D83C0A /* XVimKeyStroke.m in Sources */,
 				A2B537B11F51C94400D83C0A /* NSObject+Swizzle.m in Sources */,
 				A2B537B51F51D35000D83C0A /* XVimCmdArg.m in Sources */,
+				EDB7F6061F6D8D36007E0C41 /* SourceEditorViewProxy.m in Sources */,
 				A2B52D411F514CC600D83C0A /* XVim.m in Sources */,
 				A2B537A71F51C70000D83C0A /* _TtC22IDEPegasusSourceEditor20SourceCodeEditorView.m in Sources */,
+				EDB7F6031F6D8CE5007E0C41 /* rd_route.c in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

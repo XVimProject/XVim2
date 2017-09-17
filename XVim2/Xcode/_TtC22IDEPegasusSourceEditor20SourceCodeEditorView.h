@@ -73,8 +73,15 @@
 
 @end
 
+typedef NS_ENUM(NSInteger, XVimMode) {
+    XVIM_MODE_NORMAL,
+    XVIM_MODE_INSERT,
+};
 
+@class SourceEditorViewProxy;
 @interface _TtC22IDEPegasusSourceEditor20SourceCodeEditorView(XVim)
 + (void)xvim_hook;
+@property (strong, readonly) SourceEditorViewProxy *proxy;
+@property (nonatomic) XVimMode xvim_mode;
 @end
 
