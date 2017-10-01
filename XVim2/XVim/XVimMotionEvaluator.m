@@ -316,14 +316,15 @@
     return [self _motionFixed:XVIM_MAKE_MOTION(MOTION_WORD_FORWARD, CHARACTERWISE_EXCLUSIVE, BIGWORD, [self numericArg])];
 }
 
+
+- (XVimEvaluator*)NUM0{
+    return [self _motionFixed:XVIM_MAKE_MOTION(MOTION_BEGINNING_OF_LINE, CHARACTERWISE_INCLUSIVE, MOTION_OPTION_NONE, [self numericArg])];
+}
+
 #if 0
 - (XVimEvaluator*)z{
     [self.argumentString appendString:@"z"];
     return [[XVimZEvaluator alloc] initWithWindow:self.window];
-}
-
-- (XVimEvaluator*)NUM0{
-    return [self _motionFixed:XVIM_MAKE_MOTION(MOTION_BEGINNING_OF_LINE, CHARACTERWISE_INCLUSIVE, MOTION_OPTION_NONE, [self numericArg])];
 }
 
 - (XVimEvaluator*)searchCurrentWordForward:(BOOL)forward {
@@ -437,6 +438,7 @@
     XVimMark* mark = [[XVim instance].marks markForName:key forDocument:[self.sourceView documentURL].path];
     return [self jumpToMark:mark firstOfLine:NO KeepJumpMarkIndex:NO NeedUpdateMark:YES];
 }
+#endif
 
 // CARET ( "^") moves the cursor to the start of the currentline (past leading whitespace)
 // Note: CARET always moves to start of the current line ignoring any numericArg.
@@ -448,6 +450,7 @@
     return [self _motionFixed:XVIM_MAKE_MOTION(MOTION_END_OF_LINE, CHARACTERWISE_EXCLUSIVE, MOTION_OPTION_NONE, [self numericArg])];
 }
 
+#ifdef TODO
 // Underscore ( "_") moves the cursor to the start of the line (past leading whitespace)
 // Note: underscore without any numeric arguments behaves like caret but with a numeric argument greater than 1
 // it will moves to start of the numeric argument - 1 lines down.
@@ -467,6 +470,7 @@
     m.position = head;
     return [self _motionFixed:m];
 }
+#endif
 
 - (XVimEvaluator*)PERCENT {
     if( self.numericMode ){
@@ -475,7 +479,6 @@
         return [self _motionFixed:XVIM_MAKE_MOTION(MOTION_NEXT_MATCHED_ITEM, CHARACTERWISE_INCLUSIVE, MOTION_OPTION_NONE, [self numericArg])];
     }
 }
-#endif
 /*
  * Space acts like 'l' in vi. moves  cursor forward
  */

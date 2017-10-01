@@ -48,14 +48,15 @@
 
     NSString  *string = self.xvim_string;
     NSUInteger length = self.length;
-    NSUInteger lineNum = 0, end = 0, contentsEnd;
+    NSUInteger lineNum = 0, start = 0, end = 0, contentsEnd;
 
     do {
-        [string getLineStart:NULL end:&end contentsEnd:&contentsEnd forRange:NSMakeRange(end, 0)];
+        [string getLineStart:&start end:&end contentsEnd:&contentsEnd forRange:NSMakeRange(end, 0)];
         lineNum++;
         if (lineNum == num) {
-            if (newLineLength) *newLineLength = end - contentsEnd;
-            return NSMakeRange(end, contentsEnd - end);
+            _auto nl = end - contentsEnd;
+            if (newLineLength) *newLineLength = nl;
+            return NSMakeRange(start, contentsEnd - start);
         }
     } while (end < length);
 
@@ -72,40 +73,6 @@
     return NSMakeRange(NSNotFound, 0);
 }
 
-// TODO: we may need to keep track line number and position by hooking insertText: method.
-// FIXME: this code is actually never called in XVim for XCode, it probably has bugs, it's not tested
-- (NSRange)xvim_indexRangeForLines:(NSRange)range
-{
-    NSString  *string = self.xvim_string;
-    NSUInteger length = self.length, start = 0;
-    NSUInteger lineNum = 0, end = 0, contentsEnd = 0;
-
-    NSAssert(range.location > 0, @"line number starts at 1");
-
-    do {
-        [string getLineStart:NULL end:&end contentsEnd:&contentsEnd forRange:NSMakeRange(end, 0)];
-        lineNum++;
-        if (lineNum == range.location) {
-            start = end;
-        }
-        if (lineNum == NSMaxRange(range)) {
-            return NSMakeRange(start, end - start);
-        }
-    } while (end < length);
-
-    // we have a last empty line after \n
-    if (contentsEnd < end) {
-        lineNum++;
-        if (lineNum == range.location) {
-            start = end;
-        }
-        if (lineNum == NSMaxRange(range)) {
-            return NSMakeRange(start, end - start);
-        }
-    }
-
-    return NSMakeRange(0, length);
-}
 
 - (NSRange)xvim_indexRangeForLineAtIndex:(NSUInteger)index newLineLength:(NSUInteger *)newLineLength
 {
@@ -137,18 +104,19 @@
 
     NSString *string = self.xvim_string;
     NSUInteger len = self.length;
-    NSUInteger num = 1, pos = 0;
+    NSUInteger num = 0, pos = 0, contents_end = 0;
 
     if (index > len) {
         index = len;
     }
 
     do {
+        pos = contents_end;
         num++;
         if (index == pos) {
             return num;
         }
-        [string getLineStart:NULL end:&pos contentsEnd:NULL forRange:NSMakeRange(pos, 0)];
+        [string getLineStart:NULL end:&contents_end contentsEnd:&pos forRange:NSMakeRange(pos, 0)];
     } while (pos < index);
 
     return num;

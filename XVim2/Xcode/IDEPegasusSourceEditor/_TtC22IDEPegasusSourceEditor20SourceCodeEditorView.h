@@ -98,11 +98,11 @@
 
 
 typedef _TtC22IDEPegasusSourceEditor20SourceCodeEditorView SourceCodeEditorView;
+@class XVimWindow;
 
 @class SourceCodeEditorViewProxy;
 @interface _TtC22IDEPegasusSourceEditor20SourceCodeEditorView(XVim)
 + (void)xvim_hook;
-@property (strong, readonly) SourceCodeEditorViewProxy *proxy;
-@property (nonatomic) XVimMode xvim_mode;
+@property (strong, readonly) XVimWindow *xvim_window;
 @end
 

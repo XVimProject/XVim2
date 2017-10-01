@@ -557,7 +557,7 @@
 
 - (XVimEvaluator*)motionFixed:(XVimMotion *)motion{
     [self.window preMotion:motion];
-    //[[self sourceView] xvim_move:motion];
+    [[self sourceView] xvim_move:motion];
     return nil;
 }
 

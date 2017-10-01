@@ -8,6 +8,7 @@
 
 #import "SourceCodeEditorViewProxy.h"
 #import "NSTextStorage+VimOperation.h"
+#import "NSString+VimHelper.h"
 #import "XVim.h"
 #import "_TtC22IDEPegasusSourceEditor16SourceCodeEditor.h"
 #import "_TtC22IDEPegasusSourceEditor18SourceCodeDocument.h"
@@ -60,9 +61,9 @@ ffi_arg rc = 0; \
 void *values = NULL; \
 ffi_type *args[0]; \
 if (ffi_prep_cif(&cif, FFI_DEFAULT_ABI, 0, \
-                 &ffi_type_sint64, args) == FFI_OK) \
+&ffi_type_sint64, args) == FFI_OK) \
 { \
-    ffi_call_apple(&cif, (void*)fpGetTextStorage, target, NULL, &rc, values); \
+ffi_call_apple(&cif, (void*)fp, target, NULL, &rc, values); \
 }
 
 #define SET(target, fp, ffitype, arg) \
@@ -73,9 +74,9 @@ ffi_arg rc = 0; \
 args[0] = &ffitype; \
 values[0] = &arg; \
 if (ffi_prep_cif(&cif, FFI_DEFAULT_ABI, 1, \
-                 &ffi_type_pointer, args) == FFI_OK) \
+&ffi_type_pointer, args) == FFI_OK) \
 { \
-    ffi_call_apple(&cif, (void*)fp, target, NULL, &rc, values); \
+ffi_call_apple(&cif, (void*)fp, target, NULL, &rc, values); \
 }
 
 -(void)setCursorStyle:(CursorStyle)cursorStyle
@@ -85,15 +86,29 @@ if (ffi_prep_cif(&cif, FFI_DEFAULT_ABI, 1, \
 }
 
 -(CursorStyle)cursorStyle {
-    void * sourceEditorView = (__bridge void *)self.sourceCodeEditorView;
-    GET(sourceEditorView, fpSetCursorStyle)
+    void * sourceEditorView = (__bridge_retained void *)self.sourceCodeEditorView;
+    GET(sourceEditorView, fpGetCursorStyle)
     return rc & 0xFF;
 }
 
+-(NSString *)string
+{
+    return self.sourceCodeEditorView.string;
+}
+
+- (void)insertText:(id)insertString
+{
+    [self.sourceCodeEditorView insertText:insertString];
+}
+
+- (void)insertText:(id)string replacementRange:(NSRange)replacementRange
+{
+    [self.sourceCodeEditorView insertText:string replacementRange:replacementRange];
+}
+
 -(NSTextStorage*)textStorage {
-    void * sourceCodeDocument = (__bridge void *)self.sourceCodeEditorView.hostingEditor.document;
-    GET(sourceCodeDocument, fpGetTextStorage);
-    return (__bridge NSTextStorage*)(void*)rc;
+    NSTextStorage *storage = [[NSTextStorage alloc] initWithString:self.string];
+    return storage;
 }
 
 - (void)scrollPageBackward:(NSUInteger)numPages {
@@ -117,7 +132,10 @@ if (ffi_prep_cif(&cif, FFI_DEFAULT_ABI, 1, \
           stillSelecting:(BOOL)stillSelectingFlag
 {
     // TODO
-    [self.sourceCodeEditorView setAccessibilitySelectedTextRanges:ranges];
+    if (ranges.count == 0) return;
+    [self.sourceCodeEditorView setSelectedTextRange:ranges[0].rangeValue];
+    for (NSValue *val in ranges)
+        DEBUG_LOG("Range: %@", NSStringFromRange(val.rangeValue));
 }
 
 - (void)xvim_move:(XVimMotion*)motion{
@@ -233,7 +251,7 @@ if (ffi_prep_cif(&cif, FFI_DEFAULT_ABI, 1, \
     //[(DVTFoldingTextStorage*)self.textStorage increaseUsingFoldedRanges];
     [self setSelectedRanges:[self xvim_selectedRanges] affinity:NSSelectionAffinityDownstream stillSelecting:NO];
     //[(DVTFoldingTextStorage*)self.textStorage decreaseUsingFoldedRanges];
-
+    
     if(scroll){
         [self xvim_scrollTo:self.insertionPoint];
     }
@@ -632,6 +650,144 @@ if (ffi_prep_cif(&cif, FFI_DEFAULT_ABI, 1, \
     return r;
 }
 
+- (void)xvim_insert:(XVimInsertionPoint)mode blockColumn:(NSUInteger *)column blockLines:(XVimRange *)lines{
+    NSTextStorage *ts = self.textStorage;
+    
+    if (column) *column = NSNotFound;
+    if (lines)  *lines  = XVimMakeRange(NSNotFound, NSNotFound);
+    
+    if (self.selectionMode == XVIM_VISUAL_BLOCK) {
+        XVimSelection sel = [self _xvim_selectedBlock];
+        
+        if (lines) *lines = XVimMakeRange(sel.top, sel.bottom);
+        switch (mode) {
+            case XVIM_INSERT_BLOCK_KILL:
+#ifdef TODO
+                [self _xvim_yankSelection:sel];
+                [self _xvim_killSelection:sel];
+#endif
+                /* falltrhough */
+            case XVIM_INSERT_DEFAULT:
+                self.insertionPoint = [ts xvim_indexOfLineNumber:sel.top column:sel.left];
+                if (column) *column = sel.left;
+                break;
+            case XVIM_INSERT_APPEND:
+                if (sel.right != XVimSelectionEOL) {
+                    sel.right++;
+                }
+                self.insertionPoint = [ts xvim_indexOfLineNumber:sel.top column:sel.right];
+                if (column) *column = sel.right;
+                break;
+            default:
+                NSAssert(false, @"unreachable");
+                break;
+        }
+    } else if (mode != XVIM_INSERT_DEFAULT) {
+        NSUInteger pos = self.insertionPoint;
+        switch (mode) {
+            case XVIM_INSERT_APPEND_EOL:
+                self.insertionPoint = [ts xvim_endOfLine:pos];
+                break;
+            case XVIM_INSERT_APPEND:
+                NSAssert(self.cursorMode == CURSOR_MODE_COMMAND, @"self.cursorMode shoud be CURSOR_MODE_COMMAND");
+                if (![ts isEOF:pos] && ![ts isNewline:pos]){
+                    self.insertionPoint = pos + 1;
+                }
+                break;
+            case XVIM_INSERT_BEFORE_FIRST_NONBLANK:
+                self.insertionPoint = [ts xvim_firstNonblankInLineAtIndex:pos allowEOL:YES];
+                break;
+            default:
+                NSAssert(false, @"unreachable");
+        }
+    }
+    self.cursorMode = CURSOR_MODE_INSERT;
+    [self xvim_changeSelectionMode:XVIM_VISUAL_NONE];
+    [self xvim_syncState];
+}
+
+
+- (void)_xvim_insertSpaces:(NSUInteger)count replacementRange:(NSRange)replacementRange
+{
+    if (count || replacementRange.length) {
+        [self insertText:[NSString stringMadeOfSpaces:count] replacementRange:replacementRange];
+    }
+}
+
+
+- (void)xvim_blockInsertFixupWithText:(NSString *)text mode:(XVimInsertionPoint)mode
+                                count:(NSUInteger)count column:(NSUInteger)column lines:(XVimRange)lines
+{
+    NSMutableString *buf = nil;
+    NSTextStorage *ts;
+    NSUInteger tabWidth;
+    
+    if (count == 0 || lines.begin > lines.end || text.length == 0) {
+        return;
+    }
+    if ([text rangeOfCharacterFromSet:[NSCharacterSet newlineCharacterSet]].location != NSNotFound) {
+        return;
+    }
+    if (count > 1) {
+        buf = [[NSMutableString alloc] initWithCapacity:text.length * count];
+        for (NSUInteger i = 0; i < count; i++) {
+            [buf appendString:text];
+        }
+        text = buf;
+    }
+    
+    ts = self.textStorage;
+    tabWidth = ts.xvim_tabWidth;
+    
+    for (NSUInteger line = lines.begin; line <= lines.end; line++) {
+        NSUInteger pos = [ts xvim_indexOfLineNumber:line column:column];
+        
+        if (column != XVimSelectionEOL && [ts isEOL:pos]) {
+            if (mode == XVIM_INSERT_SPACES && column == 0) {
+                continue;
+            }
+            if ([ts xvim_columnOfIndex:pos] < column) {
+                if (mode != XVIM_INSERT_APPEND) {
+                    continue;
+                }
+                [self _xvim_insertSpaces:column - [ts xvim_columnOfIndex:pos] replacementRange:NSMakeRange(pos, 0)];
+            }
+        }
+        if (tabWidth && [self.xvim_string characterAtIndex:pos] == '\t') {
+            NSUInteger col = [ts xvim_columnOfIndex:pos];
+            
+            if (col < column) {
+                [self _xvim_insertSpaces:tabWidth - (col % tabWidth) replacementRange:NSMakeRange(pos, 1)];
+                pos += column - col;
+            }
+        }
+        [self insertText:text replacementRange:NSMakeRange(pos, 0)];
+    }
+    
+}
+
+- (void)xvim_changeSelectionMode:(XVIM_VISUAL_MODE)mode{
+    if( self.selectionMode == XVIM_VISUAL_NONE && mode != XVIM_VISUAL_NONE ){
+        self.selectionBegin = self.insertionPoint;
+    }else if( self.selectionMode != XVIM_VISUAL_NONE && mode == XVIM_VISUAL_NONE){
+        self.selectionBegin = NSNotFound;
+    }
+    self.selectionMode = mode;
+    [self xvim_syncStateWithScroll:NO];
+    return;
+}
+
+- (void)xvim_escapeFromInsert{
+    if( self.cursorMode == CURSOR_MODE_INSERT ){
+        self.cursorMode = CURSOR_MODE_COMMAND;
+        if(![self.textStorage isBOL:self.insertionPoint]){
+            [self xvim_moveCursor:self.insertionPoint-1 preserveColumn:NO];
+        }
+        [self xvim_syncState];
+    }
+}
+
+
 - (NSRange)xvim_getOperationRangeFrom:(NSUInteger)from To:(NSUInteger)to Type:(MOTION_TYPE)type {
     if( [[self xvim_string] length] == 0 ){
         NSMakeRange(0,0); // No range
@@ -752,7 +908,7 @@ if (ffi_prep_cif(&cif, FFI_DEFAULT_ABI, 1, \
     }
     // TODO
     return [self.sourceCodeEditorView characterRangeForLineRange:NSMakeRange(self.sourceCodeEditorView.accessibilityInsertionPointLineNumber, 1)].location
-            + self.sourceCodeEditorView.accessibilityColumnIndexRange.location;
+    + self.sourceCodeEditorView.accessibilityColumnIndexRange.location;
 }
 
 - (NSUInteger)xvim_displayPrevLine:(NSUInteger)index column:(NSUInteger)column count:(NSUInteger)count option:(MOTION_OPTION)opt{
@@ -762,7 +918,8 @@ if (ffi_prep_cif(&cif, FFI_DEFAULT_ABI, 1, \
     // TODO
     return [self.sourceCodeEditorView characterRangeForLineRange:NSMakeRange(self.sourceCodeEditorView.accessibilityInsertionPointLineNumber, 1)].location
     + self.sourceCodeEditorView.accessibilityColumnIndexRange.location;
-
+    
 }
 
 @end
+

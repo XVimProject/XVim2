@@ -23,8 +23,6 @@
         NSString           *_staticString;
         NSTextInputContext *_inputContext;
 }
-@property (weak, readwrite) CommandResponder * commandResponder;
-
 @property (strong, atomic) NSEvent       *tmpBuffer;
 
 - (void)_resetEvaluatorStack:(NSMutableArray *)stack activateNormalHandler:(BOOL)activate;
@@ -34,12 +32,12 @@
 @implementation XVimWindow
 @synthesize tmpBuffer = _tmpBuffer;
 
-- (instancetype)initWithCommandResponder:(CommandResponder *)editorArea
+- (instancetype)initWithEditorView:(id<SourceViewProtocol>)editorArea
 {
         if (self = [super init]){
                 _staticString = @"";
                 _keymapContext = [[XVimKeymapContext alloc] init];
-                _commandResponder = editorArea ;
+                _sourceView = editorArea ;
                 _defaultEvaluatorStack = [[NSMutableArray alloc] init];
                 _currentEvaluatorStack = _defaultEvaluatorStack;
                 _inputContext = [[NSTextInputContext alloc] initWithClient:self];
@@ -159,7 +157,7 @@
         
         [NSObject cancelPreviousPerformRequestsWithTarget:self selector:@selector(handleTimeout) object:nil];
         if (mapped) {
-                DEBUG_LOG("Mapped = %s", mapped);
+                DEBUG_LOG("Mapped = %@", mapped);
                 
                 [_keymapContext clear];
                 for (XVimKeyStroke *keyStroke in XVimKeyStrokesFromXVimString(mapped) ) {
