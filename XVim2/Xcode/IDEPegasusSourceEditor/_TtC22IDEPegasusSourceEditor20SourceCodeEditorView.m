@@ -7,7 +7,7 @@
 //
 
 #import "_TtC22IDEPegasusSourceEditor20SourceCodeEditorView.h"
-#import "SourceEditorViewProxy.h"
+#import "SourceCodeEditorViewProxy.h"
 #import "NSObject+Swizzle.h"
 #import "XVimKeyStroke.h"
 #import "Logger.h"
@@ -26,13 +26,13 @@ CONST_STR(EDProxy);
 + (void)xvim_hook{
     [self xvim_swizzleInstanceMethod:@selector(keyDown:) with:@selector(xvim_keyDown:)];
     [self xvim_swizzleInstanceMethod:@selector(viewWillMoveToWindow:) with:@selector(xvim_viewWillMoveToWindow:)];
-
+    
 }
 
--(SourceEditorViewProxy*)proxy {
-    SourceEditorViewProxy *p = [self extraDataForName:EDProxy];
+-(SourceCodeEditorViewProxy*)proxy {
+    SourceCodeEditorViewProxy *p = [self extraDataForName:EDProxy];
     if (p == nil || (NSNull*)p == NSNull.null) {
-        p = [[SourceEditorViewProxy alloc] initWithSourceEditorView:self];
+        p = [[SourceCodeEditorViewProxy alloc] initWithSourceCodeEditorView:self];
         [self setExtraData:p forName:EDProxy];
     }
     return p;
@@ -54,7 +54,7 @@ CONST_STR(EDProxy);
 }
 
 -(XVimMode)xvim_mode {
-    return [self integerForName:EDMode];
+    return (XVimMode)[self integerForName:EDMode];
 }
 
 -(void)setXvim_mode:(XVimMode)xvim_mode {
@@ -85,13 +85,13 @@ CONST_STR(EDProxy);
     CATextLayer* textLayer = [[CATextLayer alloc] init];
     [textLayer setName:@"xvim_cmd_layer"];
     [self.layer addSublayer:textLayer];
-
+    
     return textLayer;
 }
 
 - (void)xvim_keyDown:(NSEvent*)event{
-        [self setExtraData:event forName:EDLastEvent];
-        [self.xvim_key_queue addObject:[event toXVimKeyStroke]];
+    [self setExtraData:event forName:EDLastEvent];
+    [self.xvim_key_queue addObject:[event toXVimKeyStroke]];
     [self xvim_handleKeys:[XVimCmdArg new]];
     [self xvim_updateCommandLine:[XVimCmdArg new]];
 }
@@ -102,11 +102,7 @@ CONST_STR(EDProxy);
     if( 0 != [self.xvim_key_queue count]){
         stroke = [self.xvim_key_queue objectAtIndex:0];
         [self.xvim_key_queue removeObjectAtIndex:0];
-
-            [arg.args appendString:[stroke keyNotation]];
-
-
-
+        [arg.args appendString:[stroke keyNotation]];
     }
     return stroke;
 }
@@ -136,9 +132,9 @@ CONST_STR(EDProxy);
 }
 
 - (void)xvim_delete:(XVimCmdArg*)arg{
-     XVimKeyStroke *stroke =  [self xvim_nextKey:arg];
+    XVimKeyStroke *stroke =  [self xvim_nextKey:arg];
     switch(stroke.keycode){
-        // For simple ascii you can just use char here instad of XVimMakeKeyCode(0, u'x')
+            // For simple ascii you can just use char here instad of XVimMakeKeyCode(0, u'x')
         case 'd':
             [self moveToBeginningOfLine:self];
             [self deleteToEndOfLine:self];
@@ -182,15 +178,15 @@ CONST_STR(EDProxy);
 // Normal mode event handling
 - (void)xvim_handleKeys:(XVimCmdArg*)arg{
     // Handle event which can be handled by this
-        if ([self unsignedIntegerForName:EDMode] == XVIM_MODE_INSERT) {
-                [self xvim_insert:arg];
-                return;
-        }
-        [self setExtraData:nil forName:EDLastEvent];
-        XVimKeyStroke *stroke =  [self xvim_nextKey:arg];
-
+    if ([self unsignedIntegerForName:EDMode] == XVIM_MODE_INSERT) {
+        [self xvim_insert:arg];
+        return;
+    }
+    [self setExtraData:nil forName:EDLastEvent];
+    XVimKeyStroke *stroke =  [self xvim_nextKey:arg];
+    
     switch(stroke.keycode){
-        // For simple ascii you can just use char here instad of XVimMakeKeyCode(0, u'x')
+            // For simple ascii you can just use char here instad of XVimMakeKeyCode(0, u'x')
         case '0':
             [self moveToBeginningOfLine:self];
             break;

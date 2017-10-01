@@ -317,3 +317,5 @@
 
 @end
 
+typedef _TtC12SourceEditor16SourceEditorView SourceEditorView;
+

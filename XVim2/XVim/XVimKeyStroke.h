@@ -20,6 +20,7 @@
 
 #define XVimMakeKeyCode(modifier, character) ( (modifier << 16) | character )
 
+
 @class XVimKeyStroke;
 typedef uint32_t XVimKeyCode;
 typedef NSString XVimString;
@@ -31,7 +32,7 @@ XVimString* XVimStringFromKeyStrokes(NSArray* strokes);
 NSArray* XVimKeyStrokesFromXVimString(XVimString* string);
 NSArray* XVimKeyStrokesFromKeyNotation(NSString* notation);
 NSString* XVimKeyNotationFromXVimString(XVimString* string);
-    
+
 @interface NSEvent(XVimKeyStroke)
 - (XVimKeyStroke*)toXVimKeyStroke;
 - (XVimString*)toXVimString;

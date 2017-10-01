@@ -1,4 +1,6 @@
-#import "_TtC12SourceEditor16SourceEditorView.h"
+#import "SourceEditor/_TtC12SourceEditor16SourceEditorView.h"
+#import "_TtC22IDEPegasusSourceEditor16SourceCodeEditor.h"
+#import "XVimDefs.h"
 
 @class XVimKeyStroke;
 
@@ -61,7 +63,7 @@
 - (void)paste:(id)arg1;
 - (void)viewDidMoveToSuperview;
 - (void)dealloc;
-//@property(nonatomic) __weak _TtC22IDEPegasusSourceEditor16SourceCodeEditor *hostingEditor; // @synthesize hostingEditor;
+@property(nonatomic) __weak _TtC22IDEPegasusSourceEditor16SourceCodeEditor *hostingEditor; // @synthesize hostingEditor;
 - (void)selectionWillChange;
 - (id)initWithCoder:(id)arg1;
 - (id)initWithFrame:(struct CGRect)arg1;
@@ -73,15 +75,34 @@
 
 @end
 
-typedef NS_ENUM(NSInteger, XVimMode) {
-    XVIM_MODE_NORMAL,
-    XVIM_MODE_INSERT,
-};
+@interface _TtC22IDEPegasusSourceEditor20SourceCodeEditorView (IDEPegasusSourceEditor) // <DVTSourceModelProvider>
+- (id)sourceModel;
+@end
 
-@class SourceEditorViewProxy;
+@interface _TtC22IDEPegasusSourceEditor20SourceCodeEditorView (IDEPegasusSourceEditor1) // <DVTSourceLandmarkItemContainer>
+- (id)sourceLandmarkAtCharacterIndex:(unsigned long long)arg1;
+@end
+
+@interface _TtC22IDEPegasusSourceEditor20SourceCodeEditorView (IDEPegasusSourceEditor2) // <DVTLineRangeCharacterRangeConverter>
+- (struct _NSRange)lineRangeForCharacterRange:(struct _NSRange)arg1;
+- (struct _NSRange)characterRangeForLineRange:(struct _NSRange)arg1;
+@end
+
+@interface _TtC22IDEPegasusSourceEditor20SourceCodeEditorView (IDEPegasusSourceEditor3) // <DVTCharacterRangeFrameConverter>
+- (struct CGRect)frameForRange:(struct _NSRange)arg1 ignoreWhitespace:(BOOL)arg2;
+@end
+
+@interface _TtC22IDEPegasusSourceEditor20SourceCodeEditorView (IDEPegasusSourceEditor4) // <DVTTextInsertionPointLocator>
+- (unsigned long long)characterIndexForInsertionAtPoint:(struct CGPoint)arg1;
+@end
+
+
+typedef _TtC22IDEPegasusSourceEditor20SourceCodeEditorView SourceCodeEditorView;
+
+@class SourceCodeEditorViewProxy;
 @interface _TtC22IDEPegasusSourceEditor20SourceCodeEditorView(XVim)
 + (void)xvim_hook;
-@property (strong, readonly) SourceEditorViewProxy *proxy;
+@property (strong, readonly) SourceCodeEditorViewProxy *proxy;
 @property (nonatomic) XVimMode xvim_mode;
 @end
 
