@@ -27,6 +27,9 @@
 		ED548FE01F8280B700A8069D /* XVimRegisterEvaluator.m in Sources */ = {isa = PBXBuildFile; fileRef = ED548FDE1F8280B700A8069D /* XVimRegisterEvaluator.m */; };
 		ED548FE31F82A91D00A8069D /* SourceCodeEditorViewProxy+XVim.m in Sources */ = {isa = PBXBuildFile; fileRef = ED548FE21F82A91D00A8069D /* SourceCodeEditorViewProxy+XVim.m */; };
 		ED548FE61F82A9C900A8069D /* XVimReplaceEvaluator.m in Sources */ = {isa = PBXBuildFile; fileRef = ED548FE41F82A9C900A8069D /* XVimReplaceEvaluator.m */; };
+		ED60EB871F82E4D4000CBF9C /* XVimTildeEvaluator.m in Sources */ = {isa = PBXBuildFile; fileRef = ED60EB861F82E4D4000CBF9C /* XVimTildeEvaluator.m */; };
+		ED60EB8A1F82E5B9000CBF9C /* XVimUppercaseEvaluator.m in Sources */ = {isa = PBXBuildFile; fileRef = ED60EB881F82E5B9000CBF9C /* XVimUppercaseEvaluator.m */; };
+		ED60EB8D1F82E5C5000CBF9C /* XVimLowercaseEvaluator.m in Sources */ = {isa = PBXBuildFile; fileRef = ED60EB8B1F82E5C5000CBF9C /* XVimLowercaseEvaluator.m */; };
 		ED6276911F817CD5005F8274 /* XVimGActionEvaluator.m in Sources */ = {isa = PBXBuildFile; fileRef = ED62768D1F817CD4005F8274 /* XVimGActionEvaluator.m */; };
 		ED6276921F817CD5005F8274 /* XVimGMotionEvaluator.m in Sources */ = {isa = PBXBuildFile; fileRef = ED6276901F817CD5005F8274 /* XVimGMotionEvaluator.m */; };
 		ED6B8E4E1F80F896002F4A47 /* NSTextStorage+VimOperation.m in Sources */ = {isa = PBXBuildFile; fileRef = ED6B8E4A1F80F896002F4A47 /* NSTextStorage+VimOperation.m */; };
@@ -119,6 +122,12 @@
 		ED548FE21F82A91D00A8069D /* SourceCodeEditorViewProxy+XVim.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = "SourceCodeEditorViewProxy+XVim.m"; sourceTree = "<group>"; };
 		ED548FE41F82A9C900A8069D /* XVimReplaceEvaluator.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = XVimReplaceEvaluator.m; sourceTree = "<group>"; };
 		ED548FE51F82A9C900A8069D /* XVimReplaceEvaluator.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = XVimReplaceEvaluator.h; sourceTree = "<group>"; };
+		ED60EB831F82E4D4000CBF9C /* XVimTildeEvaluator.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = XVimTildeEvaluator.h; sourceTree = "<group>"; };
+		ED60EB861F82E4D4000CBF9C /* XVimTildeEvaluator.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = XVimTildeEvaluator.m; sourceTree = "<group>"; };
+		ED60EB881F82E5B9000CBF9C /* XVimUppercaseEvaluator.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = XVimUppercaseEvaluator.m; sourceTree = "<group>"; };
+		ED60EB891F82E5B9000CBF9C /* XVimUppercaseEvaluator.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = XVimUppercaseEvaluator.h; sourceTree = "<group>"; };
+		ED60EB8B1F82E5C5000CBF9C /* XVimLowercaseEvaluator.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = XVimLowercaseEvaluator.m; sourceTree = "<group>"; };
+		ED60EB8C1F82E5C5000CBF9C /* XVimLowercaseEvaluator.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = XVimLowercaseEvaluator.h; sourceTree = "<group>"; };
 		ED62768D1F817CD4005F8274 /* XVimGActionEvaluator.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = XVimGActionEvaluator.m; sourceTree = "<group>"; };
 		ED62768E1F817CD5005F8274 /* XVimGActionEvaluator.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = XVimGActionEvaluator.h; sourceTree = "<group>"; };
 		ED62768F1F817CD5005F8274 /* XVimGMotionEvaluator.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = XVimGMotionEvaluator.h; sourceTree = "<group>"; };
@@ -424,12 +433,18 @@
 		ED5282A21F825944000794A1 /* Operators */ = {
 			isa = PBXGroup;
 			children = (
-				ED548FD81F827EEC00A8069D /* XVimYankEvaluator.h */,
-				ED548FD91F827EEC00A8069D /* XVimYankEvaluator.m */,
-				ED5282A61F8259CB000794A1 /* XVimOperatorEvaluator.h */,
-				ED5282A71F8259CB000794A1 /* XVimOperatorEvaluator.m */,
 				ED5282A31F82595F000794A1 /* XVimDeleteEvaluator.h */,
 				ED5282A41F82595F000794A1 /* XVimDeleteEvaluator.m */,
+				ED60EB8C1F82E5C5000CBF9C /* XVimLowercaseEvaluator.h */,
+				ED60EB8B1F82E5C5000CBF9C /* XVimLowercaseEvaluator.m */,
+				ED5282A61F8259CB000794A1 /* XVimOperatorEvaluator.h */,
+				ED5282A71F8259CB000794A1 /* XVimOperatorEvaluator.m */,
+				ED60EB831F82E4D4000CBF9C /* XVimTildeEvaluator.h */,
+				ED60EB861F82E4D4000CBF9C /* XVimTildeEvaluator.m */,
+				ED60EB891F82E5B9000CBF9C /* XVimUppercaseEvaluator.h */,
+				ED60EB881F82E5B9000CBF9C /* XVimUppercaseEvaluator.m */,
+				ED548FD81F827EEC00A8069D /* XVimYankEvaluator.h */,
+				ED548FD91F827EEC00A8069D /* XVimYankEvaluator.m */,
 			);
 			path = Operators;
 			sourceTree = "<group>";
@@ -844,11 +859,13 @@
 				ED9CF2D71F6EFA2A00908DFB /* XVimNormalEvaluator.m in Sources */,
 				ED548FE01F8280B700A8069D /* XVimRegisterEvaluator.m in Sources */,
 				A287A8C71F55D637009378BC /* NSObject+ExtraData.m in Sources */,
+				ED60EB8D1F82E5C5000CBF9C /* XVimLowercaseEvaluator.m in Sources */,
 				ED5282A81F8259CB000794A1 /* XVimOperatorEvaluator.m in Sources */,
 				ED548FE61F82A9C900A8069D /* XVimReplaceEvaluator.m in Sources */,
 				ED52829F1F8241C2000794A1 /* SourceCodeEditorViewProxy+Scrolling.m in Sources */,
 				ED31C0C61F8164B800BE97B9 /* XVimInsertEvaluator.m in Sources */,
 				EDF010691F6EEFFC00461B2C /* XVimKeymap.m in Sources */,
+				ED60EB8A1F82E5B9000CBF9C /* XVimUppercaseEvaluator.m in Sources */,
 				A2B537B11F51C94400D83C0A /* NSObject+Swizzle.m in Sources */,
 				ED5282AE1F825ACD000794A1 /* SourceCodeEditorViewProxy+Operations.m in Sources */,
 				EDF0106E1F6EEFFC00461B2C /* XVimWindow.m in Sources */,
@@ -865,6 +882,7 @@
 				EDB7F6061F6D8D36007E0C41 /* SourceCodeEditorViewProxy.m in Sources */,
 				EDF0106D1F6EEFFC00461B2C /* XVimNumericEvaluator.m in Sources */,
 				EDF0106A1F6EEFFC00461B2C /* XVimKeyStroke.m in Sources */,
+				ED60EB871F82E4D4000CBF9C /* XVimTildeEvaluator.m in Sources */,
 				A2B537A71F51C70000D83C0A /* _TtC22IDEPegasusSourceEditor20SourceCodeEditorView.m in Sources */,
 				EDF010681F6EEFFC00461B2C /* XVimEvaluator.m in Sources */,
 				EDB7F6031F6D8CE5007E0C41 /* rd_route.c in Sources */,

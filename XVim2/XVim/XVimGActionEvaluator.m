@@ -9,11 +9,11 @@
 //#import "XVimJoinEvaluator.h"
 #import "XVimGActionEvaluator.h"
 #import "XVimInsertEvaluator.h"
+#import "XVimLowercaseEvaluator.h"
+#import "XVimUppercaseEvaluator.h"
 
 #ifdef TODO
 #import "XVimTildeEvaluator.h"
-#import "XVimLowercaseEvaluator.h"
-#import "XVimUppercaseEvaluator.h"
 #import "XVimKeyStroke.h"
 #import "XVimWindow.h"
 #import "XVim.h"
@@ -25,6 +25,18 @@
 #endif
 
 @implementation XVimGActionEvaluator
+
+// CASE CHANGING
+
+- (XVimEvaluator*)u{
+        [self.argumentString appendString:@"u"];
+        return [[XVimLowercaseEvaluator alloc] initWithWindow:self.window];
+}
+
+- (XVimEvaluator*)U{
+        [self.argumentString appendString:@"U"];
+        return [[XVimUppercaseEvaluator alloc] initWithWindow:self.window];
+}
 
 #ifdef TODO
 - (XVimEvaluator*)d{
@@ -67,15 +79,6 @@
     return [eval executeOperationWithMotion:XVIM_MAKE_MOTION(MOTION_NONE, CHARACTERWISE_EXCLUSIVE, MOTION_OPTION_NONE, self.numericArg)];
 }
 
-- (XVimEvaluator*)u{
-    [self.argumentString appendString:@"u"];
-	return [[XVimLowercaseEvaluator alloc] initWithWindow:self.window];
-}
-
-- (XVimEvaluator*)U{
-    [self.argumentString appendString:@"U"];
-	return [[XVimUppercaseEvaluator alloc] initWithWindow:self.window];
-}
 
 - (XVimEvaluator*)v{
     // Select previous visual selection

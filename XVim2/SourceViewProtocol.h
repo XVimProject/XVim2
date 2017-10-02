@@ -48,6 +48,9 @@
 - (void)xvim_moveCursor:(NSUInteger)pos preserveColumn:(BOOL)preserve;
 - (void)xvim_move:(XVimMotion*)motion;
 -(NSUInteger) numberOfSelectedLines;
+- (NSArray*)xvim_selectedRanges;
+- (void)xvim_setSelectedRange:(NSRange)range;
+
 @end
 
 
@@ -80,6 +83,10 @@
 - (void)xvim_insertNewlineAboveAndInsertWithIndent;
 - (void)xvim_insertNewlineBelowAndInsertWithIndent;
 - (BOOL)xvim_replaceCharacters:(unichar)c count:(NSUInteger)count;
+- (void)xvim_swapCase:(XVimMotion*)motion;
+- (void)xvim_swapCaseForRange:(NSRange)range;
+- (void)xvim_makeLowerCase:(XVimMotion*)motion;
+- (void)xvim_makeUpperCase:(XVimMotion*)motion;
 @end
 
 @protocol SourceViewYankProtocol <NSObject>

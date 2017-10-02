@@ -23,6 +23,7 @@
 #import "XVimRegisterEvaluator.h"
 #import "XVimRegister.h"
 #import "XVimReplaceEvaluator.h"
+#import "XVimTildeEvaluator.h"
 
 #if 0
 #import "XVimVisualEvaluator.h"
@@ -42,7 +43,6 @@
 #import "XVimRecordingEvaluator.h"
 #import "XVimMark.h"
 #import "XVimMarks.h"
-#import "XVimTildeEvaluator.h"
 #import "NSTextView+VimOperation.h"
 #import "XVimJoinEvaluator.h"
 #endif
@@ -309,6 +309,15 @@
         return [[XVimReplaceEvaluator alloc] initWithWindow:self.window oneCharMode:NO mode:XVIM_INSERT_DEFAULT];
 }
 
+
+// SWAP CASE
+
+- (XVimEvaluator*)TILDE{
+        [self.argumentString appendString:@"~"];
+        XVimTildeEvaluator* swap = [[XVimTildeEvaluator alloc] initWithWindow:self.window];
+        // TODO: support tildeop option
+        return [swap fixWithNoMotion:self.numericArg];
+}
 
 
 #if 0
@@ -586,12 +595,7 @@
     return nil;
 }
 
-- (XVimEvaluator*)TILDE{
-    [self.argumentString appendString:@"~"];
-    XVimTildeEvaluator* swap = [[XVimTildeEvaluator alloc] initWithWindow:self.window];
-    // TODO: support tildeop option
-    return [swap fixWithNoMotion:self.numericArg];
-}
+
 #endif
 
 - (XVimEvaluator*)ForwardDelete{
