@@ -12,7 +12,7 @@
 @class XVimKeymapNode;
 
 @interface XVimKeymapContext : NSObject
-@property (nonatomic, strong) XVimMutableString* inputKeys;  // All the keys input so far
+@property (nonatomic, strong) XVimMutableString* inputKeys; // All the keys input so far
 
 // substring of inputKeys which can be maps to keys (maximum match).
 // This is used when for example "ab" maps to "l" and "abcd" maps to "j".

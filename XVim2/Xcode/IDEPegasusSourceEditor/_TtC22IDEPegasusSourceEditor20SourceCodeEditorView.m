@@ -42,7 +42,7 @@ CONST_STR(EDWindow);
 
 -(void)xvim_setupOnFirstAppearance
 {
-    //self.xvim_mode = XVIM_MODE_NORMAL;
+        [self.xvim_window setupAfterEditorViewSetup];
 }
 
 -(void)xvim_viewWillMoveToWindow:(id)window

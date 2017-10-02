@@ -19,62 +19,66 @@
 // Methods:
 // XVim is a singleton instance and holds objects which can be used by all the features in XVim.
 // See the implementation to know what kind of objects it has. They are not difficult to understand.
-// 
+//
 
 #import "XVim.h"
 #import "XVimKeymap.h"
 #import "Logger.h"
 #import "_TtC22IDEPegasusSourceEditor20SourceCodeEditorView.h"
 
-@interface XVim() {
-	XVimKeymap* _keymaps[XVIM_MODE_COUNT];
+@interface XVim () {
+        XVimKeymap* _keymaps[XVIM_MODE_COUNT];
 }
-@property (strong,nonatomic) XVimMutableString* lastOperationCommands;
-@property (strong,nonatomic) XVimMutableString* tempRepeatRegister;
+@property (strong, nonatomic) XVimMutableString* lastOperationCommands;
+@property (strong, nonatomic) XVimMutableString* tempRepeatRegister;
 @end
 
 @implementation XVim
 
 
 // For reverse engineering purpose.
-+(void)receiveNotification:(NSNotification*)notification{
-    if( [notification.name hasPrefix:@"IDE"] || [notification.name hasPrefix:@"DVT"] ){
-        TRACE_LOG(@"Got notification name : %@    object : %@", notification.name, NSStringFromClass([[notification object] class]));
-    }
++ (void)receiveNotification:(NSNotification*)notification
+{
+        if ([notification.name hasPrefix:@"IDE"] || [notification.name hasPrefix:@"DVT"]) {
+                TRACE_LOG(@"Got notification name : %@    object : %@", notification.name, NSStringFromClass([[notification object] class]));
+        }
 }
 
-+ (void) load{
-    NSBundle* app = [NSBundle mainBundle];
-    NSString* identifier = [app bundleIdentifier];
-    
-    // Load only into Xcode
-    if( ![identifier isEqualToString:@"com.apple.dt.Xcode"] ){
-        return;
-    }
-    
-    // Entry Point of the Plugin.
-    [Logger defaultLogger].level = LogTrace;
-    
-    [_TtC22IDEPegasusSourceEditor20SourceCodeEditorView xvim_hook];
++ (void)load
+{
+        NSBundle* app = [NSBundle mainBundle];
+        NSString* identifier = [app bundleIdentifier];
+
+        // Load only into Xcode
+        if (![identifier isEqualToString:@"com.apple.dt.Xcode"]) {
+                return;
+        }
+
+        // Entry Point of the Plugin.
+        [Logger defaultLogger].level = LogTrace;
+
+        [_TtC22IDEPegasusSourceEditor20SourceCodeEditorView xvim_hook];
 }
 
-+ (XVim*)instance{
-    static XVim *__instance = nil;
-    static dispatch_once_t __once;
-    
-    dispatch_once(&__once, ^{
-        // Allocate singleton instance
-        __instance = [[XVim alloc] init];
-    });
-	return __instance;
++ (XVim*)instance
+{
+        static XVim* __instance = nil;
+        static dispatch_once_t __once;
+
+        dispatch_once(&__once, ^{
+          // Allocate singleton instance
+          __instance = [[XVim alloc] init];
+        });
+        return __instance;
 }
 
 //////////////////////////////
 // XVim Instance Methods /////
 //////////////////////////////
 
-- (id)init {
-	if (self = [super init]) {
+- (id)init
+{
+        if (self = [super init]) {
                 _lastCharacterSearchMotion = nil;
                 self.lastPlaybackRegister = nil;
                 self.lastOperationCommands = [[XVimMutableString alloc] init];
@@ -85,53 +89,60 @@
                 self.isExecuting = NO;
                 self.foundRangesHidden = NO;
                 self.options = @{
-                                 @"alwaysuseinputsource": @NO
-                                 , @"timeoutmillisecs": @(2000)
-                                 };
-                
+                        @"alwaysuseinputsource" : @NO,
+                        @"timeoutmillisecs" : @(2000)
+                };
+
                 for (int i = 0; i < XVIM_MODE_COUNT; ++i) {
                         _keymaps[i] = [[XVimKeymap alloc] init];
                 }
-                
-    }
-    return self;
+        }
+        return self;
 }
 
-- (void)dealloc {
-    [[NSNotificationCenter defaultCenter] removeObserver:self];
+- (void)dealloc
+{
+        [[NSNotificationCenter defaultCenter] removeObserver:self];
 }
 
 
-- (XVimKeymap*)keymapForMode:(XVIM_MODE)mode {
-	return _keymaps[(int)mode];
+- (XVimKeymap*)keymapForMode:(XVIM_MODE)mode
+{
+        return _keymaps[(int)mode];
 }
 
-- (void)appendOperationKeyStroke:(XVimString*)stroke{
-    [self.tempRepeatRegister appendString:stroke];
+- (void)appendOperationKeyStroke:(XVimString*)stroke
+{
+        [self.tempRepeatRegister appendString:stroke];
 }
 
-- (void)fixOperationCommands{
-    if( !self.isRepeating ){
-        [self.lastOperationCommands setString:self.tempRepeatRegister];
+- (void)fixOperationCommands
+{
+        if (!self.isRepeating) {
+                [self.lastOperationCommands setString:self.tempRepeatRegister];
+                [self.tempRepeatRegister setString:@""];
+        }
+}
+
+- (void)cancelOperationCommands
+{
         [self.tempRepeatRegister setString:@""];
-    }
 }
 
-- (void)cancelOperationCommands{
-    [self.tempRepeatRegister setString:@""];
+- (void)startRepeat
+{
+        self.isRepeating = YES;
 }
 
-- (void)startRepeat{
-    self.isRepeating = YES;
+- (void)endRepeat
+{
+        self.isRepeating = NO;
 }
 
-- (void)endRepeat{
-    self.isRepeating = NO;
-}
+- (void)ringBell
+{
 
-- (void)ringBell {
-
-    return;
+        return;
 }
 
 

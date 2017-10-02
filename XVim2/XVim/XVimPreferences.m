@@ -8,8 +8,7 @@
 
 #import "XVimPreferences.h"
 
-#define PREF_DEFN(_key) NSString * XVimPref_ ## _key = @ "XVim" #_key ;
+#define PREF_DEFN(_key) NSString* XVimPref_##_key = @"XVim" #_key;
 
 PREF_DEFN(StartOfLine)
 PREF_DEFN(AlwaysUseInputSource);
-

@@ -12,10 +12,10 @@
 #import "XVimTextStoring.h"
 
 typedef enum {
-    XVimSortOptionReversed              = 1,
-    XVimSortOptionRemoveDuplicateLines  = 1 << 1,
-    XVimSortOptionNumericSort           = 1 << 2,
-    XVimSortOptionIgnoreCase            = 1 << 3
+        XVimSortOptionReversed = 1,
+        XVimSortOptionRemoveDuplicateLines = 1 << 1,
+        XVimSortOptionNumericSort = 1 << 2,
+        XVimSortOptionIgnoreCase = 1 << 3
 } XVimSortOptions;
 
 /**
@@ -77,33 +77,33 @@ typedef enum {
 #pragma mark Definitions
 
 // Determine if the position specified with "index" is EOF.
-- (BOOL) isEOF:(NSUInteger)index;
+- (BOOL)isEOF:(NSUInteger)index;
 
 // Determine if the position specified with "index" is LOL.
-- (BOOL) isLOL:(NSUInteger)index;
+- (BOOL)isLOL:(NSUInteger)index;
 
 // Determine if the position specified with "index" is EOL.
-- (BOOL) isEOL:(NSUInteger)index;
+- (BOOL)isEOL:(NSUInteger)index;
 
 // Determine if the position is a beginning of line
-- (BOOL) isBOL:(NSUInteger)index;
+- (BOOL)isBOL:(NSUInteger)index;
 
 // Determine if the position specified with "index" is newline.
-- (BOOL) isNewline:(NSUInteger)index;
+- (BOOL)isNewline:(NSUInteger)index;
 
 // Determine if the position specified with "index" is white space.
-- (BOOL) isWhitespace:(NSUInteger)index;
+- (BOOL)isWhitespace:(NSUInteger)index;
 
-- (BOOL) isWhitespaceOrNewline:(NSUInteger)index;
+- (BOOL)isWhitespaceOrNewline:(NSUInteger)index;
 
-- (BOOL) isKeyword:(NSUInteger)index;
+- (BOOL)isKeyword:(NSUInteger)index;
 
 // Determine if the position is on the last line in the document
-- (BOOL) isLastLine:(NSUInteger)index;
+- (BOOL)isLastLine:(NSUInteger)index;
 
 // Determine if the position is non blank character
 // EOF is a blank character
-- (BOOL) isNonblank:(NSUInteger)index;
+- (BOOL)isNonblank:(NSUInteger)index;
 
 /**
  * Determine if the position specified with "index" is blankline.
@@ -113,7 +113,7 @@ typedef enum {
  *   - EOF after Newline. Ex. The index 4 of "abc\n" is blankline. Note that index 4 is exceed the string length. But the cursor can be there.
  *   - EOF of 0 sized document.
  **/
-- (BOOL) isBlankline:(NSUInteger)index;
+- (BOOL)isBlankline:(NSUInteger)index;
 
 /**
  * Determine if the position specified with "index" is valid cursor position in normal mode.
@@ -121,7 +121,7 @@ typedef enum {
  *   - Non newline characters.
  *   - Blankline( including EOF after newline )
  **/
-- (BOOL) isValidCursorPosition:(NSUInteger)index;
+- (BOOL)isValidCursorPosition:(NSUInteger)index;
 
 #pragma mark Vim operation related methods
 
@@ -188,30 +188,29 @@ typedef enum {
 
 #pragma mark Text Object
 // TODO: Following code should be rewritten
-- (NSRange) currentWord:(NSUInteger)index count:(NSUInteger)count option:(MOTION_OPTION)opt;
+- (NSRange)currentWord:(NSUInteger)index count:(NSUInteger)count option:(MOTION_OPTION)opt;
 // The following code is from xVim by WarWithinMe.
 // These will be integreted into NSTextView category.
 
-- (NSRange) currentCamelCaseWord:(NSUInteger)index count:(NSUInteger)count option:(MOTION_OPTION)opt;
+- (NSRange)currentCamelCaseWord:(NSUInteger)index count:(NSUInteger)count option:(MOTION_OPTION)opt;
 
 // =======================
 // Return the location of the start of indentation on current line. '^'
-NSInteger xv_caret(NSString *string, NSInteger index);
+NSInteger xv_caret(NSString* string, NSInteger index);
 // Return the beginning of line location. '0'
-NSInteger xv_0(NSString *string, NSInteger index);
+NSInteger xv_0(NSString* string, NSInteger index);
 
 // Unlike vim, this function won't ignore indent before the current character
 // even if what is '{'
-NSRange xv_current_block(NSString *string, NSUInteger index, NSUInteger repeatCount, BOOL inclusive, char what, char other);
-NSRange xv_current_quote(NSString *string, NSUInteger index, NSUInteger repeatCount, BOOL inclusive, char what);
+NSRange xv_current_block(NSString* string, NSUInteger index, NSUInteger repeatCount, BOOL inclusive, char what, char other);
+NSRange xv_current_quote(NSString* string, NSUInteger index, NSUInteger repeatCount, BOOL inclusive, char what);
 
 // Find char in current line.
 // Return the current index if nothing found.
 // If inclusive is YES :
 //   'fx' returns the index after 'x'
 //   'Fx' returns the index before 'x'
-NSInteger xv_findChar(NSString *string, NSInteger index, int repeatCount, char command, unichar what, BOOL inclusive);
-
+NSInteger xv_findChar(NSString* string, NSInteger index, int repeatCount, char command, unichar what, BOOL inclusive);
 
 
 #pragma mark Conversions

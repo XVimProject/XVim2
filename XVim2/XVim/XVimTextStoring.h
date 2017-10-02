@@ -75,7 +75,7 @@
  */
 @protocol XVimTextStoring
 
-@property (nonatomic, readonly) NSString *xvim_string;
+@property (nonatomic, readonly) NSString* xvim_string;
 
 @property (nonatomic, readonly) NSUInteger xvim_numberOfLines;
 
@@ -98,7 +98,7 @@
  *   - {NSNotFound, 0} if the index is beyond the end of the document.
  *   - the range of indexes forming the line, excluding trailing newLine characters
  */
-- (NSRange)xvim_indexRangeForLineNumber:(NSUInteger)num newLineLength:(NSUInteger *)newLineLength;
+- (NSRange)xvim_indexRangeForLineNumber:(NSUInteger)num newLineLength:(NSUInteger*)newLineLength;
 
 /** @brief returns the index range for the given line range
  *
@@ -124,7 +124,7 @@
  *   the range of indexes forming the line, exclugint trailing newLine characters
  *   Note that if the index is within a CRLF for example, the range may end before index
  */
-- (NSRange)xvim_indexRangeForLineAtIndex:(NSUInteger)index newLineLength:(NSUInteger *)newLineLength;
+- (NSRange)xvim_indexRangeForLineAtIndex:(NSUInteger)index newLineLength:(NSUInteger*)newLineLength;
 
 /** @brief starting position of line @a num within -xvim_string.
  * @returns the starting index for that line number or NSNotFound.
@@ -253,11 +253,11 @@ typedef NSTextStorage<XVimTextStoring> XVimTextStorage;
 // The following macros asserts the range of index.
 // WITH_EOF permits the index at EOF position.
 // WITHOUT_EOF doesn't permit the index at EOF position.
-#define ASSERT_VALID_RANGE_WITH_EOF(x) NSAssert( x <= [self length] || [self length] == 0, @"index can not exceed the length of string.   TextLength:%lu   SpecifiedIndex:%lu [%s:%d]", (long)[self length], x, __FILE__, __LINE__)
+#define ASSERT_VALID_RANGE_WITH_EOF(x) NSAssert(x <= [self length] || [self length] == 0, @"index can not exceed the length of string.   TextLength:%lu   SpecifiedIndex:%lu [%s:%d]", (long)[self length], x, __FILE__, __LINE__)
 
 // Some methods assume that "index" is at valid cursor position in Normal mode.
 // See isValidCursorPosition's description the condition of the valid cursor position.
-#define ASSERT_VALID_CURSOR_POS(x) NSAssert( [self isValidCursorPosition:x], @"index can not be invalid cursor position [%s:%d]", __FILE__, __LINE__ )
+#define ASSERT_VALID_CURSOR_POS(x) NSAssert([self isValidCursorPosition:x], @"index can not be invalid cursor position [%s:%d]", __FILE__, __LINE__)
 #else
 #define ASSERT_VALID_RANGE_WITH_EOF(x)
 #define ASSERT_VALID_CURSOR_POS(x)

@@ -25,10 +25,10 @@
 @class XVimTester;
 
 
-extern NSString * const XVimDocumentChangedNotification;
-extern NSString * const XVimDocumentPathKey;
+extern NSString* const XVimDocumentChangedNotification;
+extern NSString* const XVimDocumentPathKey;
 
-@interface XVim : NSObject<XVimKeymapProvider>
+@interface XVim : NSObject <XVimKeymapProvider>
 
 + (XVim*)instance;
 @property (strong) NSDictionary* options;
@@ -40,11 +40,11 @@ extern NSString * const XVimDocumentPathKey;
 @property (strong, readonly) XVimRegisterManager* registerManager;
 @property (strong, readonly) XVimHistoryHandler* exCommandHistory;
 @property (strong, readonly) XVimHistoryHandler* searchHistory;
-@property (strong, readonly) XVimMutableString *lastOperationCommands;
-@property  XVIM_VISUAL_MODE lastVisualMode;
-@property  XVimPosition lastVisualPosition;
-@property  XVimPosition lastVisualSelectionBegin;
-@property  BOOL lastVisualSelectionToEOL;
+@property (strong, readonly) XVimMutableString* lastOperationCommands;
+@property XVIM_VISUAL_MODE lastVisualMode;
+@property XVimPosition lastVisualPosition;
+@property XVimPosition lastVisualSelectionBegin;
+@property BOOL lastVisualSelectionToEOL;
 @property (nonatomic) BOOL isRepeating; // For dot(.) command repeat
 
 @property (copy) NSString* lastPlaybackRegister;
@@ -89,11 +89,13 @@ extern NSString * const XVimDocumentPathKey;
 
 @end
 
-NS_INLINE XVim *SharedXVim(void) {
+NS_INLINE XVim* SharedXVim(void)
+{
         return [XVim instance];
 }
 #define XVIM (SharedXVim())
 
-NS_INLINE id XVIMOPTION(NSString* opt) {
+NS_INLINE id XVIMOPTION(NSString* opt)
+{
         return [XVim instance].options[opt];
 }

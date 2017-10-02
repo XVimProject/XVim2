@@ -34,6 +34,8 @@ XVimMotionEvaluator
 
 #import <Cocoa/Cocoa.h>
 @protocol SourceViewProtocol;
+@protocol SourceViewScrollingProtocol;
+@protocol SourceViewOperationsProtocol;
 
 @class XVimCommandLineEvaluator;
 @class XVimMotionEvaluator;
@@ -45,12 +47,12 @@ XVimMotionEvaluator
 @protocol XVimKeymapProvider;
 
 @interface XVimEvaluator : NSObject
-@property(strong) XVimWindow* window;
-@property(strong) XVimEvaluator* parent;
-@property(nonatomic) NSUInteger numericArg;
+@property (strong) XVimWindow* window;
+@property (strong) XVimEvaluator* parent;
+@property (nonatomic) NSUInteger numericArg;
 @property BOOL numericMode;
-@property(strong) NSMutableString* argumentString;
-@property(nonatomic,strong) NSString* yankRegister;
+@property (strong) NSMutableString* argumentString;
+@property (nonatomic, strong) NSString* yankRegister;
 @property SEL onChildCompleteHandler;
 
 - (id)initWithWindow:(XVimWindow*)window;
@@ -58,7 +60,7 @@ XVimMotionEvaluator
 + (XVimEvaluator*)invalidEvaluator;
 + (XVimEvaluator*)popEvaluator;
 + (XVimEvaluator*)noOperationEvaluator;
-    
+
 /**
  * About eval: method.
  * This method handles key input.
@@ -124,7 +126,7 @@ XVimMotionEvaluator
 
 - (XVimKeymap*)selectKeymapWithProvider:(id<XVimKeymapProvider>)keymapProvider;
 
-@property (readonly, nonatomic) id<SourceViewProtocol> sourceView;
+@property (readonly, nonatomic) id<SourceViewProtocol, SourceViewScrollingProtocol, SourceViewOperationsProtocol> sourceView;
 
 - (void)resetCompletionHandler;
 
@@ -145,8 +147,5 @@ XVimMotionEvaluator
 - (XVimCommandLineEvaluator*)searchEvaluatorForward:(BOOL)forward;
 
 // Walks up the evaluator stack, and returns the argumentStrings in reverse order
--(NSArray<NSString*> *)args;
+- (NSArray<NSString*>*)args;
 @end
-
-
-

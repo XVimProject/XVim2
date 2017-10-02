@@ -21,18 +21,18 @@
 
 
 @interface XVimWindow : NSObject <NSTextInputClient, NSTextFieldDelegate>
-@property(strong, readonly) id<SourceViewProtocol> sourceView; // This represents currently focused sourceView
-@property(weak, readonly) NSTextView *inputView;
-@property (weak, readonly)       XVimEvaluator *currentEvaluator;
-@property (weak, readonly) CommandResponder * commandResponder;
+@property (strong, readonly) id<SourceViewProtocol> sourceView; // This represents currently focused sourceView
+@property (weak, readonly) NSTextView* inputView;
+@property (weak, readonly) XVimEvaluator* currentEvaluator;
+@property (weak, readonly) CommandResponder* commandResponder;
 
 - (instancetype)initWithEditorView:(id<SourceViewProtocol>)responder;
-
+- (void)setupAfterEditorViewSetup;
 - (void)handleKeyStroke:(XVimKeyStroke*)keyStroke onStack:(NSMutableArray*)stack;
 - (BOOL)handleKeyEvent:(NSEvent*)event;
 - (BOOL)shouldAutoCompleteAtLocation:(unsigned long long)location;
 
-- (void)errorMessage:(NSString *)message ringBell:(BOOL)ringBell;
+- (void)errorMessage:(NSString*)message ringBell:(BOOL)ringBell;
 - (void)statusMessage:(NSString*)message;
 - (void)clearErrorMessage;
 

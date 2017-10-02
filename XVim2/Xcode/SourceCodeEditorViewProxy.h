@@ -16,15 +16,11 @@ typedef NS_ENUM(NSInteger, CursorStyle) {
         , CursorStyleUnderline
 };
 
-typedef enum {
-    CURSOR_MODE_INSERT,
-    CURSOR_MODE_COMMAND
-}CURSOR_MODE;
 
 
 @interface SourceCodeEditorViewProxy : NSObject <SourceViewProtocol>
 @property CursorStyle cursorStyle;
-@property (unsafe_unretained) SourceCodeEditorView *sourceCodeEditorView;
+@property (weak) SourceCodeEditorView *sourceCodeEditorView;
 @property(readonly) XVIM_VISUAL_MODE selectionMode;
 @property(readonly) NSUInteger insertionPoint;
 @property(readonly) XVimPosition insertionPosition;
@@ -35,7 +31,7 @@ typedef enum {
 @property(readonly) XVimPosition selectionBeginPosition;
 @property(readonly) NSUInteger numberOfSelectedLines;
 @property(readonly) BOOL selectionToEOL;
-@property(readonly) CURSOR_MODE cursorMode;
+@property CURSOR_MODE cursorMode;
 @property(readonly) NSURL* documentURL;
 @property BOOL needsUpdateFoundRanges;
 @property(readonly) NSArray* foundRanges;
@@ -43,3 +39,6 @@ typedef enum {
 
 -(instancetype)initWithSourceCodeEditorView:(SourceCodeEditorView*)sourceEditorView;
 @end
+
+#import "SourceCodeEditorViewProxy+Scrolling.h"
+#import "SourceCodeEditorViewProxy+Operations.h"

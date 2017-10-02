@@ -11,4 +11,6 @@
 
 #define _auto __auto_type
 
+#define clamp(_in, _min, _max) _in = ((_in) < (_min) ? (_min) : ((_in) > (_max) ? (_max) : (_in) ))
+
 #endif /* Macros_h */

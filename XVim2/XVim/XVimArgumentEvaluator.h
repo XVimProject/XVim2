@@ -28,6 +28,6 @@
  **/
 @interface XVimArgumentEvaluator : XVimEvaluator {
 }
-@property(strong) XVimKeyStroke* keyStroke;
+@property (strong) XVimKeyStroke* keyStroke;
 - (XVimEvaluator*)onArgumentProvided:(XVimKeyStroke*)key;
 @end

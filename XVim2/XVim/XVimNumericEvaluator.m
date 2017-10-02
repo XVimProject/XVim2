@@ -12,30 +12,32 @@
 
 @implementation XVimNumericEvaluator
 
-- (XVimEvaluator*)eval:(XVimKeyStroke*)keyStroke{
-    
-    if (keyStroke.isNumeric) {
-        unichar     buf[4] = { 'N', 'U', 'M', keyStroke.character };
-        NSUInteger  digit  = buf[3] - '0';
+- (XVimEvaluator*)eval:(XVimKeyStroke*)keyStroke
+{
 
-        if (self.numericMode || digit) {
-            NSUInteger n = self.numericMode ?  self.numericArg : 0;
+        if (keyStroke.isNumeric) {
+                unichar buf[4] = { 'N', 'U', 'M', keyStroke.character };
+                NSUInteger digit = buf[3] - '0';
 
-            self.numericMode = YES;
-            if (n <= NSUIntegerMax / 10) {
-                self.numericArg = 10 * n + digit;
-                CFStringAppendCharacters((__bridge CFMutableStringRef)self.argumentString, buf, 4);
-            }
-            return self;
+                if (self.numericMode || digit) {
+                        NSUInteger n = self.numericMode ? self.numericArg : 0;
+
+                        self.numericMode = YES;
+                        if (n <= NSUIntegerMax / 10) {
+                                self.numericArg = 10 * n + digit;
+                                CFStringAppendCharacters((__bridge CFMutableStringRef)self.argumentString, buf, 4);
+                        }
+                        return self;
+                }
         }
-    }
-    
-    return [super eval:keyStroke];
+
+        return [super eval:keyStroke];
 }
 
-- (void)resetNumericArg{
-    [super resetNumericArg];
-    self.numericMode = NO;
+- (void)resetNumericArg
+{
+        [super resetNumericArg];
+        self.numericMode = NO;
 }
 
 @end

@@ -9,6 +9,9 @@
 
 #import "XVimEvaluator.h"
 #import "XVimNormalEvaluator.h"
+#import "XVimInsertEvaluator.h"
+#import "XVimGActionEvaluator.h"
+#import "XVimDeleteEvaluator.h"
 #import "NSString+VimHelper.h"
 #import "XVimKeymapProvider.h"
 #import "Logger.h"
@@ -23,12 +26,9 @@
 #import "XVimYankEvaluator.h"
 #import "XVimEqualEvaluator.h"
 #import "XVimShiftEvaluator.h"
-#import "XVimDeleteEvaluator.h"
-#import "XVimInsertEvaluator.h"
 #import "XVimReplaceEvaluator.h"
 #import "XVimRegisterEvaluator.h"
 #import "XVimWindowEvaluator.h"
-#import "XVimGActionEvaluator.h"
 #import "XVimMarkSetEvaluator.h"
 #import "XVimReplacePromptEvaluator.h"
 #import "XVimKeyStroke.h"
@@ -44,111 +44,201 @@
 #import "XVimJoinEvaluator.h"
 #endif
 
-@interface XVimNormalEvaluator() {
+@interface XVimNormalEvaluator () {
 }
 @end
 
 @implementation XVimNormalEvaluator
 
--(id)initWithWindow:(XVimWindow *)window{
-	self = [super initWithWindow:window];
-    if (self) {
-    }
-    return self;
-}
-    
-- (void)becameHandler{
-    [super becameHandler];
-    //[self.sourceView xvim_changeSelectionMode:XVIM_VISUAL_NONE];
+- (id)initWithWindow:(XVimWindow*)window
+{
+        self = [super initWithWindow:window];
+        if (self) {
+        }
+        return self;
 }
 
-- (NSString*)modeString {
-    return @"";
+- (void)becameHandler
+{
+        [super becameHandler];
+        //[self.sourceView xvim_changeSelectionMode:XVIM_VISUAL_NONE];
 }
 
-- (XVIM_MODE)mode{
-    return XVIM_MODE_NORMAL;
+- (NSString*)modeString
+{
+        return @"";
 }
 
-- (XVimKeymap*)selectKeymapWithProvider:(id<XVimKeymapProvider>)keymapProvider {
-	return [keymapProvider keymapForMode:XVIM_MODE_NORMAL];
+- (XVIM_MODE)mode
+{
+        return XVIM_MODE_NORMAL;
+}
+
+- (XVimKeymap*)selectKeymapWithProvider:(id<XVimKeymapProvider>)keymapProvider
+{
+        return [keymapProvider keymapForMode:XVIM_MODE_NORMAL];
 }
 
 /////////////////////////////////////////////////////////////////////////////////////////
 // Keep command implementation alphabetical order please(Except specical characters).  //
 /////////////////////////////////////////////////////////////////////////////////////////
 
-// Command which results in cursor motion should be implemented in XVimMotionEvaluator
+
+- (XVimEvaluator*)a
+{
+        return [[XVimInsertEvaluator alloc] initWithWindow:self.window mode:XVIM_INSERT_APPEND];
+}
+
+- (XVimEvaluator*)A
+{
+        return [[XVimInsertEvaluator alloc] initWithWindow:self.window mode:XVIM_INSERT_APPEND_EOL];
+}
 
 #ifdef TODO
-- (XVimEvaluator*)a{
-	return [[XVimInsertEvaluator alloc] initWithWindow:self.window mode:XVIM_INSERT_APPEND];
-}
 
-- (XVimEvaluator*)A{
-    return [[XVimInsertEvaluator alloc] initWithWindow:self.window mode:XVIM_INSERT_APPEND_EOL];
-}
-
-- (XVimEvaluator*)C_a{
-    NSTextView* view = [self sourceView];
-    if ([view xvim_incrementNumber:(int64_t)self.numericArg]) {
-        [[XVim instance] fixOperationCommands];
-    } else {
-        [[XVim instance] cancelOperationCommands];
-    }
-    return nil;
-}
-
-// This is not motion but scroll. That's the reason the implementation is here.
-- (XVimEvaluator*)C_b{
-    [[self sourceView] xvim_scrollPageBackward:[self numericArg]];
-    return nil;
-}
-
-// 'c' works like 'd' except that once it's done deleting
-// it should go you into insert mode
-- (XVimEvaluator*)c{
-    [self.argumentString appendString:@"c"];
-    return [[XVimDeleteEvaluator alloc] initWithWindow:self.window insertModeAtCompletion:YES];
-}
-
-- (XVimEvaluator*)C{
-    // Same as c$
-    XVimDeleteEvaluator* d = [[XVimDeleteEvaluator alloc] initWithWindow:self.window insertModeAtCompletion:YES];
-    d.parent = self;
-    return [d performSelector:@selector(DOLLAR)];
-}
-
-// This is not motion but scroll. That's the reason the implementation is here.
-- (XVimEvaluator*)C_d{
-    [[self sourceView] xvim_scrollHalfPageForward:[self numericArg]];
-    return nil;
-}
-
-- (XVimEvaluator*)d{
-	//XVimOperatorAction *action = [[XVimDeleteAction alloc] initWithYankRegister:[self yankRegister] insertModeAtCompletion:NO];
-    [self.argumentString appendString:@"d"];
-    return [[XVimDeleteEvaluator alloc] initWithWindow:self.window insertModeAtCompletion:FALSE];
-}
-
-- (XVimEvaluator*)D{
-    // Same as d$
-    XVimDeleteEvaluator* eval = [[XVimDeleteEvaluator alloc] initWithWindow:self.window insertModeAtCompletion:NO];
-    eval.parent = self;
-    return [eval performSelector:@selector(DOLLAR)];
-}
-
-- (XVimEvaluator*)C_e{
-    [[self sourceView] xvim_scrollLineForward:[self numericArg]];
-    return nil;
+- (XVimEvaluator*)C_a
+{
+        NSTextView* view = [self sourceView];
+        if ([view xvim_incrementNumber:(int64_t)self.numericArg]) {
+                [[XVim instance] fixOperationCommands];
+        }
+        else {
+                [[XVim instance] cancelOperationCommands];
+        }
+        return nil;
 }
 #endif
 
+// 'c' works like 'd' except that once it's done deleting
+// it should go you into insert mode
+- (XVimEvaluator*)c
+{
+        [self.argumentString appendString:@"c"];
+        return [[XVimDeleteEvaluator alloc] initWithWindow:self.window insertModeAtCompletion:YES];
+}
+
+- (XVimEvaluator*)C
+{
+        // Same as c$
+        XVimDeleteEvaluator* d = [[XVimDeleteEvaluator alloc] initWithWindow:self.window insertModeAtCompletion:YES];
+        d.parent = self;
+        return [d performSelector:@selector(DOLLAR)];
+}
+
+- (XVimEvaluator*)d
+{
+        //XVimOperatorAction *action = [[XVimDeleteAction alloc] initWithYankRegister:[self yankRegister] insertModeAtCompletion:NO];
+        [self.argumentString appendString:@"d"];
+        return [[XVimDeleteEvaluator alloc] initWithWindow:self.window insertModeAtCompletion:FALSE];
+}
+
+- (XVimEvaluator*)D
+{
+        // Same as d$
+        XVimDeleteEvaluator* eval = [[XVimDeleteEvaluator alloc] initWithWindow:self.window insertModeAtCompletion:NO];
+        eval.parent = self;
+        return [eval performSelector:@selector(DOLLAR)];
+}
+
+- (XVimEvaluator*)x{
+        // Same as dl
+        XVimDeleteEvaluator* eval = [[XVimDeleteEvaluator alloc] initWithWindow:self.window insertModeAtCompletion:NO];
+        eval.parent = self;
+        return [eval performSelector:@selector(l)];
+}
+
+// like 'x" but it goes backwards instead of forwards
+- (XVimEvaluator*)X{
+        XVimDeleteEvaluator* eval = [[XVimDeleteEvaluator alloc] initWithWindow:self.window insertModeAtCompletion:NO];
+        eval.parent = self;
+        return [eval performSelector:@selector(h)];
+}
+
+
+// UNDO/REDO
+
+- (XVimEvaluator*)C_r{
+        _auto view = [self sourceView];
+        for( NSUInteger i = 0 ; i < [self numericArg] ; i++){
+                [view.undoManager redo];
+        }
+        return nil;
+}
+
+- (XVimEvaluator*)u{
+        _auto view = [self sourceView];
+        for( NSUInteger i = 0 ; i < [self numericArg] ; i++){
+                [view.undoManager undo];
+        }
+        return nil;
+}
+
+
+// SCROLL
+
+
+// This is not motion but scroll. That's the reason the implementation is here.
+- (XVimEvaluator*)C_b
+{
+        [[self sourceView] xvim_scrollPageBackward:[self numericArg]];
+        return nil;
+}
+
+// This is not motion but scroll. That's the reason the implementation is here.
+- (XVimEvaluator*)C_d
+{
+        [[self sourceView] xvim_scrollHalfPageForward:[self numericArg]];
+        return nil;
+}
+
+// This is not motion but scroll. That's the reason the implementation is here.
+- (XVimEvaluator*)C_e{
+        [[self sourceView] xvim_scrollLineForward:[self numericArg]];
+        return nil;
+}
+
+// This is not motion but scroll. That's the reason the implementation is here.
+- (XVimEvaluator*)C_u{
+        [[self sourceView] xvim_scrollHalfPageBackward:[self numericArg]];
+        return nil;
+}
+
 // This is not motion but scroll. That's the reason the implementation is here.
 - (XVimEvaluator*)C_f{
-    [self.sourceView scrollPageForward:[self numericArg]];
-    return nil;
+        [[self sourceView] xvim_scrollPageForward:[self numericArg]];
+        return nil;
 }
+
+
+- (XVimEvaluator*)g{
+        [self.argumentString appendString:@"g"];
+        self.onChildCompleteHandler = @selector(onComplete_g:);
+        return [[XVimGActionEvaluator alloc] initWithWindow:self.window];
+}
+
+- (XVimEvaluator*)i{
+        // Go to insert
+        return [[XVimInsertEvaluator alloc] initWithWindow:self.window];
+}
+
+- (XVimEvaluator*)I{
+        return [[XVimInsertEvaluator alloc] initWithWindow:self.window mode:XVIM_INSERT_BEFORE_FIRST_NONBLANK];
+}
+
+- (XVimEvaluator*)onComplete_g:(XVimGActionEvaluator*)childEvaluator{
+        if (childEvaluator.key.selector == @selector(SEMICOLON)) {
+#ifdef TODO
+                XVimMark* mark = [[XVim instance].marks markForName:@"." forDocument:[self.sourceView documentURL].path];
+                return [self jumpToMark:mark firstOfLine:NO KeepJumpMarkIndex:NO NeedUpdateMark:YES];
+#endif
+        }else{
+                if( childEvaluator.motion != nil ){
+                        return [self _motionFixed:childEvaluator.motion];
+                }
+        }
+        return nil;
+}
+
 
 #if 0
 
@@ -170,32 +260,8 @@
     return nil;
 }
 
-- (XVimEvaluator*)g{
-    [self.argumentString appendString:@"g"];
-    self.onChildCompleteHandler = @selector(onComplete_g:);
-    return [[XVimGActionEvaluator alloc] initWithWindow:self.window];
-}
 
-- (XVimEvaluator*)onComplete_g:(XVimGActionEvaluator*)childEvaluator{
-    if (childEvaluator.key.selector == @selector(SEMICOLON)) {
-        XVimMark* mark = [[XVim instance].marks markForName:@"." forDocument:[self.sourceView documentURL].path];
-        return [self jumpToMark:mark firstOfLine:NO KeepJumpMarkIndex:NO NeedUpdateMark:YES];
-    }else{
-        if( childEvaluator.motion != nil ){
-            return [self _motionFixed:childEvaluator.motion];
-        }
-    }
-    return nil;
-}
 
-- (XVimEvaluator*)i{
-    // Go to insert 
-    return [[XVimInsertEvaluator alloc] initWithWindow:self.window];
-}
-
-- (XVimEvaluator*)I{
-    return [[XVimInsertEvaluator alloc] initWithWindow:self.window mode:XVIM_INSERT_BEFORE_FIRST_NONBLANK];
-}
 
 - (XVimEvaluator*)J{
     XVimJoinEvaluator* eval = [[XVimJoinEvaluator alloc] initWithWindow:self.window addSpace:YES];
@@ -278,13 +344,6 @@
     return nil;
 }
 
-- (XVimEvaluator*)C_r{
-    NSTextView* view = [self sourceView];
-    for( NSUInteger i = 0 ; i < [self numericArg] ; i++){
-		[view.undoManager redo];
-    }
-    return nil;
-}
 
 - (XVimEvaluator*)r{
     [self.argumentString appendString:@"r"];
@@ -315,19 +374,8 @@
     return [d performSelector:@selector(c)];
 }
 
-- (XVimEvaluator*)u{
-    NSTextView* view = [self sourceView];
-    for( NSUInteger i = 0 ; i < [self numericArg] ; i++){
-        [view.undoManager undo];
-    }
-    return nil;
-}
 
-// This is not motion but scroll. That's the reason the implementation is here.
-- (XVimEvaluator*)C_u{
-    [[self sourceView] xvim_scrollHalfPageBackward:[self numericArg]];
-    return nil;
-}
+
 
 - (XVimEvaluator*)v{
     if( XVim.instance.isRepeating ){
@@ -358,19 +406,7 @@
     return [[XVimWindowEvaluator alloc] initWithWindow:self.window];
 }
 
-- (XVimEvaluator*)x{
-    // Same as dl
-    XVimDeleteEvaluator* eval = [[XVimDeleteEvaluator alloc] initWithWindow:self.window insertModeAtCompletion:NO];
-    eval.parent = self;
-    return [eval performSelector:@selector(l)];
-}
 
-// like 'x" but it goes backwards instead of forwards
-- (XVimEvaluator*)X{
-    XVimDeleteEvaluator* eval = [[XVimDeleteEvaluator alloc] initWithWindow:self.window insertModeAtCompletion:NO];
-    eval.parent = self;
-    return [eval performSelector:@selector(h)];
-}
 
 - (XVimEvaluator*)C_x{
     NSTextView* view = [self sourceView];
@@ -541,6 +577,7 @@
     // TODO: support tildeop option
     return [swap fixWithNoMotion:self.numericArg];
 }
+#endif
 
 - (XVimEvaluator*)ForwardDelete{
 	return [self x];
@@ -553,12 +590,13 @@
 -(XVimEvaluator*)Pagedown{
     return [self C_f];
 }
-#endif
 
-- (XVimEvaluator*)motionFixed:(XVimMotion *)motion{
-    [self.window preMotion:motion];
-    [[self sourceView] xvim_move:motion];
-    return nil;
+
+- (XVimEvaluator*)motionFixed:(XVimMotion*)motion
+{
+        [self.window preMotion:motion];
+        [[self sourceView] xvim_move:motion];
+        return nil;
 }
 
 @end

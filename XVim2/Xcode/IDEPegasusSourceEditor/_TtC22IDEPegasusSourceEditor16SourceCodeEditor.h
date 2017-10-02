@@ -297,3 +297,6 @@
 @end
 
 typedef _TtC22IDEPegasusSourceEditor16SourceCodeEditor SourceCodeEditor;
+@interface _TtC12SourceEditor16SourceEditorView(XVim)
+-(void)xvim_keyDown:(NSEvent*)event;
+@end
