@@ -197,3 +197,9 @@ typedef NS_ENUM(NSInteger, CursorStyle) {
 #import "SourceCodeEditorViewProxy+Operations.h"
 #import "SourceCodeEditorViewProxy+Yank.h"
 #import "SourceCodeEditorViewProxy+XVim.h"
+
+#define EDIT_TRANSACTION_SCOPE \
+[self xvim_registerInsertionPointForUndo]; \
+[self beginEditTransaction]; \
+xvim_on_exit { [self endEditTransaction]; };
+

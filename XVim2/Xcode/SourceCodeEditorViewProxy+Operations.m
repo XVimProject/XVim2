@@ -47,8 +47,8 @@
         }
         NSUInteger newPos = NSNotFound;
         
-        [self xvim_registerInsertionPointForUndo];
-        
+        EDIT_TRANSACTION_SCOPE
+
         motion.info->deleteLastLine = NO;
         if (self.selectionMode == XVIM_VISUAL_NONE) {
                 XVimRange motionRange = [self xvim_getMotionRange:motionPoint Motion:motion];

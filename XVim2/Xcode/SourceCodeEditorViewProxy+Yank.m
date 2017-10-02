@@ -26,8 +26,8 @@
 - (XVimRange)xvim_getMotionRange:(NSUInteger)current Motion:(XVimMotion*)motion;
 - (XVimSelection)_xvim_selectedBlock;
 - (NSRange)_xvim_selectedRange;
--(void)xvim_changeSelectionMode:(XVIM_VISUAL_MODE)mode;
--(void)xvim_registerInsertionPointForUndo;
+- (void)xvim_changeSelectionMode:(XVIM_VISUAL_MODE)mode;
+- (void)xvim_registerInsertionPointForUndo;
 - (NSRange)xvim_getOperationRangeFrom:(NSUInteger)from To:(NSUInteger)to Type:(MOTION_TYPE)type;
 - (void)_xvim_insertSpaces:(NSUInteger)count replacementRange:(NSRange)replacementRange;
 @end
@@ -101,9 +101,8 @@
 
 
 - (void)xvim_put:(NSString*)text withType:(TEXT_TYPE)type afterCursor:(bool)after count:(NSUInteger)count{
-        [self beginEditTransaction];
-        [self xvim_registerInsertionPointForUndo];
-        
+        EDIT_TRANSACTION_SCOPE
+
         TRACE_LOG(@"text:%@  type:%d   afterCursor:%d   count:%d", text, type, after, count);
         if( self.selectionMode != XVIM_VISUAL_NONE ){
                 // FIXME: Make them not to change text from register...
@@ -183,7 +182,6 @@
         [self xvim_moveCursor:insertionPointAfterPut preserveColumn:NO];
         [self xvim_syncState];
         [self xvim_changeSelectionMode:XVIM_VISUAL_NONE];
-        [self endEditTransaction];
 }
 
 

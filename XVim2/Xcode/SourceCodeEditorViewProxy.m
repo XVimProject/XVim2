@@ -54,7 +54,6 @@ static void (*fpEndEditingTransaction)(void);
                 // Methdos on data source
                 fpBeginEditingTransaction = function_ptr_from_name("_T012SourceEditor0ab4DataA0C20beginEditTransactionyyF", NULL);
                 fpEndEditingTransaction = function_ptr_from_name("_T012SourceEditor0ab4DataA0C18endEditTransactionyyF", NULL);
-
         }
 }
 
@@ -73,16 +72,20 @@ static void (*fpEndEditingTransaction)(void);
 }
 
 
-- (NSRange)lineRangeForCharacterRange:(NSRange)arg1 {
+- (NSRange)lineRangeForCharacterRange:(NSRange)arg1
+{
         return [self.sourceCodeEditorView lineRangeForCharacterRange:arg1];
 }
-- (NSRange)characterRangeForLineRange:(NSRange)arg1 {
+- (NSRange)characterRangeForLineRange:(NSRange)arg1
+{
         return [self.sourceCodeEditorView characterRangeForLineRange:arg1];
 }
--(NSInteger)linesPerPage {
+- (NSInteger)linesPerPage
+{
         return self.sourceCodeEditorView.linesPerPage;
 }
--(NSInteger)lineCount {
+- (NSInteger)lineCount
+{
         return self.sourceCodeEditorView.lineCount;
 }
 - (void)scrollRangeToVisible:(NSRange)arg1
@@ -92,16 +95,14 @@ static void (*fpEndEditingTransaction)(void);
 - (void)setCursorStyle:(CursorStyle)cursorStyle
 {
         void* sev = (__bridge_retained void*)self.sourceCodeEditorView;
-        
+
         __asm__(
-                "movq %[CursorStyle], %%rdi\n\t"
-                "movq %[SourceEditorView], %%r13\n\t"
-                "call *%[SetCursorStyle]\n\t"
-                :
-                : [CursorStyle]"r"(cursorStyle)
-                , [SourceEditorView]"r"(sev)
-                , [SetCursorStyle]"m"(fpSetCursorStyle)
-                : "memory", "cc", "%rdi", "%r13");
+                    "movq %[CursorStyle], %%rdi\n\t"
+                    "movq %[SourceEditorView], %%r13\n\t"
+                    "call *%[SetCursorStyle]\n\t"
+                    :
+                    : [CursorStyle] "r"(cursorStyle), [SourceEditorView] "r"(sev), [SetCursorStyle] "m"(fpSetCursorStyle)
+                    : "memory", "cc", "%rdi", "%r13");
 }
 
 - (CursorStyle)cursorStyle
@@ -109,13 +110,13 @@ static void (*fpEndEditingTransaction)(void);
         void* sev = (__bridge_retained void*)self.sourceCodeEditorView;
         uint64_t cstyle = 0;
         __asm__(
-                "movq %[SourceEditorView], %%r13\n\t"
-                "call *%[GetCursorStyle]\n\t"
-                "movq %%rax, %[CursorStyle]\n\t"
-                
-                : [CursorStyle]"=r"(cstyle)
-                : [SourceEditorView]"r"(sev), [GetCursorStyle]"m"(fpGetCursorStyle)
-                : "memory", "%rax", "%r13");
+                    "movq %[SourceEditorView], %%r13\n\t"
+                    "call *%[GetCursorStyle]\n\t"
+                    "movq %%rax, %[CursorStyle]\n\t"
+
+                    : [CursorStyle] "=r"(cstyle)
+                    : [SourceEditorView] "r"(sev), [GetCursorStyle] "m"(fpGetCursorStyle)
+                    : "memory", "%rax", "%r13");
         cstyle = cstyle & 0xFF;
         return cstyle;
 }
@@ -126,13 +127,13 @@ static void (*fpEndEditingTransaction)(void);
         void* sev = (__bridge_retained void*)self.sourceCodeEditorView;
         uint64_t cstyle = 0;
         __asm__(
-                "movq %1, %%r13\n\t"
-                "call *%2\n\t"
-                "movq %%rax, %0\n\t"
+                    "movq %1, %%r13\n\t"
+                    "call *%2\n\t"
+                    "movq %%rax, %0\n\t"
 
-                : "=r"(cstyle)
-                : "r"(sev), "m"(fpGetSourceEditorDataSource)
-                : "memory", "%rax");
+                    : "=r"(cstyle)
+                    : "r"(sev), "m"(fpGetSourceEditorDataSource)
+                    : "memory", "%rax");
         id dataSource = (__bridge id)(void*)cstyle;
         return dataSource;
 }
@@ -141,32 +142,27 @@ static void (*fpEndEditingTransaction)(void);
 {
         void* sev = (__bridge_retained void*)self.sourceCodeEditorView;
         __asm__(
-                "movq %[SourceEditorView], %%r13\n\t"
-                "call *%[DataSourceGetter]\n\t"
-                "movq %%rax, %%r13\n\t"
-                "call *%[BeginEditTransaction]\n\t"
-                :
-                : [SourceEditorView]"r"(sev)
-                , [DataSourceGetter]"m"(fpGetSourceEditorDataSource)
-                , [BeginEditTransaction]"m"(fpBeginEditingTransaction)
-                : "memory", "%rax", "%r13");
+                    "movq %[SourceEditorView], %%r13\n\t"
+                    "call *%[DataSourceGetter]\n\t"
+                    "movq %%rax, %%r13\n\t"
+                    "call *%[BeginEditTransaction]\n\t"
+                    :
+                    : [SourceEditorView] "r"(sev), [DataSourceGetter] "m"(fpGetSourceEditorDataSource), [BeginEditTransaction] "m"(fpBeginEditingTransaction)
+                    : "memory", "%rax", "%r13");
 }
 
 - (void)endEditTransaction
 {
         void* sev = (__bridge_retained void*)self.sourceCodeEditorView;
         __asm__(
-                "movq %[SourceEditorView], %%r13\n\t"
-                "call *%[DataSourceGetter]\n\t"
-                "movq %%rax, %%r13\n\t"
-                "call *%[EndEditTransaction]\n\t"
-                :
-                : [SourceEditorView]"r"(sev)
-                , [DataSourceGetter]"m"(fpGetSourceEditorDataSource)
-                , [EndEditTransaction]"m"(fpEndEditingTransaction)
-                : "memory", "%rax", "%r13");
+                    "movq %[SourceEditorView], %%r13\n\t"
+                    "call *%[DataSourceGetter]\n\t"
+                    "movq %%rax, %%r13\n\t"
+                    "call *%[EndEditTransaction]\n\t"
+                    :
+                    : [SourceEditorView] "r"(sev), [DataSourceGetter] "m"(fpGetSourceEditorDataSource), [EndEditTransaction] "m"(fpEndEditingTransaction)
+                    : "memory", "%rax", "%r13");
 }
-
 
 
 - (void)keyDown:(NSEvent*)event
@@ -185,7 +181,7 @@ static void (*fpEndEditingTransaction)(void);
         [self.sourceCodeEditorView insertText:string replacementRange:replacementRange];
 }
 
--(void)insertText:(NSString*)text
+- (void)insertText:(NSString*)text
 {
         [self.sourceCodeEditorView insertText:text];
 }
@@ -501,7 +497,6 @@ static void (*fpEndEditingTransaction)(void);
 - (void)paste:(id)sender { [self.sourceCodeEditorView paste:self]; }
 - (void)cut:(id)sender { [self.sourceCodeEditorView cut:self]; }
 - (void)copy:(id)sender { [self.sourceCodeEditorView copy:self]; }
-
 
 
 @end
