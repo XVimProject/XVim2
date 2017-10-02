@@ -68,6 +68,67 @@ static void(*fpGetSourceEditorDataSource)(void);
         return self;
 }
 
+- (void)moveBackward:(id)sender {                                      [self.sourceCodeEditorView moveBackward:self]; }
+- (void)moveForward:(id)sender {                                       [self.sourceCodeEditorView moveForward:self]; }
+- (void)unfoldAllComments:(id)sender {                                 [self.sourceCodeEditorView unfoldAllComments:self]; }
+- (void)foldAllComments:(id)sender {                                   [self.sourceCodeEditorView foldAllComments:self]; }
+- (void)unfoldAllMethods:(id)sender {                                  [self.sourceCodeEditorView unfoldAllMethods:self]; }
+- (void)foldAllMethods:(id)sender {                                    [self.sourceCodeEditorView foldAllMethods:self]; }
+- (void)unfoldAll:(id)sender {                                         [self.sourceCodeEditorView unfoldAll:self]; }
+- (void)unfold:(id)sender {                                            [self.sourceCodeEditorView unfold:self]; }
+- (void)fold:(id)sender {                                              [self.sourceCodeEditorView fold:self]; }
+- (void)balance:(id)sender {                                           [self.sourceCodeEditorView balance:self]; }
+- (void)selectStructure:(id)sender {                                   [self.sourceCodeEditorView selectStructure:self]; }
+- (void)shiftRight:(id)sender {                                        [self.sourceCodeEditorView shiftRight:self]; }
+- (void)shiftLeft:(id)sender {                                         [self.sourceCodeEditorView shiftLeft:self]; }
+- (void)indentSelection:(id)sender {                                   [self.sourceCodeEditorView indentSelection:self]; }
+- (void)moveCurrentLineDown:(id)sender {                               [self.sourceCodeEditorView moveCurrentLineDown:self]; }
+- (void)moveCurrentLineUp:(id)sender {                                 [self.sourceCodeEditorView moveCurrentLineUp:self]; }
+- (void)complete:(id)sender {                                          [self.sourceCodeEditorView complete:self]; }
+- (void)swapWithMark:(id)sender {                                      [self.sourceCodeEditorView swapWithMark:self]; }
+- (void)selectToMark:(id)sender {                                      [self.sourceCodeEditorView selectToMark:self]; }
+- (void)deleteToMark:(id)sender {                                      [self.sourceCodeEditorView deleteToMark:self]; }
+- (void)setMark:(id)sender {                                           [self.sourceCodeEditorView setMark:self]; }
+- (void)yankAndSelect:(id)sender {                                     [self.sourceCodeEditorView yankAndSelect:self]; }
+- (void)yank:(id)sender {                                              [self.sourceCodeEditorView yank:self]; }
+- (void)capitalizeWord:(id)sender {                                    [self.sourceCodeEditorView capitalizeWord:self]; }
+- (void)lowercaseWord:(id)sender {                                     [self.sourceCodeEditorView lowercaseWord:self]; }
+- (void)uppercaseWord:(id)sender {                                     [self.sourceCodeEditorView uppercaseWord:self]; }
+- (void)transpose:(id)sender {                                         [self.sourceCodeEditorView transpose:self]; }
+- (void)deleteToEndOfText:(id)sender {                                 [self.sourceCodeEditorView deleteToEndOfText:self]; }
+- (void)deleteToBeginningOfText:(id)sender {                           [self.sourceCodeEditorView deleteToBeginningOfText:self]; }
+- (void)deleteToEndOfParagraph:(id)sender {                            [self.sourceCodeEditorView deleteToEndOfParagraph:self]; }
+- (void)deleteToBeginningOfParagraph:(id)sender {                      [self.sourceCodeEditorView deleteToBeginningOfParagraph:self]; }
+- (void)deleteToEndOfLine:(id)sender {                                 [self.sourceCodeEditorView deleteToEndOfLine:self]; }
+- (void)deleteToBeginningOfLine:(id)sender {                           [self.sourceCodeEditorView deleteToBeginningOfLine:self]; }
+- (void)deleteExpressionBackward:(id)sender {                          [self.sourceCodeEditorView deleteExpressionBackward:self]; }
+- (void)deleteExpressionForward:(id)sender {                           [self.sourceCodeEditorView deleteExpressionForward:self]; }
+- (void)deleteSubWordBackward:(id)sender {                             [self.sourceCodeEditorView deleteSubWordBackward:self]; }
+- (void)deleteSubWordForward:(id)sender {                              [self.sourceCodeEditorView deleteSubWordForward:self]; }
+- (void)deleteWordBackward:(id)sender {                                [self.sourceCodeEditorView deleteWordBackward:self]; }
+- (void)deleteWordForward:(id)sender {                                 [self.sourceCodeEditorView deleteWordForward:self]; }
+- (void)deleteBackwardByDecomposingPreviousCharacter:(id)sender {      [self.sourceCodeEditorView deleteBackwardByDecomposingPreviousCharacter:self]; }
+- (void)deleteBackward:(id)sender {                                    [self.sourceCodeEditorView deleteBackward:self]; }
+- (void)deleteForward:(id)sender {                                     [self.sourceCodeEditorView deleteForward:self]; }
+- (void)delete:(id)sender {                                            [self.sourceCodeEditorView delete:self]; }
+- (void)insertDoubleQuoteIgnoringSubstitution:(id)sender {             [self.sourceCodeEditorView insertDoubleQuoteIgnoringSubstitution:self]; }
+- (void)insertSingleQuoteIgnoringSubstitution:(id)sender {             [self.sourceCodeEditorView insertSingleQuoteIgnoringSubstitution:self]; }
+- (void)insertContainerBreak:(id)sender {                              [self.sourceCodeEditorView insertContainerBreak:self]; }
+- (void)insertLineBreak:(id)sender {                                   [self.sourceCodeEditorView insertLineBreak:self]; }
+- (void)insertTabIgnoringFieldEditor:(id)sender {                      [self.sourceCodeEditorView insertTabIgnoringFieldEditor:self]; }
+- (void)insertNewlineIgnoringFieldEditor:(id)sender {                  [self.sourceCodeEditorView insertNewlineIgnoringFieldEditor:self]; }
+- (void)insertParagraphSeparator:(id)sender {                          [self.sourceCodeEditorView insertParagraphSeparator:self]; }
+- (void)insertNewline:(id)sender {                                     [self.sourceCodeEditorView insertNewline:self]; }
+- (void)insertBacktab:(id)sender {                                     [self.sourceCodeEditorView insertBacktab:self]; }
+- (void)insertTab:(id)sender {                                         [self.sourceCodeEditorView insertTab:self]; }
+- (void)flagsChanged:(id)sender {                                      [self.sourceCodeEditorView flagsChanged:self]; }
+- (void)concludeDragOperation:(id)sender {                             [self.sourceCodeEditorView concludeDragOperation:self]; }
+- (void)draggingExited:(id)sender {                                    [self.sourceCodeEditorView draggingExited:self]; }
+- (void)pasteAsPlainText:(id)sender {                                  [self.sourceCodeEditorView pasteAsPlainText:self]; }
+- (void)pasteAndPreserveFormatting:(id)sender {                        [self.sourceCodeEditorView pasteAndPreserveFormatting:self]; }
+- (void)paste:(id)sender {                                             [self.sourceCodeEditorView paste:self]; }
+- (void)cut:(id)sender {                                               [self.sourceCodeEditorView cut:self]; }
+- (void)copy:(id)sender {                                              [self.sourceCodeEditorView copy:self]; }
 
 -(void)setCursorStyle:(CursorStyle)cursorStyle
 {
@@ -99,7 +160,7 @@ static void(*fpGetSourceEditorDataSource)(void);
                  "call *%2\n\t"
                  "movq %%rax, %0\n\t"
                  "popq %%r13\n\t"
-
+                 
                  : "=r" (cstyle)
                  : "r" (sev)
                  , "m" (fpGetCursorStyle)
