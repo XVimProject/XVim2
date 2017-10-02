@@ -24,13 +24,6 @@
 - (id) performSelector:(SEL)aSelector withObject:(id)object;
 - (void) scrollPageForward:(NSUInteger)numPages;
 - (void) scrollPageBackward:(NSUInteger)numPages;
-- (void) xvim_move:(XVimMotion*)motion;
-- (void) xvim_insert:(XVimInsertionPoint)mode blockColumn:(NSUInteger *)column blockLines:(XVimRange *)lines;
-- (void) xvim_blockInsertFixupWithText:(NSString *)text mode:(XVimInsertionPoint)mode
-                                count:(NSUInteger)count column:(NSUInteger)column lines:(XVimRange)lines;
-- (void)xvim_syncStateFromView;
-- (void)xvim_escapeFromInsert;
-
 
 // Properties
 @property (readonly) NSRange selectedRange;
@@ -39,7 +32,22 @@
 @property (readonly) NSUndoManager *undoManager;
 @property (strong) id<XVimTextViewDelegateProtocol> xvimDelegate;
 @property CURSOR_MODE cursorMode;
+@property (readonly) NSUInteger insertionPoint;
 
+@end
+
+@protocol SourceViewXVimProtocol <NSObject>
+- (void)xvim_syncState;
+- (void)xvim_syncStateFromView;
+- (void)xvim_insert:(XVimInsertionPoint)mode blockColumn:(NSUInteger*)column blockLines:(XVimRange*)lines;
+- (void)xvim_blockInsertFixupWithText:(NSString*)text mode:(XVimInsertionPoint)mode
+                                count:(NSUInteger)count
+                               column:(NSUInteger)column
+                                lines:(XVimRange)lines;
+- (void)xvim_escapeFromInsert;
+- (void)xvim_moveCursor:(NSUInteger)pos preserveColumn:(BOOL)preserve;
+- (void)xvim_move:(XVimMotion*)motion;
+-(NSUInteger) numberOfSelectedLines;
 @end
 
 
@@ -71,6 +79,7 @@
 - (void)xvim_insertNewlineAboveCurrentLineWithIndent;
 - (void)xvim_insertNewlineAboveAndInsertWithIndent;
 - (void)xvim_insertNewlineBelowAndInsertWithIndent;
+- (BOOL)xvim_replaceCharacters:(unichar)c count:(NSUInteger)count;
 @end
 
 @protocol SourceViewYankProtocol <NSObject>

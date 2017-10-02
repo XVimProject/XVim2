@@ -32,7 +32,7 @@
 @implementation XVimWindow
 @synthesize tmpBuffer = _tmpBuffer;
 
-- (instancetype)initWithEditorView:(id<SourceViewProtocol>)editorArea
+- (instancetype)initWithEditorView:(id<SourceViewProtocol, SourceViewXVimProtocol>)editorArea
 {
         if (self = [super init]) {
                 _staticString = @"";

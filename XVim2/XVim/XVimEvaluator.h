@@ -39,6 +39,8 @@ XVimMotionEvaluator
 @protocol SourceViewScrollingProtocol;
 @protocol SourceViewOperationsProtocol;
 @protocol SourceViewYankProtocol;
+@protocol SourceViewXVimProtocol;
+
 
 @class XVimCommandLineEvaluator;
 @class XVimMotionEvaluator;
@@ -130,9 +132,11 @@ XVimMotionEvaluator
 - (XVimKeymap*)selectKeymapWithProvider:(id<XVimKeymapProvider>)keymapProvider;
 
 @property (readonly, nonatomic) id<SourceViewProtocol
-, SourceViewScrollingProtocol
-, SourceViewOperationsProtocol
-, SourceViewYankProtocol> sourceView;
+        , SourceViewScrollingProtocol
+        , SourceViewOperationsProtocol
+        , SourceViewYankProtocol
+        , SourceViewXVimProtocol
+        > sourceView;
 
 - (void)resetCompletionHandler;
 

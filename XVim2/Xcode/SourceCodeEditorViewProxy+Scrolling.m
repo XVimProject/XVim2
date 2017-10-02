@@ -42,25 +42,25 @@
 
 
 - (void)xvim_scroll:(CGFloat)ratio count:(NSUInteger)count {
-        _auto origLineRange = [self.sourceCodeEditorView lineRangeForCharacterRange: self.sourceCodeEditorView.selectedRange];
-        _auto linesPerPage = self.sourceCodeEditorView.linesPerPage;
+        _auto origLineRange = [self lineRangeForCharacterRange:self.selectedRange];
+        _auto linesPerPage = self.linesPerPage;
         _auto numScrollLines = (NSInteger)( linesPerPage * ratio);
         
         if (numScrollLines < 0) {
                 clamp(numScrollLines, -(int)origLineRange.location, numScrollLines);
                 for (NSInteger i = numScrollLines; i !=0; ++i) {
-                        [self.sourceCodeEditorView scrollLineUp:self];
+                        [self scrollLineUp:self];
                 }
         }
         else {
-                clamp(numScrollLines, 0, self.sourceCodeEditorView.lineCount - (NSInteger)origLineRange.location);
+                clamp(numScrollLines, 0, self.lineCount - (NSInteger)origLineRange.location);
                 for (NSInteger i = 0; i != numScrollLines; ++i) {
-                        [self.sourceCodeEditorView scrollLineDown:self];
+                        [self scrollLineDown:self];
                 }
         }
         origLineRange.location += numScrollLines;
-        clamp(origLineRange.location, 0, self.sourceCodeEditorView.lineCount-1);
-        _auto newCharRange = [self.sourceCodeEditorView characterRangeForLineRange:origLineRange];
+        clamp(origLineRange.location, 0, self.lineCount-1);
+        _auto newCharRange = [self characterRangeForLineRange:origLineRange];
         clamp(newCharRange.location, 0, self.string.length);
         
         _auto cursorIndexAfterScroll = [self.textStorage xvim_firstNonblankInLineAtIndex:newCharRange.location allowEOL:YES];
@@ -120,7 +120,7 @@
 -(void)xvim_scrollTo:(NSUInteger)insertionPoint
 {
         //_auto rng = [self.sourceCodeEditorView lineRangeForCharacterRange:NSMakeRange(insertionPoint, 0)];
-        [self.sourceCodeEditorView scrollRangeToVisible:NSMakeRange(insertionPoint, 0)];
+        [self scrollRangeToVisible:NSMakeRange(insertionPoint, 0)];
 }
 
 - (void)xvim_pageForward:(NSUInteger)index count:(NSUInteger)count { // C-f

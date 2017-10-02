@@ -22,7 +22,7 @@
 #import "SourceViewProtocol.h"
 #import "XVimRegisterEvaluator.h"
 #import "XVimRegister.h"
-
+#import "XVimReplaceEvaluator.h"
 
 #if 0
 #import "XVimVisualEvaluator.h"
@@ -114,6 +114,9 @@
 
 // 'c' works like 'd' except that once it's done deleting
 // it should go you into insert mode
+
+// DELETE
+
 - (XVimEvaluator*)c
 {
         [self.argumentString appendString:@"c"];
@@ -142,6 +145,15 @@
         eval.parent = self;
         return [eval performSelector:@selector(DOLLAR)];
 }
+
+
+- (XVimEvaluator*)s{
+        // Same as cl
+        XVimDeleteEvaluator* eval = [[XVimDeleteEvaluator alloc] initWithWindow:self.window insertModeAtCompletion:YES];
+        eval.parent = self;
+        return [eval performSelector:@selector(l)];
+}
+
 
 - (XVimEvaluator*)x{
         // Same as dl
@@ -178,41 +190,37 @@
 
 
 // SCROLL
+// These are not motions but scrolling. That's the reason the implementation is here.
 
-
-// This is not motion but scroll. That's the reason the implementation is here.
 - (XVimEvaluator*)C_b
 {
         [[self sourceView] xvim_scrollPageBackward:[self numericArg]];
         return nil;
 }
 
-// This is not motion but scroll. That's the reason the implementation is here.
 - (XVimEvaluator*)C_d
 {
         [[self sourceView] xvim_scrollHalfPageForward:[self numericArg]];
         return nil;
 }
 
-// This is not motion but scroll. That's the reason the implementation is here.
 - (XVimEvaluator*)C_e{
         [[self sourceView] xvim_scrollLineForward:[self numericArg]];
         return nil;
 }
 
-// This is not motion but scroll. That's the reason the implementation is here.
 - (XVimEvaluator*)C_u{
         [[self sourceView] xvim_scrollHalfPageBackward:[self numericArg]];
         return nil;
 }
 
-// This is not motion but scroll. That's the reason the implementation is here.
 - (XVimEvaluator*)C_f{
         [[self sourceView] xvim_scrollPageForward:[self numericArg]];
         return nil;
 }
 
 
+// MOTION
 - (XVimEvaluator*)g{
         [self.argumentString appendString:@"g"];
         self.onChildCompleteHandler = @selector(onComplete_g:);
@@ -286,6 +294,21 @@
         [[XVim instance] fixOperationCommands];
         return nil;
 }
+
+
+// REPLACE
+
+
+- (XVimEvaluator*)r{
+        [self.argumentString appendString:@"r"];
+        return [[XVimReplaceEvaluator alloc] initWithWindow:self.window oneCharMode:YES mode:XVIM_INSERT_DEFAULT];
+}
+
+- (XVimEvaluator*)R{
+        [self.argumentString appendString:@"R"];
+        return [[XVimReplaceEvaluator alloc] initWithWindow:self.window oneCharMode:NO mode:XVIM_INSERT_DEFAULT];
+}
+
 
 
 #if 0
@@ -365,23 +388,6 @@
     return nil;
 }
 
-
-- (XVimEvaluator*)r{
-    [self.argumentString appendString:@"r"];
-    return [[XVimReplaceEvaluator alloc] initWithWindow:self.window oneCharMode:YES mode:XVIM_INSERT_DEFAULT];
-}
-
-- (XVimEvaluator*)R{
-    [self.argumentString appendString:@"R"];
-    return [[XVimReplaceEvaluator alloc] initWithWindow:self.window oneCharMode:NO mode:XVIM_INSERT_DEFAULT];
-}
-
-- (XVimEvaluator*)s{
-    // Same as cl
-    XVimDeleteEvaluator* eval = [[XVimDeleteEvaluator alloc] initWithWindow:self.window insertModeAtCompletion:YES];
-    eval.parent = self;
-    return [eval performSelector:@selector(l)];
-}
 
 - (XVimEvaluator*)C_t{
     [NSApp sendAction:@selector(goBackInHistoryByCommand:) to:nil from:self];

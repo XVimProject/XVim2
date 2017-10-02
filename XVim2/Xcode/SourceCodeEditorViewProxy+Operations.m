@@ -211,7 +211,7 @@
 - (void)xvim_insertNewlineBelowCurrentLineWithIndent{
         NSUInteger tail = [self.textStorage xvim_endOfLine:self.insertionPoint];
         [self setSelectedRange:NSMakeRange(tail,0)];
-        [self.sourceCodeEditorView insertNewline:self];
+        [self insertNewline:self];
 }
 
 - (void)xvim_insertNewlineAboveLine:(NSUInteger)line{
@@ -236,10 +236,10 @@
         NSUInteger head = [self.textStorage xvim_startOfLine:self.insertionPoint];
         if( 0 != head ){
                 [self setSelectedRange:NSMakeRange(head-1,0)];
-                [self.sourceCodeEditorView insertNewline:self];
+                [self insertNewline:self];
         }else{
                 [self setSelectedRange:NSMakeRange(head,0)];
-                [self.sourceCodeEditorView insertNewline:self];
+                [self insertNewline:self];
                 [self setSelectedRange:NSMakeRange(0,0)];
         }
 }
@@ -254,5 +254,24 @@
         [self xvim_insertNewlineBelowCurrentLineWithIndent];
 }
 
+
+
+- (BOOL)xvim_replaceCharacters:(unichar)c count:(NSUInteger)count{
+        NSUInteger eol = [self.textStorage xvim_endOfLine:self.insertionPoint];
+        // Note : endOfLine may return one less than self.insertionPoint if self.insertionPoint is on newline
+        if( NSNotFound == eol ){
+                return NO;
+        }
+        NSUInteger end = self.insertionPoint + count;
+        for( NSUInteger pos = self.insertionPoint; pos < end; ++pos){
+                NSString* text = [NSString stringWithFormat:@"%C",c];
+                if( pos < eol ){
+                        [self insertText:text replacementRange:NSMakeRange(pos, 1)];
+                } else {
+                        [self insertText:text];
+                }
+        }
+        return YES;
+}
 
 @end

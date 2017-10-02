@@ -25,6 +25,8 @@
 		ED548FDA1F827EEC00A8069D /* XVimYankEvaluator.m in Sources */ = {isa = PBXBuildFile; fileRef = ED548FD91F827EEC00A8069D /* XVimYankEvaluator.m */; };
 		ED548FDF1F8280B700A8069D /* XVimRegister.m in Sources */ = {isa = PBXBuildFile; fileRef = ED548FDD1F8280B700A8069D /* XVimRegister.m */; };
 		ED548FE01F8280B700A8069D /* XVimRegisterEvaluator.m in Sources */ = {isa = PBXBuildFile; fileRef = ED548FDE1F8280B700A8069D /* XVimRegisterEvaluator.m */; };
+		ED548FE31F82A91D00A8069D /* SourceCodeEditorViewProxy+XVim.m in Sources */ = {isa = PBXBuildFile; fileRef = ED548FE21F82A91D00A8069D /* SourceCodeEditorViewProxy+XVim.m */; };
+		ED548FE61F82A9C900A8069D /* XVimReplaceEvaluator.m in Sources */ = {isa = PBXBuildFile; fileRef = ED548FE41F82A9C900A8069D /* XVimReplaceEvaluator.m */; };
 		ED6276911F817CD5005F8274 /* XVimGActionEvaluator.m in Sources */ = {isa = PBXBuildFile; fileRef = ED62768D1F817CD4005F8274 /* XVimGActionEvaluator.m */; };
 		ED6276921F817CD5005F8274 /* XVimGMotionEvaluator.m in Sources */ = {isa = PBXBuildFile; fileRef = ED6276901F817CD5005F8274 /* XVimGMotionEvaluator.m */; };
 		ED6B8E4E1F80F896002F4A47 /* NSTextStorage+VimOperation.m in Sources */ = {isa = PBXBuildFile; fileRef = ED6B8E4A1F80F896002F4A47 /* NSTextStorage+VimOperation.m */; };
@@ -113,6 +115,10 @@
 		ED548FDC1F8280B700A8069D /* XVimRegister.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = XVimRegister.h; sourceTree = "<group>"; };
 		ED548FDD1F8280B700A8069D /* XVimRegister.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = XVimRegister.m; sourceTree = "<group>"; };
 		ED548FDE1F8280B700A8069D /* XVimRegisterEvaluator.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = XVimRegisterEvaluator.m; sourceTree = "<group>"; };
+		ED548FE11F82A91D00A8069D /* SourceCodeEditorViewProxy+XVim.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "SourceCodeEditorViewProxy+XVim.h"; sourceTree = "<group>"; };
+		ED548FE21F82A91D00A8069D /* SourceCodeEditorViewProxy+XVim.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = "SourceCodeEditorViewProxy+XVim.m"; sourceTree = "<group>"; };
+		ED548FE41F82A9C900A8069D /* XVimReplaceEvaluator.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = XVimReplaceEvaluator.m; sourceTree = "<group>"; };
+		ED548FE51F82A9C900A8069D /* XVimReplaceEvaluator.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = XVimReplaceEvaluator.h; sourceTree = "<group>"; };
 		ED62768D1F817CD4005F8274 /* XVimGActionEvaluator.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = XVimGActionEvaluator.m; sourceTree = "<group>"; };
 		ED62768E1F817CD5005F8274 /* XVimGActionEvaluator.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = XVimGActionEvaluator.h; sourceTree = "<group>"; };
 		ED62768F1F817CD5005F8274 /* XVimGMotionEvaluator.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = XVimGMotionEvaluator.h; sourceTree = "<group>"; };
@@ -380,6 +386,8 @@
 				ED5282AD1F825ACD000794A1 /* SourceCodeEditorViewProxy+Operations.m */,
 				ED548FD31F827B9D00A8069D /* SourceCodeEditorViewProxy+Yank.h */,
 				ED548FD41F827B9D00A8069D /* SourceCodeEditorViewProxy+Yank.m */,
+				ED548FE11F82A91D00A8069D /* SourceCodeEditorViewProxy+XVim.h */,
+				ED548FE21F82A91D00A8069D /* SourceCodeEditorViewProxy+XVim.m */,
 			);
 			path = Xcode;
 			sourceTree = "<group>";
@@ -684,12 +692,9 @@
 		EDF010501F6EEEF600461B2C /* XVim */ = {
 			isa = PBXGroup;
 			children = (
-				ED5282A21F825944000794A1 /* Operators */,
-				ED6B8E4F1F80F8E6002F4A47 /* XVimTextStoring.h */,
 				ED6B8E4D1F80F896002F4A47 /* NSTextStorage+VimOperation.h */,
 				ED6B8E4A1F80F896002F4A47 /* NSTextStorage+VimOperation.m */,
-				ED5282A91F8259F4000794A1 /* XVimTextObjectEvaluator.h */,
-				ED5282AA1F8259F5000794A1 /* XVimTextObjectEvaluator.m */,
+				ED5282A21F825944000794A1 /* Operators */,
 				EDF010751F6EF16600461B2C /* XVim.h */,
 				EDF010761F6EF16600461B2C /* XVim.m */,
 				EDF010641F6EEF1000461B2C /* XVimArgumentEvaluator.h */,
@@ -697,37 +702,42 @@
 				EDF010521F6EEF0F00461B2C /* XVimDefs.h */,
 				EDF010561F6EEF0F00461B2C /* XVimEvaluator.h */,
 				EDF010551F6EEF0F00461B2C /* XVimEvaluator.m */,
-				ED31C0C41F8164B800BE97B9 /* XVimInsertEvaluator.h */,
-				ED31C0C51F8164B800BE97B9 /* XVimInsertEvaluator.m */,
-				ED9CF2D51F6EFA2900908DFB /* XVimNormalEvaluator.h */,
-				ED9CF2D61F6EFA2A00908DFB /* XVimNormalEvaluator.m */,
-				EDF0105C1F6EEF1000461B2C /* XVimKeymap.h */,
-				EDF010661F6EEF1000461B2C /* XVimKeymap.m */,
-				EDF010651F6EEF1000461B2C /* XVimKeymapProvider.h */,
 				ED62768E1F817CD5005F8274 /* XVimGActionEvaluator.h */,
 				ED62768D1F817CD4005F8274 /* XVimGActionEvaluator.m */,
 				ED62768F1F817CD5005F8274 /* XVimGMotionEvaluator.h */,
 				ED6276901F817CD5005F8274 /* XVimGMotionEvaluator.m */,
+				ED31C0C41F8164B800BE97B9 /* XVimInsertEvaluator.h */,
+				ED31C0C51F8164B800BE97B9 /* XVimInsertEvaluator.m */,
+				EDF0105C1F6EEF1000461B2C /* XVimKeymap.h */,
+				EDF010661F6EEF1000461B2C /* XVimKeymap.m */,
+				EDF010651F6EEF1000461B2C /* XVimKeymapProvider.h */,
 				EDF010511F6EEF0F00461B2C /* XVimKeyStroke.h */,
 				EDF0105D1F6EEF1000461B2C /* XVimKeyStroke.m */,
 				EDF010571F6EEF0F00461B2C /* XVimMacros.h */,
 				EDF0105E1F6EEF1000461B2C /* XVimMotion.h */,
 				EDF0105B1F6EEF1000461B2C /* XVimMotion.m */,
-				ED548FDC1F8280B700A8069D /* XVimRegister.h */,
-				ED548FDD1F8280B700A8069D /* XVimRegister.m */,
-				ED548FDB1F8280B600A8069D /* XVimRegisterEvaluator.h */,
-				ED548FDE1F8280B700A8069D /* XVimRegisterEvaluator.m */,
 				EDF010591F6EEF1000461B2C /* XVimMotionEvaluator.h */,
 				EDF010601F6EEF1000461B2C /* XVimMotionEvaluator.m */,
 				EDF010611F6EEF1000461B2C /* XVimMotionOption.h */,
 				EDF010541F6EEF0F00461B2C /* XVimMotionType.h */,
+				ED9CF2D51F6EFA2900908DFB /* XVimNormalEvaluator.h */,
+				ED9CF2D61F6EFA2A00908DFB /* XVimNormalEvaluator.m */,
 				EDF0105F1F6EEF1000461B2C /* XVimNumericEvaluator.h */,
 				EDF0105A1F6EEF1000461B2C /* XVimNumericEvaluator.m */,
-				EDF010621F6EEF1000461B2C /* XVimStringBuffer.h */,
-				EDF010631F6EEF1000461B2C /* XVimWindow.h */,
-				EDF010581F6EEF0F00461B2C /* XVimWindow.m */,
 				ED6B8E501F80FE5E002F4A47 /* XVimPreferences.h */,
 				ED6B8E511F80FE5E002F4A47 /* XVimPreferences.m */,
+				ED548FDC1F8280B700A8069D /* XVimRegister.h */,
+				ED548FDD1F8280B700A8069D /* XVimRegister.m */,
+				ED548FDB1F8280B600A8069D /* XVimRegisterEvaluator.h */,
+				ED548FDE1F8280B700A8069D /* XVimRegisterEvaluator.m */,
+				ED548FE51F82A9C900A8069D /* XVimReplaceEvaluator.h */,
+				ED548FE41F82A9C900A8069D /* XVimReplaceEvaluator.m */,
+				EDF010621F6EEF1000461B2C /* XVimStringBuffer.h */,
+				ED5282A91F8259F4000794A1 /* XVimTextObjectEvaluator.h */,
+				ED5282AA1F8259F5000794A1 /* XVimTextObjectEvaluator.m */,
+				ED6B8E4F1F80F8E6002F4A47 /* XVimTextStoring.h */,
+				EDF010631F6EEF1000461B2C /* XVimWindow.h */,
+				EDF010581F6EEF0F00461B2C /* XVimWindow.m */,
 			);
 			path = XVim;
 			sourceTree = "<group>";
@@ -835,6 +845,7 @@
 				ED548FE01F8280B700A8069D /* XVimRegisterEvaluator.m in Sources */,
 				A287A8C71F55D637009378BC /* NSObject+ExtraData.m in Sources */,
 				ED5282A81F8259CB000794A1 /* XVimOperatorEvaluator.m in Sources */,
+				ED548FE61F82A9C900A8069D /* XVimReplaceEvaluator.m in Sources */,
 				ED52829F1F8241C2000794A1 /* SourceCodeEditorViewProxy+Scrolling.m in Sources */,
 				ED31C0C61F8164B800BE97B9 /* XVimInsertEvaluator.m in Sources */,
 				EDF010691F6EEFFC00461B2C /* XVimKeymap.m in Sources */,
@@ -845,6 +856,7 @@
 				ED548FDF1F8280B700A8069D /* XVimRegister.m in Sources */,
 				EDF010771F6EF16600461B2C /* XVim.m in Sources */,
 				ED548FDA1F827EEC00A8069D /* XVimYankEvaluator.m in Sources */,
+				ED548FE31F82A91D00A8069D /* SourceCodeEditorViewProxy+XVim.m in Sources */,
 				EDF010731F6EF05E00461B2C /* NSString+VimHelper.m in Sources */,
 				EDF010671F6EEFFC00461B2C /* XVimArgumentEvaluator.m in Sources */,
 				EDF010741F6EF05E00461B2C /* NSEvent+VimHelper.m in Sources */,
