@@ -187,6 +187,10 @@ typedef NS_ENUM(NSInteger, CursorStyle) {
 - (void)setSelectedRanges:(NSArray<NSValue*>*)ranges
                  affinity:(NSSelectionAffinity)affinity
            stillSelecting:(BOOL)stillSelectingFlag;
+
+- (void)beginEditTransaction;
+- (void)endEditTransaction;
+
 @end
 
 #import "SourceCodeEditorViewProxy+Scrolling.h"

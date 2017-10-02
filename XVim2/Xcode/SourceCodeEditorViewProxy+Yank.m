@@ -101,6 +101,7 @@
 
 
 - (void)xvim_put:(NSString*)text withType:(TEXT_TYPE)type afterCursor:(bool)after count:(NSUInteger)count{
+        [self beginEditTransaction];
         [self xvim_registerInsertionPointForUndo];
         
         TRACE_LOG(@"text:%@  type:%d   afterCursor:%d   count:%d", text, type, after, count);
@@ -182,6 +183,7 @@
         [self xvim_moveCursor:insertionPointAfterPut preserveColumn:NO];
         [self xvim_syncState];
         [self xvim_changeSelectionMode:XVIM_VISUAL_NONE];
+        [self endEditTransaction];
 }
 
 
