@@ -27,7 +27,7 @@ CONST_STR(EDWindow);
 + (void)xvim_hook{
     [self xvim_swizzleInstanceMethod:@selector(keyDown:) with:@selector(xvim_keyDown:)];
     [self xvim_swizzleInstanceMethod:@selector(viewWillMoveToWindow:) with:@selector(xvim_viewWillMoveToWindow:)];
-    
+        [self xvim_swizzleInstanceMethod:@selector(selectionWillChange) with:@selector(xvim_selectionWillChange)];
 }
 
 -(XVimWindow*)xvim_window {
@@ -38,6 +38,12 @@ CONST_STR(EDWindow);
         [self setExtraData:w forName:EDWindow];
     }
     return w;
+}
+
+-(void)xvim_selectionWillChange
+{
+        DEBUG_LOG(@"SELECTION WILL CHANGE");
+        [self xvim_selectionWillChange];
 }
 
 -(void)xvim_setupOnFirstAppearance

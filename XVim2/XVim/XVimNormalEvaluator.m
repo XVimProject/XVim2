@@ -239,6 +239,18 @@
         return nil;
 }
 
+- (XVimEvaluator*)o{
+        _auto view = [self sourceView];
+        [view xvim_insertNewlineBelowAndInsertWithIndent];
+        return [[XVimInsertEvaluator alloc] initWithWindow:self.window];
+}
+
+- (XVimEvaluator*)O{
+        _auto view = [self sourceView];
+        [view xvim_insertNewlineAboveAndInsertWithIndent];
+        return [[XVimInsertEvaluator alloc] initWithWindow:self.window];
+}
+
 
 #if 0
 
@@ -276,17 +288,6 @@
 	return [[XVimMarkSetEvaluator alloc] initWithWindow:self.window];
 }
 
-- (XVimEvaluator*)o{
-    NSTextView* view = [self sourceView];
-    [view xvim_insertNewlineBelowAndInsertWithIndent];
-    return [[XVimInsertEvaluator alloc] initWithWindow:self.window];
-}
-
-- (XVimEvaluator*)O{
-    NSTextView* view = [self sourceView];
-    [view xvim_insertNewlineAboveAndInsertWithIndent];
-    return [[XVimInsertEvaluator alloc] initWithWindow:self.window];
-}
 
 - (XVimEvaluator*)C_o{
     BOOL needUpdateMark;

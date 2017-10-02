@@ -56,6 +56,15 @@
 @protocol SourceViewOperationsProtocol <NSObject>
 - (BOOL)xvim_delete:(XVimMotion*)motion withMotionPoint:(NSUInteger)motionPoint andYank:(BOOL)yank;
 - (BOOL)xvim_delete:(XVimMotion*)motion andYank:(BOOL)yank;
+- (void)xvim_insertText:(NSString*)str line:(NSUInteger)line column:(NSUInteger)column;
+- (void)xvim_insertNewlineBelowLine:(NSUInteger)line;
+- (void)xvim_insertNewlineBelowCurrentLine;
+- (void)xvim_insertNewlineBelowCurrentLineWithIndent;
+- (void)xvim_insertNewlineAboveLine:(NSUInteger)line;
+- (void)xvim_insertNewlineAboveCurrentLine;
+- (void)xvim_insertNewlineAboveCurrentLineWithIndent;
+- (void)xvim_insertNewlineAboveAndInsertWithIndent;
+- (void)xvim_insertNewlineBelowAndInsertWithIndent;
 @end
 
 #endif /* SourceViewProtocol_h */

@@ -343,7 +343,75 @@
         }
 }
 
+- (void)xvim_insertText:(NSString*)str line:(NSUInteger)line column:(NSUInteger)column{
+        NSUInteger pos = [self.textStorage xvim_indexOfLineNumber:line column:column];
+        if( pos == NSNotFound ){
+                return;
+        }
+        [self insertText:str replacementRange:NSMakeRange(pos,0)];
+}
 
+- (void)xvim_insertNewlineBelowLine:(NSUInteger)line{
+        NSAssert( line != 0, @"line number starts from 1");
+        NSUInteger pos = [self.textStorage xvim_indexOfLineNumber:line];
+        if( NSNotFound == pos ){
+                return;
+        }
+        pos = [self.textStorage xvim_endOfLine:pos];
+        [self insertText:@"\n" replacementRange:NSMakeRange(pos ,0)];
+        [self xvim_moveCursor:pos+1 preserveColumn:NO];
+        [self xvim_syncState];
+}
+
+- (void)xvim_insertNewlineBelowCurrentLine{
+        [self xvim_insertNewlineBelowLine:[self.textStorage xvim_lineNumberAtIndex:self.insertionPoint]];
+}
+
+- (void)xvim_insertNewlineBelowCurrentLineWithIndent{
+        NSUInteger tail = [self.textStorage xvim_endOfLine:self.insertionPoint];
+        [self setSelectedRange:NSMakeRange(tail,0)];
+        [self.sourceCodeEditorView insertNewline:self];
+}
+
+- (void)xvim_insertNewlineAboveLine:(NSUInteger)line{
+        NSAssert( line != 0, @"line number starts from 1");
+        NSUInteger pos = [self.textStorage xvim_indexOfLineNumber:line];
+        if( NSNotFound == pos ){
+                return;
+        }
+        if( 1 != line ){
+                [self xvim_insertNewlineBelowLine:line-1];
+        }else{
+                [self insertText:@"\n" replacementRange:NSMakeRange(0,0)];
+                [self setSelectedRange:NSMakeRange(0,0)];
+        }
+}
+
+- (void)xvim_insertNewlineAboveCurrentLine{
+        [self xvim_insertNewlineAboveLine:[self.textStorage xvim_lineNumberAtIndex:self.insertionPoint]];
+}
+
+- (void)xvim_insertNewlineAboveCurrentLineWithIndent{
+        NSUInteger head = [self.textStorage xvim_startOfLine:self.insertionPoint];
+        if( 0 != head ){
+                [self setSelectedRange:NSMakeRange(head-1,0)];
+                [self.sourceCodeEditorView insertNewline:self];
+        }else{
+                [self setSelectedRange:NSMakeRange(head,0)];
+                [self.sourceCodeEditorView insertNewline:self];
+                [self setSelectedRange:NSMakeRange(0,0)];
+        }
+}
+
+- (void)xvim_insertNewlineAboveAndInsertWithIndent{
+        self.cursorMode = CURSOR_MODE_INSERT;
+        [self xvim_insertNewlineAboveCurrentLineWithIndent];
+}
+
+- (void)xvim_insertNewlineBelowAndInsertWithIndent{
+        self.cursorMode = CURSOR_MODE_INSERT;
+        [self xvim_insertNewlineBelowCurrentLineWithIndent];
+}
 
 
 @end

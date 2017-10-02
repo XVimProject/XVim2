@@ -60,7 +60,7 @@ static void(*fpGetSourceEditorDataSource)(void);
                 [NSNotificationCenter.defaultCenter addObserver:self
                                                        selector:@selector(selectionChanged:)
                                                            name:@"SourceEditorSelectedSourceRangeChangedNotification"
-                                                         object:nil];
+                                                         object:sourceCodeEditorView];
         }
         return self;
 }
@@ -221,7 +221,10 @@ static void(*fpGetSourceEditorDataSource)(void);
 
 -(void)selectionChanged:(NSNotification*)changeNotification
 {
-        DEBUG_LOG(@"SELECTION CHANGED! Locked = %@", self.xvim_lockSyncStateFromView ? @"YES" : @"NO");
+        if (!self.xvim_lockSyncStateFromView) {
+                DEBUG_LOG(@"SELECTION CHANGED from %@! Locked = %@", changeNotification.object, self.xvim_lockSyncStateFromView ? @"YES" : @"NO");
+                [self xvim_syncStateFromView];
+        }
 }
 
 
