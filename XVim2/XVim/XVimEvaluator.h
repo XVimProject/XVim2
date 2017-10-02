@@ -33,9 +33,12 @@ XVimMotionEvaluator
 */
 
 #import <Cocoa/Cocoa.h>
+#import "SourceViewProtocol.h"
+
 @protocol SourceViewProtocol;
 @protocol SourceViewScrollingProtocol;
 @protocol SourceViewOperationsProtocol;
+@protocol SourceViewYankProtocol;
 
 @class XVimCommandLineEvaluator;
 @class XVimMotionEvaluator;
@@ -46,7 +49,7 @@ XVimMotionEvaluator
 @class XVimRegister;
 @protocol XVimKeymapProvider;
 
-@interface XVimEvaluator : NSObject
+@interface XVimEvaluator : NSObject <XVimTextViewDelegateProtocol>
 @property (strong) XVimWindow* window;
 @property (strong) XVimEvaluator* parent;
 @property (nonatomic) NSUInteger numericArg;
@@ -126,7 +129,10 @@ XVimMotionEvaluator
 
 - (XVimKeymap*)selectKeymapWithProvider:(id<XVimKeymapProvider>)keymapProvider;
 
-@property (readonly, nonatomic) id<SourceViewProtocol, SourceViewScrollingProtocol, SourceViewOperationsProtocol> sourceView;
+@property (readonly, nonatomic) id<SourceViewProtocol
+, SourceViewScrollingProtocol
+, SourceViewOperationsProtocol
+, SourceViewYankProtocol> sourceView;
 
 - (void)resetCompletionHandler;
 

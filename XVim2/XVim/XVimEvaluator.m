@@ -11,6 +11,8 @@
 #import "XVimWindow.h"
 #import "XVimKeymapProvider.h"
 #import "XVimNormalEvaluator.h"
+#import "XVimRegister.h"
+#import "XVim.h"
 
 
 static XVimEvaluator* _invalidEvaluator = nil;
@@ -104,17 +106,17 @@ static XVimEvaluator* _popEvaluator = nil;
 
 - (void)becameHandler
 {
-        //self.sourceView.xvimDelegate = self;
+        self.sourceView.xvimDelegate = self;
 }
 
 - (void)cancelHandler
 {
-        //self.sourceView.xvimDelegate = nil;
+        self.sourceView.xvimDelegate = nil;
 }
 
 - (void)didEndHandler
 {
-        //self.sourceView.xvimDelegate = nil;
+        self.sourceView.xvimDelegate = nil;
 }
 
 - (XVimKeymap*)selectKeymapWithProvider:(id<XVimKeymapProvider>)keymapProvider
@@ -228,13 +230,13 @@ static XVimEvaluator* _popEvaluator = nil;
 
 - (void)textView:(NSTextView*)view didYank:(NSString*)yankedText withType:(TEXT_TYPE)type
 {
-        //    [[[XVim instance] registerManager] yank:yankedText withType:type onRegister:self.yankRegister];
+        [XVIM.registerManager yank:yankedText withType:type onRegister:self.yankRegister];
         return;
 }
 
 - (void)textView:(NSTextView*)view didDelete:(NSString*)deletedText withType:(TEXT_TYPE)type
 {
-        //    [[[XVim instance] registerManager] delete:deletedText withType:type onRegister:self.yankRegister];
+        [XVIM.registerManager delete:deletedText withType:type onRegister:self.yankRegister];
         return;
 }
 

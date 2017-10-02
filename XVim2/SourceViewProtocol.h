@@ -12,6 +12,11 @@
 
 @class XVimMotion;
 
+@protocol XVimTextViewDelegateProtocol
+- (void)textView:(id)view didYank:(NSString*)yankedText withType:(TEXT_TYPE)type;
+- (void)textView:(id)view didDelete:(NSString*)deletedText withType:(TEXT_TYPE)type;
+@end
+
 @protocol SourceViewProtocol <NSObject, NSTextInputClient>
 - (void) keyDown:(NSEvent*)event;
 - (void)interpretKeyEvents:(NSArray<NSEvent *> *)eventArray;
@@ -27,13 +32,14 @@
 - (void)xvim_escapeFromInsert;
 
 
-
 // Properties
 @property (readonly) NSRange selectedRange;
 @property (readonly) NSString *string;
 @property (readonly) XVIM_VISUAL_MODE selectionMode;
 @property (readonly) NSUndoManager *undoManager;
+@property (strong) id<XVimTextViewDelegateProtocol> xvimDelegate;
 @property CURSOR_MODE cursorMode;
+
 @end
 
 
@@ -65,6 +71,12 @@
 - (void)xvim_insertNewlineAboveCurrentLineWithIndent;
 - (void)xvim_insertNewlineAboveAndInsertWithIndent;
 - (void)xvim_insertNewlineBelowAndInsertWithIndent;
+@end
+
+@protocol SourceViewYankProtocol <NSObject>
+- (void)xvim_yank:(XVimMotion*)motion;
+- (void)xvim_yank:(XVimMotion*)motion withMotionPoint:(NSUInteger)motionPoint;
+- (void)xvim_put:(NSString*)text withType:(TEXT_TYPE)type afterCursor:(bool)after count:(NSUInteger)count;
 @end
 
 #endif /* SourceViewProtocol_h */

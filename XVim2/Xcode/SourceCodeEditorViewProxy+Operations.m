@@ -7,6 +7,7 @@
 //
 
 #import "SourceCodeEditorViewProxy+Operations.h"
+#import "SourceCodeEditorViewProxy+Yank.h"
 #import "XVimMotion.h"
 #import "NSTextStorage+VimOperation.h"
 
@@ -18,6 +19,8 @@
 @property(readonly) NSTextStorage *textStorage;
 @property NSRange selectedRange;
 @property BOOL xvim_lockSyncStateFromView;
+@property(strong) NSString* lastYankedText;
+@property TEXT_TYPE lastYankedType;
 - (void)xvim_moveCursor:(NSUInteger)pos preserveColumn:(BOOL)preserve;
 - (void)xvim_syncState;
 - (XVimRange)xvim_getMotionRange:(NSUInteger)current Motion:(XVimMotion*)motion;
@@ -118,7 +121,7 @@
                 newPos = [self.textStorage xvim_indexOfLineNumber:sel.top column:sel.left];
         }
         
-        // TODO: [self.xvimDelegate textView:self didDelete:self.lastYankedText  withType:self.lastYankedType];
+        [self.xvimDelegate textView:self didDelete:self.lastYankedText  withType:self.lastYankedType];
         [self xvim_changeSelectionMode:XVIM_VISUAL_NONE];
         if (newPos != NSNotFound) {
                 [self xvim_moveCursor:newPos preserveColumn:NO];
@@ -179,169 +182,7 @@
         return NSMakeRange(from, to - from + 1); // Inclusive range
 }
 
-- (void)__xvim_startYankWithType:(MOTION_TYPE)type
-{
-#ifdef TODO
-        if (self.selectionMode == XVIM_VISUAL_NONE) {
-                if (type == CHARACTERWISE_EXCLUSIVE || type == CHARACTERWISE_INCLUSIVE) {
-                        self.lastYankedType = TEXT_TYPE_CHARACTERS;
-                } else if (type == LINEWISE) {
-                        self.lastYankedType = TEXT_TYPE_LINES;
-                }
-        } else if (self.selectionMode == XVIM_VISUAL_CHARACTER) {
-                self.lastYankedType = TEXT_TYPE_CHARACTERS;
-        } else if (self.selectionMode == XVIM_VISUAL_LINE) {
-                self.lastYankedType = TEXT_TYPE_LINES;
-        } else if (self.selectionMode == XVIM_VISUAL_BLOCK) {
-                self.lastYankedType = TEXT_TYPE_BLOCK;
-        }
-        TRACE_LOG(@"YANKED START WITH TYPE:%d", self.lastYankedType);
-#endif
-}
 
-- (void)_xvim_yankRange:(NSRange)range withType:(MOTION_TYPE)type
-{
-#ifdef TODO
-        NSString *s;
-        BOOL needsNL;
-        
-        [self __xvim_startYankWithType:type];
-        
-        needsNL = self.lastYankedType == TEXT_TYPE_LINES;
-        if (range.length) {
-                s = [self.xvim_string substringWithRange:range];
-                if (needsNL && !isNewline([s characterAtIndex:s.length - 1])) {
-                        s = [s stringByAppendingString:@"\n"];
-                }
-        } else if (needsNL) {
-                s = @"\n";
-        } else {
-                s = @"";
-        }
-        
-        self.lastYankedText = s;
-        TRACE_LOG(@"YANKED STRING : %@", s);
-#endif
-}
-
-- (void)_xvim_yankSelection:(XVimSelection)sel
-{
-#ifdef TODO
-        NSTextStorage *ts = self.textStorage;
-        NSString *s = self.xvim_string;
-        NSUInteger tabWidth = ts.xvim_tabWidth;
-        
-        NSMutableString *ybuf = [[NSMutableString alloc] init];
-        self.lastYankedType = TEXT_TYPE_BLOCK;
-        
-        for (NSUInteger line = sel.top; line <= sel.bottom; line++) {
-                NSUInteger lpos = [ts xvim_indexOfLineNumber:line column:sel.left];
-                NSUInteger rpos = [ts xvim_indexOfLineNumber:line column:sel.right];
-                
-                /* if lpos points in the middle of a tab, split it and advance lpos */
-                if (![ts isEOF:lpos] && [s characterAtIndex:lpos] == '\t') {
-                        NSUInteger lcol = sel.left - (sel.left % tabWidth);
-                        
-                        if (lcol < sel.left) {
-                                TRACE_LOG("lcol %ld  left %ld tab %ld", (long)lcol, (long)sel.left, (long)tabWidth);
-                                NSUInteger count = tabWidth - (sel.left - lcol);
-                                
-                                if (lpos == rpos) {
-                                        /* if rpos points to the same tab, truncate it to the right also */
-                                        count = sel.right - sel.left + 1;
-                                }
-                                [ybuf appendString:[NSString stringMadeOfSpaces:count]];
-                                lpos++;
-                        }
-                }
-                
-                if (lpos <= rpos) {
-                        if (sel.right == XVimSelectionEOL) {
-                                [ybuf appendString:[s substringWithRange:NSMakeRange(lpos, rpos - lpos)]];
-                        } else {
-                                NSRange r = NSMakeRange(lpos, rpos - lpos + 1);
-                                NSUInteger rcol;
-                                BOOL mustPad = NO;
-                                
-                                if ([ts isEOF:rpos]) {
-                                        rcol = [ts xvim_columnOfIndex:rpos];
-                                        mustPad = YES;
-                                        r.length--;
-                                } else {
-                                        unichar c = [s characterAtIndex:rpos];
-                                        if (isNewline(c)) {
-                                                rcol = [ts xvim_columnOfIndex:rpos];
-                                                mustPad = YES;
-                                                r.length--;
-                                        } else if (c == '\t') {
-                                                rcol = [ts xvim_columnOfIndex:rpos];
-                                                if (sel.right - rcol + 1 < tabWidth) {
-                                                        mustPad = YES;
-                                                        r.length--;
-                                                }
-                                        }
-                                }
-                                
-                                if (r.length) {
-                                        [ybuf appendString:[s substringWithRange:r]];
-                                }
-                                
-                                if (mustPad) {
-                                        [ybuf appendString:[NSString stringMadeOfSpaces:sel.right - rcol + 1]];
-                                }
-                        }
-                }
-                [ybuf appendString:@"\n"];
-        }
-        
-        self.lastYankedText = ybuf;
-        TRACE_LOG(@"YANKED STRING : %@", ybuf);
-#endif
-}
-
-- (void)_xvim_killSelection:(XVimSelection)sel
-{
-        NSTextStorage *ts = self.textStorage;
-        NSString *s = self.string;
-        NSUInteger tabWidth = ts.xvim_tabWidth;
-        
-        for (NSUInteger line = sel.bottom; line >= sel.top; line--) {
-                NSUInteger lpos = [ts xvim_indexOfLineNumber:line column:sel.left];
-                NSUInteger rpos = [ts xvim_indexOfLineNumber:line column:sel.right];
-                NSUInteger nspaces = 0;
-                
-                if ([ts isEOF:lpos]) {
-                        continue;
-                }
-                
-                if ([s characterAtIndex:lpos] == '\t') {
-                        NSUInteger lcol = [ts xvim_columnOfIndex:lpos];
-                        
-                        if (lcol < sel.left) {
-                                nspaces = sel.left - lcol;
-                                if (lpos == rpos) {
-                                        nspaces = tabWidth - (sel.right - sel.left + 1);
-                                }
-                        }
-                }
-                
-                if ([ts isEOL:rpos]) {
-                        rpos--;
-                } else if (lpos < rpos) {
-                        if ([s characterAtIndex:rpos] == '\t') {
-                                nspaces += tabWidth - (sel.right - [ts xvim_columnOfIndex:rpos] + 1);
-                        }
-                }
-                
-                NSRange   range = NSMakeRange(lpos, rpos - lpos + 1);
-                NSString *repl = @"";
-                
-                if (nspaces) {
-                        repl = [NSString stringWithFormat:@"%*s", (int)nspaces, ""];
-                }
-                [self insertText:repl replacementRange:range];
-        }
-}
 
 - (void)xvim_insertText:(NSString*)str line:(NSUInteger)line column:(NSUInteger)column{
         NSUInteger pos = [self.textStorage xvim_indexOfLineNumber:line column:column];

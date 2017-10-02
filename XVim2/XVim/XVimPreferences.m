@@ -12,3 +12,4 @@
 
 PREF_DEFN(StartOfLine)
 PREF_DEFN(AlwaysUseInputSource);
+PREF_DEFN(ClipboardHasUnnamed);

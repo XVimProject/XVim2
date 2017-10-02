@@ -16,7 +16,7 @@ typedef NS_ENUM(NSInteger, CursorStyle) {
         , CursorStyleUnderline
 };
 
-
+@protocol XVimTextViewDelegateProtocol;
 
 @interface SourceCodeEditorViewProxy : NSObject <SourceViewProtocol>
 @property CursorStyle cursorStyle;
@@ -36,9 +36,11 @@ typedef NS_ENUM(NSInteger, CursorStyle) {
 @property BOOL needsUpdateFoundRanges;
 @property(readonly) NSArray* foundRanges;
 @property(readonly) long long currentLineNumber;
+@property(strong) id<XVimTextViewDelegateProtocol> xvimDelegate;
 
 -(instancetype)initWithSourceCodeEditorView:(SourceCodeEditorView*)sourceEditorView;
 @end
 
 #import "SourceCodeEditorViewProxy+Scrolling.h"
 #import "SourceCodeEditorViewProxy+Operations.h"
+#import "SourceCodeEditorViewProxy+Yank.h"

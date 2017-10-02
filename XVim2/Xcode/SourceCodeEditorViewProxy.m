@@ -28,7 +28,10 @@ static void(*fpGetSourceEditorDataSource)(void);
 @property(readwrite) NSUInteger preservedColumn;
 @property(readwrite) BOOL selectionToEOL;
 @property(readonly) NSTextStorage *textStorage;
+@property(strong) NSString* lastYankedText;
+@property TEXT_TYPE lastYankedType;
 @property NSRange selectedRange;
+
 @property BOOL xvim_lockSyncStateFromView;
 - (void)xvim_moveCursor:(NSUInteger)pos preserveColumn:(BOOL)preserve;
 - (void)xvim_syncState;
@@ -887,8 +890,6 @@ static void(*fpGetSourceEditorDataSource)(void);
                 [self xvim_syncState];
         }
 }
-
-
 
 
 

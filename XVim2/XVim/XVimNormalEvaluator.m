@@ -12,6 +12,7 @@
 #import "XVimInsertEvaluator.h"
 #import "XVimGActionEvaluator.h"
 #import "XVimDeleteEvaluator.h"
+#import "XVimYankEvaluator.h"
 #import "NSString+VimHelper.h"
 #import "XVimKeymapProvider.h"
 #import "Logger.h"
@@ -19,11 +20,13 @@
 #import "XVim.h"
 #import "XVimMotion.h"
 #import "SourceViewProtocol.h"
+#import "XVimRegisterEvaluator.h"
+#import "XVimRegister.h"
+
 
 #if 0
 #import "XVimVisualEvaluator.h"
 #import "XVimMarkSetEvaluator.h"
-#import "XVimYankEvaluator.h"
 #import "XVimEqualEvaluator.h"
 #import "XVimShiftEvaluator.h"
 #import "XVimReplaceEvaluator.h"
@@ -252,6 +255,39 @@
 }
 
 
+// YANK
+
+- (XVimEvaluator*)Y{
+        XVimYankEvaluator *evaluator = [[XVimYankEvaluator alloc] initWithWindow:self.window];
+        evaluator.numericArg = self.numericArg;
+        [evaluator performSelector:@selector(y)];
+        return nil;
+}
+
+- (XVimEvaluator*)y{
+        [self.argumentString appendString:@"y"];
+        return [[XVimYankEvaluator alloc] initWithWindow:self.window];
+}
+
+// PUT
+
+- (XVimEvaluator*)p{
+        _auto view = [self sourceView];
+        XVimRegister* reg = [XVIM.registerManager registerByName:self.yankRegister];
+        [view xvim_put:reg.string withType:reg.type afterCursor:YES count:[self numericArg]];
+        [[XVim instance] fixOperationCommands];
+        return nil;
+}
+
+- (XVimEvaluator*)P{
+        _auto view = [self sourceView];
+        XVimRegister* reg = [[[XVim instance] registerManager] registerByName:self.yankRegister];
+        [view xvim_put:reg.string withType:reg.type afterCursor:NO count:[self numericArg]];
+        [[XVim instance] fixOperationCommands];
+        return nil;
+}
+
+
 #if 0
 
 - (XVimEvaluator*)C_g{
@@ -303,22 +339,6 @@
     if( mark != nil ){
         [self jumpToMark:mark firstOfLine:NO KeepJumpMarkIndex:YES NeedUpdateMark:NO];
     }
-    return nil;
-}
-
-- (XVimEvaluator*)p{
-    NSTextView* view = [self sourceView];
-    XVimRegister* reg = [[[XVim instance] registerManager] registerByName:self.yankRegister];
-    [view xvim_put:reg.string withType:reg.type afterCursor:YES count:[self numericArg]];
-    [[XVim instance] fixOperationCommands];
-    return nil;
-}
-
-- (XVimEvaluator*)P{
-    NSTextView* view = [self sourceView];
-    XVimRegister* reg = [[[XVim instance] registerManager] registerByName:self.yankRegister];
-    [view xvim_put:reg.string withType:reg.type afterCursor:NO count:[self numericArg]];
-    [[XVim instance] fixOperationCommands];
     return nil;
 }
 
@@ -418,18 +438,6 @@
         [[XVim instance] cancelOperationCommands];
     }
     return nil;
-}
-
-- (XVimEvaluator*)Y{
-    XVimYankEvaluator *evaluator = [[XVimYankEvaluator alloc] initWithWindow:self.window];
-    evaluator.numericArg = self.numericArg;
-    [evaluator performSelector:@selector(y)];
-    return nil;
-}
-
-- (XVimEvaluator*)y{
-    [self.argumentString appendString:@"y"];
-    return [[XVimYankEvaluator alloc] initWithWindow:self.window];
 }
 
 - (XVimEvaluator*)C_y{
