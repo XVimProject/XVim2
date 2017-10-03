@@ -338,6 +338,35 @@
 
 #if 0
 
+// COMMAND-LINE
+
+- (XVimEvaluator*)COLON{
+        __block XVimEvaluator *eval = [[XVimCommandLineEvaluator alloc] initWithWindow:self.window
+                                                                           firstLetter:@":"
+                                                                               history:[[XVim instance] exCommandHistory]
+                                                                            completion:^ XVimEvaluator* (NSString* command, id* result)
+                                       {
+                                               XVimExCommand *excmd = [[XVim instance] excmd];
+                                               NSString *commandExecuted = [excmd executeCommand:command inWindow:self.window];
+                                               
+                                               if ([commandExecuted isEqualToString:@"substitute"]) {
+                                                       XVimSearch *searcher = [[XVim instance] searcher];
+                                                       if (searcher.confirmEach && searcher.lastFoundRange.location != NSNotFound) {
+                                                               [eval didEndHandler];
+                                                               //[[self sourceView] xvim_changeSelectionMode:XVIM_VISUAL_NONE];
+                                                               return [[XVimReplacePromptEvaluator alloc] initWithWindow:self.window
+                                                                                                       replacementString:searcher.lastReplacementString];
+                                                       }
+                                               }
+                                               return nil;
+                                       }
+                                                                            onKeyPress:nil];
+        
+        return eval;
+}
+
+
+
 - (XVimEvaluator*)C_g{
     // process
     XVimWindow* window = self.window;

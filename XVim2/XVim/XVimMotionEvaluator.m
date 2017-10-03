@@ -631,6 +631,19 @@
         return [self _motionFixed:n];
 }
 
+// TODO: Temporary replacement for slash and asterisk
+
+- (XVimEvaluator*)QUESTION{
+        [NSApp sendAction:NSSelectorFromString(@"find:") to:nil from:self];
+        return nil;
+}
+
+- (XVimEvaluator*)SLASH{
+        [NSApp sendAction:NSSelectorFromString(@"find:") to:nil from:self];
+        return nil;
+}
+
+
 #if 0
 // QESTION and SLASH are "motion" since it can be used as an arugment for operators.
 // "d/abc<CR>" will delete until "abc" characters.

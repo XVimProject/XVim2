@@ -782,8 +782,6 @@
 				ED5282A21F825944000794A1 /* Operators */,
 				EDF010751F6EF16600461B2C /* XVim.h */,
 				EDF010761F6EF16600461B2C /* XVim.m */,
-				EDDF5D0B1F83A85A00872094 /* XVimWindowEvaluator.h */,
-				EDDF5D081F83A85A00872094 /* XVimWindowEvaluator.m */,
 				EDF010641F6EEF1000461B2C /* XVimArgumentEvaluator.h */,
 				EDF010531F6EEF0F00461B2C /* XVimArgumentEvaluator.m */,
 				EDF010521F6EEF0F00461B2C /* XVimDefs.h */,
@@ -825,6 +823,8 @@
 				ED6B8E4F1F80F8E6002F4A47 /* XVimTextStoring.h */,
 				EDF010631F6EEF1000461B2C /* XVimWindow.h */,
 				EDF010581F6EEF0F00461B2C /* XVimWindow.m */,
+				EDDF5D0B1F83A85A00872094 /* XVimWindowEvaluator.h */,
+				EDDF5D081F83A85A00872094 /* XVimWindowEvaluator.m */,
 			);
 			path = XVim;
 			sourceTree = "<group>";
