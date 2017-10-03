@@ -33,7 +33,7 @@ typedef NS_ENUM(NSInteger, CursorStyle) {
 @property(readonly) NSURL* documentURL;
 @property BOOL needsUpdateFoundRanges;
 @property(readonly) NSArray* foundRanges;
-@property(readonly) long long currentLineNumber;
+@property(readonly) NSInteger currentLineNumber;
 @property(strong) id<XVimTextViewDelegateProtocol> xvimDelegate;
 
 -(instancetype)initWithSourceCodeEditorView:(SourceCodeEditorView*)sourceEditorView;

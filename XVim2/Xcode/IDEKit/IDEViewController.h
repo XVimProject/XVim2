@@ -4,7 +4,7 @@
 //     class-dump is Copyright (C) 1997-1998, 2000-2001, 2004-2015 by Steve Nygard.
 //
 
-#import "DVTKit/DVTViewController.h"
+#import <DVTKit/DVTViewController.h>
 
 #if 0
 #import <IDEKit/DVTStatefulObject-Protocol.h>

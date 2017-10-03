@@ -33,6 +33,7 @@
 @property (strong) id<XVimTextViewDelegateProtocol> xvimDelegate;
 @property CURSOR_MODE cursorMode;
 @property (readonly) NSUInteger insertionPoint;
+@property (readonly) NSInteger currentLineNumber;
 
 @end
 
@@ -87,6 +88,7 @@
 - (void)xvim_swapCaseForRange:(NSRange)range;
 - (void)xvim_makeLowerCase:(XVimMotion*)motion;
 - (void)xvim_makeUpperCase:(XVimMotion*)motion;
+- (BOOL)xvim_change:(XVimMotion*)motion;
 @end
 
 @protocol SourceViewYankProtocol <NSObject>

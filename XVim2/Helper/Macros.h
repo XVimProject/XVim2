@@ -23,5 +23,6 @@ static inline void xvim_execute_cleanup_block (__strong xvim_cleanup_block_t *bl
 #define xvim_on_exit \
 __strong xvim_cleanup_block_t xvim_concat(xvim_exitBlock_, __LINE__) __attribute__((cleanup(xvim_execute_cleanup_block), unused, objc_precise_lifetime)) = ^
 
+#define CONST_STR(_name) NSString *_name = @#_name ;
 
 #endif /* Macros_h */

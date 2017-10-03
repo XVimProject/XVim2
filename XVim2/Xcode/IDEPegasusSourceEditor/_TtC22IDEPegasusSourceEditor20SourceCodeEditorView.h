@@ -1,5 +1,5 @@
-#import "SourceEditor/_TtC12SourceEditor16SourceEditorView.h"
-#import "_TtC22IDEPegasusSourceEditor16SourceCodeEditor.h"
+#import <SourceEditor/_TtC12SourceEditor16SourceEditorView.h>
+#import <IDEPegasusSourceEditor/_TtC22IDEPegasusSourceEditor16SourceCodeEditor.h>
 #import "XVimDefs.h"
 
 @class XVimKeyStroke;

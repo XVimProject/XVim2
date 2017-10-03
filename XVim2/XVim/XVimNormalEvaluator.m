@@ -24,6 +24,7 @@
 #import "XVimRegister.h"
 #import "XVimReplaceEvaluator.h"
 #import "XVimTildeEvaluator.h"
+#import "XVimWindowEvaluator.h"
 
 #if 0
 #import "XVimVisualEvaluator.h"
@@ -32,7 +33,6 @@
 #import "XVimShiftEvaluator.h"
 #import "XVimReplaceEvaluator.h"
 #import "XVimRegisterEvaluator.h"
-#import "XVimWindowEvaluator.h"
 #import "XVimMarkSetEvaluator.h"
 #import "XVimReplacePromptEvaluator.h"
 #import "XVimKeyStroke.h"
@@ -168,6 +168,14 @@
         eval.parent = self;
         return [eval performSelector:@selector(h)];
 }
+
+// "S" is Synonym for "cc"
+- (XVimEvaluator*)S{
+        XVimDeleteEvaluator* d = [[XVimDeleteEvaluator alloc] initWithWindow:self.window insertModeAtCompletion:YES];
+        d.parent = self;
+        return [d performSelector:@selector(c)];
+}
+
 
 
 // UNDO/REDO
@@ -320,6 +328,14 @@
 }
 
 
+// WINDOW
+
+- (XVimEvaluator*)C_w{
+        [self.argumentString appendString:@"^W"];
+        return [[XVimWindowEvaluator alloc] initWithWindow:self.window];
+}
+
+
 #if 0
 
 - (XVimEvaluator*)C_g{
@@ -403,14 +419,6 @@
     return nil;
 }
 
-// "S" is Synonym for "cc"
-- (XVimEvaluator*)S{
-    XVimDeleteEvaluator* d = [[XVimDeleteEvaluator alloc] initWithWindow:self.window insertModeAtCompletion:YES];
-    d.parent = self;
-    return [d performSelector:@selector(c)];
-}
-
-
 
 
 - (XVimEvaluator*)v{
@@ -437,10 +445,6 @@
     }
 }
 
-- (XVimEvaluator*)C_w{
-    [self.argumentString appendString:@"^W"];
-    return [[XVimWindowEvaluator alloc] initWithWindow:self.window];
-}
 
 
 

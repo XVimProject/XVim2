@@ -13,3 +13,4 @@
 PREF_DECL(StartOfLine);
 PREF_DECL(AlwaysUseInputSource);
 PREF_DECL(ClipboardHasUnnamed);
+PREF_DECL(BlinkCursor);

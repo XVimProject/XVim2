@@ -129,58 +129,46 @@
         return YES;
 }
 
-- (NSRange)_xvim_getDeleteRange:(XVimMotion*)motion withRange:(XVimRange)to{
-        NSRange r = [self xvim_getOperationRangeFrom:to.begin To:to.end Type:motion.type];
-        if( motion.type == LINEWISE && [self.textStorage isLastLine:to.end]){
-                if( r.location != 0 ){
-                        motion.info->deleteLastLine = YES;
-                        r.location--;
-                        r.length++;
-                }
+- (BOOL)xvim_change:(XVimMotion*)motion{
+        // We do not need to call this since this method uses xvim_delete to operate on text
+        //[self xvim_registerInsertionPointForUndo];
+        
+        BOOL insertNewline = NO;
+        if( motion.type == LINEWISE || self.selectionMode == XVIM_VISUAL_LINE){
+                // 'cc' deletes the lines but need to keep the last newline.
+                // So insertNewline as 'O' does before entering insert mode
+                insertNewline = YES;
         }
-        return r;
+        
+        // "cw" is like "ce" if the cursor is on a word ( in this case blank line is not treated as a word )
+        if( motion.motion == MOTION_WORD_FORWARD && [self.textStorage isNonblank:self.insertionPoint] ){
+                motion.motion = MOTION_END_OF_WORD_FORWARD;
+                motion.type = CHARACTERWISE_INCLUSIVE;
+                motion.option |= MOTION_OPTION_CHANGE_WORD;
+        }
+        // We have to set cursor mode insert before calling delete
+        // because delete adjust cursor position when the cursor is end of line. (e.g. C command).
+        // This behaves that insertion position after delete is one character before the last char of the line.
+        self.cursorMode = CURSOR_MODE_INSERT;
+        if( ![self xvim_delete:motion andYank:YES] ){
+                // And if the delele failed we set the cursor mode back to command.
+                // The cursor mode should be kept in Evaluators so we should make some delegation to it.
+                self.cursorMode = CURSOR_MODE_COMMAND;
+                return NO;
+        }
+        if( motion.info->deleteLastLine){
+                [self xvim_insertNewlineAboveLine:[self.textStorage xvim_lineNumberAtIndex:self.insertionPoint]];
+        }
+        else if( insertNewline ){
+                [self xvim_insertNewlineAboveCurrentLineWithIndent];
+        }else{
+                
+        }
+        [self xvim_changeSelectionMode:XVIM_VISUAL_NONE];
+        [self xvim_syncState];
+        return YES;
 }
 
-- (NSRange)xvim_getOperationRangeFrom:(NSUInteger)from To:(NSUInteger)to Type:(MOTION_TYPE)type {
-        if( self.string.length == 0 ){
-                NSMakeRange(0,0); // No range
-        }
-        
-        if( from > to ){
-                NSUInteger tmp = from;
-                from = to;
-                to = tmp;
-        }
-        // EOF can not be included in operation range.
-        if( [self.textStorage isEOF:from] ){
-                return NSMakeRange(from, 0); // from is EOF but the length is 0 means EOF will not be included in the returned range.
-        }
-        
-        // EOF should not be included.
-        // If type is exclusive we do not subtract 1 because we do it later below
-        if( [self.textStorage isEOF:to] && type != CHARACTERWISE_EXCLUSIVE){
-                to--; // Note that we already know that "to" is not 0 so not chekcing if its 0.
-        }
-        
-        // At this point "from" and "to" is not EOF
-        if( type == CHARACTERWISE_EXCLUSIVE ){
-                // to will not be included.
-                to--;
-        }else if( type == CHARACTERWISE_INCLUSIVE ){
-                // Nothing special
-        }else if( type == LINEWISE ){
-                to = [self.textStorage xvim_endOfLine:to];
-                if( [self.textStorage isEOF:to] ){
-                        to--;
-                }
-                NSUInteger head = [self.textStorage xvim_firstOfLine:from];
-                if( NSNotFound != head ){
-                        from = head;
-                }
-        }
-        
-        return NSMakeRange(from, to - from + 1); // Inclusive range
-}
 
 
 
@@ -365,6 +353,7 @@
         [self xvim_changeSelectionMode:XVIM_VISUAL_NONE];
 }
 
+
 - (void)xvim_makeUpperCase:(XVimMotion*)motion{
         if( self.insertionPoint == 0 && [self.string length] == 0 ){
                 return ;
@@ -392,4 +381,60 @@
         [self xvim_changeSelectionMode:XVIM_VISUAL_NONE];
         
 }
+
+
+- (NSRange)_xvim_getDeleteRange:(XVimMotion*)motion withRange:(XVimRange)to{
+        NSRange r = [self xvim_getOperationRangeFrom:to.begin To:to.end Type:motion.type];
+        if( motion.type == LINEWISE && [self.textStorage isLastLine:to.end]){
+                if( r.location != 0 ){
+                        motion.info->deleteLastLine = YES;
+                        r.location--;
+                        r.length++;
+                }
+        }
+        return r;
+}
+
+- (NSRange)xvim_getOperationRangeFrom:(NSUInteger)from To:(NSUInteger)to Type:(MOTION_TYPE)type {
+        if( self.string.length == 0 ){
+                NSMakeRange(0,0); // No range
+        }
+        
+        if( from > to ){
+                NSUInteger tmp = from;
+                from = to;
+                to = tmp;
+        }
+        // EOF can not be included in operation range.
+        if( [self.textStorage isEOF:from] ){
+                return NSMakeRange(from, 0); // from is EOF but the length is 0 means EOF will not be included in the returned range.
+        }
+        
+        // EOF should not be included.
+        // If type is exclusive we do not subtract 1 because we do it later below
+        if( [self.textStorage isEOF:to] && type != CHARACTERWISE_EXCLUSIVE){
+                to--; // Note that we already know that "to" is not 0 so not chekcing if its 0.
+        }
+        
+        // At this point "from" and "to" is not EOF
+        if( type == CHARACTERWISE_EXCLUSIVE ){
+                // to will not be included.
+                to--;
+        }else if( type == CHARACTERWISE_INCLUSIVE ){
+                // Nothing special
+        }else if( type == LINEWISE ){
+                to = [self.textStorage xvim_endOfLine:to];
+                if( [self.textStorage isEOF:to] ){
+                        to--;
+                }
+                NSUInteger head = [self.textStorage xvim_firstOfLine:from];
+                if( NSNotFound != head ){
+                        from = head;
+                }
+        }
+        
+        return NSMakeRange(from, to - from + 1); // Inclusive range
+}
+
+
 @end

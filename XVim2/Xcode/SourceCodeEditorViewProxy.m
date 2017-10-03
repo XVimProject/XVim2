@@ -10,8 +10,8 @@
 #import "NSTextStorage+VimOperation.h"
 #import "NSString+VimHelper.h"
 #import "XVim.h"
-#import "_TtC22IDEPegasusSourceEditor16SourceCodeEditor.h"
-#import "_TtC22IDEPegasusSourceEditor18SourceCodeDocument.h"
+#import <IDEPegasusSourceEditor/_TtC22IDEPegasusSourceEditor16SourceCodeEditor.h>
+#import <IDEPegasusSourceEditor/_TtC22IDEPegasusSourceEditor18SourceCodeDocument.h>
 #import "XVimMotion.h"
 #import "rd_route.h"
 #import "ffi.h"
@@ -321,7 +321,7 @@ static void (*fpEndEditingTransaction)(void);
         self.cursorStyle = (cursorMode == CURSOR_MODE_INSERT) ? CursorStyleVerticalBar : CursorStyleBlock;
 }
 
-- (long long)currentLineNumber
+- (NSInteger)currentLineNumber
 {
         return [self.sourceCodeEditorView accessibilityInsertionPointLineNumber];
 }

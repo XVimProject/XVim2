@@ -16,7 +16,6 @@
 #import <QuartzCore/QuartzCore.h>
 #import "NSObject+ExtraData.h"
 
-#define CONST_STR(_name) NSString *_name = @#_name ;
 
 CONST_STR(EDLastEvent);
 CONST_STR(EDMode);

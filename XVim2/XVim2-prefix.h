@@ -10,6 +10,7 @@
 #define XVim2_prefix_h
 
 #if __OBJC__
+#define CDUnknownBlockType id
 #import "XVimDefs.h"
 #import "Macros.h"
 #import "Logger.h"

@@ -69,7 +69,6 @@ insertModeAtCompletion:(BOOL)insertModeAtCompletion{
     
 -(XVimEvaluator*)motionFixed:(XVimMotion*)motion{
     if (_insertModeAtCompletion == TRUE) {
-#ifdef TODO
         // Do not repeat the insert, that is how vim works so for
         // example 'c3wWord<ESC>' results in Word not WordWordWord
         if( ![[self sourceView] xvim_change:motion] ){
@@ -79,7 +78,6 @@ insertModeAtCompletion:(BOOL)insertModeAtCompletion{
         // Do not call [[XVim instance] fixRepeatCommand] here.
         // It will be called after XVimInsertEvaluator finish handling key input.
         return [[XVimInsertEvaluator alloc] initWithWindow:self.window];
-#endif
     }else{
         [[self sourceView] xvim_delete:motion andYank:YES];
     }
