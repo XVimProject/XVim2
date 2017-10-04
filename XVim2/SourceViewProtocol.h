@@ -9,7 +9,7 @@
 #ifndef SourceViewProtocol_h
 #define SourceViewProtocol_h
 #import <AppKit/AppKit.h>
-
+#import <SourceEditor/_TtC12SourceEditor23SourceEditorUndoManager.h>
 @class XVimMotion;
 
 @protocol XVimTextViewDelegateProtocol
@@ -29,7 +29,7 @@
 @property (readonly) NSRange selectedRange;
 @property (readonly) NSString *string;
 @property (readonly) XVIM_VISUAL_MODE selectionMode;
-@property (readonly) NSUndoManager *undoManager;
+@property (readonly) SourceEditorUndoManager *undoManager;
 @property (strong) id<XVimTextViewDelegateProtocol> xvimDelegate;
 @property CURSOR_MODE cursorMode;
 @property (readonly) NSUInteger insertionPoint;

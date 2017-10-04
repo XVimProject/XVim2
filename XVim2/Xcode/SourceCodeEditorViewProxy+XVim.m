@@ -6,6 +6,7 @@
 //  Copyright © 2017 Shuichiro Suzuki. All rights reserved.
 //
 
+#import "SourceCodeEditorViewProxy.h"
 #import "SourceCodeEditorViewProxy+XVim.h"
 #import "XVimMotion.h"
 #import "NSTextStorage+VimOperation.h"
@@ -13,6 +14,8 @@
 #import "IDEEditor.h"
 #import "IDEEditorDocument.h"
 #import "XVim.h"
+#import <SourceEditor/_TtC12SourceEditor23SourceEditorUndoManager.h>
+
 
 @interface SourceCodeEditorViewProxy ()
 @property (weak) SourceCodeEditorView* sourceCodeEditorView;
@@ -757,16 +760,18 @@
 }
 
 // UNDO
-- (void)xvim_undoCursorPos:(NSNumber*)num
-{
-        XVimMotion* m = XVIM_MAKE_MOTION(MOTION_POSITION, DEFAULT_MOTION_TYPE, MOTION_OPTION_NONE, 1);
-        m.position = num.unsignedIntegerValue;
-        [self xvim_move:m];
-}
+
 
 - (void)xvim_registerPositionForUndo:(NSUInteger)pos
 {
-        //[self.sourceCodeEditorView.undoManager registerUndoWithTarget:self selector:@selector(xvim_undoCursorPos:) object:[NSNumber numberWithUnsignedInteger:pos]];
+        __weak SourceCodeEditorViewProxy *weakSelf = self;
+        
+        [self.undoManager registerUndoWithTitle:@"BLAH" redoTitle:@"REBLAH" operation:^(void) {
+                SourceCodeEditorViewProxy *SELF = weakSelf;
+                XVimMotion* m = XVIM_MAKE_MOTION(MOTION_POSITION, DEFAULT_MOTION_TYPE, MOTION_OPTION_NONE, 1);
+                m.position = pos;
+                [SELF xvim_move:m];
+        }];
 }
 
 - (void)xvim_registerInsertionPointForUndo

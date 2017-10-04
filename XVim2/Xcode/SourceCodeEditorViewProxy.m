@@ -12,6 +12,7 @@
 #import "XVim.h"
 #import <IDEPegasusSourceEditor/_TtC22IDEPegasusSourceEditor16SourceCodeEditor.h>
 #import <IDEPegasusSourceEditor/_TtC22IDEPegasusSourceEditor18SourceCodeDocument.h>
+#import <SourceEditor/_TtC12SourceEditor23SourceEditorUndoManager.h>
 #import "XVimMotion.h"
 #import "rd_route.h"
 #import "ffi.h"
@@ -22,6 +23,7 @@ static void (*fpGetTextStorage)(void);
 static void (*fpGetSourceEditorDataSource)(void);
 static void (*fpBeginEditingTransaction)(void);
 static void (*fpEndEditingTransaction)(void);
+static void (*fpGetUndoManager)(void);
 
 
 @interface SourceCodeEditorViewProxy ()
@@ -51,6 +53,7 @@ static void (*fpEndEditingTransaction)(void);
                 fpGetCursorStyle = function_ptr_from_name("_T012SourceEditor0aB4ViewC11cursorStyleAA0ab6CursorE0Ofg", NULL);
                 fpGetTextStorage = function_ptr_from_name("_T022IDEPegasusSourceEditor0B12CodeDocumentC16sdefSupport_textSo13NSTextStorageCyF", NULL);
                 fpGetSourceEditorDataSource = function_ptr_from_name("_T012SourceEditor0aB4ViewC04dataA0AA0ab4DataA0Cfg", NULL);
+                fpGetUndoManager = function_ptr_from_name("_T012SourceEditor0ab4DataA0C11undoManagerAA0ab4UndoE0Cfg", NULL);
                 // Methdos on data source
                 fpBeginEditingTransaction = function_ptr_from_name("_T012SourceEditor0ab4DataA0C20beginEditTransactionyyF", NULL);
                 fpEndEditingTransaction = function_ptr_from_name("_T012SourceEditor0ab4DataA0C18endEditTransactionyyF", NULL);
@@ -72,6 +75,7 @@ static void (*fpEndEditingTransaction)(void);
 }
 
 
+// NOTE: line ranges are zero-indexed
 - (NSRange)lineRangeForCharacterRange:(NSRange)arg1
 {
         return [self.sourceCodeEditorView lineRangeForCharacterRange:arg1];
@@ -138,6 +142,26 @@ static void (*fpEndEditingTransaction)(void);
         return dataSource;
 }
 
+
+
+- (SourceEditorUndoManager*)undoManager
+{
+        void* sev = (__bridge_retained void*)self.sourceCodeEditorView;
+        void *undoMgr = NULL;
+        __asm__(
+                "movq %[SourceEditorView], %%r13\n\t"
+                "call *%[DataSourceGetter]\n\t"
+                "movq %%rax, %%r13\n\t"
+                "call *%[GetUndoManager]\n\t"
+                "movq %%rax, %0\n\t"
+
+                : [UndoManagerPtr]"=r"(undoMgr)
+                : [SourceEditorView] "r"(sev), [DataSourceGetter] "m"(fpGetSourceEditorDataSource), [GetUndoManager] "m"(fpGetUndoManager)
+                : "memory", "%rax", "%r13");
+        return (__bridge SourceEditorUndoManager*)undoMgr;
+}
+
+
 - (void)beginEditTransaction
 {
         void* sev = (__bridge_retained void*)self.sourceCodeEditorView;
@@ -192,10 +216,6 @@ static void (*fpEndEditingTransaction)(void);
         return storage;
 }
 
-- (NSUndoManager*)undoManager
-{
-        return self.sourceCodeEditorView.undoManager;
-}
 
 - (void)scrollPageBackward:(NSUInteger)numPages
 {
@@ -324,7 +344,7 @@ static void (*fpEndEditingTransaction)(void);
 - (NSInteger)currentLineNumber
 {
         _auto ln = [self.sourceCodeEditorView lineRangeForCharacterRange:self.sourceCodeEditorView.selectedTextRange].location;
-        return ln == NSNotFound ? 0 : (NSInteger)ln;
+        return ln == NSNotFound ? 1 : (NSInteger)ln + 1;
 }
 
 - (XVimPosition)insertionPosition

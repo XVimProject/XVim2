@@ -491,7 +491,7 @@
         NSUInteger column = 0;
         XVimRange  lines;
         BOOL blockMode = NO;
-        NSUndoManager *undoManager = self.undoManager;
+        //NSUndoManager *undoManager = self.undoManager;
         
         if (self.selectionMode == XVIM_VISUAL_NONE) {
                 XVimRange to = [self xvim_getMotionRange:motionPoint Motion:motion];

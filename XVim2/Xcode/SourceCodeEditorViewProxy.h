@@ -187,7 +187,6 @@ typedef NS_ENUM(NSInteger, CursorStyle) {
 - (void)insertText:(id)string replacementRange:(NSRange)replacementRange;
 - (void)scrollPageBackward:(NSUInteger)numPages;
 - (void)scrollPageForward:(NSUInteger)numPages;
-- (NSUndoManager*)undoManager;
 - (void)setSelectedRanges:(NSArray<NSValue*>*)ranges
                  affinity:(NSSelectionAffinity)affinity
            stillSelecting:(BOOL)stillSelectingFlag;
@@ -202,8 +201,10 @@ typedef NS_ENUM(NSInteger, CursorStyle) {
 #import "SourceCodeEditorViewProxy+Yank.h"
 #import "SourceCodeEditorViewProxy+XVim.h"
 
+
 #define EDIT_TRANSACTION_SCOPE \
-[self xvim_registerInsertionPointForUndo]; \
 [self beginEditTransaction]; \
-xvim_on_exit { [self endEditTransaction]; };
+[self.undoManager beginUndoGrouping]; \
+[self xvim_registerInsertionPointForUndo]; \
+xvim_on_exit { [self.undoManager endUndoGrouping]; [self endEditTransaction]; };
 
