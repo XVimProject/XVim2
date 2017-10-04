@@ -19,10 +19,11 @@
 @class XVimEvaluator;
 @protocol SourceViewProtocol;
 @protocol SourceViewXVimProtocol;
+@protocol SourceViewOperationsProtocol;
 
 
 @interface XVimWindow : NSObject <NSTextInputClient, NSTextFieldDelegate>
-@property (strong, readonly) id<SourceViewProtocol, SourceViewXVimProtocol> sourceView; // This represents currently focused sourceView
+@property (strong, readonly) id<SourceViewProtocol, SourceViewXVimProtocol, SourceViewOperationsProtocol> sourceView; // This represents currently focused sourceView
 @property (weak, readonly) NSTextView* inputView;
 @property (weak, readonly) XVimEvaluator* currentEvaluator;
 @property (weak, readonly) CommandResponder* commandResponder;

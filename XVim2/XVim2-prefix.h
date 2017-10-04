@@ -12,6 +12,7 @@
 #if __OBJC__
 #define CDUnknownBlockType id
 #import "XVimDefs.h"
+#import "XVimMacros.h"
 #import "Macros.h"
 #import "Logger.h"
 #endif

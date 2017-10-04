@@ -10,6 +10,8 @@
 #import "SourceCodeEditorViewProxy+Yank.h"
 #import "XVimMotion.h"
 #import "NSTextStorage+VimOperation.h"
+#import "XVim.h"
+#import "NSString+VimHelper.h"
 
 @interface SourceCodeEditorViewProxy()
 @property(readwrite) NSUInteger selectionBegin;
@@ -21,6 +23,7 @@
 @property BOOL xvim_lockSyncStateFromView;
 @property(strong) NSString* lastYankedText;
 @property TEXT_TYPE lastYankedType;
+-(XVimRange)_xvim_selectedLines;
 - (void)xvim_moveCursor:(NSUInteger)pos preserveColumn:(BOOL)preserve;
 - (void)xvim_syncState;
 - (XVimRange)xvim_getMotionRange:(NSUInteger)current Motion:(XVimMotion*)motion;
@@ -32,6 +35,8 @@
 
 
 @implementation SourceCodeEditorViewProxy(Operations)
+
+# pragma mark - DELETE
 
 - (BOOL)xvim_delete:(XVimMotion*)motion andYank:(BOOL)yank
 {
@@ -129,47 +134,9 @@
         return YES;
 }
 
-- (BOOL)xvim_change:(XVimMotion*)motion{
-        // We do not need to call this since this method uses xvim_delete to operate on text
-        //[self xvim_registerInsertionPointForUndo];
-        
-        BOOL insertNewline = NO;
-        if( motion.type == LINEWISE || self.selectionMode == XVIM_VISUAL_LINE){
-                // 'cc' deletes the lines but need to keep the last newline.
-                // So insertNewline as 'O' does before entering insert mode
-                insertNewline = YES;
-        }
-        
-        // "cw" is like "ce" if the cursor is on a word ( in this case blank line is not treated as a word )
-        if( motion.motion == MOTION_WORD_FORWARD && [self.textStorage isNonblank:self.insertionPoint] ){
-                motion.motion = MOTION_END_OF_WORD_FORWARD;
-                motion.type = CHARACTERWISE_INCLUSIVE;
-                motion.option |= MOTION_OPTION_CHANGE_WORD;
-        }
-        // We have to set cursor mode insert before calling delete
-        // because delete adjust cursor position when the cursor is end of line. (e.g. C command).
-        // This behaves that insertion position after delete is one character before the last char of the line.
-        self.cursorMode = CURSOR_MODE_INSERT;
-        if( ![self xvim_delete:motion andYank:YES] ){
-                // And if the delele failed we set the cursor mode back to command.
-                // The cursor mode should be kept in Evaluators so we should make some delegation to it.
-                self.cursorMode = CURSOR_MODE_COMMAND;
-                return NO;
-        }
-        if( motion.info->deleteLastLine){
-                [self xvim_insertNewlineAboveLine:[self.textStorage xvim_lineNumberAtIndex:self.insertionPoint]];
-        }
-        else if( insertNewline ){
-                [self xvim_insertNewlineAboveCurrentLineWithIndent];
-        }else{
-                
-        }
-        [self xvim_changeSelectionMode:XVIM_VISUAL_NONE];
-        [self xvim_syncState];
-        return YES;
-}
 
 
+#pragma mark - INSERT
 
 
 - (void)xvim_insertText:(NSString*)str line:(NSUInteger)line column:(NSUInteger)column{
@@ -243,6 +210,7 @@
 }
 
 
+#pragma mark - REPLACE
 
 - (BOOL)xvim_replaceCharacters:(unichar)c count:(NSUInteger)count{
         NSUInteger eol = [self.textStorage xvim_endOfLine:self.insertionPoint];
@@ -261,6 +229,49 @@
         }
         return YES;
 }
+
+- (BOOL)xvim_change:(XVimMotion*)motion{
+        // We do not need to call this since this method uses xvim_delete to operate on text
+        //[self xvim_registerInsertionPointForUndo];
+        
+        BOOL insertNewline = NO;
+        if( motion.type == LINEWISE || self.selectionMode == XVIM_VISUAL_LINE){
+                // 'cc' deletes the lines but need to keep the last newline.
+                // So insertNewline as 'O' does before entering insert mode
+                insertNewline = YES;
+        }
+        
+        // "cw" is like "ce" if the cursor is on a word ( in this case blank line is not treated as a word )
+        if( motion.motion == MOTION_WORD_FORWARD && [self.textStorage isNonblank:self.insertionPoint] ){
+                motion.motion = MOTION_END_OF_WORD_FORWARD;
+                motion.type = CHARACTERWISE_INCLUSIVE;
+                motion.option |= MOTION_OPTION_CHANGE_WORD;
+        }
+        // We have to set cursor mode insert before calling delete
+        // because delete adjust cursor position when the cursor is end of line. (e.g. C command).
+        // This behaves that insertion position after delete is one character before the last char of the line.
+        self.cursorMode = CURSOR_MODE_INSERT;
+        if( ![self xvim_delete:motion andYank:YES] ){
+                // And if the delele failed we set the cursor mode back to command.
+                // The cursor mode should be kept in Evaluators so we should make some delegation to it.
+                self.cursorMode = CURSOR_MODE_COMMAND;
+                return NO;
+        }
+        if( motion.info->deleteLastLine){
+                [self xvim_insertNewlineAboveLine:[self.textStorage xvim_lineNumberAtIndex:self.insertionPoint]];
+        }
+        else if( insertNewline ){
+                [self xvim_insertNewlineAboveCurrentLineWithIndent];
+        }else{
+                
+        }
+        [self xvim_changeSelectionMode:XVIM_VISUAL_NONE];
+        [self xvim_syncState];
+        return YES;
+}
+
+
+#pragma mark - CASE
 
 - (void)xvim_swapCaseForRange:(NSRange)range {
         EDIT_TRANSACTION_SCOPE;
@@ -383,6 +394,223 @@
 }
 
 
+#pragma mark - JOIN
+
+- (void)xvim_joinAtLineNumber:(NSUInteger)line{
+        BOOL needSpace = NO;
+        NSUInteger headOfLine = [self.textStorage xvim_indexOfLineNumber:line];
+        if( headOfLine == NSNotFound){
+                return;
+        }
+        
+        NSUInteger tail = [self.textStorage xvim_endOfLine:headOfLine];
+        if( [self.textStorage isEOF:tail] ){
+                // This is the last line and nothing to join
+                return;
+        }
+        
+        // Check if we need to insert space between lines.
+        NSUInteger lastOfLine = [self.textStorage xvim_lastOfLine:headOfLine];
+        if( lastOfLine != NSNotFound ){
+                // This is not blank line so we check if the last character is space or not .
+                if( ![self.textStorage isWhitespace:lastOfLine] ){
+                        needSpace = YES;
+                }
+        }
+        
+        // Search in next line for the position to join(skip white spaces in next line)
+        NSUInteger posToJoin = [self.textStorage nextLine:headOfLine column:0 count:1 option:MOTION_OPTION_NONE];
+        
+        posToJoin = [self.textStorage xvim_nextNonblankInLineAtIndex:posToJoin allowEOL:YES];
+        if (![self.textStorage isEOF:posToJoin] && [self.string characterAtIndex:posToJoin] == ')') {
+                needSpace = NO;
+        }
+        
+        // delete "tail" to "posToJoin" excluding the position of "posToJoin" and insert space if need.
+        if( needSpace ){
+                [self insertText:@" " replacementRange:NSMakeRange(tail, posToJoin-tail)];
+        }else{
+                [self insertText:@""  replacementRange:NSMakeRange(tail, posToJoin-tail)];
+        }
+        
+        // Move cursor
+        [self xvim_moveCursor:tail preserveColumn:NO];
+}
+
+- (void)xvim_join:(NSUInteger)count addSpace:(BOOL)addSpace{
+        NSUInteger line;
+        
+        [self xvim_registerInsertionPointForUndo];
+        
+        if (self.selectionMode == XVIM_VISUAL_NONE) {
+                line = self.insertionLine;
+        } else {
+                XVimRange lines = [self _xvim_selectedLines];
+                
+                line = lines.begin;
+                count = MAX((NSUInteger)1, UNSIGNED_DECREMENT(lines.end, lines.begin));
+        }
+        
+        if (addSpace) {
+                for (NSUInteger i = 0; i < count; i++) {
+                        [self xvim_joinAtLineNumber:line];
+                }
+        } else {
+                NSTextStorage *ts = self.textStorage;
+                NSUInteger pos = [ts xvim_indexOfLineNumber:line];
+                
+                for (NSUInteger i = 0; i < count; i++) {
+                        NSUInteger tail = [ts xvim_endOfLine:pos];
+                        
+                        if (tail != NSNotFound && ![ts isEOF:tail]) {
+                                [self insertText:@"" replacementRange:NSMakeRange(tail, 1)];
+                                [self xvim_moveCursor:tail preserveColumn:NO];
+                        }
+                }
+        }
+        
+        [self xvim_changeSelectionMode:XVIM_VISUAL_NONE];
+}
+
+
+#pragma mark - SHIFT
+
+- (void)_xvim_shift:(XVimMotion*)motion right:(BOOL)right
+{
+        [self _xvim_shift:motion right:right withMotionPoint:self.insertionPoint count:1];
+}
+
+- (void)_xvim_shift:(XVimMotion*)motion right:(BOOL)right withMotionPoint:(NSUInteger)motionPoint count:(NSUInteger) count
+{
+        if (motionPoint == 0 && self.string.length == 0) {
+                return ;
+        }
+        
+        NSTextStorage *ts = self.textStorage;
+        NSUInteger shiftWidth = ts.xvim_indentWidth;
+        NSUInteger column = 0;
+        XVimRange  lines;
+        BOOL blockMode = NO;
+        NSUndoManager *undoManager = self.undoManager;
+        
+        if (self.selectionMode == XVIM_VISUAL_NONE) {
+                XVimRange to = [self xvim_getMotionRange:motionPoint Motion:motion];
+                if (to.end == NSNotFound) {
+                        return;
+                }
+                lines = XVimMakeRange([ts xvim_lineNumberAtIndex:to.begin], [ts xvim_lineNumberAtIndex:to.end]);
+                shiftWidth *= count;
+        } else if (self.selectionMode != XVIM_VISUAL_BLOCK) {
+                lines = [self _xvim_selectedLines];
+                shiftWidth *= motion.count;
+        } else {
+                XVimSelection sel = [self _xvim_selectedBlock];
+                
+                column = sel.left;
+                lines  = XVimMakeRange(sel.top, sel.bottom);
+                blockMode = YES;
+                shiftWidth *= motion.count;
+        }
+        
+        NSUInteger pos = [ts xvim_indexOfLineNumber:lines.begin column:0];
+
+        if (!blockMode) {
+#ifdef TODO
+                [self xvim_registerPositionForUndo:[ts xvim_firstNonblankInLineAtIndex:pos allowEOL:YES]];
+#endif
+        }
+        
+        if (right) {
+                [self shiftRight:self];
+#ifdef TODO
+                NSString *s;
+                if ([XVIM.options[XVimPref_ExpandTab] boolValue]) {
+                        s = [NSString stringMadeOfSpaces:shiftWidth];
+                } else {
+                        s = @"\t";
+                        while ([s length] < (shiftWidth / ts.xvim_indentWidth)) {
+                                s = [s stringByAppendingString:@"\t"];
+                        }
+                }
+                [self xvim_blockInsertFixupWithText:s mode:XVIM_INSERT_SPACES count:1 column:column lines:lines];
+#endif
+        } else {
+                [self shiftLeft:self];
+#ifdef TODO
+                for (NSUInteger line = lines.begin; line <= lines.end; line++) {
+                        [self _xvim_removeSpacesAtLine:line column:column count:shiftWidth];
+                }
+#endif
+        }
+        
+        if (blockMode) {
+                pos = [ts xvim_indexOfLineNumber:lines.begin column:column];
+        } else {
+                pos = [ts xvim_firstNonblankInLineAtIndex:pos allowEOL:YES];
+        }
+        
+        [self xvim_moveCursor:pos preserveColumn:NO];
+        [self xvim_syncState];
+        [self xvim_changeSelectionMode:XVIM_VISUAL_NONE];
+}
+
+- (void)xvim_shiftRight:(XVimMotion*)motion{
+        [self _xvim_shift:motion right:YES];
+}
+
+- (void)xvim_shiftRight:(XVimMotion*)motion withMotionPoint:(NSUInteger)motionPoint count:(NSUInteger)count{
+        [self _xvim_shift:motion right:YES withMotionPoint:motionPoint count:count];
+}
+
+- (void)xvim_shiftLeft:(XVimMotion*)motion{
+        [self _xvim_shift:motion right:NO];
+}
+
+- (void)xvim_shiftLeft:(XVimMotion*)motion withMotionPoint:(NSUInteger)motionPoint count:(NSUInteger)count{
+        [self _xvim_shift:motion right:NO withMotionPoint:motionPoint count:count];
+}
+
+
+
+#pragma mark - UTILITY
+
+// @param column   head column of selected area (zero origin)
+// @param count    moving count of a space
+- (void)_xvim_removeSpacesAtLine:(NSUInteger)line column:(NSUInteger)column count:(NSUInteger)count
+{
+        NSTextStorage *ts = self.textStorage;
+        const NSUInteger tabWidth = ts.xvim_tabWidth;
+        NSUInteger head_pos = [ts xvim_indexOfLineNumber:line column:column];
+        NSString *s = self.string;
+        
+        if ([ts isEOL:head_pos]) {
+                return;
+        }
+        
+        NSInteger remain = (NSInteger)count;
+        NSUInteger pos = head_pos;
+        NSUInteger temp_width = 0;
+        for( ;remain > 0; ++pos ){
+                const unichar c = [s characterAtIndex:pos];
+                if( c == '\t' ){
+                        remain -= tabWidth;
+                        // reset
+                        temp_width = 0;
+                } else if( c == ' ' ){
+                        ++temp_width;
+                        if( temp_width >= tabWidth ){
+                                remain -= tabWidth;
+                                // reset
+                                temp_width = 0;
+                        }
+                } else {
+                        break;
+                }
+        }
+        [self insertText:@"" replacementRange:NSMakeRange(head_pos, pos - head_pos)];
+}
+
+
 - (NSRange)_xvim_getDeleteRange:(XVimMotion*)motion withRange:(XVimRange)to{
         NSRange r = [self xvim_getOperationRangeFrom:to.begin To:to.end Type:motion.type];
         if( motion.type == LINEWISE && [self.textStorage isLastLine:to.end]){
@@ -435,6 +663,9 @@
         
         return NSMakeRange(from, to - from + 1); // Inclusive range
 }
+
+
+
 
 
 @end

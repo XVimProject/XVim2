@@ -14,3 +14,5 @@ PREF_DEFN(StartOfLine)
 PREF_DEFN(AlwaysUseInputSource);
 PREF_DEFN(ClipboardHasUnnamed);
 PREF_DEFN(BlinkCursor);
+PREF_DEFN(ExpandTab);
+PREF_DEFN(Timeout);

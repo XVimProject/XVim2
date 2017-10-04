@@ -55,8 +55,8 @@
 @end
 
 
-@protocol SourceViewScrollingProtocol <NSObject>
 // Scrolling
+@protocol SourceViewScrollingProtocol <NSObject>
 - (void)xvim_scroll:(CGFloat)ratio count:(NSUInteger)count;
 - (void)xvim_pageForward:(NSUInteger)index count:(NSUInteger)count;
 - (void)xvim_pageBackward:(NSUInteger)index count:(NSUInteger)count;
@@ -71,6 +71,7 @@
 - (void)xvim_scrollTo:(NSUInteger)insertionPoint;
 @end
 
+// Mutate Operations
 @protocol SourceViewOperationsProtocol <NSObject>
 - (BOOL)xvim_delete:(XVimMotion*)motion withMotionPoint:(NSUInteger)motionPoint andYank:(BOOL)yank;
 - (BOOL)xvim_delete:(XVimMotion*)motion andYank:(BOOL)yank;
@@ -89,8 +90,16 @@
 - (void)xvim_makeLowerCase:(XVimMotion*)motion;
 - (void)xvim_makeUpperCase:(XVimMotion*)motion;
 - (BOOL)xvim_change:(XVimMotion*)motion;
+- (void)xvim_joinAtLineNumber:(NSUInteger)line;
+- (void)xvim_join:(NSUInteger)count addSpace:(BOOL)addSpace;
+- (void)_xvim_shift:(XVimMotion*)motion right:(BOOL)right;
+- (void)xvim_shiftRight:(XVimMotion*)motion;
+- (void)xvim_shiftRight:(XVimMotion*)motion withMotionPoint:(NSUInteger)motionPoint count:(NSUInteger)count;
+- (void)xvim_shiftLeft:(XVimMotion*)motion;
+- (void)xvim_shiftLeft:(XVimMotion*)motion withMotionPoint:(NSUInteger)motionPoint count:(NSUInteger)count;
 @end
 
+// Yank + Put
 @protocol SourceViewYankProtocol <NSObject>
 - (void)xvim_yank:(XVimMotion*)motion;
 - (void)xvim_yank:(XVimMotion*)motion withMotionPoint:(NSUInteger)motionPoint;

@@ -323,7 +323,8 @@ static void (*fpEndEditingTransaction)(void);
 
 - (NSInteger)currentLineNumber
 {
-        return [self.sourceCodeEditorView accessibilityInsertionPointLineNumber];
+        _auto ln = [self.sourceCodeEditorView lineRangeForCharacterRange:self.sourceCodeEditorView.selectedTextRange].location;
+        return ln == NSNotFound ? 0 : (NSInteger)ln;
 }
 
 - (XVimPosition)insertionPosition
@@ -498,5 +499,11 @@ static void (*fpEndEditingTransaction)(void);
 - (void)cut:(id)sender { [self.sourceCodeEditorView cut:self]; }
 - (void)copy:(id)sender { [self.sourceCodeEditorView copy:self]; }
 
+- (NSUInteger)characterIndexForInsertionAtPoint:(CGPoint)arg1{
+        return [self.sourceCodeEditorView characterIndexForInsertionAtPoint:arg1];
+}
 
+-(NSRect)bounds { return self.sourceCodeEditorView.bounds; }
+-(NSRect)frame { return self.sourceCodeEditorView.frame; }
+-(NSSize)contentSize { return self.sourceCodeEditorView.visibleTextRect.size; }
 @end

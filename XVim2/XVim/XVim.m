@@ -24,6 +24,7 @@
 #import "XVim.h"
 #import "XVimKeymap.h"
 #import "XVimRegister.h"
+#import "XVimPreferences.h"
 #import "Logger.h"
 #import "_TtC22IDEPegasusSourceEditor20SourceCodeEditorView.h"
 
@@ -91,8 +92,9 @@
                 self.isExecuting = NO;
                 self.foundRangesHidden = NO;
                 self.options = @{
-                        @"alwaysuseinputsource" : @NO,
-                        @"timeoutmillisecs" : @(2000)
+                        XVimPref_AlwaysUseInputSource : @NO,
+                        XVimPref_Timeout : @(2000),
+                        XVimPref_ExpandTab : @YES
                 };
 
                 for (int i = 0; i < XVIM_MODE_COUNT; ++i) {

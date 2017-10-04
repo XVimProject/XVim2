@@ -25,13 +25,13 @@
 #import "XVimReplaceEvaluator.h"
 #import "XVimTildeEvaluator.h"
 #import "XVimWindowEvaluator.h"
+#import "XVimJoinEvaluator.h"
+#import "XVimShiftEvaluator.h"
 
 #if 0
 #import "XVimVisualEvaluator.h"
 #import "XVimMarkSetEvaluator.h"
 #import "XVimEqualEvaluator.h"
-#import "XVimShiftEvaluator.h"
-#import "XVimReplaceEvaluator.h"
 #import "XVimRegisterEvaluator.h"
 #import "XVimMarkSetEvaluator.h"
 #import "XVimReplacePromptEvaluator.h"
@@ -43,8 +43,6 @@
 #import "XVimRecordingEvaluator.h"
 #import "XVimMark.h"
 #import "XVimMarks.h"
-#import "NSTextView+VimOperation.h"
-#import "XVimJoinEvaluator.h"
 #endif
 
 @interface XVimNormalEvaluator () {
@@ -116,6 +114,7 @@
 // it should go you into insert mode
 
 // DELETE
+#pragma mark - DELETE
 
 - (XVimEvaluator*)c
 {
@@ -179,6 +178,7 @@
 
 
 // UNDO/REDO
+#pragma mark - UNDO/REDO
 
 - (XVimEvaluator*)C_r{
         _auto view = [self sourceView];
@@ -199,6 +199,7 @@
 
 // SCROLL
 // These are not motions but scrolling. That's the reason the implementation is here.
+#pragma mark - SCROLL
 
 - (XVimEvaluator*)C_b
 {
@@ -229,6 +230,8 @@
 
 
 // MOTION
+#pragma mark - MOTION
+
 - (XVimEvaluator*)g{
         [self.argumentString appendString:@"g"];
         self.onChildCompleteHandler = @selector(onComplete_g:);
@@ -272,6 +275,7 @@
 
 
 // YANK
+#pragma mark - YANK
 
 - (XVimEvaluator*)Y{
         XVimYankEvaluator *evaluator = [[XVimYankEvaluator alloc] initWithWindow:self.window];
@@ -286,6 +290,7 @@
 }
 
 // PUT
+#pragma mark - PUT
 
 - (XVimEvaluator*)p{
         _auto view = [self sourceView];
@@ -305,6 +310,7 @@
 
 
 // REPLACE
+#pragma mark - REPLACE
 
 
 - (XVimEvaluator*)r{
@@ -319,6 +325,7 @@
 
 
 // SWAP CASE
+#pragma mark - CASE
 
 - (XVimEvaluator*)TILDE{
         [self.argumentString appendString:@"~"];
@@ -329,12 +336,38 @@
 
 
 // WINDOW
+#pragma mark - WINDOW
 
 - (XVimEvaluator*)C_w{
         [self.argumentString appendString:@"^W"];
         return [[XVimWindowEvaluator alloc] initWithWindow:self.window];
 }
 
+
+
+// JOIN
+#pragma mark - JOIN
+
+- (XVimEvaluator*)J{
+        XVimJoinEvaluator* eval = [[XVimJoinEvaluator alloc] initWithWindow:self.window addSpace:YES];
+        return [eval executeOperationWithMotion:XVIM_MAKE_MOTION(MOTION_NONE, CHARACTERWISE_EXCLUSIVE, MOTION_OPTION_NONE, self.numericArg)];
+}
+
+
+// SHIFT
+#pragma mark - SHIFT
+
+- (XVimEvaluator*)GREATERTHAN{
+        [self.argumentString appendString:@">"];
+        XVimShiftEvaluator* eval =  [[XVimShiftEvaluator alloc] initWithWindow:self.window unshift:NO];
+        return eval;
+}
+
+- (XVimEvaluator*)LESSTHAN{
+        [self.argumentString appendString:@"<"];
+        XVimShiftEvaluator* eval =  [[XVimShiftEvaluator alloc] initWithWindow:self.window unshift:YES];
+        return eval;
+}
 
 #if 0
 
@@ -387,11 +420,6 @@
 
 
 
-
-- (XVimEvaluator*)J{
-    XVimJoinEvaluator* eval = [[XVimJoinEvaluator alloc] initWithWindow:self.window addSpace:YES];
-    return [eval executeOperationWithMotion:XVIM_MAKE_MOTION(MOTION_NONE, CHARACTERWISE_EXCLUSIVE, MOTION_OPTION_NONE, self.numericArg)];
-}
 
 // Should be moved to XVimMotionEvaluator
 

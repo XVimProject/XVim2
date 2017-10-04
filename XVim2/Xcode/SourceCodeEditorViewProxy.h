@@ -41,6 +41,7 @@ typedef NS_ENUM(NSInteger, CursorStyle) {
 // Proxy methods
 - (NSRange)lineRangeForCharacterRange:(NSRange)arg1;
 - (NSRange)characterRangeForLineRange:(NSRange)arg1;
+- (NSUInteger)characterIndexForInsertionAtPoint:(CGPoint)arg1;
 - (void)mouseExited:(id)sender;
 - (void)mouseEntered:(id)sender;
 - (void)mouseMoved:(id)sender;
@@ -176,6 +177,9 @@ typedef NS_ENUM(NSInteger, CursorStyle) {
 - (void)cut:(id)sender;
 - (void)copy:(id)sender;
 
+-(NSRect)bounds;
+-(NSRect)frame;
+-(NSSize)contentSize;
 // Utilities
 - (void)scrollRangeToVisible:(NSRange)arg1;
 @property (readonly) NSInteger linesPerPage;
