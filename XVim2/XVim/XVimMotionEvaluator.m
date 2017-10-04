@@ -633,12 +633,14 @@
 
 // TODO: Temporary replacement for slash and asterisk
 
-- (XVimEvaluator*)QUESTION{
+- (XVimEvaluator*)QUESTION
+{
         [NSApp sendAction:NSSelectorFromString(@"find:") to:nil from:self];
         return nil;
 }
 
-- (XVimEvaluator*)SLASH{
+- (XVimEvaluator*)SLASH
+{
         [NSApp sendAction:NSSelectorFromString(@"find:") to:nil from:self];
         return nil;
 }

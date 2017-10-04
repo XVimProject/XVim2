@@ -243,18 +243,19 @@
         }
 
         if (nextEvaluator == self && nil == keySelector) {
-                NSEvent *event = [keyStroke toEventwithWindowNumber:0 context:nil];
+                NSEvent* event = [keyStroke toEventwithWindowNumber:0 context:nil];
                 if ([self windowShouldReceive:keySelector]) {
                         // Here we pass the key input to original text view.
                         // The input coming to this method is already handled by "Input Method"
                         // and the input maight be non ascii like 'あ'
                         if (keyStroke.isPrintable) {
                                 [self.sourceView insertText:keyStroke.xvimString];
-                        }else{
+                        }
+                        else {
                                 [self.sourceView interpretKeyEvents:[NSArray arrayWithObject:event]];
                         }
-                //NSEvent* event = [keyStroke event];
-                //[self.sourceView keyDown:event];
+                        //NSEvent* event = [keyStroke event];
+                        //[self.sourceView keyDown:event];
                 }
         }
         return nextEvaluator;
@@ -317,12 +318,12 @@
 
 - (XVimEvaluator*)ESC
 {
-    return nil;
+        return nil;
 }
 
 - (XVimEvaluator*)C_LSQUAREBRACKET
 {
-    return [self ESC];
+        return [self ESC];
 }
 
 

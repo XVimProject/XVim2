@@ -315,7 +315,8 @@ static void (*fpGetUndoManager)(void);
 
 -(NSArray<NSValue*>*)selectedRanges
 {
-        return self.sourceCodeEditorView.accessibilitySelectedTextRanges;
+        //TODO
+        return @[[NSValue valueWithRange:self.selectedRange]];
 }
 
 

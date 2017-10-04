@@ -97,12 +97,12 @@
 // FIXME: this code is actually never called in XVim for XCode, it probably has bugs, it's not tested
 - (NSRange)xvim_indexRangeForLines:(NSRange)range
 {
-        NSString  *string = self.xvim_string;
+        NSString* string = self.xvim_string;
         NSUInteger length = self.length, start = 0;
         NSUInteger lineNum = 0, end = 0, contentsEnd = 0;
-        
+
         NSAssert(range.location > 0, @"line number starts at 1");
-        
+
         do {
                 [string getLineStart:NULL end:&end contentsEnd:&contentsEnd forRange:NSMakeRange(end, 0)];
                 lineNum++;
@@ -113,7 +113,7 @@
                         return NSMakeRange(start, end - start);
                 }
         } while (end < length);
-        
+
         // we have a last empty line after \n
         if (contentsEnd < end) {
                 lineNum++;
@@ -124,10 +124,9 @@
                         return NSMakeRange(start, end - start);
                 }
         }
-        
+
         return NSMakeRange(0, length);
 }
-
 
 
 - (NSUInteger)xvim_indexOfLineNumber:(NSUInteger)num
@@ -331,7 +330,6 @@ static NSUInteger xvim_sb_count_columns(xvim_string_buffer_t* sb, NSUInteger tab
 
         return NSNotFound;
 }
-
 
 
 #pragma mark Definitions

@@ -53,7 +53,8 @@
         [[NSNotificationCenter defaultCenter] removeObserver:self];
 }
 
--(void)setupAfterEditorViewSetup {
+- (void)setupAfterEditorViewSetup
+{
         self.sourceView.cursorMode = CURSOR_MODE_COMMAND;
         [self.sourceView xvim_syncStateFromView];
 }
@@ -130,8 +131,7 @@
 
         if ([XVIM.options[XVimPref_AlwaysUseInputSource] boolValue]
             || self.currentEvaluator.mode == XVIM_MODE_INSERT
-            || self.currentEvaluator.mode == XVIM_MODE_CMDLINE)
-        {
+            || self.currentEvaluator.mode == XVIM_MODE_CMDLINE) {
                 // We must pass the event to the current input method
                 // If it is obserbed we do not do anything anymore and handle insertText: or doCommandBySelector:
 
@@ -228,7 +228,7 @@
         // Evaluate key stroke
         XVimEvaluator* currentEvaluator = [_currentEvaluatorStack lastObject];
         currentEvaluator.window = self;
-        
+
         if (self.tmpBuffer) {
                 keyStroke.event = self.tmpBuffer;
                 self.tmpBuffer = nil;
@@ -381,7 +381,7 @@
 - (id<NSTextInputClient>)inputView
 {
 #ifdef TODO
-        if( self.currentEvaluator.mode == XVIM_MODE_CMDLINE ){
+        if (self.currentEvaluator.mode == XVIM_MODE_CMDLINE) {
                 return self.commandLine.commandField;
         }
 #endif
