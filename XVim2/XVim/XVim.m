@@ -25,6 +25,7 @@
 #import "XVimKeymap.h"
 #import "XVimRegister.h"
 #import "XVimPreferences.h"
+#import "XVimMarks.h"
 #import "Logger.h"
 #import "_TtC22IDEPegasusSourceEditor20SourceCodeEditorView.h"
 
@@ -87,6 +88,7 @@
                 self.lastVisualPosition = XVimMakePosition(NSNotFound, NSNotFound);
                 self.lastVisualSelectionBegin = XVimMakePosition(NSNotFound, NSNotFound);
                 _registerManager = [[XVimRegisterManager alloc] init];
+                _marks = [[XVimMarks alloc] init];
                 self.tempRepeatRegister = [[XVimMutableString alloc] init];
                 self.isRepeating = NO;
                 self.isExecuting = NO;

@@ -35,7 +35,7 @@
 // Do not override this method
 - (XVimEvaluator*)_motionFixed:(XVimMotion*)motion;
 
-//- (XVimEvaluator*)jumpToMark:(XVimMark*)mark firstOfLine:(BOOL)fol KeepJumpMarkIndex:(BOOL)keepJumpMarkIndex NeedUpdateMark:(BOOL)needUpdateMark;
+- (XVimEvaluator*)jumpToMark:(XVimMark*)mark firstOfLine:(BOOL)fol KeepJumpMarkIndex:(BOOL)keepJumpMarkIndex NeedUpdateMark:(BOOL)needUpdateMark;
 
 // These are only for surpress warning
 

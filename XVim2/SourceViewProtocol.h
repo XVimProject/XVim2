@@ -41,6 +41,7 @@
 @property (readonly) BOOL selectionToEOL;
 @property (readonly) NSUInteger insertionColumn;
 @property (readonly) NSUInteger insertionLine;
+@property (readonly) NSURL *documentURL;
 @end
 
 

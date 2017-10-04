@@ -11,8 +11,11 @@
 #import "XVimKeyStroke.h"
 #import "XVimWindow.h"
 #import "XVim.h"
+#import "XVimMarks.h"
+#import "XVimMark.h"
 #import "XVimArgumentEvaluator.h"
 #import "SourceViewProtocol.h"
+#import "NSTextStorage+VimOperation.h"
 
 
 ////////////////////////////////
@@ -356,6 +359,75 @@
         return [self _motionFixed:XVIM_MAKE_MOTION(MOTION_BEGINNING_OF_LINE, CHARACTERWISE_INCLUSIVE, MOTION_OPTION_NONE, [self numericArg])];
 }
 
+
+// MARKS
+#pragma mark - MARKS
+
+// This is internal method used by SQUOTE, BACKQUOTE
+// TODO: rename firstOfLine -> firstNonblankOfLine
+- (XVimEvaluator*)jumpToMark:(XVimMark*)mark
+                 firstOfLine:(BOOL)fol
+           KeepJumpMarkIndex:(BOOL)keepJumpMarkIndex
+              NeedUpdateMark:(BOOL)needUpdateMark
+{
+        MOTION_TYPE motionType = fol?LINEWISE:CHARACTERWISE_EXCLUSIVE;
+        
+        if( mark.line == NSNotFound ){
+                return [XVimEvaluator invalidEvaluator];
+        }
+        
+        BOOL jumpToAnotherFile = NO;
+        if( ![mark.document isEqualToString:self.sourceView.documentURL.path]){
+#ifdef TODO
+                jumpToAnotherFile = YES;
+                NSError* error;
+                NSURL* doc = [NSURL fileURLWithPath:mark.document];
+                DVTDocumentLocation* loc = [[DVTDocumentLocation alloc] initWithDocumentURL:doc timestamp:nil];
+                IDEEditorOpenSpecifier* spec = [IDEEditorOpenSpecifier structureEditorOpenSpecifierForDocumentLocation:loc inWorkspace:[XVimLastActiveWorkspaceTabController() workspace] error:&error];
+                
+                [XVimLastActiveEditorArea() _openEditorOpenSpecifier:spec editorContext:[XVimLastActiveEditorArea() lastActiveEditorContext] takeFocus:YES];
+#endif
+        }
+        
+        NSUInteger to = [self.sourceView.textStorage xvim_indexOfLineNumber:mark.line column:mark.column];
+        if( NSNotFound == to ){
+                return [XVimEvaluator invalidEvaluator];
+        }
+        
+        if( fol ){
+                to = [self.sourceView.textStorage xvim_firstNonblankInLineAtIndex:to allowEOL:YES]; // This never returns NSNotFound
+        }
+        
+        XVimMotion* m = XVIM_MAKE_MOTION(needUpdateMark?MOTION_POSITION_JUMP:MOTION_POSITION, motionType, MOTION_OPTION_NONE, self.numericArg);
+        m.position = to;
+        if( needUpdateMark ){
+                m.jumpToAnotherFile = jumpToAnotherFile;
+        }
+        m.keepJumpMarkIndex = keepJumpMarkIndex;
+        
+        return [self _motionFixed:m];
+}
+
+// SQUOTE ( "'{mark-name-letter}" ) moves the cursor to the mark named {mark-name-letter}
+// e.g. 'a moves the cursor to the mark names "a"
+// It does nothing if the mark is not defined or if the mark is no longer within
+//  the range of the document
+
+- (XVimEvaluator*)SQUOTE{
+        [self.argumentString appendString:@"'"];
+        self.onChildCompleteHandler = @selector(onComplete_SQUOTE:);
+        return [[XVimArgumentEvaluator alloc] initWithWindow:self.window];
+}
+
+- (XVimEvaluator*)onComplete_SQUOTE:(XVimArgumentEvaluator*)childEvaluator{
+        // FIXME:
+        // This will work for Ctrl-c as register c but it should not
+        //NSString* key = [childEvaluator.keyStroke toString];
+        NSString* key = [NSString stringWithFormat:@"%c", childEvaluator.keyStroke.character];
+        XVimMark* mark = [[XVim instance].marks markForName:key forDocument:[self.sourceView documentURL].path];
+        return [self jumpToMark:mark firstOfLine:YES KeepJumpMarkIndex:NO NeedUpdateMark:YES];
+}
+
 #if 0
 - (XVimEvaluator*)z{
     [self.argumentString appendString:@"z"];
@@ -396,68 +468,7 @@
 	return [self searchCurrentWordForward:NO];
 }
 
-// This is internal method used by SQUOTE, BACKQUOTE
-// TODO: rename firstOfLine -> firstNonblankOfLine
-- (XVimEvaluator*)jumpToMark:(XVimMark*)mark
-                 firstOfLine:(BOOL)fol
-           KeepJumpMarkIndex:(BOOL)keepJumpMarkIndex
-              NeedUpdateMark:(BOOL)needUpdateMark
-{
-	MOTION_TYPE motionType = fol?LINEWISE:CHARACTERWISE_EXCLUSIVE;
-    
-    if( mark.line == NSNotFound ){
-        return [XVimEvaluator invalidEvaluator];
-    }
-    
-	BOOL jumpToAnotherFile = NO;
-    if( ![mark.document isEqualToString:self.sourceView.documentURL.path]){
-		jumpToAnotherFile = YES;
-        NSError* error;
-        NSURL* doc = [NSURL fileURLWithPath:mark.document];
-        DVTDocumentLocation* loc = [[DVTDocumentLocation alloc] initWithDocumentURL:doc timestamp:nil];
-        IDEEditorOpenSpecifier* spec = [IDEEditorOpenSpecifier structureEditorOpenSpecifierForDocumentLocation:loc inWorkspace:[XVimLastActiveWorkspaceTabController() workspace] error:&error];
-        
-        [XVimLastActiveEditorArea() _openEditorOpenSpecifier:spec editorContext:[XVimLastActiveEditorArea() lastActiveEditorContext] takeFocus:YES];
-    }
-    
-    NSUInteger to = [self.sourceView.textStorage xvim_indexOfLineNumber:mark.line column:mark.column];
-    if( NSNotFound == to ){
-        return [XVimEvaluator invalidEvaluator];
-    }
-    
-    if( fol ){
-        to = [self.sourceView.textStorage xvim_firstNonblankInLineAtIndex:to allowEOL:YES]; // This never returns NSNotFound
-    }
 
-    XVimMotion* m = XVIM_MAKE_MOTION(needUpdateMark?MOTION_POSITION_JUMP:MOTION_POSITION, motionType, MOTION_OPTION_NONE, self.numericArg);
-    m.position = to;
-	if( needUpdateMark ){
-		m.jumpToAnotherFile = jumpToAnotherFile;
-	}
-    m.keepJumpMarkIndex = keepJumpMarkIndex;
-	
-    return [self _motionFixed:m];
-}
-
-// SQUOTE ( "'{mark-name-letter}" ) moves the cursor to the mark named {mark-name-letter}
-// e.g. 'a moves the cursor to the mark names "a"
-// It does nothing if the mark is not defined or if the mark is no longer within
-//  the range of the document
-
-- (XVimEvaluator*)SQUOTE{
-    [self.argumentString appendString:@"'"];
-    self.onChildCompleteHandler = @selector(onComplete_SQUOTE:);
-    return [[XVimArgumentEvaluator alloc] initWithWindow:self.window];
-}
-
-- (XVimEvaluator*)onComplete_SQUOTE:(XVimArgumentEvaluator*)childEvaluator{
-    // FIXME:
-    // This will work for Ctrl-c as register c but it should not
-    //NSString* key = [childEvaluator.keyStroke toString];
-    NSString* key = [NSString stringWithFormat:@"%c", childEvaluator.keyStroke.character];
-    XVimMark* mark = [[XVim instance].marks markForName:key forDocument:[self.sourceView documentURL].path];
-    return [self jumpToMark:mark firstOfLine:YES KeepJumpMarkIndex:NO NeedUpdateMark:YES];
-}
 
 - (XVimEvaluator*)BACKQUOTE{
     [self.argumentString appendString:@"`"];

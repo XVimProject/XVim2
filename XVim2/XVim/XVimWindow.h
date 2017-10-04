@@ -17,6 +17,7 @@
  */
 @class CommandResponder;
 @class XVimEvaluator;
+@class XVimMark;
 @protocol SourceViewProtocol;
 @protocol SourceViewXVimProtocol;
 @protocol SourceViewOperationsProtocol;
@@ -27,6 +28,8 @@
 @property (weak, readonly) NSTextView* inputView;
 @property (weak, readonly) XVimEvaluator* currentEvaluator;
 @property (weak, readonly) CommandResponder* commandResponder;
+
+@property (strong, nonatomic) XVimMark * currentPositionMark;
 
 - (instancetype)initWithEditorView:(id<SourceViewProtocol>)responder;
 - (void)setupAfterEditorViewSetup;

@@ -11,7 +11,10 @@
 #import "XVimKeyStroke.h"
 #import "XVimKeymap.h"
 #import "XVimEvaluator.h"
+#import "XVimMark.h"
+#import "XVimMarks.h"
 #import "SourceViewProtocol.h"
+#import "NSTextStorage+VimOperation.h"
 #import <objc/runtime.h>
 
 
@@ -439,8 +442,34 @@
 }
 
 
+
+- (XVimMark*)currentPositionMark
+{
+        XVimMark* mark = [[XVimMark alloc] init];
+        NSRange r = [self.sourceView selectedRange];
+        mark.document = [[self.sourceView documentURL] path];
+        if( nil == mark.document ){
+                return nil;
+        }
+        mark.line = [self.sourceView.textStorage xvim_lineNumberAtIndex:r.location];
+        mark.column = [self.sourceView.textStorage xvim_columnOfIndex:r.location];
+        return mark;
+}
+
 - (void)preMotion:(XVimMotion*)motion
 {
+        if( ![motion isJumpMotion] ) return;
+        
+        XVimMark* mark = [self currentPositionMark];
+        if( motion.jumpToAnotherFile ){
+                // do nothing for jumping to another file
+        } else {
+                // update single quote mark
+                [XVIM.marks setMark:mark forName:@"'"];
+        }
+        
+        [XVIM.marks addToJumpListWithMark:mark
+                        KeepJumpMarkIndex:motion.keepJumpMarkIndex];
 }
 
 @end

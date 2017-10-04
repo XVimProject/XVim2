@@ -28,12 +28,13 @@
 #import "XVimJoinEvaluator.h"
 #import "XVimShiftEvaluator.h"
 #import "XVimVisualEvaluator.h"
+#import "XVimMarkSetEvaluator.h"
+#import "XVimMark.h"
+#import "XVimMarks.h"
 
 #if 0
-#import "XVimMarkSetEvaluator.h"
 #import "XVimEqualEvaluator.h"
 #import "XVimRegisterEvaluator.h"
-#import "XVimMarkSetEvaluator.h"
 #import "XVimReplacePromptEvaluator.h"
 #import "XVimKeyStroke.h"
 #import "XVimCommandLineEvaluator.h"
@@ -41,8 +42,6 @@
 #import "XVimSearch.h"
 #import "XVimOptions.h"
 #import "XVimRecordingEvaluator.h"
-#import "XVimMark.h"
-#import "XVimMarks.h"
 #endif
 
 @interface XVimNormalEvaluator () {
@@ -261,10 +260,8 @@
 - (XVimEvaluator*)onComplete_g:(XVimGActionEvaluator*)childEvaluator
 {
         if (childEvaluator.key.selector == @selector(SEMICOLON)) {
-#ifdef TODO
                 XVimMark* mark = [[XVim instance].marks markForName:@"." forDocument:[self.sourceView documentURL].path];
                 return [self jumpToMark:mark firstOfLine:NO KeepJumpMarkIndex:NO NeedUpdateMark:YES];
-#endif
         }
         else {
                 if (childEvaluator.motion != nil) {
@@ -425,7 +422,28 @@
 }
 
 
+// MARK
+#pragma mark - MARK
 
+- (XVimEvaluator*)m{
+        // 'm{letter}' sets a local mark.
+        [self.argumentString appendString:@"m"];
+        return [[XVimMarkSetEvaluator alloc] initWithWindow:self.window];
+}
+
+
+
+// OTHERS
+
+- (XVimEvaluator*)C_RSQUAREBRACKET{
+        // Add current position/file to jump list
+        XVimMotion *motion = XVIM_MAKE_MOTION(MOTION_POSITION_JUMP, DEFAULT_MOTION_TYPE, MOTION_OPTION_NONE, 0);
+        motion.jumpToAnotherFile = YES;
+        [self.window preMotion:motion];
+        
+        [NSApp sendAction:NSSelectorFromString(@"jumpToDefinition:") to:nil from:self];
+        return nil;
+}
 
 #if 0
 
@@ -480,12 +498,6 @@
 
 
 // Should be moved to XVimMotionEvaluator
-
-- (XVimEvaluator*)m{
-    // 'm{letter}' sets a local mark.
-    [self.argumentString appendString:@"m"];
-	return [[XVimMarkSetEvaluator alloc] initWithWindow:self.window];
-}
 
 
 - (XVimEvaluator*)C_o{
@@ -614,16 +626,6 @@
     [self.argumentString appendString:@"<"];
     XVimShiftEvaluator* eval =  [[XVimShiftEvaluator alloc] initWithWindow:self.window unshift:YES];
     return eval;
-}
-
-- (XVimEvaluator*)C_RSQUAREBRACKET{
-    // Add current position/file to jump list
-    XVimMotion *motion = XVIM_MAKE_MOTION(MOTION_POSITION_JUMP, DEFAULT_MOTION_TYPE, MOTION_OPTION_NONE, 0);
-    motion.jumpToAnotherFile = YES;
-    [self.window preMotion:motion];
-        
-    [NSApp sendAction:@selector(jumpToDefinition:) to:nil from:self];
-    return nil;
 }
 
 - (XVimEvaluator*)HT{

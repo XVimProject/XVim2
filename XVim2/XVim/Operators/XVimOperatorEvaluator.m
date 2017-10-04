@@ -13,9 +13,9 @@
 #import "XVimWindow.h"
 #import "Logger.h"
 #import "XVimKeymapProvider.h"
-//#import "XVimMark.h"
-//#import "XVimMarks.h"
-//#import "NSTextView+VimOperation.h"
+#import "XVimMark.h"
+#import "XVimMarks.h"
+#import "SourceViewProtocol.h"
 
 @interface XVimOperatorEvaluator() {
 }
@@ -68,8 +68,7 @@
     // We do not fix the change here if next evaluator is not nil becaust it waits more input for fix the command.
     // This happens for a command like "cw..."
     if( nil == evaluator ){
-#ifdef TODO
-        NSTextView* view = self.window.sourceView;
+        _auto view = self.window.sourceView;
         NSString* className = NSStringFromClass([self class]);
         if( ![className isEqualToString:@"XVimYankEvaluator"]){
             [[XVim instance] fixOperationCommands];
@@ -89,7 +88,6 @@
                 [[XVim instance].marks setMark:mark forName:@"."];
             }
         }
-#endif
     }
     return evaluator;
 }
