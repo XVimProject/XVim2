@@ -34,9 +34,17 @@
 @property CURSOR_MODE cursorMode;
 @property (readonly) NSUInteger insertionPoint;
 @property (readonly) NSInteger currentLineNumber;
-
+@property (readonly) NSArray<NSValue*> * selectedRanges;
+@property (readonly) NSTextStorage *textStorage;
+@property (readonly) XVimPosition insertionPosition;
+@property (readonly) XVimPosition selectionBeginPosition;
+@property (readonly) BOOL selectionToEOL;
+@property (readonly) NSUInteger insertionColumn;
+@property (readonly) NSUInteger insertionLine;
 @end
 
+
+// XVim extensions
 @protocol SourceViewXVimProtocol <NSObject>
 - (void)xvim_syncState;
 - (void)xvim_syncStateFromView;
@@ -48,10 +56,11 @@
 - (void)xvim_escapeFromInsert;
 - (void)xvim_moveCursor:(NSUInteger)pos preserveColumn:(BOOL)preserve;
 - (void)xvim_move:(XVimMotion*)motion;
+- (void)xvim_moveToPosition:(XVimPosition)pos;
 -(NSUInteger) numberOfSelectedLines;
 - (NSArray*)xvim_selectedRanges;
 - (void)xvim_setSelectedRange:(NSRange)range;
-
+- (void)xvim_changeSelectionMode:(XVIM_VISUAL_MODE)mode;
 @end
 
 
@@ -105,5 +114,6 @@
 - (void)xvim_yank:(XVimMotion*)motion withMotionPoint:(NSUInteger)motionPoint;
 - (void)xvim_put:(NSString*)text withType:(TEXT_TYPE)type afterCursor:(bool)after count:(NSUInteger)count;
 @end
+
 
 #endif /* SourceViewProtocol_h */

@@ -32,7 +32,6 @@ static void (*fpGetUndoManager)(void);
 @property (readwrite) NSUInteger insertionPoint;
 @property (readwrite) NSUInteger preservedColumn;
 @property (readwrite) BOOL selectionToEOL;
-@property (readonly) NSTextStorage* textStorage;
 @property (strong) NSString* lastYankedText;
 @property TEXT_TYPE lastYankedType;
 @property NSRange selectedRange;
@@ -312,6 +311,11 @@ static void (*fpGetUndoManager)(void);
         [self.sourceCodeEditorView setSelectedTextRange:ranges[0].rangeValue];
         for (NSValue* val in ranges)
                 DEBUG_LOG("Range: %@", NSStringFromRange(val.rangeValue));
+}
+
+-(NSArray<NSValue*>*)selectedRanges
+{
+        return self.sourceCodeEditorView.accessibilitySelectedTextRanges;
 }
 
 

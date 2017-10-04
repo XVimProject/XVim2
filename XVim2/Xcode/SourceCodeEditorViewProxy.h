@@ -16,6 +16,16 @@ typedef NS_ENUM(NSInteger, CursorStyle) {
         , CursorStyleUnderline
 };
 
+// Raw values for SourceEditor.SourceEditorSelectionModifiers
+typedef NS_OPTIONS(unsigned, SelectionModifiers) {
+       SelectionModifierExtension = 1
+        , SelectionModifierColumnar = 1 << 1
+        , SelectionModifierDiscontiguous = 1 << 2
+};
+
+// SourceEditorView.selection returns a SourceEditor.SourceEditorSelection?
+// SourceEditorSelection is an internal class
+
 @protocol XVimTextViewDelegateProtocol;
 
 @interface SourceCodeEditorViewProxy : NSObject <SourceViewProtocol>

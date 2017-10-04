@@ -24,7 +24,6 @@
 @property (readwrite) NSUInteger insertionPoint;
 @property (readwrite) NSUInteger preservedColumn;
 @property (readwrite) BOOL selectionToEOL;
-@property (readonly) NSTextStorage* textStorage;
 @property (strong) NSString* lastYankedText;
 @property TEXT_TYPE lastYankedType;
 @property NSRange selectedRange;
@@ -98,6 +97,11 @@
                 }
         }
         //[self setNeedsDisplay:YES];
+        [self xvim_syncState];
+}
+
+- (void)xvim_moveToPosition:(XVimPosition)pos{
+        [self xvim_moveCursor:[self.textStorage xvim_indexOfLineNumber:pos.line column:pos.column] preserveColumn:NO];
         [self xvim_syncState];
 }
 
@@ -765,9 +769,9 @@
 - (void)xvim_registerPositionForUndo:(NSUInteger)pos
 {
         __weak SourceCodeEditorViewProxy *weakSelf = self;
-        
         [self.undoManager registerUndoWithTitle:@"BLAH" redoTitle:@"REBLAH" operation:^(void) {
                 SourceCodeEditorViewProxy *SELF = weakSelf;
+                if (!SELF) return;
                 XVimMotion* m = XVIM_MAKE_MOTION(MOTION_POSITION, DEFAULT_MOTION_TYPE, MOTION_OPTION_NONE, 1);
                 m.position = pos;
                 [SELF xvim_move:m];
