@@ -43,8 +43,8 @@ typedef NS_OPTIONS(unsigned, SelectionModifiers) {
 @property(readonly) BOOL selectionToEOL;
 @property CURSOR_MODE cursorMode;
 @property(readonly) NSURL* documentURL;
-@property BOOL needsUpdateFoundRanges;
-@property(readonly) NSArray* foundRanges;
+@property (nonatomic) BOOL needsUpdateFoundRanges;
+@property(readonly) NSMutableArray* foundRanges;
 @property(readonly) NSInteger currentLineNumber;
 @property(strong) id<XVimTextViewDelegateProtocol> xvimDelegate;
 @property(readonly) XVimCommandLine *commandLine;

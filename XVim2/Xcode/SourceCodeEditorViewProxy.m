@@ -556,6 +556,13 @@ static void (*fpGetUndoManager)(void);
         return _commandLine;
 }
 
+-(NSMutableArray *)foundRanges {
+        if (_foundRanges == nil) {
+                _foundRanges = [[NSMutableArray alloc] init];
+        }
+        return _foundRanges;
+}
+
 -(NSWindow *)window {
         return self.sourceCodeEditorView.window;
 }
@@ -563,4 +570,5 @@ static void (*fpGetUndoManager)(void);
 -(NSView*)view {
         return self.sourceCodeEditorView;
 }
+
 @end

@@ -9,6 +9,7 @@
 
 #import "XVimMotionEvaluator.h"
 #import "XVimKeyStroke.h"
+#import "XVimSearch.h"
 #import "XVimWindow.h"
 #import "XVim.h"
 #import "XVimMarks.h"
@@ -273,13 +274,12 @@
 }
 
 
-#if 0
 - (XVimEvaluator*)nN_impl:(BOOL)opposite{
     XVim.instance.foundRangesHidden = NO;
-    NSTextView* view = [self.window sourceView];
+    _auto view = [self.window sourceView];
     view.needsUpdateFoundRanges = YES;
 
-    XVimMotion* m = [XVim.instance.searcher motionForRepeatSearch];
+    XVimMotion* m = [XVIM.searcher motionForRepeatSearch];
     if( opposite ){
         m.motion = (m.motion == MOTION_SEARCH_FORWARD) ? MOTION_SEARCH_BACKWARD : MOTION_SEARCH_FORWARD;
     }
@@ -294,7 +294,6 @@
 - (XVimEvaluator*)N{
     return [self nN_impl:YES];
 }
-#endif
 
 /*
  // Since Ctrl-u is not "motion" but "scroll"
@@ -624,6 +623,7 @@
 
 // TODO: Temporary replacement for slash and asterisk
 
+#ifdef TODO
 - (XVimEvaluator*)QUESTION
 {
         [NSApp sendAction:NSSelectorFromString(@"find:") to:nil from:self];
@@ -635,9 +635,9 @@
         [NSApp sendAction:NSSelectorFromString(@"find:") to:nil from:self];
         return nil;
 }
+#endif
 
 
-#if 0
 // QESTION and SLASH are "motion" since it can be used as an arugment for operators.
 // "d/abc<CR>" will delete until "abc" characters.
 - (XVimEvaluator*)QUESTION{
@@ -657,7 +657,6 @@
     }
     return [XVimEvaluator invalidEvaluator];
 }
-#endif
 
 
 - (XVimEvaluator*)Up
@@ -679,7 +678,6 @@
 {
         return [self l];
 }
-#if 0
 -(XVimEvaluator*)Home{
     return [self NUM0];
 }
@@ -687,7 +685,6 @@
 -(XVimEvaluator*)End{
     return [self DOLLAR];
 }
-#endif
 
 - (XVimEvaluator*)searchCurrentWordForward:(BOOL)forward {
         XVimCommandLineEvaluator* eval = [self searchEvaluatorForward:forward];

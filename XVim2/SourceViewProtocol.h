@@ -43,6 +43,7 @@
 @property (readonly) XVimPosition insertionPosition;
 @property (readonly) NSUInteger selectionBegin;
 @property (readonly) XVimPosition selectionBeginPosition;
+@property (nonatomic) BOOL needsUpdateFoundRanges;
 @property (readonly) BOOL selectionToEOL;
 @property (readonly) NSUInteger insertionColumn;
 @property (readonly) NSUInteger insertionLine;
@@ -75,6 +76,9 @@
 - (NSUInteger)xvim_lineNumberFromBottom:(NSUInteger)count;
 - (NSUInteger)xvim_lineNumberAtMiddle;
 - (NSUInteger)xvim_lineNumberFromTop:(NSUInteger)count;
+- (void)xvim_highlightNextSearchCandidate:(NSString *)regex count:(NSUInteger)count option:(MOTION_OPTION)opt forward:(BOOL)forward;
+- (void)xvim_highlightNextSearchCandidateForward:(NSString*)regex count:(NSUInteger)count option:(MOTION_OPTION)opt;
+- (void)xvim_highlightNextSearchCandidateBackward:(NSString*)regex count:(NSUInteger)count option:(MOTION_OPTION)opt;
 @end
 
 

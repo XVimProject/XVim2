@@ -11,7 +11,9 @@
 #import "XVimWindow.h"
 #import "XVimKeymapProvider.h"
 #import "XVimNormalEvaluator.h"
+#import "XVimCommandLineEvaluator.h"
 #import "XVimRegister.h"
+#import "XVimSearch.h"
 #import "XVim.h"
 
 
@@ -242,8 +244,6 @@ static XVimEvaluator* _popEvaluator = nil;
 
 - (XVimCommandLineEvaluator*)searchEvaluatorForward:(BOOL)forward
 {
-        return nil;
-#if 0
     return [[XVimCommandLineEvaluator alloc] initWithWindow:self.window
                                                 firstLetter:forward?@"/":@"?"
                                                     history:[[XVim instance] searchHistory]
@@ -253,7 +253,7 @@ static XVimEvaluator* _popEvaluator = nil;
                     return nil;
                 }
                 XVim.instance.foundRangesHidden = NO;
-                NSTextView* view = [self.window sourceView];
+                _auto view = [self.window sourceView];
                 view.needsUpdateFoundRanges = YES;
                 
                 BOOL forward = [command characterAtIndex:0] == '/';
@@ -285,7 +285,6 @@ static XVimEvaluator* _popEvaluator = nil;
                     [self.sourceView xvim_highlightNextSearchCandidateBackward:m.regex count:self.numericArg option:m.option];
                 }
             }];
-#endif
 }
 
 @end
