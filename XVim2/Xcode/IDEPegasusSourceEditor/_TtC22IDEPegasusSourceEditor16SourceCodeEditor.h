@@ -23,10 +23,20 @@
 #endif
 
 
-@class DVTAnnotationManager, DVTNotificationToken, DVTObservingToken, DVTSDK, DVTScopeBarController, DVTSourceExpression, IDEAnalyzerResultsExplorer, IDEIssueManager, IDESchemeActionCodeCoverageFile, NSBox, NSColor, NSFont, NSProgressIndicator, NSSet, NSString, NSView, _TtC22IDEPegasusSourceEditor20SourceCodeEditorView, _TtC22IDEPegasusSourceEditor21RefactoringController, _TtC22IDEPegasusSourceEditor29QuickHelpForceTouchController, _TtC22IDEPegasusSourceEditor37AutoLayoutSyncedControllerContentView;
+@class DVTAnnotationManager, DVTNotificationToken, DVTObservingToken, DVTSDK, DVTScopeBarController,
+            DVTSourceExpression, IDEAnalyzerResultsExplorer, IDEIssueManager, IDESchemeActionCodeCoverageFile, NSBox,
+            NSColor, NSFont, NSProgressIndicator, NSSet, NSString, NSView,
+            _TtC22IDEPegasusSourceEditor20SourceCodeEditorView, _TtC22IDEPegasusSourceEditor21RefactoringController,
+            _TtC22IDEPegasusSourceEditor29QuickHelpForceTouchController,
+            _TtC22IDEPegasusSourceEditor37AutoLayoutSyncedControllerContentView;
 @protocol DVTCancellable;
 
-@interface _TtC22IDEPegasusSourceEditor16SourceCodeEditor : IDEEditor // <NSTouchBarDelegate, _TtP9DVTMarkup28PlaygroundMarkupViewDelegate_, NSMenuDelegate, IDESourceExpressionSource, IDEQuickHelpDataContextService, IDEJumpToLineDestination, IDETestingSelection, IDEAnalyzerResultsHostingEditor, IDESingleFileCommandSupportingEditor, DVTColorLiteralQuickEditViewControllerDelegate, DVTImageLiteralQuickEditViewControllerDelegate, DVTFileLiteralQuickEditViewControllerDelegate, IDEPathCellDelegate>
+@interface _TtC22IDEPegasusSourceEditor16SourceCodeEditor
+    : IDEEditor // <NSTouchBarDelegate, _TtP9DVTMarkup28PlaygroundMarkupViewDelegate_, NSMenuDelegate,
+                // IDESourceExpressionSource, IDEQuickHelpDataContextService, IDEJumpToLineDestination,
+                // IDETestingSelection, IDEAnalyzerResultsHostingEditor, IDESingleFileCommandSupportingEditor,
+                // DVTColorLiteralQuickEditViewControllerDelegate, DVTImageLiteralQuickEditViewControllerDelegate,
+                // DVTFileLiteralQuickEditViewControllerDelegate, IDEPathCellDelegate>
 {
     // Error parsing type: , name: sourceEditorView
     // Error parsing type: , name: containerView
@@ -90,8 +100,11 @@
 + (void)configureStateSavingObjectPersistenceByName:(id)arg1;
 //- (CDUnknownBlockType).cxx_destruct;
 - (id)initWithNibName:(id)arg1 bundle:(id)arg2;
-@property(nonatomic, retain) DVTScopeBarController *sourceEditorExtensionErrorScopeBarController; // @synthesize sourceEditorExtensionErrorScopeBarController;
-@property(nonatomic, retain) DVTScopeBarController *sourceEditorExtensionCancellationScopeBarController; // @synthesize sourceEditorExtensionCancellationScopeBarController;
+@property (nonatomic, retain) DVTScopeBarController*
+            sourceEditorExtensionErrorScopeBarController; // @synthesize sourceEditorExtensionErrorScopeBarController;
+@property (nonatomic, retain) DVTScopeBarController*
+            sourceEditorExtensionCancellationScopeBarController; // @synthesize
+                                                                 // sourceEditorExtensionCancellationScopeBarController;
 - (void)addDocumentation:(id)arg1;
 - (BOOL)isAddDocumentationCommandSupportedWithFileType:(id)arg1;
 - (BOOL)validateAddDocumentationWithMenuItem:(id)arg1;
@@ -118,14 +131,14 @@
 - (void)_copySymbolNameWithQualified:(BOOL)arg1;
 - (void)continueToCurrentLine:(id)arg1;
 - (void)continueToHere:(id)arg1;
-@property(nonatomic, readonly) DVTSDK *sdk;
+@property (nonatomic, readonly) DVTSDK* sdk;
 - (struct CGRect)expressionFrameForExpression:(id)arg1;
-@property(nonatomic, readonly) DVTSourceExpression *mouseOverExpression;
-@property(nonatomic, readonly) struct CGRect currentSelectionFrame;
-@property(nonatomic, retain) DVTSourceExpression *quickHelpExpression; // @synthesize quickHelpExpression;
-@property(nonatomic, readonly) DVTSourceExpression *contextMenuExpression;
-@property(nonatomic, readonly) NSString *selectedText;
-@property(nonatomic, readonly) DVTSourceExpression *selectedExpression;
+@property (nonatomic, readonly) DVTSourceExpression* mouseOverExpression;
+@property (nonatomic, readonly) struct CGRect currentSelectionFrame;
+@property (nonatomic, retain) DVTSourceExpression* quickHelpExpression; // @synthesize quickHelpExpression;
+@property (nonatomic, readonly) DVTSourceExpression* contextMenuExpression;
+@property (nonatomic, readonly) NSString* selectedText;
+@property (nonatomic, readonly) DVTSourceExpression* selectedExpression;
 //- (void)quickHelpDataContextForExpression:(id)arg1 queue:(id)arg2 completionBlock:(CDUnknownBlockType)arg3;
 - (id)selectedTestsAndTestables;
 - (id)selectedTest;
@@ -138,12 +151,14 @@
 - (void)breakpointEnablementChanged:(id)arg1;
 - (void)breakpointsActivationStateChanged;
 - (void)currentBuildOperationChanged;
-@property(nonatomic, retain) id <DVTCancellable> currentBuildOperationObservingToken; // @synthesize currentBuildOperationObservingToken;
+@property (nonatomic, retain) id<DVTCancellable>
+            currentBuildOperationObservingToken; // @synthesize currentBuildOperationObservingToken;
 - (void)finishedLoadingWorkspace:(id)arg1;
-@property(nonatomic, retain) DVTObservingToken *logRecordsToken; // @synthesize logRecordsToken;
-@property(nonatomic, retain) id <DVTCancellable> workspaceFinishedLoadingToken; // @synthesize workspaceFinishedLoadingToken;
-@property(nonatomic, retain) id <DVTCancellable> workspaceObservingToken; // @synthesize workspaceObservingToken;
-@property(nonatomic, readonly) BOOL isWorkspaceBuilding;
+@property (nonatomic, retain) DVTObservingToken* logRecordsToken; // @synthesize logRecordsToken;
+@property (nonatomic, retain) id<DVTCancellable>
+            workspaceFinishedLoadingToken; // @synthesize workspaceFinishedLoadingToken;
+@property (nonatomic, retain) id<DVTCancellable> workspaceObservingToken; // @synthesize workspaceObservingToken;
+@property (nonatomic, readonly) BOOL isWorkspaceBuilding;
 - (void)compileCurrentFile;
 - (BOOL)canCompileFile;
 - (void)analyzeCurrentFile;
@@ -155,7 +170,8 @@
 - (void)startSingleFileProcessingModeFor:(id)arg1;
 - (void)hideAnalyzerExplorerAnimate:(BOOL)arg1;
 - (void)showAnalyzerExplorerForMessage:(id)arg1 animate:(BOOL)arg2;
-@property(nonatomic, retain) IDEAnalyzerResultsExplorer *analyzerResultsExplorer; // @synthesize analyzerResultsExplorer;
+@property (nonatomic, retain)
+            IDEAnalyzerResultsExplorer* analyzerResultsExplorer; // @synthesize analyzerResultsExplorer;
 - (void)hideAllMessageBubbleAnnotations;
 - (void)showAllMessageBubbleAnnotationsIfNotExplicitlyHidden;
 - (void)removeAnalyzerStepAnnotation:(id)arg1;
@@ -164,27 +180,28 @@
 //- (void)removeAnalyzerVisualization:(id)arg1 fadeOut:(BOOL)arg2 completionBlock:(CDUnknownBlockType)arg3;
 //- (void)addAnalyzerVisualization:(id)arg1 fadeIn:(BOOL)arg2 completionBlock:(CDUnknownBlockType)arg3;
 - (struct _NSRange)characterRangeFromDocumentLocation:(id)arg1;
-@property(nonatomic, readonly) long long textIndentWidth;
-@property(nonatomic, readonly) NSColor *backgroundColor;
+@property (nonatomic, readonly) long long textIndentWidth;
+@property (nonatomic, readonly) NSColor* backgroundColor;
 - (id)rectArrayForCharacterRange:(struct _NSRange)arg1;
-@property(nonatomic, readonly) NSView *textView;
+@property (nonatomic, readonly) NSView* textView;
 - (void)didRemoveAnnotations:(id)arg1;
 - (void)didInsertAnnotations:(id)arg1;
-@property(nonatomic, copy) NSSet *annotations; // @synthesize annotations;
-@property(nonatomic, retain) DVTAnnotationManager *annotationManager; // @synthesize annotationManager;
-@property(nonatomic, retain) IDEIssueManager *issueManager; // @synthesize issueManager;
-@property(nonatomic, retain) id <DVTCancellable> issueObserverToken; // @synthesize issueObserverToken;
+@property (nonatomic, copy) NSSet* annotations; // @synthesize annotations;
+@property (nonatomic, retain) DVTAnnotationManager* annotationManager; // @synthesize annotationManager;
+@property (nonatomic, retain) IDEIssueManager* issueManager; // @synthesize issueManager;
+@property (nonatomic, retain) id<DVTCancellable> issueObserverToken; // @synthesize issueObserverToken;
 - (void)performTextFinderAction:(id)arg1;
-@property(nonatomic, readonly) BOOL providesOwnFindBar;
+@property (nonatomic, readonly) BOOL providesOwnFindBar;
 - (void)updatePageGuideVisualization;
 - (void)updateLineNumbers;
-@property(nonatomic, readonly) NSFont *lineNumberFont;
+@property (nonatomic, readonly) NSFont* lineNumberFont;
 - (void)disableActiveLineHighlight;
 - (void)enableActiveLineHighlight;
 - (void)updateActiveLineVisualization;
 - (void)updateGestureRecognizers;
 - (void)addQuickHelpForceTouchController;
-@property(nonatomic, retain) _TtC22IDEPegasusSourceEditor29QuickHelpForceTouchController *quickHelpForceTouchController; // @synthesize quickHelpForceTouchController;
+@property (nonatomic, retain) _TtC22IDEPegasusSourceEditor29QuickHelpForceTouchController*
+            quickHelpForceTouchController; // @synthesize quickHelpForceTouchController;
 - (void)showQuickHelp:(id)arg1;
 - (BOOL)editorViewHandleCancel;
 - (void)willPassCodeCompletionContextToStrategies:(id)arg1;
@@ -210,7 +227,8 @@
 - (void)dataSourceBeginEditTransaction;
 - (void)playgroundMarkupView:(id)arg1 openLink:(id)arg2;
 - (void)updateFontAndColorTheme;
-@property(nonatomic, retain) DVTNotificationToken *themeChangeNotificationToken; // @synthesize themeChangeNotificationToken;
+@property (nonatomic, retain)
+            DVTNotificationToken* themeChangeNotificationToken; // @synthesize themeChangeNotificationToken;
 - (void)revertStateWithDictionary:(id)arg1;
 - (void)commitStateToDictionary:(id)arg1;
 - (id)pathCell:(id)arg1 menuItemForNavigableItem:(id)arg2 defaultMenuItem:(id)arg3;
@@ -219,11 +237,13 @@
 - (id)currentSelectedItems;
 - (void)updateSelectionObservers;
 - (void)updateSelectionDisplay;
-- (void)navigateToAnnotationWithRepresentedObject:(id)arg1 wantsIndicatorAnimation:(BOOL)arg2 exploreAnnotationRepresentedObject:(id)arg3;
+- (void)navigateToAnnotationWithRepresentedObject:(id)arg1
+                              wantsIndicatorAnimation:(BOOL)arg2
+                   exploreAnnotationRepresentedObject:(id)arg3;
 - (void)selectAndHighlightDocumentLocations:(id)arg1;
 - (void)selectDocumentLocations:(id)arg1;
-@property(nonatomic, readonly) BOOL canBecomeMainViewController;
-@property(nonatomic) BOOL allowBecomeMainViewController; // @synthesize allowBecomeMainViewController;
+@property (nonatomic, readonly) BOOL canBecomeMainViewController;
+@property (nonatomic) BOOL allowBecomeMainViewController; // @synthesize allowBecomeMainViewController;
 - (void)takeFocus;
 - (id)initialQueryForJumpToLine;
 - (id)documentLocationForJumpToLineQuery:(id)arg1;
@@ -232,7 +252,7 @@
 - (void)changeSourceCodeLanguageAction:(id)arg1;
 - (void)useSourceCodeLanguageFromFileDataTypeAction:(id)arg1;
 - (BOOL)validateMenuItem:(id)arg1;
-@property(nonatomic, retain) IDESchemeActionCodeCoverageFile *coverageFile; // @synthesize coverageFile;
+@property (nonatomic, retain) IDESchemeActionCodeCoverageFile* coverageFile; // @synthesize coverageFile;
 - (void)jumpBetweenSourceFileAndGeneratedFile:(id)arg1;
 - (void)jumpToLine:(id)arg1;
 - (void)resetFontSize:(id)arg1;
@@ -252,15 +272,18 @@
 - (id)initWithCoder:(id)arg1;
 - (id)initWithNibName:(id)arg1 bundle:(id)arg2 document:(id)arg3;
 - (id)initWithNibName:(id)arg1 bundle:(id)arg2 document:(id)arg3 sourceEditorScrollViewClass:(Class)arg4;
-@property(nonatomic) Class sourceEditorScrollViewClass; // @synthesize sourceEditorScrollViewClass;
-@property(nonatomic, readonly) _TtC22IDEPegasusSourceEditor21RefactoringController *refactoringController; // @synthesize refactoringController;
-@property(nonatomic) double progressIndicatorDisplayTime; // @synthesize progressIndicatorDisplayTime;
-@property(nonatomic, retain) NSProgressIndicator *progressIndicator; // @synthesize progressIndicator;
-@property(nonatomic, retain) NSView *messageView; // @synthesize messageView;
-@property(nonatomic, retain) NSBox *contentGenerationBackgroundView; // @synthesize contentGenerationBackgroundView;
-@property(nonatomic, retain) _TtC22IDEPegasusSourceEditor37AutoLayoutSyncedControllerContentView *controllerContentView; // @synthesize controllerContentView;
-@property(nonatomic, retain) NSView *containerView; // @synthesize containerView;
-@property(nonatomic, retain) _TtC22IDEPegasusSourceEditor20SourceCodeEditorView *sourceEditorView; // @synthesize sourceEditorView;
+@property (nonatomic) Class sourceEditorScrollViewClass; // @synthesize sourceEditorScrollViewClass;
+@property (nonatomic, readonly) _TtC22IDEPegasusSourceEditor21RefactoringController*
+            refactoringController; // @synthesize refactoringController;
+@property (nonatomic) double progressIndicatorDisplayTime; // @synthesize progressIndicatorDisplayTime;
+@property (nonatomic, retain) NSProgressIndicator* progressIndicator; // @synthesize progressIndicator;
+@property (nonatomic, retain) NSView* messageView; // @synthesize messageView;
+@property (nonatomic, retain) NSBox* contentGenerationBackgroundView; // @synthesize contentGenerationBackgroundView;
+@property (nonatomic, retain) _TtC22IDEPegasusSourceEditor37AutoLayoutSyncedControllerContentView*
+            controllerContentView; // @synthesize controllerContentView;
+@property (nonatomic, retain) NSView* containerView; // @synthesize containerView;
+@property (nonatomic, retain)
+            _TtC22IDEPegasusSourceEditor20SourceCodeEditorView* sourceEditorView; // @synthesize sourceEditorView;
 - (id)addDocumentationSourceEditorExtensionCommand;
 - (id)toggleCommentsSourceEditorExtensionCommand;
 - (void)addSourceEditorExtensionsTo:(id)arg1;
@@ -297,6 +320,4 @@
 @end
 
 typedef _TtC22IDEPegasusSourceEditor16SourceCodeEditor SourceCodeEditor;
-@interface _TtC12SourceEditor16SourceEditorView(XVim)
--(void)xvim_keyDown:(NSEvent*)event;
-@end
+

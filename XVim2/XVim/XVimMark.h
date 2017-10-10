@@ -11,7 +11,7 @@
 @interface XVimMark : NSObject
 @property NSUInteger line;
 @property NSUInteger column;
-@property(strong) NSString* document;
+@property (strong) NSString* document;
 
 - (id)initWithLine:(NSUInteger)line column:(NSUInteger)col document:(NSString*)doc;
 - (id)initWithMark:(XVimMark*)mark;

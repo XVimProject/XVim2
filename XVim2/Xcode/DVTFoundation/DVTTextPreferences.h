@@ -8,13 +8,12 @@
 
 @class NSArray, NSString;
 
-@interface DVTTextPreferences : NSObject
-{
-    double _autoHighlightTokenAppearancesDelay;	// 8 = 0x8
-    long long _wrappedLinesIndentWidth;	// 16 = 0x10
-    long long _tabKeyIndentingBehavior;	// 24 = 0x18
-    unsigned long long _defaultLineEndings;	// 32 = 0x20
-    BOOL _codeFocusOnHover;	// 40 = 0x28
+@interface DVTTextPreferences : NSObject {
+    double _autoHighlightTokenAppearancesDelay; // 8 = 0x8
+    long long _wrappedLinesIndentWidth; // 16 = 0x10
+    long long _tabKeyIndentingBehavior; // 24 = 0x18
+    unsigned long long _defaultLineEndings; // 32 = 0x20
+    BOOL _codeFocusOnHover; // 40 = 0x28
 }
 
 + (id)_defaultDefaults;
@@ -28,12 +27,12 @@
 @property BOOL autoEncloseSelectionInDelimiters;
 @property BOOL autoHighlightTokenAppearances;
 @property double autoHighlightTokenAppearancesDelay;
-@property(copy) NSString *autoIndentCharacters;
+@property (copy) NSString* autoIndentCharacters;
 @property BOOL autoInsertClosingBrace;
 @property BOOL autoInsertOpenBracket;
 @property BOOL autoSuggestCompletions;
 @property double autoSuggestCompletionsDelay;
-@property(readonly) NSArray *availableTextEncodings;
+@property (readonly) NSArray* availableTextEncodings;
 @property BOOL beepOnNonMatchingBrace;
 @property BOOL centersOnScroll;
 - (BOOL)characterIsAutoIndent:(unsigned short)arg1;
@@ -65,7 +64,8 @@
 @property BOOL showMessageBubbleAnnotations;
 @property BOOL showPageGuide;
 @property long long soloBraceIndentWidth;
-@property(nonatomic) long long tabKeyIndentingBehavior; // @synthesize tabKeyIndentingBehavior=_tabKeyIndentingBehavior;
+@property (nonatomic)
+            long long tabKeyIndentingBehavior; // @synthesize tabKeyIndentingBehavior=_tabKeyIndentingBehavior;
 @property long long tabWidth;
 @property BOOL trimTrailingWhitespace;
 @property BOOL trimWhitespaceOnlyLines;
@@ -75,4 +75,3 @@
 @property long long wrappedLinesIndentWidth;
 
 @end
-

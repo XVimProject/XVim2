@@ -8,11 +8,7 @@
 
 #import <IDEKit/IDEWorkspaceTabController.h>
 
-typedef NS_ENUM(NSInteger,EditorMode) {
-    STANDARD,
-    GENIUS,
-    VERSION
-};
+typedef NS_ENUM(NSInteger, EditorMode) { STANDARD, GENIUS, VERSION };
 
 @interface IDEWorkspaceTabController (XVim)
 - (void)xvim_jumpFocus:(NSInteger)count relative:(BOOL)relative;

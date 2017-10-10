@@ -6,15 +6,15 @@
 //
 //
 
-#import "XVimMark.h"
 #import "XVimMarks.h"
 #import "Logger.h"
 #import "XVim.h"
+#import "XVimMark.h"
 
 static NSString* LOCAL_MARKS = @"abcdefghijklmnopqrstuvwxyz'^.<>";
 static NSString* FILE_MARKS = @"ABCDEFGHIJKLMNOPQRSTUVWXYZ";
 
-@implementation XVimMarks{
+@implementation XVimMarks {
     NSMutableDictionary* _localMarksDictionary;
     NSCharacterSet* _localMarkSet;
     NSCharacterSet* _fileMarkSet;
@@ -29,9 +29,10 @@ static NSString* FILE_MARKS = @"ABCDEFGHIJKLMNOPQRSTUVWXYZ";
 
 @synthesize fileMarks = _fileMarks;
 
-+ (NSDictionary*)createEmptyLocalMarkDictionary{
++ (NSDictionary*)createEmptyLocalMarkDictionary
+{
     NSMutableDictionary* dic = [[NSMutableDictionary alloc] init];
-    for( NSUInteger i = 0 ; i < LOCAL_MARKS.length; i++){
+    for (NSUInteger i = 0; i < LOCAL_MARKS.length; i++) {
         unichar c = [LOCAL_MARKS characterAtIndex:i];
         NSString* name = [NSString stringWithFormat:@"%C", c];
         [dic setObject:[[XVimMark alloc] init] forKey:name];
@@ -39,9 +40,10 @@ static NSString* FILE_MARKS = @"ABCDEFGHIJKLMNOPQRSTUVWXYZ";
     return dic;
 }
 
-+ (NSMutableDictionary*)createEmptyFileMarkDictionary{
++ (NSMutableDictionary*)createEmptyFileMarkDictionary
+{
     NSMutableDictionary* dic = [[NSMutableDictionary alloc] init];
-    for( NSUInteger i = 0 ; i < FILE_MARKS.length; i++ ){
+    for (NSUInteger i = 0; i < FILE_MARKS.length; i++) {
         unichar c = [FILE_MARKS characterAtIndex:i];
         NSString* name = [NSString stringWithFormat:@"%C", c];
         [dic setObject:[[XVimMark alloc] init] forKey:name];
@@ -49,8 +51,9 @@ static NSString* FILE_MARKS = @"ABCDEFGHIJKLMNOPQRSTUVWXYZ";
     return dic;
 }
 
-- (id)init{
-    if(self = [super init]){
+- (id)init
+{
+    if (self = [super init]) {
         _fileMarks = [XVimMarks createEmptyFileMarkDictionary];
         _localMarksDictionary = [[NSMutableDictionary alloc] init];
         _localMarkSet = [NSCharacterSet characterSetWithCharactersInString:LOCAL_MARKS];
@@ -63,117 +66,127 @@ static NSString* FILE_MARKS = @"ABCDEFGHIJKLMNOPQRSTUVWXYZ";
 
 + (NSString*)markDescriptionWithName:(NSString*)name Mark:(XVimMark*)mark
 {
-    return [NSString stringWithFormat:@"%@    %-5d%-7d%20@\n", (NSString*)name, (int)mark.line, (int)mark.column, mark.document];
+    return [NSString stringWithFormat:@"%@    %-5d%-7d%20@\n", (NSString*)name, (int)mark.line, (int)mark.column,
+                                      mark.document];
 }
 
-- (NSString*)dumpMarksForDocument:(NSString*)document{
+- (NSString*)dumpMarksForDocument:(NSString*)document
+{
     NSDictionary* marks = [self marksForDocument:document];
     NSMutableString* str = [[NSMutableString alloc] init];
-    for( NSUInteger i = 0 ; i < LOCAL_MARKS.length; i++){
+    for (NSUInteger i = 0; i < LOCAL_MARKS.length; i++) {
         unichar c = [LOCAL_MARKS characterAtIndex:i];
         NSString* name = [NSString stringWithFormat:@"%C", c];
         XVimMark* mark = [marks objectForKey:name];
-        // Here we cast NSUInteger to int to dump. This is just because it may be NSNotFound and want make it dumped as "-1" not big value.
-        // This is not accurate but should not be big problem for just dumping purpose.
-        if( mark.document != nil ){
+        // Here we cast NSUInteger to int to dump. This is just because it may be NSNotFound and want make it dumped as
+        // "-1" not big value. This is not accurate but should not be big problem for just dumping purpose.
+        if (mark.document != nil) {
             [str appendString:[[self class] markDescriptionWithName:name Mark:mark]];
         }
     }
     return str;
 }
 
-- (NSString*)dumpFileMarks{
+- (NSString*)dumpFileMarks
+{
     NSDictionary* marks = _fileMarks;
     NSMutableString* str = [[NSMutableString alloc] init];
-    for( NSUInteger i = 0 ; i < FILE_MARKS.length; i++){
+    for (NSUInteger i = 0; i < FILE_MARKS.length; i++) {
         unichar c = [FILE_MARKS characterAtIndex:i];
         NSString* name = [NSString stringWithFormat:@"%C", c];
         XVimMark* mark = [marks objectForKey:name];
-        // Here we cast NSUInteger to int to dump. This is just because it may be NSNotFound and want make it dumped as "-1" not big value.
-        // This is not accurate but should not be big problem for just dumping purpose.
-        if( mark.document != nil ){
+        // Here we cast NSUInteger to int to dump. This is just because it may be NSNotFound and want make it dumped as
+        // "-1" not big value. This is not accurate but should not be big problem for just dumping purpose.
+        if (mark.document != nil) {
             [str appendString:[[self class] markDescriptionWithName:name Mark:mark]];
         }
     }
     return str;
-    
 }
 
-- (XVimMark*)markForName:(NSString*)name forDocument:(NSString *)documentPath{
+- (XVimMark*)markForName:(NSString*)name forDocument:(NSString*)documentPath
+{
     NSAssert(nil != name, @"name can not be nil");
     NSAssert(nil != documentPath, @"documentPath can not be nil");
-    
-    if( [name length] == 0 ){
+
+    if ([name length] == 0) {
         DEBUG_LOG(@"The length of name is 0");
         return nil;
     }
-    
+
     unichar c = [name characterAtIndex:0];
-    if( c == '\'' || c == '`' ){
-		return [[self marksForDocument:documentPath] objectForKey:@"'"];
-    }else
-	if( [_localMarkSet characterIsMember:c] ){
+    if (c == '\'' || c == '`') {
+        return [[self marksForDocument:documentPath] objectForKey:@"'"];
+    }
+    else if ([_localMarkSet characterIsMember:c]) {
         return [[self marksForDocument:documentPath] objectForKey:name];
-    }else if( [_fileMarkSet characterIsMember:c] ){
+    }
+    else if ([_fileMarkSet characterIsMember:c]) {
         return [_fileMarks objectForKey:name];
-    }else{
+    }
+    else {
         TRACE_LOG(@"Unsupported name for mark is passed");
         return nil;
     }
 }
 
-- (void)setMark:(XVimMark*)mark forName:(NSString*)name{
+- (void)setMark:(XVimMark*)mark forName:(NSString*)name
+{
     NSAssert(nil != mark, @"mark can not be nil");
     NSAssert(nil != name, @"name can not be nil");
     NSAssert(nil != mark.document, @"documentPath can not be nil");
-    
-    if( [name length] == 0 ){
+
+    if ([name length] == 0) {
         DEBUG_LOG(@"The length of name is 0");
         return;
     }
     unichar c = [name characterAtIndex:0];
-    if( c == '\'' || c == '`' ){
-		[self setLocalMark:mark forName:@"'"];
-    }else
-	if( [_localMarkSet characterIsMember:c] ){
+    if (c == '\'' || c == '`') {
+        [self setLocalMark:mark forName:@"'"];
+    }
+    else if ([_localMarkSet characterIsMember:c]) {
         [self setLocalMark:mark forName:name];
-    }else if( [_fileMarkSet characterIsMember:c] ){
+    }
+    else if ([_fileMarkSet characterIsMember:c]) {
         [self setFileMark:mark forName:name];
-    }else{
+    }
+    else {
         TRACE_LOG(@"Unsupported name for mark is passed");
     }
-    
+
     return;
 }
 
-- (NSDictionary*)marksForDocument:(NSString*)documentPath{
+- (NSDictionary*)marksForDocument:(NSString*)documentPath
+{
     NSAssert(nil != documentPath, @"documentPath can not be nil");
-    if( nil == [_localMarksDictionary objectForKey:documentPath] ){
+    if (nil == [_localMarksDictionary objectForKey:documentPath]) {
         [_localMarksDictionary setObject:[XVimMarks createEmptyLocalMarkDictionary] forKey:documentPath];
     }
     NSDictionary* marks = [_localMarksDictionary objectForKey:documentPath];
-    
-    NSAssert( nil != marks, @"This should not happen");
+
+    NSAssert(nil != marks, @"This should not happen");
     return marks;
 }
 
 
-- (void)setLocalMark:(XVimMark*)mark forName:(NSString*)name{
+- (void)setLocalMark:(XVimMark*)mark forName:(NSString*)name
+{
     NSAssert(nil != mark, @"mark can not be nil");
     NSAssert(nil != name, @"name can not be nil");
     NSAssert(nil != mark.document, @"documentPath can not be nil");
-    
-    if( [name length] == 0 ){
+
+    if ([name length] == 0) {
         DEBUG_LOG(@"The length of name is 0");
         return;
     }
     unichar c = [name characterAtIndex:0];
-    if( ![_localMarkSet characterIsMember:c] ){
+    if (![_localMarkSet characterIsMember:c]) {
         TRACE_LOG(@"Local Mark '%C' not found", c);
         return;
     }
-    
-    if( nil == [_localMarksDictionary objectForKey:mark.document] ){
+
+    if (nil == [_localMarksDictionary objectForKey:mark.document]) {
         [_localMarksDictionary setObject:[XVimMarks createEmptyLocalMarkDictionary] forKey:mark.document];
     }
     NSDictionary* marks = [_localMarksDictionary objectForKey:mark.document];
@@ -181,31 +194,29 @@ static NSString* FILE_MARKS = @"ABCDEFGHIJKLMNOPQRSTUVWXYZ";
     return;
 }
 
-- (void)setFileMark:(XVimMark*)mark forName:(NSString*)name{
+- (void)setFileMark:(XVimMark*)mark forName:(NSString*)name
+{
     NSAssert(nil != mark, @"mark can not be nil");
     NSAssert(nil != name, @"name can not be nil");
     NSAssert(nil != mark.document, @"documentPath can not be nil");
-    
-    if( [name length] == 0 ){
+
+    if ([name length] == 0) {
         DEBUG_LOG(@"The length of name is 0");
         return;
     }
     unichar c = [name characterAtIndex:0];
-    if( ![_fileMarkSet characterIsMember:c] ){
+    if (![_fileMarkSet characterIsMember:c]) {
         TRACE_LOG(@"File Mark '%C' not found", c);
         return;
     }
-    
+
     // Never replace object in dictionary (just change the value of the mark)
     [[_fileMarks objectForKey:[NSString stringWithFormat:@"%C", c]] setMark:mark];
     return;
 }
 
 #pragma mark - JumpList
-- (NSArray*)jumplist
-{
-    return _jumplist;
-}
+- (NSArray*)jumplist { return _jumplist; }
 
 /**
  * support motion: "'", "`", "/", "?", "n", "N", "%", "(", ")", "{", "}", ":s", "L", "M", "H"
@@ -213,21 +224,21 @@ static NSString* FILE_MARKS = @"ABCDEFGHIJKLMNOPQRSTUVWXYZ";
  */
 - (void)addToJumpListWithMark:(XVimMark*)aMark KeepJumpMarkIndex:(BOOL)keepJumpMarkIndex
 {
-    //DEBUG_LOG( @"line[%d] keepjump[%d]", aMark.line, keepJumpMarkIndex );
+    // DEBUG_LOG( @"line[%d] keepjump[%d]", aMark.line, keepJumpMarkIndex );
     NSMutableArray* aryDel = [NSMutableArray array];
-    for( XVimMark* jump in _jumplist ){
-        if( jump.line == aMark.line && [jump.document isEqualToString:aMark.document] ){
+    for (XVimMark* jump in _jumplist) {
+        if (jump.line == aMark.line && [jump.document isEqualToString:aMark.document]) {
             [aryDel addObject:jump];
         }
     }
     [_jumplist removeObjectsInArray:aryDel];
-    if( _jumplist.count > kJumpListMax ){
+    if (_jumplist.count > kJumpListMax) {
         // remove oldest jump mark
         [_jumplist removeObjectAtIndex:0];
     }
     [_jumplist addObject:aMark];
-    
-    if( !keepJumpMarkIndex ){
+
+    if (!keepJumpMarkIndex) {
         // reset
         _jumpMarkIndex = 0;
     }
@@ -235,14 +246,16 @@ static NSString* FILE_MARKS = @"ABCDEFGHIJKLMNOPQRSTUVWXYZ";
 
 - (XVimMark*)incrementJumpMark
 {
-    if( _jumpMarkIndex <= 1 ) return nil;
+    if (_jumpMarkIndex <= 1)
+        return nil;
     NSUInteger count = _jumplist.count;
     --_jumpMarkIndex;
     XVimMark* mark;
     @try {
-        mark = _jumplist[count-_jumpMarkIndex];
-    } @catch(NSException* e) {
-        DEBUG_LOG( @"e[%@]", e );
+        mark = _jumplist[count - _jumpMarkIndex];
+    }
+    @catch (NSException* e) {
+        DEBUG_LOG(@"e[%@]", e);
     }
     return mark;
 }
@@ -250,16 +263,18 @@ static NSString* FILE_MARKS = @"ABCDEFGHIJKLMNOPQRSTUVWXYZ";
 - (XVimMark*)decrementJumpMark:(BOOL*)pNeedUpdateMark
 {
     NSUInteger count = _jumplist.count;
-    if( _jumpMarkIndex >= count ) return nil;
+    if (_jumpMarkIndex >= count)
+        return nil;
     *pNeedUpdateMark = (_jumpMarkIndex == 0);
     ++_jumpMarkIndex;
     XVimMark* mark;
     @try {
-        mark = _jumplist[count-_jumpMarkIndex];
-    } @catch(NSException* e){
-        DEBUG_LOG( @"e[%@]", e );
+        mark = _jumplist[count - _jumpMarkIndex];
     }
-    if( _jumpMarkIndex == 1 ){
+    @catch (NSException* e) {
+        DEBUG_LOG(@"e[%@]", e);
+    }
+    if (_jumpMarkIndex == 1) {
         _jumpMarkIndex = 2;
     }
     return mark;
@@ -272,11 +287,12 @@ static NSString* FILE_MARKS = @"ABCDEFGHIJKLMNOPQRSTUVWXYZ";
     [str appendString:@" jump line  col file/text\n"];
     NSArray* jumplist = xvim.marks.jumplist;
     NSInteger index = (NSInteger)jumplist.count - (NSInteger)_jumpMarkIndex;
-    for( XVimMark* jump in jumplist ){
-        [str appendFormat:@"%c%3ld %5ld %4ld %@\n", (index==0?'>':' '), labs(index), jump.line, jump.column, jump.document];
+    for (XVimMark* jump in jumplist) {
+        [str appendFormat:@"%c%3ld %5ld %4ld %@\n", (index == 0 ? '>' : ' '), labs(index), jump.line, jump.column,
+                          jump.document];
         --index;
     }
-    if( _jumpMarkIndex == 0 ){
+    if (_jumpMarkIndex == 0) {
         [str appendString:@">\n"];
     }
     return str;

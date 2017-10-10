@@ -13,22 +13,19 @@
 
 IDEWorkspaceWindowController* XVimLastActiveWindowController()
 {
-        return [IDEWorkspaceWindow lastActiveWorkspaceWindowController];
+    return [IDEWorkspaceWindow lastActiveWorkspaceWindowController];
 }
 
 IDEWorkspaceTabController* XVimLastActiveWorkspaceTabController()
 {
-        return [XVimLastActiveWindowController() activeWorkspaceTabController];
+    return [XVimLastActiveWindowController() activeWorkspaceTabController];
 }
 
-IDEEditorArea* XVimLastActiveEditorArea()
-{
-        return [XVimLastActiveWindowController() editorArea];
-}
+IDEEditorArea* XVimLastActiveEditorArea() { return [XVimLastActiveWindowController() editorArea]; }
 
 #ifdef TODO
 DVTSourceTextView* XVimLastActiveSourceView()
 {
-        return [[[[XVimLastActiveEditorArea() lastActiveEditorContext] editor] mainScrollView] documentView];
+    return [[[[XVimLastActiveEditorArea() lastActiveEditorContext] editor] mainScrollView] documentView];
 }
 #endif

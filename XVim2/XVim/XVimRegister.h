@@ -6,18 +6,17 @@
 //  Copyright (c) 2012 __MyCompanyName__. All rights reserved.
 //
 
-#import <Foundation/Foundation.h>
-#import "XVimKeyStroke.h"
 #import "XVimDefs.h"
-
+#import "XVimKeyStroke.h"
+#import <Foundation/Foundation.h>
 
 
 @interface XVimRegister : NSObject
--(void) appendXVimString:(XVimString*)string;
--(void) setXVimString:(XVimString*)string;
--(void) clear;
+- (void)appendXVimString:(XVimString*)string;
+- (void)setXVimString:(XVimString*)string;
+- (void)clear;
 @property TEXT_TYPE type;
-@property (readonly) XVimMutableString *string;
+@property (readonly) XVimMutableString* string;
 @end
 
 // Never implement direct access to XVimRegister object.
@@ -43,7 +42,7 @@
  **/
 - (XVimString*)xvimStringForRegister:(NSString*)name;
 - (void)yank:(XVimString*)string withType:(TEXT_TYPE)type onRegister:(NSString*)name;
-- (void)delete:(XVimString*)string withType:(TEXT_TYPE)type onRegister:(NSString*)name;
+- (void) delete:(XVimString*)string withType:(TEXT_TYPE)type onRegister:(NSString*)name;
 - (void)textInserted:(XVimString*)string withType:(TEXT_TYPE)type;
 - (void)commandExecuted:(XVimString*)string withType:(TEXT_TYPE)type;
 - (void)registerExecuted:(NSString*)name;
@@ -88,5 +87,5 @@
 @interface XVimClipboardRegister : XVimRegister
 @end
 
-@interface XVimBlackholeRegister: XVimRegister
+@interface XVimBlackholeRegister : XVimRegister
 @end

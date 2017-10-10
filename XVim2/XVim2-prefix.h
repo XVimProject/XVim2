@@ -11,10 +11,10 @@
 
 #if __OBJC__
 #define CDUnknownBlockType id
+#import "Logger.h"
+#import "Macros.h"
 #import "XVimDefs.h"
 #import "XVimMacros.h"
-#import "Macros.h"
-#import "Logger.h"
 #endif
 
 #endif /* XVim2_prefix_h */

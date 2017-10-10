@@ -5,9 +5,9 @@
 //  Created by Tomas Lundell on 9/04/12.
 //
 
-#import <Cocoa/Cocoa.h>
 #import "XVimKeyStroke.h"
 #import "XVimMotion.h"
+#import <Cocoa/Cocoa.h>
 
 /*
  * This class manages 1 window. (The term "window" here is different from NSWindow)
@@ -26,13 +26,15 @@
 
 
 @interface XVimWindow : NSObject <NSTextInputClient, NSTextFieldDelegate>
-@property (strong, readonly) id<SourceViewProtocol, SourceViewXVimProtocol, SourceViewScrollingProtocol, SourceViewOperationsProtocol> sourceView; // This represents currently focused sourceView
+@property (strong, readonly)
+            id<SourceViewProtocol, SourceViewXVimProtocol, SourceViewScrollingProtocol, SourceViewOperationsProtocol>
+                        sourceView; // This represents currently focused sourceView
 @property (weak, readonly) NSTextView* inputView;
 @property (weak, readonly) XVimEvaluator* currentEvaluator;
 @property (weak, readonly) CommandResponder* commandResponder;
-@property (readonly) XVimCommandLine * commandLine;
+@property (readonly) XVimCommandLine* commandLine;
 
-@property (strong, nonatomic) XVimMark * currentPositionMark;
+@property (strong, nonatomic) XVimMark* currentPositionMark;
 
 - (instancetype)initWithEditorView:(id<SourceViewProtocol>)responder;
 - (void)setupAfterEditorViewSetup;

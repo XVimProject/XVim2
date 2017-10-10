@@ -1,9 +1,8 @@
-#import <Foundation/Foundation.h>
-#import <Cocoa/Cocoa.h>
 #import "SourceEditorScrollView.h"
+#import <Cocoa/Cocoa.h>
+#import <Foundation/Foundation.h>
 
-@interface _TtC12SourceEditor16SourceEditorView : NSView <NSTextInputClient, NSServicesMenuRequestor>
-{
+@interface _TtC12SourceEditor16SourceEditorView : NSView <NSTextInputClient, NSServicesMenuRequestor> {
     // Error parsing type: , name: delegate
     // Error parsing type: , name: contentViewOffset
     // Error parsing type: , name: layoutManager
@@ -74,16 +73,16 @@
 - (void)contentViewDidFinishLayout;
 - (void)removeContentVerticalShiftEffect:(BOOL)arg1;
 - (void)setContentVerticalShiftEffect:(double)arg1;
-@property(nonatomic, readonly) NSColor *tintColor;
-@property(nonatomic, readonly) long long lineCount;
+@property (nonatomic, readonly) NSColor* tintColor;
+@property (nonatomic, readonly) long long lineCount;
 - (void)updateContentSizeIfNeeded;
-@property(nonatomic) double contentSize; // @synthesize contentSize;
+@property (nonatomic) double contentSize; // @synthesize contentSize;
 - (void)invalidateContentSize;
-@property(nonatomic) BOOL contentSizeIsValid; // @synthesize contentSizeIsValid;
+@property (nonatomic) BOOL contentSizeIsValid; // @synthesize contentSizeIsValid;
 - (void)viewDidEndLiveResize;
 - (void)viewWillStartLiveResize;
-@property(nonatomic) BOOL isInLiveResize; // @synthesize isInLiveResize;
-@property(nonatomic) BOOL editing; // @synthesize editing;
+@property (nonatomic) BOOL isInLiveResize; // @synthesize isInLiveResize;
+@property (nonatomic) BOOL editing; // @synthesize editing;
 - (void)dataSourceEndEditTransaction;
 - (void)dataSourceBeginEditTransaction;
 - (void)dataSourceDidDeleteLines:(id)arg1;
@@ -92,50 +91,55 @@
 - (id)lineLayersInRect:(struct CGRect)arg1;
 - (id)lineLayerAtPoint:(struct CGPoint)arg1;
 - (void)applyScrollStateWithLine:(long long)arg1 offset:(double)arg2;
-@property(nonatomic) BOOL continueKillRing; // @synthesize continueKillRing;
-@property(nonatomic) BOOL markedEditTransaction; // @synthesize markedEditTransaction;
+@property (nonatomic) BOOL continueKillRing; // @synthesize continueKillRing;
+@property (nonatomic) BOOL markedEditTransaction; // @synthesize markedEditTransaction;
 - (BOOL)shouldSuppressCodeCompletion;
 - (void)showCodeCompletionSuggestionList;
 - (void)queueCodeCompletionWithExplicitly:(BOOL)arg1;
 - (void)codeCompletionAvailabilityChangedWithDuringReload:(BOOL)arg1;
 - (void)overrideCompletionDisplayWithShouldDisplay:(BOOL)arg1;
-@property(nonatomic) BOOL shouldProvideCodeCompletionInCurrentRange;
-@property(nonatomic) BOOL currentListShownExplicitly; // @synthesize currentListShownExplicitly;
-@property(nonatomic) BOOL isCodeCompletionEnabled; // @synthesize isCodeCompletionEnabled;
-@property(nonatomic, readonly) BOOL isShowingCodeCompletion;
-@property(nonatomic, readonly) BOOL escapeKeyTriggersCodeCompletion;
+@property (nonatomic) BOOL shouldProvideCodeCompletionInCurrentRange;
+@property (nonatomic) BOOL currentListShownExplicitly; // @synthesize currentListShownExplicitly;
+@property (nonatomic) BOOL isCodeCompletionEnabled; // @synthesize isCodeCompletionEnabled;
+@property (nonatomic, readonly) BOOL isShowingCodeCompletion;
+@property (nonatomic, readonly) BOOL escapeKeyTriggersCodeCompletion;
 - (void)selectionWillChange;
-@property(nonatomic) BOOL isEditingEnabled; // @synthesize isEditingEnabled;
-@property(nonatomic) BOOL delimiterHighlightEnabled;
-@property(nonatomic, readonly) NSLayoutYAxisAnchor *findPanelTopAnchor;
+@property (nonatomic) BOOL isEditingEnabled; // @synthesize isEditingEnabled;
+@property (nonatomic) BOOL delimiterHighlightEnabled;
+@property (nonatomic, readonly) NSLayoutYAxisAnchor* findPanelTopAnchor;
 - (void)pushFindConfigurationForFindQuery;
 - (void)pullFindConfigurationForFindQuery;
 - (void)performTextFinderAction:(id)arg1;
 - (void)performFindPanelAction:(id)arg1;
-@property(nonatomic) BOOL findResultNeedUpdate; // @synthesize findResultNeedUpdate;
-@property(nonatomic) BOOL textFindPanelDisplayed; // @synthesize textFindPanelDisplayed;
+@property (nonatomic) BOOL findResultNeedUpdate; // @synthesize findResultNeedUpdate;
+@property (nonatomic) BOOL textFindPanelDisplayed; // @synthesize textFindPanelDisplayed;
 - (void)unregisterDraggingExtensionWithIdentifier:(id)arg1;
-//@property(nonatomic, readonly) _TtC12SourceEditor30SourceEditorViewDraggingSource *draggingSource; // @synthesize draggingSource;
+//@property(nonatomic, readonly) _TtC12SourceEditor30SourceEditorViewDraggingSource *draggingSource; // @synthesize
+//draggingSource;
 //@property(nonatomic, retain) _TtC12SourceEditor18SourceEditorGutter *gutter; // @synthesize gutter;
-@property(nonatomic) BOOL allowLineAnnotationAnimations;
+@property (nonatomic) BOOL allowLineAnnotationAnimations;
 - (void)expandLineAnnotationsOnLine:(long long)arg1 animated:(BOOL)arg2;
 - (id)mouseCursorForStructuredSelectionWith:(id)arg1;
 - (void)resetCursorRects;
 - (struct CGRect)contentRectForCursor;
 - (void)invalidateCursorRects;
-@property(nonatomic) BOOL automaticallyAdjustsContentMargins; // @synthesize automaticallyAdjustsContentMargins;
+@property (nonatomic) BOOL automaticallyAdjustsContentMargins; // @synthesize automaticallyAdjustsContentMargins;
 - (void)queueTrimTrailingWhitespace;
 - (void)setupStructuredEditingController;
 - (id)editorViewSnapshotsIn:(id)arg1;
-@property(nonatomic, readonly) NSLayoutConstraint *contentViewHeightLimitConstraint; // @synthesize contentViewHeightLimitConstraint;
-@property(nonatomic, readonly) NSLayoutConstraint *contentViewHeightConstraint; // @synthesize contentViewHeightConstraint;
-@property(nonatomic, readonly) NSLayoutConstraint *contentViewWidthLimitConstraint; // @synthesize contentViewWidthLimitConstraint;
-@property(nonatomic, readonly) NSLayoutConstraint *contentViewWidthConstraint; // @synthesize contentViewWidthConstraint;
+@property (nonatomic, readonly)
+            NSLayoutConstraint* contentViewHeightLimitConstraint; // @synthesize contentViewHeightLimitConstraint;
+@property (nonatomic, readonly)
+            NSLayoutConstraint* contentViewHeightConstraint; // @synthesize contentViewHeightConstraint;
+@property (nonatomic, readonly)
+            NSLayoutConstraint* contentViewWidthLimitConstraint; // @synthesize contentViewWidthLimitConstraint;
+@property (nonatomic, readonly)
+            NSLayoutConstraint* contentViewWidthConstraint; // @synthesize contentViewWidthConstraint;
 - (BOOL)_wantsKeyDownForEvent:(id)arg1;
 - (void)updateSelectionManagerIsActive;
 - (BOOL)resignFirstResponder;
 - (BOOL)becomeFirstResponder;
-@property(nonatomic, readonly) BOOL acceptsFirstResponder;
+@property (nonatomic, readonly) BOOL acceptsFirstResponder;
 - (void)viewDidMoveToWindow;
 - (BOOL)isFlipped;
 - (void)dealloc;
@@ -143,9 +147,9 @@
 - (id)initWithFrame:(struct CGRect)arg1;
 - (id)initWithCoder:(id)arg1 sourceEditorScrollViewClass:(Class)arg2;
 - (id)initWithFrame:(struct CGRect)arg1 sourceEditorScrollViewClass:(Class)arg2;
-@property(nonatomic, readonly) SourceEditorScrollView *scrollView; // @synthesize scrollView;
+@property (nonatomic, readonly) SourceEditorScrollView* scrollView; // @synthesize scrollView;
 //@property(nonatomic, readonly) _TtC12SourceEditor23SourceEditorContentView *contentView; // @synthesize contentView;
-@property(nonatomic) double contentViewOffset; // @synthesize contentViewOffset;
+@property (nonatomic) double contentViewOffset; // @synthesize contentViewOffset;
 - (void)mouseExited:(id)arg1;
 - (void)mouseEntered:(id)arg1;
 - (void)mouseMoved:(id)arg1;
@@ -154,11 +158,11 @@
 - (void)mouseDragged:(id)arg1;
 - (void)rightMouseDown:(id)arg1;
 - (void)mouseDown:(id)arg1;
-@property(nonatomic, readonly) id accessibilityFocusedUIElement;
+@property (nonatomic, readonly) id accessibilityFocusedUIElement;
 - (long long)characterIndexForPoint:(struct CGPoint)arg1;
-- (struct CGRect)firstRectForCharacterRange:(struct _NSRange)arg1 actualRange:(struct _NSRange *)arg2;
+- (struct CGRect)firstRectForCharacterRange:(struct _NSRange)arg1 actualRange:(struct _NSRange*)arg2;
 - (id)validAttributesForMarkedText;
-- (id)attributedSubstringForProposedRange:(struct _NSRange)arg1 actualRange:(struct _NSRange *)arg2;
+- (id)attributedSubstringForProposedRange:(struct _NSRange)arg1 actualRange:(struct _NSRange*)arg2;
 - (BOOL)hasMarkedText;
 - (struct _NSRange)markedRange;
 - (struct _NSRange)selectedRange;
@@ -246,7 +250,7 @@
 - (void)fold:(id)arg1;
 - (void)balance:(id)arg1;
 - (void)selectStructure:(id)arg1;
-- (int)syntaxTypeWithLocation:(unsigned long long)arg1 effectiveRange:(struct _NSRange *)arg2;
+- (int)syntaxTypeWithLocation:(unsigned long long)arg1 effectiveRange:(struct _NSRange*)arg2;
 - (void)shiftRight:(id)arg1;
 - (void)shiftLeft:(id)arg1;
 - (BOOL)indentSelectionWithAllowUnindent:(BOOL)arg1;
@@ -279,7 +283,7 @@
 - (void)deleteBackwardByDecomposingPreviousCharacter:(id)arg1;
 - (void)deleteBackward:(id)arg1;
 - (void)deleteForward:(id)arg1;
-- (void)delete:(id)arg1;
+- (void) delete:(id)arg1;
 - (void)insertDoubleQuoteIgnoringSubstitution:(id)arg1;
 - (void)insertSingleQuoteIgnoringSubstitution:(id)arg1;
 - (void)insertContainerBreak:(id)arg1;
@@ -302,9 +306,11 @@
 - (unsigned long long)draggingUpdated:(id)arg1;
 - (unsigned long long)draggingEntered:(id)arg1;
 - (BOOL)performDragOperation:(unsigned long long)arg1 from:(id)arg2 with:(id)arg3 at:(struct CGPoint)arg4;
-- (unsigned long long)dragOperationFor:(id)arg1 draggingLocation:(struct CGPoint)arg2 sourceOperationMask:(unsigned long long)arg3;
+- (unsigned long long)dragOperationFor:(id)arg1
+                      draggingLocation:(struct CGPoint)arg2
+                   sourceOperationMask:(unsigned long long)arg3;
 - (unsigned long long)dragOperationForDraggingInfo:(id)arg1;
-@property(nonatomic, readonly) NSArray *defaultDragTypes;
+@property (nonatomic, readonly) NSArray* defaultDragTypes;
 - (BOOL)readSelectionFromPasteboard:(id)arg1;
 - (BOOL)writeSelectionToPasteboard:(id)arg1 types:(id)arg2;
 - (id)validRequestorForSendType:(id)arg1 returnType:(id)arg2;
@@ -321,3 +327,6 @@
 
 typedef _TtC12SourceEditor16SourceEditorView SourceEditorView;
 
+@interface _TtC12SourceEditor16SourceEditorView(XVim)
+-(void)xvim_keyDown:(NSEvent*)event;
+@end

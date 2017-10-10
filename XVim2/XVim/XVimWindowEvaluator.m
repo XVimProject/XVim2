@@ -6,20 +6,18 @@
 //  Copyright (c) 2012 __MyCompanyName__. All rights reserved.
 //
 
-#import "Logger.h"
 #import "XVimWindowEvaluator.h"
+#import "Logger.h"
 #import "XVimWindow.h"
 //#import "IDEKit.h"
 #import "Geometry.h"
-#import "XcodeUtils.h"
 #import "IDEWorkspaceTabController+XVim.h"
-#import <IDEKit/IDEWorkspaceWindowController.h>
+#import "XcodeUtils.h"
 #import <IDEKit/IDEEditor.h>
 #import <IDEKit/IDEEditorArea.h>
 #import <IDEKit/IDEEditorContext.h>
 #import <IDEKit/IDEWorkspaceWindow.h>
-
-
+#import <IDEKit/IDEWorkspaceWindowController.h>
 
 
 @implementation XVimWindowEvaluator
@@ -41,80 +39,80 @@
 - (XVimEvaluator*)eval:(XVimKeyStroke*)keyStroke
 {
 
-        SEL handler = keyStroke.selector;
-        if ([self respondsToSelector:handler]) {
-                TRACE_LOG(@"Calling SELECTOR %@", NSStringFromSelector(handler));
+    SEL handler = keyStroke.selector;
+    if ([self respondsToSelector:handler]) {
+        TRACE_LOG(@"Calling SELECTOR %@", NSStringFromSelector(handler));
 #pragma clang diagnostic push
 #pragma clang diagnostic ignored "-Warc-performSelector-leaks"
-                return [self performSelector:handler];
+        return [self performSelector:handler];
 #pragma clang diagnostic pop
-        }
-        XVimKeyStroke* modifiedKeyStroke = [keyStroke copy];
-        if ([modifiedKeyStroke isCTRLModifier]) {
-                modifiedKeyStroke.modifier = 0;
-                return [super eval:modifiedKeyStroke];
-        }
-        return [super eval:keyStroke];
+    }
+    XVimKeyStroke* modifiedKeyStroke = [keyStroke copy];
+    if ([modifiedKeyStroke isCTRLModifier]) {
+        modifiedKeyStroke.modifier = 0;
+        return [super eval:modifiedKeyStroke];
+    }
+    return [super eval:keyStroke];
 }
 
 - (XVimEvaluator*)c
 {
-        [XVimLastActiveWorkspaceTabController() xvim_closeCurrentEditor];
-        return nil;
+    [XVimLastActiveWorkspaceTabController() xvim_closeCurrentEditor];
+    return nil;
 }
 
 - (XVimEvaluator*)n
 {
-        [XVimLastActiveWorkspaceTabController() xvim_addEditor];
-        return nil;
+    [XVimLastActiveWorkspaceTabController() xvim_addEditor];
+    return nil;
 }
 
 - (XVimEvaluator*)o
 {
-        [XVimLastActiveWorkspaceTabController() xvim_closeOtherEditors];
-        return nil;
+    [XVimLastActiveWorkspaceTabController() xvim_closeOtherEditors];
+    return nil;
 }
 
 - (XVimEvaluator*)s
 {
-        [XVimLastActiveWorkspaceTabController() xvim_addEditorHorizontally];
-        return nil;
+    [XVimLastActiveWorkspaceTabController() xvim_addEditorHorizontally];
+    return nil;
 }
 
 - (XVimEvaluator*)q
 {
-        [XVimLastActiveWorkspaceTabController() xvim_closeCurrentEditor];
-        return nil;
+    [XVimLastActiveWorkspaceTabController() xvim_closeCurrentEditor];
+    return nil;
 }
 
 - (XVimEvaluator*)v
 {
-        [XVimLastActiveWorkspaceTabController() xvim_addEditorVertically];
-        return nil;
+    [XVimLastActiveWorkspaceTabController() xvim_addEditorVertically];
+    return nil;
 }
 
 - (XVimEvaluator*)h
 {
-        [XVimLastActiveWorkspaceTabController() xvim_moveFocusLeft];
-        return nil;
+    [XVimLastActiveWorkspaceTabController() xvim_moveFocusLeft];
+    return nil;
 }
 
 - (XVimEvaluator*)j
 {
-        [XVimLastActiveWorkspaceTabController() xvim_moveFocusDown];
-        return nil;
+    [XVimLastActiveWorkspaceTabController() xvim_moveFocusDown];
+    return nil;
 }
 
 - (XVimEvaluator*)k
 {
-        [XVimLastActiveWorkspaceTabController() xvim_moveFocusUp];
-        return nil;
+    [XVimLastActiveWorkspaceTabController() xvim_moveFocusUp];
+    return nil;
 }
 
 - (XVimEvaluator*)l
 {
-        [XVimLastActiveWorkspaceTabController() xvim_moveFocusRight];
-        return nil;
+    [XVimLastActiveWorkspaceTabController() xvim_moveFocusRight];
+    return nil;
 }
 
 /*
@@ -123,12 +121,12 @@
  */
 - (XVimEvaluator*)w
 {
-        // TODO: Must handle numericMode  properly.
-        //       Currently we do not have good way to know if current evaluator is in numericMode
-        //       Accessing parent evaluator directly is not good practice.
-        NSInteger count = NSIntegerMax < [self numericArg] ? NSIntegerMax : (NSInteger)[self numericArg];
-        [XVimLastActiveWorkspaceTabController() xvim_jumpFocus:count relative:![self.parent numericMode]];
-        return nil;
+    // TODO: Must handle numericMode  properly.
+    //       Currently we do not have good way to know if current evaluator is in numericMode
+    //       Accessing parent evaluator directly is not good practice.
+    NSInteger count = NSIntegerMax < [self numericArg] ? NSIntegerMax : (NSInteger)[self numericArg];
+    [XVimLastActiveWorkspaceTabController() xvim_jumpFocus:count relative:![self.parent numericMode]];
+    return nil;
 }
 
 /*
@@ -137,9 +135,9 @@
  */
 - (XVimEvaluator*)W
 {
-        NSInteger count = NSIntegerMax < [self numericArg] ? NSIntegerMax : (NSInteger)[self numericArg];
-        [XVimLastActiveWorkspaceTabController() xvim_jumpFocus:-count relative:![self.parent numericMode]];
-        return nil;
+    NSInteger count = NSIntegerMax < [self numericArg] ? NSIntegerMax : (NSInteger)[self numericArg];
+    [XVimLastActiveWorkspaceTabController() xvim_jumpFocus:-count relative:![self.parent numericMode]];
+    return nil;
 }
 
 @end

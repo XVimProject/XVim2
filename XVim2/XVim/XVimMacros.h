@@ -10,7 +10,8 @@
 #define XVim_XVimMacros_h
 
 #if __clang__
-#define IGNORE_WARNING_PERFORM_SELECTOR_LEAK_PUSH _Pragma("clang diagnostic push") _Pragma("clang diagnostic ignored \"-Warc-performSelector-leaks\"")
+#define IGNORE_WARNING_PERFORM_SELECTOR_LEAK_PUSH                                                                      \
+    _Pragma("clang diagnostic push") _Pragma("clang diagnostic ignored \"-Warc-performSelector-leaks\"")
 #define IGNORE_WARNING_PERFORM_SELECTOR_LEAK_POP _Pragma("clang diagnostic pop")
 #else
 #define IGNORE_WARNING_PERFORM_SELECTOR_LEAK_PUSH
@@ -32,10 +33,13 @@
 #endif
 
 // If C11 is available, include a static assert in the statement expression to check that _val is unsigned
-#define UNSIGNED_DECREMENT_CHECKED(_val, _dec) \
-        (({_Static_assert( _Generic((_val+1l), NSUInteger:1, default:0), "_val must be unsigned"); \
-DECREMENT_ASSERT(_val,_dec); true; }),                                \
-         (((_val) >= (_dec)) ? ((_val) - (_dec)) : 0))
+#define UNSIGNED_DECREMENT_CHECKED(_val, _dec)                                                                         \
+    (({                                                                                                                \
+         _Static_assert(_Generic((_val + 1l), NSUInteger : 1, default : 0), "_val must be unsigned");                  \
+         DECREMENT_ASSERT(_val, _dec);                                                                                 \
+         true;                                                                                                         \
+     }),                                                                                                               \
+     (((_val) >= (_dec)) ? ((_val) - (_dec)) : 0))
 
 #ifdef DEBUG
 #define UNSIGNED_DECREMENT(_val, _dec) UNSIGNED_DECREMENT_CHECKED(_val, _dec)

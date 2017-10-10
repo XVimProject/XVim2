@@ -9,7 +9,6 @@
 #import "XVimOperatorEvaluator.h"
 
 
-
 @interface XVimShiftEvaluator : XVimOperatorEvaluator
 - (id)initWithWindow:(XVimWindow*)window unshift:(BOOL)unshift;
 @end

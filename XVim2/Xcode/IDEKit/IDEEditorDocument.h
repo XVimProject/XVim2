@@ -11,62 +11,64 @@
 #import <IDEKit/IDEReadOnlyItem-Protocol.h>
 #endif
 
-@class DVTDispatchLock, DVTExtension, DVTFileDataType, DVTFilePath, DVTNotificationToken, DVTStackBacktrace, NSDictionary, NSMapTable, NSMutableArray, NSMutableSet, NSSet, NSString, NSURL, NSUndoManager;
-@protocol DVTCancellable, DVTUndo;
+@class DVTDispatchLock, DVTExtension, DVTFileDataType, DVTFilePath, DVTNotificationToken, DVTStackBacktrace,
+            NSDictionary, NSMapTable, NSMutableArray, NSMutableSet, NSSet, NSString, NSURL, NSUndoManager;
+@protocol DVTCancellable
+, DVTUndo;
 
 @interface IDEEditorDocument : NSDocument // <IDEReadOnlyItem, DVTUndoManagerDelegate>
 {
-    DVTDispatchLock *_editorDocumentLock;	// 104 = 0x68
-    DVTExtension *_extension;	// 112 = 0x70
-    DVTFileDataType *_ide_hintedFileDataType;	// 120 = 0x78
-    DVTFilePath *_filePath;	// 128 = 0x80
-    DVTFilePath *autosavedContentsFilePath;	// 136 = 0x88
-    NSMapTable *_readOnlyClientsForRegistrationBacktrace;	// 144 = 0x90
-    DVTNotificationToken *_willRedoChangeNotificationToken;	// 152 = 0x98
-    DVTNotificationToken *_willUndoChangeNotificationToken;	// 160 = 0xa0
-    DVTNotificationToken *_readOnlyItemsManagerWillProcessItemNotificationToken;	// 168 = 0xa8
-    DVTNotificationToken *_readOnlyItemsManagerDidProcessItemNotificationToken;	// 176 = 0xb0
-    DVTStackBacktrace *_addedToDocumentControllerBacktrace;	// 184 = 0xb8
-    DVTStackBacktrace *_savePresentedItemChanges;	// 192 = 0xc0
-    DVTStackBacktrace *_autosaveWithImplicitCancellabilityCallerBacktrace;	// 200 = 0xc8
-    DVTStackBacktrace *_beginUnlockingBacktrace;	// 208 = 0xd0
-    DVTStackBacktrace *_canCloseDocumentCallPriorToClosingDocumentStackBacktrace;	// 216 = 0xd8
-    DVTStackBacktrace *_continueActivityCallerBacktrace;	// 224 = 0xe0
-    DVTStackBacktrace *_continueAsynchronousWorkOnMainThreadCallerBacktrace;	// 232 = 0xe8
-    DVTStackBacktrace *_continueFileAccessCallerBacktrace;	// 240 = 0xf0
-    DVTStackBacktrace *_creationBacktrace;	// 248 = 0xf8
-    DVTStackBacktrace *_firstPerformActivityMessageBacktrace;	// 256 = 0x100
-    DVTStackBacktrace *_invalidationBacktrace;	// 264 = 0x108
-    DVTStackBacktrace *_lastUndoChangeNotificationBacktrace;	// 272 = 0x110
-    DVTStackBacktrace *_currentSaveToURLBacktrace;	// 280 = 0x118
-    NSUndoManager<DVTUndo> *_dvtUndoManager;	// 288 = 0x120
-    int _readOnlyStatus;	// 296 = 0x128
-    NSDictionary *_willCloseNotificationUserInfo;	// 304 = 0x130
-    NSMutableArray *_pendingChanges;	// 312 = 0x138
-    NSMutableSet *_documentEditors;	// 320 = 0x140
-    NSURL *_ide_representedURL;	// 328 = 0x148
-    id <DVTCancellable> _closeAfterDelayToken;	// 336 = 0x150
-    id <DVTCancellable> _autosaveAfterDelayToken;	// 344 = 0x158
-//    CDUnknownBlockType _filePresenterWriter;	// 352 = 0x160
-    BOOL _cachedHasRecentChanges;	// 360 = 0x168
-    BOOL _didDisableAutomaticTermination;	// 361 = 0x169
-    BOOL _ide_isTemporaryDocument;	// 362 = 0x16a
-    BOOL _inSetUndoManager;	// 363 = 0x16b
-    BOOL _inWriteSafelyToURL;	// 364 = 0x16c
-    BOOL _isAttemptingToRespondToSaveDocumentAction;	// 365 = 0x16d
-    BOOL _isClosing;	// 366 = 0x16e
-    BOOL _isClosingForRevert;	// 367 = 0x16f
-    BOOL _isInvalidated;	// 368 = 0x170
-    BOOL _isRespondingToFSChanges;	// 369 = 0x171
-    BOOL _isSafeToCallClose;	// 370 = 0x172
-    BOOL _isUndoingAfterFailureToUnlockDocument;	// 371 = 0x173
-    BOOL _isWritingToDisk;	// 372 = 0x174
-    BOOL _shouldAssertIfNotInvalidatedBeforeDealloc;	// 373 = 0x175
-    BOOL _trackFileSystemChanges;	// 374 = 0x176
-    BOOL _wholeDocumentChanged;	// 375 = 0x177
-    BOOL _isPerformingSynchronousFileAccess;	// 376 = 0x178
-    NSSet *_readOnlyClients;	// 384 = 0x180
-    DVTFilePath *_autosavedContentsFilePath;	// 392 = 0x188
+    DVTDispatchLock* _editorDocumentLock; // 104 = 0x68
+    DVTExtension* _extension; // 112 = 0x70
+    DVTFileDataType* _ide_hintedFileDataType; // 120 = 0x78
+    DVTFilePath* _filePath; // 128 = 0x80
+    DVTFilePath* autosavedContentsFilePath; // 136 = 0x88
+    NSMapTable* _readOnlyClientsForRegistrationBacktrace; // 144 = 0x90
+    DVTNotificationToken* _willRedoChangeNotificationToken; // 152 = 0x98
+    DVTNotificationToken* _willUndoChangeNotificationToken; // 160 = 0xa0
+    DVTNotificationToken* _readOnlyItemsManagerWillProcessItemNotificationToken; // 168 = 0xa8
+    DVTNotificationToken* _readOnlyItemsManagerDidProcessItemNotificationToken; // 176 = 0xb0
+    DVTStackBacktrace* _addedToDocumentControllerBacktrace; // 184 = 0xb8
+    DVTStackBacktrace* _savePresentedItemChanges; // 192 = 0xc0
+    DVTStackBacktrace* _autosaveWithImplicitCancellabilityCallerBacktrace; // 200 = 0xc8
+    DVTStackBacktrace* _beginUnlockingBacktrace; // 208 = 0xd0
+    DVTStackBacktrace* _canCloseDocumentCallPriorToClosingDocumentStackBacktrace; // 216 = 0xd8
+    DVTStackBacktrace* _continueActivityCallerBacktrace; // 224 = 0xe0
+    DVTStackBacktrace* _continueAsynchronousWorkOnMainThreadCallerBacktrace; // 232 = 0xe8
+    DVTStackBacktrace* _continueFileAccessCallerBacktrace; // 240 = 0xf0
+    DVTStackBacktrace* _creationBacktrace; // 248 = 0xf8
+    DVTStackBacktrace* _firstPerformActivityMessageBacktrace; // 256 = 0x100
+    DVTStackBacktrace* _invalidationBacktrace; // 264 = 0x108
+    DVTStackBacktrace* _lastUndoChangeNotificationBacktrace; // 272 = 0x110
+    DVTStackBacktrace* _currentSaveToURLBacktrace; // 280 = 0x118
+    NSUndoManager<DVTUndo>* _dvtUndoManager; // 288 = 0x120
+    int _readOnlyStatus; // 296 = 0x128
+    NSDictionary* _willCloseNotificationUserInfo; // 304 = 0x130
+    NSMutableArray* _pendingChanges; // 312 = 0x138
+    NSMutableSet* _documentEditors; // 320 = 0x140
+    NSURL* _ide_representedURL; // 328 = 0x148
+    id<DVTCancellable> _closeAfterDelayToken; // 336 = 0x150
+    id<DVTCancellable> _autosaveAfterDelayToken; // 344 = 0x158
+    //    CDUnknownBlockType _filePresenterWriter;	// 352 = 0x160
+    BOOL _cachedHasRecentChanges; // 360 = 0x168
+    BOOL _didDisableAutomaticTermination; // 361 = 0x169
+    BOOL _ide_isTemporaryDocument; // 362 = 0x16a
+    BOOL _inSetUndoManager; // 363 = 0x16b
+    BOOL _inWriteSafelyToURL; // 364 = 0x16c
+    BOOL _isAttemptingToRespondToSaveDocumentAction; // 365 = 0x16d
+    BOOL _isClosing; // 366 = 0x16e
+    BOOL _isClosingForRevert; // 367 = 0x16f
+    BOOL _isInvalidated; // 368 = 0x170
+    BOOL _isRespondingToFSChanges; // 369 = 0x171
+    BOOL _isSafeToCallClose; // 370 = 0x172
+    BOOL _isUndoingAfterFailureToUnlockDocument; // 371 = 0x173
+    BOOL _isWritingToDisk; // 372 = 0x174
+    BOOL _shouldAssertIfNotInvalidatedBeforeDealloc; // 373 = 0x175
+    BOOL _trackFileSystemChanges; // 374 = 0x176
+    BOOL _wholeDocumentChanged; // 375 = 0x177
+    BOOL _isPerformingSynchronousFileAccess; // 376 = 0x178
+    NSSet* _readOnlyClients; // 384 = 0x180
+    DVTFilePath* _autosavedContentsFilePath; // 392 = 0x188
 }
 
 + (BOOL)_presentsVersionsUserInterface;
@@ -81,11 +83,12 @@
 + (BOOL)shouldUnlockFileURLBeforeMakingChanges;
 + (long long)topUndoGroupingLevel;
 //- (void).cxx_destruct;
-//- (void)_canCloseAsynchronouslyToRevert:(BOOL)arg1 promptForUnsavedChanges:(BOOL)arg2 withCompletionBlock:(CDUnknownBlockType)arg3;
+//- (void)_canCloseAsynchronouslyToRevert:(BOOL)arg1 promptForUnsavedChanges:(BOOL)arg2
+//withCompletionBlock:(CDUnknownBlockType)arg3;
 - (void)_changeWasDone:(id)arg1;
 - (void)_changeWasRedone:(id)arg1;
 - (void)_changeWasUndone:(id)arg1;
-- (BOOL)_checkAutosavingPossibilityAndReturnError:(id *)arg1;
+- (BOOL)_checkAutosavingPossibilityAndReturnError:(id*)arg1;
 - (void)_closeToRevert;
 - (void)_didAddToDocumentController;
 - (id)_documentEditors;
@@ -96,22 +99,23 @@
 - (void)_sendOutDocumentUpdateLocation;
 //- (void)_setDocumentFileType:(id)arg1 completionBlock:(CDUnknownBlockType)arg2;
 //- (void)_startUnlockIfNeededForWorkspace:(id)arg1 window:(id)arg2 completionBlock:(CDUnknownBlockType)arg3;
-//- (void)_tryCloseAsynchronouslyToRevert:(BOOL)arg1 promptForUnsavedChanges:(BOOL)arg2 withCompletionBlock:(CDUnknownBlockType)arg3;
-//- (void)_tryCloseAsynchronouslyToRevert:(BOOL)arg1 withCompletionBlock:(CDUnknownBlockType)arg2;
-//- (void)_unlockIfNeededCompletionBlock:(CDUnknownBlockType)arg1;
+//- (void)_tryCloseAsynchronouslyToRevert:(BOOL)arg1 promptForUnsavedChanges:(BOOL)arg2
+//withCompletionBlock:(CDUnknownBlockType)arg3; - (void)_tryCloseAsynchronouslyToRevert:(BOOL)arg1
+//withCompletionBlock:(CDUnknownBlockType)arg2; - (void)_unlockIfNeededCompletionBlock:(CDUnknownBlockType)arg1;
 - (void)_updateReadOnlyStatus;
 - (void)_validateClass;
-- (BOOL)_windowForSheet:(id *)arg1 workspaceForSheet:(id *)arg2 editor:(id *)arg3;
+- (BOOL)_windowForSheet:(id*)arg1 workspaceForSheet:(id*)arg2 editor:(id*)arg3;
 - (id)applicableInspectorCategoriesGivenSuggestion:(id)arg1;
 //- (void)autosaveWithImplicitCancellability:(BOOL)arg1 completionHandler:(CDUnknownBlockType)arg2;
-@property(retain) DVTFilePath *autosavedContentsFilePath; // @synthesize autosavedContentsFilePath=_autosavedContentsFilePath;
+@property (retain)
+            DVTFilePath* autosavedContentsFilePath; // @synthesize autosavedContentsFilePath=_autosavedContentsFilePath;
 - (id)autosavedContentsFileURL;
-- (void)canCloseDocumentWithDelegate:(id)arg1 shouldCloseSelector:(SEL)arg2 contextInfo:(void *)arg3;
-@property(readonly) BOOL canExportDocument;
+- (void)canCloseDocumentWithDelegate:(id)arg1 shouldCloseSelector:(SEL)arg2 contextInfo:(void*)arg3;
+@property (readonly) BOOL canExportDocument;
 - (BOOL)canRevert;
-@property(readonly) BOOL canSave;
-@property(readonly) BOOL canSaveAs;
-- (BOOL)checkAutosavingSafetyAndReturnError:(id *)arg1;
+@property (readonly) BOOL canSave;
+@property (readonly) BOOL canSaveAs;
+- (BOOL)checkAutosavingSafetyAndReturnError:(id*)arg1;
 - (void)close;
 - (void)closePrivateDocumentSynchronously;
 - (void)closeToRevert;
@@ -119,12 +123,12 @@
 //- (void)continueAsynchronousWorkOnMainThreadUsingBlock:(CDUnknownBlockType)arg1;
 //- (void)continueFileAccessUsingBlock:(CDUnknownBlockType)arg1;
 //- (void)convertToDocumentAtFilePath:(id)arg1 forFileDataType:(id)arg2 completionBlock:(CDUnknownBlockType)arg3;
-@property(retain) DVTStackBacktrace *creationBacktrace; // @synthesize creationBacktrace=_creationBacktrace;
-- (id)dataOfType:(id)arg1 error:(id *)arg2;
+@property (retain) DVTStackBacktrace* creationBacktrace; // @synthesize creationBacktrace=_creationBacktrace;
+- (id)dataOfType:(id)arg1 error:(id*)arg2;
 - (id)derivedContentProviderForType:(id)arg1;
 - (void)didExternallyRelocateFileContent;
 - (id)diffDataSource;
-- (id)duplicateAndReturnError:(id *)arg1;
+- (id)duplicateAndReturnError:(id*)arg1;
 - (void)duplicateDocument:(id)arg1;
 //- (void)duplicateDocumentWithFileType:(id)arg1 completionBlock:(CDUnknownBlockType)arg2;
 //- (void)duplicateDocumentWithFileType:(id)arg1 writableTypes:(id)arg2 completionBlock:(CDUnknownBlockType)arg3;
@@ -136,47 +140,50 @@
 - (id)emptyPrivateCopy;
 - (void)encodeRestorableStateWithCoder:(id)arg1;
 - (void)exportDocument:(id)arg1;
-@property(retain, nonatomic) DVTExtension *extension; // @synthesize extension=_extension;
+@property (retain, nonatomic) DVTExtension* extension; // @synthesize extension=_extension;
 - (id)fileNameExtensionForType:(id)arg1 saveOperation:(unsigned long long)arg2;
-@property(retain) DVTFilePath *filePath; // @synthesize filePath=_filePath;
+@property (retain) DVTFilePath* filePath; // @synthesize filePath=_filePath;
 - (id)fileURL;
 - (id)handleCloseScriptCommand:(id)arg1;
 - (BOOL)hasBeenEditedSinceLastUserInitiatedSave;
-- (void)ide_didFixupChangeCountWithWasEdited:(BOOL)arg1 didHaveEditsSinceLastUserInitiatedSave:(BOOL)arg2 changeString:(id)arg3;
-@property(readonly, copy) NSString *ide_displayName;
+- (void)ide_didFixupChangeCountWithWasEdited:(BOOL)arg1
+            didHaveEditsSinceLastUserInitiatedSave:(BOOL)arg2
+                                      changeString:(id)arg3;
+@property (readonly, copy) NSString* ide_displayName;
 - (void)ide_duplicateDocument:(id)arg1;
-- (void)ide_editorDocument:(id)arg1 shouldClose:(BOOL)arg2 contextInfo:(void *)arg3;
+- (void)ide_editorDocument:(id)arg1 shouldClose:(BOOL)arg2 contextInfo:(void*)arg3;
 - (void)ide_finishSaving:(BOOL)arg1 forSaveOperation:(unsigned long long)arg2 previousPath:(id)arg3;
-@property(retain) DVTFileDataType *ide_hintedFileDataType;
+@property (retain) DVTFileDataType* ide_hintedFileDataType;
 @property BOOL ide_isTemporaryDocument;
-@property(readonly) BOOL ide_isTextRepresentation;
+@property (readonly) BOOL ide_isTextRepresentation;
 - (void)ide_moveDocumentTo:(id)arg1;
 - (void)ide_renameDocument:(id)arg1;
-@property(copy) NSURL *ide_representedURL;
+@property (copy) NSURL* ide_representedURL;
 - (void)ide_revertDocumentToSaved:(id)arg1;
 - (void)ide_saveDocument:(id)arg1;
 - (void)ide_saveDocumentAs:(id)arg1;
 - (void)ide_setUndoManager:(id)arg1;
 - (id)init;
-- (id)initForURL:(id)arg1 withContentsOfURL:(id)arg2 ofType:(id)arg3 error:(id *)arg4;
-- (id)initWithContentsOfURL:(id)arg1 ofType:(id)arg2 error:(id *)arg3;
-- (id)initWithType:(id)arg1 error:(id *)arg2;
-@property(readonly) DVTStackBacktrace *invalidationBacktrace; // @synthesize invalidationBacktrace=_invalidationBacktrace;
-@property(readonly, getter=isClosed) BOOL closed;
+- (id)initForURL:(id)arg1 withContentsOfURL:(id)arg2 ofType:(id)arg3 error:(id*)arg4;
+- (id)initWithContentsOfURL:(id)arg1 ofType:(id)arg2 error:(id*)arg3;
+- (id)initWithType:(id)arg1 error:(id*)arg2;
+@property (readonly)
+            DVTStackBacktrace* invalidationBacktrace; // @synthesize invalidationBacktrace=_invalidationBacktrace;
+@property (readonly, getter=isClosed) BOOL closed;
 - (BOOL)isClosing;
 - (BOOL)isClosingForRevert;
-- (BOOL)makeWritableWithError:(id *)arg1;
-@property(readonly) NSString *messageForIsValidAssertion;
+- (BOOL)makeWritableWithError:(id*)arg1;
+@property (readonly) NSString* messageForIsValidAssertion;
 - (id)newUndoManager;
 //- (void)performActivityWithSynchronousWaiting:(BOOL)arg1 usingBlock:(CDUnknownBlockType)arg2;
 //- (void)performSynchronousFileAccessUsingBlock:(CDUnknownBlockType)arg1;
 - (void)presentedItemDidChange;
 - (void)presentedItemDidMoveToURL:(id)arg1;
-- (id)printOperationWithSettings:(id)arg1 error:(id *)arg2;
+- (id)printOperationWithSettings:(id)arg1 error:(id*)arg2;
 - (id)privateCopy;
-- (BOOL)readFromData:(id)arg1 ofType:(id)arg2 error:(id *)arg3;
-@property(readonly) NSSet *readOnlyClients; // @synthesize readOnlyClients=_readOnlyClients;
-@property(readonly) NSURL *readOnlyItemURL;
+- (BOOL)readFromData:(id)arg1 ofType:(id)arg2 error:(id*)arg3;
+@property (readonly) NSSet* readOnlyClients; // @synthesize readOnlyClients=_readOnlyClients;
+@property (readonly) NSURL* readOnlyItemURL;
 @property int readOnlyStatus; // @synthesize readOnlyStatus=_readOnlyStatus;
 - (void)registerDocumentEditor:(id)arg1;
 - (void)registerReadOnlyClient:(id)arg1;
@@ -184,20 +191,21 @@
 //- (void)restoreDocumentWindowWithIdentifier:(id)arg1 state:(id)arg2 completionHandler:(CDUnknownBlockType)arg3;
 - (void)restoreStateWithCoder:(id)arg1;
 - (void)revertDocumentToSaved:(id)arg1;
-- (BOOL)revertToContentsOfURL:(id)arg1 ofType:(id)arg2 error:(id *)arg3;
+- (BOOL)revertToContentsOfURL:(id)arg1 ofType:(id)arg2 error:(id*)arg3;
 - (void)saveDocument:(id)arg1;
 - (void)saveDocumentAs:(id)arg1;
-- (void)saveDocumentWithDelegate:(id)arg1 didSaveSelector:(SEL)arg2 contextInfo:(void *)arg3;
+- (void)saveDocumentWithDelegate:(id)arg1 didSaveSelector:(SEL)arg2 contextInfo:(void*)arg3;
 //- (void)saveForOperation:(unsigned long long)arg1 withCompletionHandler:(CDUnknownBlockType)arg2;
 //- (void)savePresentedItemChangesWithCompletionHandler:(CDUnknownBlockType)arg1;
-//- (void)saveToURL:(id)arg1 ofType:(id)arg2 forSaveOperation:(unsigned long long)arg3 completionHandler:(CDUnknownBlockType)arg4;
+//- (void)saveToURL:(id)arg1 ofType:(id)arg2 forSaveOperation:(unsigned long long)arg3
+//completionHandler:(CDUnknownBlockType)arg4;
 - (id)sdefSupport_displayName;
 - (void)setAutosavedContentsFileURL:(id)arg1;
 - (void)setFileURL:(id)arg1;
 - (void)setHasUndoManager:(BOOL)arg1;
 - (void)setSdefSupport_displayName:(id)arg1;
 @property BOOL trackFileSystemChanges; // @synthesize trackFileSystemChanges=_trackFileSystemChanges;
-@property(retain) NSUndoManager<DVTUndo> *undoManager;
+@property (retain) NSUndoManager<DVTUndo>* undoManager;
 - (void)setupUndoManager:(id)arg1;
 - (void)teardownUndoManager:(id)arg1;
 //- (void)tryCloseAsynchronouslyWithCompletionBlock:(CDUnknownBlockType)arg1;
@@ -212,13 +220,12 @@
 - (void)willExternallyRelocateFileContent;
 - (id)windowForSheet;
 - (id)writableTypesForSaveOperation:(unsigned long long)arg1;
-- (BOOL)writeSafelyToURL:(id)arg1 ofType:(id)arg2 forSaveOperation:(unsigned long long)arg3 error:(id *)arg4;
+- (BOOL)writeSafelyToURL:(id)arg1 ofType:(id)arg2 forSaveOperation:(unsigned long long)arg3 error:(id*)arg4;
 
 // Remaining properties
-@property(readonly, copy) NSString *debugDescription;
-@property(readonly, copy) NSString *description;
-@property(readonly) unsigned long long hash;
-@property(readonly) Class superclass;
+@property (readonly, copy) NSString* debugDescription;
+@property (readonly, copy) NSString* description;
+@property (readonly) unsigned long long hash;
+@property (readonly) Class superclass;
 
 @end
-

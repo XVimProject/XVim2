@@ -10,4 +10,3 @@
 
 @interface XVimUppercaseEvaluator : XVimOperatorEvaluator
 @end
-

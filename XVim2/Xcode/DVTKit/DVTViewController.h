@@ -15,11 +15,11 @@
 
 @interface DVTViewController : NSViewController // <DVTEditor, DVTInvalidation>
 {
-    NSWindow *_kvoWindow;	// 104 = 0x68
-    BOOL _isInstalled;	// 112 = 0x70
-    BOOL _didInstall;	// 113 = 0x71
-    BOOL _isViewLoaded;	// 114 = 0x72
-    DVTExtension *_representedExtension;	// 120 = 0x78
+    NSWindow* _kvoWindow; // 104 = 0x68
+    BOOL _isInstalled; // 112 = 0x70
+    BOOL _didInstall; // 113 = 0x71
+    BOOL _isViewLoaded; // 114 = 0x72
+    DVTExtension* _representedExtension; // 120 = 0x78
 }
 
 + (unsigned long long)assertionBehaviorAfterEndOfEventForSelector:(SEL)arg1;
@@ -40,10 +40,10 @@
 - (void)_viewWillChangeWindow;
 - (void)_viewWillUninstall;
 - (void)_windowWillClose:(id)arg1;
-@property(readonly) BOOL canBecomeMainViewController;
+@property (readonly) BOOL canBecomeMainViewController;
 - (BOOL)commitEditingForAction:(int)arg1 errors:(id)arg2;
 - (BOOL)delegateFirstResponder;
-@property(readonly, copy) NSString *description;
+@property (readonly, copy) NSString* description;
 - (void)dvtViewController_commonInit;
 - (id)initUsingDefaultNib;
 - (id)initWithCoder:(id)arg1;
@@ -51,23 +51,23 @@
 - (void)invalidate;
 @property BOOL isViewLoaded; // @synthesize isViewLoaded=_isViewLoaded;
 - (void)loadView;
-@property(readonly) DVTViewController *mainViewControllerInParentWindow;
-@property(readonly) NSWindowController *parentWindowController;
+@property (readonly) DVTViewController* mainViewControllerInParentWindow;
+@property (readonly) NSWindowController* parentWindowController;
 - (void)primitiveInvalidate;
-@property(retain, nonatomic) DVTExtension *representedExtension; // @synthesize representedExtension=_representedExtension;
+@property (retain, nonatomic)
+            DVTExtension* representedExtension; // @synthesize representedExtension=_representedExtension;
 - (void)separateKeyViewLoops;
-@property(retain) NSView *view;
+@property (retain) NSView* view;
 - (id)supplementalMainViewController;
 - (void)viewDidInstall;
 - (void)viewWillUninstall;
 
 // Remaining properties
-@property(retain) DVTStackBacktrace *creationBacktrace;
-@property(readonly, copy) NSString *debugDescription;
-@property(readonly) unsigned long long hash;
-@property(readonly) DVTStackBacktrace *invalidationBacktrace;
-@property(readonly) Class superclass;
-@property(readonly, nonatomic, getter=isValid) BOOL valid;
+@property (retain) DVTStackBacktrace* creationBacktrace;
+@property (readonly, copy) NSString* debugDescription;
+@property (readonly) unsigned long long hash;
+@property (readonly) DVTStackBacktrace* invalidationBacktrace;
+@property (readonly) Class superclass;
+@property (readonly, nonatomic, getter=isValid) BOOL valid;
 
 @end
-

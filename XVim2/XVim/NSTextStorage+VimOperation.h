@@ -7,15 +7,15 @@
 //
 
 
-#import "XVimMotion.h"
 #import "XVimDefs.h"
+#import "XVimMotion.h"
 #import "XVimTextStoring.h"
 
 typedef enum {
-        XVimSortOptionReversed = 1,
-        XVimSortOptionRemoveDuplicateLines = 1 << 1,
-        XVimSortOptionNumericSort = 1 << 2,
-        XVimSortOptionIgnoreCase = 1 << 3
+    XVimSortOptionReversed = 1,
+    XVimSortOptionRemoveDuplicateLines = 1 << 1,
+    XVimSortOptionNumericSort = 1 << 2,
+    XVimSortOptionIgnoreCase = 1 << 3
 } XVimSortOptions;
 
 /**
@@ -35,8 +35,9 @@ typedef enum {
  * EOF is the position at the end of document(text).
  * If we have NSTextView with string "abc" the EOF is just AFTER the 'c'.
  * The index of EOF is 3 in this case ( index is 0 based ).
- * What we have to think about is a cursor can be on the EOF(when the previous letter is newline) but characterAtIndex: with index of EOF cause an exception.
- * We have to be careful about it when calculate and find the position of some motions.
+ * What we have to think about is a cursor can be on the EOF(when the previous letter is newline) but characterAtIndex:
+ *with index of EOF cause an exception. We have to be careful about it when calculate and find the position of some
+ *motions.
  *
  * "Newline"
  * Newline is defined as "unichar determined by isNewline function". Usually "\n" or "\r".
@@ -45,7 +46,8 @@ typedef enum {
  * Line is a sequence of characters terminated by newline or EOF. "Line" includes the last newline character.
  *
  * "Blankline"
- * Blankline is a line which has only newline or EOF. In other words, it is newline character or EOF after newline character.
+ * Blankline is a line which has only newline or EOF. In other words, it is newline character or EOF after newline
+ *character.
  *
  * "Last of Line(LOL)"
  * Last of line is the last character of a line EXCLUDING newline character.
@@ -110,8 +112,8 @@ typedef enum {
  * Blankline is one of followings
  *   - Newline after Newline. Ex. The second '\n' in "abc\n\nabc" is a blankline. First one is not.
  *   - Newline at begining of the document.
- *   - EOF after Newline. Ex. The index 4 of "abc\n" is blankline. Note that index 4 is exceed the string length. But the cursor can be there.
- *   - EOF of 0 sized document.
+ *   - EOF after Newline. Ex. The index 4 of "abc\n" is blankline. Note that index 4 is exceed the string length. But
+ *the cursor can be there. - EOF of 0 sized document.
  **/
 - (BOOL)isBlankline:(NSUInteger)index;
 
@@ -160,23 +162,35 @@ typedef enum {
  * @param opt MOTION_OPTION_NONE or BIGWORD
  * @param info This is used with special cases explaind above such as 'cw' or 'w' crossing over the newline.
  **/
-- (NSUInteger)wordsForward:(NSUInteger)index count:(NSUInteger)count option:(MOTION_OPTION)opt info:(XVimMotionInfo*)info;
+- (NSUInteger)wordsForward:(NSUInteger)index
+                     count:(NSUInteger)count
+                    option:(MOTION_OPTION)opt
+                      info:(XVimMotionInfo*)info;
 
 
 - (NSUInteger)wordsBackward:(NSUInteger)index count:(NSUInteger)count option:(MOTION_OPTION)opt;
-- (NSUInteger)endOfWordsForward:(NSUInteger)index count:(NSUInteger)count option:(MOTION_OPTION)opt; //e,E
-- (NSUInteger)endOfWordsBackward:(NSUInteger)index count:(NSUInteger)count option:(MOTION_OPTION)opt; //ge,gE
+- (NSUInteger)endOfWordsForward:(NSUInteger)index count:(NSUInteger)count option:(MOTION_OPTION)opt; // e,E
+- (NSUInteger)endOfWordsBackward:(NSUInteger)index count:(NSUInteger)count option:(MOTION_OPTION)opt; // ge,gE
 - (NSUInteger)sentencesForward:(NSUInteger)index count:(NSUInteger)count option:(MOTION_OPTION)opt;
 - (NSUInteger)sentencesBackward:(NSUInteger)index count:(NSUInteger)count option:(MOTION_OPTION)opt;
 - (NSUInteger)paragraphsForward:(NSUInteger)index count:(NSUInteger)count option:(MOTION_OPTION)opt;
 - (NSUInteger)paragraphsBackward:(NSUInteger)index count:(NSUInteger)count option:(MOTION_OPTION)opt;
-- (NSUInteger)nextCharacterInLine:(NSUInteger)index count:(NSUInteger)count character:(unichar)character option:(MOTION_OPTION)opt;
-- (NSUInteger)prevCharacterInLine:(NSUInteger)index count:(NSUInteger)count character:(unichar)character option:(MOTION_OPTION)opt;
+- (NSUInteger)nextCharacterInLine:(NSUInteger)index
+                            count:(NSUInteger)count
+                        character:(unichar)character
+                           option:(MOTION_OPTION)opt;
+- (NSUInteger)prevCharacterInLine:(NSUInteger)index
+                            count:(NSUInteger)count
+                        character:(unichar)character
+                           option:(MOTION_OPTION)opt;
 
 // Search starts from 'index+1' to the end of the string
 - (NSRange)searchRegexForward:(NSString*)regex from:(NSUInteger)index count:(NSUInteger)count option:(MOTION_OPTION)opt;
 // Search starts from 'index-1' to the beginning of the string
-- (NSRange)searchRegexBackward:(NSString*)regex from:(NSUInteger)index count:(NSUInteger)count option:(MOTION_OPTION)opt;
+- (NSRange)searchRegexBackward:(NSString*)regex
+                           from:(NSUInteger)index
+                          count:(NSUInteger)count
+                         option:(MOTION_OPTION)opt;
 
 
 /**
@@ -202,7 +216,8 @@ NSInteger xv_0(NSString* string, NSInteger index);
 
 // Unlike vim, this function won't ignore indent before the current character
 // even if what is '{'
-NSRange xv_current_block(NSString* string, NSUInteger index, NSUInteger repeatCount, BOOL inclusive, char what, char other);
+NSRange xv_current_block(NSString* string, NSUInteger index, NSUInteger repeatCount, BOOL inclusive, char what,
+                         char other);
 NSRange xv_current_quote(NSString* string, NSUInteger index, NSUInteger repeatCount, BOOL inclusive, char what);
 
 // Find char in current line.

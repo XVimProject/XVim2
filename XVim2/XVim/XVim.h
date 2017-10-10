@@ -6,9 +6,9 @@
 //  Copyright 2012 JugglerShu.Net. All rights reserved.
 //
 
-#import <Foundation/Foundation.h>
 #import "XVimKeymapProvider.h"
 #import "XVimPreferences.h"
+#import <Foundation/Foundation.h>
 
 @class XVimKeymap;
 @class XVimOptions;
@@ -32,7 +32,7 @@ extern NSString* const XVimDocumentPathKey;
 @interface XVim : NSObject <XVimKeymapProvider>
 
 + (XVim*)instance;
-@property (strong) XVimOptions * options;
+@property (strong) XVimOptions* options;
 @property (strong) XVimSearch* searcher;
 @property (strong) XVimMotion* lastCharacterSearchMotion;
 @property (strong) XVimExCommand* excmd;
@@ -73,13 +73,13 @@ extern NSString* const XVimDocumentPathKey;
  * appendOperationKeyStroke method with the input.
  * When the command is fixed with edit command related evaluators
  * it calls fixOperationCommand.
- * If it is not called and when a command(series of key input) is 
+ * If it is not called and when a command(series of key input) is
  * finished XVimWindow calls cancelRepeatCommand not to store the
  * key input recorded in repeat regisger so far.
  *
- * When repeating you must call startRepeat first and 
+ * When repeating you must call startRepeat first and
  * call endRepeat after you finish repeating.
- * When in repeating the key input never recorded into 
+ * When in repeating the key input never recorded into
  * repeat register
  **/
 - (void)appendOperationKeyStroke:(XVimString*)stroke;
@@ -99,10 +99,5 @@ extern NSString* const XVimDocumentPathKey;
 
 @end
 
-NS_INLINE XVim* SharedXVim(void)
-{
-        return [XVim instance];
-}
+NS_INLINE XVim* SharedXVim(void) { return [XVim instance]; }
 #define XVIM (SharedXVim())
-
-

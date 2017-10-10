@@ -12,42 +12,46 @@
 #import <IDEKit/NSTouchBarProvider-Protocol.h>
 #endif
 
-@class DVTBorderedView, DVTLayoutView_ML, DVTObservingToken, DVTReplacementView, DVTSplitView, DVTSplitViewItem, DVTStateToken, IDEDebugArea, IDEDebugBar, IDEEditorContext, IDEEditorDocument, IDEEditorModeViewController, IDENavigableItemArchivableRepresentation, IDEWorkspaceTabControllerLayoutTree, NSMutableDictionary, NSString, NSTouchBar, NSView;
+@class DVTBorderedView, DVTLayoutView_ML, DVTObservingToken, DVTReplacementView, DVTSplitView, DVTSplitViewItem,
+            DVTStateToken, IDEDebugArea, IDEDebugBar, IDEEditorContext, IDEEditorDocument, IDEEditorModeViewController,
+            IDENavigableItemArchivableRepresentation, IDEWorkspaceTabControllerLayoutTree, NSMutableDictionary,
+            NSString, NSTouchBar, NSView;
 @protocol DVTCancellable;
 
-@interface IDEEditorArea : IDEViewController // <NSTouchBarProvider, NSTouchBarDelegate, IDEDebuggerBarEditorInfoProvider>
+@interface IDEEditorArea
+    : IDEViewController // <NSTouchBarProvider, NSTouchBarDelegate, IDEDebuggerBarEditorInfoProvider>
 {
-    NSView *_editorModeHostView;	// 104 = 0x68
-    IDEEditorModeViewController *_editorModeViewController;	// 112 = 0x70
-    int _editorMode;	// 120 = 0x78
-    int _versionEditorSubmode;	// 124 = 0x7c
-    DVTObservingToken *_workspaceActivityObserver;	// 128 = 0x80
-    IDEEditorContext *_lastActiveEditorContext;	// 136 = 0x88
-    IDEDebugBar *_activeDebuggerBar;	// 144 = 0x90
-    IDEDebugArea *_activeDebuggerArea;	// 152 = 0x98
-    NSMutableDictionary *_defaultPersistentRepresentations;	// 160 = 0xa0
-    NSString *_currentDefaultDebugAreaExtensionID;	// 168 = 0xa8
-    DVTLayoutView_ML *_editorAreaAutoLayoutView;	// 176 = 0xb0
-    DVTLayoutView_ML *_debuggerAreaAutoLayoutView;	// 184 = 0xb8
-    DVTBorderedView *_debuggerBarBorderedView;	// 192 = 0xc0
-    DVTBorderedView *_debuggerAreaBorderedView;	// 200 = 0xc8
-    DVTReplacementView *_debuggerBarReplacementView;	// 208 = 0xd0
-    DVTReplacementView *_debuggerAreaReplacementView;	// 216 = 0xd8
-    DVTSplitView *_debuggerSplitView;	// 224 = 0xe0
-    DVTSplitViewItem *_debugAreaSplitViewItem;	// 232 = 0xe8
-    double _heightToReturnToDebuggerArea;	// 240 = 0xf0
-    id _launchSessionObserver;	// 248 = 0xf8
-    DVTObservingToken *_themeObserver;	// 256 = 0x100
-    IDEWorkspaceTabControllerLayoutTree *_layoutTreeForNavigationHUD;	// 264 = 0x108
-    IDEWorkspaceTabControllerLayoutTree *_oldLayoutTreeFromStateSaving;	// 272 = 0x110
-    //BOOL _didInstall;	// 280 = 0x118
-    BOOL _needsToRefreshContexts;	// 281 = 0x119
-    BOOL _didRestoreState;	// 282 = 0x11a
-    BOOL _userWantsEditorVisible;	// 283 = 0x11b
-    BOOL _showDebuggerArea;	// 284 = 0x11c
-    id <DVTCancellable> _setEditorModeAfterDelayToken;	// 288 = 0x120
-    id <DVTCancellable> _invokeCompletionBlockAfterDelayToken;	// 296 = 0x128
-    IDEEditorContext *_navigationTargetedEditorContext;	// 304 = 0x130
+    NSView* _editorModeHostView; // 104 = 0x68
+    IDEEditorModeViewController* _editorModeViewController; // 112 = 0x70
+    int _editorMode; // 120 = 0x78
+    int _versionEditorSubmode; // 124 = 0x7c
+    DVTObservingToken* _workspaceActivityObserver; // 128 = 0x80
+    IDEEditorContext* _lastActiveEditorContext; // 136 = 0x88
+    IDEDebugBar* _activeDebuggerBar; // 144 = 0x90
+    IDEDebugArea* _activeDebuggerArea; // 152 = 0x98
+    NSMutableDictionary* _defaultPersistentRepresentations; // 160 = 0xa0
+    NSString* _currentDefaultDebugAreaExtensionID; // 168 = 0xa8
+    DVTLayoutView_ML* _editorAreaAutoLayoutView; // 176 = 0xb0
+    DVTLayoutView_ML* _debuggerAreaAutoLayoutView; // 184 = 0xb8
+    DVTBorderedView* _debuggerBarBorderedView; // 192 = 0xc0
+    DVTBorderedView* _debuggerAreaBorderedView; // 200 = 0xc8
+    DVTReplacementView* _debuggerBarReplacementView; // 208 = 0xd0
+    DVTReplacementView* _debuggerAreaReplacementView; // 216 = 0xd8
+    DVTSplitView* _debuggerSplitView; // 224 = 0xe0
+    DVTSplitViewItem* _debugAreaSplitViewItem; // 232 = 0xe8
+    double _heightToReturnToDebuggerArea; // 240 = 0xf0
+    id _launchSessionObserver; // 248 = 0xf8
+    DVTObservingToken* _themeObserver; // 256 = 0x100
+    IDEWorkspaceTabControllerLayoutTree* _layoutTreeForNavigationHUD; // 264 = 0x108
+    IDEWorkspaceTabControllerLayoutTree* _oldLayoutTreeFromStateSaving; // 272 = 0x110
+    // BOOL _didInstall;	// 280 = 0x118
+    BOOL _needsToRefreshContexts; // 281 = 0x119
+    BOOL _didRestoreState; // 282 = 0x11a
+    BOOL _userWantsEditorVisible; // 283 = 0x11b
+    BOOL _showDebuggerArea; // 284 = 0x11c
+    id<DVTCancellable> _setEditorModeAfterDelayToken; // 288 = 0x120
+    id<DVTCancellable> _invokeCompletionBlockAfterDelayToken; // 296 = 0x128
+    IDEEditorContext* _navigationTargetedEditorContext; // 304 = 0x130
 }
 
 + (BOOL)automaticallyNotifiesObserversOfLastActiveEditorContext;
@@ -102,44 +106,49 @@
 - (void)_updateDebuggerBarVisibility;
 - (void)_updateStateSavingRegistrations;
 - (void)activateConsole:(id)arg1;
-@property(retain) IDEDebugArea *activeDebuggerArea; // @synthesize activeDebuggerArea=_activeDebuggerArea;
-@property(retain) IDEDebugBar *activeDebuggerBar; // @synthesize activeDebuggerBar=_activeDebuggerBar;
+@property (retain) IDEDebugArea* activeDebuggerArea; // @synthesize activeDebuggerArea=_activeDebuggerArea;
+@property (retain) IDEDebugBar* activeDebuggerBar; // @synthesize activeDebuggerBar=_activeDebuggerBar;
 - (BOOL)commitEditingForAction:(int)arg1 errors:(id)arg2;
 - (void)commitStateToDictionary:(id)arg1;
 - (void)compareRevisionChange:(id)arg1;
-@property(readonly) DVTReplacementView *debuggerAreaReplacementView; // @synthesize debuggerAreaReplacementView=_debuggerAreaReplacementView;
+@property (readonly) DVTReplacementView*
+            debuggerAreaReplacementView; // @synthesize debuggerAreaReplacementView=_debuggerAreaReplacementView;
 - (void)discardEditing;
 - (id)editorAreaDFRController;
 - (void)editorContextDidBecomeLastActiveEditor:(id)arg1;
 - (void)editorContextWasRemoved:(id)arg1;
-@property(nonatomic) int editorMode; // @synthesize editorMode=_editorMode;
-@property(retain) IDEEditorModeViewController *editorModeViewController; // @synthesize editorModeViewController=_editorModeViewController;
+@property (nonatomic) int editorMode; // @synthesize editorMode=_editorMode;
+@property (retain) IDEEditorModeViewController*
+            editorModeViewController; // @synthesize editorModeViewController=_editorModeViewController;
 - (void)installDebugAreaWithExtensionID:(id)arg1;
 - (void)installDefaultDebugArea;
 - (void)installNewDefaultDebugAreaWithExtensionID:(id)arg1;
-@property(retain, nonatomic) IDEEditorContext *lastActiveEditorContext; // @synthesize lastActiveEditorContext=_lastActiveEditorContext;
-@property(readonly) IDEWorkspaceTabControllerLayoutTree *layoutTreeForNavigationHUD;
+@property (retain, nonatomic)
+            IDEEditorContext* lastActiveEditorContext; // @synthesize lastActiveEditorContext=_lastActiveEditorContext;
+@property (readonly) IDEWorkspaceTabControllerLayoutTree* layoutTreeForNavigationHUD;
 - (void)loadView;
 - (id)makeTouchBar;
 - (void)navigateHistoryWithSegmentedControl:(id)arg1;
-@property(retain) IDEEditorContext *navigationTargetedEditorContext; // @synthesize navigationTargetedEditorContext=_navigationTargetedEditorContext;
-@property(readonly) IDEEditorDocument *navigationTargetedEditorDocument;
-@property(readonly) IDEEditorContext *primaryEditorContext;
-@property(readonly) IDEEditorDocument *primaryEditorDocument;
+@property (retain) IDEEditorContext*
+            navigationTargetedEditorContext; // @synthesize
+                                             // navigationTargetedEditorContext=_navigationTargetedEditorContext;
+@property (readonly) IDEEditorDocument* navigationTargetedEditorDocument;
+@property (readonly) IDEEditorContext* primaryEditorContext;
+@property (readonly) IDEEditorDocument* primaryEditorDocument;
 - (void)primitiveInvalidate;
 - (void)revertState;
 - (void)revertStateWithDictionary:(id)arg1;
-@property(readonly) IDENavigableItemArchivableRepresentation *selectedNavigableItemArchivedRepresentation;
+@property (readonly) IDENavigableItemArchivableRepresentation* selectedNavigableItemArchivedRepresentation;
 - (void)setLayoutTreeForNavigationHUD:(id)arg1;
 @property BOOL showDebuggerArea;
 @property BOOL showEditor;
 - (void)setStateSavingDefaultPersistentRepresentations:(id)arg1;
-@property(retain,nonatomic) DVTStateToken *stateToken; // @dynamic stateToken;
-@property(nonatomic) BOOL userWantsEditorVisible; // @synthesize userWantsEditorVisible=_userWantsEditorVisible;
-@property(nonatomic) int versionEditorSubmode; // @synthesize versionEditorSubmode=_versionEditorSubmode;
+@property (retain, nonatomic) DVTStateToken* stateToken; // @dynamic stateToken;
+@property (nonatomic) BOOL userWantsEditorVisible; // @synthesize userWantsEditorVisible=_userWantsEditorVisible;
+@property (nonatomic) int versionEditorSubmode; // @synthesize versionEditorSubmode=_versionEditorSubmode;
 - (void)showBlame;
 - (void)showDebuggerArea:(id)arg1;
-@property(readonly) BOOL showDebuggerBar;
+@property (readonly) BOOL showDebuggerBar;
 - (id)splitView:(id)arg1 additionalEffectiveRectsOfDividerAtIndex:(long long)arg2;
 - (BOOL)splitView:(id)arg1 canCollapseSubview:(id)arg2;
 - (double)splitView:(id)arg1 constrainMaxCoordinate:(double)arg2 ofSubviewAt:(long long)arg3;
@@ -157,11 +166,10 @@
 - (BOOL)wantsToSuppressFunctionBar;
 
 // Remaining properties
-@property(readonly, copy) NSString *debugDescription;
-@property(readonly, copy) NSString *description;
-@property(readonly) unsigned long long hash;
-@property(readonly) Class superclass;
-@property(readonly) NSTouchBar *touchBar;
+@property (readonly, copy) NSString* debugDescription;
+@property (readonly, copy) NSString* description;
+@property (readonly) unsigned long long hash;
+@property (readonly) Class superclass;
+@property (readonly) NSTouchBar* touchBar;
 
 @end
-

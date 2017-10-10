@@ -7,21 +7,23 @@
 //
 
 #import "XVimUppercaseEvaluator.h"
-#import "XVimWindow.h"
-#import "XVim.h"
 #import "SourceViewProtocol.h"
+#import "XVim.h"
+#import "XVimWindow.h"
 
 @implementation XVimUppercaseEvaluator
 
-- (XVimEvaluator*)U{
-    if ([self numericArg] < 1) 
+- (XVimEvaluator*)U
+{
+    if ([self numericArg] < 1)
         return nil;
-    
-    XVimMotion* m = XVIM_MAKE_MOTION(MOTION_LINE_FORWARD, LINEWISE, MOTION_OPTION_NONE, [self numericArg]-1);
+
+    XVimMotion* m = XVIM_MAKE_MOTION(MOTION_LINE_FORWARD, LINEWISE, MOTION_OPTION_NONE, [self numericArg] - 1);
     return [self _motionFixed:m];
 }
 
--(XVimEvaluator*)motionFixed:(XVimMotion*)motion{
+- (XVimEvaluator*)motionFixed:(XVimMotion*)motion
+{
     [[self sourceView] xvim_makeUpperCase:motion];
     return nil;
 }

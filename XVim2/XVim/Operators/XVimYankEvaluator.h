@@ -11,4 +11,3 @@
 @interface XVimYankEvaluator : XVimOperatorEvaluator
 - (XVimEvaluator*)y;
 @end
-

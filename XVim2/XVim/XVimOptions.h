@@ -18,13 +18,13 @@
 @property BOOL debug;
 @property BOOL hlsearch;
 @property (nonatomic) BOOL number;
-@property (copy) NSString *clipboard;
-@property (copy) NSString *guioptions;
-@property (copy) NSString *timeoutlen;
+@property (copy) NSString* clipboard;
+@property (copy) NSString* guioptions;
+@property (copy) NSString* timeoutlen;
 @property int laststatus;
 @property BOOL vimregex; // XVim Original
 @property BOOL relativenumber;
-@property BOOL alwaysuseinputsource; //XVim original
+@property BOOL alwaysuseinputsource; // XVim original
 @property BOOL blinkcursor;
 @property BOOL startofline;
 @property BOOL expandtab;

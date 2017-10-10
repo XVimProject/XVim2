@@ -6,9 +6,9 @@
 //  Copyright © 2017 Shuichiro Suzuki. All rights reserved.
 //
 
-#import <Foundation/Foundation.h>
 #import "SourceCodeEditorViewProxy.h"
 #import "XVimMotionOption.h"
+#import <Foundation/Foundation.h>
 
 @interface SourceCodeEditorViewProxy (XVim) <SourceViewXVimProtocol>
 @end

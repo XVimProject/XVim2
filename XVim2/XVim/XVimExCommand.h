@@ -13,8 +13,9 @@
 // Wondering if we can reuse ex_*.* files in Vim...
 
 // Here's the struct Vim using to express ex command.
-// XVimExArg is based on this struct but has more Objective-C like members and does not have unsupported members by XVim at the moment.
-//struct exarg
+// XVimExArg is based on this struct but has more Objective-C like members and does not have unsupported members by XVim
+// at the moment.
+// struct exarg
 //{
 //    char_u	*arg;		/* argument of the command */
 //    char_u	*nextcmd;	/* next command (NULL if none) */
@@ -54,7 +55,7 @@
 
 @class XVimWindow;
 
-@interface XVimExArg : NSObject{
+@interface XVimExArg : NSObject {
 }
 @property (strong) NSString* arg;
 @property (strong) NSString* cmd;
@@ -66,15 +67,14 @@
 @end
 
 // XVimExCmd corresponds cmdname struct in ex_cmds.h
-@interface XVimExCmdname : NSObject{
-
+@interface XVimExCmdname : NSObject {
 }
 @property (weak, readonly) NSString* cmdName;
 @property (weak, readonly) NSString* methodName;
 @end
 
 
-@interface XVimExCommand : NSObject{
+@interface XVimExCommand : NSObject {
     NSArray* _excommands;
 }
 - (NSString*)executeCommand:(NSString*)cmd inWindow:(XVimWindow*)window;

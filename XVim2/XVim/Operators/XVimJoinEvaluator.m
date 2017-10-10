@@ -14,7 +14,7 @@
     BOOL _addSpace;
 }
 
-- (instancetype)initWithWindow:(XVimWindow *)window addSpace:(BOOL)addSpace
+- (instancetype)initWithWindow:(XVimWindow*)window addSpace:(BOOL)addSpace
 {
     if ((self = [self initWithWindow:window])) {
         _addSpace = addSpace;
@@ -22,8 +22,9 @@
     return self;
 }
 
-- (XVimEvaluator*)motionFixed:(XVimMotion*)motion{
-    if( motion.count > 1 ){
+- (XVimEvaluator*)motionFixed:(XVimMotion*)motion
+{
+    if (motion.count > 1) {
         // J and 2J is the same
         motion.count--;
     }

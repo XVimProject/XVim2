@@ -8,79 +8,80 @@
 
 //#import <DVTKit/DVTPreferenceSet-Protocol.h>
 
-@class DVTCustomDataSpecifier, DVTStackBacktrace, NSColor, NSFont, NSImage, NSMutableDictionary, NSPointerArray, NSString, NSURL;
+@class DVTCustomDataSpecifier, DVTStackBacktrace, NSColor, NSFont, NSImage, NSMutableDictionary, NSPointerArray,
+            NSString, NSURL;
 
 @interface DVTFontAndColorTheme : NSObject // <DVTPreferenceSet>
 {
-    NSString *_name;	// 8 = 0x8
-    NSImage *_image;	// 16 = 0x10
-    NSURL *_dataURL;	// 24 = 0x18
-    DVTCustomDataSpecifier *_customDataSpecifier;	// 32 = 0x20
-    BOOL _needsPostSettingsChangedNotification;	// 40 = 0x28
-    long long _disablePostSettingsChangedNotificationCount;	// 48 = 0x30
-    NSColor *_sourceTextBackgroundColor;	// 56 = 0x38
-    NSColor *_sourceTextSidebarBackgroundColor;	// 64 = 0x40
-    NSColor *_sourceTextSidebarEdgeColor;	// 72 = 0x48
-    NSColor *_sourceTextSidebarNumbersColor;	// 80 = 0x50
-    NSColor *_sourceTextSidebarHighlightedNumbersColor;	// 88 = 0x58
-    NSColor *_sourceTextFoldbarBackgroundColor;	// 96 = 0x60
-    NSColor *_sourceTextSelectionColor;	// 104 = 0x68
-    NSColor *_sourceTextSecondarySelectionColor;	// 112 = 0x70
-    NSColor *_sourceTextInsertionPointColor;	// 120 = 0x78
-    NSColor *_sourceTextCurrentLineHighlightColor;	// 128 = 0x80
-    NSColor *_sourceTextInvisiblesColor;	// 136 = 0x88
-    NSColor *_sourceTextBlockDimBackgroundColor;	// 144 = 0x90
-    NSColor *_sourceTextTokenizedBorderColor;	// 152 = 0x98
-    NSColor *_sourceTextTokenizedBackgroundColor;	// 160 = 0xa0
-    NSColor *_sourceTextTokenizedBorderSelectedColor;	// 168 = 0xa8
-    NSColor *_sourceTextTokenizedBackgroundSelectedColor;	// 176 = 0xb0
-    NSColor *_markupTextBackgroundColor;	// 184 = 0xb8
-    NSColor *_markupTextBorderColor;	// 192 = 0xc0
-    NSColor *_markupTextNormalColor;	// 200 = 0xc8
-    NSColor *_markupTextStrongColor;	// 208 = 0xd0
-    NSColor *_markupTextEmphasisColor;	// 216 = 0xd8
-    NSColor *_markupTextPrimaryHeadingColor;	// 224 = 0xe0
-    NSColor *_markupTextSecondaryHeadingColor;	// 232 = 0xe8
-    NSColor *_markupTextOtherHeadingColor;	// 240 = 0xf0
-    NSColor *_markupTextInlineCodeColor;	// 248 = 0xf8
-    NSColor *_markupTextLinkColor;	// 256 = 0x100
-    NSFont *_markupTextNormalFont;	// 264 = 0x108
-    NSFont *_markupTextStrongFont;	// 272 = 0x110
-    NSFont *_markupTextEmphasisFont;	// 280 = 0x118
-    NSFont *_markupTextPrimaryHeadingFont;	// 288 = 0x120
-    NSFont *_markupTextSecondaryHeadingFont;	// 296 = 0x128
-    NSFont *_markupTextOtherHeadingFont;	// 304 = 0x130
-    NSFont *_markupTextLinkFont;	// 312 = 0x138
-    NSFont *_markupTextCodeFont;	// 320 = 0x140
-    NSColor *_consoleTextBackgroundColor;	// 328 = 0x148
-    NSColor *_consoleTextSelectionColor;	// 336 = 0x150
-    NSColor *_consoleTextSecondarySelectionColor;	// 344 = 0x158
-    NSColor *_consoleTextInsertionPointColor;	// 352 = 0x160
-    NSColor *_consoleDebuggerPromptTextColor;	// 360 = 0x168
-    NSColor *_consoleDebuggerInputTextColor;	// 368 = 0x170
-    NSColor *_consoleDebuggerOutputTextColor;	// 376 = 0x178
-    NSColor *_consoleExecutableInputTextColor;	// 384 = 0x180
-    NSColor *_consoleExecutableOutputTextColor;	// 392 = 0x188
-    NSFont *_consoleDebuggerPromptTextFont;	// 400 = 0x190
-    NSFont *_consoleDebuggerInputTextFont;	// 408 = 0x198
-    NSFont *_consoleDebuggerOutputTextFont;	// 416 = 0x1a0
-    NSFont *_consoleExecutableInputTextFont;	// 424 = 0x1a8
-    NSFont *_consoleExecutableOutputTextFont;	// 432 = 0x1b0
-    NSColor *_debuggerInstructionPointerColor;	// 440 = 0x1b8
-    NSColor *_sourcePlainTextColor;	// 448 = 0x1c0
-    NSFont *_sourcePlainTextFont;	// 456 = 0x1c8
-    NSPointerArray *_syntaxColorsByNodeType;	// 464 = 0x1d0
-    NSPointerArray *_syntaxFontsByNodeType;	// 472 = 0x1d8
-    NSMutableDictionary *_markdownNodeToColorDeriverBlock;	// 480 = 0x1e0
-    NSMutableDictionary *_markdownNodeToFontDeriverBlock;	// 488 = 0x1e8
-    NSColor *_ghostComplementTextColor;	// 496 = 0x1f0
-    double _lineSpacing;	// 504 = 0x1f8
-    int _cursor;	// 512 = 0x200
-    BOOL _builtIn;	// 516 = 0x204
-    BOOL _loadedData;	// 517 = 0x205
-    BOOL _contentNeedsSaving;	// 518 = 0x206
-    BOOL _hasMultipleSourceTextFonts;	// 519 = 0x207
-    long long _fontSizeModifier;	// 520 = 0x208
+    NSString* _name; // 8 = 0x8
+    NSImage* _image; // 16 = 0x10
+    NSURL* _dataURL; // 24 = 0x18
+    DVTCustomDataSpecifier* _customDataSpecifier; // 32 = 0x20
+    BOOL _needsPostSettingsChangedNotification; // 40 = 0x28
+    long long _disablePostSettingsChangedNotificationCount; // 48 = 0x30
+    NSColor* _sourceTextBackgroundColor; // 56 = 0x38
+    NSColor* _sourceTextSidebarBackgroundColor; // 64 = 0x40
+    NSColor* _sourceTextSidebarEdgeColor; // 72 = 0x48
+    NSColor* _sourceTextSidebarNumbersColor; // 80 = 0x50
+    NSColor* _sourceTextSidebarHighlightedNumbersColor; // 88 = 0x58
+    NSColor* _sourceTextFoldbarBackgroundColor; // 96 = 0x60
+    NSColor* _sourceTextSelectionColor; // 104 = 0x68
+    NSColor* _sourceTextSecondarySelectionColor; // 112 = 0x70
+    NSColor* _sourceTextInsertionPointColor; // 120 = 0x78
+    NSColor* _sourceTextCurrentLineHighlightColor; // 128 = 0x80
+    NSColor* _sourceTextInvisiblesColor; // 136 = 0x88
+    NSColor* _sourceTextBlockDimBackgroundColor; // 144 = 0x90
+    NSColor* _sourceTextTokenizedBorderColor; // 152 = 0x98
+    NSColor* _sourceTextTokenizedBackgroundColor; // 160 = 0xa0
+    NSColor* _sourceTextTokenizedBorderSelectedColor; // 168 = 0xa8
+    NSColor* _sourceTextTokenizedBackgroundSelectedColor; // 176 = 0xb0
+    NSColor* _markupTextBackgroundColor; // 184 = 0xb8
+    NSColor* _markupTextBorderColor; // 192 = 0xc0
+    NSColor* _markupTextNormalColor; // 200 = 0xc8
+    NSColor* _markupTextStrongColor; // 208 = 0xd0
+    NSColor* _markupTextEmphasisColor; // 216 = 0xd8
+    NSColor* _markupTextPrimaryHeadingColor; // 224 = 0xe0
+    NSColor* _markupTextSecondaryHeadingColor; // 232 = 0xe8
+    NSColor* _markupTextOtherHeadingColor; // 240 = 0xf0
+    NSColor* _markupTextInlineCodeColor; // 248 = 0xf8
+    NSColor* _markupTextLinkColor; // 256 = 0x100
+    NSFont* _markupTextNormalFont; // 264 = 0x108
+    NSFont* _markupTextStrongFont; // 272 = 0x110
+    NSFont* _markupTextEmphasisFont; // 280 = 0x118
+    NSFont* _markupTextPrimaryHeadingFont; // 288 = 0x120
+    NSFont* _markupTextSecondaryHeadingFont; // 296 = 0x128
+    NSFont* _markupTextOtherHeadingFont; // 304 = 0x130
+    NSFont* _markupTextLinkFont; // 312 = 0x138
+    NSFont* _markupTextCodeFont; // 320 = 0x140
+    NSColor* _consoleTextBackgroundColor; // 328 = 0x148
+    NSColor* _consoleTextSelectionColor; // 336 = 0x150
+    NSColor* _consoleTextSecondarySelectionColor; // 344 = 0x158
+    NSColor* _consoleTextInsertionPointColor; // 352 = 0x160
+    NSColor* _consoleDebuggerPromptTextColor; // 360 = 0x168
+    NSColor* _consoleDebuggerInputTextColor; // 368 = 0x170
+    NSColor* _consoleDebuggerOutputTextColor; // 376 = 0x178
+    NSColor* _consoleExecutableInputTextColor; // 384 = 0x180
+    NSColor* _consoleExecutableOutputTextColor; // 392 = 0x188
+    NSFont* _consoleDebuggerPromptTextFont; // 400 = 0x190
+    NSFont* _consoleDebuggerInputTextFont; // 408 = 0x198
+    NSFont* _consoleDebuggerOutputTextFont; // 416 = 0x1a0
+    NSFont* _consoleExecutableInputTextFont; // 424 = 0x1a8
+    NSFont* _consoleExecutableOutputTextFont; // 432 = 0x1b0
+    NSColor* _debuggerInstructionPointerColor; // 440 = 0x1b8
+    NSColor* _sourcePlainTextColor; // 448 = 0x1c0
+    NSFont* _sourcePlainTextFont; // 456 = 0x1c8
+    NSPointerArray* _syntaxColorsByNodeType; // 464 = 0x1d0
+    NSPointerArray* _syntaxFontsByNodeType; // 472 = 0x1d8
+    NSMutableDictionary* _markdownNodeToColorDeriverBlock; // 480 = 0x1e0
+    NSMutableDictionary* _markdownNodeToFontDeriverBlock; // 488 = 0x1e8
+    NSColor* _ghostComplementTextColor; // 496 = 0x1f0
+    double _lineSpacing; // 504 = 0x1f8
+    int _cursor; // 512 = 0x200
+    BOOL _builtIn; // 516 = 0x204
+    BOOL _loadedData; // 517 = 0x205
+    BOOL _contentNeedsSaving; // 518 = 0x206
+    BOOL _hasMultipleSourceTextFonts; // 519 = 0x207
+    long long _fontSizeModifier; // 520 = 0x208
 }
 
 + (id)_defaultSourceCodeFont;
@@ -106,7 +107,7 @@
 - (BOOL)_loadFontsAndColors;
 - (void)_registerDerivedMarkdownNodesAndDeriverBlocks;
 - (void)_registerMarkdownNode:(id)arg1 nodeNameForColor:(id)arg2 fontName:(id)arg3 fontMultiplier:(double)arg4;
-- (void)_setColorOrFont:(id)arg1 forKey:(id)arg2 colorOrFontivar:(id *)arg3;
+- (void)_setColorOrFont:(id)arg1 forKey:(id)arg2 colorOrFontivar:(id*)arg3;
 - (void)_setColorOrFont:(id)arg1 forNodeTypes:(id)arg2;
 - (void)_themeCommonInit;
 - (void)_updateDerivedColors;
@@ -118,64 +119,67 @@
 - (BOOL)canResetFontSize;
 - (id)colorForNodeType:(short)arg1;
 - (id)colorIfExistsForNodeType:(short)arg1;
-@property(readonly, copy) NSColor *consoleDebuggerInputTextColor;
-@property(readonly) NSFont *consoleDebuggerInputTextFont;
-@property(readonly, copy) NSColor *consoleDebuggerOutputTextColor;
-@property(readonly) NSFont *consoleDebuggerOutputTextFont;
-@property(readonly, copy) NSColor *consoleDebuggerPromptTextColor;
-@property(readonly) NSFont *consoleDebuggerPromptTextFont;
-@property(readonly, copy) NSColor *consoleExecutableInputTextColor;
-@property(readonly) NSFont *consoleExecutableInputTextFont;
-@property(readonly, copy) NSColor *consoleExecutableOutputTextColor;
-@property(readonly) NSFont *consoleExecutableOutputTextFont;
-@property(readonly, copy) NSColor *consoleTextBackgroundColor;
-@property(readonly, copy) NSColor *consoleTextInsertionPointColor;
-@property(readonly, copy) NSColor *consoleTextSecondarySelectionColor;
-@property(readonly, copy) NSColor *consoleTextSelectionColor;
+@property (readonly, copy) NSColor* consoleDebuggerInputTextColor;
+@property (readonly) NSFont* consoleDebuggerInputTextFont;
+@property (readonly, copy) NSColor* consoleDebuggerOutputTextColor;
+@property (readonly) NSFont* consoleDebuggerOutputTextFont;
+@property (readonly, copy) NSColor* consoleDebuggerPromptTextColor;
+@property (readonly) NSFont* consoleDebuggerPromptTextFont;
+@property (readonly, copy) NSColor* consoleExecutableInputTextColor;
+@property (readonly) NSFont* consoleExecutableInputTextFont;
+@property (readonly, copy) NSColor* consoleExecutableOutputTextColor;
+@property (readonly) NSFont* consoleExecutableOutputTextFont;
+@property (readonly, copy) NSColor* consoleTextBackgroundColor;
+@property (readonly, copy) NSColor* consoleTextInsertionPointColor;
+@property (readonly, copy) NSColor* consoleTextSecondarySelectionColor;
+@property (readonly, copy) NSColor* consoleTextSelectionColor;
 @property BOOL contentNeedsSaving; // @synthesize contentNeedsSaving=_contentNeedsSaving;
-@property(readonly) int cursor;
-@property(retain) DVTCustomDataSpecifier *customDataSpecifier; // @synthesize customDataSpecifier=_customDataSpecifier;
-- (id)dataRepresentationWithError:(id *)arg1;
-@property(readonly, copy) NSColor *debuggerInstructionPointerColor;
+@property (readonly) int cursor;
+@property (retain) DVTCustomDataSpecifier* customDataSpecifier; // @synthesize customDataSpecifier=_customDataSpecifier;
+- (id)dataRepresentationWithError:(id*)arg1;
+@property (readonly, copy) NSColor* debuggerInstructionPointerColor;
 - (void)decreaseFontSize;
-@property(readonly, copy) NSString *description;
+@property (readonly, copy) NSString* description;
 - (void)disablePostSettingsChangedNotification;
 - (void)enablePostSettingsChangedNotification;
 - (id)fontForNodeType:(short)arg1;
 - (id)fontIfExistsForNodeType:(short)arg1;
-@property(nonatomic) long long fontSizeModifier; // @synthesize fontSizeModifier=_fontSizeModifier;
-@property(readonly, copy) NSColor *ghostComplementTextColor;
+@property (nonatomic) long long fontSizeModifier; // @synthesize fontSizeModifier=_fontSizeModifier;
+@property (readonly, copy) NSColor* ghostComplementTextColor;
 - (BOOL)hasLightBackground;
-@property(nonatomic) BOOL hasMultipleSourceTextFonts; // @synthesize hasMultipleSourceTextFonts=_hasMultipleSourceTextFonts;
-@property(retain) NSImage *image; // @synthesize image=_image;
+@property (nonatomic)
+            BOOL hasMultipleSourceTextFonts; // @synthesize hasMultipleSourceTextFonts=_hasMultipleSourceTextFonts;
+@property (retain) NSImage* image; // @synthesize image=_image;
 - (void)increaseFontSize;
 - (id)init;
 - (id)initWithCustomDataSpecifier:(id)arg1 basePreferenceSet:(id)arg2;
 - (id)initWithName:(id)arg1 dataURL:(id)arg2;
-@property(readonly, getter=isBuiltIn) BOOL builtIn; // @synthesize builtIn=_builtIn;
-@property(readonly) double lineSpacing;
-@property(readonly) BOOL loadedData; // @synthesize loadedData=_loadedData;
-@property(readonly, copy) NSString *localizedName;
-@property(readonly, copy) NSColor *markupTextBackgroundColor;
-@property(readonly, copy) NSColor *markupTextBorderColor;
-@property(readonly) NSFont *markupTextCodeFont;
-@property(readonly, copy) NSColor *markupTextEmphasisColor;
-@property(readonly) NSFont *markupTextEmphasisFont;
-@property(readonly, copy) NSColor *markupTextInlineCodeColor;
-@property(readonly, copy) NSColor *markupTextLinkColor;
-@property(readonly) NSFont *markupTextLinkFont;
-@property(readonly, copy) NSColor *markupTextNormalColor;
-@property(readonly) NSFont *markupTextNormalFont;
-@property(readonly, copy) NSColor *markupTextOtherHeadingColor;
-@property(readonly) NSFont *markupTextOtherHeadingFont;
-@property(readonly, copy) NSColor *markupTextPrimaryHeadingColor;
-@property(readonly) NSFont *markupTextPrimaryHeadingFont;
-@property(readonly, copy) NSColor *markupTextSecondaryHeadingColor;
-@property(readonly) NSFont *markupTextSecondaryHeadingFont;
-@property(readonly, copy) NSColor *markupTextStrongColor;
-@property(readonly) NSFont *markupTextStrongFont;
-@property(copy) NSString *name; // @synthesize name=_name;
-@property BOOL needsPostSettingsChangedNotification; // @synthesize needsPostSettingsChangedNotification=_needsPostSettingsChangedNotification;
+@property (readonly, getter=isBuiltIn) BOOL builtIn; // @synthesize builtIn=_builtIn;
+@property (readonly) double lineSpacing;
+@property (readonly) BOOL loadedData; // @synthesize loadedData=_loadedData;
+@property (readonly, copy) NSString* localizedName;
+@property (readonly, copy) NSColor* markupTextBackgroundColor;
+@property (readonly, copy) NSColor* markupTextBorderColor;
+@property (readonly) NSFont* markupTextCodeFont;
+@property (readonly, copy) NSColor* markupTextEmphasisColor;
+@property (readonly) NSFont* markupTextEmphasisFont;
+@property (readonly, copy) NSColor* markupTextInlineCodeColor;
+@property (readonly, copy) NSColor* markupTextLinkColor;
+@property (readonly) NSFont* markupTextLinkFont;
+@property (readonly, copy) NSColor* markupTextNormalColor;
+@property (readonly) NSFont* markupTextNormalFont;
+@property (readonly, copy) NSColor* markupTextOtherHeadingColor;
+@property (readonly) NSFont* markupTextOtherHeadingFont;
+@property (readonly, copy) NSColor* markupTextPrimaryHeadingColor;
+@property (readonly) NSFont* markupTextPrimaryHeadingFont;
+@property (readonly, copy) NSColor* markupTextSecondaryHeadingColor;
+@property (readonly) NSFont* markupTextSecondaryHeadingFont;
+@property (readonly, copy) NSColor* markupTextStrongColor;
+@property (readonly) NSFont* markupTextStrongFont;
+@property (copy) NSString* name; // @synthesize name=_name;
+@property BOOL
+            needsPostSettingsChangedNotification; // @synthesize
+                                                  // needsPostSettingsChangedNotification=_needsPostSettingsChangedNotification;
 - (void)postSettingsChangedNotification;
 - (void)postSettingsChangedNotificationIfNeeded;
 - (void)primitiveInvalidate;
@@ -222,35 +226,35 @@
 - (void)setSourceTextInsertionPointColor:(id)arg1;
 - (void)setSourceTextInvisiblesColor:(id)arg1;
 - (void)setSourceTextSelectionColor:(id)arg1;
-@property(readonly, copy) NSColor *sourcePlainTextColor;
-@property(readonly) NSFont *sourcePlainTextFont;
-@property(readonly, copy) NSColor *sourceTextBackgroundColor;
-@property(readonly, copy) NSColor *sourceTextBlockDimBackgroundColor;
-@property(readonly, copy) NSColor *sourceTextCurrentLineHighlightColor;
-@property(readonly, copy) NSColor *sourceTextFoldbarBackgroundColor;
-@property(readonly, copy) NSColor *sourceTextInsertionPointColor;
-@property(readonly, copy) NSColor *sourceTextInvisiblesColor;
-@property(readonly, copy) NSColor *sourceTextLinkColor;
-@property(readonly, copy) NSColor *sourceTextSecondarySelectionColor;
-@property(readonly, copy) NSColor *sourceTextSelectionColor;
-@property(readonly, copy) NSColor *sourceTextSidebarBackgroundColor;
-@property(readonly, copy) NSColor *sourceTextSidebarEdgeColor;
-@property(readonly, copy) NSColor *sourceTextSidebarHighlightedNumbersColor;
-@property(readonly, copy) NSColor *sourceTextSidebarNumbersColor;
-@property(readonly, copy) NSColor *sourceTextTokenizedBackgroundColor;
-@property(readonly, copy) NSColor *sourceTextTokenizedBackgroundSelectedColor;
-@property(readonly, copy) NSColor *sourceTextTokenizedBorderColor;
-@property(readonly, copy) NSColor *sourceTextTokenizedBorderSelectedColor;
-@property(readonly) NSPointerArray *syntaxColorsByNodeType; // @synthesize syntaxColorsByNodeType=_syntaxColorsByNodeType;
-@property(readonly) NSPointerArray *syntaxFontsByNodeType; // @synthesize syntaxFontsByNodeType=_syntaxFontsByNodeType;
+@property (readonly, copy) NSColor* sourcePlainTextColor;
+@property (readonly) NSFont* sourcePlainTextFont;
+@property (readonly, copy) NSColor* sourceTextBackgroundColor;
+@property (readonly, copy) NSColor* sourceTextBlockDimBackgroundColor;
+@property (readonly, copy) NSColor* sourceTextCurrentLineHighlightColor;
+@property (readonly, copy) NSColor* sourceTextFoldbarBackgroundColor;
+@property (readonly, copy) NSColor* sourceTextInsertionPointColor;
+@property (readonly, copy) NSColor* sourceTextInvisiblesColor;
+@property (readonly, copy) NSColor* sourceTextLinkColor;
+@property (readonly, copy) NSColor* sourceTextSecondarySelectionColor;
+@property (readonly, copy) NSColor* sourceTextSelectionColor;
+@property (readonly, copy) NSColor* sourceTextSidebarBackgroundColor;
+@property (readonly, copy) NSColor* sourceTextSidebarEdgeColor;
+@property (readonly, copy) NSColor* sourceTextSidebarHighlightedNumbersColor;
+@property (readonly, copy) NSColor* sourceTextSidebarNumbersColor;
+@property (readonly, copy) NSColor* sourceTextTokenizedBackgroundColor;
+@property (readonly, copy) NSColor* sourceTextTokenizedBackgroundSelectedColor;
+@property (readonly, copy) NSColor* sourceTextTokenizedBorderColor;
+@property (readonly, copy) NSColor* sourceTextTokenizedBorderSelectedColor;
+@property (readonly)
+            NSPointerArray* syntaxColorsByNodeType; // @synthesize syntaxColorsByNodeType=_syntaxColorsByNodeType;
+@property (readonly) NSPointerArray* syntaxFontsByNodeType; // @synthesize syntaxFontsByNodeType=_syntaxFontsByNodeType;
 
 // Remaining properties
-@property(retain) DVTStackBacktrace *creationBacktrace;
-@property(readonly, copy) NSString *debugDescription;
-@property(readonly) unsigned long long hash;
-@property(readonly) DVTStackBacktrace *invalidationBacktrace;
-@property(readonly) Class superclass;
-@property(readonly, nonatomic, getter=isValid) BOOL valid;
+@property (retain) DVTStackBacktrace* creationBacktrace;
+@property (readonly, copy) NSString* debugDescription;
+@property (readonly) unsigned long long hash;
+@property (readonly) DVTStackBacktrace* invalidationBacktrace;
+@property (readonly) Class superclass;
+@property (readonly, nonatomic, getter=isValid) BOOL valid;
 
 @end
-

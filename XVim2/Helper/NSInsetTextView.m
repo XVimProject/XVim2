@@ -11,7 +11,8 @@
 @implementation NSInsetTextView
 @synthesize inset = _inset;
 
-- (NSPoint)textContainerOrigin {
+- (NSPoint)textContainerOrigin
+{
     NSPoint origin = [super textContainerOrigin];
     NSPoint newOrigin = NSMakePoint(origin.x + _inset.width, origin.y + _inset.height);
     return newOrigin;

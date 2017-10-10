@@ -12,6 +12,6 @@
 @class XVimMotion;
 
 @interface XVimGMotionEvaluator : XVimEvaluator
-@property(strong) XVimMotion* motion;
-@property(strong) XVimKeyStroke* key;
+@property (strong) XVimMotion* motion;
+@property (strong) XVimKeyStroke* key;
 @end

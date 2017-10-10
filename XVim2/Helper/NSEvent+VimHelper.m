@@ -10,13 +10,15 @@
 
 @implementation NSEvent (VimHelper)
 
-- (unichar)unmodifiedKeyCode {
-    NSString *charactersIgnoringModifiers = [self charactersIgnoringModifiers];
+- (unichar)unmodifiedKeyCode
+{
+    NSString* charactersIgnoringModifiers = [self charactersIgnoringModifiers];
     return charactersIgnoringModifiers.length > 0 ? [charactersIgnoringModifiers characterAtIndex:0] : 0;
 }
 
-- (unichar)modifiedKeyCode {
-    NSString *characters = [self characters];
+- (unichar)modifiedKeyCode
+{
+    NSString* characters = [self characters];
     return characters.length > 0 ? [characters characterAtIndex:0] : [self unmodifiedKeyCode];
 }
 

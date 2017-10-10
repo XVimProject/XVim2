@@ -8,13 +8,12 @@
 
 @class IDEEditorArea, IDEEditorContext, NSDictionary;
 
-@interface IDEEditorModeViewController : IDEViewController
-{
-    IDEEditorContext *_primaryEditorContext;	// 104 = 0x68
-    IDEEditorContext *_selectedAlternateEditorContext;	// 112 = 0x70
-    NSDictionary *_lastSetEditorLayoutConfiguration;	// 120 = 0x78
-    NSDictionary *_lastSetPersistentRepresentation;	// 128 = 0x80
-    IDEEditorArea *_editorArea;	// 136 = 0x88
+@interface IDEEditorModeViewController : IDEViewController {
+    IDEEditorContext* _primaryEditorContext; // 104 = 0x68
+    IDEEditorContext* _selectedAlternateEditorContext; // 112 = 0x70
+    NSDictionary* _lastSetEditorLayoutConfiguration; // 120 = 0x78
+    NSDictionary* _lastSetPersistentRepresentation; // 128 = 0x80
+    IDEEditorArea* _editorArea; // 136 = 0x88
 }
 
 + (void)configureStateSavingObjectPersistenceByName:(id)arg1;
@@ -23,9 +22,12 @@
 //- (void).cxx_destruct;
 - (id)_configurationDictionaryWithItems:(id)arg1 itemsKey:(id)arg2 selected:(id)arg3 geometry:(id)arg4;
 - (id)_editorLayoutConfigurationForEditorHistoryStacks:(id)arg1 selected:(id)arg2 geometry:(id)arg3;
-- (BOOL)_getEditorHistoryStacks:(id *)arg1 selected:(id *)arg2 geometry:(id *)arg3 forEditorLayoutConfiguration:(id)arg4;
-- (BOOL)_getItems:(id *)arg1 itemsKey:(id)arg2 selected:(id *)arg3 geometry:(id *)arg4 inConfigurationDictionary:(id)arg5;
-- (BOOL)_getStateSavingStateDictionaries:(id *)arg1 selected:(id *)arg2 geometry:(id *)arg3 forPersistentRepresentation:(id)arg4;
+- (BOOL)_getEditorHistoryStacks:(id*)arg1 selected:(id*)arg2 geometry:(id*)arg3 forEditorLayoutConfiguration:(id)arg4;
+- (BOOL)_getItems:(id*)arg1 itemsKey:(id)arg2 selected:(id*)arg3 geometry:(id*)arg4 inConfigurationDictionary:(id)arg5;
+- (BOOL)_getStateSavingStateDictionaries:(id*)arg1
+                                    selected:(id*)arg2
+                                    geometry:(id*)arg3
+                 forPersistentRepresentation:(id)arg4;
 - (id)_initWithPrimaryEditorContext:(id)arg1;
 - (id)_liftEditorLayoutConfiguration;
 - (id)_liftEditorLayoutConfigurationForIdentifier:(id)arg1;
@@ -46,19 +48,21 @@
 - (BOOL)canRemoveAssistantEditor;
 - (BOOL)canResetEditor;
 - (void)commitStateToDictionary:(id)arg1;
-@property(retain, nonatomic) IDEEditorArea *editorArea; // @synthesize editorArea=_editorArea;
+@property (retain, nonatomic) IDEEditorArea* editorArea; // @synthesize editorArea=_editorArea;
 - (void)editorContext:(id)arg1 editorStateRepositoryDidChange:(id)arg2;
 - (id)editorContexts;
-@property(readonly) struct CGSize minimumContentViewFrameSize;
+@property (readonly) struct CGSize minimumContentViewFrameSize;
 - (BOOL)openEditorHistoryItem:(id)arg1 editorContext:(id)arg2;
 - (BOOL)openEditorOpenSpecifier:(id)arg1 editorContext:(id)arg2;
-@property(retain, nonatomic) IDEEditorContext *primaryEditorContext; // @synthesize primaryEditorContext=_primaryEditorContext;
+@property (retain, nonatomic)
+            IDEEditorContext* primaryEditorContext; // @synthesize primaryEditorContext=_primaryEditorContext;
 - (void)primitiveInvalidate;
 - (void)removeAssistantEditor;
 - (void)resetEditor;
 - (void)revertStateWithDictionary:(id)arg1;
-@property(retain) IDEEditorContext *selectedAlternateEditorContext; // @synthesize selectedAlternateEditorContext=_selectedAlternateEditorContext;
+@property (retain) IDEEditorContext*
+            selectedAlternateEditorContext; // @synthesize
+                                            // selectedAlternateEditorContext=_selectedAlternateEditorContext;
 - (void)setAssistantEditorsLayout:(unsigned long long)arg1;
 
 @end
-

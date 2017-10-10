@@ -7,12 +7,12 @@
 //
 
 #import "XVimRegisterEvaluator.h"
+#import "Logger.h"
+#import "XVim.h"
+#import "XVimKeyStroke.h"
 #import "XVimNormalEvaluator.h"
 #import "XVimRegister.h"
-#import "XVimKeyStroke.h"
 #import "XVimWindow.h"
-#import "XVim.h"
-#import "Logger.h"
 
 @interface XVimRegisterEvaluator () {
 }
@@ -22,28 +22,28 @@
 
 - (XVimKeymap*)selectKeymapWithProvider:(id<XVimKeymapProvider>)keymapProvider
 {
-        return [keymapProvider keymapForMode:XVIM_MODE_NONE];
+    return [keymapProvider keymapForMode:XVIM_MODE_NONE];
 }
 
 - (XVimEvaluator*)eval:(XVimKeyStroke*)keyStroke
 {
-        SEL handler = keyStroke.selector;
-        if ([self respondsToSelector:handler]) {
-                TRACE_LOG(@"Calling SELECTOR %@", NSStringFromSelector(handler));
+    SEL handler = keyStroke.selector;
+    if ([self respondsToSelector:handler]) {
+        TRACE_LOG(@"Calling SELECTOR %@", NSStringFromSelector(handler));
 #pragma clang diagnostic push
 #pragma clang diagnostic ignored "-Warc-performSelector-leaks"
-                return [self performSelector:handler];
+        return [self performSelector:handler];
 #pragma clang diagnostic pop
-        }
+    }
 
-        if (keyStroke.modifier == 0) {
-                unichar c = keyStroke.character;
-                self.reg = [NSString stringWithCharacters:&c length:1];
-        }
-        else {
-                self.reg = nil;
-        }
-        return nil;
+    if (keyStroke.modifier == 0) {
+        unichar c = keyStroke.character;
+        self.reg = [NSString stringWithCharacters:&c length:1];
+    }
+    else {
+        self.reg = nil;
+    }
+    return nil;
 }
 
 @end
@@ -51,7 +51,7 @@
 @implementation XVimRecordingRegisterEvaluator
 - (XVimEvaluator*)AT
 {
-        self.reg = [[[XVim instance] registerManager] lastExecutedRegister];
-        return nil;
+    self.reg = [[[XVim instance] registerManager] lastExecutedRegister];
+    return nil;
 }
 @end

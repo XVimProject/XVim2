@@ -6,10 +6,10 @@
 //  Copyright © 2017 Shuichiro Suzuki. All rights reserved.
 //
 
-#import <Foundation/Foundation.h>
 #import "SourceCodeEditorViewProxy.h"
+#import <Foundation/Foundation.h>
 
-@interface SourceCodeEditorViewProxy(Operations) <SourceViewOperationsProtocol>
+@interface SourceCodeEditorViewProxy (Operations) <SourceViewOperationsProtocol>
 - (BOOL)xvim_delete:(XVimMotion*)motion withMotionPoint:(NSUInteger)motionPoint andYank:(BOOL)yank;
 - (BOOL)xvim_delete:(XVimMotion*)motion andYank:(BOOL)yank;
 @end

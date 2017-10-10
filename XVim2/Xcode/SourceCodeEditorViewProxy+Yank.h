@@ -6,11 +6,11 @@
 //  Copyright © 2017 Shuichiro Suzuki. All rights reserved.
 //
 
-#import <Foundation/Foundation.h>
 #import "SourceCodeEditorViewProxy.h"
 #import "XVimMotionType.h"
+#import <Foundation/Foundation.h>
 
-@interface SourceCodeEditorViewProxy(Yank) <SourceViewYankProtocol>
+@interface SourceCodeEditorViewProxy (Yank) <SourceViewYankProtocol>
 - (void)__xvim_startYankWithType:(MOTION_TYPE)type;
 - (void)_xvim_yankRange:(NSRange)range withType:(MOTION_TYPE)type;
 - (void)_xvim_yankSelection:(XVimSelection)sel;

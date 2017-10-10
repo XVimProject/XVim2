@@ -23,8 +23,7 @@
 @end
 
 //
-@interface XVimEval : NSObject
-{
+@interface XVimEval : NSObject {
     NSArray* _evalFuncs;
 }
 - (void)evaluateWhole:(XVimEvalArg*)args inWindow:(XVimWindow*)window;

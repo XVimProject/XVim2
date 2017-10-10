@@ -6,8 +6,8 @@
 //  Copyright (c) 2012 __MyCompanyName__. All rights reserved.
 //
 
-#import <Foundation/Foundation.h>
 #import <Cocoa/Cocoa.h>
+#import <Foundation/Foundation.h>
 
 
 #define KS_MODIFIER 0xF8 // This value is not the same as Vim's one

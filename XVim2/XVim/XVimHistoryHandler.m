@@ -8,8 +8,8 @@
 
 #import "XVimHistoryHandler.h"
 
-@interface XVimHistoryHandler() {
-	NSMutableArray *_history;
+@interface XVimHistoryHandler () {
+    NSMutableArray* _history;
 }
 @end
 
@@ -17,31 +17,27 @@
 
 - (id)init
 {
-	if (self = [super init])
-	{
-		_history = [[NSMutableArray alloc] init];
-	}
-	return self;
+    if (self = [super init]) {
+        _history = [[NSMutableArray alloc] init];
+    }
+    return self;
 }
 
-- (void)addEntry:(NSString*)entry
-{
-	[_history insertObject:entry atIndex:0];
-}
+- (void)addEntry:(NSString*)entry { [_history insertObject:entry atIndex:0]; }
 
-- (NSString*) entry:(NSUInteger)no withPrefix:(NSString*)str
+- (NSString*)entry:(NSUInteger)no withPrefix:(NSString*)str
 {
-    NSAssert( no != 0, @"no starts from 1" );
+    NSAssert(no != 0, @"no starts from 1");
     NSUInteger count = 0;
-    for( NSString* s in _history ){
-        if( [s hasPrefix:str] ){
+    for (NSString* s in _history) {
+        if ([s hasPrefix:str]) {
             count++;
-            if( no == count){
+            if (no == count) {
                 return s;
             }
         }
     }
-	return nil;
+    return nil;
 }
 
 @end

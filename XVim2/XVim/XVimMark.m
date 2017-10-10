@@ -13,8 +13,9 @@
 @synthesize column = _column;
 @synthesize document = _document;
 
-- (id)initWithLine:(NSUInteger)line column:(NSUInteger)col document:(NSString*)doc{
-    if( self = [super init] ){
+- (id)initWithLine:(NSUInteger)line column:(NSUInteger)col document:(NSString*)doc
+{
+    if (self = [super init]) {
         _line = line;
         _column = col;
         _document = [doc copy];
@@ -22,40 +23,38 @@
     return self;
 }
 
-- (id)initWithMark:(XVimMark*)mark{
-    if( nil == mark ){
+- (id)initWithMark:(XVimMark*)mark
+{
+    if (nil == mark) {
         return [self initWithLine:NSNotFound column:NSNotFound document:nil];
-    }else{
+    }
+    else {
         return [self initWithLine:mark.line column:mark.column document:mark.document];
     }
 }
 
-- (void)setMark:(XVimMark *)mark
+- (void)setMark:(XVimMark*)mark
 {
-    if( mark == nil ){
+    if (mark == nil) {
         _line = NSNotFound;
         _column = NSNotFound;
         _document = nil;
-    } else {
+    }
+    else {
         _line = mark.line;
         _column = mark.column;
         _document = [mark.document copy];
     }
 }
 
-- (id)init{
-    return [self initWithMark:nil];
-}
+- (id)init { return [self initWithMark:nil]; }
 
-+ (id)markWithLine:(NSUInteger)line column:(NSUInteger)col document:(NSString*)doc{
++ (id)markWithLine:(NSUInteger)line column:(NSUInteger)col document:(NSString*)doc
+{
     return [[self alloc] initWithLine:line column:col document:doc];
 }
 
-+ (id)markWithMark:(XVimMark*)mark{
-    
-    return [[self alloc] initWithMark:mark];
-}
-
++ (id)markWithMark:(XVimMark*)mark { return [[self alloc] initWithMark:mark]; }
 
 
 @end

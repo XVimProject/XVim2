@@ -7,26 +7,28 @@
 //
 
 #import "XVimMarkSetEvaluator.h"
-#import "XVimKeymapProvider.h"
+#import "XVim.h"
 #import "XVimKeyStroke.h"
-#import "XVimWindow.h"
+#import "XVimKeymapProvider.h"
 #import "XVimMark.h"
 #import "XVimMarks.h"
-#import "XVim.h"
+#import "XVimWindow.h"
 
 @implementation XVimMarkSetEvaluator
 
-- (XVimKeymap*)selectKeymapWithProvider:(id<XVimKeymapProvider>)keymapProvider {
-	return [keymapProvider keymapForMode:XVIM_MODE_NONE];
+- (XVimKeymap*)selectKeymapWithProvider:(id<XVimKeymapProvider>)keymapProvider
+{
+    return [keymapProvider keymapForMode:XVIM_MODE_NONE];
 }
 
-- (XVimEvaluator*)eval:(XVimKeyStroke*)keyStroke{
+- (XVimEvaluator*)eval:(XVimKeyStroke*)keyStroke
+{
     if (keyStroke.modifier) {
         return [XVimEvaluator invalidEvaluator];
     }
-    
+
     XVimMark* mark = [self.window currentPositionMark];
-    if( nil != mark ){
+    if (nil != mark) {
         [XVIM.marks setMark:mark forName:keyStroke.xvimString];
     }
     return nil;

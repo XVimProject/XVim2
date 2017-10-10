@@ -27,7 +27,7 @@
 + (double)caretWidth;
 + (BOOL)isCompatibleWithResponsiveScrolling;
 //- (CDUnknownBlockType).cxx_destruct;
-@property(nonatomic, readonly) BOOL acceptsFirstResponder;
+@property (nonatomic, readonly) BOOL acceptsFirstResponder;
 - (id)accessibilityAttributedStringForRange:(struct _NSRange)arg1;
 - (id)accessibilityChildren;
 - (struct CGRect)accessibilityFrameForRange:(struct _NSRange)arg1;
@@ -45,50 +45,50 @@
 - (id)accessibilityStringForRange:(struct _NSRange)arg1;
 - (id)accessibilityValue;
 - (struct _NSRange)accessibilityVisibleCharacterRange;
-@property(nonatomic) struct NSEdgeInsets accessoryMargins; // @synthesize accessoryMargins;
+@property (nonatomic) struct NSEdgeInsets accessoryMargins; // @synthesize accessoryMargins;
 - (void)addAuxView:(id)arg1 floating:(BOOL)arg2;
 - (double)adjustFirstVisibleLineForBounds:(struct CGRect)arg1;
 - (BOOL)becomeFirstResponder;
 - (id)closestLineLayerToPoint:(struct CGPoint)arg1;
-@property(nonatomic, readonly) CALayer *contentLayer; // @synthesize contentLayer;
-@property(nonatomic) struct NSEdgeInsets contentMargins; // @synthesize contentMargins;
+@property (nonatomic, readonly) CALayer* contentLayer; // @synthesize contentLayer;
+@property (nonatomic) struct NSEdgeInsets contentMargins; // @synthesize contentMargins;
 - (struct CGRect)contentViewRectForLineLayer:(id)arg1;
-@property(nonatomic, readonly) NSString *debugDescription;
-@property(nonatomic, readonly) NSString *description;
+@property (nonatomic, readonly) NSString* debugDescription;
+@property (nonatomic, readonly) NSString* description;
 - (double)distanceFromNearestVisibleLineToLineAtIndex:(long long)arg1;
-@property(nonatomic, readonly) struct CGRect documentRect;
+@property (nonatomic, readonly) struct CGRect documentRect;
 - (double)ensureLineVisible:(long long)arg1 maxHeight:(double)arg2;
-@property(nonatomic, readonly) _TtC12SourceEditor21SourceEditorLineLayer *firstVisibleLineLayer;
-@property(nonatomic, readonly) struct CGRect fullBleedLayoutBounds;
+@property (nonatomic, readonly) _TtC12SourceEditor21SourceEditorLineLayer* firstVisibleLineLayer;
+@property (nonatomic, readonly) struct CGRect fullBleedLayoutBounds;
 - (id)init;
 - (id)initWithCoder:(id)arg1;
 - (id)initWithFrame:(struct CGRect)arg1;
 - (BOOL)isAccessibilityElement;
 - (BOOL)isFlipped;
-@property(nonatomic, readonly) _TtC12SourceEditor21SourceEditorLineLayer *lastVisibleLineLayer;
-@property(nonatomic, readonly) struct CGRect layoutBounds;
-@property(nonatomic, readonly) struct NSEdgeInsets layoutBoundsVisibleInsets;
+@property (nonatomic, readonly) _TtC12SourceEditor21SourceEditorLineLayer* lastVisibleLineLayer;
+@property (nonatomic, readonly) struct CGRect layoutBounds;
+@property (nonatomic, readonly) struct NSEdgeInsets layoutBoundsVisibleInsets;
 - (void)layoutIfNeeded;
-@property(nonatomic, readonly) struct NSEdgeInsets layoutMargins;
-@property(nonatomic, readonly) double layoutScale;
+@property (nonatomic, readonly) struct NSEdgeInsets layoutMargins;
+@property (nonatomic, readonly) double layoutScale;
 - (void)layoutSublayersOfLayer:(id)arg1;
 - (id)lineLayerAtPoint:(struct CGPoint)arg1;
 - (id)lineLayerForVisibleLine:(long long)arg1;
 - (id)lineLayersInRect:(struct CGRect)arg1;
-@property(nonatomic, readonly) CALayer *overlayLayer; // @synthesize overlayLayer;
+@property (nonatomic, readonly) CALayer* overlayLayer; // @synthesize overlayLayer;
 - (void)prepareContentInRect:(struct CGRect)arg1;
-@property(nonatomic) __weak NSResponder *responderProxy; // @synthesize responderProxy;
+@property (nonatomic) __weak NSResponder* responderProxy; // @synthesize responderProxy;
 - (void)setAccessibilitySelectedText:(id)arg1;
 - (void)setAccessibilitySelectedTextRange:(struct _NSRange)arg1;
 - (void)setAccessibilityValue:(id)arg1;
 - (void)setAccessibilityVisibleCharacterRange:(struct _NSRange)arg1;
 - (void)setNeedsLayout;
-@property(nonatomic, readonly) CALayer *underlayLayer; // @synthesize underlayLayer;
+@property (nonatomic, readonly) CALayer* underlayLayer; // @synthesize underlayLayer;
 - (void)updateAuxView:(id)arg1 with:(struct CGRect)arg2 floating:(BOOL)arg3;
 - (void)viewDidChangeBackingProperties;
 
 // Remaining properties
-@property(nonatomic, readonly, getter=isFlipped) BOOL flipped;
+@property (nonatomic, readonly, getter=isFlipped) BOOL flipped;
 
 @end
 

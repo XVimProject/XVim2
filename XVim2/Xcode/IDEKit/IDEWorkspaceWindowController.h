@@ -16,54 +16,59 @@
 #import <IDEKit/NSWindowDelegate-Protocol.h>
 #endif
 
-@class DVTNotificationToken, DVTObservingToken, DVTPerformanceMetric, DVTStackBacktrace, DVTStateToken, DVTWeakInterposer, IDEEditorArea, IDEEditorDocument, IDEToolbarDelegate, IDEWorkspace, IDEWorkspaceDFRController, IDEWorkspaceTabController, IDEWorkspaceWindow, NSMutableArray, NSString, NSTimer, NSTouchBar, _IDEWindowFullScreenSavedDebuggerTransitionValues;
+@class DVTNotificationToken, DVTObservingToken, DVTPerformanceMetric, DVTStackBacktrace, DVTStateToken,
+            DVTWeakInterposer, IDEEditorArea, IDEEditorDocument, IDEToolbarDelegate, IDEWorkspace,
+            IDEWorkspaceDFRController, IDEWorkspaceTabController, IDEWorkspaceWindow, NSMutableArray, NSString, NSTimer,
+            NSTouchBar, _IDEWindowFullScreenSavedDebuggerTransitionValues;
 
-@interface IDEWorkspaceWindowController : NSWindowController // <NSTouchBarProvider, NSTouchBarDelegate, NSWindowDelegate, IDEEditorAreaContainer, DVTStatefulObject, DVTEditor, DVTInvalidation>
+@interface IDEWorkspaceWindowController : NSWindowController // <NSTouchBarProvider, NSTouchBarDelegate,
+                                                             // NSWindowDelegate, IDEEditorAreaContainer,
+                                                             // DVTStatefulObject, DVTEditor, DVTInvalidation>
 {
-    NSTimer *_springToFrontTimer;	// 80 = 0x50
-    int _debugSessionState;	// 88 = 0x58
-    struct CGRect _restoreFrame;	// 96 = 0x60
-    struct CGSize _originalMinSize;	// 128 = 0x80
-    NSMutableArray *_stateChangeObservingTokens;	// 144 = 0x90
-    IDEEditorDocument *_lastObservedEditorDocument;	// 152 = 0x98
-    IDEWorkspaceTabController *_activeWorkspaceTabController;	// 160 = 0xa0
-    IDEToolbarDelegate *_toolbarDelegate;	// 168 = 0xa8
-    DVTObservingToken *_workspaceSimpleFilesFocusedObservingToken;	// 176 = 0xb0
-    DVTObservingToken *_workspaceRepresentingFilePathObservingToken;	// 184 = 0xb8
-    DVTObservingToken *_workspaceFinishedLoadingObservingToken;	// 192 = 0xc0
-    DVTObservingToken *_navigationTargetedEditorDocumentObservingToken;	// 200 = 0xc8
-    DVTObservingToken *_tabLabelObservingToken;	// 208 = 0xd0
-    DVTObservingToken *_themeObserver;	// 216 = 0xd8
-    DVTObservingToken *_firstResponderValidObservingToken;	// 224 = 0xe0
-    DVTNotificationToken *_deallocatingFirstResponderNotificationToken;	// 232 = 0xe8
-    DVTNotificationToken *_editorDocumentIsEditedNotificationToken;	// 240 = 0xf0
-    IDEWorkspace *_workspace;	// 248 = 0xf8
-    _IDEWindowFullScreenSavedDebuggerTransitionValues *_fullScreenSavedDebuggerTransitionValues;	// 256 = 0x100
-    DVTPerformanceMetric *_newWindowControllerMetric;	// 264 = 0x108
-    unsigned int _coalescedUpdateMask;	// 272 = 0x110
-    int _contentViewFrozenMode;	// 276 = 0x114
-    BOOL _performingCoalescedUpdates;	// 280 = 0x118
-    BOOL _tabBarInTransition;	// 281 = 0x119
-    BOOL _tabBarShownForTabDrag;	// 282 = 0x11a
-    BOOL _createdCollapsedRestoreFrame;	// 283 = 0x11b
-    BOOL _createdMediumRestoreFrame;	// 284 = 0x11c
-    BOOL _inTotalCollapsedFrame;	// 285 = 0x11d
-    BOOL _tabBarForcedClosed;	// 286 = 0x11e
-    BOOL _isClosing;	// 287 = 0x11f
-    BOOL _didSetActiveWorkspaceTabController;	// 288 = 0x120
-    BOOL _enteringFullScreenMode;	// 289 = 0x121
-    BOOL _exitingFullScreenMode;	// 290 = 0x122
-    DVTStateToken *_stateToken;	// 296 = 0x128
-    BOOL _createNewTabUponLoadIfNoTabsExist;	// 304 = 0x130
-    BOOL _shouldPerformWindowClose;	// 305 = 0x131
-    BOOL _didRestoreFromStateSaving;	// 306 = 0x132
-    NSString *_uniqueIdentifier;	// 312 = 0x138
-    NSString *_stateSavingIdentifier;	// 320 = 0x140
-    DVTStackBacktrace *_windowDidLoadBacktrace;	// 328 = 0x148
-    DVTWeakInterposer *_firstResponderInterposer;	// 336 = 0x150
-    IDEWorkspaceDFRController *_standardWorkspaceTouchBarController;	// 344 = 0x158
-    IDEWorkspaceDFRController *_systemModalWorkspaceTouchBarController;	// 352 = 0x160
-    long long _visibleSheetsCount;	// 360 = 0x168
+    NSTimer* _springToFrontTimer; // 80 = 0x50
+    int _debugSessionState; // 88 = 0x58
+    struct CGRect _restoreFrame; // 96 = 0x60
+    struct CGSize _originalMinSize; // 128 = 0x80
+    NSMutableArray* _stateChangeObservingTokens; // 144 = 0x90
+    IDEEditorDocument* _lastObservedEditorDocument; // 152 = 0x98
+    IDEWorkspaceTabController* _activeWorkspaceTabController; // 160 = 0xa0
+    IDEToolbarDelegate* _toolbarDelegate; // 168 = 0xa8
+    DVTObservingToken* _workspaceSimpleFilesFocusedObservingToken; // 176 = 0xb0
+    DVTObservingToken* _workspaceRepresentingFilePathObservingToken; // 184 = 0xb8
+    DVTObservingToken* _workspaceFinishedLoadingObservingToken; // 192 = 0xc0
+    DVTObservingToken* _navigationTargetedEditorDocumentObservingToken; // 200 = 0xc8
+    DVTObservingToken* _tabLabelObservingToken; // 208 = 0xd0
+    DVTObservingToken* _themeObserver; // 216 = 0xd8
+    DVTObservingToken* _firstResponderValidObservingToken; // 224 = 0xe0
+    DVTNotificationToken* _deallocatingFirstResponderNotificationToken; // 232 = 0xe8
+    DVTNotificationToken* _editorDocumentIsEditedNotificationToken; // 240 = 0xf0
+    IDEWorkspace* _workspace; // 248 = 0xf8
+    _IDEWindowFullScreenSavedDebuggerTransitionValues* _fullScreenSavedDebuggerTransitionValues; // 256 = 0x100
+    DVTPerformanceMetric* _newWindowControllerMetric; // 264 = 0x108
+    unsigned int _coalescedUpdateMask; // 272 = 0x110
+    int _contentViewFrozenMode; // 276 = 0x114
+    BOOL _performingCoalescedUpdates; // 280 = 0x118
+    BOOL _tabBarInTransition; // 281 = 0x119
+    BOOL _tabBarShownForTabDrag; // 282 = 0x11a
+    BOOL _createdCollapsedRestoreFrame; // 283 = 0x11b
+    BOOL _createdMediumRestoreFrame; // 284 = 0x11c
+    BOOL _inTotalCollapsedFrame; // 285 = 0x11d
+    BOOL _tabBarForcedClosed; // 286 = 0x11e
+    BOOL _isClosing; // 287 = 0x11f
+    BOOL _didSetActiveWorkspaceTabController; // 288 = 0x120
+    BOOL _enteringFullScreenMode; // 289 = 0x121
+    BOOL _exitingFullScreenMode; // 290 = 0x122
+    DVTStateToken* _stateToken; // 296 = 0x128
+    BOOL _createNewTabUponLoadIfNoTabsExist; // 304 = 0x130
+    BOOL _shouldPerformWindowClose; // 305 = 0x131
+    BOOL _didRestoreFromStateSaving; // 306 = 0x132
+    NSString* _uniqueIdentifier; // 312 = 0x138
+    NSString* _stateSavingIdentifier; // 320 = 0x140
+    DVTStackBacktrace* _windowDidLoadBacktrace; // 328 = 0x148
+    DVTWeakInterposer* _firstResponderInterposer; // 336 = 0x150
+    IDEWorkspaceDFRController* _standardWorkspaceTouchBarController; // 344 = 0x158
+    IDEWorkspaceDFRController* _systemModalWorkspaceTouchBarController; // 352 = 0x160
+    long long _visibleSheetsCount; // 360 = 0x168
 }
 
 + (unsigned long long)assertionBehaviorAfterEndOfEventForSelector:(SEL)arg1;
@@ -78,7 +83,9 @@
 + (id)workspaceWindowControllers;
 // - (void).cxx_destruct;
 - (void)_cancelSpringToFront;
-- (void)_changeSizeForSimpleEditorWindowLayoutWithEditorDocumentURLOrNil:(id)arg1 forSingleFile:(BOOL)arg2 workspaceTabController:(id)arg3;
+- (void)_changeSizeForSimpleEditorWindowLayoutWithEditorDocumentURLOrNil:(id)arg1
+                                                               forSingleFile:(BOOL)arg2
+                                                      workspaceTabController:(id)arg3;
 - (id)_cloneNewWindowController;
 - (id)_cloneWindowWithUserDefinedLabel:(id)arg1 addToTabGroup:(BOOL)arg2 activate:(BOOL)arg3;
 - (void)_configureStateSavingObservers;
@@ -124,17 +131,20 @@
 - (void)_updateWindowTitle;
 - (id)_windowFrameValueForStateSaving;
 - (void)_workaround8217584;
-@property(retain) IDEWorkspaceTabController *activeWorkspaceTabController;
+@property (retain) IDEWorkspaceTabController* activeWorkspaceTabController;
 - (void)autocreateContexts:(id)arg1;
 - (BOOL)canCreateNewTab;
 - (void)changeFromDebugSessionState:(int)arg1 to:(int)arg2 forLaunchSession:(id)arg3;
 - (BOOL)commitEditingForAction:(int)arg1 errors:(id)arg2;
 - (void)commitStateToDictionary:(id)arg1;
-@property BOOL createNewTabUponLoadIfNoTabsExist; // @synthesize createNewTabUponLoadIfNoTabsExist=_createNewTabUponLoadIfNoTabsExist;
+@property BOOL
+            createNewTabUponLoadIfNoTabsExist; // @synthesize
+                                               // createNewTabUponLoadIfNoTabsExist=_createNewTabUponLoadIfNoTabsExist;
 - (void)dicardEditing;
 @property BOOL didRestoreFromStateSaving; // @synthesize didRestoreFromStateSaving=_didRestoreFromStateSaving;
-@property(readonly) IDEEditorArea *editorArea;
-@property(retain) DVTWeakInterposer *firstResponderInterposer; // @synthesize firstResponderInterposer=_firstResponderInterposer;
+@property (readonly) IDEEditorArea* editorArea;
+@property (retain) DVTWeakInterposer*
+            firstResponderInterposer; // @synthesize firstResponderInterposer=_firstResponderInterposer;
 - (id)ide_lastActiveEditor;
 - (id)init;
 - (id)instantiateTabControllerAndRegisterForStateSavingWithName:(id)arg1 inDocument:(id)arg2;
@@ -151,18 +161,24 @@
 - (void)runActiveRunContextWithGesture:(id)arg1;
 - (id)runButtonPopoverBar;
 - (id)runStopButtonFromToolbar;
-@property(readonly) IDEWorkspaceWindowController *selectedTabWorkspaceWindowController;
+@property (readonly) IDEWorkspaceWindowController* selectedTabWorkspaceWindowController;
 @property BOOL shouldPerformWindowClose; // @synthesize shouldPerformWindowClose=_shouldPerformWindowClose;
-@property(nonatomic) BOOL showToolbar;
-@property(retain) IDEWorkspaceDFRController *standardWorkspaceTouchBarController; // @synthesize standardWorkspaceTouchBarController=_standardWorkspaceTouchBarController;
-@property(copy, nonatomic) NSString *stateSavingIdentifier; // @synthesize stateSavingIdentifier=_stateSavingIdentifier;
-@property(retain) DVTStateToken *stateToken;
-@property(retain) IDEWorkspaceDFRController *systemModalWorkspaceTouchBarController; // @synthesize systemModalWorkspaceTouchBarController=_systemModalWorkspaceTouchBarController;
-@property(copy, nonatomic) NSString *uniqueIdentifier; // @synthesize uniqueIdentifier=_uniqueIdentifier;
+@property (nonatomic) BOOL showToolbar;
+@property (retain) IDEWorkspaceDFRController*
+            standardWorkspaceTouchBarController; // @synthesize
+                                                 // standardWorkspaceTouchBarController=_standardWorkspaceTouchBarController;
+@property (copy, nonatomic)
+            NSString* stateSavingIdentifier; // @synthesize stateSavingIdentifier=_stateSavingIdentifier;
+@property (retain) DVTStateToken* stateToken;
+@property (retain) IDEWorkspaceDFRController*
+            systemModalWorkspaceTouchBarController; // @synthesize
+                                                    // systemModalWorkspaceTouchBarController=_systemModalWorkspaceTouchBarController;
+@property (copy, nonatomic) NSString* uniqueIdentifier; // @synthesize uniqueIdentifier=_uniqueIdentifier;
 @property BOOL userWantsBreakpointsActivated;
 @property long long visibleSheetsCount; // @synthesize visibleSheetsCount=_visibleSheetsCount;
-@property(retain) DVTStackBacktrace *windowDidLoadBacktrace; // @synthesize windowDidLoadBacktrace=_windowDidLoadBacktrace;
-@property(readonly) BOOL shouldEnableToolbarItems;
+@property (retain)
+            DVTStackBacktrace* windowDidLoadBacktrace; // @synthesize windowDidLoadBacktrace=_windowDidLoadBacktrace;
+@property (readonly) BOOL shouldEnableToolbarItems;
 - (void)standardDFRDebugBarStopAction:(id)arg1;
 - (id)standardWorkspaceDFRController;
 - (id)supplementalTargetForAction:(SEL)arg1 sender:(id)arg2;
@@ -199,7 +215,7 @@
 - (struct CGSize)windowWillResize:(id)arg1 toSize:(struct CGSize)arg2;
 - (id)workspaceTabControllers;
 - (void)workspaceTabDFRShouldBecomeVisible;
-@property(readonly) IDEWorkspaceWindow *workspaceWindow;
+@property (readonly) IDEWorkspaceWindow* workspaceWindow;
 - (BOOL)workspaceWindow:(id)arg1 interceptAddCursorRect:(struct CGRect)arg2 cursor:(id)arg3 forView:(id)arg4;
 - (BOOL)workspaceWindow:(id)arg1 interceptSetCursorForMouseLocation:(struct CGPoint)arg2;
 - (void)workspaceWindow:(id)arg1 willInvalidateCursorRectsForView:(id)arg2;
@@ -209,15 +225,14 @@
 - (void)workspaceWindowWillInvalidateCursorRectsForViewsWithNoTrackingAreas:(id)arg1;
 
 // Remaining properties
-@property(readonly) BOOL canRevertWithEmptyStateDictionary;
-@property(retain) DVTStackBacktrace *creationBacktrace;
-@property(readonly, copy) NSString *debugDescription;
-@property(readonly, copy) NSString *description;
-@property(readonly) unsigned long long hash;
-@property(readonly) DVTStackBacktrace *invalidationBacktrace;
-@property(readonly) Class superclass;
-@property(readonly) NSTouchBar *touchBar;
-@property(readonly, nonatomic, getter=isValid) BOOL valid;
+@property (readonly) BOOL canRevertWithEmptyStateDictionary;
+@property (retain) DVTStackBacktrace* creationBacktrace;
+@property (readonly, copy) NSString* debugDescription;
+@property (readonly, copy) NSString* description;
+@property (readonly) unsigned long long hash;
+@property (readonly) DVTStackBacktrace* invalidationBacktrace;
+@property (readonly) Class superclass;
+@property (readonly) NSTouchBar* touchBar;
+@property (readonly, nonatomic, getter=isValid) BOOL valid;
 
 @end
-

@@ -10,9 +10,10 @@
 
 @implementation XVimCmdArg
 
-- (id)init{
-    if( self = [super init]){
-    _args = [[NSMutableString alloc] init];
+- (id)init
+{
+    if (self = [super init]) {
+        _args = [[NSMutableString alloc] init];
     }
     return self;
 }

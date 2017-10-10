@@ -7,24 +7,25 @@
 //
 
 #import "XVimLowercaseEvaluator.h"
-#import "XVimWindow.h"
 #import "XVim.h"
+#import "XVimWindow.h"
 
 @implementation XVimLowercaseEvaluator
 
-- (XVimEvaluator*)u{
-    if ([self numericArg] < 1) 
+- (XVimEvaluator*)u
+{
+    if ([self numericArg] < 1)
         return nil;
-    
-    XVimMotion* m = XVIM_MAKE_MOTION(MOTION_LINE_FORWARD, LINEWISE, MOTION_OPTION_NONE, [self numericArg]-1);
+
+    XVimMotion* m = XVIM_MAKE_MOTION(MOTION_LINE_FORWARD, LINEWISE, MOTION_OPTION_NONE, [self numericArg] - 1);
     return [self _motionFixed:m];
 }
 
--(XVimEvaluator*)motionFixed:(XVimMotion*)motion{
+- (XVimEvaluator*)motionFixed:(XVimMotion*)motion
+{
     [[self sourceView] xvim_makeLowerCase:motion];
     return nil;
 }
 
 
 @end
-

@@ -6,21 +6,17 @@
 //  Copyright © 2017 Shuichiro Suzuki. All rights reserved.
 //
 
-#import <Foundation/Foundation.h>
-#import "SourceViewProtocol.h"
 #import "IDEPegasusSourceEditor/_TtC22IDEPegasusSourceEditor20SourceCodeEditorView.h"
+#import "SourceViewProtocol.h"
+#import <Foundation/Foundation.h>
 
-typedef NS_ENUM(NSInteger, CursorStyle) {
-        CursorStyleVerticalBar
-        , CursorStyleBlock
-        , CursorStyleUnderline
-};
+typedef NS_ENUM(NSInteger, CursorStyle) { CursorStyleVerticalBar, CursorStyleBlock, CursorStyleUnderline };
 
 // Raw values for SourceEditor.SourceEditorSelectionModifiers
 typedef NS_OPTIONS(unsigned, SelectionModifiers) {
-       SelectionModifierExtension = 1
-        , SelectionModifierColumnar = 1 << 1
-        , SelectionModifierDiscontiguous = 1 << 2
+    SelectionModifierExtension = 1,
+    SelectionModifierColumnar = 1 << 1,
+    SelectionModifierDiscontiguous = 1 << 2
 };
 
 @class XVimCommandLine;
@@ -32,24 +28,24 @@ typedef NS_OPTIONS(unsigned, SelectionModifiers) {
 
 @interface SourceCodeEditorViewProxy : NSObject <SourceViewProtocol>
 @property CursorStyle cursorStyle;
-@property(readonly) XVIM_VISUAL_MODE selectionMode;
-@property(readonly) NSUInteger insertionPoint;
-@property(readonly) XVimPosition insertionPosition;
-@property(readonly) NSUInteger insertionColumn;
-@property(readonly) NSUInteger insertionLine;
-@property(readonly) NSUInteger preservedColumn;
-@property(readonly) NSUInteger selectionBegin;
-@property(readonly) XVimPosition selectionBeginPosition;
-@property(readonly) BOOL selectionToEOL;
+@property (readonly) XVIM_VISUAL_MODE selectionMode;
+@property (readonly) NSUInteger insertionPoint;
+@property (readonly) XVimPosition insertionPosition;
+@property (readonly) NSUInteger insertionColumn;
+@property (readonly) NSUInteger insertionLine;
+@property (readonly) NSUInteger preservedColumn;
+@property (readonly) NSUInteger selectionBegin;
+@property (readonly) XVimPosition selectionBeginPosition;
+@property (readonly) BOOL selectionToEOL;
 @property CURSOR_MODE cursorMode;
-@property(readonly) NSURL* documentURL;
+@property (readonly) NSURL* documentURL;
 @property (nonatomic) BOOL needsUpdateFoundRanges;
-@property(readonly) NSMutableArray* foundRanges;
-@property(readonly) NSInteger currentLineNumber;
-@property(strong) id<XVimTextViewDelegateProtocol> xvimDelegate;
-@property(readonly) XVimCommandLine *commandLine;
-@property(readonly) NSWindow *window;
--(instancetype)initWithSourceCodeEditorView:(SourceCodeEditorView*)sourceEditorView;
+@property (readonly) NSMutableArray* foundRanges;
+@property (readonly) NSInteger currentLineNumber;
+@property (strong) id<XVimTextViewDelegateProtocol> xvimDelegate;
+@property (readonly) XVimCommandLine* commandLine;
+@property (readonly) NSWindow* window;
+- (instancetype)initWithSourceCodeEditorView:(SourceCodeEditorView*)sourceEditorView;
 
 // Proxy methods
 - (NSRange)lineRangeForCharacterRange:(NSRange)arg1;
@@ -169,7 +165,7 @@ typedef NS_OPTIONS(unsigned, SelectionModifiers) {
 - (void)deleteBackwardByDecomposingPreviousCharacter:(id)sender;
 - (void)deleteBackward:(id)sender;
 - (void)deleteForward:(id)sender;
-- (void)delete:(id)sender;
+- (void) delete:(id)sender;
 - (void)insertDoubleQuoteIgnoringSubstitution:(id)sender;
 - (void)insertSingleQuoteIgnoringSubstitution:(id)sender;
 - (void)insertContainerBreak:(id)sender;
@@ -191,9 +187,9 @@ typedef NS_OPTIONS(unsigned, SelectionModifiers) {
 - (void)copy:(id)sender;
 - (void)showFindIndicatorForRange:(NSRange)arg1;
 
--(NSRect)bounds;
--(NSRect)frame;
--(NSSize)contentSize;
+- (NSRect)bounds;
+- (NSRect)frame;
+- (NSSize)contentSize;
 // Utilities
 - (void)scrollRangeToVisible:(NSRange)arg1;
 @property (readonly) NSInteger linesPerPage;
@@ -202,23 +198,26 @@ typedef NS_OPTIONS(unsigned, SelectionModifiers) {
 - (void)scrollPageBackward:(NSUInteger)numPages;
 - (void)scrollPageForward:(NSUInteger)numPages;
 - (void)setSelectedRanges:(NSArray<NSValue*>*)ranges
-                 affinity:(NSSelectionAffinity)affinity
-           stillSelecting:(BOOL)stillSelectingFlag;
+                     affinity:(NSSelectionAffinity)affinity
+               stillSelecting:(BOOL)stillSelectingFlag;
 
 - (void)beginEditTransaction;
 - (void)endEditTransaction;
 
 @end
 
-#import "SourceCodeEditorViewProxy+Scrolling.h"
 #import "SourceCodeEditorViewProxy+Operations.h"
-#import "SourceCodeEditorViewProxy+Yank.h"
+#import "SourceCodeEditorViewProxy+Scrolling.h"
 #import "SourceCodeEditorViewProxy+XVim.h"
+#import "SourceCodeEditorViewProxy+Yank.h"
 
 
-#define EDIT_TRANSACTION_SCOPE \
-[self beginEditTransaction]; \
-[self.undoManager beginUndoGrouping]; \
-[self xvim_registerInsertionPointForUndo]; \
-xvim_on_exit { [self.undoManager endUndoGrouping]; [self endEditTransaction]; };
-
+#define EDIT_TRANSACTION_SCOPE                                                                                         \
+    [self beginEditTransaction];                                                                                       \
+    [self.undoManager beginUndoGrouping];                                                                              \
+    [self xvim_registerInsertionPointForUndo];                                                                         \
+    xvim_on_exit                                                                                                       \
+    {                                                                                                                  \
+        [self.undoManager endUndoGrouping];                                                                            \
+        [self endEditTransaction];                                                                                     \
+    };

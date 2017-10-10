@@ -10,5 +10,5 @@
 
 @interface XVimHistoryHandler : NSObject
 - (void)addEntry:(NSString*)entry;
-- (NSString*) entry:(NSUInteger)no withPrefix:(NSString*)str;
+- (NSString*)entry:(NSUInteger)no withPrefix:(NSString*)str;
 @end

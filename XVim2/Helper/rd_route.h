@@ -5,14 +5,14 @@
 // of the MIT license.  See the LICENSE file for details.
 
 #ifndef RD_ROUTE
-	#define RD_ROUTE
+#define RD_ROUTE
 
 #ifdef __cplusplus
-	extern "C" {
+extern "C" {
 #endif
-        
-        
-void*          function_ptr_from_name(const char *function_name, const char *suggested_image_name);
+
+
+void* function_ptr_from_name(const char* function_name, const char* suggested_image_name);
 
 
 /**
@@ -27,7 +27,7 @@ void*          function_ptr_from_name(const char *function_name, const char *sug
  *
  * @return             KERN_SUCCESS if succeeded, or other value if failed
  */
-int rd_route(void *function, void *replacement, void **original);
+int rd_route(void* function, void* replacement, void** original);
 
 /**
  * The same as rd_route(), but the target function is defined with its name, not its symbol pointer.
@@ -43,7 +43,7 @@ int rd_route(void *function, void *replacement, void **original);
  *
  * @return               see rd_route() for the list of possible return values
  */
-int rd_route_byname(const char *function_name, const char *image_name, void *replacement, void **original);
+int rd_route_byname(const char* function_name, const char* image_name, void* replacement, void** original);
 
 /**
  * Copy `function` implementation into another (first available) memory region.
@@ -52,10 +52,10 @@ int rd_route_byname(const char *function_name, const char *image_name, void *rep
  *
  * @return KERN_SUCCESS if succeeded, or other value if failed
  */
-int rd_duplicate_function(void *function, void **duplicate);
+int rd_duplicate_function(void* function, void** duplicate);
 
 #ifdef __cplusplus
-	}
+}
 #endif
 
 #endif /* RD_ROUTE */

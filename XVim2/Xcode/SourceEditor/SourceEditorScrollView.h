@@ -9,13 +9,12 @@
 @class NSScroller;
 @protocol SourceEditorScrollViewDelegate;
 
-@interface SourceEditorScrollView : NSScrollView
-{
-    BOOL _floatingSubviewsShouldMaskToBounds;	// 232 = 0xe8
-    BOOL _updatingAutoContentInsets;	// 233 = 0xe9
-    id <SourceEditorScrollViewDelegate> _sourceEditorScrollViewDelegate;	// 240 = 0xf0
-    NSScroller *_observedVerticalScroller;	// 248 = 0xf8
-    struct NSEdgeInsets _additionalContentInsets;	// 256 = 0x100
+@interface SourceEditorScrollView : NSScrollView {
+    BOOL _floatingSubviewsShouldMaskToBounds; // 232 = 0xe8
+    BOOL _updatingAutoContentInsets; // 233 = 0xe9
+    id<SourceEditorScrollViewDelegate> _sourceEditorScrollViewDelegate; // 240 = 0xf0
+    NSScroller* _observedVerticalScroller; // 248 = 0xf8
+    struct NSEdgeInsets _additionalContentInsets; // 256 = 0x100
 }
 
 //- (void).cxx_destruct;
@@ -28,10 +27,13 @@
 - (id)floatingSubviewsContainerForAxis:(long long)arg1;
 - (id)floatingSubviewsForAxis:(long long)arg1;
 - (BOOL)isObservingVerticalScroller;
-- (void)observeValueForKeyPath:(id)arg1 ofObject:(id)arg2 change:(id)arg3 context:(void *)arg4;
-@property __weak NSScroller *observedVerticalScroller; // @synthesize observedVerticalScroller=_observedVerticalScroller;
+- (void)observeValueForKeyPath:(id)arg1 ofObject:(id)arg2 change:(id)arg3 context:(void*)arg4;
+@property __weak
+            NSScroller* observedVerticalScroller; // @synthesize observedVerticalScroller=_observedVerticalScroller;
 - (void)setFloatingSubviewsShouldMaskToBounds:(BOOL)arg1;
-@property __weak id <SourceEditorScrollViewDelegate> sourceEditorScrollViewDelegate; // @synthesize sourceEditorScrollViewDelegate=_sourceEditorScrollViewDelegate;
+@property __weak id<SourceEditorScrollViewDelegate>
+            sourceEditorScrollViewDelegate; // @synthesize
+                                            // sourceEditorScrollViewDelegate=_sourceEditorScrollViewDelegate;
 @property BOOL updatingAutoContentInsets; // @synthesize updatingAutoContentInsets=_updatingAutoContentInsets;
 - (void)setVerticalScroller:(id)arg1;
 - (void)startObservingVerticalScroller:(id)arg1;
@@ -40,4 +42,3 @@
 - (void)viewWillMoveToWindow:(id)arg1;
 
 @end
-

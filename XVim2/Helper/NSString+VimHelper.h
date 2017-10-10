@@ -20,13 +20,13 @@ BOOL isWhiteSpaceOrNewline(unichar ch);
 BOOL isKeyword(unichar ch);
 
 @interface NSString (VimHelper)
-- (BOOL) isDigit:(NSUInteger)index;
-- (BOOL) isOctDigit:(NSUInteger)index;
-- (BOOL) isHexDigit:(NSUInteger)index;
-- (BOOL) isAlpha:(NSUInteger)index;
-- (BOOL) isDelimeter:(NSUInteger)index;
-- (BOOL) isNewline:(NSUInteger)index;
-- (BOOL) isKeyword:(NSUInteger)index;
+- (BOOL)isDigit:(NSUInteger)index;
+- (BOOL)isOctDigit:(NSUInteger)index;
+- (BOOL)isHexDigit:(NSUInteger)index;
+- (BOOL)isAlpha:(NSUInteger)index;
+- (BOOL)isDelimeter:(NSUInteger)index;
+- (BOOL)isNewline:(NSUInteger)index;
+- (BOOL)isKeyword:(NSUInteger)index;
 
 /**
  * Convert Vim regex to ICU regex.
@@ -36,9 +36,9 @@ BOOL isKeyword(unichar ch);
  **/
 - (NSString*)convertToICURegex:(NSRegularExpressionOptions*)options;
 
-+ (NSString *)stringMadeOfSpaces:(NSUInteger)count;
++ (NSString*)stringMadeOfSpaces:(NSUInteger)count;
 @end
 
 @interface NSMutableString (VimHelper)
-+ (NSMutableString *)mutableStringMadeOfSpaces:(NSUInteger)count;
++ (NSMutableString*)mutableStringMadeOfSpaces:(NSUInteger)count;
 @end

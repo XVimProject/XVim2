@@ -15,8 +15,8 @@
 
 @interface IDEWorkspaceWindow : NSWindow // IDETabbedWindow <NSKeyedArchiverDelegate>
 {
-    DVTObservingToken *_workspaceFinishedLoadingObservingToken;	// 256 = 0x100
-    BOOL __isOverridingEscapeInsteadOfExitingFullscreen;	// 264 = 0x108
+    DVTObservingToken* _workspaceFinishedLoadingObservingToken; // 256 = 0x100
+    BOOL __isOverridingEscapeInsteadOfExitingFullscreen; // 264 = 0x108
 }
 
 + (id)lastActiveWorkspaceWindowController;
@@ -25,7 +25,9 @@
 - (BOOL)_attemptToCloseAllTabs:(id)arg1;
 - (void)_invalidateCursorRectsForView:(id)arg1 force:(BOOL)arg2;
 - (void)_invalidateCursorRectsForViewsWithNoTrackingAreas;
-@property BOOL _isOverridingEscapeInsteadOfExitingFullscreen; // @synthesize _isOverridingEscapeInsteadOfExitingFullscreen=__isOverridingEscapeInsteadOfExitingFullscreen;
+@property BOOL
+            _isOverridingEscapeInsteadOfExitingFullscreen; // @synthesize
+                                                           // _isOverridingEscapeInsteadOfExitingFullscreen=__isOverridingEscapeInsteadOfExitingFullscreen;
 - (BOOL)_keyViewRedirectionDisabled;
 - (void)_setCursorForMouseLocation:(struct CGPoint)arg1;
 - (void)becomeMainWindow;
@@ -47,10 +49,9 @@
 - (BOOL)validateMenuItem:(id)arg1;
 
 // Remaining properties
-@property(readonly, copy) NSString *debugDescription;
-@property(readonly, copy) NSString *description;
-@property(readonly) unsigned long long hash;
-@property(readonly) Class superclass;
+@property (readonly, copy) NSString* debugDescription;
+@property (readonly, copy) NSString* description;
+@property (readonly) unsigned long long hash;
+@property (readonly) Class superclass;
 
 @end
-

@@ -10,17 +10,18 @@
 
 @class XVimHistoryHandler;
 
-typedef XVimEvaluator* (^OnCompleteHandler) (NSString* command, id* result); // returned "result" will be stored in evaluationResult
-typedef void (^OnKeyPressHandler) (NSString* command);
+typedef XVimEvaluator* (^OnCompleteHandler)(NSString* command,
+                                            id* result); // returned "result" will be stored in evaluationResult
+typedef void (^OnKeyPressHandler)(NSString* command);
 
 @interface XVimCommandLineEvaluator : XVimEvaluator
-@property(strong) id evalutionResult;
+@property (strong) id evalutionResult;
 
-- (id)initWithWindow:(XVimWindow *)window
-		 firstLetter:(NSString*)firstLetter
-			 history:(XVimHistoryHandler*)history
-		  completion:(OnCompleteHandler)completeHandler
-		  onKeyPress:(OnKeyPressHandler)keyPressHandler;
+- (id)initWithWindow:(XVimWindow*)window
+               firstLetter:(NSString*)firstLetter
+                   history:(XVimHistoryHandler*)history
+                completion:(OnCompleteHandler)completeHandler
+                onKeyPress:(OnKeyPressHandler)keyPressHandler;
 
 - (void)appendString:(NSString*)str;
 - (XVimEvaluator*)execute;

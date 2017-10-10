@@ -22,12 +22,12 @@
  * For local marks XVim create XVimMarks object for each document.
  * Marks are managed in NSDictionary like { @"a" => markObj, @"b" => markObj2, ... }
  * As a result this class has
- *    - one dictionary for file mark set (XVim global and shared by all the text views). Its like { @"A" => markObj, @"B"=> markObj2... }
- *    - multiple dictionaries for local mark set like
- *        { @"a" => markObj1, @"b" => markObj2, ... } for document1
- *        { @"a" => markObjX, @"b" => markObjY, ... } for document2
+ *    - one dictionary for file mark set (XVim global and shared by all the text views). Its like { @"A" => markObj,
+ *@"B"=> markObj2... } - multiple dictionaries for local mark set like { @"a" => markObj1, @"b" => markObj2, ... } for
+ *document1 { @"a" => markObjX, @"b" => markObjY, ... } for document2
  *        ...
- * All the mark dictionaries have full set of marks. If a mark is not set its lineNumber properties is set to NSNotFound.
+ * All the mark dictionaries have full set of marks. If a mark is not set its lineNumber properties is set to
+ *NSNotFound.
  *
  * Implementation Note:
  * You never replace mark object in a dictionary once you initialize the dictionary.
@@ -70,7 +70,7 @@
 /**
  * Returns list of XVimMarks object for file marks.
  **/
-@property(readonly) NSDictionary* fileMarks;
+@property (readonly) NSDictionary* fileMarks;
 
 /**
  * Set file mark or local mark.

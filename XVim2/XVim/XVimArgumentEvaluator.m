@@ -8,26 +8,23 @@
 
 #import "XVimArgumentEvaluator.h"
 #import "XVimKeyStroke.h"
-#import "XVimWindow.h"
 #import "XVimKeymapProvider.h"
+#import "XVimWindow.h"
 
 @implementation XVimArgumentEvaluator
 @synthesize keyStroke = _keyStroke;
 
 - (XVimEvaluator*)eval:(XVimKeyStroke*)keyStroke
 {
-        self.keyStroke = keyStroke;
-        return [self onArgumentProvided:keyStroke];
+    self.keyStroke = keyStroke;
+    return [self onArgumentProvided:keyStroke];
 }
 
-- (XVimEvaluator*)onArgumentProvided:(XVimKeyStroke*)key
-{
-        return nil;
-}
+- (XVimEvaluator*)onArgumentProvided:(XVimKeyStroke*)key { return nil; }
 
 
 - (XVimKeymap*)selectKeymapWithProvider:(id<XVimKeymapProvider>)keymapProvider
 {
-        return [keymapProvider keymapForMode:XVIM_MODE_NONE];
+    return [keymapProvider keymapForMode:XVIM_MODE_NONE];
 }
 @end

@@ -6,8 +6,8 @@
 //  Copyright (c) 2012 JugglerShu.Net. All rights reserved.
 //
 
-#import "XVimEvaluator.h"
 #import "XVimArgumentEvaluator.h"
+#import "XVimEvaluator.h"
 
 @interface XVimZEvaluator : XVimEvaluator
 

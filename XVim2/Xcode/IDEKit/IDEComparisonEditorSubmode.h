@@ -8,9 +8,8 @@
 
 @class DVTDiffSession, DVTWeakInterposer, IDEComparisonEditor, IDEEditor;
 
-@interface IDEComparisonEditorSubmode : IDEViewController
-{
-    DVTWeakInterposer *_comparisonEditor_dvtWeakInterposer;	// 104 = 0x68
+@interface IDEComparisonEditorSubmode : IDEViewController {
+    DVTWeakInterposer* _comparisonEditor_dvtWeakInterposer; // 104 = 0x68
 }
 
 + (double)emptyEditorLoadingDelay;
@@ -19,23 +18,23 @@
 - (BOOL)canCopyDiff;
 - (BOOL)canRevertMenuItemDifference:(id)arg1;
 - (BOOL)canRevertSelectedDifference;
-@property(readonly) BOOL canSelectNext;
-@property(readonly) BOOL canSelectPrevious;
+@property (readonly) BOOL canSelectNext;
+@property (readonly) BOOL canSelectPrevious;
 - (void)commitComparisonEditorStateToDictionary:(id)arg1;
 - (void)comparisonContextMenu_revertDiffDescriptor:(id)arg1;
 - (void)comparisonContextMenu_revertSelectedDiffDescriptor:(id)arg1;
-@property(readonly) IDEComparisonEditor *comparisonEditor;
+@property (readonly) IDEComparisonEditor* comparisonEditor;
 - (void)copyDiff;
 - (id)currentSelectedDocumentLocations;
 - (id)currentSelectedItems;
-@property(readonly) DVTDiffSession *diffSession;
+@property (readonly) DVTDiffSession* diffSession;
 - (void)hidePrimaryPlaceholder;
 - (void)hideSecondaryPlaceholder;
-@property(readonly) IDEEditor *keyEditor;
+@property (readonly) IDEEditor* keyEditor;
 - (void)offsetCurrentSelectedIndexBy:(long long)arg1;
-@property(readonly) IDEEditor *primaryEditor;
+@property (readonly) IDEEditor* primaryEditor;
 - (void)revertComparisonEditorStateWithDictionary:(id)arg1;
-@property(readonly) IDEEditor *secondaryEditor;
+@property (readonly) IDEEditor* secondaryEditor;
 - (void)setCanSelectNext:(BOOL)arg1;
 - (void)setCanSelectPrevious:(BOOL)arg1;
 - (void)setDifferenceMenu:(id)arg1;
@@ -47,4 +46,3 @@
 - (void)willBeRemovedFromComparisonEditor;
 
 @end
-

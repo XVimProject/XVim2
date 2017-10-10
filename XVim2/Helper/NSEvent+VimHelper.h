@@ -12,5 +12,5 @@
 
 - (unichar)unmodifiedKeyCode;
 - (unichar)modifiedKeyCode;
-    
+
 @end

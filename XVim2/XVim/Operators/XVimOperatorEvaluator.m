@@ -6,18 +6,18 @@
 //  Copyright (c) 2012 JugglerShu.Net. All rights reserved.
 //
 
-#import "XVim.h"
 #import "XVimOperatorEvaluator.h"
-#import "XVimTextObjectEvaluator.h"
-#import "XVimKeyStroke.h"
-#import "XVimWindow.h"
 #import "Logger.h"
+#import "SourceViewProtocol.h"
+#import "XVim.h"
+#import "XVimKeyStroke.h"
 #import "XVimKeymapProvider.h"
 #import "XVimMark.h"
 #import "XVimMarks.h"
-#import "SourceViewProtocol.h"
+#import "XVimTextObjectEvaluator.h"
+#import "XVimWindow.h"
 
-@interface XVimOperatorEvaluator() {
+@interface XVimOperatorEvaluator () {
 }
 @end
 
@@ -25,66 +25,67 @@
 
 @implementation XVimOperatorEvaluator
 
-+ (XVimEvaluator*)doOperationWithMotion:(XVimMotion*)motion onView:(NSTextView*)view{
-    return nil;
++ (XVimEvaluator*)doOperationWithMotion:(XVimMotion*)motion onView:(NSTextView*)view { return nil; }
+
+- (id)initWithWindow:window
+{
+    if (self = [super initWithWindow:window]) {
+    }
+    return self;
 }
 
-- (id)initWithWindow:window{
-	if (self = [super initWithWindow:window]){
-	}
-	return self;
+
+- (float)insertionPointHeightRatio { return 0.5; }
+
+- (BOOL)isRelatedTo:(XVimEvaluator*)other { return [super isRelatedTo:other] || other == self.parent; }
+
+- (XVimKeymap*)selectKeymapWithProvider:(id<XVimKeymapProvider>)keymapProvider
+{
+    return [keymapProvider keymapForMode:XVIM_MODE_OPERATOR_PENDING];
 }
 
-
-- (float)insertionPointHeightRatio{
-    return 0.5;
-}
-
-- (BOOL)isRelatedTo:(XVimEvaluator*)other{
-	return [super isRelatedTo:other] || other == self.parent;
-}
-
-- (XVimKeymap*)selectKeymapWithProvider:(id<XVimKeymapProvider>)keymapProvider{
-	return [keymapProvider keymapForMode:XVIM_MODE_OPERATOR_PENDING];
-}
-
-- (XVimEvaluator*)a{
+- (XVimEvaluator*)a
+{
     [self.argumentString appendString:@"a"];
-	return [[XVimTextObjectEvaluator alloc] initWithWindow:self.window inner:NO];
+    return [[XVimTextObjectEvaluator alloc] initWithWindow:self.window inner:NO];
 }
 
 // TODO: There used to be "b:" and "B:" methods here. Take a look how they have been.
 
-- (XVimEvaluator*)i{
+- (XVimEvaluator*)i
+{
     [self.argumentString appendString:@"i"];
     return [[XVimTextObjectEvaluator alloc] initWithWindow:self.window inner:YES];
 }
 
-- (XVimEvaluator*)_motionFixed:(XVimMotion *)motion{
+- (XVimEvaluator*)_motionFixed:(XVimMotion*)motion
+{
     // We have to save current selection range before fix the command to pass them to fixOperationCommandInMode...
     XVimEvaluator* evaluator = [super _motionFixed:motion];
     // Fix repeat command for change here (except for Yank)
     // Also need to set "." mark for last change.
     // We do not fix the change here if next evaluator is not nil becaust it waits more input for fix the command.
     // This happens for a command like "cw..."
-    if( nil == evaluator ){
+    if (nil == evaluator) {
         _auto view = self.window.sourceView;
         NSString* className = NSStringFromClass([self class]);
-        if( ![className isEqualToString:@"XVimYankEvaluator"]){
+        if (![className isEqualToString:@"XVimYankEvaluator"]) {
             [[XVim instance] fixOperationCommands];
             XVimMark* mark = nil;
-            if( [className isEqualToString:@"XVimJoinEvaluator"]){
+            if ([className isEqualToString:@"XVimJoinEvaluator"]) {
                 // This is specical case for join operation.
                 // The mark is set at the head of next line of the insertion point after the operation
-                mark = XVimMakeMark([self.sourceView insertionLine]+1, 0, view.documentURL.path);
-            }else if( [className isEqualToString:@"XVimShiftEvaluator"] ){
+                mark = XVimMakeMark([self.sourceView insertionLine] + 1, 0, view.documentURL.path);
+            }
+            else if ([className isEqualToString:@"XVimShiftEvaluator"]) {
                 mark = XVimMakeMark([self.sourceView insertionLine], 0, view.documentURL.path);
             }
-            else{
-                mark = XVimMakeMark([self.sourceView insertionLine], [self.sourceView insertionColumn], view.documentURL.path);
+            else {
+                mark = XVimMakeMark([self.sourceView insertionLine], [self.sourceView insertionColumn],
+                                    view.documentURL.path);
             }
-            
-            if( nil != mark.document){
+
+            if (nil != mark.document) {
                 [[XVim instance].marks setMark:mark forName:@"."];
             }
         }
@@ -92,13 +93,12 @@
     return evaluator;
 }
 
-- (XVimEvaluator*)executeOperationWithMotion:(XVimMotion*)motion{
-    return [self _motionFixed:motion];
-}
+- (XVimEvaluator*)executeOperationWithMotion:(XVimMotion*)motion { return [self _motionFixed:motion]; }
 
-- (XVimEvaluator*)onChildComplete:(XVimEvaluator *)childEvaluator{
+- (XVimEvaluator*)onChildComplete:(XVimEvaluator*)childEvaluator
+{
     if ([childEvaluator isKindOfClass:[XVimTextObjectEvaluator class]]) {
-        return [self _motionFixed:[(XVimTextObjectEvaluator *)childEvaluator motion]];
+        return [self _motionFixed:[(XVimTextObjectEvaluator*)childEvaluator motion]];
     }
     return nil;
 }

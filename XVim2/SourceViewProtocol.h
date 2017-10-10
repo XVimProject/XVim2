@@ -8,9 +8,9 @@
 
 #ifndef SourceViewProtocol_h
 #define SourceViewProtocol_h
+#import "XVimMotionOption.h"
 #import <AppKit/AppKit.h>
 #import <SourceEditor/_TtC12SourceEditor23SourceEditorUndoManager.h>
-#import "XVimMotionOption.h"
 
 @class XVimMotion;
 @class XVimCommandLine;
@@ -21,25 +21,25 @@
 @end
 
 @protocol SourceViewProtocol <NSObject, NSTextInputClient>
-- (void) keyDown:(NSEvent*)event;
-- (void)interpretKeyEvents:(NSArray<NSEvent *> *)eventArray;
-- (void) insertText:(id)insertString;
-- (id) performSelector:(SEL)aSelector withObject:(id)object;
-- (void) scrollPageForward:(NSUInteger)numPages;
-- (void) scrollPageBackward:(NSUInteger)numPages;
+- (void)keyDown:(NSEvent*)event;
+- (void)interpretKeyEvents:(NSArray<NSEvent*>*)eventArray;
+- (void)insertText:(id)insertString;
+- (id)performSelector:(SEL)aSelector withObject:(id)object;
+- (void)scrollPageForward:(NSUInteger)numPages;
+- (void)scrollPageBackward:(NSUInteger)numPages;
 - (void)showFindIndicatorForRange:(NSRange)arg1;
 
 // Properties
 @property NSRange selectedRange;
-@property (readonly) NSString *string;
+@property (readonly) NSString* string;
 @property (readonly) XVIM_VISUAL_MODE selectionMode;
-@property (readonly) SourceEditorUndoManager *undoManager;
+@property (readonly) SourceEditorUndoManager* undoManager;
 @property (strong) id<XVimTextViewDelegateProtocol> xvimDelegate;
 @property CURSOR_MODE cursorMode;
 @property (readonly) NSUInteger insertionPoint;
 @property (readonly) NSInteger currentLineNumber;
-@property (readonly) NSArray<NSValue*> * selectedRanges;
-@property (readonly) NSTextStorage *textStorage;
+@property (readonly) NSArray<NSValue*>* selectedRanges;
+@property (readonly) NSTextStorage* textStorage;
 @property (readonly) XVimPosition insertionPosition;
 @property (readonly) NSUInteger selectionBegin;
 @property (readonly) XVimPosition selectionBeginPosition;
@@ -47,10 +47,10 @@
 @property (readonly) BOOL selectionToEOL;
 @property (readonly) NSUInteger insertionColumn;
 @property (readonly) NSUInteger insertionLine;
-@property (readonly) NSURL *documentURL;
-@property (readonly) XVimCommandLine * commandLine;
-@property (readonly) NSWindow *window;
-@property (readonly) NSView *view;
+@property (readonly) NSURL* documentURL;
+@property (readonly) XVimCommandLine* commandLine;
+@property (readonly) NSWindow* window;
+@property (readonly) NSView* view;
 @end
 
 
@@ -59,24 +59,28 @@
 - (void)xvim_syncState;
 - (void)xvim_syncStateFromView;
 - (void)xvim_insert:(XVimInsertionPoint)mode blockColumn:(NSUInteger*)column blockLines:(XVimRange*)lines;
-- (void)xvim_blockInsertFixupWithText:(NSString*)text mode:(XVimInsertionPoint)mode
-                                count:(NSUInteger)count
-                               column:(NSUInteger)column
-                                lines:(XVimRange)lines;
+- (void)xvim_blockInsertFixupWithText:(NSString*)text
+                                     mode:(XVimInsertionPoint)mode
+                                    count:(NSUInteger)count
+                                   column:(NSUInteger)column
+                                    lines:(XVimRange)lines;
 - (void)xvim_escapeFromInsert;
 - (void)xvim_moveCursor:(NSUInteger)pos preserveColumn:(BOOL)preserve;
 - (void)xvim_move:(XVimMotion*)motion;
 - (void)xvim_moveToPosition:(XVimPosition)pos;
--(NSUInteger) numberOfSelectedLines;
+- (NSUInteger)numberOfSelectedLines;
 - (NSArray*)xvim_selectedRanges;
 - (void)xvim_setSelectedRange:(NSRange)range;
 - (NSRange)xvim_currentWord:(MOTION_OPTION)opt;
 - (void)xvim_changeSelectionMode:(XVIM_VISUAL_MODE)mode;
--(unichar)xvim_characterAtIndex:(NSInteger)idx;
+- (unichar)xvim_characterAtIndex:(NSInteger)idx;
 - (NSUInteger)xvim_lineNumberFromBottom:(NSUInteger)count;
 - (NSUInteger)xvim_lineNumberAtMiddle;
 - (NSUInteger)xvim_lineNumberFromTop:(NSUInteger)count;
-- (void)xvim_highlightNextSearchCandidate:(NSString *)regex count:(NSUInteger)count option:(MOTION_OPTION)opt forward:(BOOL)forward;
+- (void)xvim_highlightNextSearchCandidate:(NSString*)regex
+                                        count:(NSUInteger)count
+                                       option:(MOTION_OPTION)opt
+                                      forward:(BOOL)forward;
 - (void)xvim_highlightNextSearchCandidateForward:(NSString*)regex count:(NSUInteger)count option:(MOTION_OPTION)opt;
 - (void)xvim_highlightNextSearchCandidateBackward:(NSString*)regex count:(NSUInteger)count option:(MOTION_OPTION)opt;
 @end

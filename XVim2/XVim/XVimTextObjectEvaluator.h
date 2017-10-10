@@ -12,6 +12,6 @@
 @class XVimOperatorAction;
 
 @interface XVimTextObjectEvaluator : XVimEvaluator
-- (id)initWithWindow:(XVimWindow *)window inner:(BOOL)inner;
-- (XVimMotion *)motion;
+- (id)initWithWindow:(XVimWindow*)window inner:(BOOL)inner;
+- (XVimMotion*)motion;
 @end

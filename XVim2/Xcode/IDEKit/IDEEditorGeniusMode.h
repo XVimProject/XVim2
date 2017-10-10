@@ -14,17 +14,18 @@
 
 @class DVTObservingToken, IDEEditorMultipleContext, NSString;
 
-@interface IDEEditorGeniusMode : IDEEditorModeViewController // <IDEEditorContextDelegate, IDEEditorMultipleContextDelegate, NSSplitViewDelegate>
+@interface IDEEditorGeniusMode
+    : IDEEditorModeViewController // <IDEEditorContextDelegate, IDEEditorMultipleContextDelegate, NSSplitViewDelegate>
 {
-    unsigned long long _layout;	// 104 = 0x68
-    DVTObservingToken *_geniusResultsObservingToken;	// 112 = 0x70
-    IDEEditorMultipleContext *_alternateEditorMultipleContext;	// 120 = 0x78
-    id _pendingEditorLayoutConfiguration;	// 128 = 0x80
-    id _pendingPersistentRepresentation;	// 136 = 0x88
-    NSString *_pendingStateSavingIdentifier;	// 144 = 0x90
-    BOOL _isRestoringState;	// 152 = 0x98
-    BOOL _isRestoringPendingState;	// 153 = 0x99
-    BOOL _didInitialViewInstall;	// 154 = 0x9a
+    unsigned long long _layout; // 104 = 0x68
+    DVTObservingToken* _geniusResultsObservingToken; // 112 = 0x70
+    IDEEditorMultipleContext* _alternateEditorMultipleContext; // 120 = 0x78
+    id _pendingEditorLayoutConfiguration; // 128 = 0x80
+    id _pendingPersistentRepresentation; // 136 = 0x88
+    NSString* _pendingStateSavingIdentifier; // 144 = 0x90
+    BOOL _isRestoringState; // 152 = 0x98
+    BOOL _isRestoringPendingState; // 153 = 0x99
+    BOOL _didInitialViewInstall; // 154 = 0x9a
 }
 
 + (void)configureStateSavingObjectPersistenceByName:(id)arg1;
@@ -47,13 +48,15 @@
 - (id)_manualCategoryNavigableItemForEditorContext:(id)arg1 withDocumentURLOrNil:(id)arg2;
 - (id)_manualCategoryNavigableItemForEditorContext:(id)arg1 withStructureNavigableItem:(id)arg2;
 - (id)_navigableItemForEditorContext:(id)arg1 bySelectingRawDocumentURLInManualDomain:(id)arg2;
-- (id)_navigableItemForEditorContext:(id)arg1 fromGeniusArchivedRepresentation:(id)arg2 error:(id *)arg3;
-- (id)_navigableItemForEditorContext:(id)arg1 fromStructureArchivedRepresentation:(id)arg2 error:(id *)arg3;
+- (id)_navigableItemForEditorContext:(id)arg1 fromGeniusArchivedRepresentation:(id)arg2 error:(id*)arg3;
+- (id)_navigableItemForEditorContext:(id)arg1 fromStructureArchivedRepresentation:(id)arg2 error:(id*)arg3;
 - (id)_navigableItemForEditorContext:(id)arg1 inGeniusCategoryNavigableItem:(id)arg2 withDocumentURLOrNil:(id)arg3;
 - (id)_navigableItemForGeniusCategory:(id)arg1 editorContext:(id)arg2;
 - (id)_persistentRepresentationForIdentifier:(id)arg1;
 - (void)_primitiveSetGeniusCategory:(id)arg1 forEditorContext:(id)arg2;
-- (id)_resetManualCategoryNavigableItemForEditorContext:(id)arg1 toDomainWithIdentifier:(id)arg2 withManualDomainRootItem:(id)arg3;
+- (id)_resetManualCategoryNavigableItemForEditorContext:(id)arg1
+                                       toDomainWithIdentifier:(id)arg2
+                                     withManualDomainRootItem:(id)arg3;
 - (id)_rootForNavigableItem:(id)arg1;
 - (id)_selectedCategoryNavigableItemForEditorContext:(id)arg1;
 - (void)_setDefaultGeniusCategoryForEditorContext:(id)arg1;
@@ -61,14 +64,18 @@
 - (void)_setPersistentRepresentation:(id)arg1 forIdentifier:(id)arg2;
 - (void)_setPersistentRepresentation:(id)arg1 forIdentifier:(id)arg2 excludingEditorContext:(id)arg3;
 - (void)_setSplitsVertical:(BOOL)arg1;
-- (void)_setupPendingStateRestorationWithLayoutConfiguration:(id)arg1 persistentRepresentation:(id)arg2 stateSavingIdentifier:(id)arg3;
+- (void)_setupPendingStateRestorationWithLayoutConfiguration:(id)arg1
+                                        persistentRepresentation:(id)arg2
+                                           stateSavingIdentifier:(id)arg3;
 - (void)_stampEditorLayoutConfiguration:(id)arg1 forIdentifier:(id)arg2;
 - (id)_stealPrimaryEditorContext;
 - (void)_updateRootNavigableItemForEditorContext:(id)arg1;
 - (void)addAssistantEditor;
 - (id)addNewAssistantEditor;
 - (void)addSplitForEditorContext:(id)arg1;
-@property(retain) IDEEditorMultipleContext *alternateEditorMultipleContext; // @synthesize alternateEditorMultipleContext=_alternateEditorMultipleContext;
+@property (retain) IDEEditorMultipleContext*
+            alternateEditorMultipleContext; // @synthesize
+                                            // alternateEditorMultipleContext=_alternateEditorMultipleContext;
 - (BOOL)canAddAssistantEditor;
 - (BOOL)canAddNewAssistantEditor;
 - (BOOL)canChangeAssistantEditorsLayout;
@@ -81,8 +88,8 @@
 - (void)discardEditing;
 - (void)editorContext:(id)arg1 didSetNavigableItem:(id)arg2;
 - (void)editorContext:(id)arg1 didUpdateMenu:(id)arg2;
-- (BOOL)editorContext:(id)arg1 emptyEditorRootNavigableItem:(id *)arg2 selectedNavigableItem:(id *)arg3;
-- (id)editorContext:(id)arg1 navigableItemForEditingFromArchivedRepresentation:(id)arg2 error:(id *)arg3;
+- (BOOL)editorContext:(id)arg1 emptyEditorRootNavigableItem:(id*)arg2 selectedNavigableItem:(id*)arg3;
+- (id)editorContext:(id)arg1 navigableItemForEditingFromArchivedRepresentation:(id)arg2 error:(id*)arg3;
 - (id)editorContext:(id)arg1 navigableItemInSelectedGeniusCategoryWithRepresentedObject:(id)arg2;
 - (id)editorContexts;
 - (void)editorMultipleContext:(id)arg1 didSplitEditorContext:(id)arg2 creatingEditorContext:(id)arg3;
@@ -103,16 +110,18 @@
 - (double)splitView:(id)arg1 constrainMaxCoordinate:(double)arg2 ofSubviewAt:(long long)arg3;
 - (double)splitView:(id)arg1 constrainMinCoordinate:(double)arg2 ofSubviewAt:(long long)arg3;
 - (double)splitView:(id)arg1 constrainSplitPosition:(double)arg2 ofSubviewAt:(long long)arg3;
-- (struct CGRect)splitView:(id)arg1 effectiveRect:(struct CGRect)arg2 forDrawnRect:(struct CGRect)arg3 ofDividerAtIndex:(long long)arg4;
+- (struct CGRect)splitView:(id)arg1
+               effectiveRect:(struct CGRect)arg2
+                forDrawnRect:(struct CGRect)arg3
+            ofDividerAtIndex:(long long)arg4;
 - (void)splitView:(id)arg1 resizeSubviewsWithOldSize:(struct CGSize)arg2;
 - (void)viewDidInstall;
 - (void)viewWillUninstall;
 
 // Remaining properties
-@property(readonly, copy) NSString *debugDescription;
-@property(readonly, copy) NSString *description;
-@property(readonly) unsigned long long hash;
-@property(readonly) Class superclass;
+@property (readonly, copy) NSString* debugDescription;
+@property (readonly, copy) NSString* description;
+@property (readonly) unsigned long long hash;
+@property (readonly) Class superclass;
 
 @end
-

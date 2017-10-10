@@ -17,6 +17,6 @@
 - (BOOL)boolForName:(NSString*)name;
 - (void)setUnsignedInteger:(NSUInteger)value forName:(NSString*)name;
 - (NSUInteger)unsignedIntegerForName:(NSString*)name;
-- (void)setInteger:(NSInteger)value forName:(NSString *)name;
+- (void)setInteger:(NSInteger)value forName:(NSString*)name;
 - (NSInteger)integerForName:(NSString*)name;
 @end

@@ -6,8 +6,8 @@
 //  Copyright 2012 JugglerShu.Net. All rights reserved.
 //
 
-#import <AppKit/AppKit.h>
 #import "XVimCommandField.h"
+#import <AppKit/AppKit.h>
 
 @interface XVimCommandLine : NSVisualEffectView
 
@@ -16,7 +16,7 @@
 - (void)setArgumentString:(NSString*)string;
 - (void)errorMessage:(NSString*)string Timer:(BOOL)aTimer RedColorSetting:(BOOL)aRedColorSetting;
 #ifdef TODO
-- (void)quickFixWithString:(NSString*)string completionHandler:(void(^)(void))completionHandler;
+- (void)quickFixWithString:(NSString*)string completionHandler:(void (^)(void))completionHandler;
 - (NSUInteger)quickFixColWidth;
 #endif
 - (XVimCommandField*)commandField;
