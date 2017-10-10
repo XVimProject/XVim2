@@ -23,10 +23,13 @@ CONST_STR(EDWindow);
 
 
 @implementation _TtC22IDEPegasusSourceEditor20SourceCodeEditorView(XVim)
+
 + (void)xvim_hook{
     [self xvim_swizzleInstanceMethod:@selector(keyDown:) with:@selector(xvim_keyDown:)];
     [self xvim_swizzleInstanceMethod:@selector(viewWillMoveToWindow:) with:@selector(xvim_viewWillMoveToWindow:)];
     [self xvim_swizzleInstanceMethod:@selector(selectionWillChange) with:@selector(xvim_selectionWillChange)];
+    //[self xvim_swizzleInstanceMethod:@selector(contentViewHeightConstraint) with:@selector(xvim_contentViewHeightConstraint)];
+    //[self xvim_swizzleInstanceMethod:@selector(contentViewMargins) with:@selector(xvim_contentViewMargins)];
 }
 
 -(XVimWindow*)xvim_window {
@@ -43,6 +46,20 @@ CONST_STR(EDWindow);
 {
         DEBUG_LOG(@"SELECTION WILL CHANGE");
         [self xvim_selectionWillChange];
+}
+
+-(NSEdgeInsets)xvim_contentViewMargins
+{
+        NSEdgeInsets insets = [self xvim_contentViewMargins];
+        insets.bottom += 30;
+        return insets;
+}
+
+-(NSLayoutConstraint*)xvim_contentViewHeightConstraint
+{
+        NSLayoutConstraint *constraint = [self xvim_contentViewHeightConstraint];
+        constraint.constant -= 30;
+        return constraint;
 }
 
 -(void)xvim_setupOnFirstAppearance

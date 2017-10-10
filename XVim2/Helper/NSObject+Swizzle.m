@@ -34,19 +34,24 @@
 }
 
 
-+ (void)xvim_swizzleInstanceMethod:(SEL)origSel with:(SEL)newSel
++ (void)xvim_swizzleInstanceMethodOfClass:(Class)destClass selector:(SEL)origSel with:(SEL)newSel
 {
-    Method origMethod = class_getInstanceMethod(self, origSel);
+    Method origMethod = class_getInstanceMethod(destClass, origSel);
     Method newMethod  = class_getInstanceMethod(self, newSel);
 
-    NSAssert(newMethod,  @"-[%@ %@] doesn't exist", NSStringFromClass(self), NSStringFromSelector(newSel));
+    NSAssert(newMethod,  @"-[%@ %@] doesn't exist", NSStringFromClass(destClass), NSStringFromSelector(newSel));
 
-    if (class_addMethod(self, origSel, method_getImplementation(newMethod), method_getTypeEncoding(newMethod))) {
-        class_replaceMethod(self, origSel, method_getImplementation(newMethod), method_getTypeEncoding(newMethod));
-        class_replaceMethod(self, newSel, method_getImplementation(origMethod), method_getTypeEncoding(origMethod));
+    if (class_addMethod(destClass, origSel, method_getImplementation(newMethod), method_getTypeEncoding(newMethod))) {
+        class_replaceMethod(destClass, origSel, method_getImplementation(newMethod), method_getTypeEncoding(newMethod));
+        class_replaceMethod(destClass, newSel, method_getImplementation(origMethod), method_getTypeEncoding(origMethod));
     } else {
         method_exchangeImplementations(newMethod, origMethod);
     }
+}
+
++ (void)xvim_swizzleInstanceMethod:(SEL)origSel with:(SEL)newSel
+{
+        [self xvim_swizzleInstanceMethodOfClass:self selector:origSel with:newSel];
 }
 
 @end

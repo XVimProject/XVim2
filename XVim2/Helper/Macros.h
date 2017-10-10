@@ -25,4 +25,11 @@ __strong xvim_cleanup_block_t xvim_concat(xvim_exitBlock_, __LINE__) __attribute
 
 #define CONST_STR(_name) NSString *_name = @#_name ;
 
+#define _run_before_main(_id, _disambiguator, _priority) \
+        void xvim_concat(runBeforeMain_, xvim_concat(_id, _disambiguator)) (void) __attribute__((constructor(_priority))) ; \
+        void xvim_concat(runBeforeMain_, xvim_concat(_id, _disambiguator)) ()
+
+#define run_before_main(_id) \
+        _run_before_main(_id, xvim_concat(__LINE__, __COUNTER__), 110)
+
 #endif /* Macros_h */
