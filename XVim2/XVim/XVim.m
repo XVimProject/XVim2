@@ -32,6 +32,7 @@
 #import "XVimOptions.h"
 #import "Logger.h"
 #import "_TtC22IDEPegasusSourceEditor20SourceCodeEditorView.h"
+#import "_TtC12SourceEditor23SourceEditorContentView.h"
 
 @interface XVim () {
         XVimKeymap* _keymaps[XVIM_MODE_COUNT];

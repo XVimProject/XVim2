@@ -88,8 +88,9 @@
 - (void)viewDidChangeBackingProperties;
 
 // Remaining properties
-@property(nonatomic, readonly) BOOL flipped;
+@property(nonatomic, readonly, getter=isFlipped) BOOL flipped;
 
 @end
+
 
 typedef _TtC12SourceEditor23SourceEditorContentView SourceEditorContentView;

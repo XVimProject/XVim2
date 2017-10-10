@@ -895,6 +895,11 @@
 //   Commands  !!Please keep them alphabetical order!!  //
 //////////////////////////////////////////////////////////
 
+// TODO: Instead of ignoring 'undeclared-selector', we should import the relevant IDEKit headers
+#pragma clang diagnostic push
+#pragma clang diagnostic ignored "-Wundeclared-selector"
+
+
 - (void)commit:(XVimExArg*)args inWindow:(XVimWindow*)window{
     [NSApp sendAction:@selector(commitCommand:) to:nil from:self];
 }
@@ -1307,7 +1312,7 @@
 
 - (void)set:(XVimExArg*)args inWindow:(XVimWindow*)window{
     NSString* setCommand = [args.arg stringByTrimmingCharactersInSet:[NSCharacterSet whitespaceCharacterSet]];
-    _auto srcView = [window sourceView];
+    //_auto srcView = [window sourceView];
 	XVimOptions* options = [XVIM options];
     
     if( [setCommand rangeOfString:@"="].location != NSNotFound ){
@@ -1436,6 +1441,7 @@
 - (void)write:(XVimExArg*)args inWindow:(XVimWindow*)window{ // :w
     [NSApp sendAction:@selector(ide_saveDocument:) to:nil from:self];
 }
+#pragma clang diagnostic pop
 
 - (NSMenuItem*)findMenuItemIn:(NSMenu*)menu forAction:(NSString*)actionName{
     if( nil == menu ){

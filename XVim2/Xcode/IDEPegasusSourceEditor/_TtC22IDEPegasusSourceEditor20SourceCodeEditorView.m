@@ -7,6 +7,7 @@
 //
 
 #import "_TtC22IDEPegasusSourceEditor20SourceCodeEditorView.h"
+#import <SourceEditor/SourceEditorScrollView.h>
 #import "SourceCodeEditorViewProxy.h"
 #import "NSObject+Swizzle.h"
 #import "XVimKeyStroke.h"
@@ -65,6 +66,16 @@ CONST_STR(EDWindow);
 -(void)xvim_setupOnFirstAppearance
 {
         [self.xvim_window setupAfterEditorViewSetup];
+        SourceEditorScrollView *scrollView = self.scrollView;
+        
+        // Add inset at bottom for XVim command line
+        if ([scrollView isKindOfClass:NSClassFromString(@"SourceEditorScrollView")]) {
+                // TODO: Don't hardwire insets
+                NSEdgeInsets insets = scrollView.additionalContentInsets;
+                insets.bottom += 20;
+                scrollView.additionalContentInsets = insets;
+                [scrollView updateAutomaticContentInsets];
+        }
 }
 
 -(void)xvim_viewWillMoveToWindow:(id)window
