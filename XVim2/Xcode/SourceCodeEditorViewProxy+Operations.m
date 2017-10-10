@@ -569,6 +569,41 @@
 }
 
 
+#pragma mark - FILTER
+
+- (void)xvim_filter:(XVimMotion*)motion{
+        if (self.insertionPoint == 0 && self.string.length == 0) {
+                return ;
+        }
+        
+        NSUInteger insertionAfterFilter = self.insertionPoint;
+        NSRange filterRange;
+        if (self.selectionMode == XVIM_VISUAL_NONE) {
+                XVimRange to = [self xvim_getMotionRange:self.insertionPoint Motion:motion];
+                if (to.end == NSNotFound) {
+                        return;
+                }
+                filterRange = [self xvim_getOperationRangeFrom:to.begin To:to.end Type:LINEWISE];
+        } else {
+                XVimRange lines = [self _xvim_selectedLines];
+                NSUInteger from = [self.textStorage xvim_indexOfLineNumber:lines.begin];
+                NSUInteger to   = [self.textStorage xvim_indexOfLineNumber:lines.end];
+                filterRange = [self xvim_getOperationRangeFrom:from To:to Type:LINEWISE];
+        }
+        
+        [self xvim_indentCharacterRange:filterRange];
+        [self xvim_moveCursor:insertionAfterFilter preserveColumn:NO];
+        [self xvim_changeSelectionMode:XVIM_VISUAL_NONE];
+}
+
+
+
+- (void)xvim_indentCharacterRange:(NSRange)range{
+        _auto currentSelection = self.selectedRange;
+        self.selectedRange = range;
+        [self indentSelection:self];
+        self.selectedRange = NSIntersectionRange(currentSelection, NSMakeRange(0, self.string.length-1));
+}
 
 #pragma mark - UTILITY
 

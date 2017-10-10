@@ -22,8 +22,6 @@
 #import "XVimJoinEvaluator.h"
 #import "SourceViewProtocol.h"
 #import "NSTextStorage+VimOperation.h"
-
-#ifdef TODO
 #import "XVimReplacePromptEvaluator.h"
 #import "XVimEqualEvaluator.h"
 #import "XVimGVisualEvaluator.h"
@@ -32,7 +30,6 @@
 #import "XVimExCommand.h"
 #import "XVimSearch.h"
 #import "XVimOptions.h"
-#endif
 
 static NSString* MODE_STRINGS[] = { @"", @"-- VISUAL --", @"-- VISUAL LINE --", @"-- VISUAL BLOCK --" };
 
@@ -500,10 +497,8 @@ TODO: This block is from commit 42498.
 
 - (XVimEvaluator*)EQUAL
 {
-#ifdef TODO
         XVimEqualEvaluator* eval = [[XVimEqualEvaluator alloc] initWithWindow:self.window];
         return [eval executeOperationWithMotion:XVIM_MAKE_MOTION(MOTION_NONE, CHARACTERWISE_EXCLUSIVE, MOTION_OPTION_NONE, [self numericArg])];
-#endif
         return nil;
 }
 
@@ -531,7 +526,6 @@ TODO: This block is from commit 42498.
 
 - (XVimEvaluator*)COLON
 {
-#ifdef TODO
         __block XVimEvaluator* eval = [[XVimCommandLineEvaluator alloc] initWithWindow:self.window
                                                                            firstLetter:@":'<,'>"
                                                                                history:[[XVim instance] exCommandHistory]
@@ -557,8 +551,6 @@ TODO: This block is from commit 42498.
                                                                             onKeyPress:nil];
 
         return eval;
-#endif
-        return nil;
 }
 
 - (XVimEvaluator*)EXCLAMATION

@@ -117,6 +117,8 @@
 - (void)xvim_shiftRight:(XVimMotion*)motion withMotionPoint:(NSUInteger)motionPoint count:(NSUInteger)count;
 - (void)xvim_shiftLeft:(XVimMotion*)motion;
 - (void)xvim_shiftLeft:(XVimMotion*)motion withMotionPoint:(NSUInteger)motionPoint count:(NSUInteger)count;
+- (void)xvim_filter:(XVimMotion*)motion;
+- (void)xvim_indentCharacterRange:(NSRange)range;
 @end
 
 // Yank + Put
