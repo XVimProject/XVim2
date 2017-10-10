@@ -31,16 +31,17 @@
 #import "XVimMarkSetEvaluator.h"
 #import "XVimMark.h"
 #import "XVimMarks.h"
-
-#if 0
-#import "XVimEqualEvaluator.h"
-#import "XVimRegisterEvaluator.h"
-#import "XVimReplacePromptEvaluator.h"
-#import "XVimKeyStroke.h"
+#import "NSTextStorage+VimOperation.h"
 #import "XVimCommandLineEvaluator.h"
 #import "XVimExCommand.h"
 #import "XVimSearch.h"
 #import "XVimOptions.h"
+#import "XVimReplacePromptEvaluator.h"
+
+#if 0
+#import "XVimEqualEvaluator.h"
+#import "XVimRegisterEvaluator.h"
+#import "XVimKeyStroke.h"
 #import "XVimRecordingEvaluator.h"
 #endif
 
@@ -445,7 +446,6 @@
         return nil;
 }
 
-#if 0
 
 // COMMAND-LINE
 
@@ -476,25 +476,7 @@
 
 
 
-- (XVimEvaluator*)C_g{
-    // process
-    XVimWindow* window = self.window;
-    NSRange range = [[window sourceView] selectedRange];
-    NSUInteger numberOfLines = [window.sourceView.textStorage xvim_numberOfLines];
-    long long lineNumber = [window.sourceView currentLineNumber];
-    NSUInteger columnNumber = [window.sourceView.textStorage xvim_columnOfIndex:range.location];
-    NSURL* documentURL = [[window sourceView] documentURL];
-	if( [documentURL isFileURL] ) {
-		NSString* filename = [documentURL path];
-		NSString* text = [NSString stringWithFormat:@"%@   line %lld of %ld --%d%%-- col %ld",
-                          filename, lineNumber, numberOfLines, (int)((float)lineNumber*100.0/(float)numberOfLines), columnNumber+1 ];
-        
-		[window statusMessage:text];
-	}
-    return nil;
-}
-
-
+#if 0
 
 
 // Should be moved to XVimMotionEvaluator
@@ -658,40 +640,60 @@
 	return eval;
 }
 
+
+#endif
+
 - (XVimEvaluator*)DOT{
-    [[XVim instance] startRepeat];
-    XVimString *repeatRegister = [[XVim instance] lastOperationCommands];
-    TRACE_LOG(@"Repeat:%@", repeatRegister);
-    
-    NSMutableArray* stack = [[NSMutableArray alloc] init];
-    
-    if( self.numericMode ){
-        // Input numeric args if dot command has numeric arg
-        XVimString* nums = [NSString stringWithFormat:@"%ld", (unsigned long)self.numericArg];
-        for( XVimKeyStroke* stroke in XVimKeyStrokesFromXVimString(nums) ){
-            [self.window handleKeyStroke:stroke onStack:stack];
+        [[XVim instance] startRepeat];
+        XVimString *repeatRegister = [[XVim instance] lastOperationCommands];
+        TRACE_LOG(@"Repeat:%@", repeatRegister);
+        
+        NSMutableArray* stack = [[NSMutableArray alloc] init];
+        
+        if( self.numericMode ){
+                // Input numeric args if dot command has numeric arg
+                XVimString* nums = [NSString stringWithFormat:@"%ld", (unsigned long)self.numericArg];
+                for( XVimKeyStroke* stroke in XVimKeyStrokesFromXVimString(nums) ){
+                        [self.window handleKeyStroke:stroke onStack:stack];
+                }
         }
-    }
-    
-    BOOL nonNumFound = NO;
-    for( XVimKeyStroke* stroke in XVimKeyStrokesFromXVimString(repeatRegister) ){
-        // TODO: This skips numeric args in repeat regisger if numericArg is specified.
-        //       But if numericArg is not begining of the input (such as d3w) this never skips it.
-        //       We have to also correctly handle "df3" not to skip the number.
-        if( !nonNumFound && self.numericMode && [stroke isNumeric]){
-            // Skip numeric arg
-            continue;
+        
+        BOOL nonNumFound = NO;
+        for( XVimKeyStroke* stroke in XVimKeyStrokesFromXVimString(repeatRegister) ){
+                // TODO: This skips numeric args in repeat regisger if numericArg is specified.
+                //       But if numericArg is not begining of the input (such as d3w) this never skips it.
+                //       We have to also correctly handle "df3" not to skip the number.
+                if( !nonNumFound && self.numericMode && [stroke isNumeric]){
+                        // Skip numeric arg
+                        continue;
+                }
+                nonNumFound = YES;
+                TRACE_LOG("Feeding stroke: %@", stroke);
+                [self.window handleKeyStroke:stroke onStack:stack];
         }
-        nonNumFound = YES;
-        TRACE_LOG("Feeding stroke: %@", stroke);
-        [self.window handleKeyStroke:stroke onStack:stack];
-    }
-    [[XVim instance] endRepeat];
-    return nil;
+        [[XVim instance] endRepeat];
+        return nil;
 }
 
 
-#endif
+- (XVimEvaluator*)C_g{
+        // process
+        XVimWindow* window = self.window;
+        NSRange range = [[window sourceView] selectedRange];
+        NSUInteger numberOfLines = [window.sourceView.textStorage xvim_numberOfLines];
+        long long lineNumber = [window.sourceView currentLineNumber];
+        NSUInteger columnNumber = [window.sourceView.textStorage xvim_columnOfIndex:range.location];
+        NSURL* documentURL = [[window sourceView] documentURL];
+        if( [documentURL isFileURL] ) {
+                NSString* filename = [documentURL path];
+                NSString* text = [NSString stringWithFormat:@"%@   line %lld of %ld --%d%%-- col %ld",
+                                  filename, lineNumber, numberOfLines, (int)((float)lineNumber*100.0/(float)numberOfLines), columnNumber+1 ];
+                
+                [window statusMessage:text];
+        }
+        return nil;
+}
+
 
 - (XVimEvaluator*)ForwardDelete
 {

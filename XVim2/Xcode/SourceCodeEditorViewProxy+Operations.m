@@ -18,7 +18,6 @@
 @property(readwrite) NSUInteger insertionPoint;
 @property(readwrite) NSUInteger preservedColumn;
 @property(readwrite) BOOL selectionToEOL;
-@property NSRange selectedRange;
 @property BOOL xvim_lockSyncStateFromView;
 @property(strong) NSString* lastYankedText;
 @property TEXT_TYPE lastYankedType;

@@ -7,7 +7,7 @@
 //
 
 #import "XVimRegister.h"
-//#import "XVimOptions.h"
+#import "XVimOptions.h"
 #import "XVimEvaluator.h"
 #import "XVimKeyStroke.h"
 #import "XVim.h"
@@ -251,7 +251,7 @@ static const NSString* s_enum_registers = @"\"0123456789abcdefghijklmnopqrstuvwx
 {
         NSAssert(name == nil || name.length == 1, @"name must be nil or one character string");
         if (nil == name) {
-                if ([XVIM.options[XVimPref_ClipboardHasUnnamed] boolValue]) {
+                if (XVIM.options.clipboardHasUnnamed) {
                         name = @"*";
                 }
                 else {
@@ -313,7 +313,7 @@ static const NSString* s_enum_registers = @"\"0123456789abcdefghijklmnopqrstuvwx
                 // "" register should point to "0
                 [self.registers setObject:[self registerByName:@"0"] forKey:@"\""];
 
-                if ([XVIM.options[XVimPref_ClipboardHasUnnamed] boolValue]) {
+                if (XVIM.options.clipboardHasUnnamed) {
                         // Update clipboard register too
                         [self setXVimString:string withType:type forReg:@"*"];
                 }
@@ -351,7 +351,7 @@ static const NSString* s_enum_registers = @"\"0123456789abcdefghijklmnopqrstuvwx
         }
 
         if (nil == name) {
-                if ([XVIM.options[XVimPref_ClipboardHasUnnamed] boolValue]) {
+                if (XVIM.options.clipboardHasUnnamed) {
                         // Update clipboard register too
                         [self setXVimString:string withType:type forReg:@"*"];
                 }

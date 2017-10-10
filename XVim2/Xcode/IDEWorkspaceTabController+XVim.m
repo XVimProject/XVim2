@@ -9,10 +9,10 @@
 #import "Logger.h"
 #import "IDEWorkspaceTabController+XVim.h"
 #import "Geometry.h"
-#import "IDEEditorArea+XVim.h"
 #import "XVimWindow.h"
 #import "SourceCodeEditorViewProxy.h"
 #import <IDEKit/IDEEditorContext.h>
+#import <IDEKit/IDEEditorArea.h>
 #import <IDEKit/IDEWorkspaceWindowController.h>
 #import <IDEKit/IDEEditorVersionsMode.h>
 #import <IDEKit/IDEEditorGeniusMode.h>
@@ -238,15 +238,15 @@ static inline BOOL xvim_horizontallyStackingModeForMode(GeniusLayoutMode mode) {
         // This implementation is not correct for precise moveFocusLeft behavior but it is useful.
 
         // preserve current line number.
-        NSUInteger line_number = (NSUInteger)editorArea.xvim_window.sourceView.currentLineNumber;
+        //NSUInteger line_number = (NSUInteger)editorArea.xvim_window.sourceView.currentLineNumber;
         // change window focus.
         IDEEditorVersionsMode *mode = (IDEEditorVersionsMode*)[editorArea editorModeViewController];
         IDEComparisonEditorSubmode* submode = mode.comparisonEditorSubmode;
         [submode.primaryEditor takeFocus];
         // set current line number
-        XVimMotion* motion = XVIM_MAKE_MOTION(MOTION_LINENUMBER, LINEWISE, LEFT_RIGHT_NOWRAP, 1);
-        motion.line = line_number;
-        [editorArea.xvim_window.sourceView xvim_move:motion];
+        //XVimMotion* motion = XVIM_MAKE_MOTION(MOTION_LINENUMBER, LINEWISE, LEFT_RIGHT_NOWRAP, 1);
+        //motion.line = line_number;
+        //[editorArea.xvim_window.sourceView xvim_move:motion];
 
         return;
     }
@@ -282,15 +282,15 @@ static inline BOOL xvim_horizontallyStackingModeForMode(GeniusLayoutMode mode) {
         // The behavior in comparison view is like diff mode on the original vim.
         
         // preserve current line number.
-        NSUInteger line_number = (NSUInteger)editorArea.xvim_window.sourceView.currentLineNumber;
+        //NSUInteger line_number = (NSUInteger)editorArea.xvim_window.sourceView.currentLineNumber;
         // change window focus.
         IDEEditorVersionsMode *mode = (IDEEditorVersionsMode*)[editorArea editorModeViewController];
         IDEComparisonEditorSubmode* submode = mode.comparisonEditorSubmode;
         [submode.secondaryEditor takeFocus];
         // set current line number
-        XVimMotion* motion = XVIM_MAKE_MOTION(MOTION_LINENUMBER, LINEWISE, LEFT_RIGHT_NOWRAP, 1);
-        motion.line = line_number;
-        [editorArea.xvim_window.sourceView xvim_move:motion];
+        //XVimMotion* motion = XVIM_MAKE_MOTION(MOTION_LINENUMBER, LINEWISE, LEFT_RIGHT_NOWRAP, 1);
+        //motion.line = line_number;
+        //[editorArea.xvim_window.sourceView xvim_move:motion];
 
         return;
     }

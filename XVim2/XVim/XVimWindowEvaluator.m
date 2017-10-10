@@ -11,6 +11,7 @@
 #import "XVimWindow.h"
 //#import "IDEKit.h"
 #import "Geometry.h"
+#import "XcodeUtils.h"
 #import "IDEWorkspaceTabController+XVim.h"
 #import <IDEKit/IDEWorkspaceWindowController.h>
 #import <IDEKit/IDEEditor.h>
@@ -19,27 +20,6 @@
 #import <IDEKit/IDEWorkspaceWindow.h>
 
 
-IDEWorkspaceWindowController* XVimLastActiveWindowController()
-{
-        return [IDEWorkspaceWindow lastActiveWorkspaceWindowController];
-}
-
-IDEWorkspaceTabController* XVimLastActiveWorkspaceTabController()
-{
-        return [XVimLastActiveWindowController() activeWorkspaceTabController];
-}
-
-IDEEditorArea* XVimLastActiveEditorArea()
-{
-        return [XVimLastActiveWindowController() editorArea];
-}
-
-#ifdef TODO
-DVTSourceTextView* XVimLastActiveSourceView()
-{
-        return [[[[XVimLastActiveEditorArea() lastActiveEditorContext] editor] mainScrollView] documentView];
-}
-#endif
 
 
 @implementation XVimWindowEvaluator

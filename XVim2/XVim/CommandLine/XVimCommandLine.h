@@ -9,7 +9,7 @@
 #import <AppKit/AppKit.h>
 #import "XVimCommandField.h"
 
-@interface XVimCommandLine : NSView
+@interface XVimCommandLine : NSVisualEffectView
 
 - (id)init;
 - (void)setModeString:(NSString*)string;

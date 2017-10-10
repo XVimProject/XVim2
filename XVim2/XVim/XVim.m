@@ -26,6 +26,10 @@
 #import "XVimRegister.h"
 #import "XVimPreferences.h"
 #import "XVimMarks.h"
+#import "XVimHistoryHandler.h"
+#import "XVimExCommand.h"
+#import "XVimSearch.h"
+#import "XVimOptions.h"
 #import "Logger.h"
 #import "_TtC22IDEPegasusSourceEditor20SourceCodeEditorView.h"
 
@@ -82,7 +86,11 @@
 - (id)init
 {
         if (self = [super init]) {
+                _searchHistory = [[XVimHistoryHandler alloc] init];
+                _searcher = [[XVimSearch alloc] init];
                 _lastCharacterSearchMotion = nil;
+                _marks = [[XVimMarks alloc] init];
+                self.excmd = [[XVimExCommand alloc] init];
                 self.lastPlaybackRegister = nil;
                 self.lastOperationCommands = [[XVimMutableString alloc] init];
                 self.lastVisualPosition = XVimMakePosition(NSNotFound, NSNotFound);
@@ -93,11 +101,7 @@
                 self.isRepeating = NO;
                 self.isExecuting = NO;
                 self.foundRangesHidden = NO;
-                self.options = @{
-                        XVimPref_AlwaysUseInputSource : @NO,
-                        XVimPref_Timeout : @(2000),
-                        XVimPref_ExpandTab : @YES
-                };
+                self.options = [[XVimOptions alloc] init];
 
                 for (int i = 0; i < XVIM_MODE_COUNT; ++i) {
                         _keymaps[i] = [[XVimKeymap alloc] init];
@@ -145,11 +149,36 @@
         self.isRepeating = NO;
 }
 
-- (void)ringBell
-{
-
+- (void)ringBell {
+        if (self.options.errorbells) {
+                NSBeep();
+        }
         return;
 }
 
+- (void)writeToConsole:(NSString*)fmt, ...{
+#ifdef TODO
+        IDEDefaultDebugArea* debugArea = (IDEDefaultDebugArea*)[XVimLastActiveEditorArea() activeDebuggerArea];
+        // On playgorund activateConsole call cause crash.
+        if (![debugArea canActivateConsole]){
+                return;
+        }
+        [XVimLastActiveEditorArea() activateConsole:self];
+        IDEConsoleArea* console = [debugArea consoleArea];
+        
+        // IDEConsoleArea has IDEConsoleTextView as its view but we do not have public method to access it.
+        // It has the view as instance variable named "_consoleView"
+        // So use obj-c runtime method to get instance varialbe by its name.
+        IDEConsoleTextView* pView = [console valueForKey:@"_consoleView"];
+        
+        va_list argumentList;
+        va_start(argumentList, fmt);
+        NSString* string = [[NSString alloc] initWithFormat:fmt arguments:argumentList];
+        pView.logMode = 1; // I do not know well about this value. But we have to set this to write text into the console.
+        [pView insertText:string];
+        [pView insertNewline:self];
+        va_end(argumentList);
+#endif
+}
 
 @end

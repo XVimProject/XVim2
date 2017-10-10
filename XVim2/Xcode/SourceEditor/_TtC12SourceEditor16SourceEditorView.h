@@ -141,7 +141,7 @@
 - (id)initWithFrame:(struct CGRect)arg1;
 - (id)initWithCoder:(id)arg1 sourceEditorScrollViewClass:(Class)arg2;
 - (id)initWithFrame:(struct CGRect)arg1 sourceEditorScrollViewClass:(Class)arg2;
-//@property(nonatomic, readonly) SourceEditorScrollView *scrollView; // @synthesize scrollView;
+@property(nonatomic, readonly) NSView *scrollView; // @synthesize scrollView;
 //@property(nonatomic, readonly) _TtC12SourceEditor23SourceEditorContentView *contentView; // @synthesize contentView;
 @property(nonatomic) double contentViewOffset; // @synthesize contentViewOffset;
 - (void)mouseExited:(id)arg1;

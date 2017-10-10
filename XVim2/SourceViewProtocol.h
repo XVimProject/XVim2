@@ -10,7 +10,9 @@
 #define SourceViewProtocol_h
 #import <AppKit/AppKit.h>
 #import <SourceEditor/_TtC12SourceEditor23SourceEditorUndoManager.h>
+
 @class XVimMotion;
+@class XVimCommandLine;
 
 @protocol XVimTextViewDelegateProtocol
 - (void)textView:(id)view didYank:(NSString*)yankedText withType:(TEXT_TYPE)type;
@@ -24,9 +26,10 @@
 - (id) performSelector:(SEL)aSelector withObject:(id)object;
 - (void) scrollPageForward:(NSUInteger)numPages;
 - (void) scrollPageBackward:(NSUInteger)numPages;
+- (void)showFindIndicatorForRange:(NSRange)arg1;
 
 // Properties
-@property (readonly) NSRange selectedRange;
+@property NSRange selectedRange;
 @property (readonly) NSString *string;
 @property (readonly) XVIM_VISUAL_MODE selectionMode;
 @property (readonly) SourceEditorUndoManager *undoManager;
@@ -37,11 +40,15 @@
 @property (readonly) NSArray<NSValue*> * selectedRanges;
 @property (readonly) NSTextStorage *textStorage;
 @property (readonly) XVimPosition insertionPosition;
+@property (readonly) NSUInteger selectionBegin;
 @property (readonly) XVimPosition selectionBeginPosition;
 @property (readonly) BOOL selectionToEOL;
 @property (readonly) NSUInteger insertionColumn;
 @property (readonly) NSUInteger insertionLine;
 @property (readonly) NSURL *documentURL;
+@property (readonly) XVimCommandLine * commandLine;
+@property (readonly) NSWindow *window;
+@property (readonly) NSView *view;
 @end
 
 
@@ -79,6 +86,9 @@
 - (void)xvim_scrollLineForward:(NSUInteger)count;
 - (void)xvim_scrollLineBackward:(NSUInteger)count;
 - (void)xvim_scrollTo:(NSUInteger)insertionPoint;
+- (void)xvim_scrollBottom:(NSUInteger)lineNumber firstNonblank:(BOOL)fnb;
+- (void)xvim_scrollCenter:(NSUInteger)lineNumber firstNonblank:(BOOL)fnb;
+- (void)xvim_scrollTop:(NSUInteger)lineNumber firstNonblank:(BOOL)fnb;
 @end
 
 // Mutate Operations

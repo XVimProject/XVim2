@@ -8,6 +8,8 @@
 #import "XVimWindow.h"
 #import "XVim.h"
 #import "XVimNormalEvaluator.h"
+#import "XVimCommandLine.h"
+#import "XVimOptions.h"
 #import "XVimKeyStroke.h"
 #import "XVimKeymap.h"
 #import "XVimEvaluator.h"
@@ -35,7 +37,7 @@
 @implementation XVimWindow
 @synthesize tmpBuffer = _tmpBuffer;
 
-- (instancetype)initWithEditorView:(id<SourceViewProtocol, SourceViewXVimProtocol, SourceViewOperationsProtocol>)editorArea
+- (instancetype)initWithEditorView:(id<SourceViewProtocol, SourceViewXVimProtocol, SourceViewScrollingProtocol, SourceViewOperationsProtocol>)editorArea
 {
         if (self = [super init]) {
                 _staticString = @"";
@@ -60,6 +62,7 @@
 {
         self.sourceView.cursorMode = CURSOR_MODE_COMMAND;
         [self.sourceView xvim_syncStateFromView];
+        self.sourceView.commandLine.needsDisplay = YES;
 }
 
 - (void)dumpEvaluatorStack:(NSMutableArray*)stack
@@ -132,7 +135,7 @@
         // On the other hand, Franch language uses input source to send character like "}". So they need the help of input source
         // to send command to Vim.
 
-        if ([XVIM.options[XVimPref_AlwaysUseInputSource] boolValue]
+        if (XVIM.options.alwaysuseinputsource
             || self.currentEvaluator.mode == XVIM_MODE_INSERT
             || self.currentEvaluator.mode == XVIM_MODE_CMDLINE) {
                 // We must pass the event to the current input method
@@ -173,7 +176,7 @@
                 }
         }
         else {
-                NSTimeInterval delay = [XVIMOPTION(@"timeoutmillisecs") integerValue] / 1000.0;
+                NSTimeInterval delay = [XVIM.options.timeoutlen integerValue] / 1000.0;
                 if (delay > 0) {
                         [self performSelector:@selector(handleTimeout) withObject:nil afterDelay:delay];
                 }
@@ -343,7 +346,7 @@
 
 - (void)statusMessage:(NSString*)message
 {
-        //[_commandLine errorMessage:message Timer:NO RedColorSetting:NO];
+        [self.commandLine errorMessage:message Timer:NO RedColorSetting:NO];
 }
 
 - (void)clearErrorMessage
@@ -441,7 +444,10 @@
         return [self.inputView characterIndexForPoint:aPoint];
 }
 
-
+-(XVimCommandLine *)commandLine
+{
+        return self.sourceView.commandLine;
+}
 
 - (XVimMark*)currentPositionMark
 {

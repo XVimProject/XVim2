@@ -9,6 +9,7 @@
 #import "SourceCodeEditorViewProxy.h"
 #import "SourceCodeEditorViewProxy+XVim.h"
 #import "XVimMotion.h"
+#import "XVimOptions.h"
 #import "NSTextStorage+VimOperation.h"
 #import "NSString+VimHelper.h"
 #import "IDEEditor.h"
@@ -26,7 +27,6 @@
 @property (readwrite) BOOL selectionToEOL;
 @property (strong) NSString* lastYankedText;
 @property TEXT_TYPE lastYankedType;
-@property NSRange selectedRange;
 @property BOOL xvim_lockSyncStateFromView;
 @end
 
@@ -73,7 +73,7 @@
                                 if (self.selectionMode == XVIM_VISUAL_BLOCK && self.selectionToEOL) {
                                         r.end = [self.textStorage xvim_endOfLine:r.end];
                                 }
-                                else if (XVIM.options[XVimPref_StartOfLine]) {
+                                else if (XVIM.options.startofline) {
                                         // only jump to nonblank line for last line or line number
                                         if (motion.motion == MOTION_LASTLINE || motion.motion == MOTION_LINENUMBER) {
                                                 r.end = [self.textStorage xvim_firstNonblankInLineAtIndex:r.end allowEOL:YES];

@@ -9,7 +9,7 @@
 #import "XVimCommandField.h"
 #import "XVimKeyStroke.h"
 #import "XVimWindow.h"
-//#import "XVimOptions.h"
+#import "XVimOptions.h"
 #import "XVim.h"
 #import "Logger.h"
 #import "NSAttributedString+Geometrics.h"
@@ -40,6 +40,10 @@
 }
 
 - (BOOL)becomeFirstResponder{
+        [self setTextColor:NSColor.labelColor];
+        [self setTypingAttributes:@{NSForegroundColorAttributeName: NSColor.labelColor,
+                                    NSFontAttributeName: [NSFont systemFontOfSize:[NSFont systemFontSizeForControlSize:NSControlSizeRegular ]]
+                                    }];
         [self setEditable:YES];
         [self setHidden:NO];
         [self invalidateIntrinsicContentSize];
@@ -75,7 +79,7 @@
 }
 
 - (void)drawInsertionPointInRect:(NSRect)rect color:(NSColor*)color turnedOn:(BOOL)flag{
-        if( [XVIM.options[XVimPref_BlinkCursor] boolValue] ){
+        if( XVIM.options.blinkcursor ){
                 if(!flag) {
                         // Clear caret
                         [self drawRect:[self visibleRect]];

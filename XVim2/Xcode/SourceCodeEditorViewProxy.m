@@ -7,6 +7,7 @@
 //
 
 #import "SourceCodeEditorViewProxy.h"
+#import "XVimCommandLine.h"
 #import "NSTextStorage+VimOperation.h"
 #import "NSString+VimHelper.h"
 #import "XVim.h"
@@ -15,7 +16,6 @@
 #import <SourceEditor/_TtC12SourceEditor23SourceEditorUndoManager.h>
 #import "XVimMotion.h"
 #import "rd_route.h"
-#import "ffi.h"
 
 static void (*fpSetCursorStyle)(int style, id obj);
 static void (*fpGetCursorStyle)(int style, id obj);
@@ -34,7 +34,6 @@ static void (*fpGetUndoManager)(void);
 @property (readwrite) BOOL selectionToEOL;
 @property (strong) NSString* lastYankedText;
 @property TEXT_TYPE lastYankedType;
-@property NSRange selectedRange;
 @property BOOL xvim_lockSyncStateFromView;
 @end
 
@@ -42,6 +41,7 @@ static void (*fpGetUndoManager)(void);
 
 @implementation SourceCodeEditorViewProxy {
         NSMutableArray<NSValue*>* _foundRanges;
+        XVimCommandLine * _commandLine;
 }
 
 + (void)initialize
@@ -59,7 +59,7 @@ static void (*fpGetUndoManager)(void);
         }
 }
 
-- (instancetype)initWithSourceCodeEditorView:(SourceCodeEditorView*)sourceCodeEditorView
+- (instancetype)initWithSourceCodeEditorView:(SourceCodeEditorView*)sourceCodeEditorView 
 {
         self = [super init];
         if (self) {
@@ -523,6 +523,11 @@ static void (*fpGetUndoManager)(void);
 - (void)paste:(id)sender { [self.sourceCodeEditorView paste:self]; }
 - (void)cut:(id)sender { [self.sourceCodeEditorView cut:self]; }
 - (void)copy:(id)sender { [self.sourceCodeEditorView copy:self]; }
+- (void)showFindIndicatorForRange:(NSRange)arg1
+{
+        [self.sourceCodeEditorView showFindIndicatorForRange:arg1];
+        
+}
 
 - (NSUInteger)characterIndexForInsertionAtPoint:(CGPoint)arg1{
         return [self.sourceCodeEditorView characterIndexForInsertionAtPoint:arg1];
@@ -531,4 +536,31 @@ static void (*fpGetUndoManager)(void);
 -(NSRect)bounds { return self.sourceCodeEditorView.bounds; }
 -(NSRect)frame { return self.sourceCodeEditorView.frame; }
 -(NSSize)contentSize { return self.sourceCodeEditorView.visibleTextRect.size; }
+
+-(XVimCommandLine*)commandLine {
+        
+        if( nil == _commandLine ){
+                _commandLine = [[XVimCommandLine alloc] init];
+
+                NSView * layoutView = [[[[[self.sourceCodeEditorView scrollView] superview] superview] superview] superview];
+                [layoutView addSubview:_commandLine];
+                
+                [layoutView.bottomAnchor constraintEqualToAnchor:_commandLine.bottomAnchor].active = YES;
+                [layoutView.widthAnchor constraintEqualToAnchor:_commandLine.widthAnchor multiplier:1.0].active = YES;
+                [layoutView.leftAnchor constraintEqualToAnchor:_commandLine.leftAnchor].active = YES;
+                [layoutView.rightAnchor constraintEqualToAnchor:_commandLine.rightAnchor].active = YES;
+                _auto height = [_commandLine.heightAnchor constraintEqualToConstant:20];
+                height.priority = 250;
+                height.active = YES;
+        }
+        return _commandLine;
+}
+
+-(NSWindow *)window {
+        return self.sourceCodeEditorView.window;
+}
+
+-(NSView*)view {
+        return self.sourceCodeEditorView;
+}
 @end

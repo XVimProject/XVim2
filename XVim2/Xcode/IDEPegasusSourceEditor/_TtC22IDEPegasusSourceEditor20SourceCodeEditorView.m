@@ -26,7 +26,7 @@ CONST_STR(EDWindow);
 + (void)xvim_hook{
     [self xvim_swizzleInstanceMethod:@selector(keyDown:) with:@selector(xvim_keyDown:)];
     [self xvim_swizzleInstanceMethod:@selector(viewWillMoveToWindow:) with:@selector(xvim_viewWillMoveToWindow:)];
-        [self xvim_swizzleInstanceMethod:@selector(selectionWillChange) with:@selector(xvim_selectionWillChange)];
+    [self xvim_swizzleInstanceMethod:@selector(selectionWillChange) with:@selector(xvim_selectionWillChange)];
 }
 
 -(XVimWindow*)xvim_window {

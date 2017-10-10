@@ -23,6 +23,8 @@ typedef NS_OPTIONS(unsigned, SelectionModifiers) {
         , SelectionModifierDiscontiguous = 1 << 2
 };
 
+@class XVimCommandLine;
+
 // SourceEditorView.selection returns a SourceEditor.SourceEditorSelection?
 // SourceEditorSelection is an internal class
 
@@ -45,7 +47,8 @@ typedef NS_OPTIONS(unsigned, SelectionModifiers) {
 @property(readonly) NSArray* foundRanges;
 @property(readonly) NSInteger currentLineNumber;
 @property(strong) id<XVimTextViewDelegateProtocol> xvimDelegate;
-
+@property(readonly) XVimCommandLine *commandLine;
+@property(readonly) NSWindow *window;
 -(instancetype)initWithSourceCodeEditorView:(SourceCodeEditorView*)sourceEditorView;
 
 // Proxy methods
@@ -186,6 +189,7 @@ typedef NS_OPTIONS(unsigned, SelectionModifiers) {
 - (void)paste:(id)sender;
 - (void)cut:(id)sender;
 - (void)copy:(id)sender;
+- (void)showFindIndicatorForRange:(NSRange)arg1;
 
 -(NSRect)bounds;
 -(NSRect)frame;

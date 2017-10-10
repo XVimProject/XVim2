@@ -16,3 +16,4 @@ PREF_DECL(ClipboardHasUnnamed);
 PREF_DECL(BlinkCursor);
 PREF_DECL(ExpandTab);
 PREF_DECL(Timeout);
+PREF_DECL(ErrorBells);

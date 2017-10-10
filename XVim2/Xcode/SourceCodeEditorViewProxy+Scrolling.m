@@ -14,7 +14,6 @@
 @property(readwrite) NSUInteger insertionPoint;
 @property(readwrite) NSUInteger preservedColumn;
 @property(readwrite) BOOL selectionToEOL;
-@property NSRange selectedRange;
 @property BOOL xvim_lockSyncStateFromView;
 - (void)xvim_moveCursor:(NSUInteger)pos preserveColumn:(BOOL)preserve;
 - (void)xvim_syncState;

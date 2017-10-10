@@ -31,7 +31,7 @@ extern NSString* const XVimDocumentPathKey;
 @interface XVim : NSObject <XVimKeymapProvider>
 
 + (XVim*)instance;
-@property (strong) NSDictionary* options;
+@property (strong) XVimOptions * options;
 @property (strong) XVimSearch* searcher;
 @property (strong) XVimMotion* lastCharacterSearchMotion;
 @property (strong) XVimExCommand* excmd;
@@ -86,6 +86,14 @@ extern NSString* const XVimDocumentPathKey;
 - (void)cancelOperationCommands;
 - (void)startRepeat;
 - (void)endRepeat;
+- (void)ringBell;
+/**
+ * Write string to debuger console.
+ * It automatically inserts newline end of the string.
+ * Do not use this for debugging XVim.
+ * This is for XVim feature. Use TRACE_LOG or DEBUG_LOG to debug and Xcode as a debugger.
+ **/
+- (void)writeToConsole:(NSString*)fmt, ...;
 
 @end
 
@@ -95,7 +103,4 @@ NS_INLINE XVim* SharedXVim(void)
 }
 #define XVIM (SharedXVim())
 
-NS_INLINE id XVIMOPTION(NSString* opt)
-{
-        return [XVim instance].options[opt];
-}
+
