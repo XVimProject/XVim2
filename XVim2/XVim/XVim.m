@@ -28,7 +28,6 @@
 #import "XVimKeymap.h"
 #import "XVimMarks.h"
 #import "XVimOptions.h"
-#import "XVimPreferences.h"
 #import "XVimRegister.h"
 #import "XVimSearch.h"
 #import "_TtC12SourceEditor23SourceEditorContentView.h"

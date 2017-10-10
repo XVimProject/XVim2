@@ -7,7 +7,6 @@
 //
 
 #import "XVimKeymapProvider.h"
-#import "XVimPreferences.h"
 #import <Foundation/Foundation.h>
 
 @class XVimKeymap;
