@@ -4,13 +4,13 @@
 
   XVim2 (or 'XVim for Xcode 9 and above') is a Vim plugin for Xcode. The plugin intends to offer a compelling Vim experience without the need to give up any Xcode features.
   
-  - Xcode 9 Users, See [INSTALL_Xcode8.md](INSTALL_Xcode8.md)
+  - Xcode 9 Users, See [INSTALL_Xcode.md](INSTALL_Xcode.md)
   - Xcode 8 or below, you should use [XVim](https://github.com/XVimProject/XVim)
   - [Google Group for XVim developers](https://groups.google.com/d/forum/xvim-developers) has been created.
 
 ## INSTALL
 
-  Xcode 9 Users, Follow instructions in [INSTALL_Xcode8.md](INSTALL_Xcode8.md) first.
+  Xcode 9 Users, Follow instructions in [INSTALL_Xcode.md](INSTALL_Xcode.md) first.
   
   Download source code or clone the repo. Then,
   
