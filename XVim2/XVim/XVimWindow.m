@@ -63,6 +63,7 @@
         self.sourceView.cursorMode = CURSOR_MODE_COMMAND;
         [self.sourceView xvim_syncStateFromView];
         self.sourceView.commandLine.needsDisplay = YES;
+        [XVIM registerWindow:self];
 }
 
 - (void)dumpEvaluatorStack:(NSMutableArray*)stack
@@ -337,9 +338,9 @@
 
 - (void)errorMessage:(NSString*)message ringBell:(BOOL)ringBell
 {
-        //[_commandLine errorMessage:message Timer:YES RedColorSetting:YES];
+        [self.commandLine errorMessage:message Timer:YES RedColorSetting:YES];
         if (ringBell) {
-                //[[XVim instance] ringBell];
+                [XVIM ringBell];
         }
         return;
 }
@@ -351,13 +352,12 @@
 
 - (void)clearErrorMessage
 {
-        //[_commandLine errorMessage:@"" Timer:NO RedColorSetting:YES];
+        [self.commandLine errorMessage:@"" Timer:NO RedColorSetting:YES];
 }
-
 
 - (void)setForcusBackToSourceView
 {
-        //[[self currentWorkspaceWindow] makeFirstResponder:self.sourceView];
+        [self.sourceView.window makeFirstResponder:self.sourceView.view];
 }
 
 

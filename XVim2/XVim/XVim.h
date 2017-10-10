@@ -23,6 +23,7 @@
 @class XVimMotion;
 @class XVimRegisterManager;
 @class XVimTester;
+@class XVimWindow;
 
 
 extern NSString* const XVimDocumentChangedNotification;
@@ -94,6 +95,7 @@ extern NSString* const XVimDocumentPathKey;
  * This is for XVim feature. Use TRACE_LOG or DEBUG_LOG to debug and Xcode as a debugger.
  **/
 - (void)writeToConsole:(NSString*)fmt, ...;
+- (void)registerWindow:(XVimWindow*)win;
 
 @end
 

@@ -43,6 +43,20 @@
 @implementation XVim
 
 
++ (NSString*)xvimrc{
+        NSString *homeDir = NSHomeDirectoryForUser(NSUserName());
+        NSString *keymapPath = [homeDir stringByAppendingString: @"/.xvimrc"];
+        return [[NSString alloc] initWithContentsOfFile:keymapPath encoding:NSUTF8StringEncoding error:NULL];
+}
+
+- (void)parseRcFile {
+        NSString* rc = [XVim xvimrc];
+        for (NSString *string in [rc componentsSeparatedByString:@"\n"])
+        {
+                [self.excmd executeCommand:[@":" stringByAppendingString:string] inWindow:nil];
+        }
+}
+
 // For reverse engineering purpose.
 + (void)receiveNotification:(NSNotification*)notification
 {
@@ -72,10 +86,12 @@
         static XVim* __instance = nil;
         static dispatch_once_t __once;
 
-        dispatch_once(&__once, ^{
-          // Allocate singleton instance
-          __instance = [[XVim alloc] init];
-        });
+        if (__instance == nil) {
+                dispatch_once(&__once, ^{
+                        __instance = [[XVim alloc] init];
+                        [__instance instanceSetup];
+                });
+        }
         return __instance;
 }
 
@@ -106,8 +122,14 @@
                 for (int i = 0; i < XVIM_MODE_COUNT; ++i) {
                         _keymaps[i] = [[XVimKeymap alloc] init];
                 }
+                
         }
         return self;
+}
+
+-(void)instanceSetup
+{
+        [self parseRcFile];
 }
 
 - (void)dealloc
@@ -154,6 +176,11 @@
                 NSBeep();
         }
         return;
+}
+
+-(void)registerWindow:(XVimWindow *)win
+{
+        // DOES NOTHING, but ensures XVim Instance gets accessed
 }
 
 - (void)writeToConsole:(NSString*)fmt, ...{

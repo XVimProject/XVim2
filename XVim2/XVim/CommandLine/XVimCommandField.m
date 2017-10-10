@@ -42,7 +42,7 @@
 - (BOOL)becomeFirstResponder{
         [self setTextColor:NSColor.labelColor];
         [self setTypingAttributes:@{NSForegroundColorAttributeName: NSColor.labelColor,
-                                    NSFontAttributeName: [NSFont systemFontOfSize:[NSFont systemFontSizeForControlSize:NSControlSizeRegular ]]
+                                    NSFontAttributeName: [NSFont userFixedPitchFontOfSize:[NSFont systemFontSizeForControlSize:NSControlSizeSmall ]]
                                     }];
         [self setEditable:YES];
         [self setHidden:NO];
