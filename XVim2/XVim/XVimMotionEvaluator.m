@@ -14,7 +14,9 @@
 #import "XVimMarks.h"
 #import "XVimMark.h"
 #import "XVimArgumentEvaluator.h"
+#import "XVimCommandLineEvaluator.h"
 #import "SourceViewProtocol.h"
+#import "NSString+VimHelper.h"
 #import "NSTextStorage+VimOperation.h"
 
 
@@ -360,6 +362,19 @@
 }
 
 
+// SEARCH
+#pragma mark - SEARCH
+
+- (XVimEvaluator*)ASTERISK{
+        return [self searchCurrentWordForward:YES];
+}
+
+- (XVimEvaluator*)NUMBER{
+        return [self searchCurrentWordForward:NO];
+}
+
+
+
 // MARKS
 #pragma mark - MARKS
 
@@ -433,41 +448,6 @@
     [self.argumentString appendString:@"z"];
     return [[XVimZEvaluator alloc] initWithWindow:self.window];
 }
-
-- (XVimEvaluator*)searchCurrentWordForward:(BOOL)forward {
-    XVimCommandLineEvaluator* eval = [self searchEvaluatorForward:forward];
-    NSRange r = [self.sourceView xvim_currentWord:MOTION_OPTION_NONE];
-    if( r.location == NSNotFound ){
-        return nil;
-    }
-    
-    NSString* word = [self.sourceView.string substringWithRange:r];
-    NSString* searchWord = [NSRegularExpression escapedPatternForString:word];
-    searchWord = [NSString stringWithFormat:@"%@%@%@", @"\\b", searchWord, @"\\b"];
-    [eval appendString:searchWord];
-    [eval execute];
-    XVimMotion* motion = eval.evalutionResult;
-    if( !forward ){
-        // NB when searching backward (`QUESTION`) while in the middle of the
-        // searched word, the first match is the word at the cursor. Therefore,
-        // search backwards an extra time if not at the beginning of a word.
-        NSUInteger index = self.sourceView.insertionPoint;
-        if( isKeyword([self.sourceView.xvim_string characterAtIndex:(index - 1)]) ){
-            ++motion.count;
-        }
-    }
-    [self _motionFixed:motion];
-    return nil;
-}
-
-- (XVimEvaluator*)ASTERISK{
-    return [self searchCurrentWordForward:YES];
-}
-
-- (XVimEvaluator*)NUMBER{
-	return [self searchCurrentWordForward:NO];
-}
-
 
 
 - (XVimEvaluator*)BACKQUOTE{
@@ -708,4 +688,31 @@
     return [self DOLLAR];
 }
 #endif
+
+- (XVimEvaluator*)searchCurrentWordForward:(BOOL)forward {
+        XVimCommandLineEvaluator* eval = [self searchEvaluatorForward:forward];
+        NSRange r = [self.sourceView xvim_currentWord:MOTION_OPTION_NONE];
+        if( r.location == NSNotFound ){
+                return nil;
+        }
+        
+        NSString* word = [self.sourceView.string substringWithRange:r];
+        NSString* searchWord = [NSRegularExpression escapedPatternForString:word];
+        searchWord = [NSString stringWithFormat:@"%@%@%@", @"\\b", searchWord, @"\\b"];
+        [eval appendString:searchWord];
+        [eval execute];
+        XVimMotion* motion = eval.evalutionResult;
+        if( !forward ){
+                // NB when searching backward (`QUESTION`) while in the middle of the
+                // searched word, the first match is the word at the cursor. Therefore,
+                // search backwards an extra time if not at the beginning of a word.
+                NSUInteger index = self.sourceView.insertionPoint;
+                if( isKeyword([self.sourceView xvim_characterAtIndex:(index - 1)]) ){
+                        ++motion.count;
+                }
+        }
+        [self _motionFixed:motion];
+        return nil;
+}
+
 @end

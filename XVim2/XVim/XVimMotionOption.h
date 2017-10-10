@@ -6,7 +6,7 @@
 //  Copyright (c) 2012 __MyCompanyName__. All rights reserved.
 //
 
-typedef enum {
+typedef NS_OPTIONS(NSUInteger, MOTION_OPTION) {
         MOTION_OPTION_NONE = 0x00,
         LEFT_RIGHT_WRAP = 0x01,
         LEFT_RIGHT_NOWRAP = 0x02,
@@ -21,4 +21,4 @@ typedef enum {
         MOPT_PLACEHOLDER = 0x400,
         /* Custom for Dervish Software */
         EXTEND_SELECTION = 0x800,
-} MOTION_OPTION;
+};

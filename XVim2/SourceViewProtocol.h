@@ -10,6 +10,7 @@
 #define SourceViewProtocol_h
 #import <AppKit/AppKit.h>
 #import <SourceEditor/_TtC12SourceEditor23SourceEditorUndoManager.h>
+#import "XVimMotionOption.h"
 
 @class XVimMotion;
 @class XVimCommandLine;
@@ -68,7 +69,12 @@
 -(NSUInteger) numberOfSelectedLines;
 - (NSArray*)xvim_selectedRanges;
 - (void)xvim_setSelectedRange:(NSRange)range;
+- (NSRange)xvim_currentWord:(MOTION_OPTION)opt;
 - (void)xvim_changeSelectionMode:(XVIM_VISUAL_MODE)mode;
+-(unichar)xvim_characterAtIndex:(NSInteger)idx;
+- (NSUInteger)xvim_lineNumberFromBottom:(NSUInteger)count;
+- (NSUInteger)xvim_lineNumberAtMiddle;
+- (NSUInteger)xvim_lineNumberFromTop:(NSUInteger)count;
 @end
 
 

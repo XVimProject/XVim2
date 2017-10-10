@@ -199,6 +199,9 @@
         // LOG_STATE();
 }
 
+// SELECTION
+# pragma mark - SELECTION
+
 // xvim_setSelectedRange is an internal method
 // This is used when you want to call [self setSelectedRrange];
 // The difference is that this checks the bounds(range can not be include EOF) and protect from Assersion
@@ -356,6 +359,9 @@
 }
 
 
+// Text Range Queries
+#pragma MARK - TEXT RANGE QUERIES
+
 - (XVimRange)xvim_getMotionRange:(NSUInteger)current Motion:(XVimMotion*)motion
 {
         NSRange range = NSMakeRange(NSNotFound, 0);
@@ -486,31 +492,26 @@
                         end = [self.textStorage xvim_indexOfLineNumber:[self.textStorage xvim_numberOfLines] column:self.preservedColumn];
                         break;
                 case MOTION_HOME:
-                        //TODO
-                        //end = [self.textStorage xvim_firstNonblankInLineAtIndex:[self.textStorage xvim_indexOfLineNumber:[self xvim_lineNumberFromTop:motion.count]] allowEOL:YES];
+                        end = [self.textStorage xvim_firstNonblankInLineAtIndex:[self.textStorage xvim_indexOfLineNumber:[self xvim_lineNumberFromTop:motion.count]] allowEOL:YES];
                         break;
                 case MOTION_MIDDLE:
-                        //TODO
-                        //end = [self.textStorage xvim_firstNonblankInLineAtIndex:[self.textStorage xvim_indexOfLineNumber:[self xvim_lineNumberAtMiddle]] allowEOL:YES];
+                        end = [self.textStorage xvim_firstNonblankInLineAtIndex:[self.textStorage xvim_indexOfLineNumber:[self xvim_lineNumberAtMiddle]] allowEOL:YES];
                         break;
                 case MOTION_BOTTOM:
-                        //TODO
-                        //end = [self.textStorage xvim_firstNonblankInLineAtIndex:[self.textStorage xvim_indexOfLineNumber:[self xvim_lineNumberFromBottom:motion.count]] allowEOL:YES];
+                        end = [self.textStorage xvim_firstNonblankInLineAtIndex:[self.textStorage xvim_indexOfLineNumber:[self xvim_lineNumberFromBottom:motion.count]] allowEOL:YES];
                         break;
                 case MOTION_SEARCH_FORWARD:
                         end = [self.textStorage searchRegexForward:motion.regex from:self.insertionPoint count:motion.count option:motion.option].location;
                         if (end == NSNotFound && !(motion.option & SEARCH_WRAP)) {
-                                //TODO
-                                //NSRange range = [self xvim_currentWord:MOTION_OPTION_NONE];
-                                //end = range.location;
+                                NSRange range = [self xvim_currentWord:MOTION_OPTION_NONE];
+                                end = range.location;
                         }
                         break;
                 case MOTION_SEARCH_BACKWARD:
                         end = [self.textStorage searchRegexBackward:motion.regex from:self.insertionPoint count:motion.count option:motion.option].location;
                         if (end == NSNotFound && !(motion.option & SEARCH_WRAP)) {
-                                //TODO
-                                // NSRange range = [self xvim_currentWord:MOTION_OPTION_NONE];
-                                //end = range.location;
+                                NSRange range = [self xvim_currentWord:MOTION_OPTION_NONE];
+                                end = range.location;
                         }
                         break;
                 case TEXTOBJECT_WORD:
@@ -649,6 +650,15 @@
         [self xvim_syncState];
 }
 
+- (NSRange)xvim_currentWord:(MOTION_OPTION)opt
+{
+        return [self.textStorage currentWord:self.insertionPoint count:1 option:opt|TEXTOBJECT_INNER];
+}
+
+
+
+// UTILITY
+#pragma MARK - UTILITY
 
 - (void)_xvim_insertSpaces:(NSUInteger)count replacementRange:(NSRange)replacementRange
 {
@@ -657,6 +667,48 @@
         }
 }
 
+-(unichar)xvim_characterAtIndex:(NSInteger)idx
+{
+        if (self.string.length == 0) return 0;
+        clamp(idx, 0, self.string.length-1);
+        return [self.string characterAtIndex:idx];
+}
+
+- (NSUInteger)xvim_lineNumberFromBottom:(NSUInteger)count
+{
+    NSAssert( 0 != count , @"count starts from 1" );
+        NSPoint bottomPoint = NSMakePoint(0.0, self.contentSize.height);
+        NSInteger bottomLine =
+        [self lineRangeForCharacterRange:
+         NSMakeRange([self characterIndexForInsertionAtPoint:bottomPoint], 0)].location;
+        clamp(bottomLine, 0, self.lineCount-1);
+        if (count > 1) {
+                bottomLine -= (count-1);
+                clamp(bottomLine, 0, self.lineCount-1);
+        }
+        return bottomLine+1;
+}
+
+- (NSUInteger)xvim_lineNumberAtMiddle
+{
+        _auto topLine = [self xvim_lineNumberFromTop:1];
+        _auto bottomLine = [self xvim_lineNumberFromBottom:1];
+        return (topLine + bottomLine) / 2;
+}
+
+- (NSUInteger)xvim_lineNumberFromTop:(NSUInteger)count
+{
+    NSAssert( 0 != count , @"count starts from 1" );
+        NSInteger topLine =
+                [self lineRangeForCharacterRange:
+                         NSMakeRange([self characterIndexForInsertionAtPoint:NSZeroPoint], 0)].location;
+        clamp(topLine, 0, self.lineCount-1);
+        if (count > 1) {
+                topLine += (count-1);
+                clamp(topLine, 0, self.lineCount-1);
+        }
+        return topLine+1;
+}
 
 - (void)xvim_blockInsertFixupWithText:(NSString*)text mode:(XVimInsertionPoint)mode
                                 count:(NSUInteger)count

@@ -8,6 +8,7 @@
 
 #import <Foundation/Foundation.h>
 #import "SourceCodeEditorViewProxy.h"
+#import "XVimMotionOption.h"
 
 @interface SourceCodeEditorViewProxy (XVim) <SourceViewXVimProtocol>
 @end

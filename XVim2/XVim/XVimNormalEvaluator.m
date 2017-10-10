@@ -37,10 +37,10 @@
 #import "XVimSearch.h"
 #import "XVimOptions.h"
 #import "XVimReplacePromptEvaluator.h"
-
-#if 0
 #import "XVimEqualEvaluator.h"
 #import "XVimRegisterEvaluator.h"
+
+#if 0
 #import "XVimKeyStroke.h"
 #import "XVimRecordingEvaluator.h"
 #endif
@@ -375,8 +375,8 @@
 }
 
 
-// SHIFT
-#pragma mark - SHIFT
+// SHIFT / INDENT
+#pragma mark - SHIFT / INDENT
 
 - (XVimEvaluator*)GREATERTHAN
 {
@@ -391,6 +391,12 @@
         XVimShiftEvaluator* eval = [[XVimShiftEvaluator alloc] initWithWindow:self.window unshift:YES];
         return eval;
 }
+
+- (XVimEvaluator*)EQUAL{
+        [self.argumentString appendString:@"="];
+        return [[XVimEqualEvaluator alloc] initWithWindow:self.window];
+}
+
 
 
 // VISUAL
@@ -431,6 +437,24 @@
         [self.argumentString appendString:@"m"];
         return [[XVimMarkSetEvaluator alloc] initWithWindow:self.window];
 }
+
+- (XVimEvaluator*)C_o{
+        BOOL needUpdateMark;
+        XVimMark* mark = [[XVim instance].marks decrementJumpMark:&needUpdateMark];
+        if( mark != nil ){
+                [self jumpToMark:mark firstOfLine:NO KeepJumpMarkIndex:YES NeedUpdateMark:needUpdateMark];
+        }
+        return nil;
+}
+
+- (XVimEvaluator*)C_i{
+        XVimMark* mark = [[XVim instance].marks incrementJumpMark];
+        if( mark != nil ){
+                [self jumpToMark:mark firstOfLine:NO KeepJumpMarkIndex:YES NeedUpdateMark:NO];
+        }
+        return nil;
+}
+
 
 
 
@@ -482,23 +506,6 @@
 // Should be moved to XVimMotionEvaluator
 
 
-- (XVimEvaluator*)C_o{
-    BOOL needUpdateMark;
-    XVimMark* mark = [[XVim instance].marks decrementJumpMark:&needUpdateMark];
-    if( mark != nil ){
-        [self jumpToMark:mark firstOfLine:NO KeepJumpMarkIndex:YES NeedUpdateMark:needUpdateMark];
-    }
-    return nil;
-}
-
-- (XVimEvaluator*)C_i{
-    XVimMark* mark = [[XVim instance].marks incrementJumpMark];
-    if( mark != nil ){
-        [self jumpToMark:mark firstOfLine:NO KeepJumpMarkIndex:YES NeedUpdateMark:NO];
-    }
-    return nil;
-}
-
 - (XVimEvaluator*)q{
     if( [XVim instance].isExecuting ){
         return nil;
@@ -527,7 +534,6 @@
     [NSApp sendAction:@selector(goBackInHistoryByCommand:) to:nil from:self];
     return nil;
 }
-
 
 
 
@@ -593,51 +599,9 @@
     }
 }
 
-- (XVimEvaluator*)EQUAL{
-    [self.argumentString appendString:@"="];
-    return [[XVimEqualEvaluator alloc] initWithWindow:self.window];
-}
-
-- (XVimEvaluator*)GREATERTHAN{
-    [self.argumentString appendString:@">"];
-    XVimShiftEvaluator* eval =  [[XVimShiftEvaluator alloc] initWithWindow:self.window unshift:NO];
-    return eval;
-}
-
-- (XVimEvaluator*)LESSTHAN{
-    [self.argumentString appendString:@"<"];
-    XVimShiftEvaluator* eval =  [[XVimShiftEvaluator alloc] initWithWindow:self.window unshift:YES];
-    return eval;
-}
-
 - (XVimEvaluator*)HT{
     [[self sourceView] xvim_selectNextPlaceholder];
     return nil;
-}
-
-- (XVimEvaluator*)COLON{
-	__block XVimEvaluator *eval = [[XVimCommandLineEvaluator alloc] initWithWindow:self.window
-                                                                firstLetter:@":"
-                                                                    history:[[XVim instance] exCommandHistory]
-                                                                 completion:^ XVimEvaluator* (NSString* command, id* result)
-                           {
-                               XVimExCommand *excmd = [[XVim instance] excmd];
-                               NSString *commandExecuted = [excmd executeCommand:command inWindow:self.window];
-
-                               if ([commandExecuted isEqualToString:@"substitute"]) {
-                                  	XVimSearch *searcher = [[XVim instance] searcher];
-                                   if (searcher.confirmEach && searcher.lastFoundRange.location != NSNotFound) {
-                                       [eval didEndHandler];
-                                       //[[self sourceView] xvim_changeSelectionMode:XVIM_VISUAL_NONE];
-                                       return [[XVimReplacePromptEvaluator alloc] initWithWindow:self.window
-                                                                               replacementString:searcher.lastReplacementString];
-                                   }
-                               }
-                               return nil;
-                           }
-                                                                 onKeyPress:nil];
-	
-	return eval;
 }
 
 
