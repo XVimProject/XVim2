@@ -215,7 +215,15 @@ static void (*fpGetUndoManager)(void);
 
 - (void)setSelectedRange:(NSRange)range { self.sourceCodeEditorView.selectedTextRange = range; }
 
-- (NSRange)selectedRange { return self.sourceCodeEditorView.selectedTextRange; }
+- (NSRange)selectedRange {
+    NSRange rng = self.sourceCodeEditorView.selectedTextRange;
+    
+    // TODO: Work out why Xcode can return 'NSNotFound' for location
+    if (rng.location == NSNotFound) {
+        rng = NSMakeRange(0, 0);
+    }
+    return rng;
+}
 
 - (nullable NSAttributedString*)attributedSubstringForProposedRange:(NSRange)range
                                                         actualRange:(nullable NSRangePointer)actualRange

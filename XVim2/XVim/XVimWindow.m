@@ -239,7 +239,19 @@
         keyStroke.event = self.tmpBuffer;
         self.tmpBuffer = nil;
     }
-    XVimEvaluator* nextEvaluator = [currentEvaluator eval:keyStroke];
+    
+    // Evaluate
+    XVimEvaluator* nextEvaluator = nil;
+    @try {
+        nextEvaluator = [currentEvaluator eval:keyStroke];
+    }
+    @catch (NSException *ex)
+    {
+        ERROR_LOG(@"Exception caught while evaluating. Current evaluator = %@. Exception = %@", currentEvaluator, ex);
+        [XVIM ringBell];
+        [self _resetEvaluatorStack:_currentEvaluatorStack activateNormalHandler:YES];
+        return;
+    }
 
     // Manipulate evaluator stack
     while (YES) {
@@ -446,3 +458,4 @@
 }
 
 @end
+
