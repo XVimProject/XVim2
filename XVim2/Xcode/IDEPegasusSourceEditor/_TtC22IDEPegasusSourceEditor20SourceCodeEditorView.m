@@ -18,6 +18,12 @@
 #import <QuartzCore/QuartzCore.h>
 #import <SourceEditor/SourceEditorScrollView.h>
 
+#import "NSObject+ExtraData.h"
+#import "IDEEditorArea.h"
+#import "IDEEditorContext.h"
+#import "IDEEditorDocument.h"
+#import "XVimTaskRunner.h"
+#import "StringUtil.h"
 
 CONST_STR(EDLastEvent);
 CONST_STR(EDMode);
@@ -64,6 +70,22 @@ CONST_STR(EDWindow);
 
 - (void)xvim_keyDown:(NSEvent*)event
 {
+    // <TODO>temporary code until bang implementation
+    if (([event modifierFlags] & NSEventModifierFlagControl /* NSControlKeyMask*/) && event.keyCode == 16 /* y */)
+    {
+         // Ctrl-y
+         NSURL* documentURL = self.xvim_window.sourceView.documentURL;
+         NSString* filepath = documentURL.path;
+         if (filepath != nil){
+             NSUInteger pos = self.xvim_window.sourceView.insertionPoint;
+             NSUInteger linenumber = [StringUtil lineWithPath:filepath pos:pos];
+             // use `brew install macvim`
+             NSString* str = [NSString stringWithFormat:@"/usr/local/bin/mvim +%ld %@", linenumber, filepath];
+             [XVimTaskRunner runScript:str];
+        }
+    }
+    // </TODO>
+
     if (![self.xvim_window handleKeyEvent:event])
         [self xvim_keyDown:event];
 }
