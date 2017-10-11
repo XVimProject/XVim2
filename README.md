@@ -43,7 +43,7 @@
    ```
    defaults delete  com.apple.dt.Xcode DVTPlugInManagerNonApplePlugIns-Xcode-X.X     (X.X is your Xcode version)
    ```
-Then relaunch Xcode.
+   Then relaunch Xcode.
     
 ## Branches and Releases
  XVim has several branches and releases. Usually you only need to download one of 'releases' and use it.
