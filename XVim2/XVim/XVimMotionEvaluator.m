@@ -390,7 +390,7 @@ if( childEvaluator.keyStroke.toString.length != 1 ){
     }
 
     BOOL jumpToAnotherFile = NO;
-    if (![mark.document isEqualToString:self.sourceView.documentURL.path]) {
+    if (mark.document && ![mark.document isEqualToString:self.sourceView.documentURL.path]) {
         jumpToAnotherFile = YES;
         XVimOpenDocumentAtPath(mark.document);
     }
@@ -473,14 +473,13 @@ if( childEvaluator.keyStroke.toString.length != 1 ){
                                                [self numericArg])];
 }
 
-#ifdef TODO
 // Underscore ( "_") moves the cursor to the start of the line (past leading whitespace)
 // Note: underscore without any numeric arguments behaves like caret but with a numeric argument greater than 1
 // it will moves to start of the numeric argument - 1 lines down.
 - (XVimEvaluator*)UNDERSCORE
 {
     // TODO add this motion interface to NSTextView
-    NSTextView* view = [self.window sourceView];
+    _auto view = [self.window sourceView];
     NSRange r = [view selectedRange];
     NSUInteger repeat = self.numericArg;
     NSUInteger linesUpCursorloc =
@@ -496,7 +495,6 @@ if( childEvaluator.keyStroke.toString.length != 1 ){
     m.position = head;
     return [self _motionFixed:m];
 }
-#endif
 
 - (XVimEvaluator*)PERCENT
 {

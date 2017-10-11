@@ -330,3 +330,5 @@ typedef _TtC12SourceEditor16SourceEditorView SourceEditorView;
 @interface _TtC12SourceEditor16SourceEditorView(XVim)
 -(void)xvim_keyDown:(NSEvent*)event;
 @end
+
+static NSString * const SourceEditorViewClassName = @"SourceEditor.SourceEditorView";

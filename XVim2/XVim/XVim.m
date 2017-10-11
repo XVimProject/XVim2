@@ -76,11 +76,30 @@
     if (![identifier isEqualToString:@"com.apple.dt.Xcode"]) {
         return;
     }
-
+    NSMutableSet<NSString*> *requiredClasses = [[NSMutableSet alloc] initWithArray: @[IDEPegasusSourceCodeEditorClassName
+                                                                                      , SourceEditorViewClassName]];
+    
     // Entry Point of the Plugin.
     [Logger defaultLogger].level = LogTrace;
+    __weak Class weakXvim = self;
+    [NSNotificationCenter.defaultCenter addObserverForName:NSBundleDidLoadNotification
+                                                    object:nil
+                                                     queue:nil
+                                                usingBlock:^(NSNotification * _Nonnull note) {
+                                                    Class XVimClass = weakXvim;
+                                                    NSArray<NSString*> * classes = [note.userInfo objectForKey:NSLoadedClasses];
+                                                    if (classes && requiredClasses.count > 0) {
+                                                        [requiredClasses minusSet:[NSSet setWithArray:classes]];
+                                                        if (requiredClasses.count == 0) {
+                                                            [XVimClass hookClasses];
+                                                        }
+                                                    }
+                                                }];
+}
 
-    [_TtC22IDEPegasusSourceEditor20SourceCodeEditorView xvim_hook];
++(void)hookClasses
+{
+    [XVimIDEPegasusSourceEditorView xvim_hook];
 }
 
 + (XVim*)instance

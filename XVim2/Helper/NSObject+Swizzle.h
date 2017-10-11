@@ -56,6 +56,8 @@
  */
 + (void)xvim_swizzleInstanceMethod:(SEL)origSel with:(SEL)newSel;
 + (void)xvim_swizzleInstanceMethodOfClass:(Class)destClass selector:(SEL)origSel with:(SEL)newSel;
++ (void)xvim_swizzleInstanceMethodOfClassName:(NSString*)destClassName selector:(SEL)origSel with:(SEL)newSel;
 
-
++ (void)xvim_addInstanceMethod:(SEL)sel toClass:(Class)destClass;
++ (void)xvim_addInstanceMethod:(SEL)sel toClassName:(NSString*)destClassName;
 @end

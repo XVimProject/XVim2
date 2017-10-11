@@ -31,6 +31,6 @@
 	<key>NSHumanReadableCopyright</key>
 	<string>Copyright © 2017 Shuichiro Suzuki. All rights reserved.</string>
 	<key>NSPrincipalClass</key>
-	<string></string>
+	<string>XVim</string>
 </dict>
 </plist>

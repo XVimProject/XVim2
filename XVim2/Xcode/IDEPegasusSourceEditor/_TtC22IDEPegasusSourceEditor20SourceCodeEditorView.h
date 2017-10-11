@@ -112,3 +112,9 @@ typedef _TtC22IDEPegasusSourceEditor20SourceCodeEditorView SourceCodeEditorView;
 + (void)xvim_hook;
 @property (strong, readonly) XVimWindow* xvim_window;
 @end
+
+static NSString * const IDEPegasusSourceCodeEditorViewClassName = @"IDEPegasusSourceEditor.SourceCodeEditorView";
+
+@interface XVimIDEPegasusSourceEditorView : NSObject
++(void)xvim_hook;
+@end

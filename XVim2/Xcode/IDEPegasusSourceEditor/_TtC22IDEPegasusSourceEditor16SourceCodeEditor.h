@@ -321,3 +321,4 @@
 
 typedef _TtC22IDEPegasusSourceEditor16SourceCodeEditor SourceCodeEditor;
 
+static NSString * const IDEPegasusSourceCodeEditorClassName = @"IDEPegasusSourceEditor.SourceCodeEditorView";

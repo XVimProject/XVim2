@@ -11,8 +11,6 @@
 		A287A8C71F55D637009378BC /* NSObject+ExtraData.m in Sources */ = {isa = PBXBuildFile; fileRef = A287A8C61F55D636009378BC /* NSObject+ExtraData.m */; };
 		A2B52D3F1F514CC600D83C0A /* Logger.m in Sources */ = {isa = PBXBuildFile; fileRef = A2B52D3B1F514CC600D83C0A /* Logger.m */; };
 		A2B537A71F51C70000D83C0A /* _TtC22IDEPegasusSourceEditor20SourceCodeEditorView.m in Sources */ = {isa = PBXBuildFile; fileRef = A2B537A61F51C70000D83C0A /* _TtC22IDEPegasusSourceEditor20SourceCodeEditorView.m */; };
-		A2B537AA1F51C89A00D83C0A /* SourceEditor in Frameworks */ = {isa = PBXBuildFile; fileRef = A2B537A91F51C89A00D83C0A /* SourceEditor */; };
-		A2B537AE1F51C8D200D83C0A /* IDEPegasusSourceEditor in Frameworks */ = {isa = PBXBuildFile; fileRef = A2B537AD1F51C8D200D83C0A /* IDEPegasusSourceEditor */; };
 		A2B537B11F51C94400D83C0A /* NSObject+Swizzle.m in Sources */ = {isa = PBXBuildFile; fileRef = A2B537B01F51C94400D83C0A /* NSObject+Swizzle.m */; };
 		A2B537B51F51D35000D83C0A /* XVimCmdArg.m in Sources */ = {isa = PBXBuildFile; fileRef = A2B537B41F51D35000D83C0A /* XVimCmdArg.m */; };
 		ED0DED611F8C2CEC00886F6B /* XVimZEvaluator.m in Sources */ = {isa = PBXBuildFile; fileRef = ED0DED5D1F8C2CDD00886F6B /* XVimZEvaluator.m */; };
@@ -263,8 +261,6 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				A2B537AE1F51C8D200D83C0A /* IDEPegasusSourceEditor in Frameworks */,
-				A2B537AA1F51C89A00D83C0A /* SourceEditor in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
