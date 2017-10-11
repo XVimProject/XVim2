@@ -100,20 +100,15 @@
 
 - (void)xvim_scrollCenter:(NSUInteger)lineNumber firstNonblank:(BOOL)fnb
 { // zz / z.
-#ifdef TODO
-    [self xvim_scrollCommon_moveCursorPos:lineNumber firstNonblank:fnb];
-    NSScrollView* scrollView = [self enclosingScrollView];
-    NSTextContainer* container = [self textContainer];
-    NSRect glyphRect = [[self layoutManager] boundingRectForGlyphRange:NSMakeRange(self.insertionPoint, 0)
-                                                       inTextContainer:container];
-    NSPoint center = NSMakePoint(0.0f, NSMidY(glyphRect) - NSHeight(glyphRect) / 2.0f);
-    center.y -= NSHeight([[scrollView contentView] bounds]) / 2.0f;
-    if (center.y < 0.0) {
-        center.y = 0.0;
+    if (fnb) {
+        _auto cursorIndexAfterScroll =
+            [self.textStorage xvim_firstNonblankInLineAtIndex:self.selectedRange.location allowEOL:YES];
+        if (cursorIndexAfterScroll != self.selectedRange.location) {
+            self.selectedRange = NSMakeRange(cursorIndexAfterScroll, 0);
+            [self xvim_syncStateWithScroll:NO];
+        }
     }
-    [[scrollView contentView] scrollToPoint:center];
-    [scrollView reflectScrolledClipView:[scrollView contentView]];
-#endif
+    [self centerSelectionInVisibleArea:self];
 }
 
 - (void)xvim_scrollTop:(NSUInteger)lineNumber firstNonblank:(BOOL)fnb

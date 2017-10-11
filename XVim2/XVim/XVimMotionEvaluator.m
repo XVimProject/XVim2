@@ -19,6 +19,7 @@
 #import "XVimMarks.h"
 #import "XVimSearch.h"
 #import "XVimWindow.h"
+#import "XVimZEvaluator.h"
 #import "XcodeUtils.h"
 
 ////////////////////////////////
@@ -437,7 +438,6 @@ if( childEvaluator.keyStroke.toString.length != 1 ){
     return [self jumpToMark:mark firstOfLine:YES KeepJumpMarkIndex:NO NeedUpdateMark:YES];
 }
 
-#if 0
 - (XVimEvaluator*)z{
     [self.argumentString appendString:@"z"];
     return [[XVimZEvaluator alloc] initWithWindow:self.window];
@@ -458,7 +458,6 @@ if( childEvaluator.keyStroke.toString.length != 1 ){
     XVimMark* mark = [[XVim instance].marks markForName:key forDocument:[self.sourceView documentURL].path];
     return [self jumpToMark:mark firstOfLine:NO KeepJumpMarkIndex:NO NeedUpdateMark:YES];
 }
-#endif
 
 // CARET ( "^") moves the cursor to the start of the currentline (past leading whitespace)
 // Note: CARET always moves to start of the current line ignoring any numericArg.

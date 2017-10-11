@@ -446,6 +446,8 @@
         return;
 
     XVimMark* mark = [self currentPositionMark];
+    if (mark == nil) return;
+    
     if (motion.jumpToAnotherFile) {
         // do nothing for jumping to another file
     }
