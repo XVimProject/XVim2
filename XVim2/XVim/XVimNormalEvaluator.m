@@ -497,6 +497,17 @@
 }
 
 
+// TAGS / HISTORY
+#pragma mark - TAGS / HISTORY
+
+- (XVimEvaluator*)C_t{
+    xvim_ignore_warning_undeclared_selector_push
+    [NSApp sendAction:@selector(goBackInHistoryByCommand:) to:nil from:self];
+    xvim_ignore_warning_pop
+    return nil;
+}
+
+
 #if 0
 
 
@@ -523,12 +534,6 @@
 }
 
 - (XVimEvaluator*)onComplete_Recording:childEvaluator{
-    return nil;
-}
-
-
-- (XVimEvaluator*)C_t{
-    [NSApp sendAction:@selector(goBackInHistoryByCommand:) to:nil from:self];
     return nil;
 }
 
@@ -577,6 +582,18 @@
     return [XVimEvaluator noOperationEvaluator];
 }
 
+
+- (XVimEvaluator*)HT{
+    [[self sourceView] xvim_selectNextPlaceholder];
+    return nil;
+}
+
+
+#endif
+
+
+// REGISTER
+#pragma mark - REGISTER
 - (XVimEvaluator*)DQUOTE{
     [self.argumentString appendString:@"\""];
     self.onChildCompleteHandler = @selector(onComplete_DQUOTE:);
@@ -595,14 +612,6 @@
         return [XVimEvaluator invalidEvaluator];
     }
 }
-
-- (XVimEvaluator*)HT{
-    [[self sourceView] xvim_selectNextPlaceholder];
-    return nil;
-}
-
-
-#endif
 
 - (XVimEvaluator*)DOT
 {

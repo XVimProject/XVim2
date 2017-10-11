@@ -29,6 +29,7 @@
 #import "XVimUppercaseEvaluator.h"
 #import "XVimWindow.h"
 #import "XVimYankEvaluator.h"
+#import "XVimRegister.h"
 
 static NSString* MODE_STRINGS[] = { @"", @"-- VISUAL --", @"-- VISUAL LINE --", @"-- VISUAL BLOCK --" };
 
@@ -277,11 +278,9 @@ static NSString* MODE_STRINGS[] = { @"", @"-- VISUAL --", @"-- VISUAL LINE --", 
 
 - (XVimEvaluator*)g
 {
-#ifdef TODO
     [self.argumentString appendString:@"g"];
     self.onChildCompleteHandler = @selector(g_completed:);
     return [[XVimGVisualEvaluator alloc] initWithWindow:self.window];
-#endif
     return nil;
 }
 
@@ -311,12 +310,10 @@ static NSString* MODE_STRINGS[] = { @"", @"-- VISUAL --", @"-- VISUAL LINE --", 
 
 - (XVimEvaluator*)m
 {
-#ifdef TODO
     // 'm{letter}' sets a local mark.
     [self.argumentString appendString:@"m"];
     self.onChildCompleteHandler = @selector(m_completed:);
     return [[XVimMarkSetEvaluator alloc] initWithWindow:self.window];
-#endif
     return nil;
 }
 
@@ -345,11 +342,9 @@ static NSString* MODE_STRINGS[] = { @"", @"-- VISUAL --", @"-- VISUAL LINE --", 
 
 - (XVimEvaluator*)p
 {
-#ifdef TODO
-    NSTextView* view = [self sourceView];
-    XVimRegister* reg = [[[XVim instance] registerManager] registerByName:self.yankRegister];
+    _auto view = [self sourceView];
+    XVimRegister* reg = [XVIM.registerManager registerByName:self.yankRegister];
     [view xvim_put:reg.string withType:reg.type afterCursor:YES count:[self numericArg]];
-#endif
     return nil;
 }
 
@@ -466,7 +461,6 @@ static NSString* MODE_STRINGS[] = { @"", @"-- VISUAL --", @"-- VISUAL LINE --", 
 
 - (XVimEvaluator*)onComplete_DQUOTE:(XVimRegisterEvaluator*)childEvaluator
 {
-#ifdef TODO
     NSString* xregister = childEvaluator.reg;
     if ([XVIM.registerManager isValidForYank:xregister]) {
         self.yankRegister = xregister;
@@ -477,7 +471,6 @@ static NSString* MODE_STRINGS[] = { @"", @"-- VISUAL --", @"-- VISUAL LINE --", 
         return [XVimEvaluator invalidEvaluator];
     }
     _waitForArgument = NO;
-#endif
     return self;
 }
 

@@ -13,13 +13,10 @@
 #import "XVimKeyStroke.h"
 #import "XVimKeymapProvider.h"
 #import "XVimWindow.h"
-//#import "XVimVisualEvaluator.h"
-//#import "XVimDeleteEvaluator.h"
-//#import "XVimMark.h"
-//#import "XVimMarks.h"
+#import "XVimMark.h"
+#import "XVimMarks.h"
 #import "XVimNormalEvaluator.h"
-//#import "NSTextView+VimOperation.h"
-//#import "DVTKit.h"
+#import "NSTextStorage+VimOperation.h"
 
 @interface XVimInsertEvaluator ()
 @property (nonatomic) NSRange startRange;
@@ -179,8 +176,7 @@
     else if (self.lastInsertedText.length > 0) {
         //[xvim.repeatRegister appendText:self.lastInsertedText];
     }
-#ifdef TODO
-    id<SourceViewProtocol> sourceView = [self sourceView];
+    _auto sourceView = [self sourceView];
 
     [sourceView xvim_hideCompletions];
 
@@ -192,9 +188,7 @@
     if (nil != mark.document) {
         [[XVim instance].marks setMark:mark forName:@"^"];
     }
-#endif
     [[self sourceView] xvim_escapeFromInsert];
-#ifdef TODO
 
     // Position for "." is after escaped from insert mode
     pos = self.sourceView.insertionPoint;
@@ -203,7 +197,6 @@
     if (nil != mark.document) {
         [[XVim instance].marks setMark:mark forName:@"."];
     }
-#endif
 }
 
 - (BOOL)windowShouldReceive:(SEL)keySelector
@@ -257,42 +250,11 @@
 
 - (XVimEvaluator*)C_c { return [self ESC]; }
 
-#ifdef TODO
 - (XVimEvaluator*)C_e
 {
     [self C_yC_eHelper:NO];
     return self;
 }
-
-// Experimental
-- (XVimEvaluator*)C_n
-{
-    DVTSourceTextView* view = (DVTSourceTextView*)self.window.sourceView;
-    DVTTextCompletionController* c = [view completionController];
-    DVTTextCompletionSession* currentSession = c.currentSession;
-    if (nil == currentSession) {
-        [view complete:self];
-    }
-    else {
-        [currentSession selectNextCompletionAlpha];
-    }
-    return self;
-}
-
-- (XVimEvaluator*)C_p
-{
-    DVTSourceTextView* view = (DVTSourceTextView*)self.window.sourceView;
-    DVTTextCompletionController* c = [view completionController];
-    DVTTextCompletionSession* currentSession = c.currentSession;
-    if (nil == currentSession) {
-        [view complete:self];
-    }
-    else {
-        [currentSession selectPreviousCompletionAlpha];
-    }
-    return self;
-}
-#endif
 
 
 - (XVimEvaluator*)C_o
@@ -312,7 +274,6 @@
 - (XVimEvaluator*)C_LSQUAREBRACKET { return [self ESC]; }
 
 
-#ifdef TODO
 - (XVimEvaluator*)C_w
 {
     XVimMotion* m = XVIM_MAKE_MOTION(MOTION_WORD_BACKWARD, CHARACTERWISE_EXCLUSIVE, MOTION_OPTION_NONE, 1);
@@ -352,5 +313,4 @@
         [[self sourceView] insertText:charToInsert];
     }
 }
-#endif
 @end

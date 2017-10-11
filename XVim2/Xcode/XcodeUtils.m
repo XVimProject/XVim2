@@ -8,7 +8,11 @@
 
 #import "XcodeUtils.h"
 #import <IDEKit/IDEWorkspaceWindow.h>
+#import <IDEKit/IDEEditorArea.h>
 #import <IDEKit/IDEWorkspaceWindowController.h>
+#import <IDEKit/IDEWorkspaceTabController.h>
+#import <IDEKit/IDEEditorOpenSpecifier.h>
+#import <DVTKit/DVTDocumentLocation.h>
 
 
 IDEWorkspaceWindowController* XVimLastActiveWindowController()
@@ -29,3 +33,29 @@ DVTSourceTextView* XVimLastActiveSourceView()
     return [[[[XVimLastActiveEditorArea() lastActiveEditorContext] editor] mainScrollView] documentView];
 }
 #endif
+
+BOOL XVimOpenDocumentAtPath(NSString *path) {
+    NSError* error;
+    NSURL* doc = [NSURL fileURLWithPath:path];
+    DVTDocumentLocation* loc = [[NSClassFromString(@"DVTDocumentLocation") alloc] initWithDocumentURL:doc timestamp:nil];
+    if (loc) {
+        IDEEditorOpenSpecifier* spec = [IDEEditorOpenSpecifier
+                                        structureEditorOpenSpecifierForDocumentLocation:loc
+                                        inWorkspace:[XVimLastActiveWorkspaceTabController() workspace]
+                                        error:&error];
+        if (error == nil) {
+            [XVimLastActiveEditorArea() _openEditorOpenSpecifier:spec
+                                                   editorContext:[XVimLastActiveEditorArea() lastActiveEditorContext]
+                                                       takeFocus:YES];
+        }
+        else {
+            ERROR_LOG(@"Failed to create IDEEditorOpenSpecifier from %@. Error = %@", path, error.localizedDescription);
+            return NO;
+        }
+    }
+    else {
+        ERROR_LOG(@"Cannot create DVTDocumentLocation from %@", path);
+        return NO;
+    }
+    return YES;
+}

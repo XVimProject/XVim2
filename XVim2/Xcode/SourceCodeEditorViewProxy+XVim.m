@@ -979,5 +979,8 @@
     [self setNeedsUpdateFoundRanges:NO];
 }
 
+-(void)xvim_hideCompletions {
+    // TODO
+}
 
 @end

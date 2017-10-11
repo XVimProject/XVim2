@@ -19,7 +19,7 @@
 #import "XVimMarks.h"
 #import "XVimSearch.h"
 #import "XVimWindow.h"
-
+#import "XcodeUtils.h"
 
 ////////////////////////////////
 // How to Implement Motion    //
@@ -390,20 +390,8 @@ if( childEvaluator.keyStroke.toString.length != 1 ){
 
     BOOL jumpToAnotherFile = NO;
     if (![mark.document isEqualToString:self.sourceView.documentURL.path]) {
-#ifdef TODO
         jumpToAnotherFile = YES;
-        NSError* error;
-        NSURL* doc = [NSURL fileURLWithPath:mark.document];
-        DVTDocumentLocation* loc = [[DVTDocumentLocation alloc] initWithDocumentURL:doc timestamp:nil];
-        IDEEditorOpenSpecifier* spec = [IDEEditorOpenSpecifier
-                    structureEditorOpenSpecifierForDocumentLocation:loc
-                                                        inWorkspace:[XVimLastActiveWorkspaceTabController() workspace]
-                                                              error:&error];
-
-        [XVimLastActiveEditorArea() _openEditorOpenSpecifier:spec
-                                               editorContext:[XVimLastActiveEditorArea() lastActiveEditorContext]
-                                                   takeFocus:YES];
-#endif
+        XVimOpenDocumentAtPath(mark.document);
     }
 
     NSUInteger to = [self.sourceView.textStorage xvim_indexOfLineNumber:mark.line column:mark.column];

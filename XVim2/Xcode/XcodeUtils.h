@@ -16,3 +16,4 @@
 IDEWorkspaceWindowController* XVimLastActiveWindowController(void);
 IDEWorkspaceTabController* XVimLastActiveWorkspaceTabController(void);
 IDEEditorArea* XVimLastActiveEditorArea(void);
+BOOL XVimOpenDocumentAtPath(NSString *path);

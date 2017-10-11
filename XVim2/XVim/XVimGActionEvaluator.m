@@ -11,18 +11,16 @@
 #import "XVimInsertEvaluator.h"
 #import "XVimLowercaseEvaluator.h"
 #import "XVimUppercaseEvaluator.h"
-
-#ifdef TODO
 #import "NSTextStorage+VimOperation.h"
-#import "NSTextView+VimOperation.h"
+#import "SourceViewProtocol.h"
 #import "XVim.h"
 #import "XVimKeyStroke.h"
 #import "XVimMark.h"
 #import "XVimMarks.h"
 #import "XVimTildeEvaluator.h"
 #import "XVimVisualEvaluator.h"
+#import "XVimJoinEvaluator.h"
 #import "XVimWindow.h"
-#endif
 
 @implementation XVimGActionEvaluator
 
@@ -40,10 +38,11 @@
     return [[XVimUppercaseEvaluator alloc] initWithWindow:self.window];
 }
 
-#ifdef TODO
 - (XVimEvaluator*)d
 {
+    xvim_ignore_warning_undeclared_selector_push
     [NSApp sendAction:@selector(jumpToDefinition:) to:nil from:self];
+    xvim_ignore_warning_pop
     return nil;
 }
 
@@ -98,5 +97,4 @@
     [self.argumentString appendString:@"~"];
     return [[XVimTildeEvaluator alloc] initWithWindow:self.window];
 }
-#endif
 @end

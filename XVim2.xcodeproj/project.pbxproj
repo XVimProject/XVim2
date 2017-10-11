@@ -219,6 +219,7 @@
 		EDDF5D081F83A85A00872094 /* XVimWindowEvaluator.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = XVimWindowEvaluator.m; sourceTree = "<group>"; };
 		EDDF5D0B1F83A85A00872094 /* XVimWindowEvaluator.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = XVimWindowEvaluator.h; sourceTree = "<group>"; };
 		EDDF5D0D1F83A99300872094 /* IDEWorkspaceWindow.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = IDEWorkspaceWindow.h; sourceTree = "<group>"; };
+		EDE489B31F8E25EA00A40F9F /* DVTDocumentLocation.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = DVTDocumentLocation.h; sourceTree = "<group>"; };
 		EDEF0F201F84DB570087D30B /* XVimShiftEvaluator.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = XVimShiftEvaluator.h; sourceTree = "<group>"; };
 		EDEF0F231F84DB570087D30B /* XVimShiftEvaluator.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = XVimShiftEvaluator.m; sourceTree = "<group>"; };
 		EDF010511F6EEF0F00461B2C /* XVimKeyStroke.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = XVimKeyStroke.h; sourceTree = "<group>"; };
@@ -466,6 +467,7 @@
 		ED8568431F800960008494BB /* DVTKit */ = {
 			isa = PBXGroup;
 			children = (
+				EDE489B31F8E25EA00A40F9F /* DVTDocumentLocation.h */,
 				ED8568441F80096B008494BB /* DVTViewController.h */,
 				ED6331DD1F8389F800E9E6B0 /* DVTFontAndColorTheme.h */,
 			);

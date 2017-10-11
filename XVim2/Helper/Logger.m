@@ -65,11 +65,10 @@ static Logger* s_defaultLogger = nil;
     }
     unsigned int num;
     Method* m = class_copyMethodList(c, &num);
-#pragma clang diagnostic push
-#pragma clang diagnostic ignored "-Wundeclared-selector"
+    xvim_ignore_warning_undeclared_selector_push
     IMP no_imp = class_getMethodImplementation([Logger class],
                                                @selector(there_is_not_such_method)); // Find imple for not implemented
-#pragma clang diagnostic pop
+    xvim_ignore_warning_pop
     for (unsigned int i = 0; i < num; i++) {
         SEL selector = method_getName(m[i]);
         NSString* new_selector = [[NSString alloc] initWithFormat:@"LOGGER_HIDDEN_%@", NSStringFromSelector(selector)];

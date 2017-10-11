@@ -13,6 +13,7 @@
 #import "XVimMotion.h"
 #import "XVimMotionEvaluator.h"
 #import "XVimMotionOption.h"
+#import "XVimCommandLineEvaluator.h"
 #import "XVimWindow.h"
 
 #ifdef TODO
@@ -62,7 +63,6 @@
     return nil;
 }
 
-#ifdef TODO
 - (XVimEvaluator*)searchCurrentWord:(BOOL)forward
 {
     XVimCommandLineEvaluator* eval = [self searchEvaluatorForward:forward];
@@ -82,7 +82,6 @@
 - (XVimEvaluator*)ASTERISK { return [self searchCurrentWord:YES]; }
 
 - (XVimEvaluator*)NUMBER { return [self searchCurrentWord:NO]; }
-#endif
 
 - (XVimEvaluator*)SEMICOLON
 {

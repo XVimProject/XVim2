@@ -671,9 +671,7 @@
 //////////////////////////////////////////////////////////
 
 // TODO: Instead of ignoring 'undeclared-selector', we should import the relevant IDEKit headers
-#pragma clang diagnostic push
-#pragma clang diagnostic ignored "-Wundeclared-selector"
-
+xvim_ignore_warning_undeclared_selector_push
 
 - (void)commit:(XVimExArg*)args inWindow:(XVimWindow*)window
 {
@@ -1279,7 +1277,8 @@
 { // :w
     [NSApp sendAction:@selector(ide_saveDocument:) to:nil from:self];
 }
-#pragma clang diagnostic pop
+
+xvim_ignore_warning_pop
 
 - (NSMenuItem*)findMenuItemIn:(NSMenu*)menu forAction:(NSString*)actionName
 {

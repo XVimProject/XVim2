@@ -83,6 +83,7 @@
                                       forward:(BOOL)forward;
 - (void)xvim_highlightNextSearchCandidateForward:(NSString*)regex count:(NSUInteger)count option:(MOTION_OPTION)opt;
 - (void)xvim_highlightNextSearchCandidateBackward:(NSString*)regex count:(NSUInteger)count option:(MOTION_OPTION)opt;
+- (void)xvim_hideCompletions;
 @end
 
 

@@ -31,4 +31,8 @@ static inline void xvim_execute_cleanup_block(__strong xvim_cleanup_block_t* blo
 
 #define run_before_main(_id) _run_before_main(_id, xvim_concat(__LINE__, __COUNTER__), 110)
 
+
+#define xvim_ignore_warning_undeclared_selector_push _Pragma("clang diagnostic push") _Pragma("clang diagnostic ignored \"-Wundeclared-selector\"")
+#define xvim_ignore_warning_pop _Pragma("clang diagnostic pop")
+
 #endif /* Macros_h */
