@@ -48,14 +48,11 @@
         _defaultEvaluatorStack = [[NSMutableArray alloc] init];
         _currentEvaluatorStack = _defaultEvaluatorStack;
         _inputContext = [[NSTextInputContext alloc] initWithClient:self];
-        //_commandLine = [_editorArea xvim_commandline];
         [self _resetEvaluatorStack:_defaultEvaluatorStack activateNormalHandler:YES];
     }
     return self;
 }
 
-
-- (void)dealloc { [[NSNotificationCenter defaultCenter] removeObserver:self]; }
 
 - (void)setupAfterEditorViewSetup
 {
@@ -185,17 +182,6 @@
     return YES;
 }
 
-- (void)postStatusString:(NSString*)status confirm:(BOOL)confirm
-{
-#ifdef TODO
-    [NSNotificationCenter.defaultCenter postNotificationName:DSVimNotificationStatusChanged
-                                                      object:self
-                                                    userInfo:@{
-                                                        XVimNotificationStatusChangedStringKey : (status ?: @""),
-                                                        XVimNotificationStatusChangedConfirmKey : @(confirm)
-                                                    }];
-#endif
-}
 
 - (BOOL)handleXVimString:(XVimString*)strokes
 {
@@ -385,11 +371,9 @@
 
 - (id<NSTextInputClient>)inputView
 {
-#ifdef TODO
     if (self.currentEvaluator.mode == XVIM_MODE_CMDLINE) {
         return self.commandLine.commandField;
     }
-#endif
     return self.sourceView;
 }
 
