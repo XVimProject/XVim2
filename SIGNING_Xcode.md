@@ -1,6 +1,6 @@
 # Signing Xcode
 
-Since Apple decided not to load 3rd party plugins in Xcode 8, we have to make change to it. What we have to do overall is to re-codesign Xcode. This allows us to load 3rd party plugins. Here are the steps to do so:
+Since Apple no longer loads 3rd party plugins (in Xcode 8 and above), we have to make change to it. What we have to do overall is to re-codesign Xcode. This allows us to load 3rd party plugins. Here are the steps to do so:
 
 1. Close Xcode
     
