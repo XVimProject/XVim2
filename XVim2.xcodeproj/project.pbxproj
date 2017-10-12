@@ -827,13 +827,7 @@
 					"$(PROJECT_DIR)",
 				);
 				MACOSX_DEPLOYMENT_TARGET = 10.13;
-				OTHER_LDFLAGS = (
-					"-Wl,-no_compact_unwind",
-					"-framework",
-					DVTKit,
-					"-framework",
-					IDEKit,
-				);
+				OTHER_LDFLAGS = "-Wl,-no_compact_unwind";
 				PRODUCT_BUNDLE_IDENTIFIER = net.JugglerShu.XVim2;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SKIP_INSTALL = YES;
@@ -863,13 +857,7 @@
 					"$(PROJECT_DIR)",
 				);
 				MACOSX_DEPLOYMENT_TARGET = 10.13;
-				OTHER_LDFLAGS = (
-					"-Wl,-no_compact_unwind",
-					"-framework",
-					DVTKit,
-					"-framework",
-					IDEKit,
-				);
+				OTHER_LDFLAGS = "-Wl,-no_compact_unwind";
 				PRODUCT_BUNDLE_IDENTIFIER = net.JugglerShu.XVim2;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SKIP_INSTALL = YES;

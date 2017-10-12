@@ -9,8 +9,10 @@
 #import "Geometry.h"
 #import "IDEWorkspaceTabController+XVim.h"
 #import "Logger.h"
+#import "NSObject+Swizzle.h"
 #import "SourceCodeEditorViewProxy.h"
 #import "XVimWindow.h"
+#import "XcodeUtils.h"
 #import <IDEKit/IDEComparisonEditorSubmode.h>
 #import <IDEKit/IDEEditorArea.h>
 #import <IDEKit/IDEEditorContext.h>
@@ -72,8 +74,28 @@ static inline BOOL xvim_horizontallyStackingModeForMode(GeniusLayoutMode mode)
     return (mode % 2) == 0 ? mode + 1 : mode;
 }
 
+#define SELF ((IDEWorkspaceTabController*)self)
 
-@implementation IDEWorkspaceTabController (XVim)
+@implementation IDEWorkspaceTabController_XVim
+
++ (void)xvim_hook
+{
+    Class wtc = NSClassFromString(@"IDEWorkspaceTabController");
+    [self xvim_addInstanceMethod:@selector(xvim_allEditorArea) toClass:wtc];
+    [self xvim_addInstanceMethod:@selector(xvim_keyboardFocusAreas) toClass:wtc];
+    [self xvim_addInstanceMethod:@selector(xvim_currentLayout) toClass:wtc];
+    [self xvim_addInstanceMethod:@selector(xvim_addEditorVertically) toClass:wtc];
+    [self xvim_addInstanceMethod:@selector(xvim_addEditorHorizontally) toClass:wtc];
+    [self xvim_addInstanceMethod:@selector(xvim_jumpFocus:relative:) toClass:wtc];
+    [self xvim_addInstanceMethod:@selector(xvim_addEditor) toClass:wtc];
+    [self xvim_addInstanceMethod:@selector(xvim_moveFocusDown) toClass:wtc];
+    [self xvim_addInstanceMethod:@selector(xvim_moveFocusUp) toClass:wtc];
+    [self xvim_addInstanceMethod:@selector(xvim_moveFocusLeft) toClass:wtc];
+    [self xvim_addInstanceMethod:@selector(xvim_moveFocusRight) toClass:wtc];
+    [self xvim_addInstanceMethod:@selector(xvim_closeOtherEditors) toClass:wtc];
+    [self xvim_addInstanceMethod:@selector(xvim_closeCurrentEditor) toClass:wtc];
+    [self xvim_addInstanceMethod:@selector(xvim_removeAssistantEditor) toClass:wtc];
+}
 
 - (NSArray*)xvim_allEditorArea
 {
@@ -97,7 +119,7 @@ static inline BOOL xvim_horizontallyStackingModeForMode(GeniusLayoutMode mode)
 
 - (GeniusLayoutMode)xvim_currentLayout
 {
-    return (self.editorArea.editorMode == GENIUS) ? self.assistantEditorsLayout : NOT_GENIUS;
+    return (SELF.editorArea.editorMode == GENIUS) ? SELF.assistantEditorsLayout : NOT_GENIUS;
 }
 
 // It's not possible to get the full flexibility of Vim windows in Xcode, so we have to compromise.
@@ -112,10 +134,10 @@ static inline BOOL xvim_horizontallyStackingModeForMode(GeniusLayoutMode mode)
     GeniusLayoutMode layout = [self xvim_currentLayout];
     [self xvim_addEditor];
     if (layout == NOT_GENIUS) {
-        [self changeToAssistantLayout_RH:self];
+        [SELF changeToAssistantLayout_RH:self];
     }
     else {
-        self.assistantEditorsLayout = xvim_horizontallyStackingModeForMode(layout);
+        SELF.assistantEditorsLayout = xvim_horizontallyStackingModeForMode(layout);
     }
 }
 
@@ -124,10 +146,10 @@ static inline BOOL xvim_horizontallyStackingModeForMode(GeniusLayoutMode mode)
     GeniusLayoutMode layout = [self xvim_currentLayout];
     [self xvim_addEditor];
     if (layout == NOT_GENIUS) {
-        [self changeToAssistantLayout_BV:self];
+        [SELF changeToAssistantLayout_BV:self];
     }
     else {
-        self.assistantEditorsLayout = xvim_verticallyStackingModeForMode(layout);
+        SELF.assistantEditorsLayout = xvim_verticallyStackingModeForMode(layout);
     }
 }
 
@@ -139,13 +161,13 @@ static inline BOOL xvim_horizontallyStackingModeForMode(GeniusLayoutMode mode)
         return;
     }
 
-    IDEEditorArea* editorArea = [self editorArea];
+    IDEEditorArea* editorArea = [SELF editorArea];
     if ([editorArea editorMode] != GENIUS) {
         DEBUG_LOG(@"editor not in genius mode, nothing to jump to");
         return;
     }
 
-    IDEViewController* current = [self _currentFirstResponderArea];
+    IDEViewController* current = [SELF _currentFirstResponderArea];
     NSArray* allEditors = [self xvim_allEditorArea];
     NSInteger numEditors = (NSInteger)[allEditors count]; // Should be no problem to cast it to NSInteger
     if (0 >= numEditors) {
@@ -170,13 +192,13 @@ static inline BOOL xvim_horizontallyStackingModeForMode(GeniusLayoutMode mode)
 
 - (void)xvim_addEditor
 {
-    IDEWorkspaceTabController* workspaceTabController = self;
-    IDEEditorArea* editorArea = [self editorArea];
+    IDEWorkspaceTabController* workspaceTabController = SELF;
+    IDEEditorArea* editorArea = [SELF editorArea];
     if ([editorArea editorMode] != GENIUS) {
-        [workspaceTabController changeToGeniusEditor:self];
+        [workspaceTabController changeToGeniusEditor:SELF];
     }
     else {
-        [workspaceTabController addAssistantEditor:self];
+        [workspaceTabController addAssistantEditor:SELF];
     }
 }
 
@@ -193,7 +215,7 @@ static inline BOOL xvim_horizontallyStackingModeForMode(GeniusLayoutMode mode)
 
 - (void)xvim_moveFocusDown
 {
-    IDEWorkspaceTabController* tabCtrl = self;
+    IDEWorkspaceTabController* tabCtrl = SELF;
     IDEViewController* current = [tabCtrl _currentFirstResponderArea];
     NSArray* allEditors = [self xvim_allEditorArea];
 
@@ -222,7 +244,7 @@ static inline BOOL xvim_horizontallyStackingModeForMode(GeniusLayoutMode mode)
 
 - (void)xvim_moveFocusUp
 {
-    IDEWorkspaceTabController* tabCtrl = self;
+    IDEWorkspaceTabController* tabCtrl = SELF;
     IDEViewController* current = [tabCtrl _currentFirstResponderArea];
     NSArray* allEditors = [self xvim_allEditorArea];
 
@@ -251,7 +273,7 @@ static inline BOOL xvim_horizontallyStackingModeForMode(GeniusLayoutMode mode)
 
 - (void)xvim_moveFocusLeft
 {
-    IDEEditorArea* editorArea = [self editorArea];
+    IDEEditorArea* editorArea = [SELF editorArea];
     if ([editorArea editorMode] == VERSION) {
         // This implementation is not correct for precise moveFocusLeft behavior but it is useful.
 
@@ -268,7 +290,7 @@ static inline BOOL xvim_horizontallyStackingModeForMode(GeniusLayoutMode mode)
 
         return;
     }
-    IDEWorkspaceTabController* tabCtrl = self;
+    IDEWorkspaceTabController* tabCtrl = SELF;
     IDEViewController* current = [tabCtrl _currentFirstResponderArea];
     NSArray* allEditors = [self xvim_allEditorArea];
 
@@ -296,7 +318,7 @@ static inline BOOL xvim_horizontallyStackingModeForMode(GeniusLayoutMode mode)
 
 - (void)xvim_moveFocusRight
 {
-    IDEEditorArea* editorArea = [self editorArea];
+    IDEEditorArea* editorArea = [SELF editorArea];
     if ([editorArea editorMode] == VERSION) {
         // This implementation is not correct for precise moveFocusRight behavior but it is useful.
         // The behavior in comparison view is like diff mode on the original vim.
@@ -314,7 +336,7 @@ static inline BOOL xvim_horizontallyStackingModeForMode(GeniusLayoutMode mode)
 
         return;
     }
-    IDEWorkspaceTabController* tabCtrl = self;
+    IDEWorkspaceTabController* tabCtrl = SELF;
     IDEViewController* current = [tabCtrl _currentFirstResponderArea];
     NSArray* allEditors = [self xvim_allEditorArea];
 
@@ -341,7 +363,7 @@ static inline BOOL xvim_horizontallyStackingModeForMode(GeniusLayoutMode mode)
 
 - (void)xvim_closeOtherEditors
 {
-    IDEEditorArea* editorArea = [self editorArea];
+    IDEEditorArea* editorArea = [SELF editorArea];
     if ([editorArea editorMode] != GENIUS) {
         return;
     }
@@ -360,20 +382,20 @@ static inline BOOL xvim_horizontallyStackingModeForMode(GeniusLayoutMode mode)
     if ([multipleContext canCloseEditorContexts]) {
         [multipleContext closeAllEditorContextsKeeping:[multipleContext selectedEditorContext]];
     }
-    [self changeToStandardEditor:self];
+    [SELF changeToStandardEditor:SELF];
 }
 
 
 - (void)xvim_closeCurrentEditor
 {
-    IDEEditorArea* editorArea = [self editorArea];
+    IDEEditorArea* editorArea = [SELF editorArea];
     EditorMode editorMode = (EditorMode)[editorArea editorMode];
     if (editorMode == STANDARD) {
-        if ([self.windowController.workspaceTabControllers count] > 1) {
-            [self.windowController.window.tabGroup.selectedWindow performClose:nil];
+        if ([SELF.windowController.workspaceTabControllers count] > 1) {
+            [SELF.windowController.window.tabGroup.selectedWindow performClose:nil];
         }
         else {
-            [self.windowController.window performSelector:@selector(performClose:) withObject:nil afterDelay:0];
+            [SELF.windowController.window performSelector:@selector(performClose:) withObject:nil afterDelay:0];
         }
         return;
     }
@@ -402,7 +424,7 @@ static inline BOOL xvim_horizontallyStackingModeForMode(GeniusLayoutMode mode)
 
 - (void)xvim_removeAssistantEditor
 {
-    IDEEditorArea* editorArea = self.editorArea;
+    IDEEditorArea* editorArea = SELF.editorArea;
     IDEEditorGeniusMode* geniusMode;
     switch ([editorArea editorMode]) {
     case STANDARD:
@@ -411,10 +433,10 @@ static inline BOOL xvim_horizontallyStackingModeForMode(GeniusLayoutMode mode)
     case GENIUS:
         geniusMode = (IDEEditorGeniusMode*)[editorArea editorModeViewController];
         if ([geniusMode canRemoveAssistantEditor] == NO) {
-            [self changeToStandardEditor:self];
+            [SELF changeToStandardEditor:SELF];
         }
         else {
-            [self removeAssistantEditor:self];
+            [SELF removeAssistantEditor:SELF];
         }
         break;
     case VERSION:
@@ -428,13 +450,6 @@ static inline BOOL xvim_horizontallyStackingModeForMode(GeniusLayoutMode mode)
 
 IDEEditorOpenSpecifier* xvim_openSpecifierForContext(IDEEditorContext* context)
 {
-    NSError* err = nil;
     NSArray* locations = context._currentSelectedDocumentLocations;
-    IDEEditorOpenSpecifier* openSpecifier
-                = locations.count
-                              ? [[IDEEditorOpenSpecifier alloc] initWithNavigableItem:context.navigableItem
-                                                                     locationToSelect:locations.firstObject
-                                                                                error:&err]
-                              : [[IDEEditorOpenSpecifier alloc] initWithNavigableItem:context.navigableItem error:&err];
-    return openSpecifier;
+    return XVimOpenSpecifier(context.navigableItem, locations.firstObject);
 }

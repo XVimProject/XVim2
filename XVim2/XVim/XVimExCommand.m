@@ -1347,7 +1347,7 @@ xvim_ignore_warning_pop
     }
 
     // Below if-else achieves the same goal. I'm not sure the better one.
-    IDEWorkspaceTabController* ctrl = XVimLastActiveWorkspaceTabController();
+    _auto ctrl = XVimLastActiveWorkspaceTabController();
     if ([ctrl respondsToSelector:item.action]) {
         NSLog(@"IDEWorkspaceTabController perform action");
 #pragma clang diagnostic push
@@ -1363,7 +1363,7 @@ xvim_ignore_warning_pop
 
 - (void)xctabctrl:(XVimExArg*)args inWindow:(XVimWindow*)window
 {
-    IDEWorkspaceTabController* ctrl = XVimLastActiveWorkspaceTabController();
+    _auto ctrl = XVimLastActiveWorkspaceTabController();
     if ([ctrl respondsToSelector:NSSelectorFromString(args.arg)]) {
 #pragma clang diagnostic push
 #pragma clang diagnostic ignored "-Warc-performSelector-leaks"

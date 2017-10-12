@@ -10,10 +10,13 @@
 
 @class IDEWorkspaceWindow;
 @class IDEWorkspaceWindowController;
-@class IDEWorkspaceTabController;
+@class IDEWorkspaceTabController_XVim;
 @class IDEEditorArea;
+@class IDENavigableItem;
+@class IDEEditorOpenSpecifier;
 
 IDEWorkspaceWindowController* XVimLastActiveWindowController(void);
-IDEWorkspaceTabController* XVimLastActiveWorkspaceTabController(void);
+IDEWorkspaceTabController_XVim* XVimLastActiveWorkspaceTabController(void);
 IDEEditorArea* XVimLastActiveEditorArea(void);
 BOOL XVimOpenDocumentAtPath(NSString *path);
+IDEEditorOpenSpecifier *XVimOpenSpecifier(IDENavigableItem *item, id locationToSelect);
