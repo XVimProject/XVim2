@@ -76,25 +76,43 @@
     if (![identifier isEqualToString:@"com.apple.dt.Xcode"]) {
         return;
     }
-    NSMutableSet<NSString*> *requiredClasses = [[NSMutableSet alloc] initWithArray: @[IDEPegasusSourceCodeEditorClassName
-                                                                                      , SourceEditorViewClassName]];
-    
-    // Entry Point of the Plugin.
     [Logger defaultLogger].level = LogTrace;
-    __weak Class weakXvim = self;
-    [NSNotificationCenter.defaultCenter addObserverForName:NSBundleDidLoadNotification
-                                                    object:nil
-                                                     queue:nil
-                                                usingBlock:^(NSNotification * _Nonnull note) {
-                                                    Class XVimClass = weakXvim;
-                                                    NSArray<NSString*> * classes = [note.userInfo objectForKey:NSLoadedClasses];
-                                                    if (classes && requiredClasses.count > 0) {
-                                                        [requiredClasses minusSet:[NSSet setWithArray:classes]];
-                                                        if (requiredClasses.count == 0) {
-                                                            [XVimClass hookClasses];
+    
+    // Make a list of classes that will be swizzled, so we can check if they have been loaded
+    // before swizzling. If not, we will wait, observing NSBundle's class load notifications,
+    // until all of these classes have been loaded before swizzling.
+    NSArray<NSString*> *swizzleClasses = @[IDEPegasusSourceCodeEditorClassName
+                                           , SourceEditorViewClassName];
+    
+    NSMutableSet<NSString*> *requiredClassesWaitSet = [[NSMutableSet alloc] initWithArray:swizzleClasses];
+    NSMutableSet<NSString*> *loadedClasses = [NSMutableSet new];
+    
+    // Remove already loaded classes from wait set
+    for (NSString *className in requiredClassesWaitSet) {
+        if (NSClassFromString(className)) [loadedClasses addObject:className];
+    }
+    [requiredClassesWaitSet minusSet:loadedClasses];
+
+    if (requiredClassesWaitSet.count == 0) {
+        [self hookClasses];
+    }
+    else {
+        // Entry Point of the Plugin.
+        __weak Class weakXvim = self;
+        [NSNotificationCenter.defaultCenter addObserverForName:NSBundleDidLoadNotification
+                                                        object:nil
+                                                         queue:nil
+                                                    usingBlock:^(NSNotification * _Nonnull note) {
+                                                        Class XVimClass = weakXvim;
+                                                        NSArray<NSString*> * classes = [note.userInfo objectForKey:NSLoadedClasses];
+                                                        if (classes && requiredClassesWaitSet.count > 0) {
+                                                            [requiredClassesWaitSet minusSet:[NSSet setWithArray:classes]];
+                                                            if (requiredClassesWaitSet.count == 0) {
+                                                                [XVimClass hookClasses];
+                                                            }
                                                         }
-                                                    }
-                                                }];
+                                                    }];
+    }
 }
 
 +(void)hookClasses
