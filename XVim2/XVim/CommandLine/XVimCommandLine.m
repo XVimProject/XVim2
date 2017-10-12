@@ -91,7 +91,7 @@
         //[self.widthAnchor constraintEqualToAnchor:_static.widthAnchor multiplier:1.0].active = YES;
         [self.leftAnchor constraintEqualToAnchor:_static.leftAnchor constant:-insets.left].active = YES;
         [self.rightAnchor constraintEqualToAnchor:_static.rightAnchor constant:insets.right].active = YES;
-        [self.bottomAnchor constraintGreaterThanOrEqualToAnchor:_static.bottomAnchor constant:insets.bottom].active
+        [self.bottomAnchor constraintEqualToAnchor:_static.bottomAnchor constant:insets.bottom].active
                     = YES;
 
 
@@ -110,7 +110,7 @@
         //[self.widthAnchor constraintEqualToAnchor:_error.widthAnchor multiplier:1.0].active = YES;
         [self.leftAnchor constraintEqualToAnchor:_error.leftAnchor constant:-insets.left].active = YES;
         [self.rightAnchor constraintEqualToAnchor:_error.rightAnchor constant:insets.right].active = YES;
-        [self.bottomAnchor constraintGreaterThanOrEqualToAnchor:_error.bottomAnchor constant:insets.bottom].active
+        [self.bottomAnchor constraintEqualToAnchor:_error.bottomAnchor constant:insets.bottom].active
                     = YES;
 
 
@@ -170,7 +170,7 @@
         //[self.widthAnchor constraintEqualToAnchor:_command.widthAnchor multiplier:1.0].active = YES;
         [self.leftAnchor constraintEqualToAnchor:_command.leftAnchor constant:-insets.left].active = YES;
         [self.rightAnchor constraintEqualToAnchor:_command.rightAnchor constant:insets.right].active = YES;
-        [self.bottomAnchor constraintGreaterThanOrEqualToAnchor:_command.bottomAnchor constant:insets.bottom].active
+        [self.bottomAnchor constraintEqualToAnchor:_command.bottomAnchor constant:insets.bottom].active
                     = YES;
 
 
@@ -194,7 +194,7 @@
         //[self.widthAnchor constraintEqualToAnchor:_argument.widthAnchor multiplier:1.0].active = YES;
         [self.leftAnchor constraintEqualToAnchor:_argument.leftAnchor constant:-insets.left].active = YES;
         [self.rightAnchor constraintEqualToAnchor:_argument.rightAnchor constant:insets.right].active = YES;
-        [self.bottomAnchor constraintGreaterThanOrEqualToAnchor:_argument.bottomAnchor constant:insets.bottom].active
+        [self.bottomAnchor constraintEqualToAnchor:_argument.bottomAnchor constant:insets.bottom].active
                     = YES;
 
 

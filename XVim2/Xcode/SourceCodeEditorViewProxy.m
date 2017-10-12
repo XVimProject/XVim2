@@ -565,7 +565,7 @@ static void (*fpGetUndoManager)(void);
     if (nil == _commandLine) {
         _commandLine = [[XVimCommandLine alloc] init];
 
-        NSView* layoutView = [[[[[self.sourceCodeEditorView scrollView] superview] superview] superview] superview];
+        NSView* layoutView = [[self.sourceCodeEditorView scrollView] superview];
         [layoutView addSubview:_commandLine];
 
         [layoutView.bottomAnchor constraintEqualToAnchor:_commandLine.bottomAnchor].active = YES;
