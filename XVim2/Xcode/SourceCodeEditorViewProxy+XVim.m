@@ -118,7 +118,13 @@
     }
 
     if (self.cursorMode == CURSOR_MODE_COMMAND && !(self.selectionMode == XVIM_VISUAL_BLOCK)) {
-        self.insertionPoint = [self.textStorage convertToValidCursorPositionForNormalMode:pos];
+        _auto adjustedPos = [self.textStorage convertToValidCursorPositionForNormalMode:pos];
+        self.insertionPoint = adjustedPos;
+        if (pos != adjustedPos && self.selectedRange.length == 0) {
+            self.xvim_lockSyncStateFromView = YES;
+            self.selectedRange = NSMakeRange(adjustedPos, 0);
+            self.xvim_lockSyncStateFromView = NO;
+        }
     }
     else {
         self.insertionPoint = pos;
@@ -133,9 +139,9 @@
 
 - (void)_adjustCursorPosition
 {
-#ifdef TODO
     TRACE_LOG(@"[%p]ENTER", self);
     if (![self.textStorage isValidCursorPosition:self.insertionPoint]) {
+#ifdef TODO
         NSRange placeholder = [(DVTSourceTextView*)self rangeOfPlaceholderFromCharacterIndex:self.insertionPoint
                                                                                      forward:NO
                                                                                         wrap:NO
@@ -146,10 +152,10 @@
             [self xvim_moveCursor:placeholder.location preserveColumn:YES];
         }
         else {
-            [self xvim_moveCursor:self.insertionPoint - 1 preserveColumn:YES];
-        }
-    }
 #endif
+            [self xvim_moveCursor:self.insertionPoint - 1 preserveColumn:YES];
+//        }
+    }
 }
 
 

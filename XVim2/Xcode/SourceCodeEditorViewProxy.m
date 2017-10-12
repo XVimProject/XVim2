@@ -350,6 +350,13 @@ static void (*fpGetUndoManager)(void);
 
 // Proxy methods
 
+- (void)selectPreviousPlaceholder:(id)arg1 {
+    [self.sourceCodeEditorView selectPreviousPlaceholder:self];
+}
+- (void)selectNextPlaceholder:(id)arg1 {
+    [self.sourceCodeEditorView selectNextPlaceholder:self];
+}
+
 - (void)mouseExited:(id)sender { [self.sourceCodeEditorView mouseExited:self]; }
 - (void)mouseEntered:(id)sender { [self.sourceCodeEditorView mouseEntered:self]; }
 - (void)mouseMoved:(id)sender { [self.sourceCodeEditorView mouseMoved:self]; }
