@@ -813,10 +813,7 @@
 			buildSettings = {
 				CLANG_ENABLE_MODULES = YES;
 				COMBINE_HIDPI_IMAGES = YES;
-				FRAMEWORK_SEARCH_PATHS = (
-					/Applications/Xcode.app/Contents/SharedFrameworks,
-					/Applications/Xcode.app/Contents/Frameworks,
-				);
+				FRAMEWORK_SEARCH_PATHS = "";
 				GCC_PREFIX_HEADER = "$(PROJECT_NAME)/XVim2-prefix.h";
 				HEADER_SEARCH_PATHS = "$(SOURCE_ROOT)/XVim2/Xcode";
 				INFOPLIST_FILE = XVim2/Info.plist;
@@ -843,10 +840,7 @@
 			buildSettings = {
 				CLANG_ENABLE_MODULES = YES;
 				COMBINE_HIDPI_IMAGES = YES;
-				FRAMEWORK_SEARCH_PATHS = (
-					/Applications/Xcode.app/Contents/SharedFrameworks,
-					/Applications/Xcode.app/Contents/Frameworks,
-				);
+				FRAMEWORK_SEARCH_PATHS = "";
 				GCC_PREFIX_HEADER = "$(PROJECT_NAME)/XVim2-prefix.h";
 				HEADER_SEARCH_PATHS = "$(SOURCE_ROOT)/XVim2/Xcode";
 				INFOPLIST_FILE = XVim2/Info.plist;
