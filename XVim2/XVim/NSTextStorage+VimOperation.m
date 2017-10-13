@@ -391,7 +391,9 @@ static NSUInteger xvim_sb_count_columns(xvim_string_buffer_t* sb, NSUInteger tab
 - (BOOL)isLastLine:(NSUInteger)index
 {
     ASSERT_VALID_RANGE_WITH_EOF(index);
-    return [self xvim_lineNumberAtIndex:index] == [self xvim_numberOfLines];
+    _auto numLines = [self xvim_numberOfLines];
+    return [self xvim_lineNumberAtIndex:index] == numLines
+        || (numLines > 1 && [self xvim_lineNumberAtIndex:index] == [self xvim_numberOfLines]-1);
 }
 
 - (BOOL)isNonblank:(NSUInteger)index
