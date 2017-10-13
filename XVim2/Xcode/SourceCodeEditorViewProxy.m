@@ -568,22 +568,33 @@ static void (*fpGetUndoManager)(void);
 
 - (XVimCommandLine*)commandLine
 {
-
     if (nil == _commandLine) {
         _commandLine = [[XVimCommandLine alloc] init];
-
-        NSView* layoutView = [[self.sourceCodeEditorView scrollView] superview];
-        [layoutView addSubview:_commandLine];
-
-        [layoutView.bottomAnchor constraintEqualToAnchor:_commandLine.bottomAnchor].active = YES;
-        [layoutView.widthAnchor constraintEqualToAnchor:_commandLine.widthAnchor multiplier:1.0].active = YES;
-        [layoutView.leftAnchor constraintEqualToAnchor:_commandLine.leftAnchor].active = YES;
-        [layoutView.rightAnchor constraintEqualToAnchor:_commandLine.rightAnchor].active = YES;
-        _auto height = [_commandLine.heightAnchor constraintEqualToConstant:20];
-        height.priority = 250;
-        height.active = YES;
     }
     return _commandLine;
+}
+
+-(void)showCommandLine
+{
+    _auto scrollView = [self.sourceCodeEditorView scrollView];
+    if ([scrollView isKindOfClass:NSClassFromString(@"SourceEditorScrollView")]) {
+        // TODO: Don't hardwire insets
+        NSEdgeInsets insets = scrollView.additionalContentInsets;
+        insets.bottom += 20;
+        scrollView.additionalContentInsets = insets;
+        [scrollView updateAutomaticContentInsets];
+        NSView* layoutView = [scrollView superview];
+        [layoutView addSubview:self.commandLine];
+        
+        [layoutView.bottomAnchor constraintEqualToAnchor:self.commandLine.bottomAnchor].active = YES;
+        [layoutView.widthAnchor constraintEqualToAnchor:self.commandLine.widthAnchor multiplier:1.0].active = YES;
+        [layoutView.leftAnchor constraintEqualToAnchor:self.commandLine.leftAnchor].active = YES;
+        [layoutView.rightAnchor constraintEqualToAnchor:self.commandLine.rightAnchor].active = YES;
+        _auto height = [self.commandLine.heightAnchor constraintEqualToConstant:20];
+        height.priority = 250;
+        height.active = YES;
+        self.commandLine.needsDisplay = YES;
+    }
 }
 
 - (NSMutableArray*)foundRanges

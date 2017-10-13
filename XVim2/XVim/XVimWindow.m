@@ -56,11 +56,16 @@
 
 - (void)setupAfterEditorViewSetup
 {
-    self.sourceView.cursorMode = CURSOR_MODE_COMMAND;
+    __weak XVimWindow *weakSelf = self;
+    [NSOperationQueue.mainQueue addOperationWithBlock:^{
+        XVimWindow *strongSelf = weakSelf;
+        strongSelf.sourceView.cursorMode = CURSOR_MODE_COMMAND;
+    }];
     [self.sourceView xvim_syncStateFromView];
-    self.sourceView.commandLine.needsDisplay = YES;
+    [self.sourceView showCommandLine];
     [XVIM registerWindow:self];
 }
+
 
 - (void)dumpEvaluatorStack:(NSMutableArray*)stack
 {

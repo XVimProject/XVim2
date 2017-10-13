@@ -21,6 +21,7 @@
 @end
 
 @protocol SourceViewProtocol <NSObject, NSTextInputClient>
+- (void)showCommandLine;
 - (void)keyDown:(NSEvent*)event;
 - (void)interpretKeyEvents:(NSArray<NSEvent*>*)eventArray;
 - (void)insertText:(id)insertString;

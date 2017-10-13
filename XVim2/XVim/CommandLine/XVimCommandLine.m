@@ -64,6 +64,8 @@
 #endif
 }
 
+static const BOOL UseLayers = NO;
+
 - (id)init
 {
     self = [super init];
@@ -71,13 +73,13 @@
         NSEdgeInsets insets = NSEdgeInsetsMake(3.0, 3.0, 3.0, 3.0);
 
         self.translatesAutoresizingMaskIntoConstraints = NO;
-        self.wantsLayer = YES;
+        self.wantsLayer = UseLayers;
         self.blendingMode = NSVisualEffectBlendingModeWithinWindow;
         self.appearance = [NSAppearance appearanceNamed:NSAppearanceNameVibrantDark];
 
         // Static Message ( This is behind the command view if the command is active)
         _static = [NSTextField labelWithString:@""];
-        _static.wantsLayer = YES;
+        _static.wantsLayer = UseLayers;
         _static.drawsBackground = NO;
         [_static setEditable:NO];
         [_static setSelectable:NO];
@@ -97,7 +99,7 @@
 
         // Error Message
         _error = [NSTextField labelWithString:@""];
-        _error.wantsLayer = YES;
+        _error.wantsLayer = UseLayers;
         [_error setEditable:NO];
         [_error setSelectable:NO];
         [_error setBackgroundColor:[NSColor redColor]];
@@ -158,7 +160,7 @@
 
         // Command View
         _command = [[XVimCommandField alloc] init];
-        _command.wantsLayer = YES;
+        _command.wantsLayer = UseLayers;
         _command.drawsBackground = NO;
         [_command setEditable:NO];
         [_command setSelectable:NO];
@@ -176,7 +178,7 @@
 
         // Argument View
         _argument = [NSTextField labelWithString:@""];
-        _argument.wantsLayer = YES;
+        _argument.wantsLayer = UseLayers;
         _command.drawsBackground = NO;
         [_argument setEditable:NO];
         [_argument setSelectable:NO];

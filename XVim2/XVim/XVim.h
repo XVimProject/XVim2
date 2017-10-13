@@ -31,6 +31,8 @@ extern NSString* const XVimDocumentPathKey;
 @interface XVim : NSObject <XVimKeymapProvider>
 
 + (XVim*)instance;
++ (NSString*)xvimrc;
+
 @property (strong) XVimOptions* options;
 @property (strong) XVimSearch* searcher;
 @property (strong) XVimMotion* lastCharacterSearchMotion;

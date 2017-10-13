@@ -73,16 +73,7 @@ CONST_STR(EDWindow);
 - (void)xvim_setupOnFirstAppearance
 {
     [self.xvim_window setupAfterEditorViewSetup];
-    SourceEditorScrollView* scrollView = SELF.scrollView;
     
-    // Add inset at bottom for XVim command line
-    if ([scrollView isKindOfClass:NSClassFromString(@"SourceEditorScrollView")]) {
-        // TODO: Don't hardwire insets
-        NSEdgeInsets insets = scrollView.additionalContentInsets;
-        insets.bottom += 20;
-        scrollView.additionalContentInsets = insets;
-        [scrollView updateAutomaticContentInsets];
-    }
 }
 
 

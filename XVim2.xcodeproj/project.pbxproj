@@ -25,6 +25,8 @@
 		ED0DED7F1F8C41F100886F6B /* NSURL+XVimXcodeModule.m in Sources */ = {isa = PBXBuildFile; fileRef = ED0DED7E1F8C41F000886F6B /* NSURL+XVimXcodeModule.m */; };
 		ED0DED821F8C444800886F6B /* NSColor+Extra.m in Sources */ = {isa = PBXBuildFile; fileRef = ED0DED801F8C444700886F6B /* NSColor+Extra.m */; };
 		ED0DED851F8C47F300886F6B /* XVimReplacePromptEvaluator.m in Sources */ = {isa = PBXBuildFile; fileRef = ED0DED841F8C47F200886F6B /* XVimReplacePromptEvaluator.m */; };
+		ED1286521F90B203007B6FC7 /* XVimAboutDialog.m in Sources */ = {isa = PBXBuildFile; fileRef = ED12864F1F90B1EB007B6FC7 /* XVimAboutDialog.m */; };
+		ED1286531F90B22A007B6FC7 /* about.xib in Resources */ = {isa = PBXBuildFile; fileRef = ED1286501F90B1EB007B6FC7 /* about.xib */; };
 		ED31C0C61F8164B800BE97B9 /* XVimInsertEvaluator.m in Sources */ = {isa = PBXBuildFile; fileRef = ED31C0C51F8164B800BE97B9 /* XVimInsertEvaluator.m */; };
 		ED4382B11F85340200975127 /* XVimVisualEvaluator.m in Sources */ = {isa = PBXBuildFile; fileRef = ED4382AD1F85340100975127 /* XVimVisualEvaluator.m */; };
 		ED52829F1F8241C2000794A1 /* SourceCodeEditorViewProxy+Scrolling.m in Sources */ = {isa = PBXBuildFile; fileRef = ED52829E1F8241C2000794A1 /* SourceCodeEditorViewProxy+Scrolling.m */; };
@@ -127,6 +129,9 @@
 		ED0DED811F8C444800886F6B /* NSColor+Extra.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "NSColor+Extra.h"; sourceTree = "<group>"; };
 		ED0DED831F8C47F100886F6B /* XVimReplacePromptEvaluator.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = XVimReplacePromptEvaluator.h; sourceTree = "<group>"; };
 		ED0DED841F8C47F200886F6B /* XVimReplacePromptEvaluator.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = XVimReplacePromptEvaluator.m; sourceTree = "<group>"; };
+		ED12864F1F90B1EB007B6FC7 /* XVimAboutDialog.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = XVimAboutDialog.m; sourceTree = "<group>"; };
+		ED1286501F90B1EB007B6FC7 /* about.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = about.xib; sourceTree = "<group>"; };
+		ED1286511F90B1EC007B6FC7 /* XVimAboutDialog.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = XVimAboutDialog.h; sourceTree = "<group>"; };
 		ED2521551F851C7300622B6A /* _TtC12SourceEditor23SourceEditorUndoManager.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = _TtC12SourceEditor23SourceEditorUndoManager.h; sourceTree = "<group>"; };
 		ED31C0C41F8164B800BE97B9 /* XVimInsertEvaluator.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = XVimInsertEvaluator.h; sourceTree = "<group>"; };
 		ED31C0C51F8164B800BE97B9 /* XVimInsertEvaluator.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = XVimInsertEvaluator.m; sourceTree = "<group>"; };
@@ -287,6 +292,9 @@
 		A2B52D381F514CC600D83C0A /* XVim2 */ = {
 			isa = PBXGroup;
 			children = (
+				ED1286501F90B1EB007B6FC7 /* about.xib */,
+				ED1286511F90B1EC007B6FC7 /* XVimAboutDialog.h */,
+				ED12864F1F90B1EB007B6FC7 /* XVimAboutDialog.m */,
 				EDF010501F6EEEF600461B2C /* XVim */,
 				A2B537B21F51D32D00D83C0A /* VimEmulation */,
 				A2B537A51F51B87A00D83C0A /* Xcode */,
@@ -575,6 +583,7 @@
 			isa = PBXNativeTarget;
 			buildConfigurationList = A26E5C791F5145AB000BCC66 /* Build configuration list for PBXNativeTarget "XVim2" */;
 			buildPhases = (
+				ED1286541F90B268007B6FC7 /* Write git revision */,
 				A26E5C6F1F5145AB000BCC66 /* Sources */,
 				A26E5C701F5145AB000BCC66 /* Frameworks */,
 				A26E5C711F5145AB000BCC66 /* Resources */,
@@ -626,10 +635,28 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				ED1286531F90B22A007B6FC7 /* about.xib in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
 /* End PBXResourcesBuildPhase section */
+
+/* Begin PBXShellScriptBuildPhase section */
+		ED1286541F90B268007B6FC7 /* Write git revision */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputPaths = (
+			);
+			name = "Write git revision";
+			outputPaths = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "echo '#define GIT_REVISION @\"'`git rev-parse HEAD`'\"' > gitrevision.h";
+		};
+/* End PBXShellScriptBuildPhase section */
 
 /* Begin PBXSourcesBuildPhase section */
 		A26E5C6F1F5145AB000BCC66 /* Sources */ = {
@@ -695,6 +722,7 @@
 				EDF0106A1F6EEFFC00461B2C /* XVimKeyStroke.m in Sources */,
 				ED0DED6B1F8C368900886F6B /* XcodeUtils.m in Sources */,
 				ED60EB871F82E4D4000CBF9C /* XVimTildeEvaluator.m in Sources */,
+				ED1286521F90B203007B6FC7 /* XVimAboutDialog.m in Sources */,
 				A2B537A71F51C70000D83C0A /* _TtC22IDEPegasusSourceEditor20SourceCodeEditorView.m in Sources */,
 				EDF010681F6EEFFC00461B2C /* XVimEvaluator.m in Sources */,
 				EDB7F6031F6D8CE5007E0C41 /* rd_route.c in Sources */,
