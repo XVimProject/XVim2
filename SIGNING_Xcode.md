@@ -1,6 +1,6 @@
-# Install XVim for Xcode 9
+# Signing Xcode
 
-Since Apple decided not to load 3rd party plugins, we have to make change to it. What we have to do overall is to re-codesign Xcode. This allows us to load 3rd party plugins. Here's the steps to do.
+Since Apple no longer loads 3rd party plugins (in Xcode 8 and above), we have to make change to it. What we have to do overall is to re-codesign Xcode. This allows us to load 3rd party plugins. Here are the steps to do so:
 
 1. Close Xcode
     
@@ -33,4 +33,4 @@ Since Apple decided not to load 3rd party plugins, we have to make change to it.
    
 4. Build XVim
 
-   Go to XVim directory you cloned and build it as usual (Read INSTALL section in README.md).
+   Go to XVim directory you cloned and build it as usual (Read INSTALL section in [README.md](README.md)).

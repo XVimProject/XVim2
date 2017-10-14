@@ -4,17 +4,20 @@
 
   XVim2 (or 'XVim for Xcode 9 and above') is a Vim plugin for Xcode. The plugin intends to offer a compelling Vim experience without the need to give up any Xcode features.
   
-  - Xcode 9 Users, See [INSTALL_Xcode.md](INSTALL_Xcode.md)
+  - Xcode 9 Users, follow the installation instructions below.
   - Xcode 8 or below, you should use [XVim](https://github.com/XVimProject/XVim)
   - [Google Group for XVim developers](https://groups.google.com/d/forum/xvim-developers) has been created.
 
 ## INSTALL
 
-  Xcode 9 Users, Follow instructions in [INSTALL_Xcode.md](INSTALL_Xcode.md) first.
+  1. Sign Xcode with your own certificate. You can find instructions in [SIGNING_Xcode.md](SIGNING_Xcode.md).
   
-  Download source code or clone the repo. Then,
+  2. Download the source code or clone the repo. 
+  ```bash
+  $ git clone https://github.com/XVimProject/XVim2.git
+  ```
   
-  1. Confirm `xcode-select` points to your Xcode
+  3. Confirm `xcode-select` points to your Xcode
   ```bash
   $ xcode-select -p
   /Applications/Xcode.app/Contents/Developer
@@ -22,7 +25,7 @@
   
   If this doesn't show your Xcode application path, use `xcode-select -s` to set.
   
-  2. make
+  4. make
   ```bash
   $ make
   ```
@@ -35,16 +38,16 @@
   ```
   Press y if you want to use XVim with your Xcode version (even it is not confirmed it works)
   
-  3. Create `.xvimrc` as you need and restart your Xcode. 
+  5. Create `.xvimrc` as you need. 
 
-  4. Launch Xcode. You'll be asked if you load XVim. Press 'Yes' to it.
+  6. Launch Xcode. You'll be asked if you load XVim. Press 'Yes' to it.
      If you press 'No' by mistake, close the Xcode and execute the following from a terminal
 
     ```
     defaults delete  com.apple.dt.Xcode DVTPlugInManagerNonApplePlugIns-Xcode-X.X     (X.X is your Xcode version)
     ```
     
-     Then relaunch Xcode.
+  7. Relaunch Xcode.
     
 ## Branches and Releases
  XVim has several branches and releases. Usually you only need to download one of 'releases' and use it.
