@@ -12,10 +12,20 @@
 
 
 // Raw values for SourceEditor.SourceEditorSelectionModifiers
-typedef NS_OPTIONS(unsigned, SelectionModifiers) {
+typedef NS_OPTIONS(unsigned, XVimSelectionModifiers) {
     SelectionModifierExtension = 1,
     SelectionModifierColumnar = 1 << 1,
     SelectionModifierDiscontiguous = 1 << 2
+};
+
+struct XVimSourceEditorPosition {
+    NSUInteger row;
+    NSUInteger col;
+};
+
+struct XVimSourceEditorRange {
+    struct XVimSourceEditorPosition pos1;
+    struct XVimSourceEditorPosition pos2;
 };
 
 @class XVimCommandLine;

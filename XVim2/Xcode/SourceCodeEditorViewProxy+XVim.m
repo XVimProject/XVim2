@@ -170,7 +170,12 @@
     [self dumpState];
 
     //[(DVTFoldingTextStorage*)self.textStorage increaseUsingFoldedRanges];
-    [self setSelectedRanges:[self xvim_selectedRanges] affinity:NSSelectionAffinityDownstream stillSelecting:NO];
+    if (self.selectionMode != XVIM_VISUAL_BLOCK) {
+        self.selectedRange = [self _xvim_selectedRange];
+    }
+    else {
+        [self setSelectedRanges:[self xvim_selectedRanges] affinity:NSSelectionAffinityDownstream stillSelecting:NO];
+    }
     //[(DVTFoldingTextStorage*)self.textStorage decreaseUsingFoldedRanges];
 
     if (scroll) {
