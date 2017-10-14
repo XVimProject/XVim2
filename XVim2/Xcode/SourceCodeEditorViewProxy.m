@@ -590,7 +590,7 @@ static void (*fpGetUndoManager)(void);
         [layoutView.widthAnchor constraintEqualToAnchor:self.commandLine.widthAnchor multiplier:1.0].active = YES;
         [layoutView.leftAnchor constraintEqualToAnchor:self.commandLine.leftAnchor].active = YES;
         [layoutView.rightAnchor constraintEqualToAnchor:self.commandLine.rightAnchor].active = YES;
-        _auto height = [self.commandLine.heightAnchor constraintEqualToConstant:20];
+        _auto height = [self.commandLine.heightAnchor constraintEqualToConstant:0];
         height.priority = 250;
         height.active = YES;
         self.commandLine.needsDisplay = YES;
