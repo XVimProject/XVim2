@@ -43,7 +43,7 @@
 
 - (void)xvim_scroll:(CGFloat)ratio count:(NSUInteger)count
 {
-    NSInteger cursorLine = self.currentLineNumber - 1;
+    NSInteger cursorLine = self.insertionLine - 1;
 
     // Scroll to the new location
     NSInteger numScrollLines = (NSInteger)(self.linesPerPage * ratio);

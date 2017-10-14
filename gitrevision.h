@@ -1,1 +1,0 @@
-#define GIT_REVISION @"a8a536e89bbd94a3419851ec945a4f5a4d8f8650"
