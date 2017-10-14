@@ -15,6 +15,7 @@
 #import "Macros.h"
 #import "XVimDefs.h"
 #import "XVimMacros.h"
+#import "XVimConstants.h"
 #endif
 
 #endif /* XVim2_prefix_h */

@@ -33,6 +33,7 @@ static void (*fpGetUndoManager)(void);
 @property (readwrite) NSUInteger preservedColumn;
 @property (readwrite) BOOL selectionToEOL;
 @property (strong) NSString* lastYankedText;
+@property (strong) NSLayoutConstraint* cmdLineBottomAnchor;
 @property TEXT_TYPE lastYankedType;
 @property BOOL xvim_lockSyncStateFromView;
 @end
@@ -43,6 +44,7 @@ static void (*fpGetUndoManager)(void);
     NSMutableArray<NSValue*>* _foundRanges;
     XVimCommandLine* _commandLine;
 }
+@synthesize enabled = _enabled;
 
 + (void)initialize
 {
@@ -66,13 +68,29 @@ static void (*fpGetUndoManager)(void);
     self = [super init];
     if (self) {
         self.sourceCodeEditorView = sourceCodeEditorView;
-        self.cursorMode = CURSOR_MODE_COMMAND;
-        [NSNotificationCenter.defaultCenter addObserver:self
-                                               selector:@selector(selectionChanged:)
-                                                   name:@"SourceEditorSelectedSourceRangeChangedNotification"
-                                                 object:sourceCodeEditorView];
     }
     return self;
+}
+
+-(void)setEnabled:(BOOL)enable {
+    if (enable != _enabled) {
+        _enabled = enable;
+        if (enable) {[self _enable];} else {[self _disable];}
+    }
+}
+
+-(void)_enable {
+    self.originalCursorStyle = self.cursorStyle;
+    self.selectionMode = XVIM_MODE_NONE;
+    self.cursorMode = CURSOR_MODE_COMMAND;
+    [self showCommandLine];
+    [self xvim_syncStateFromView];
+}
+
+-(void)_disable {
+    [self xvim_changeSelectionMode:XVIM_VISUAL_NONE];
+    self.cursorStyle = self.originalCursorStyle;
+    [self hideCommandLine];
 }
 
 
@@ -573,29 +591,66 @@ static void (*fpGetUndoManager)(void);
     }
     return _commandLine;
 }
+static CGFloat XvimCommandLineHeight = 20;
+static CGFloat XvimCommandLineAnimationDuration = 0.1;
+
+-(BOOL)isShowingCommandLine
+{
+    return self.commandLine.superview != nil;
+}
 
 -(void)showCommandLine
 {
+    if (self.isShowingCommandLine) return;
+    
     _auto scrollView = [self.sourceCodeEditorView scrollView];
     if ([scrollView isKindOfClass:NSClassFromString(@"SourceEditorScrollView")]) {
-        // TODO: Don't hardwire insets
-        NSEdgeInsets insets = scrollView.additionalContentInsets;
-        insets.bottom += 20;
-        scrollView.additionalContentInsets = insets;
-        [scrollView updateAutomaticContentInsets];
         NSView* layoutView = [scrollView superview];
         [layoutView addSubview:self.commandLine];
-        
-        [layoutView.bottomAnchor constraintEqualToAnchor:self.commandLine.bottomAnchor].active = YES;
+        _cmdLineBottomAnchor = [layoutView.bottomAnchor constraintEqualToAnchor:self.commandLine.bottomAnchor constant:-XvimCommandLineHeight];
+        _cmdLineBottomAnchor.active = YES;
         [layoutView.widthAnchor constraintEqualToAnchor:self.commandLine.widthAnchor multiplier:1.0].active = YES;
         [layoutView.leftAnchor constraintEqualToAnchor:self.commandLine.leftAnchor].active = YES;
         [layoutView.rightAnchor constraintEqualToAnchor:self.commandLine.rightAnchor].active = YES;
-        _auto height = [self.commandLine.heightAnchor constraintEqualToConstant:20];
+        _auto height = [self.commandLine.heightAnchor constraintEqualToConstant:XvimCommandLineHeight];
         height.priority = 250;
         height.active = YES;
-        self.commandLine.needsDisplay = YES;
+        
+        [NSAnimationContext runAnimationGroup:^(NSAnimationContext * _Nonnull context) {
+            context.duration = XvimCommandLineAnimationDuration;
+            NSEdgeInsets insets = scrollView.additionalContentInsets;
+            _cmdLineBottomAnchor.animator.constant = 0;
+            insets.bottom += XvimCommandLineHeight;
+            scrollView.animator.additionalContentInsets = insets;
+            [scrollView updateAutomaticContentInsets];
+        } completionHandler:^{
+            self.commandLine.needsDisplay = YES;
+        }];
     }
 }
+
+-(void)hideCommandLine
+{
+    if (!self.isShowingCommandLine) return;
+    
+    _auto scrollView = [self.sourceCodeEditorView scrollView];
+    if ([scrollView isKindOfClass:NSClassFromString(@"SourceEditorScrollView")]) {
+        NSEdgeInsets insets = scrollView.additionalContentInsets;
+        insets.bottom = 0;
+        
+        [NSAnimationContext runAnimationGroup:^(NSAnimationContext * _Nonnull context) {
+            context.duration = XvimCommandLineAnimationDuration;
+            _cmdLineBottomAnchor.animator.constant = -XvimCommandLineHeight;
+            scrollView.animator.additionalContentInsets = insets;
+            [scrollView updateAutomaticContentInsets];
+        } completionHandler:^{
+            [self.commandLine removeFromSuperview];
+            self->_cmdLineBottomAnchor = nil;
+        }];
+    }
+}
+
+
 
 - (NSMutableArray*)foundRanges
 {
@@ -608,5 +663,7 @@ static void (*fpGetUndoManager)(void);
 - (NSWindow*)window { return self.sourceCodeEditorView.window; }
 
 - (NSView*)view { return self.sourceCodeEditorView; }
+
+@synthesize originalCursorStyle;
 
 @end

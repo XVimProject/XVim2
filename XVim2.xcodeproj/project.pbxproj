@@ -12,7 +12,6 @@
 		A2B52D3F1F514CC600D83C0A /* Logger.m in Sources */ = {isa = PBXBuildFile; fileRef = A2B52D3B1F514CC600D83C0A /* Logger.m */; };
 		A2B537A71F51C70000D83C0A /* _TtC22IDEPegasusSourceEditor20SourceCodeEditorView.m in Sources */ = {isa = PBXBuildFile; fileRef = A2B537A61F51C70000D83C0A /* _TtC22IDEPegasusSourceEditor20SourceCodeEditorView.m */; };
 		A2B537B11F51C94400D83C0A /* NSObject+Swizzle.m in Sources */ = {isa = PBXBuildFile; fileRef = A2B537B01F51C94400D83C0A /* NSObject+Swizzle.m */; };
-		A2B537B51F51D35000D83C0A /* XVimCmdArg.m in Sources */ = {isa = PBXBuildFile; fileRef = A2B537B41F51D35000D83C0A /* XVimCmdArg.m */; };
 		ED0DED611F8C2CEC00886F6B /* XVimZEvaluator.m in Sources */ = {isa = PBXBuildFile; fileRef = ED0DED5D1F8C2CDD00886F6B /* XVimZEvaluator.m */; };
 		ED0DED621F8C2E1D00886F6B /* XVimGVisualEvaluator.m in Sources */ = {isa = PBXBuildFile; fileRef = ED0DED601F8C2CDF00886F6B /* XVimGVisualEvaluator.m */; };
 		ED0DED681F8C31FA00886F6B /* XVimCommandLineEvaluator.m in Sources */ = {isa = PBXBuildFile; fileRef = ED0DED661F8C31F900886F6B /* XVimCommandLineEvaluator.m */; };
@@ -56,6 +55,7 @@
 		ED9CF2D71F6EFA2A00908DFB /* XVimNormalEvaluator.m in Sources */ = {isa = PBXBuildFile; fileRef = ED9CF2D61F6EFA2A00908DFB /* XVimNormalEvaluator.m */; };
 		EDB7F6031F6D8CE5007E0C41 /* rd_route.c in Sources */ = {isa = PBXBuildFile; fileRef = EDB7F6011F6D8CE5007E0C41 /* rd_route.c */; };
 		EDB7F6061F6D8D36007E0C41 /* SourceCodeEditorViewProxy.m in Sources */ = {isa = PBXBuildFile; fileRef = EDB7F6051F6D8D36007E0C41 /* SourceCodeEditorViewProxy.m */; };
+		EDB8EF4F1F91F8DA004188F5 /* XVimConstants.m in Sources */ = {isa = PBXBuildFile; fileRef = EDB8EF4E1F91F8DA004188F5 /* XVimConstants.m */; };
 		EDCAF9A41F8CC33C003F1C58 /* XVimEqualEvaluator.m in Sources */ = {isa = PBXBuildFile; fileRef = EDCAF9A21F8CC33A003F1C58 /* XVimEqualEvaluator.m */; };
 		EDDF5D0C1F83A85B00872094 /* XVimWindowEvaluator.m in Sources */ = {isa = PBXBuildFile; fileRef = EDDF5D081F83A85A00872094 /* XVimWindowEvaluator.m */; };
 		EDEF0F241F84DB570087D30B /* XVimShiftEvaluator.m in Sources */ = {isa = PBXBuildFile; fileRef = EDEF0F231F84DB570087D30B /* XVimShiftEvaluator.m */; };
@@ -102,8 +102,6 @@
 		A2B537AD1F51C8D200D83C0A /* IDEPegasusSourceEditor */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; name = IDEPegasusSourceEditor; path = ../PlugIns/IDEPegasusSourceEditor.ideplugin/Contents/MacOS/IDEPegasusSourceEditor; sourceTree = DEVELOPER_DIR; };
 		A2B537AF1F51C94400D83C0A /* NSObject+Swizzle.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "NSObject+Swizzle.h"; sourceTree = "<group>"; };
 		A2B537B01F51C94400D83C0A /* NSObject+Swizzle.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "NSObject+Swizzle.m"; sourceTree = "<group>"; };
-		A2B537B31F51D35000D83C0A /* XVimCmdArg.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = XVimCmdArg.h; sourceTree = "<group>"; };
-		A2B537B41F51D35000D83C0A /* XVimCmdArg.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = XVimCmdArg.m; sourceTree = "<group>"; };
 		ED0DED5D1F8C2CDD00886F6B /* XVimZEvaluator.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = XVimZEvaluator.m; sourceTree = "<group>"; };
 		ED0DED5E1F8C2CDD00886F6B /* XVimZEvaluator.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = XVimZEvaluator.h; sourceTree = "<group>"; };
 		ED0DED5F1F8C2CDE00886F6B /* XVimGVisualEvaluator.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = XVimGVisualEvaluator.h; sourceTree = "<group>"; };
@@ -217,6 +215,8 @@
 		EDB7F6021F6D8CE5007E0C41 /* rd_route.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = rd_route.h; sourceTree = "<group>"; };
 		EDB7F6041F6D8D36007E0C41 /* SourceCodeEditorViewProxy.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = SourceCodeEditorViewProxy.h; sourceTree = "<group>"; };
 		EDB7F6051F6D8D36007E0C41 /* SourceCodeEditorViewProxy.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = SourceCodeEditorViewProxy.m; sourceTree = "<group>"; };
+		EDB8EF4D1F91F8DA004188F5 /* XVimConstants.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = XVimConstants.h; sourceTree = "<group>"; };
+		EDB8EF4E1F91F8DA004188F5 /* XVimConstants.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = XVimConstants.m; sourceTree = "<group>"; };
 		EDCAF9A21F8CC33A003F1C58 /* XVimEqualEvaluator.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = XVimEqualEvaluator.m; sourceTree = "<group>"; };
 		EDCAF9A31F8CC33B003F1C58 /* XVimEqualEvaluator.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = XVimEqualEvaluator.h; sourceTree = "<group>"; };
 		EDDF5D081F83A85A00872094 /* XVimWindowEvaluator.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = XVimWindowEvaluator.m; sourceTree = "<group>"; };
@@ -296,7 +296,6 @@
 				ED1286511F90B1EC007B6FC7 /* XVimAboutDialog.h */,
 				ED12864F1F90B1EB007B6FC7 /* XVimAboutDialog.m */,
 				EDF010501F6EEEF600461B2C /* XVim */,
-				A2B537B21F51D32D00D83C0A /* VimEmulation */,
 				A2B537A51F51B87A00D83C0A /* Xcode */,
 				A2B52D391F514CC600D83C0A /* Helper */,
 				ED41F7E41F7FDA3000417142 /* SourceViewProtocol.h */,
@@ -367,15 +366,6 @@
 				A2B537A91F51C89A00D83C0A /* SourceEditor */,
 			);
 			name = Frameworks;
-			sourceTree = "<group>";
-		};
-		A2B537B21F51D32D00D83C0A /* VimEmulation */ = {
-			isa = PBXGroup;
-			children = (
-				A2B537B31F51D35000D83C0A /* XVimCmdArg.h */,
-				A2B537B41F51D35000D83C0A /* XVimCmdArg.m */,
-			);
-			path = VimEmulation;
 			sourceTree = "<group>";
 		};
 		ED00D4661F800DB4006BE4AE /* SourceEditor */ = {
@@ -563,6 +553,8 @@
 				EDDF5D081F83A85A00872094 /* XVimWindowEvaluator.m */,
 				ED0DED6C1F8C37D000886F6B /* XVimHistoryHandler.h */,
 				ED0DED6D1F8C37D100886F6B /* XVimHistoryHandler.m */,
+				EDB8EF4D1F91F8DA004188F5 /* XVimConstants.h */,
+				EDB8EF4E1F91F8DA004188F5 /* XVimConstants.m */,
 			);
 			path = XVim;
 			sourceTree = "<group>";
@@ -706,13 +698,13 @@
 				EDDF5D0C1F83A85B00872094 /* XVimWindowEvaluator.m in Sources */,
 				ED548FDA1F827EEC00A8069D /* XVimYankEvaluator.m in Sources */,
 				ED548FE31F82A91D00A8069D /* SourceCodeEditorViewProxy+XVim.m in Sources */,
+				EDB8EF4F1F91F8DA004188F5 /* XVimConstants.m in Sources */,
 				EDF010731F6EF05E00461B2C /* NSString+VimHelper.m in Sources */,
 				ED0DED711F8C3B0800886F6B /* XVimExCommand.m in Sources */,
 				EDF010671F6EEFFC00461B2C /* XVimArgumentEvaluator.m in Sources */,
 				EDF010741F6EF05E00461B2C /* NSEvent+VimHelper.m in Sources */,
 				EDEF0F241F84DB570087D30B /* XVimShiftEvaluator.m in Sources */,
 				ED548FD51F827B9D00A8069D /* SourceCodeEditorViewProxy+Yank.m in Sources */,
-				A2B537B51F51D35000D83C0A /* XVimCmdArg.m in Sources */,
 				ED6331BA1F836D2100E9E6B0 /* IDEWorkspaceTabController+XVim.m in Sources */,
 				EDB7F6061F6D8D36007E0C41 /* SourceCodeEditorViewProxy.m in Sources */,
 				ED6331D81F83862600E9E6B0 /* XVimCommandLine.m in Sources */,

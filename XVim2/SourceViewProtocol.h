@@ -12,6 +12,8 @@
 #import <AppKit/AppKit.h>
 #import <SourceEditor/_TtC12SourceEditor23SourceEditorUndoManager.h>
 
+typedef NS_ENUM(NSInteger, CursorStyle) { CursorStyleVerticalBar, CursorStyleBlock, CursorStyleUnderline };
+
 @class XVimMotion;
 @class XVimCommandLine;
 
@@ -22,6 +24,8 @@
 
 @protocol SourceViewProtocol <NSObject, NSTextInputClient>
 - (void)showCommandLine;
+- (void)hideCommandLine;
+- (BOOL)isShowingCommandLine;
 - (void)keyDown:(NSEvent*)event;
 - (void)interpretKeyEvents:(NSArray<NSEvent*>*)eventArray;
 - (void)insertText:(id)insertString;
@@ -29,8 +33,10 @@
 - (void)scrollPageForward:(NSUInteger)numPages;
 - (void)scrollPageBackward:(NSUInteger)numPages;
 - (void)showFindIndicatorForRange:(NSRange)arg1;
+- (void)selectionChanged:(NSNotification*)changeNotification;
 
 // Properties
+@property (nonatomic, getter=isEnabled) BOOL enabled;
 @property NSRange selectedRange;
 @property (readonly) NSString* string;
 @property (readonly) XVIM_VISUAL_MODE selectionMode;
@@ -52,6 +58,8 @@
 @property (readonly) XVimCommandLine* commandLine;
 @property (readonly) NSWindow* window;
 @property (readonly) NSView* view;
+@property CursorStyle originalCursorStyle;
+@property CursorStyle cursorStyle;
 @end
 
 

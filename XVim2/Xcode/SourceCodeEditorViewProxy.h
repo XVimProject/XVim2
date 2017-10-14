@@ -10,7 +10,6 @@
 #import "SourceViewProtocol.h"
 #import <Foundation/Foundation.h>
 
-typedef NS_ENUM(NSInteger, CursorStyle) { CursorStyleVerticalBar, CursorStyleBlock, CursorStyleUnderline };
 
 // Raw values for SourceEditor.SourceEditorSelectionModifiers
 typedef NS_OPTIONS(unsigned, SelectionModifiers) {
@@ -27,7 +26,6 @@ typedef NS_OPTIONS(unsigned, SelectionModifiers) {
 @protocol XVimTextViewDelegateProtocol;
 
 @interface SourceCodeEditorViewProxy : NSObject <SourceViewProtocol>
-@property CursorStyle cursorStyle;
 @property (readonly) XVIM_VISUAL_MODE selectionMode;
 @property (readonly) NSUInteger insertionPoint;
 @property (readonly) XVimPosition insertionPosition;

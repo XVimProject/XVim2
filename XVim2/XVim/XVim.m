@@ -143,6 +143,7 @@
         self.tempRepeatRegister = [[XVimMutableString alloc] init];
         self.isRepeating = NO;
         self.isExecuting = NO;
+        self.enabled = YES;
         self.foundRangesHidden = NO;
         self.options = [[XVimOptions alloc] init];
 
@@ -247,7 +248,7 @@ static id _startupObservation = nil;
     NSMenu *menu = [[NSApplication sharedApplication] menu];
     
     NSMenuItem *editorMenuItem = [menu itemWithTitle:@"Edit"];
-    NSMenuItem *xvimMenuItem = [[self class] xvimMenuItem];
+    NSMenuItem *xvimMenuItem = [self xvimMenuItem];
     [editorMenuItem.submenu addItem:NSMenuItem.separatorItem];
     [editorMenuItem.submenu addItem:xvimMenuItem];
     
@@ -255,7 +256,8 @@ static id _startupObservation = nil;
 
 
 #define XVIM_MENU_TOGGLE_IDENTIFIER @"XVim.Enable";
-+ (NSMenuItem*)xvimMenuItem{
+- (NSMenuItem*)xvimMenuItem
+{
     // Add XVim menu
     NSMenuItem* item = [[NSMenuItem alloc] init];
     item.title = @"XVim";
@@ -269,6 +271,7 @@ static id _startupObservation = nil;
     subitem.target = [XVim instance];
     subitem.action = @selector(toggleXVim:);
     subitem.representedObject = XVIM_MENU_TOGGLE_IDENTIFIER;
+    self.enabledMenuItem = subitem;
     [m addItem:subitem];
     
     subitem = [[NSMenuItem alloc] init];
@@ -317,14 +320,26 @@ static id _startupObservation = nil;
     [[NSApplication sharedApplication] runModalForWindow:win];
 }
 
+- (void)enableXVim {
+    self.enabled = YES;
+    self.enabledMenuItem.state = NSOnState;
+    [self postEnabledChanged];
+}
+- (void)disableXVim {
+    self.enabled = NO;
+    self.enabledMenuItem.state = NSOffState;
+    [self postEnabledChanged];
+}
+
+
+-(void)postEnabledChanged {
+    [NSNotificationCenter.defaultCenter postNotificationName:XVimNotificationEnabled
+                                                      object:self
+                                                    userInfo:@{XVimNotificationEnabledFlag:@(self.enabled)}];
+}
+
 - (void)toggleXVim:(id)sender{
-    if( [(NSCell*)sender state] == NSOnState ){
-        // TODO: [DVTSourceTextView xvim_finalize];
-        [(NSCell*)sender setState:NSOffState];
-    }else{
-        // TODO: [DVTSourceTextView xvim_initialize];
-        [(NSCell*)sender setState:NSOnState];
-    }
+    if (self.isEnabled) {[self disableXVim];} else {[self enableXVim];}
 }
 
 

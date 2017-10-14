@@ -12,7 +12,6 @@
 #import "NSObject+ExtraData.h"
 #import "NSObject+Swizzle.h"
 #import "SourceCodeEditorViewProxy.h"
-#import "XVimCmdArg.h"
 #import "XVimKeyStroke.h"
 #import "XVimWindow.h"
 #import <QuartzCore/QuartzCore.h>
@@ -35,9 +34,6 @@ CONST_STR(EDWindow);
     [XVimIDEPegasusSourceEditorView xvim_swizzleInstanceMethodOfClassName:IDEPegasusSourceCodeEditorViewClassName
                                                                  selector:@selector(viewWillMoveToWindow:)
                                                                      with:@selector(xvim_viewWillMoveToWindow:)];
-    [XVimIDEPegasusSourceEditorView xvim_swizzleInstanceMethodOfClassName:IDEPegasusSourceCodeEditorViewClassName
-                                                                 selector:@selector(selectionWillChange)
-                                                                     with:@selector(xvim_selectionWillChange)];
     [XVimIDEPegasusSourceEditorView xvim_addInstanceMethod:@selector(xvim_window)
                                                toClassName:IDEPegasusSourceCodeEditorClassName];
     [XVimIDEPegasusSourceEditorView xvim_addInstanceMethod:@selector(xvim_setupOnFirstAppearance)
@@ -45,12 +41,6 @@ CONST_STR(EDWindow);
 
 }
 
-// SWIZZLED
-- (void)xvim_selectionWillChange
-{
-    DEBUG_LOG(@"SELECTION WILL CHANGE");
-    [self xvim_selectionWillChange];
-}
 
 - (void)xvim_viewWillMoveToWindow:(id)window
 {
