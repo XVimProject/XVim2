@@ -77,7 +77,7 @@
                 [self.textStorage xvim_firstNonblankInLineAtIndex:newCharRange.location allowEOL:YES];
 
     [self xvim_moveCursor:cursorIndexAfterScroll preserveColumn:NO];
-    [self xvim_syncStateWithScroll:NO];
+    [self xvim_syncState];
 }
 
 - (void)xvim_scrollBottom:(NSUInteger)lineNumber firstNonblank:(BOOL)fnb

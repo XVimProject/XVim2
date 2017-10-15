@@ -65,7 +65,7 @@
             [self xvim_moveCursor:r.end preserveColumn:NO];
         }
     }
-    else {
+    else { // VISUAL MODE
         switch (motion.motion) {
         case MOTION_LINE_BACKWARD:
         case MOTION_LINE_FORWARD:
@@ -84,7 +84,7 @@
             [self xvim_moveCursor:r.end preserveColumn:YES];
             break;
         case MOTION_END_OF_LINE:
-            self.selectionToEOL = YES;
+            self.selectionToEOL = NO;
             [self xvim_moveCursor:r.end preserveColumn:NO];
             break;
         case MOTION_END_OF_WORD_BACKWARD:
@@ -170,12 +170,7 @@
     [self dumpState];
 
     //[(DVTFoldingTextStorage*)self.textStorage increaseUsingFoldedRanges];
-    if (self.selectionMode != XVIM_VISUAL_BLOCK) {
-        self.selectedRange = [self _xvim_selectedRange];
-    }
-    else {
-        [self setSelectedRanges:[self xvim_selectedRanges] affinity:NSSelectionAffinityDownstream stillSelecting:NO];
-    }
+    [self setSelectedRanges:[self xvim_selectedRanges] affinity:NSSelectionAffinityDownstream stillSelecting:NO];
     //[(DVTFoldingTextStorage*)self.textStorage decreaseUsingFoldedRanges];
 
     if (scroll) {

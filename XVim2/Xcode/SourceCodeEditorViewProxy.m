@@ -23,6 +23,7 @@ static void (*fpGetTextStorage)(void);
 static void (*fpGetSourceEditorDataSource)(void);
 static void (*fpBeginEditingTransaction)(void);
 static void (*fpEndEditingTransaction)(void);
+static void (*fpSetSelectedRangeWithModifiers)(void);
 static void (*fpAddSelectedRangeWithModifiers)(void);
 static void (*fpGetUndoManager)(void);
 static void (*fpPositionFromIndexLineHint)(void);
@@ -58,6 +59,7 @@ static void (*fpPositionFromIndexLineHint)(void);
                     "_T022IDEPegasusSourceEditor0B12CodeDocumentC16sdefSupport_textSo13NSTextStorageCyF", NULL);
         fpGetSourceEditorDataSource = function_ptr_from_name("_T012SourceEditor0aB4ViewC04dataA0AA0ab4DataA0Cfg", NULL);
         fpGetUndoManager = function_ptr_from_name("_T012SourceEditor0ab4DataA0C11undoManagerAA0ab4UndoE0Cfg", NULL);
+        fpSetSelectedRangeWithModifiers = function_ptr_from_name("_T012SourceEditor0aB4ViewC16setSelectedRangeyAA0abF0V_AA0aB18SelectionModifiersV9modifierstF", NULL);
         fpAddSelectedRangeWithModifiers = function_ptr_from_name("_T012SourceEditor0aB4ViewC16addSelectedRangeyAA0abF0V_AA0aB18SelectionModifiersV9modifierstF", NULL);
         // Methdos on data source
         fpBeginEditingTransaction
@@ -137,9 +139,10 @@ static void (*fpPositionFromIndexLineHint)(void);
     return cstyle;
 }
 
-- (void)addSourceEditorRange:(struct XVimSourceEditorRange)rng modifiers:(XVimSelectionModifiers)modifiers
+- (void)addSelectedRange:(struct XVimSourceEditorRange)rng modifiers:(XVimSelectionModifiers)modifiers reset:(BOOL)reset
 {
     void* sev = (__bridge_retained void*)self.sourceCodeEditorView;
+    void *fpAddOrSet = reset ? fpSetSelectedRangeWithModifiers : fpAddSelectedRangeWithModifiers;
     struct XVimSourceEditorRange *rngPtr = (void*)&rng;
     uint64_t mods = modifiers;
     uint64_t *modsPtr = &mods;
@@ -153,7 +156,7 @@ static void (*fpPositionFromIndexLineHint)(void);
             "call *%[AddSelectedRangeWithModifiers]\n\t"
             :
             : [SourceEditorView] "m" (sev)
-            , [AddSelectedRangeWithModifiers] "m"(fpAddSelectedRangeWithModifiers)
+            , [AddSelectedRangeWithModifiers] "m"(fpAddOrSet)
             , [Modifiers] "r" (mods)
             , [RangePtr] "r" (rngPtr)
             , "m" (*rngPtr)
@@ -179,7 +182,10 @@ static void (*fpPositionFromIndexLineHint)(void);
 - (struct XVimSourceEditorPosition)positionFromIndex:(NSUInteger)idx lineHint:(NSUInteger)line
 {
     void* sev = (__bridge_retained void*)self.sourceCodeEditorView;
-    NSUInteger row, col;
+    uint64_t row = 0; uint64_t *rowPtr = &row;
+    uint64_t col = 0; uint64_t *colPtr = &col;
+    int64_t index = idx; int64_t *indexPtr = &idx;
+    
     __asm__("movq %[SourceEditorView], %%r13\n\t"
             "call *%[DataSourceGetter]\n\t"
             "movq %%rax, %%r13\n\t"
@@ -193,11 +199,14 @@ static void (*fpPositionFromIndexLineHint)(void);
             , [Col] "=r"(col)
             
             : [SourceEditorView] "r"(sev)
-            , [Index] "r" (idx)
-            , [LineHint] "r" (line)
+            , [Index] "m" (index)
+            , [LineHint] "m" (line)
             , [DataSourceGetter] "m"(fpGetSourceEditorDataSource)
             , [GetPosition] "m"(fpPositionFromIndexLineHint)
-            
+            , "m"(rowPtr)
+            , "m"(colPtr)
+            , "m"(indexPtr)
+
             : "memory", "%rax", "%rbx", "%rdx", "%r13", "%rdi", "%rsi");
     
     struct XVimSourceEditorPosition pos = { .row = row, .col = col };
@@ -340,31 +349,35 @@ static void (*fpPositionFromIndexLineHint)(void);
 #pragma mark-- selection
 
 - (void)setSelectedRanges:(NSArray<NSValue*>*)ranges
-                     affinity:(NSSelectionAffinity)affinity
-               stillSelecting:(BOOL)stillSelectingFlag
+                 affinity:(NSSelectionAffinity)affinity
+           stillSelecting:(BOOL)stillSelectingFlag
 {
-    // TODO
     if (ranges.count == 0) return;
     
-    self.selectedRange = NSMakeRange(0, 0);
-    self.selectedRange = [ranges[0] rangeValue];
-    
-    if (ranges.count == 1) return;
+    if (ranges.count == 1) {
+        _auto rng = [ranges[0] rangeValue];
+        self.selectedRange = rng;
+    }
+    else {
+        _auto rangeItr = (affinity == NSSelectionAffinityUpstream) ? [ranges reverseObjectEnumerator] : ranges;
+        _auto insertionPos = [self positionFromIndex:self.insertionPoint lineHint:0];
+        _auto insertionLine = insertionPos.row;
+        BOOL isFirst = YES;
 
-    NSInteger minc,minr,maxc,maxr;
-    minc = minr = 1E10;
-    maxc = maxr = 0;
-    _auto nextValues = [ranges subarrayWithRange:NSMakeRange(1, ranges.count-1)];
-    
-    for (NSValue* val in nextValues) {
-        _auto rng = val.rangeValue;
-        _auto line = [self.textStorage xvim_lineNumberAtIndex:rng.location] - 1;
-        _auto crng = [self characterRangeForLineRange:NSMakeRange(line, 1)];
-        struct XVimSourceEditorRange ser = {
-            .pos1 = { .row = line, .col = MIN(crng.length, rng.location - crng.location) }
-            , .pos2 = { .row = line, .col = MIN(crng.length, rng.location - crng.location + rng.length)}
-        };
-        [self addSourceEditorRange:ser modifiers:SelectionModifierDiscontiguous];
+        for (NSValue* val in rangeItr) {
+            _auto rng = val.rangeValue;
+            _auto pos1 = [self positionFromIndex:rng.location lineHint:0];
+            _auto pos2 = [self positionFromIndex:rng.location + rng.length lineHint:pos1.row];
+            
+            struct XVimSourceEditorRange ser = { .pos1 = pos1, .pos2 = pos2 };
+            BOOL isInsertionLine = (pos1.row == insertionLine);
+            
+            _auto selectionModifiers = isInsertionLine
+                ? SelectionModifierDiscontiguous
+                : SelectionModifierDiscontiguous | SelectionModifierExtension ;
+            [self addSelectedRange:ser modifiers:selectionModifiers reset:isFirst];
+            isFirst = NO;
+        }
     }
 }
 
