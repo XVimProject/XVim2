@@ -368,12 +368,14 @@ static void (*fpPositionFromIndexLineHint)(void);
         _auto rangeItr = (affinity == NSSelectionAffinityUpstream) ? [ranges reverseObjectEnumerator] : ranges;
         _auto insertionPos = [self positionFromIndex:self.insertionPoint lineHint:0];
         _auto insertionLine = insertionPos.row;
+        _auto lastLine = insertionLine;
         BOOL isFirst = YES;
 
         for (NSValue* val in rangeItr) {
             _auto rng = val.rangeValue;
-            _auto pos1 = [self positionFromIndex:rng.location lineHint:insertionPos.row];
+            _auto pos1 = [self positionFromIndex:rng.location lineHint:lastLine];
             _auto pos2 = [self positionFromIndex:rng.location + rng.length lineHint:pos1.row];
+            lastLine = pos2.row;
             
             struct XVimSourceEditorRange ser = { .pos1 = pos1, .pos2 = pos2 };
             BOOL isInsertionLine = (pos1.row == insertionLine);
