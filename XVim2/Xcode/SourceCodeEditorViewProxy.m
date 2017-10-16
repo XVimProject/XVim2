@@ -355,8 +355,14 @@ static void (*fpPositionFromIndexLineHint)(void);
     if (ranges.count == 0) return;
     
     if (ranges.count == 1) {
-        _auto rng = [ranges[0] rangeValue];
-        self.selectedRange = rng;
+        _auto rng = ranges.firstObject.rangeValue;
+        _auto insertionPos = [self positionFromIndex:self.insertionPoint lineHint:0];
+        struct XVimSourceEditorRange insertionRange = { .pos1 = insertionPos, .pos2 = insertionPos };
+        [self addSelectedRange:insertionRange modifiers:0 reset:YES];
+        _auto pos1 = [self positionFromIndex:rng.location lineHint:insertionPos.row];
+        _auto pos2 = [self positionFromIndex:rng.location + rng.length lineHint:pos1.row];
+        struct XVimSourceEditorRange selectionRange = { .pos1 = pos1, .pos2 = pos2 };
+        [self addSelectedRange:selectionRange modifiers:SelectionModifierExtension reset:NO];
     }
     else {
         _auto rangeItr = (affinity == NSSelectionAffinityUpstream) ? [ranges reverseObjectEnumerator] : ranges;
@@ -366,7 +372,7 @@ static void (*fpPositionFromIndexLineHint)(void);
 
         for (NSValue* val in rangeItr) {
             _auto rng = val.rangeValue;
-            _auto pos1 = [self positionFromIndex:rng.location lineHint:0];
+            _auto pos1 = [self positionFromIndex:rng.location lineHint:insertionPos.row];
             _auto pos2 = [self positionFromIndex:rng.location + rng.length lineHint:pos1.row];
             
             struct XVimSourceEditorRange ser = { .pos1 = pos1, .pos2 = pos2 };
