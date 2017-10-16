@@ -82,20 +82,6 @@
 
 - (XVimEvaluator*)A { return [[XVimInsertEvaluator alloc] initWithWindow:self.window mode:XVIM_INSERT_APPEND_EOL]; }
 
-#ifdef TODO
-
-- (XVimEvaluator*)C_a
-{
-    NSTextView* view = [self sourceView];
-    if ([view xvim_incrementNumber:(int64_t)self.numericArg]) {
-        [[XVim instance] fixOperationCommands];
-    }
-    else {
-        [[XVim instance] cancelOperationCommands];
-    }
-    return nil;
-}
-#endif
 
 // 'c' works like 'd' except that once it's done deleting
 // it should go you into insert mode
@@ -508,6 +494,35 @@
 }
 
 
+
+// INCREMENT / DECREMENT
+#pragma mark - INCREMENT / DECREMENT
+
+- (XVimEvaluator*)C_a
+{
+    _auto view = [self sourceView];
+    if ([view xvim_incrementNumber:(int64_t)self.numericArg]) {
+        [[XVim instance] fixOperationCommands];
+    }
+    else {
+        [[XVim instance] cancelOperationCommands];
+    }
+    return nil;
+}
+
+
+- (XVimEvaluator*)C_x{
+    _auto view = [self sourceView];
+    
+    if ([view xvim_incrementNumber:-(int64_t)self.numericArg]) {
+        [[XVim instance] fixOperationCommands];
+    } else {
+        [[XVim instance] cancelOperationCommands];
+    }
+    return nil;
+}
+
+
 #if 0
 
 
@@ -538,17 +553,6 @@
 }
 
 
-
-- (XVimEvaluator*)C_x{
-    NSTextView* view = [self sourceView];
-
-    if ([view xvim_incrementNumber:-(int64_t)self.numericArg]) {
-        [[XVim instance] fixOperationCommands];
-    } else {
-        [[XVim instance] cancelOperationCommands];
-    }
-    return nil;
-}
 
 - (XVimEvaluator*)C_y{
     [[self sourceView] xvim_scrollLineBackward:[self numericArg]];

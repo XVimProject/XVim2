@@ -184,7 +184,7 @@ static void (*fpPositionFromIndexLineHint)(void);
     void* sev = (__bridge_retained void*)self.sourceCodeEditorView;
     uint64_t row = 0; uint64_t *rowPtr = &row;
     uint64_t col = 0; uint64_t *colPtr = &col;
-    int64_t index = idx; int64_t *indexPtr = &idx;
+    int64_t index = idx; int64_t *indexPtr = (void*)&idx;
     
     __asm__("movq %[SourceEditorView], %%r13\n\t"
             "call *%[DataSourceGetter]\n\t"

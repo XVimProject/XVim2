@@ -143,6 +143,7 @@ typedef NS_ENUM(NSInteger, CursorStyle) { CursorStyleVerticalBar, CursorStyleBlo
 - (void)xvim_shiftLeft:(XVimMotion*)motion withMotionPoint:(NSUInteger)motionPoint count:(NSUInteger)count;
 - (void)xvim_filter:(XVimMotion*)motion;
 - (void)xvim_indentCharacterRange:(NSRange)range;
+- (BOOL)xvim_incrementNumber:(int64_t)offset;
 @end
 
 // Yank + Put
