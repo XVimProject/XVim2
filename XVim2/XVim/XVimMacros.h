@@ -49,4 +49,5 @@
 
 #define xvim_const_defn(_key) NSString* XVim##_key = @"XVim" #_key;
 #define xvim_const_decl(_key) extern NSString* XVim##_key;
+
 #endif

@@ -12,13 +12,14 @@
 #import "SourceCodeEditorViewProxy+Yank.h"
 #import "XVim.h"
 #import "XVimMotion.h"
+#import "XVimOptions.h"
+
 
 @interface SourceCodeEditorViewProxy ()
 @property (readwrite) NSUInteger selectionBegin;
 @property (readwrite) NSUInteger insertionPoint;
 @property (readwrite) NSUInteger preservedColumn;
 @property (readwrite) BOOL selectionToEOL;
-@property BOOL xvim_lockSyncStateFromView;
 @property (strong) NSString* lastYankedText;
 @property TEXT_TYPE lastYankedType;
 - (XVimRange)_xvim_selectedLines;
@@ -555,16 +556,13 @@
     NSUInteger pos = [ts xvim_indexOfLineNumber:lines.begin column:0];
 
     if (!blockMode) {
-#ifdef TODO
         [self xvim_registerPositionForUndo:[ts xvim_firstNonblankInLineAtIndex:pos allowEOL:YES]];
-#endif
     }
 
     if (right) {
         [self shiftRight:self];
-#ifdef TODO
         NSString* s;
-        if ([XVIM.options[XVimPref_ExpandTab] boolValue]) {
+        if (XVIM.options.expandtab) {
             s = [NSString stringMadeOfSpaces:shiftWidth];
         }
         else {
@@ -574,15 +572,12 @@
             }
         }
         [self xvim_blockInsertFixupWithText:s mode:XVIM_INSERT_SPACES count:1 column:column lines:lines];
-#endif
     }
     else {
         [self shiftLeft:self];
-#ifdef TODO
         for (NSUInteger line = lines.begin; line <= lines.end; line++) {
             [self _xvim_removeSpacesAtLine:line column:column count:shiftWidth];
         }
-#endif
     }
 
     if (blockMode) {

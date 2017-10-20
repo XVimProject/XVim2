@@ -26,14 +26,45 @@
 @property (readwrite) NSUInteger preservedColumn;
 @property (readwrite) BOOL selectionToEOL;
 @property (strong) NSString* lastYankedText;
+@property (readwrite) NSInteger editTransactionDepth;
 @property TEXT_TYPE lastYankedType;
-@property BOOL xvim_lockSyncStateFromView;
 - (void)_xvim_yankSelection:(XVimSelection)sel;
 - (void)_xvim_killSelection:(XVimSelection)sel;
 @end
 
 
 @implementation SourceCodeEditorViewProxy (XVim)
+
+-(NSUInteger)xvim_indexOfLineNumber:(NSUInteger)line column:(NSUInteger)col {
+    if (line > self.lineCount) return NSNotFound;
+    _auto cols = [self characterRangeForLineRange:NSMakeRange(line-1, 1)];
+    if (col >= cols.length) return NSNotFound;
+    return [self indexFromPosition:XvimMakeSourceEditorPosition(line-1, col)];
+}
+
+- (void)xvim_beginEditTransaction
+{
+    if (self.editTransactionDepth == 0) {
+        [self beginEditTransaction];
+        [self.undoManager beginUndoGrouping];
+        [self xvim_registerInsertionPointForUndo];
+    }
+    self.editTransactionDepth++;
+}
+
+- (void)xvim_endEditTransaction
+{
+    if (self.editTransactionDepth == 0) {
+        ERROR_LOG(@"Attempt to end a non-existent edit transaction");
+        return;
+    }
+    
+    --self.editTransactionDepth;
+    if (self.editTransactionDepth == 0) {
+        [self.undoManager endUndoGrouping];
+        [self endEditTransaction];
+    }
+}
 
 - (void)xvim_move:(XVimMotion*)motion
 {
@@ -136,6 +167,35 @@
 
     DEBUG_LOG(@"[%p]New Insertion Point:%d   Preserved Column:%d", self, self.insertionPoint, self.preservedColumn);
 }
+
+/**
+ * Adjust cursor position if the position is not valid as normal mode cursor position
+ * This method may changes selected range of the view.
+ **/
+- (void)xvim_adjustCursorPosition
+{
+    // If the current cursor position is not valid for normal mode move it.
+    if (nil == self.textStorage){
+        return;
+    }
+    if (![self.textStorage isValidCursorPosition:[self selectedRange].location]) {
+        NSRange currentRange = [self selectedRange];
+        // TODO: [self selectPreviousPlaceholder];
+        NSRange prevPlaceHolder = [self selectedRange];
+        if (currentRange.location != prevPlaceHolder.location
+            && currentRange.location == (prevPlaceHolder.location + prevPlaceHolder.length) ) {
+            //The condition here means that just before current insertion point is a placeholder.
+            //So we select the the place holder and its already selected by "selectedPreviousPlaceholder" above
+        }
+        else {
+            if ([[self string] length] > currentRange.location) {
+                [self setSelectedRange:NSMakeRange(UNSIGNED_DECREMENT(currentRange.location,1), 0)];
+            }
+        }
+    }
+    return;
+}
+
 
 - (void)_adjustCursorPosition
 {
@@ -630,6 +690,8 @@
     return r;
 }
 
+// Perform actions before entering insertion mode. For example, for visual block mode:
+// kill the current selection, and yank it.
 - (void)xvim_insert:(XVimInsertionPoint)mode blockColumn:(NSUInteger*)column blockLines:(XVimRange*)lines
 {
     NSTextStorage* ts = self.textStorage;
@@ -650,7 +712,7 @@
             [self _xvim_killSelection:sel];
         /* falltrhough */
         case XVIM_INSERT_DEFAULT:
-            self.insertionPoint = [ts xvim_indexOfLineNumber:sel.top column:sel.left];
+            self.insertionPoint = [self xvim_indexOfLineNumber:sel.top column:sel.left];
             if (column)
                 *column = sel.left;
             break;
@@ -658,7 +720,7 @@
             if (sel.right != XVimSelectionEOL) {
                 sel.right++;
             }
-            self.insertionPoint = [ts xvim_indexOfLineNumber:sel.top column:sel.right];
+            self.insertionPoint = [self xvim_indexOfLineNumber:sel.top column:sel.right];
             if (column)
                 *column = sel.right;
             break;
@@ -751,6 +813,8 @@
     return topLine + 1;
 }
 
+// Insert some text at the same column position, for a range of lines
+// Used by the XVim visual block mode, and shift functions
 - (void)xvim_blockInsertFixupWithText:(NSString*)text
                                      mode:(XVimInsertionPoint)mode
                                     count:(NSUInteger)count
@@ -761,6 +825,8 @@
     NSTextStorage* ts;
     NSUInteger tabWidth;
 
+    IGNORE_SELECTION_UPDATES_SCOPE
+    
     if (count == 0 || lines.begin > lines.end || text.length == 0) {
         return;
     }
@@ -779,7 +845,10 @@
     tabWidth = ts.xvim_tabWidth;
 
     for (NSUInteger line = lines.begin; line <= lines.end; line++) {
-        NSUInteger pos = [ts xvim_indexOfLineNumber:line column:column];
+        _auto pos = [self xvim_indexOfLineNumber:line column:column];
+        if (pos == NSNotFound) {
+            continue;
+        }
 
         if (column != XVimSelectionEOL && [ts isEOL:pos]) {
             if (mode == XVIM_INSERT_SPACES && column == 0) {

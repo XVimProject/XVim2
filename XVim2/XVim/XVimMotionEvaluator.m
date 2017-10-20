@@ -383,6 +383,8 @@ if( childEvaluator.keyStroke.toString.length != 1 ){
             KeepJumpMarkIndex:(BOOL)keepJumpMarkIndex
                NeedUpdateMark:(BOOL)needUpdateMark
 {
+    if (mark == nil) return [XVimEvaluator invalidEvaluator];
+    
     MOTION_TYPE motionType = fol ? LINEWISE : CHARACTERWISE_EXCLUSIVE;
 
     if (mark.line == NSNotFound) {

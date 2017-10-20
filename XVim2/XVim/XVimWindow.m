@@ -87,7 +87,7 @@
     for (NSUInteger i = 0; i < stack.count; i++) {
         XVimEvaluator* e = [stack objectAtIndex:i];
 
-        DEBUG_LOG("Evaluator %lu :%s   argStr:%s   yankReg:%s", (unsigned long)i, NSStringFromClass([e class]),
+        DEBUG_LOG("Evaluator %lu :%@   argStr:%@   yankReg:%@", (unsigned long)i, NSStringFromClass([e class]),
                   e.argumentString, e.yankRegister);
     }
 }
@@ -223,7 +223,8 @@
         }
     }
 
-    //[self postStatusString:self.currentEvaluator.argumentDisplayString confirm:NO];
+    [self.commandLine setArgumentString:[self.currentEvaluator argumentDisplayString]];
+    [self.commandLine setNeedsDisplay:YES];
     return YES;
 }
 
@@ -318,7 +319,7 @@
         }
         else if (nextEvaluator == [XVimEvaluator invalidEvaluator]) {
             [xvim cancelOperationCommands];
-            //[[XVim instance] ringBell];
+            [XVIM ringBell];
             [self _resetEvaluatorStack:_currentEvaluatorStack activateNormalHandler:YES];
             break;
         }
@@ -344,8 +345,8 @@
 
     currentEvaluator = [_currentEvaluatorStack lastObject];
 
-    //[_commandLine setModeString:[[currentEvaluator modeString] stringByAppendingString:_staticString]];
-    //[_commandLine setArgumentString:[currentEvaluator argumentDisplayString]];
+    [self.commandLine setModeString:[[currentEvaluator modeString] stringByAppendingString:_staticString]];
+    [self.commandLine setArgumentString:[currentEvaluator argumentDisplayString]];
 
     _currentEvaluatorStack = _defaultEvaluatorStack;
 }
@@ -366,10 +367,10 @@
         [self handleOneXVimString:@"v"];
     }
     else {
-        //[self.sourceView xvim_adjustCursorPosition];
+        [self.sourceView xvim_adjustCursorPosition];
     }
 
-    //[_commandLine setModeString:[self.currentEvaluator.modeString stringByAppendingString:_staticString]];
+    [self.commandLine setModeString:[self.currentEvaluator.modeString stringByAppendingString:_staticString]];
 }
 
 

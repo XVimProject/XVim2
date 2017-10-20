@@ -16,7 +16,6 @@
 @property (readwrite) NSUInteger insertionPoint;
 @property (readwrite) NSUInteger preservedColumn;
 @property (readwrite) BOOL selectionToEOL;
-@property BOOL xvim_lockSyncStateFromView;
 @property (strong) NSString* lastYankedText;
 @property TEXT_TYPE lastYankedType;
 - (void)xvim_moveCursor:(NSUInteger)pos preserveColumn:(BOOL)preserve;

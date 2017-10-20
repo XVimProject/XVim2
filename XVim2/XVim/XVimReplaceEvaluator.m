@@ -47,19 +47,13 @@
 - (void)didEndHandler
 {
     [super didEndHandler];
-
-    NSUndoManager* undoManager = [[self sourceView] undoManager];
-    [undoManager endUndoGrouping];
-    [undoManager setGroupsByEvent:YES];
+    [self.sourceView xvim_endEditTransaction];
 }
 
 - (void)becameHandler
 {
     [super becameHandler];
-
-    NSUndoManager* undoManager = [[self sourceView] undoManager];
-    [undoManager setGroupsByEvent:NO];
-    [undoManager beginUndoGrouping];
+    [self.sourceView xvim_beginEditTransaction];
 }
 
 - (XVimEvaluator*)eval:(XVimKeyStroke*)keyStroke

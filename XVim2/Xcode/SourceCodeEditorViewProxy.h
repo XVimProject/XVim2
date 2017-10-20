@@ -18,15 +18,26 @@ typedef NS_OPTIONS(unsigned, XVimSelectionModifiers) {
     SelectionModifierDiscontiguous = 1 << 2
 };
 
-struct XVimSourceEditorPosition {
+typedef struct {
     NSUInteger row;
     NSUInteger col;
-};
+} XVimSourceEditorPosition ;
 
-struct XVimSourceEditorRange {
-    struct XVimSourceEditorPosition pos1;
-    struct XVimSourceEditorPosition pos2;
-};
+static inline
+XVimSourceEditorPosition XvimMakeSourceEditorPosition(NSUInteger row, NSUInteger col) {
+    XVimSourceEditorPosition pos = { .row=row, .col=col };
+    return pos;
+}
+typedef struct {
+    XVimSourceEditorPosition pos1;
+    XVimSourceEditorPosition pos2;
+} XVimSourceEditorRange ;
+
+static inline
+XVimSourceEditorRange XvimMakeSourceEditorRange(XVimSourceEditorPosition pos1, XVimSourceEditorPosition pos2) {
+    XVimSourceEditorRange rng = { .pos1=pos1, .pos2=pos2 };
+    return rng;
+}
 
 @class XVimCommandLine;
 
@@ -53,7 +64,12 @@ struct XVimSourceEditorRange {
 @property (strong) id<XVimTextViewDelegateProtocol> xvimDelegate;
 @property (readonly) XVimCommandLine* commandLine;
 @property (readonly) NSWindow* window;
+@property BOOL xvim_lockSyncStateFromView;
 - (instancetype)initWithSourceCodeEditorView:(SourceCodeEditorView*)sourceEditorView;
+
+// Data source
+- (NSUInteger)indexFromPosition:(XVimSourceEditorPosition)pos;
+- (XVimSourceEditorPosition)positionFromIndex:(NSUInteger)idx lineHint:(NSUInteger)line;
 
 // Proxy methods
 - (NSRange)lineRangeForCharacterRange:(NSRange)arg1;
@@ -221,11 +237,12 @@ struct XVimSourceEditorRange {
 
 
 #define EDIT_TRANSACTION_SCOPE                                                                                         \
-    [self beginEditTransaction];                                                                                       \
-    [self.undoManager beginUndoGrouping];                                                                              \
-    [self xvim_registerInsertionPointForUndo];                                                                         \
+    [self xvim_beginEditTransaction];                                                                                  \
     xvim_on_exit                                                                                                       \
     {                                                                                                                  \
-        [self.undoManager endUndoGrouping];                                                                            \
-        [self endEditTransaction];                                                                                     \
+        [self xvim_endEditTransaction];                                                                                \
     };
+
+#define IGNORE_SELECTION_UPDATES_SCOPE                                                                                         \
+    self.xvim_lockSyncStateFromView = YES; \
+    xvim_on_exit { self.xvim_lockSyncStateFromView = NO; };

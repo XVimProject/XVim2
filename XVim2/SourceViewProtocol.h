@@ -65,6 +65,8 @@ typedef NS_ENUM(NSInteger, CursorStyle) { CursorStyleVerticalBar, CursorStyleBlo
 
 // XVim extensions
 @protocol SourceViewXVimProtocol <NSObject>
+- (void)xvim_beginEditTransaction;
+- (void)xvim_endEditTransaction;
 - (void)xvim_syncState;
 - (void)xvim_syncStateFromView;
 - (void)xvim_insert:(XVimInsertionPoint)mode blockColumn:(NSUInteger*)column blockLines:(XVimRange*)lines;
@@ -73,6 +75,7 @@ typedef NS_ENUM(NSInteger, CursorStyle) { CursorStyleVerticalBar, CursorStyleBlo
                                     count:(NSUInteger)count
                                    column:(NSUInteger)column
                                     lines:(XVimRange)lines;
+- (void)xvim_adjustCursorPosition;
 - (void)xvim_escapeFromInsert;
 - (void)xvim_moveCursor:(NSUInteger)pos preserveColumn:(BOOL)preserve;
 - (void)xvim_move:(XVimMotion*)motion;
