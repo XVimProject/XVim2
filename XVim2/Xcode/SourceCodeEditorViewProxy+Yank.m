@@ -318,11 +318,11 @@
 
 - (void)_xvim_killSelection:(XVimSelection)sel
 {
-    NSTextStorage* ts = self.textStorage;
     NSString* s = self.string;
-    NSUInteger tabWidth = ts.xvim_tabWidth;
+    NSUInteger tabWidth = self.textStorage.xvim_tabWidth;
 
     for (NSUInteger line = sel.bottom; line >= sel.top; line--) {
+        NSTextStorage* ts = self.textStorage;
         NSUInteger lpos = [ts xvim_indexOfLineNumber:line column:sel.left];
         NSUInteger rpos = [ts xvim_indexOfLineNumber:line column:sel.right];
         NSUInteger nspaces = 0;

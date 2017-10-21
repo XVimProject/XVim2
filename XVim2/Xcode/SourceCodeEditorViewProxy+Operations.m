@@ -48,7 +48,7 @@
 {
     NSAssert(!(self.selectionMode == XVIM_VISUAL_NONE && motion == nil),
              @"motion must be specified if current selection mode is not visual");
-    if (motionPoint == 0 && self.string.length == 0) {
+    if (motionPoint == NSNotFound || (motionPoint == 0 && self.string.length == 0)) {
         return NO;
     }
     NSUInteger newPos = NSNotFound;
@@ -493,13 +493,12 @@
         }
     }
     else {
-        NSTextStorage* ts = self.textStorage;
-        NSUInteger pos = [ts xvim_indexOfLineNumber:line];
+        NSUInteger pos = [self.textStorage xvim_indexOfLineNumber:line];
 
         for (NSUInteger i = 0; i < count; i++) {
-            NSUInteger tail = [ts xvim_endOfLine:pos];
+            NSUInteger tail = [self.textStorage xvim_endOfLine:pos];
 
-            if (tail != NSNotFound && ![ts isEOF:tail]) {
+            if (tail != NSNotFound && ![self.textStorage isEOF:tail]) {
                 [self insertText:@"" replacementRange:NSMakeRange(tail, 1)];
                 [self xvim_moveCursor:tail preserveColumn:NO];
             }
@@ -526,8 +525,7 @@
         return;
     }
 
-    NSTextStorage* ts = self.textStorage;
-    NSUInteger shiftWidth = ts.xvim_indentWidth;
+    NSUInteger shiftWidth = self.textStorage.xvim_indentWidth;
     NSUInteger column = 0;
     XVimRange lines;
     BOOL blockMode = NO;
@@ -538,6 +536,7 @@
         if (to.end == NSNotFound) {
             return;
         }
+        NSTextStorage *ts = self.textStorage;
         lines = XVimMakeRange([ts xvim_lineNumberAtIndex:to.begin], [ts xvim_lineNumberAtIndex:to.end]);
         shiftWidth *= count;
     }
@@ -554,10 +553,10 @@
         shiftWidth *= motion.count;
     }
 
-    NSUInteger pos = [ts xvim_indexOfLineNumber:lines.begin column:0];
+    NSUInteger pos = [self.textStorage xvim_indexOfLineNumber:lines.begin column:0];
 
     if (!blockMode) {
-        [self xvim_registerPositionForUndo:[ts xvim_firstNonblankInLineAtIndex:pos allowEOL:YES]];
+        [self xvim_registerPositionForUndo:[self.textStorage xvim_firstNonblankInLineAtIndex:pos allowEOL:YES]];
     }
 
     if (right) {
@@ -568,7 +567,7 @@
         }
         else {
             s = @"\t";
-            while ([s length] < (shiftWidth / ts.xvim_indentWidth)) {
+            while ([s length] < (shiftWidth / self.textStorage.xvim_indentWidth)) {
                 s = [s stringByAppendingString:@"\t"];
             }
         }
@@ -582,10 +581,10 @@
     }
 
     if (blockMode) {
-        pos = [ts xvim_indexOfLineNumber:lines.begin column:column];
+        pos = [self.textStorage xvim_indexOfLineNumber:lines.begin column:column];
     }
     else {
-        pos = [ts xvim_firstNonblankInLineAtIndex:pos allowEOL:YES];
+        pos = [self.textStorage xvim_firstNonblankInLineAtIndex:pos allowEOL:YES];
     }
 
     [self xvim_moveCursor:pos preserveColumn:NO];

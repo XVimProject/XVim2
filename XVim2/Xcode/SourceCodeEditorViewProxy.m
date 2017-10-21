@@ -322,6 +322,30 @@ static void (*fpIndexFromPosition)(void);
 
 - (NSString*)string { return self.sourceCodeEditorView.string; }
 
+- (void)setString:(NSString *)string {
+    _auto scanner = [NSScanner scannerWithString:string];
+    scanner.charactersToBeSkipped = [NSCharacterSet new];
+    
+    NSString * nextLine = nil;
+    
+    NSRange nextRng = NSMakeRange(0, self.string.length);
+    
+    IGNORE_SELECTION_UPDATES_SCOPE
+    
+    while ([scanner scanUpToCharactersFromSet:NSCharacterSet.newlineCharacterSet
+                                   intoString:&nextLine]) {
+        [scanner scanCharactersFromSet:NSCharacterSet.newlineCharacterSet
+                            intoString:NULL];
+        [self insertText:nextLine replacementRange:nextRng];
+        
+        nextRng.location = self.string.length;
+        nextRng.length = 0;
+    }
+    if (!scanner.atEnd) {
+        [self insertText:[string substringFromIndex:scanner.scanLocation] replacementRange:nextRng];
+    }
+}
+
 
 - (void)insertText:(id)string replacementRange:(NSRange)replacementRange
 {
@@ -815,6 +839,7 @@ static CGFloat XvimCommandLineAnimationDuration = 0.1;
 - (NSWindow*)window { return self.sourceCodeEditorView.window; }
 
 - (NSView*)view { return self.sourceCodeEditorView; }
+
 
 @synthesize originalCursorStyle;
 

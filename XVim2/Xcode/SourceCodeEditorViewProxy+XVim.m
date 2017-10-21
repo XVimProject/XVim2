@@ -694,7 +694,6 @@
 // kill the current selection, and yank it.
 - (void)xvim_insert:(XVimInsertionPoint)mode blockColumn:(NSUInteger*)column blockLines:(XVimRange*)lines
 {
-    NSTextStorage* ts = self.textStorage;
 
     if (column)
         *column = NSNotFound;
@@ -730,6 +729,7 @@
         }
     }
     else if (mode != XVIM_INSERT_DEFAULT) {
+        NSTextStorage* ts = self.textStorage;
         NSUInteger pos = self.insertionPoint;
         switch (mode) {
         case XVIM_INSERT_APPEND_EOL:
@@ -840,10 +840,10 @@
         text = buf;
     }
 
-    ts = self.textStorage;
-    tabWidth = ts.xvim_tabWidth;
+    tabWidth = self.textStorage.xvim_tabWidth;
 
     for (NSUInteger line = lines.begin; line <= lines.end; line++) {
+        ts = self.textStorage;
         _auto pos = [self xvim_indexOfLineNumber:line column:column];
         if (pos == NSNotFound) {
             continue;
@@ -1016,7 +1016,6 @@
 
     // Find all the maches
     NSString* string = self.string;
-    // NSTextStorage* storage = self.textStorage;
     if (string == nil) {
         return;
     }

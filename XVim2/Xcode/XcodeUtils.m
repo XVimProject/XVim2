@@ -7,19 +7,10 @@
 //
 
 #import "XcodeUtils.h"
+#import "XVimWindow.h"
 #import "IDEWorkspaceTabController+XVim.h"
-#import <IDEKit/IDEWorkspaceWindow.h>
-#import <IDEKit/IDEEditorContext.h>
-#import <IDEKit/IDEEditorOpenSpecifier.h>
-#import <IDEKit/IDEEditorArea.h>
-#import <IDEKit/IDEWorkspaceWindowController.h>
-#import <IDEKit/IDEWorkspaceTabController.h>
-#import <IDEKit/IDEEditorOpenSpecifier.h>
-#import <DVTKit/DVTDocumentLocation.h>
+#import "_TtC22IDEPegasusSourceEditor20SourceCodeEditorView.h"
 
-Class IDEEditorOpenSpecifierClass() { return NSClassFromString(@"IDEEditorOpenSpecifier"); }
-Class DVTDocumentLocationClass() { return NSClassFromString(@"DVTDocumentLocation"); }
-Class IDEWorkspaceWindowClass() { return NSClassFromString(@"IDEWorkspaceWindow"); }
 
 IDEWorkspaceWindowController* XVimLastActiveWindowController()
 {
@@ -32,6 +23,14 @@ IDEWorkspaceTabController_XVim* XVimLastActiveWorkspaceTabController()
 }
 
 IDEEditorArea* XVimLastActiveEditorArea() { return [XVimLastActiveWindowController() editorArea]; }
+
+_TtC22IDEPegasusSourceEditor20SourceCodeEditorView*
+XVimLastActiveEditorView() { return (id)[[[[[[[XVimLastActiveEditorArea() lastActiveEditorContext] supplementalMainViewController] view] subviews] objectAtIndex:0] subviews] objectAtIndex:0]; }
+
+
+SourceCodeEditorViewProxy* XVimLastActiveSourceView() {
+    return (id)[[XVimLastActiveEditorView() xvim_window] sourceView];
+}
 
 
 BOOL XVimOpenDocumentAtPath(NSString *path) {

@@ -64,6 +64,7 @@ XVimSourceEditorRange XvimMakeSourceEditorRange(XVimSourceEditorPosition pos1, X
 @property (strong) id<XVimTextViewDelegateProtocol> xvimDelegate;
 @property (readonly) XVimCommandLine* commandLine;
 @property (readonly) NSWindow* window;
+@property (strong) NSString * string;
 @property BOOL xvim_lockSyncStateFromView;
 - (instancetype)initWithSourceCodeEditorView:(SourceCodeEditorView*)sourceEditorView;
 

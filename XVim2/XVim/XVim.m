@@ -31,6 +31,7 @@
 #import "XVimRegister.h"
 #import "XVimSearch.h"
 #import "XVimAboutDialog.h"
+#import "XVimTester.h"
 #import "IDEWorkspaceTabController+XVim.h"
 #import "_TtC12SourceEditor23SourceEditorContentView.h"
 #import "_TtC22IDEPegasusSourceEditor20SourceCodeEditorView.h"
@@ -133,6 +134,7 @@
         _searcher = [[XVimSearch alloc] init];
         _lastCharacterSearchMotion = nil;
         _marks = [[XVimMarks alloc] init];
+        _testRunner= [[XVimTester alloc] init];
         self.excmd = [[XVimExCommand alloc] init];
         self.lastPlaybackRegister = nil;
         self.lastOperationCommands = [[XVimMutableString alloc] init];
@@ -146,6 +148,7 @@
         self.enabled = YES;
         self.foundRangesHidden = NO;
         self.options = [[XVimOptions alloc] init];
+        [_options addObserver:self forKeyPath:@"debug" options:NSKeyValueObservingOptionNew context:nil];
 
         for (int i = 0; i < XVIM_MODE_COUNT; ++i) {
             _keymaps[i] = [[XVimKeymap alloc] init];
@@ -186,6 +189,18 @@
     NSString* rc = [XVim xvimrc];
     for (NSString* string in [rc componentsSeparatedByString:@"\n"]) {
         [self.excmd executeCommand:[@":" stringByAppendingString:string] inWindow:nil];
+    }
+}
+
+- (void)observeValueForKeyPath:(NSString *)keyPath ofObject:(id)object change:(NSDictionary *)change context:(void *)context{
+    if( [keyPath isEqualToString:@"debug"]) {
+        if( [[XVim instance] options].debug ){
+            NSString *homeDir = NSHomeDirectoryForUser(NSUserName());
+            NSString *logPath = [homeDir stringByAppendingString: @"/.xvimlog"];
+            [[Logger defaultLogger] setLogFile:logPath];
+        }else{
+            [[Logger defaultLogger] setLogFile:nil];
+        }
     }
 }
 
@@ -282,7 +297,7 @@ static id _startupObservation = nil;
     [m addItem:subitem];
     
     // Test cases
-    if( [XVim instance].options.debug ){
+    if( self.options.debug ){
         // Add category sub menu
         NSMenuItem* subm = [[NSMenuItem alloc] init];
         subm.title = @"Test categories";
@@ -295,7 +310,6 @@ static id _startupObservation = nil;
         subitem.target = [XVim instance];
         subitem.action = @selector(runTest:);
         [cat_menu addItem:subitem];
-#ifdef TODO
         [cat_menu addItem:[NSMenuItem separatorItem]];
         for( NSString* c in [[XVim instance].testRunner categories]){
             subitem = [[NSMenuItem alloc] init];
@@ -305,7 +319,6 @@ static id _startupObservation = nil;
             [subitem setEnabled:YES];
             [cat_menu addItem:subitem];
         }
-#endif
         [m addItem:subm];
         [subm setSubmenu:cat_menu];
     }
@@ -370,7 +383,6 @@ static id _startupObservation = nil;
 }
 
 - (void)runTest:(id)sender{
-#ifdef TODO
     NSMenuItem* m = sender;
     if( [m.title isEqualToString:@"All"] ){
         [self.testRunner selectCategories:self.testRunner.categories];
@@ -380,7 +392,6 @@ static id _startupObservation = nil;
         [self.testRunner selectCategories:arr];
     }
     [self.testRunner runTest];
-#endif
 }
 
 
