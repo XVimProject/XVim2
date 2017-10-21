@@ -134,6 +134,7 @@
     [self xvim_changeSelectionMode:XVIM_VISUAL_NONE];
     if (newPos != NSNotFound) {
         [self xvim_moveCursor:newPos preserveColumn:NO];
+        [self xvim_syncState];
     }
     return YES;
 }
@@ -752,11 +753,8 @@
         NSMakeRange(0, 0); // No range
     }
 
-    if (from > to) {
-        NSUInteger tmp = from;
-        from = to;
-        to = tmp;
-    }
+    if (from > to) xvim_swap(from, to);
+        
     // EOF can not be included in operation range.
     if ([self.textStorage isEOF:from]) {
         return NSMakeRange(from,

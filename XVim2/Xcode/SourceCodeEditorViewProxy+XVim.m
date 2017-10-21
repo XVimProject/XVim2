@@ -750,7 +750,6 @@
     }
     self.cursorMode = CURSOR_MODE_INSERT;
     [self xvim_changeSelectionMode:XVIM_VISUAL_NONE];
-    [self xvim_syncState];
 }
 
 - (NSRange)xvim_currentWord:(MOTION_OPTION)opt

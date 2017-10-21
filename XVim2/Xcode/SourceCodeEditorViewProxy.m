@@ -153,12 +153,12 @@ static void (*fpIndexFromPosition)(void);
     
     _auto rr = [self characterRangeForLineRange:NSMakeRange((rng->pos1).row, 1)];
     if (rr.location == NSNotFound) return NO;
-    clamp((rng->pos1).col, 0, rr.length-1);
+    clamp((rng->pos1).col, 0, rr.length);
     if ((rng->pos2).row != (rng->pos1).row) {
         rr = [self characterRangeForLineRange:NSMakeRange((rng->pos2).row, 1)];
         if (rr.location == NSNotFound) return NO;
     }
-    clamp((rng->pos2).col, 0, rr.length-1);
+    clamp((rng->pos2).col, 0, rr.length);
     return YES;
 }
 
