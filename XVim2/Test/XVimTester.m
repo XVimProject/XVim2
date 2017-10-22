@@ -183,6 +183,7 @@
         (self.testWindow == nil || !self.testWindow.isVisible))
     {
         self.currentTestsCases = nil;
+        [self.testWindow performClose:self];
         [self showResultsTable];
         return;
     }
