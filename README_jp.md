@@ -4,7 +4,7 @@
 
   - Xcode 9 ユーザーは、以下のインストール手順にしたがってください。
   - Xcode 8 以下のユーザーは [XVim](https://github.com/XVimProject/XVim) をご利用ください。
-  - [XVim開発者向けGoogleグループ][google-group] が作成されました。
+  - [Google Group for XVim developers](https://groups.google.com/d/forum/xvim-developers) が作成されました。
 
 ## インストール
 
