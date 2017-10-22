@@ -163,8 +163,26 @@ static Logger* s_defaultLogger = nil;
         if (![fm fileExistsAtPath:path]) {
             [fm createFileAtPath:path contents:nil attributes:nil];
         }
-        _logFile = [NSFileHandle fileHandleForWritingAtPath:path]; // Do we need to retain this? I want to use this
-                                                                   // handle as long as Xvim is alive.
+        
+        int fd = -1;
+        int filenum = 1;
+        int attempts = 0;
+        NSString *fullpath = path;
+        
+        // If the logfile is being held open by another XVim, try adding a
+        // discriminator to the file name, and try again.
+        while (attempts++ < 20 && fd < 0) {
+            fd = open( fullpath.UTF8String, O_RDWR + O_EXLOCK + O_NONBLOCK + O_CREAT );
+            if (fd < 0 && (errno == EWOULDBLOCK || errno == EDEADLK)) {
+                filenum++;
+                fullpath = [path stringByAppendingString:[@(filenum) stringValue]];
+            }
+        }
+        
+        _logFile = (fd>=0)
+                ? [[NSFileHandle alloc] initWithFileDescriptor:fd closeOnDealloc:YES]
+                : [NSFileHandle fileHandleForWritingAtPath:path];
+        
         [_logFile seekToEndOfFile];
     }
 }

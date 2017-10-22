@@ -19,6 +19,7 @@
 @property (weak) NSWindow * window;
 @property dispatch_semaphore_t keySemaphore;
 @property (readonly) dispatch_queue_t testCompletionDispatchQueue;
+@property NSInteger keyStrokesCount;
 @end
 
 static NSOperationQueue *_keySendQueue = nil;
@@ -85,6 +86,7 @@ static atomic_uint dispatchQueueCount = ATOMIC_VAR_INIT(0);
     test.expectedRange = er;
     test.message = @"";
     test.exception = NO;
+    test.keyStrokesCount = 0;
     if (nil != desc) {
         test.desc = desc;
     }
@@ -144,7 +146,8 @@ static atomic_uint dispatchQueueCount = ATOMIC_VAR_INIT(0);
 {
     NSString *notation = [self.input stringByAppendingString:@"<ESC>:mapclear<CR>"];
     NSArray* strokes = XVimKeyStrokesFromKeyNotation(notation);
-    self.keySemaphore = dispatch_semaphore_create(strokes.count);
+    self.keySemaphore = dispatch_semaphore_create(0);
+    self.keyStrokesCount = strokes.count;
     
     for (XVimKeyStroke* stroke in strokes) {
         [XVimTestCase.keySendQueue addOperationWithBlock:^{
@@ -159,7 +162,7 @@ static atomic_uint dispatchQueueCount = ATOMIC_VAR_INIT(0);
                         self.exception = YES;
                     }
                 }];
-            [NSThread sleepForTimeInterval:0.1];
+            [NSThread sleepForTimeInterval:0.01];
         }];
 
         // Tells NSUndoManager to end grouping (Little hacky)
@@ -176,14 +179,16 @@ static atomic_uint dispatchQueueCount = ATOMIC_VAR_INIT(0);
 
 - (void)waitForCompletionWithConinuation:(void(^)(void))continuation
 {
-        dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(1.0 * NSEC_PER_SEC)), self.testCompletionDispatchQueue, ^{
-            if (dispatch_semaphore_wait(self.keySemaphore, DISPATCH_TIME_NOW) == 0) {
-                [NSOperationQueue.mainQueue addOperationWithBlock:continuation];
-            }
-            else {
-               [self waitForCompletionWithConinuation:continuation];
-            }
-        });
+    if (self.keyStrokesCount == 0) {
+        [NSOperationQueue.mainQueue addOperationWithBlock:continuation];
+        return;
+    }
+    
+    dispatch_async(self.testCompletionDispatchQueue, ^{
+        dispatch_semaphore_wait(self.keySemaphore, DISPATCH_TIME_FOREVER);
+        self.keyStrokesCount--;
+        [self waitForCompletionWithConinuation:continuation];
+    });
 }
 
 - (void)runInWindow:(NSWindow*)window withContinuation:(void(^)(void))continuation
