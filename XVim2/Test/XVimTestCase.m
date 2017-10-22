@@ -87,6 +87,8 @@ static atomic_uint dispatchQueueCount = ATOMIC_VAR_INIT(0);
     test.message = @"";
     test.exception = NO;
     test.keyStrokesCount = 0;
+    test.finished = NO;
+    
     if (nil != desc) {
         test.desc = desc;
     }
@@ -152,6 +154,10 @@ static atomic_uint dispatchQueueCount = ATOMIC_VAR_INIT(0);
     for (XVimKeyStroke* stroke in strokes) {
         [XVimTestCase.keySendQueue addOperationWithBlock:^{
                 [NSOperationQueue.mainQueue addOperationWithBlock:^{
+                    if (self.window == nil || !self.window.isVisible) {
+                        dispatch_semaphore_signal(self.keySemaphore);
+                        return;
+                    }
                     @try {
                         NSEvent* event = [stroke toEventwithWindowNumber:self.window.windowNumber context:self.window.graphicsContext];
                         [self.window makeKeyAndOrderFront:self];
@@ -199,7 +205,8 @@ static atomic_uint dispatchQueueCount = ATOMIC_VAR_INIT(0);
     [self executeInput];
     
     [self waitForCompletionWithConinuation:^{
-        self.success = [self assert];
+        self.finished = (self.window != nil && self.window.isVisible);
+        self.success = self.finished && [self assert];
         [self tearDown];
         continuation();
     }];

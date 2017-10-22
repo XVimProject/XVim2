@@ -38,6 +38,7 @@
 @property (strong) NSString* message;
 @property BOOL success;
 @property BOOL exception;
+@property BOOL finished;
 @property NSString* file;
 @property NSUInteger line;
 

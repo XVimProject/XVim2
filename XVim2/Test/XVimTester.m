@@ -179,7 +179,9 @@
 
 -(void)runNextTest
 {
-    if (self.currentTestCaseIndex == self.currentTestsCases.count) {
+    if ((self.currentTestCaseIndex == self.currentTestsCases.count) ||
+        (self.testWindow == nil || !self.testWindow.isVisible))
+    {
         self.currentTestsCases = nil;
         [self showResultsTable];
         return;
@@ -323,7 +325,7 @@
         return [resultRow desc];
     }
     else if ([aTableColumn.identifier isEqualToString:@"Pass/Fail"]) {
-        return (resultRow.success) ? @"Pass" : @"Fail";
+        return resultRow.finished ? ((resultRow.success) ? @"Pass" : @"Fail") : @"Cancelled";
     }
     else if ([aTableColumn.identifier isEqualToString:@"Message"]) {
         return resultRow.message;
