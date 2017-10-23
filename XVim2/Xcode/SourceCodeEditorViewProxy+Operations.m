@@ -692,6 +692,65 @@
 }
 
 
+#pragma mark - SORT
+
+- (void)xvim_sortLinesFrom:(NSUInteger)line1 to:(NSUInteger)line2 withOptions:(XVimSortOptions)options{
+    NSAssert( line1 > 0, @"line1 must be greater than 0.");
+    NSAssert( line2 > 0, @"line2 must be greater than 0.");
+    
+    if( line2 < line1 ) xvim_swap(line1, line2);
+
+    NSRange characterRange = [self.textStorage xvim_indexRangeForLines:NSMakeRange(line1, line2 - line1 + 1)];
+    NSString *str = [self.string substringWithRange:characterRange];
+    
+    NSMutableArray *lines = [[str componentsSeparatedByCharactersInSet:[NSCharacterSet newlineCharacterSet]] mutableCopy];
+    if ([[lines lastObject] length] == 0) {
+        [lines removeLastObject];
+    }
+    [lines sortUsingComparator:^NSComparisonResult(NSString *str1, NSString *str2) {
+        NSStringCompareOptions compareOptions = 0;
+        if (options & XVimSortOptionNumericSort) {
+            compareOptions |= NSNumericSearch;
+        }
+        if (options & XVimSortOptionIgnoreCase) {
+            compareOptions |= NSCaseInsensitiveSearch;
+        }
+        
+        if (options & XVimSortOptionReversed) {
+            return [str2 compare:str1 options:compareOptions];
+        } else {
+            return [str1 compare:str2 options:compareOptions];
+        }
+    }];
+    
+    if (options & XVimSortOptionRemoveDuplicateLines) {
+        NSMutableIndexSet *removeIndices = [NSMutableIndexSet indexSet];
+        // At this point the lines are already sorted
+        [lines enumerateObjectsUsingBlock:^(NSString *str, NSUInteger idx, BOOL *stop) {
+            if (idx < [lines count] - 1) {
+                NSString *nextStr = [lines objectAtIndex:idx + 1];
+                if ([str isEqualToString:nextStr]) {
+                    [removeIndices addIndex:idx + 1];
+                }
+            }
+        }];
+        [lines removeObjectsAtIndexes:removeIndices];
+    }
+    
+    NSUInteger insertionAfterOperation = characterRange.location;
+    NSString *sortedLinesString = [[lines componentsJoinedByString:@"\n"] stringByAppendingString:@"\n"];
+    
+    {
+        IGNORE_SELECTION_UPDATES_SCOPE
+        [self insertText:sortedLinesString replacementRange:characterRange];
+    }
+
+    self.insertionPoint = insertionAfterOperation;
+    [self xvim_syncState];
+}
+
+
+
 #pragma mark - UTILITY
 
 // @param column   head column of selected area (zero origin)

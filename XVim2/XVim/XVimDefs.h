@@ -59,6 +59,14 @@ typedef enum {
     XVIM_VISUAL_BOTTOMRIGHT = 3,
 } XVIM_VISUAL_CORNER;
 
+
+typedef NS_OPTIONS(NSUInteger, XVimSortOptions) {
+    XVimSortOptionReversed              = 1,
+    XVimSortOptionRemoveDuplicateLines  = 1 << 1,
+    XVimSortOptionNumericSort           = 1 << 2,
+    XVimSortOptionIgnoreCase            = 1 << 3
+};
+
 typedef struct _XVimRange {
     NSUInteger begin; // begin may be greater than end
     NSUInteger end;

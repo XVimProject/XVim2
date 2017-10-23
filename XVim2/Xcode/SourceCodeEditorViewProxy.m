@@ -12,7 +12,9 @@
 #import "XVim.h"
 #import "XVimCommandLine.h"
 #import "XVimMotion.h"
+#import "XVim2-Swift.h"
 #import "rd_route.h"
+
 #import <IDEPegasusSourceEditor/_TtC22IDEPegasusSourceEditor16SourceCodeEditor.h>
 #import <IDEPegasusSourceEditor/_TtC22IDEPegasusSourceEditor18SourceCodeDocument.h>
 #import <SourceEditor/_TtC12SourceEditor23SourceEditorUndoManager.h>
@@ -40,6 +42,7 @@ static void (*fpIndexFromPosition)(void);
 @property (strong) NSString* lastYankedText;
 @property (strong) NSLayoutConstraint* cmdLineBottomAnchor;
 @property TEXT_TYPE lastYankedType;
+@property (strong) SourceCodeEditorViewWrapper * wrapper;
 @end
 
 #define LOG_STATE()
@@ -76,6 +79,7 @@ static void (*fpIndexFromPosition)(void);
     self = [super init];
     if (self) {
         self.sourceCodeEditorView = sourceCodeEditorView;
+        self.wrapper = [[SourceCodeEditorViewWrapper alloc] initWithProxy:self];
     }
     return self;
 }
@@ -114,32 +118,9 @@ static void (*fpIndexFromPosition)(void);
 - (NSInteger)linesPerPage { return self.sourceCodeEditorView.linesPerPage; }
 - (NSInteger)lineCount { return self.sourceCodeEditorView.lineCount; }
 - (void)scrollRangeToVisible:(NSRange)arg1 { [self.sourceCodeEditorView scrollRangeToVisible:arg1]; }
-- (void)setCursorStyle:(CursorStyle)cursorStyle
-{
-    void* sev = (__bridge_retained void*)self.sourceCodeEditorView;
 
-    __asm__("movq %[CursorStyle], %%rdi\n\t"
-            "movq %[SourceEditorView], %%r13\n\t"
-            "call *%[SetCursorStyle]\n\t"
-            :
-            : [CursorStyle] "r"(cursorStyle), [SourceEditorView] "r"(sev), [SetCursorStyle] "m"(fpSetCursorStyle)
-            : "memory", "cc", "%rdi", "%r13");
-}
-
-- (CursorStyle)cursorStyle
-{
-    void* sev = (__bridge_retained void*)self.sourceCodeEditorView;
-    uint64_t cstyle = 0;
-    __asm__("movq %[SourceEditorView], %%r13\n\t"
-            "call *%[GetCursorStyle]\n\t"
-            "movq %%rax, %[CursorStyle]\n\t"
-
-            : [CursorStyle] "=r"(cstyle)
-            : [SourceEditorView] "r"(sev), [GetCursorStyle] "m"(fpGetCursorStyle)
-            : "memory", "%rax", "%r13");
-    cstyle = cstyle & 0xFF;
-    return cstyle;
-}
+- (void)setCursorStyle:(CursorStyle)cursorStyle { self.wrapper.cursorStyle = cursorStyle; }
+- (CursorStyle)cursorStyle { return self.wrapper.cursorStyle; }
 
 -(BOOL)normalizeRange:(XVimSourceEditorRange*)rng
 {

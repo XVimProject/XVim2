@@ -12,7 +12,7 @@
 #import <AppKit/AppKit.h>
 #import <SourceEditor/_TtC12SourceEditor23SourceEditorUndoManager.h>
 
-typedef NS_ENUM(NSInteger, CursorStyle) { CursorStyleVerticalBar, CursorStyleBlock, CursorStyleUnderline };
+typedef NS_ENUM(char, CursorStyle) { CursorStyleVerticalBar, CursorStyleBlock, CursorStyleUnderline };
 
 @class XVimMotion;
 @class XVimCommandLine;
@@ -147,6 +147,7 @@ typedef NS_ENUM(NSInteger, CursorStyle) { CursorStyleVerticalBar, CursorStyleBlo
 - (void)xvim_filter:(XVimMotion*)motion;
 - (void)xvim_indentCharacterRange:(NSRange)range;
 - (BOOL)xvim_incrementNumber:(int64_t)offset;
+- (void)xvim_sortLinesFrom:(NSUInteger)line1 to:(NSUInteger)line2 withOptions:(XVimSortOptions)options;
 @end
 
 // Yank + Put
