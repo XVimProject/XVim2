@@ -14,16 +14,16 @@ import Cocoa
 
 class SourceCodeEditorViewWrapper: NSObject {
 
-    let sourceCodeEditorViewPtr : UnsafeMutableRawPointer
-    var functionToCallPtr : UnsafeMutableRawPointer
-    var savedr12 : UnsafeMutableRawPointer
-    var rax : UnsafeMutableRawPointer
-    var rdx : UnsafeMutableRawPointer
+    private var sourceCodeEditorViewPtr : UnsafeMutableRawPointer
+    private var functionToCallPtr : UnsafeMutableRawPointer
+    private var savedr12 : UnsafeMutableRawPointer
+    private var rax : UnsafeMutableRawPointer
+    private var rdx : UnsafeMutableRawPointer
 
-    let fpSetCursorStyle = function_ptr_from_name("_T012SourceEditor0aB4ViewC11cursorStyleAA0ab6CursorE0Ofs", nil);
-    let fpGetCursorStyle = function_ptr_from_name("_T012SourceEditor0aB4ViewC11cursorStyleAA0ab6CursorE0Ofg", nil);
+    private let fpSetCursorStyle = function_ptr_from_name("_T012SourceEditor0aB4ViewC11cursorStyleAA0ab6CursorE0Ofs", nil);
+    private let fpGetCursorStyle = function_ptr_from_name("_T012SourceEditor0aB4ViewC11cursorStyleAA0ab6CursorE0Ofg", nil);
 
-    weak var editorViewProxy : SourceCodeEditorViewProxy?
+    private weak var editorViewProxy : SourceCodeEditorViewProxy?
     
     public init(withProxy proxy:SourceCodeEditorViewProxy) {
         editorViewProxy = proxy
@@ -36,15 +36,27 @@ class SourceCodeEditorViewWrapper: NSObject {
     
     var cursorStyle : CursorStyle {
         get {
-            self.functionToCallPtr = fpGetCursorStyle!
+            if !prepareCall(fpGetCursorStyle!) {return .verticalBar}
             _get_cursor_style();
             return CursorStyle(rawValue:NSNumber(value: UInt(bitPattern:rax)).int8Value)!
         }
         set {
-            self.functionToCallPtr = fpSetCursorStyle!
+            if !prepareCall(fpSetCursorStyle!) {return}
             _set_cursor_style(newValue);
         }
-        
     }
     
+    // PRIVATE
+    // =======
+    
+    private func prepareCall(_ funcPtr: UnsafeMutableRawPointer) -> Bool
+    {
+        guard let evp = editorViewProxy else {return false}
+        if evp.view == nil {return false}
+        sourceCodeEditorViewPtr = unsafeBitCast(evp.view, to:UnsafeMutableRawPointer.self)
+        functionToCallPtr = funcPtr
+        return true
+    }
+    
+
 }

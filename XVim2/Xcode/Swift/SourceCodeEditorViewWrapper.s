@@ -31,8 +31,8 @@ _wrapper_call9:
     pushq %rbp
     movq  %rsp, %rbp
 
-    leaq    -200(%rsp), %rsp
-
+# Save registers on stack
+    leaq    -208(%rsp), %rsp
     andq    $0FFFFFFFFFFFFFFF0H, %rsp
     movq    %rdi, (%rsp)
     movq    %rsi, 8(%rsp)
@@ -54,13 +54,15 @@ _wrapper_call9:
 
 # Body
     pushq %r13
-    pushq 16(%r13)
+    pushq 16(%r13)      # Push function pointer onto stack
     movq  8(%r13), %r13 # Load the target 'self'
     callq *(%rsp)
     addq $8, %rsp
-    popq %r13
+    popq %r13           # Restore original 'self'
+
     movq %rax, 32(%r13) # Save rax to calling object
 
+# Restore registers from stack
     movq    (%rsp), %rdi
     movq    8(%rsp), %rsi
     movq    16(%rsp), %rdx
@@ -79,7 +81,7 @@ _wrapper_call9:
     movdqa  160(%rsp), %xmm6
     movdqa  176(%rsp), %xmm7
 
-    leaq    200(%rsp), %rsp
+    leaq    208(%rsp), %rsp
 
 # Cleanup
     movq %rbp, %rsp

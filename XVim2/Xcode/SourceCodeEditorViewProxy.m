@@ -119,8 +119,11 @@ static void (*fpIndexFromPosition)(void);
 - (NSInteger)lineCount { return self.sourceCodeEditorView.lineCount; }
 - (void)scrollRangeToVisible:(NSRange)arg1 { [self.sourceCodeEditorView scrollRangeToVisible:arg1]; }
 
-- (void)setCursorStyle:(CursorStyle)cursorStyle { self.wrapper.cursorStyle = cursorStyle; }
-- (CursorStyle)cursorStyle { return self.wrapper.cursorStyle; }
+- (void)setCursorStyle:(CursorStyle)cursorStyle {
+    self.wrapper.cursorStyle = cursorStyle; }
+- (CursorStyle)cursorStyle {
+    return self.wrapper.cursorStyle;
+}
 
 -(BOOL)normalizeRange:(XVimSourceEditorRange*)rng
 {
