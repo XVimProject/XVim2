@@ -620,6 +620,7 @@
 - (XVimEvaluator*)DOT
 {
     [[XVim instance] startRepeat];
+    [self.sourceView xvim_beginEditTransaction];
     XVimString* repeatRegister = [[XVim instance] lastOperationCommands];
     TRACE_LOG(@"Repeat:%@", repeatRegister);
 
@@ -646,6 +647,7 @@
         TRACE_LOG("Feeding stroke: %@", stroke);
         [self.window handleKeyStroke:stroke onStack:stack];
     }
+    [self.sourceView xvim_endEditTransaction];
     [[XVim instance] endRepeat];
     return nil;
 }

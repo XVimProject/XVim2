@@ -25,6 +25,7 @@
 @property (nonatomic, readonly, strong) NSArray* cancelKeys;
 @property (nonatomic, readonly, strong) NSArray* movementKeys;
 @property (nonatomic) BOOL enoughBufferForReplace;
+@property (nonatomic) BOOL beganUndoGroup;
 @end
 
 @implementation XVimInsertEvaluator {
@@ -75,6 +76,7 @@
 
 - (void)becameHandler
 {
+    [self beginUndoGrouping];
     [super becameHandler];
     [self.sourceView xvim_insert:_mode blockColumn:&_blockEditColumn blockLines:&_blockLines];
     self.startRange = [[self sourceView] selectedRange];
@@ -320,4 +322,6 @@
         [[self sourceView] insertText:charToInsert];
     }
 }
+
+
 @end

@@ -524,6 +524,7 @@
     if (motionPoint == 0 && self.string.length == 0) {
         return;
     }
+    EDIT_TRANSACTION_SCOPE;
 
     NSUInteger shiftWidth = self.textStorage.xvim_indentWidth;
     NSUInteger column = 0;

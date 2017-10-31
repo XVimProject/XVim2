@@ -206,7 +206,7 @@
 
 - (NSTextStorage*)textStorage
 {
-    NSTextStorage* storage = [[NSTextStorage alloc] initWithString:self.string];
+    NSTextStorage* storage = [[NSTextStorage alloc] initWithString:(self.string?:@"")];
     return storage;
 }
 
