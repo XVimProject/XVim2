@@ -7,25 +7,45 @@
 //
 
 .text
-    .global _wrapper_call
-    .global _wrapper_call2
-    .global _wrapper_call3
-    .global _wrapper_call4
-    .global _wrapper_call5
-    .global _wrapper_call6
-    .global _wrapper_call7
-    .global _wrapper_call8
-    .global _wrapper_call9
+    .global _scev_wrapper_call
+    .global _scev_wrapper_call2
+    .global _scev_wrapper_call3
+    .global _scev_wrapper_call4
+    .global _scev_wrapper_call5
+    .global _scev_wrapper_call6
+    .global _scev_wrapper_call7
+    .global _scev_wrapper_call8
+    .global _scev_wrapper_call9
 
-_wrapper_call:
-_wrapper_call2:
-_wrapper_call3:
-_wrapper_call4:
-_wrapper_call5:
-_wrapper_call6:
-_wrapper_call7:
-_wrapper_call8:
-_wrapper_call9:
+    .global _seds_wrapper_call
+    .global _seds_wrapper_call2
+    .global _seds_wrapper_call3
+    .global _seds_wrapper_call4
+    .global _seds_wrapper_call5
+    .global _seds_wrapper_call6
+    .global _seds_wrapper_call7
+    .global _seds_wrapper_call8
+    .global _seds_wrapper_call9
+
+_scev_wrapper_call:
+_scev_wrapper_call2:
+_scev_wrapper_call3:
+_scev_wrapper_call4:
+_scev_wrapper_call5:
+_scev_wrapper_call6:
+_scev_wrapper_call7:
+_scev_wrapper_call8:
+_scev_wrapper_call9:
+
+_seds_wrapper_call:
+_seds_wrapper_call2:
+_seds_wrapper_call3:
+_seds_wrapper_call4:
+_seds_wrapper_call5:
+_seds_wrapper_call6:
+_seds_wrapper_call7:
+_seds_wrapper_call8:
+_seds_wrapper_call9:
 
 # Prolog
     pushq %rbp
@@ -54,13 +74,16 @@ _wrapper_call9:
 
 # Body
     pushq %r13
-    pushq 16(%r13)      # Push function pointer onto stack
-    movq  8(%r13), %r13 # Load the target 'self'
+    pushq 24(%r13)      # Push function pointer onto stack
+    movq  16(%r13), %r13 # Load the target 'self'
+
     callq *(%rsp)
+
     addq $8, %rsp
     popq %r13           # Restore original 'self'
 
     movq %rax, 32(%r13) # Save rax to calling object
+    movq %rdx, 40(%r13) # Save rdx to calling object
 
 # Restore registers from stack
     movq    (%rsp), %rdi

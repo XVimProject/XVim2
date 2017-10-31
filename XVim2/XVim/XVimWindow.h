@@ -45,6 +45,8 @@
 - (void)errorMessage:(NSString*)message ringBell:(BOOL)ringBell;
 - (void)statusMessage:(NSString*)message;
 - (void)clearErrorMessage;
+- (void)beginCommandEntry;
+- (void)endCommandEntry;
 
 - (void)setForcusBackToSourceView;
 

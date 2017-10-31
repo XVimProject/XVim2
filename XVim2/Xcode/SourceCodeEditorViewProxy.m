@@ -19,18 +19,6 @@
 #import <IDEPegasusSourceEditor/_TtC22IDEPegasusSourceEditor18SourceCodeDocument.h>
 #import <SourceEditor/_TtC12SourceEditor23SourceEditorUndoManager.h>
 
-static void (*fpSetCursorStyle)(int style, id obj);
-static void (*fpGetCursorStyle)(int style, id obj);
-static void (*fpGetTextStorage)(void);
-static void (*fpGetSourceEditorDataSource)(void);
-static void (*fpBeginEditingTransaction)(void);
-static void (*fpEndEditingTransaction)(void);
-static void (*fpSetSelectedRangeWithModifiers)(void);
-static void (*fpAddSelectedRangeWithModifiers)(void);
-static void (*fpGetUndoManager)(void);
-static void (*fpPositionFromIndexLineHint)(void);
-static void (*fpIndexFromPosition)(void);
-
 
 @interface SourceCodeEditorViewProxy ()
 @property (weak) SourceCodeEditorView* sourceCodeEditorView;
@@ -42,7 +30,7 @@ static void (*fpIndexFromPosition)(void);
 @property (strong) NSString* lastYankedText;
 @property (strong) NSLayoutConstraint* cmdLineBottomAnchor;
 @property TEXT_TYPE lastYankedType;
-@property (strong) SourceCodeEditorViewWrapper * wrapper;
+@property (readonly, nonatomic) SourceEditorDataSourceWrapper * sourceEditorDataSourceWrapper;
 @end
 
 #define LOG_STATE()
@@ -53,33 +41,13 @@ static void (*fpIndexFromPosition)(void);
 }
 @synthesize enabled = _enabled;
 
-+ (void)initialize
-{
-    if (self == [SourceCodeEditorViewProxy class]) {
-        // SourceEditorView.cursorStyle.setter
-        fpSetCursorStyle = function_ptr_from_name("_T012SourceEditor0aB4ViewC11cursorStyleAA0ab6CursorE0Ofs", NULL);
-        fpGetCursorStyle = function_ptr_from_name("_T012SourceEditor0aB4ViewC11cursorStyleAA0ab6CursorE0Ofg", NULL);
-        fpGetTextStorage = function_ptr_from_name(
-                    "_T022IDEPegasusSourceEditor0B12CodeDocumentC16sdefSupport_textSo13NSTextStorageCyF", NULL);
-        fpGetSourceEditorDataSource = function_ptr_from_name("_T012SourceEditor0aB4ViewC04dataA0AA0ab4DataA0Cfg", NULL);
-        fpGetUndoManager = function_ptr_from_name("_T012SourceEditor0ab4DataA0C11undoManagerAA0ab4UndoE0Cfg", NULL);
-        fpSetSelectedRangeWithModifiers = function_ptr_from_name("_T012SourceEditor0aB4ViewC16setSelectedRangeyAA0abF0V_AA0aB18SelectionModifiersV9modifierstF", NULL);
-        fpAddSelectedRangeWithModifiers = function_ptr_from_name("_T012SourceEditor0aB4ViewC16addSelectedRangeyAA0abF0V_AA0aB18SelectionModifiersV9modifierstF", NULL);
-        // Methdos on data source
-        fpBeginEditingTransaction
-                    = function_ptr_from_name("_T012SourceEditor0ab4DataA0C20beginEditTransactionyyF", NULL);
-        fpEndEditingTransaction = function_ptr_from_name("_T012SourceEditor0ab4DataA0C18endEditTransactionyyF", NULL);
-        fpPositionFromIndexLineHint = function_ptr_from_name("_T012SourceEditor0ab4DataA0C30positionFromInternalCharOffsetAA0aB8PositionVSi_Si8lineHinttF", NULL);
-        fpIndexFromPosition = function_ptr_from_name("_T012SourceEditor0ab4DataA0C30internalCharOffsetFromPositionSiAA0abH0VF", NULL);
-    }
-}
 
 - (instancetype)initWithSourceCodeEditorView:(SourceCodeEditorView*)sourceCodeEditorView
 {
     self = [super init];
     if (self) {
         self.sourceCodeEditorView = sourceCodeEditorView;
-        self.wrapper = [[SourceCodeEditorViewWrapper alloc] initWithProxy:self];
+        self.sourceCodeEditorViewWrapper = [[SourceCodeEditorViewWrapper alloc] initWithProxy:self];
     }
     return self;
 }
@@ -105,6 +73,10 @@ static void (*fpIndexFromPosition)(void);
     [self hideCommandLine];
 }
 
+-(SourceEditorDataSourceWrapper*)sourceEditorDataSourceWrapper
+{
+    return self.sourceCodeEditorViewWrapper.dataSourceWrapper;
+}
 
 // NOTE: line ranges are zero-indexed
 - (NSRange)lineRangeForCharacterRange:(NSRange)arg1
@@ -120,9 +92,11 @@ static void (*fpIndexFromPosition)(void);
 - (void)scrollRangeToVisible:(NSRange)arg1 { [self.sourceCodeEditorView scrollRangeToVisible:arg1]; }
 
 - (void)setCursorStyle:(CursorStyle)cursorStyle {
-    self.wrapper.cursorStyle = cursorStyle; }
+    self.sourceCodeEditorViewWrapper.cursorStyle = cursorStyle;
+}
+
 - (CursorStyle)cursorStyle {
-    return self.wrapper.cursorStyle;
+    return self.sourceCodeEditorViewWrapper.cursorStyle;
 }
 
 -(BOOL)normalizeRange:(XVimSourceEditorRange*)rng
@@ -148,157 +122,49 @@ static void (*fpIndexFromPosition)(void);
 
 - (void)addSelectedRange:(XVimSourceEditorRange)rng modifiers:(XVimSelectionModifiers)modifiers reset:(BOOL)reset
 {
-    if (![self normalizeRange:&rng]) return;
-    void* sev = (__bridge_retained void*)self.sourceCodeEditorView;
-    void *fpAddOrSet = reset ? fpSetSelectedRangeWithModifiers : fpAddSelectedRangeWithModifiers;
-    XVimSourceEditorRange *rngPtr = (void*)&rng;
-    uint64_t mods = modifiers;
-    uint64_t *modsPtr = &mods;
-    
-    __asm__("movq %[SourceEditorView], %%r13\n\t"
-            "movq (%[RangePtr])  , %%rdi\n\t"
-            "movq 8(%[RangePtr]) , %%rsi\n\t"
-            "movq 16(%[RangePtr]), %%rdx\n\t"
-            "movq 24(%[RangePtr]), %%rcx\n\t"
-            "movq %[Modifiers]   , %%r8\n\t"
-            "call *%[AddSelectedRangeWithModifiers]\n\t"
-            :
-            : [SourceEditorView] "m" (sev)
-            , [AddSelectedRangeWithModifiers] "m"(fpAddOrSet)
-            , [Modifiers] "r" (mods)
-            , [RangePtr] "r" (rngPtr)
-            , "m" (*rngPtr)
-            , "m" (*modsPtr)
-            : "memory", "%rax", "%r13", "%rdi", "%rsi", "%rdx", "%rcx", "%r8");
+    if (reset)
+        [self setSelectedRange:rng modifiers:modifiers];
+    else
+        [self addSelectedRange:rng modifiers:modifiers];
 }
+
 - (void)addSelectedRange:(XVimSourceEditorRange)rng modifiers:(XVimSelectionModifiers)modifiers
 {
-    [self addSelectedRange:rng modifiers:modifiers reset:NO];
+    [self.sourceCodeEditorViewWrapper addSelectedRange:rng modifiers:modifiers];
 }
 - (void)setSelectedRange:(XVimSourceEditorRange)rng modifiers:(XVimSelectionModifiers)modifiers
 {
-    [self addSelectedRange:rng modifiers:modifiers reset:YES];
+    [self.sourceCodeEditorViewWrapper setSelectedRange:rng modifiers:modifiers];
 }
 
-- (id)dataSource
+- (nullable id)dataSource
 {
-    void* sev = (__bridge_retained void*)self.sourceCodeEditorView;
-    uint64_t cstyle = 0;
-    __asm__("movq %1, %%r13\n\t"
-            "call *%2\n\t"
-            "movq %%rax, %0\n\t"
-
-            : "=r"(cstyle)
-            : "r"(sev), "m"(fpGetSourceEditorDataSource)
-            : "memory", "%rax");
-    id dataSource = (__bridge id)(void*)cstyle;
-    return dataSource;
+    return self.sourceCodeEditorViewWrapper.dataSource;
 }
 
 - (XVimSourceEditorPosition)positionFromIndex:(NSUInteger)idx lineHint:(NSUInteger)line
 {
-    void* sev = (__bridge_retained void*)self.sourceCodeEditorView;
-    uint64_t row = 0; uint64_t *rowPtr = &row;
-    uint64_t col = 0; uint64_t *colPtr = &col;
-    int64_t index = idx; int64_t *indexPtr = (void*)&idx;
-    
-    __asm__("movq %[SourceEditorView], %%r13\n\t"
-            "call *%[DataSourceGetter]\n\t"
-            "movq %%rax, %%r13\n\t"
-            "movq %[Index], %%rdi\n\t"
-            "movq %[LineHint], %%rsi\n\t"
-            "call *%[GetPosition]\n\t"
-            "movq %%rax, %[Row]\n\t"
-            "movq %%rdx, %[Col]\n\t"
-            
-            : [Row] "=r"(row)
-            , [Col] "=r"(col)
-            
-            : [SourceEditorView] "r"(sev)
-            , [Index] "m" (index)
-            , [LineHint] "m" (line)
-            , [DataSourceGetter] "m"(fpGetSourceEditorDataSource)
-            , [GetPosition] "m"(fpPositionFromIndexLineHint)
-            , "m"(rowPtr)
-            , "m"(colPtr)
-            , "m"(indexPtr)
-
-            : "memory", "%rax", "%rbx", "%rdx", "%r13", "%rdi", "%rsi");
-    
-    XVimSourceEditorPosition pos = { .row = row, .col = col };
-    return pos;
+    return [self.sourceEditorDataSourceWrapper positionFromInternalCharOffset:idx lineHint:line];
 }
 
 - (NSUInteger)indexFromPosition:(XVimSourceEditorPosition)pos
 {
-    void* sev = (__bridge_retained void*)self.sourceCodeEditorView;
-    uint64_t row = pos.row;
-    uint64_t col = pos.col;
-    int64_t index = 0;
-    
-    __asm__("movq %[SourceEditorView], %%r13\n\t"
-            "call *%[DataSourceGetter]\n\t"
-            "movq %%rax, %%r13\n\t"
-            "movq %[Row], %%rdi\n\t"
-            "movq %[Col], %%rsi\n\t"
-            "call *%[GetIndex]\n\t"
-            "movq %%rax, %[Index]\n\t"
-
-            : [Index] "=r"(index)
-
-            : [SourceEditorView] "r"(sev)
-            , [Row] "m" (row)
-            , [Col] "m" (col)
-            , [DataSourceGetter] "m"(fpGetSourceEditorDataSource)
-            , [GetIndex] "m"(fpIndexFromPosition)
-
-            : "memory", "%rax", "%rbx", "%rdx", "%r13", "%rdi", "%rsi");
-    
-    return index;
+    return [self.sourceEditorDataSourceWrapper internalCharOffsetFromPosition:pos];
 }
 
 - (SourceEditorUndoManager*)undoManager
 {
-    void* sev = (__bridge_retained void*)self.sourceCodeEditorView;
-    void* undoMgr = NULL;
-    __asm__("movq %[SourceEditorView], %%r13\n\t"
-            "call *%[DataSourceGetter]\n\t"
-            "movq %%rax, %%r13\n\t"
-            "call *%[GetUndoManager]\n\t"
-            "movq %%rax, %0\n\t"
-
-            : [UndoManagerPtr] "=r"(undoMgr)
-            : [SourceEditorView] "r"(sev), [DataSourceGetter] "m"(fpGetSourceEditorDataSource),
-              [GetUndoManager] "m"(fpGetUndoManager)
-            : "memory", "%rax", "%r13");
-    return (__bridge SourceEditorUndoManager*)undoMgr;
+    return self.sourceEditorDataSourceWrapper.undoManager;
 }
-
 
 - (void)beginEditTransaction
 {
-    void* sev = (__bridge_retained void*)self.sourceCodeEditorView;
-    __asm__("movq %[SourceEditorView], %%r13\n\t"
-            "call *%[DataSourceGetter]\n\t"
-            "movq %%rax, %%r13\n\t"
-            "call *%[BeginEditTransaction]\n\t"
-            :
-            : [SourceEditorView] "r"(sev), [DataSourceGetter] "m"(fpGetSourceEditorDataSource),
-              [BeginEditTransaction] "m"(fpBeginEditingTransaction)
-            : "memory", "%rax", "%r13");
+    [self.sourceEditorDataSourceWrapper beginEditTransaction];
 }
 
 - (void)endEditTransaction
 {
-    void* sev = (__bridge_retained void*)self.sourceCodeEditorView;
-    __asm__("movq %[SourceEditorView], %%r13\n\t"
-            "call *%[DataSourceGetter]\n\t"
-            "movq %%rax, %%r13\n\t"
-            "call *%[EndEditTransaction]\n\t"
-            :
-            : [SourceEditorView] "r"(sev), [DataSourceGetter] "m"(fpGetSourceEditorDataSource),
-              [EndEditTransaction] "m"(fpEndEditingTransaction)
-            : "memory", "%rax", "%r13");
+    [self.sourceEditorDataSourceWrapper endEditTransaction];
 }
 
 
@@ -450,6 +316,7 @@ static void (*fpIndexFromPosition)(void);
             _auto selectionModifiers = isInsertionLine
                 ? SelectionModifierDiscontiguous
                 : SelectionModifierDiscontiguous | SelectionModifierExtension ;
+            if (![self normalizeRange:&ser]) continue;
             [self addSelectedRange:ser modifiers:selectionModifiers reset:isFirst];
             isFirst = NO;
         }

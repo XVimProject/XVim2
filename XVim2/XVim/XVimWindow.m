@@ -30,6 +30,7 @@
     id _enabledNotificationObserver;
 }
 @property (strong, atomic) NSEvent* tmpBuffer;
+@property (strong) id<SourceViewProtocol> lastTextView;
 
 - (void)_resetEvaluatorStack:(NSMutableArray*)stack activateNormalHandler:(BOOL)activate;
 
@@ -376,6 +377,9 @@
 
 - (BOOL)shouldAutoCompleteAtLocation:(unsigned long long)location { return NO; }
 
+// STATUS LINE
+#pragma mark - Status Line
+
 - (void)errorMessage:(NSString*)message ringBell:(BOOL)ringBell
 {
     [self.commandLine errorMessage:message Timer:YES RedColorSetting:YES];
@@ -391,6 +395,22 @@
 
 - (void)setForcusBackToSourceView { [self.sourceView.window makeFirstResponder:self.sourceView.view]; }
 
+- (void)beginCommandEntry
+{
+    self.commandLine.modeHidden = YES;
+    XVimCommandField* commandField = self.commandLine.commandField;
+    [commandField setDelegate:self];
+    [self.sourceView.window makeFirstResponder:commandField];
+}
+
+- (void)endCommandEntry
+{
+    XVimCommandField* commandField = self.commandLine.commandField;
+    [commandField setDelegate:nil];
+    [commandField setHidden:YES];
+    self.commandLine.modeHidden = NO;
+    [self setForcusBackToSourceView];
+}
 
 #pragma mark - NSTextInputClient Protocol
 
