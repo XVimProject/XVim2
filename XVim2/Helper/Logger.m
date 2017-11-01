@@ -190,6 +190,7 @@ static Logger* s_defaultLogger = nil;
 + (void)logStackTrace:(NSException*)ex
 {
     for (NSString* e in [ex callStackSymbols]) {
+        (void)(e);
         TRACE_LOG(@"%@", e);
     }
 }

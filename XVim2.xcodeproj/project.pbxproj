@@ -674,7 +674,7 @@
 		A26E5C6B1F5145AB000BCC66 /* Project object */ = {
 			isa = PBXProject;
 			attributes = {
-				LastUpgradeCheck = 0900;
+				LastUpgradeCheck = 0910;
 				ORGANIZATIONNAME = "Shuichiro Suzuki";
 				TargetAttributes = {
 					A26E5C721F5145AB000BCC66 = {
@@ -873,6 +873,7 @@
 				MTL_ENABLE_DEBUG_INFO = YES;
 				ONLY_ACTIVE_ARCH = YES;
 				SDKROOT = macosx;
+				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
 			};
 			name = Debug;
 		};
@@ -921,6 +922,7 @@
 				MACOSX_DEPLOYMENT_TARGET = 10.12;
 				MTL_ENABLE_DEBUG_INFO = NO;
 				SDKROOT = macosx;
+				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
 			};
 			name = Release;
 		};
@@ -946,7 +948,8 @@
 				SKIP_INSTALL = YES;
 				SWIFT_OBJC_BRIDGING_HEADER = "XVim2-Bridging-Header.h";
 				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
-				SWIFT_VERSION = 3.0;
+				SWIFT_SWIFT3_OBJC_INFERENCE = Off;
+				SWIFT_VERSION = 4.0;
 				WRAPPER_EXTENSION = xcplugin;
 			};
 			name = Debug;
@@ -957,6 +960,7 @@
 				CLANG_ENABLE_MODULES = YES;
 				COMBINE_HIDPI_IMAGES = YES;
 				FRAMEWORK_SEARCH_PATHS = "";
+				GCC_OPTIMIZATION_LEVEL = 2;
 				GCC_PREFIX_HEADER = "$(PROJECT_NAME)/XVim2-prefix.h";
 				HEADER_SEARCH_PATHS = "$(SOURCE_ROOT)/XVim2/Xcode";
 				INFOPLIST_FILE = XVim2/Info.plist;
@@ -972,7 +976,9 @@
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SKIP_INSTALL = YES;
 				SWIFT_OBJC_BRIDGING_HEADER = "XVim2-Bridging-Header.h";
-				SWIFT_VERSION = 3.0;
+				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
+				SWIFT_SWIFT3_OBJC_INFERENCE = Off;
+				SWIFT_VERSION = 4.0;
 				WRAPPER_EXTENSION = xcplugin;
 			};
 			name = Release;

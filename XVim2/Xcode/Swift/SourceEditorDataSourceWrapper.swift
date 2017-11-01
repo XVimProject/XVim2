@@ -33,6 +33,7 @@ class SourceEditorDataSourceWrapper: NSObject {
 
     private weak var sourceCodeEditorViewWrapper : SourceCodeEditorViewWrapper?
     
+    @objc
     public init(withSourceCodeEditorViewWrapper wrapper:SourceCodeEditorViewWrapper) {
         sourceCodeEditorViewWrapper = wrapper
         sourceEditorDataSourcePtr = unsafeBitCast(fpIndexFromPosition, to: UnsafeMutableRawPointer.self)
@@ -43,23 +44,26 @@ class SourceEditorDataSourceWrapper: NSObject {
     
     // MARK:- PUBLIC
 
+    @objc
     public var undoManager : AnyObject? {
         guard prepareCall(fpGetUndoManager) else {return nil}
         _getUndoManager()
         return Unmanaged.fromOpaque(rax).takeRetainedValue()
     }
     
-
+    @objc
     public func beginEditTransaction() -> () {
         guard prepareCall(fpBeginEditingTransaction) else {return}
         _beginEditTransaction()
     }
     
+    @objc
     public func endEditTransaction() -> () {
         guard prepareCall(fpEndEditingTransaction) else {return}
         _endEditTransaction()
     }
     
+    @objc
     public func positionFromInternalCharOffset(_ pos : UInt, lineHint: UInt = 0) -> XVimSourceEditorPosition {
         guard prepareCall(fpPositionFromIndexLineHint) else {return XVimSourceEditorPosition(row:0, col:0)}
         _positionFromInternalCharOffset(pos, lineHint: lineHint)
@@ -69,6 +73,7 @@ class SourceEditorDataSourceWrapper: NSObject {
         )
     }
     
+    @objc
     public func internalCharOffsetFromPosition(_ pos : XVimSourceEditorPosition) -> UInt {
         guard prepareCall(fpIndexFromPosition) else {return 0}
         _internalCharOffsetFromPosition(pos)
@@ -83,6 +88,11 @@ class SourceEditorDataSourceWrapper: NSObject {
             , let ds = vw.dataSource
             , let fp = funcPtr
             else {return false}
+       
+        let byteCount = 8 * 4
+        let rawSelf = Unmanaged.toOpaque(Unmanaged.passUnretained(self))()
+        let ptr = UnsafeMutablePointer<UInt8>(rawSelf.assumingMemoryBound(to: UInt8.self))
+        memset_s(ptr+16, byteCount, 0x00, byteCount)
         
         sourceEditorDataSourcePtr = unsafeBitCast(ds as AnyObject, to:UnsafeMutableRawPointer.self)
         functionToCallPtr = fp

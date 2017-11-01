@@ -87,7 +87,7 @@
 {
     for (NSUInteger i = 0; i < stack.count; i++) {
         XVimEvaluator* e = [stack objectAtIndex:i];
-
+        (void)(e);
         DEBUG_LOG("Evaluator %lu :%@   argStr:%@   yankReg:%@", (unsigned long)i, NSStringFromClass([e class]),
                   e.argumentString, e.yankRegister);
     }

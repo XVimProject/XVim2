@@ -33,10 +33,12 @@ class SourceCodeEditorViewWrapper: NSObject {
 
     private weak var editorViewProxy : SourceCodeEditorViewProxy?
     
+    @objc
     lazy public var dataSourceWrapper = {
         return SourceEditorDataSourceWrapper(withSourceCodeEditorViewWrapper: self)
     }()
     
+    @objc
     public init(withProxy proxy:SourceCodeEditorViewProxy) {
         editorViewProxy = proxy
         sourceCodeEditorViewPtr = unsafeBitCast(proxy.view, to:UnsafeMutableRawPointer.self)
@@ -46,6 +48,7 @@ class SourceCodeEditorViewWrapper: NSObject {
         
     }
     
+    @objc
     var cursorStyle : CursorStyle {
         get {
             guard prepareCall(fpGetCursorStyle) else {return .verticalBar}
@@ -58,24 +61,28 @@ class SourceCodeEditorViewWrapper: NSObject {
         }
     }
     
+    @objc
     var dataSource : AnyObject? {
         guard prepareCall(fpGetDataSource) else {return nil}
         _get_data_source()
         return UnsafeMutableRawPointer(bitPattern: 0)?.distance(to:rax) == 0  ? nil : Unmanaged.fromOpaque(rax).takeUnretainedValue()
     }
     
+    @objc
     var textStorage : NSTextStorage? {
         guard prepareCall(fpGetTextStorage) else {return nil}
         _get_text_storage()
         return UnsafeMutableRawPointer(bitPattern: 0)?.distance(to:rax) == 0  ? nil : Unmanaged.fromOpaque(rax).takeUnretainedValue()
     }
     
+    @objc
     public func addSelectedRange(_ range:XVimSourceEditorRange, modifiers:XVimSelectionModifiers)
     {
         guard prepareCall(fpAddSelectedRangeWithModifiers) else {return }
         _add_selected_range(range, modifiers: modifiers.rawValue)
     }
     
+    @objc
     public func setSelectedRange(_ range:XVimSourceEditorRange, modifiers:XVimSelectionModifiers)
     {
         guard prepareCall(fpSetSelectedRangeWithModifiers) else {return }
