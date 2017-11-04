@@ -8,13 +8,15 @@
 
 import Cocoa
 
-@_silgen_name("seds_wrapper_call") func _positionFromInternalCharOffset(_:UInt, lineHint:UInt) -> ()
-@_silgen_name("seds_wrapper_call2") func _internalCharOffsetFromPosition(_:XVimSourceEditorPosition) -> ()
-@_silgen_name("seds_wrapper_call3") func _beginEditTransaction() -> ()
-@_silgen_name("seds_wrapper_call4") func _endEditTransaction() -> ()
-@_silgen_name("seds_wrapper_call4") func _getUndoManager() -> ()
+@_silgen_name("seds_wrapper_call") func _positionFromInternalCharOffset(_:UnsafeRawPointer, _:UInt, lineHint:UInt) -> ()
+@_silgen_name("seds_wrapper_call2") func _internalCharOffsetFromPosition(_:UnsafeRawPointer, _:XVimSourceEditorPosition) -> ()
+@_silgen_name("seds_wrapper_call3") func _beginEditTransaction(_:UnsafeRawPointer) -> ()
+@_silgen_name("seds_wrapper_call4") func _endEditTransaction(_:UnsafeRawPointer) -> ()
+@_silgen_name("seds_wrapper_call4") func _getUndoManager(_:UnsafeRawPointer) -> ()
+@_silgen_name("seds_wrapper_call5") func _leadingWhitespaceWithForLine(_:UnsafeRawPointer, _:Int, expandTabs:Bool) -> ()
 
 typealias InternalCharOffset = Int64
+
 
 
 class SourceEditorDataSourceWrapper: NSObject {
@@ -30,6 +32,7 @@ class SourceEditorDataSourceWrapper: NSObject {
     private let fpPositionFromIndexLineHint = function_ptr_from_name("_T012SourceEditor0ab4DataA0C30positionFromInternalCharOffsetAA0aB8PositionVSi_Si8lineHinttF", nil);
     private let fpIndexFromPosition = function_ptr_from_name("_T012SourceEditor0ab4DataA0C30internalCharOffsetFromPositionSiAA0abH0VF", nil);
     private let fpGetUndoManager = function_ptr_from_name("_T012SourceEditor0ab4DataA0C11undoManagerAA0ab4UndoE0Cfg", nil);
+    private let fpLeadingWhitespaceWidthForLine = function_ptr_from_name("__T012SourceEditor0ab4DataA0C29leadingWhitespaceWidthForLineS2i_Sb10expandTabstF", nil);
 
     private weak var sourceCodeEditorViewWrapper : SourceCodeEditorViewWrapper?
     
@@ -46,27 +49,34 @@ class SourceEditorDataSourceWrapper: NSObject {
 
     @objc
     public var undoManager : AnyObject? {
-        guard prepareCall(fpGetUndoManager) else {return nil}
-        _getUndoManager()
-        return Unmanaged.fromOpaque(rax).takeRetainedValue()
+        let result = doCall(fpGetUndoManager) { rawSelf, dataSource in
+            _getUndoManager(rawSelf)
+        }
+        
+        return result
+            ? Unmanaged.fromOpaque(rax).retain().autorelease().takeUnretainedValue()
+            : nil
     }
     
     @objc
     public func beginEditTransaction() -> () {
-        guard prepareCall(fpBeginEditingTransaction) else {return}
-        _beginEditTransaction()
+        doCall(fpBeginEditingTransaction) { rawSelf, dataSource in
+            _beginEditTransaction(rawSelf)
+        }
     }
     
     @objc
     public func endEditTransaction() -> () {
-        guard prepareCall(fpEndEditingTransaction) else {return}
-        _endEditTransaction()
+        doCall(fpEndEditingTransaction) { rawSelf, dataSource in
+            _endEditTransaction(rawSelf)
+        }
     }
     
     @objc
     public func positionFromInternalCharOffset(_ pos : UInt, lineHint: UInt = 0) -> XVimSourceEditorPosition {
-        guard prepareCall(fpPositionFromIndexLineHint) else {return XVimSourceEditorPosition(row:0, col:0)}
-        _positionFromInternalCharOffset(pos, lineHint: lineHint)
+        doCall(fpPositionFromIndexLineHint) { rawSelf, dataSource in
+            _positionFromInternalCharOffset(rawSelf, pos, lineHint: lineHint)
+        }
         return XVimSourceEditorPosition(
             row: UInt(bitPattern: rax)
             , col: UInt(bitPattern:rdx)
@@ -75,14 +85,24 @@ class SourceEditorDataSourceWrapper: NSObject {
     
     @objc
     public func internalCharOffsetFromPosition(_ pos : XVimSourceEditorPosition) -> UInt {
-        guard prepareCall(fpIndexFromPosition) else {return 0}
-        _internalCharOffsetFromPosition(pos)
+        doCall(fpIndexFromPosition) { rawSelf, dataSource in
+            _internalCharOffsetFromPosition(rawSelf, pos)
+        }
         return UInt(bitPattern: rax)
+    }
+    
+    @objc
+    public func leadingWhitespaceWidthForLine(_ line:Int, expandTabs:Bool) -> Int {
+        doCall(fpLeadingWhitespaceWidthForLine) { rawSelf, dataSource in
+            _leadingWhitespaceWithForLine(rawSelf, line, expandTabs: expandTabs)
+        }
+        return Int(bitPattern: rax)
     }
     
     // MARK:- PRIVATE
     
-    private func prepareCall(_ funcPtr: UnsafeMutableRawPointer?) -> Bool
+    @discardableResult
+    private func doCall(_ funcPtr: UnsafeMutableRawPointer?, block: (UnsafeRawPointer, AnyObject)->()) -> Bool
     {
         guard let vw = self.sourceCodeEditorViewWrapper
             , let ds = vw.dataSource
@@ -96,7 +116,8 @@ class SourceEditorDataSourceWrapper: NSObject {
         
         sourceEditorDataSourcePtr = unsafeBitCast(ds as AnyObject, to:UnsafeMutableRawPointer.self)
         functionToCallPtr = fp
-        return true
+        block(rawSelf, ds)
+        return true;
     }
 
 }

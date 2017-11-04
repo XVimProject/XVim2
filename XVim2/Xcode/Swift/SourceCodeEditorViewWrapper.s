@@ -54,14 +54,12 @@ _seds_wrapper_call9:
 # Save registers on stack
     leaq    -208(%rsp), %rsp
     andq    $0FFFFFFFFFFFFFFF0H, %rsp
-    movq    %rdi, (%rsp)
-    movq    %rsi, 8(%rsp)
-    movq    %rdx, 16(%rsp)
-    movq    %rcx, 24(%rsp)
-    movq    %r8, 32(%rsp)
-    movq    %r9, 40(%rsp)
-    movq    %r12, 48(%rsp)
-    movq    %r14, 56(%rsp)
+    movq    %rbx, (%rsp)
+    movq    %r12, 8(%rsp)
+    movq    %r13, 16(%rsp)
+    movq    %r14, 24(%rsp)
+    movq    %r15, 32(%rsp)
+
 
     movdqa  %xmm0, 64(%rsp)
     movdqa  %xmm1, 80(%rsp)
@@ -73,27 +71,33 @@ _seds_wrapper_call9:
     movdqa  %xmm7, 176(%rsp)
 
 # Body
-    pushq %r13
-    pushq 24(%r13)      # Push function pointer onto stack
-    movq  16(%r13), %r13 # Load the target 'self'
+    pushq %rdi
+    pushq 24(%rdi)      # Push function pointer onto stack
 
+    movq  16(%rdi), %r13 # Load the target 'self'
+
+# Shuffle up arguments
+    movq  %rsi, %rdi
+    movq  %rdx, %rsi
+    movq  %rcx, %rdx
+    movq  %r8, %rcx
+    movq  %r9, %r8
+
+# CALL
     callq *(%rsp)
 
     addq $8, %rsp
-    popq %r13           # Restore original 'self'
+    popq %rdi
 
-    movq %rax, 32(%r13) # Save rax to calling object
-    movq %rdx, 40(%r13) # Save rdx to calling object
+    movq %rax, 32(%rdi) # Save rax to calling object
+    movq %rdx, 40(%rdi) # Save rdx to calling object
 
 # Restore registers from stack
-    movq    (%rsp), %rdi
-    movq    8(%rsp), %rsi
-    movq    16(%rsp), %rdx
-    movq    24(%rsp), %rcx
-    movq    32(%rsp), %r8
-    movq    40(%rsp), %r9
-    movq    48(%rsp), %r12
-    movq    56(%rsp), %r14
+    movq    (%rsp), %rbx
+    movq    8(%rsp), %r12
+    movq    16(%rsp), %r13
+    movq    24(%rsp), %r14
+    movq    32(%rsp), %r15
 
     movdqa  64(%rsp), %xmm0
     movdqa  80(%rsp), %xmm1
