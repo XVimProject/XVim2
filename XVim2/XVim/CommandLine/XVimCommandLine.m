@@ -123,7 +123,6 @@ static const BOOL UseLayers = NO;
         [self addSubview:_quickFixScrollView];
 #endif
 
-
         // Command View
         _command = [[XVimCommandField alloc] init];
         _command.wantsLayer = UseLayers;

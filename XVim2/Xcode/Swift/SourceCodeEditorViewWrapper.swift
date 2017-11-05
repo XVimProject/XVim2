@@ -8,21 +8,19 @@
 
 import Cocoa
 
-@_silgen_name("scev_wrapper_call") func _get_cursor_style(_:UnsafeRawPointer) -> ()
+@_silgen_name("scev_wrapper_call") func _get_cursor_style(_:UnsafeRawPointer) -> (CursorStyle)
 @_silgen_name("scev_wrapper_call2") func _set_cursor_style(_:UnsafeRawPointer, _:CursorStyle) -> ()
-@_silgen_name("scev_wrapper_call3") func _get_data_source(_:UnsafeRawPointer) -> ()
+@_silgen_name("scev_wrapper_call3") func _get_data_source(_:UnsafeRawPointer) -> (AnyObject?)
 @_silgen_name("scev_wrapper_call4") func _set_selected_range(_:UnsafeRawPointer, _:XVimSourceEditorRange, modifiers:UInt32) -> ()
 @_silgen_name("scev_wrapper_call5") func _add_selected_range(_:UnsafeRawPointer, _:XVimSourceEditorRange, modifiers:UInt32) -> ()
-@_silgen_name("scev_wrapper_call6") func _get_text_storage(_:UnsafeRawPointer) -> ()
+@_silgen_name("scev_wrapper_call6") func _get_text_storage(_:UnsafeRawPointer) -> (NSTextStorage?)
 
 
 class SourceCodeEditorViewWrapper: NSObject {
 
-    let a: UInt64 = 0xaaaaaaaaaaaaaaaa
-    private var sourceCodeEditorViewPtr : UnsafeMutableRawPointer // 16
-    private var functionToCallPtr : UnsafeMutableRawPointer // 24
-    private var rax : UnsafeMutableRawPointer // 32
-    private var rdx : UnsafeMutableRawPointer // 40
+    let context : UnsafeMutableRawPointer = malloc(2 * 8)!
+    let contextPtr : UnsafeMutableBufferPointer<UnsafeMutableRawPointer>!
+
 
     private let fpSetCursorStyle = function_ptr_from_name("_T012SourceEditor0aB4ViewC11cursorStyleAA0ab6CursorE0Ofs", nil);
     private let fpGetCursorStyle = function_ptr_from_name("_T012SourceEditor0aB4ViewC11cursorStyleAA0ab6CursorE0Ofg", nil);
@@ -41,63 +39,48 @@ class SourceCodeEditorViewWrapper: NSObject {
     @objc
     public init(withProxy proxy:SourceCodeEditorViewProxy) {
         editorViewProxy = proxy
-        sourceCodeEditorViewPtr = unsafeBitCast(proxy.view, to:UnsafeMutableRawPointer.self)
-        functionToCallPtr = unsafeBitCast(fpSetCursorStyle, to: UnsafeMutableRawPointer.self)
-        rax = unsafeBitCast(fpSetCursorStyle, to: UnsafeMutableRawPointer.self)
-        rdx = unsafeBitCast(fpSetCursorStyle, to: UnsafeMutableRawPointer.self)
-        
+        contextPtr = UnsafeMutableBufferPointer<UnsafeMutableRawPointer>(start: context.assumingMemoryBound(to: UnsafeMutableRawPointer.self), count: 2)
+    }
+    
+    deinit {
+        free(context)
     }
     
     @objc
     var cursorStyle : CursorStyle {
         get {
-            doCall(fpGetCursorStyle) {rawSelf, sourceCodeEditorView in
-                _get_cursor_style(rawSelf);
-            }
-            return CursorStyle(rawValue:NSNumber(value: UInt(bitPattern:rax)).int8Value)!
+            return doCall(fpGetCursorStyle) ? _get_cursor_style(context) : CursorStyle.block
         }
         set {
-            doCall(fpSetCursorStyle) {rawSelf, sourceCodeEditorView in
-                _set_cursor_style(rawSelf, newValue);
+            if doCall(fpSetCursorStyle) {
+                _set_cursor_style(context, newValue)
             }
         }
     }
     
     @objc
     var dataSource : AnyObject? {
-        let result = doCall(fpGetDataSource) { rawSelf, sourceCodeEditorView in
-                _get_data_source(rawSelf)
-        }
-        
-        return !result || UnsafeMutableRawPointer(bitPattern: 0)?.distance(to:rax) == 0
-            ? nil
-            : Unmanaged.fromOpaque(rax).retain().autorelease().takeRetainedValue()
+        return doCall(fpGetDataSource) ? _get_data_source(context) : nil
     }
     
     @objc
     var textStorage : NSTextStorage? {
-        let result = doCall(fpGetTextStorage) { rawSelf, sourceCodeEditorView in
-            _get_text_storage(rawSelf)
-        }
-        
-        return !result || UnsafeMutableRawPointer(bitPattern: 0)?.distance(to:rax) == 0
-            ? nil
-            : Unmanaged.fromOpaque(rax).retain().autorelease().takeRetainedValue()
+        return doCall(fpGetTextStorage) ? _get_text_storage(context) : nil
     }
     
     @objc
     public func addSelectedRange(_ range:XVimSourceEditorRange, modifiers:XVimSelectionModifiers)
     {
-        doCall(fpAddSelectedRangeWithModifiers) { rawSelf, sourceCodeEditorView in
-            _add_selected_range(rawSelf, range, modifiers: modifiers.rawValue)
+        if doCall(fpAddSelectedRangeWithModifiers) {
+            _add_selected_range(context, range, modifiers: modifiers.rawValue)
         }
     }
     
     @objc
     public func setSelectedRange(_ range:XVimSourceEditorRange, modifiers:XVimSelectionModifiers)
     {
-        doCall(fpSetSelectedRangeWithModifiers) { rawSelf, sourceCodeEditorView in
-            _set_selected_range(rawSelf, range, modifiers: modifiers.rawValue)
+        if doCall(fpSetSelectedRangeWithModifiers) {
+            _set_selected_range(context, range, modifiers: modifiers.rawValue)
         }
     }
     
@@ -106,20 +89,16 @@ class SourceCodeEditorViewWrapper: NSObject {
     
 
     @discardableResult
-    private func doCall(_ funcPtr: UnsafeMutableRawPointer?, block: (UnsafeRawPointer, AnyObject)->()) -> Bool
+    private func doCall(_ funcPtr: UnsafeMutableRawPointer?) -> Bool
     {
         guard let evp = editorViewProxy,
             let scev = evp.view,
             let fp = funcPtr else {return false}
 
-        let byteCount = 8 * 4
-        let rawSelf = Unmanaged.toOpaque(Unmanaged.passUnretained(self))()
-        let ptr = UnsafeMutablePointer<UInt8>(rawSelf.assumingMemoryBound(to: UInt8.self))
-        memset_s(ptr+16, byteCount, 0x00, byteCount)
+        let sourceCodeEditorViewPtr = Unmanaged.toOpaque(Unmanaged.passRetained(scev))()
+        contextPtr[0] = sourceCodeEditorViewPtr
+        contextPtr[1] = fp
         
-        sourceCodeEditorViewPtr = unsafeBitCast(scev, to:UnsafeMutableRawPointer.self)
-        functionToCallPtr = fp
-        block(rawSelf, scev)
         return true;
     }
 

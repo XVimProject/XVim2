@@ -52,29 +52,39 @@ _seds_wrapper_call9:
     movq  %rsp, %rbp
 
 # Save registers on stack
-    leaq    -208(%rsp), %rsp
+
+    leaq    -240(%rsp), %rsp
     andq    $0FFFFFFFFFFFFFFF0H, %rsp
+
+    // Callee-saved
     movq    %rbx, (%rsp)
     movq    %r12, 8(%rsp)
     movq    %r13, 16(%rsp)
     movq    %r14, 24(%rsp)
     movq    %r15, 32(%rsp)
 
+    // Shuffled args
+    movq    %rdi, 40(%rsp)
+    movq    %rsi, 48(%rsp)
+    movq    %rdx, 56(%rsp)
+    movq    %rcx, 64(%rsp)
+    movq    %r8, 80(%rsp)
+    movq    %r9, 96(%rsp)
 
-    movdqa  %xmm0, 64(%rsp)
-    movdqa  %xmm1, 80(%rsp)
-    movdqa  %xmm2, 96(%rsp)
-    movdqa  %xmm3, 112(%rsp)
-    movdqa  %xmm4, 128(%rsp)
-    movdqa  %xmm5, 144(%rsp)
-    movdqa  %xmm6, 160(%rsp)
-    movdqa  %xmm7, 176(%rsp)
+    movdqa  %xmm0, 112(%rsp)
+    movdqa  %xmm1, 128(%rsp)
+    movdqa  %xmm2, 144(%rsp)
+    movdqa  %xmm3, 160(%rsp)
+    movdqa  %xmm4, 176(%rsp)
+    movdqa  %xmm5, 192(%rsp)
+    movdqa  %xmm6, 208(%rsp)
+    movdqa  %xmm7, 224(%rsp)
 
 # Body
-    pushq %rdi
-    pushq 24(%rdi)      # Push function pointer onto stack
+    movq  (%rdi), %r13 # Load the target 'self'
 
-    movq  16(%rdi), %r13 # Load the target 'self'
+    pushq  $0 # Keep 16-byte SP alignment
+    pushq  8(%rdi)  # Push the target function
 
 # Shuffle up arguments
     movq  %rsi, %rdi
@@ -86,11 +96,7 @@ _seds_wrapper_call9:
 # CALL
     callq *(%rsp)
 
-    addq $8, %rsp
-    popq %rdi
-
-    movq %rax, 32(%rdi) # Save rax to calling object
-    movq %rdx, 40(%rdi) # Save rdx to calling object
+    addq $16, %rsp
 
 # Restore registers from stack
     movq    (%rsp), %rbx
@@ -99,16 +105,23 @@ _seds_wrapper_call9:
     movq    24(%rsp), %r14
     movq    32(%rsp), %r15
 
-    movdqa  64(%rsp), %xmm0
-    movdqa  80(%rsp), %xmm1
-    movdqa  96(%rsp), %xmm2
-    movdqa  112(%rsp), %xmm3
-    movdqa  128(%rsp), %xmm4
-    movdqa  144(%rsp), %xmm5
-    movdqa  160(%rsp), %xmm6
-    movdqa  176(%rsp), %xmm7
+    // Shuffled args
+    movq    40(%rsp), %rdi
+    movq    48(%rsp), %rsi
 
-    leaq    208(%rsp), %rsp
+    // RAX, RDX Used for return values
+    // RCX Used for return values
+    // R8 Used for return values
+
+    movq    96(%rsp), %r9
+
+    // XMM0-3 Used for return values
+    movdqa  176(%rsp), %xmm4
+    movdqa  192(%rsp), %xmm5
+    movdqa  208(%rsp), %xmm6
+    movdqa  224(%rsp), %xmm7
+
+    leaq    240(%rsp), %rsp
 
 # Cleanup
     movq %rbp, %rsp
