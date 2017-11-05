@@ -90,12 +90,13 @@ class SourceEditorDataSourceWrapper: NSObject {
     @discardableResult
     private func doCall(_ funcPtr: UnsafeMutableRawPointer?) -> Bool
     {
+        if (funcPtr == fpBeginEditingTransaction || funcPtr == fpEndEditingTransaction) {return false}
+
         guard let vw = self.sourceCodeEditorViewWrapper
             , let ds = vw.dataSource
             , let fp = funcPtr
             else {return false}
-        
-        let sourceEditorDataSourcePtr = Unmanaged.toOpaque(Unmanaged.passUnretained(ds))()
+        let sourceEditorDataSourcePtr = Unmanaged.passUnretained(ds).toOpaque()
         contextPtr[0] = sourceEditorDataSourcePtr
         contextPtr[1] = fp
         
