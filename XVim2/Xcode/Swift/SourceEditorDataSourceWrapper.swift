@@ -12,7 +12,7 @@ import Cocoa
 @_silgen_name("seds_wrapper_call2") func _internalCharOffsetFromPosition(_:UnsafeRawPointer, _:XVimSourceEditorPosition) -> (UInt)
 @_silgen_name("seds_wrapper_call3") func _beginEditTransaction(_:UnsafeRawPointer) -> ()
 @_silgen_name("seds_wrapper_call4") func _endEditTransaction(_:UnsafeRawPointer) -> ()
-@_silgen_name("seds_wrapper_call4") func _getUndoManager(_:UnsafeRawPointer) -> (AnyObject?)
+@_silgen_name("seds_wrapper_call4") func _getUndoManager(_:UnsafeRawPointer) -> (UnsafeMutableRawPointer)
 @_silgen_name("seds_wrapper_call5") func _leadingWhitespaceWithForLine(_:UnsafeRawPointer, _:Int, expandTabs:Bool) -> (Int)
 
 typealias InternalCharOffset = Int64
@@ -47,7 +47,7 @@ class SourceEditorDataSourceWrapper: NSObject {
 
     @objc
     public var undoManager : AnyObject? {
-        return doCall(fpGetUndoManager) ? _getUndoManager(context) : nil
+        return doCall(fpGetUndoManager) ? Unmanaged.fromOpaque(_getUndoManager(context).assumingMemoryBound(to: AnyObject?.self)).takeRetainedValue() : nil
     }
     
     @objc

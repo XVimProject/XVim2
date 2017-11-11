@@ -10,10 +10,10 @@ import Cocoa
 
 @_silgen_name("scev_wrapper_call") func _get_cursor_style(_:UnsafeRawPointer) -> (CursorStyle)
 @_silgen_name("scev_wrapper_call2") func _set_cursor_style(_:UnsafeRawPointer, _:CursorStyle) -> ()
-@_silgen_name("scev_wrapper_call3") func _get_data_source(_:UnsafeRawPointer) -> (AnyObject?)
+@_silgen_name("scev_wrapper_call3") func _get_data_source(_:UnsafeRawPointer) -> (UnsafeMutableRawPointer)
 @_silgen_name("scev_wrapper_call4") func _set_selected_range(_:UnsafeRawPointer, _:XVimSourceEditorRange, modifiers:UInt32) -> ()
 @_silgen_name("scev_wrapper_call5") func _add_selected_range(_:UnsafeRawPointer, _:XVimSourceEditorRange, modifiers:UInt32) -> ()
-@_silgen_name("scev_wrapper_call6") func _get_text_storage(_:UnsafeRawPointer) -> (NSTextStorage?)
+@_silgen_name("scev_wrapper_call6") func _get_text_storage(_:UnsafeRawPointer) -> (UnsafeMutableRawPointer)
 
 
 class SourceCodeEditorViewWrapper: NSObject {
@@ -60,12 +60,12 @@ class SourceCodeEditorViewWrapper: NSObject {
     
     @objc
     var dataSource : AnyObject? {
-        return doCall(fpGetDataSource) ? _get_data_source(context) : nil
+        return doCall(fpGetDataSource) ? Unmanaged.fromOpaque(_get_data_source(context).assumingMemoryBound(to: AnyObject?.self)).takeRetainedValue() : nil
     }
     
     @objc
     var textStorage : NSTextStorage? {
-        return doCall(fpGetTextStorage) ? _get_text_storage(context) : nil
+        return doCall(fpGetTextStorage) ? Unmanaged.fromOpaque(_get_text_storage(context).assumingMemoryBound(to: AnyObject?.self)).takeRetainedValue() : nil
     }
     
     @objc
@@ -95,7 +95,7 @@ class SourceCodeEditorViewWrapper: NSObject {
             let scev = evp.view,
             let fp = funcPtr else {return false}
 
-        let sourceCodeEditorViewPtr = Unmanaged.passUnretained(scev).toOpaque()
+        let sourceCodeEditorViewPtr = Unmanaged.passRetained(scev).toOpaque()
         contextPtr[0] = sourceCodeEditorViewPtr
         contextPtr[1] = fp
         

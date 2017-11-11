@@ -139,7 +139,7 @@
 
 - (nullable id)dataSource
 {
-    return self.sourceCodeEditorViewWrapper.dataSource;
+    return [self.sourceCodeEditorViewWrapper dataSource];
 }
 
 - (XVimSourceEditorPosition)positionFromIndex:(NSUInteger)idx lineHint:(NSUInteger)line
