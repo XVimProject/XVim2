@@ -85,13 +85,12 @@ class SourceEditorDataSourceWrapper: NSObject {
             : 0
     }
     
+    
     // MARK:- PRIVATE
     
     @discardableResult
     private func doCall(_ funcPtr: UnsafeMutableRawPointer?) -> Bool
     {
-        if (funcPtr == fpBeginEditingTransaction || funcPtr == fpEndEditingTransaction) {return false}
-
         guard let vw = self.sourceCodeEditorViewWrapper
             , let ds = vw.dataSource
             , let fp = funcPtr
