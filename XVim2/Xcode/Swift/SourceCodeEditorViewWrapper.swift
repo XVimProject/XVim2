@@ -95,7 +95,7 @@ class SourceCodeEditorViewWrapper: NSObject {
             let scev = evp.view,
             let fp = funcPtr else {return false}
 
-        let sourceCodeEditorViewPtr = Unmanaged.passRetained(scev).toOpaque()
+        let sourceCodeEditorViewPtr = Unmanaged.passUnretained(scev).toOpaque()
         contextPtr[0] = sourceCodeEditorViewPtr
         contextPtr[1] = fp
         
