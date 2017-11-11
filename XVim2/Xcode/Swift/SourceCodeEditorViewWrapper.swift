@@ -60,12 +60,16 @@ class SourceCodeEditorViewWrapper: NSObject {
     
     @objc
     var dataSource : AnyObject? {
-        return doCall(fpGetDataSource) ? Unmanaged.fromOpaque(_get_data_source(context).assumingMemoryBound(to: AnyObject?.self)).takeRetainedValue() : nil
+        return doCall(fpGetDataSource)
+            ? Unmanaged.fromOpaque(_get_data_source(context).assumingMemoryBound(to: AnyObject?.self)).takeRetainedValue()
+            : nil
     }
     
     @objc
     var textStorage : NSTextStorage? {
-        return doCall(fpGetTextStorage) ? Unmanaged.fromOpaque(_get_text_storage(context).assumingMemoryBound(to: AnyObject?.self)).takeRetainedValue() : nil
+        return doCall(fpGetTextStorage)
+            ? Unmanaged.fromOpaque(_get_text_storage(context).assumingMemoryBound(to: AnyObject?.self)).takeRetainedValue()
+            : nil
     }
     
     @objc

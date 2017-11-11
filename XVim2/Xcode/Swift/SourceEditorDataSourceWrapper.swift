@@ -47,7 +47,9 @@ class SourceEditorDataSourceWrapper: NSObject {
 
     @objc
     public var undoManager : AnyObject? {
-        return doCall(fpGetUndoManager) ? Unmanaged.fromOpaque(_getUndoManager(context).assumingMemoryBound(to: AnyObject?.self)).takeRetainedValue() : nil
+        return doCall(fpGetUndoManager)
+            ? Unmanaged.fromOpaque(_getUndoManager(context).assumingMemoryBound(to: AnyObject?.self)).takeRetainedValue()
+            : nil
     }
     
     @objc
