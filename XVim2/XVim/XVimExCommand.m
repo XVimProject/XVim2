@@ -356,7 +356,10 @@
 
 
 // This method correnspons parsing part of get_address in ex_cmds.c
-- (NSUInteger)getAddress:(unichar*)parsing cmdLeft:(unichar**)cmdLeft allowZero:(BOOL)allowZero inWindow:(XVimWindow*)window
+- (NSUInteger)getAddress:(unichar*)parsing
+                 cmdLeft:(unichar**)cmdLeft
+               allowZero:(BOOL)allowZero
+                inWindow:(XVimWindow*)window
 {
     _auto view = [window sourceView];
     // DVTFoldingTextStorage* storage = [view textStorage];
@@ -673,7 +676,7 @@
 // TODO: Instead of ignoring 'undeclared-selector', we should import the relevant IDEKit headers
 xvim_ignore_warning_undeclared_selector_push
 
-- (void)commit:(XVimExArg*)args inWindow:(XVimWindow*)window
+            - (void)commit : (XVimExArg*)args inWindow : (XVimWindow*)window
 {
     [NSApp sendAction:@selector(commitCommand:) to:nil from:self];
 }
@@ -1278,7 +1281,7 @@ xvim_ignore_warning_undeclared_selector_push
 
 xvim_ignore_warning_pop
 
-- (NSMenuItem*)findMenuItemIn:(NSMenu*)menu forAction:(NSString*)actionName
+            - (NSMenuItem*)findMenuItemIn : (NSMenu*)menu forAction : (NSString*)actionName
 {
     if (nil == menu) {
         menu = [NSApp mainMenu];

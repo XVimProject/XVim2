@@ -20,7 +20,7 @@
 #import <objc/runtime.h>
 
 
-@interface XVimWindow (){
+@interface XVimWindow () {
     NSMutableArray* _defaultEvaluatorStack;
     NSMutableArray* _currentEvaluatorStack;
     XVimKeymapContext* _keymapContext;
@@ -58,28 +58,28 @@
 
 - (void)setupAfterEditorViewSetup
 {
-    __weak XVimWindow *weakSelf = self;
+    __weak XVimWindow* weakSelf = self;
     [NSOperationQueue.mainQueue addOperationWithBlock:^{
-        XVimWindow *strongSelf = weakSelf;
+        XVimWindow* strongSelf = weakSelf;
         strongSelf.sourceView.cursorMode = CURSOR_MODE_COMMAND;
     }];
-    _enabledNotificationObserver =
-        [NSNotificationCenter.defaultCenter addObserverForName:XVimNotificationEnabled
-                                                        object:nil
-                                                         queue:nil
-                                                    usingBlock:^(NSNotification * _Nonnull note) {
-                                                        XVimWindow *strongSelf = weakSelf;
-                                                        BOOL enabled = [note.userInfo[XVimNotificationEnabledFlag] boolValue];
-                                                        strongSelf.enabled = enabled;
-                                                    }];
+    _enabledNotificationObserver = [NSNotificationCenter.defaultCenter
+                addObserverForName:XVimNotificationEnabled
+                            object:nil
+                             queue:nil
+                        usingBlock:^(NSNotification* _Nonnull note) {
+                            XVimWindow* strongSelf = weakSelf;
+                            BOOL enabled = [note.userInfo[XVimNotificationEnabledFlag] boolValue];
+                            strongSelf.enabled = enabled;
+                        }];
     self.enabled = XVIM.enabled;
     [XVIM registerWindow:self];
 }
 
--(void)dealloc {
+- (void)dealloc
+{
     _enabledNotificationObserver = nil;
     [NSNotificationCenter.defaultCenter removeObserver:self.sourceView];
-
 }
 
 
@@ -118,22 +118,31 @@
     [this syncEvaluatorStack];
 }
 
--(void)setEnabled:(BOOL)enable {
+- (void)setEnabled:(BOOL)enable
+{
     if (enable != _enabled) {
         _enabled = enable;
-        if (enable) { [self _enable]; } else { [self _disable]; }
+        if (enable) {
+            [self _enable];
+        }
+        else {
+            [self _disable];
+        }
     }
 }
 
--(void)_enable {
+- (void)_enable
+{
     [NSNotificationCenter.defaultCenter addObserver:self.sourceView
                                            selector:@selector(selectionChanged:)
                                                name:@"SourceEditorSelectedSourceRangeChangedNotification"
                                              object:self.sourceView.view];
-    self.sourceView.enabled = YES;;
+    self.sourceView.enabled = YES;
+    ;
 }
 
--(void)_disable {
+- (void)_disable
+{
     [NSNotificationCenter.defaultCenter removeObserver:self.sourceView
                                                   name:@"SourceEditorSelectedSourceRangeChangedNotification"
                                                 object:self.sourceView.view];
@@ -167,8 +176,9 @@
  **/
 - (BOOL)handleKeyEvent:(NSEvent*)event
 {
-    if (!XVIM.isEnabled) return NO;
-    
+    if (!XVIM.isEnabled)
+        return NO;
+
     // useinputsourcealways option forces to use input source to input on any mode.
     // This is for French or other keyborads.
     // The reason why we do not want to set this option always on is because
@@ -272,14 +282,13 @@
         keyStroke.event = self.tmpBuffer;
         self.tmpBuffer = nil;
     }
-    
+
     // Evaluate
     XVimEvaluator* nextEvaluator = nil;
     @try {
         nextEvaluator = [currentEvaluator eval:keyStroke];
     }
-    @catch (NSException *ex)
-    {
+    @catch (NSException* ex) {
         ERROR_LOG(@"Exception caught while evaluating. Current evaluator = %@. Exception = %@", currentEvaluator, ex);
         [XVIM ringBell];
         [self _resetEvaluatorStack:_currentEvaluatorStack activateNormalHandler:YES];
@@ -496,8 +505,9 @@
         return;
 
     XVimMark* mark = [self currentPositionMark];
-    if (mark == nil) return;
-    
+    if (mark == nil)
+        return;
+
     if (motion.jumpToAnotherFile) {
         // do nothing for jumping to another file
     }
@@ -510,4 +520,3 @@
 }
 
 @end
-

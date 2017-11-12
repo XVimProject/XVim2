@@ -486,13 +486,12 @@
 // TAGS / HISTORY
 #pragma mark - TAGS / HISTORY
 
-- (XVimEvaluator*)C_t{
+- (XVimEvaluator*)C_t
+{
     xvim_ignore_warning_undeclared_selector_push
-    [NSApp sendAction:@selector(goBackInHistoryByCommand:) to:nil from:self];
-    xvim_ignore_warning_pop
-    return nil;
+                [NSApp sendAction:@selector(goBackInHistoryByCommand:) to:nil from:self];
+    xvim_ignore_warning_pop return nil;
 }
-
 
 
 // INCREMENT / DECREMENT
@@ -511,12 +510,14 @@
 }
 
 
-- (XVimEvaluator*)C_x{
+- (XVimEvaluator*)C_x
+{
     _auto view = [self sourceView];
-    
+
     if ([view xvim_incrementNumber:-(int64_t)self.numericArg]) {
         [[XVim instance] fixOperationCommands];
-    } else {
+    }
+    else {
         [[XVim instance] cancelOperationCommands];
     }
     return nil;
@@ -598,21 +599,23 @@
 
 // REGISTER
 #pragma mark - REGISTER
-- (XVimEvaluator*)DQUOTE{
+- (XVimEvaluator*)DQUOTE
+{
     [self.argumentString appendString:@"\""];
     self.onChildCompleteHandler = @selector(onComplete_DQUOTE:);
-    return  [[XVimRegisterEvaluator alloc] initWithWindow:self.window];
+    return [[XVimRegisterEvaluator alloc] initWithWindow:self.window];
 }
 
-- (XVimEvaluator*)onComplete_DQUOTE:(XVimRegisterEvaluator*)childEvaluator{
+- (XVimEvaluator*)onComplete_DQUOTE:(XVimRegisterEvaluator*)childEvaluator
+{
     XVimRegisterManager* m = [[XVim instance] registerManager];
-    if( [m isValidRegister:childEvaluator.reg] ){
+    if ([m isValidRegister:childEvaluator.reg]) {
         self.yankRegister = childEvaluator.reg;
         [self.argumentString appendString:childEvaluator.reg];
         self.onChildCompleteHandler = @selector(onChildComplete:);
         return self;
-        
-    }else{
+    }
+    else {
         return [XVimEvaluator invalidEvaluator];
     }
 }

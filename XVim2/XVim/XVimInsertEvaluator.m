@@ -8,15 +8,15 @@
 
 #import "XVimInsertEvaluator.h"
 #import "Logger.h"
+#import "NSTextStorage+VimOperation.h"
 #import "SourceViewProtocol.h"
 #import "XVim.h"
 #import "XVimKeyStroke.h"
 #import "XVimKeymapProvider.h"
-#import "XVimWindow.h"
 #import "XVimMark.h"
 #import "XVimMarks.h"
 #import "XVimNormalEvaluator.h"
-#import "NSTextStorage+VimOperation.h"
+#import "XVimWindow.h"
 
 @interface XVimInsertEvaluator ()
 @property (nonatomic) NSRange startRange;
@@ -171,10 +171,10 @@
 
     // Store off any needed text
     XVim* xvim = [XVim instance];
-    
+
     xvim.lastVisualMode = self.sourceView.selectionMode;
     [xvim fixOperationCommands];
-    
+
 #if 0
     if (!self.movementKeyPressed) {
         [self recordTextIntoRegister:xvim.recordingRegister];
@@ -184,9 +184,9 @@
         [xvim.repeatRegister appendText:self.lastInsertedText];
     }
 #endif
-    
+
     _auto sourceView = self.sourceView;
-    
+
     [sourceView xvim_hideCompletions];
 
     // Position for "^" is before escaped from insert mode

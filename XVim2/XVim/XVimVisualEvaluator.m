@@ -20,6 +20,7 @@
 #import "XVimLowercaseEvaluator.h"
 #import "XVimMarkSetEvaluator.h"
 #import "XVimOptions.h"
+#import "XVimRegister.h"
 #import "XVimRegisterEvaluator.h"
 #import "XVimReplacePromptEvaluator.h"
 #import "XVimSearch.h"
@@ -29,7 +30,6 @@
 #import "XVimUppercaseEvaluator.h"
 #import "XVimWindow.h"
 #import "XVimYankEvaluator.h"
-#import "XVimRegister.h"
 
 static NSString* MODE_STRINGS[] = { @"", @"-- VISUAL --", @"-- VISUAL LINE --", @"-- VISUAL BLOCK --" };
 
@@ -90,7 +90,6 @@ static NSString* MODE_STRINGS[] = { @"", @"-- VISUAL --", @"-- VISUAL LINE --", 
     }
     return self;
 }
-
 
 
 - (NSString*)modeString { return MODE_STRINGS[_visual_mode]; }
@@ -198,7 +197,8 @@ static NSString* MODE_STRINGS[] = { @"", @"-- VISUAL --", @"-- VISUAL LINE --", 
     return [[XVimTextObjectEvaluator alloc] initWithWindow:self.window inner:NO];
 }
 
-- (XVimEvaluator*)A {
+- (XVimEvaluator*)A
+{
     [self beginUndoGrouping];
     return [[XVimInsertEvaluator alloc] initWithWindow:self.window mode:XVIM_INSERT_APPEND];
 }
@@ -668,7 +668,6 @@ return eval;
     [self.argumentString setString:@""];
     return self;
 }
-
 
 
 @end

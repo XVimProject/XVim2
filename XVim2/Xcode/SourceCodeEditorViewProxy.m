@@ -10,9 +10,9 @@
 #import "NSString+VimHelper.h"
 #import "NSTextStorage+VimOperation.h"
 #import "XVim.h"
+#import "XVim2-Swift.h"
 #import "XVimCommandLine.h"
 #import "XVimMotion.h"
-#import "XVim2-Swift.h"
 #import "rd_route.h"
 
 #import <IDEPegasusSourceEditor/_TtC22IDEPegasusSourceEditor16SourceCodeEditor.h>
@@ -31,7 +31,7 @@
 @property (strong) NSString* lastYankedText;
 @property (strong) NSLayoutConstraint* cmdLineBottomAnchor;
 @property TEXT_TYPE lastYankedType;
-@property (readonly, nonatomic) SourceEditorDataSourceWrapper * sourceEditorDataSourceWrapper;
+@property (readonly, nonatomic) SourceEditorDataSourceWrapper* sourceEditorDataSourceWrapper;
 @end
 
 #define LOG_STATE()
@@ -53,14 +53,21 @@
     return self;
 }
 
--(void)setEnabled:(BOOL)enable {
+- (void)setEnabled:(BOOL)enable
+{
     if (enable != _enabled) {
         _enabled = enable;
-        if (enable) {[self _enable];} else {[self _disable];}
+        if (enable) {
+            [self _enable];
+        }
+        else {
+            [self _disable];
+        }
     }
 }
 
--(void)_enable {
+- (void)_enable
+{
     self.originalCursorStyle = self.cursorStyle;
     self.selectionMode = XVIM_MODE_NONE;
     self.cursorMode = CURSOR_MODE_COMMAND;
@@ -68,13 +75,14 @@
     [self xvim_syncStateFromView];
 }
 
--(void)_disable {
+- (void)_disable
+{
     [self xvim_changeSelectionMode:XVIM_VISUAL_NONE];
     self.cursorStyle = self.originalCursorStyle;
     [self hideCommandLine];
 }
 
--(SourceEditorDataSourceWrapper*)sourceEditorDataSourceWrapper
+- (SourceEditorDataSourceWrapper*)sourceEditorDataSourceWrapper
 {
     return self.sourceCodeEditorViewWrapper.dataSourceWrapper;
 }
@@ -92,30 +100,32 @@
 - (NSInteger)lineCount { return self.sourceCodeEditorView.lineCount; }
 - (void)scrollRangeToVisible:(NSRange)arg1 { [self.sourceCodeEditorView scrollRangeToVisible:arg1]; }
 
-- (void)setCursorStyle:(CursorStyle)cursorStyle {
-    self.sourceCodeEditorViewWrapper.cursorStyle = cursorStyle;
-}
+- (void)setCursorStyle:(CursorStyle)cursorStyle { self.sourceCodeEditorViewWrapper.cursorStyle = cursorStyle; }
 
-- (CursorStyle)cursorStyle {
-    return self.sourceCodeEditorViewWrapper.cursorStyle;
-}
+- (CursorStyle)cursorStyle { return self.sourceCodeEditorViewWrapper.cursorStyle; }
 
--(BOOL)normalizeRange:(XVimSourceEditorRange*)rng
+- (BOOL)normalizeRange:(XVimSourceEditorRange*)rng
 {
-    if ((rng->pos1).row > (rng->pos2).row) xvim_swap((rng->pos1).row, (rng->pos2).row);
-    if ((rng->pos1).col > (rng->pos2).col) xvim_swap((rng->pos1).col, (rng->pos2).col);
-    clamp((rng->pos1).row, 0, self.lineCount-1);
-    clamp((rng->pos2).row, 0, self.lineCount-1);
-    
+    if ((rng->pos1).row > (rng->pos2).row)
+        xvim_swap((rng->pos1).row, (rng->pos2).row);
+    if ((rng->pos1).col > (rng->pos2).col)
+        xvim_swap((rng->pos1).col, (rng->pos2).col);
+    clamp((rng->pos1).row, 0, self.lineCount - 1);
+    clamp((rng->pos2).row, 0, self.lineCount - 1);
+
     // Special handling for cursor on first col of last row
-    if ((rng->pos1).row == self.lineCount-1 && (rng->pos2).row == self.lineCount-1 && (rng->pos1).col == 0 && (rng->pos2).col == 0) return YES;
-    
+    if ((rng->pos1).row == self.lineCount - 1 && (rng->pos2).row == self.lineCount - 1 && (rng->pos1).col == 0
+        && (rng->pos2).col == 0)
+        return YES;
+
     _auto rr = [self characterRangeForLineRange:NSMakeRange((rng->pos1).row, 1)];
-    if (rr.location == NSNotFound) return NO;
+    if (rr.location == NSNotFound)
+        return NO;
     clamp((rng->pos1).col, 0, rr.length);
     if ((rng->pos2).row != (rng->pos1).row) {
         rr = [self characterRangeForLineRange:NSMakeRange((rng->pos2).row, 1)];
-        if (rr.location == NSNotFound) return NO;
+        if (rr.location == NSNotFound)
+            return NO;
     }
     clamp((rng->pos2).col, 0, rr.length);
     return YES;
@@ -140,10 +150,7 @@
     [self.sourceCodeEditorViewWrapper setSelectedRange:rng modifiers:modifiers];
 }
 
-- (nullable id)dataSource
-{
-    return [self.sourceCodeEditorViewWrapper dataSource];
-}
+- (nullable id)dataSource { return [self.sourceCodeEditorViewWrapper dataSource]; }
 
 - (XVimSourceEditorPosition)positionFromIndex:(NSUInteger)idx lineHint:(NSUInteger)line
 {
@@ -155,42 +162,32 @@
     return [self.sourceEditorDataSourceWrapper internalCharOffsetFromPosition:pos];
 }
 
-- (SourceEditorUndoManager*)undoManager
-{
-    return self.sourceEditorDataSourceWrapper.undoManager;
-}
+- (SourceEditorUndoManager*)undoManager { return self.sourceEditorDataSourceWrapper.undoManager; }
 
-- (void)beginEditTransaction
-{
-    [self.sourceEditorDataSourceWrapper beginEditTransaction];
-}
+- (void)beginEditTransaction { [self.sourceEditorDataSourceWrapper beginEditTransaction]; }
 
-- (void)endEditTransaction
-{
-    [self.sourceEditorDataSourceWrapper endEditTransaction];
-}
+- (void)endEditTransaction { [self.sourceEditorDataSourceWrapper endEditTransaction]; }
 
 
 - (void)keyDown:(NSEvent*)event { [self.sourceCodeEditorView xvim_keyDown:event]; }
 
 - (NSString*)string { return self.sourceCodeEditorView.string; }
 
-- (void)setString:(NSString *)string {
+- (void)setString:(NSString*)string
+{
     _auto scanner = [NSScanner scannerWithString:string];
     scanner.charactersToBeSkipped = [NSCharacterSet new];
-    
-    NSString * nextLine = nil;
-    
+
+    NSString* nextLine = nil;
+
     NSRange nextRng = NSMakeRange(0, self.string.length);
-    
+
     IGNORE_SELECTION_UPDATES_SCOPE
-    
-    while ([scanner scanUpToCharactersFromSet:NSCharacterSet.newlineCharacterSet
-                                   intoString:&nextLine]) {
-        [scanner scanCharactersFromSet:NSCharacterSet.newlineCharacterSet
-                            intoString:NULL];
+
+    while ([scanner scanUpToCharactersFromSet:NSCharacterSet.newlineCharacterSet intoString:&nextLine]) {
+        [scanner scanCharactersFromSet:NSCharacterSet.newlineCharacterSet intoString:NULL];
         [self insertText:nextLine replacementRange:nextRng];
-        
+
         nextRng.location = self.string.length;
         nextRng.length = 0;
     }
@@ -209,7 +206,7 @@
 
 - (NSTextStorage*)textStorage
 {
-    NSTextStorage* storage = [[NSTextStorage alloc] initWithString:(self.string?:@"")];
+    NSTextStorage* storage = [[NSTextStorage alloc] initWithString:(self.string ?: @"")];
     return storage;
 }
 
@@ -233,9 +230,10 @@
 
 - (void)setSelectedRange:(NSRange)range { self.sourceCodeEditorView.selectedTextRange = range; }
 
-- (NSRange)selectedRange {
+- (NSRange)selectedRange
+{
     NSRange rng = self.sourceCodeEditorView.selectedTextRange;
-    
+
     // TODO: Work out why Xcode can return 'NSNotFound' for location
     if (rng.location == NSNotFound) {
         rng = NSMakeRange(0, 0);
@@ -285,25 +283,26 @@
 #pragma mark-- selection
 
 - (void)setSelectedRanges:(NSArray<NSValue*>*)ranges
-                 affinity:(NSSelectionAffinity)affinity
-           stillSelecting:(BOOL)stillSelectingFlag
+                     affinity:(NSSelectionAffinity)affinity
+               stillSelecting:(BOOL)stillSelectingFlag
 {
-    if (ranges.count == 0) return;
-    
+    if (ranges.count == 0)
+        return;
+
     if (ranges.count == 1) {
         _auto rng = ranges.firstObject.rangeValue;
-        
+
         if (rng.length == 0) {
             self.sourceCodeEditorView.selectedTextRange = rng;
             return;
         }
-        
+
         _auto insertionPos = [self positionFromIndex:self.insertionPoint lineHint:0];
-        XVimSourceEditorRange insertionRange = { .pos1 = insertionPos, .pos2 = insertionPos };
+        XVimSourceEditorRange insertionRange = {.pos1 = insertionPos, .pos2 = insertionPos };
         [self setSelectedRange:insertionRange modifiers:0];
         _auto pos1 = [self positionFromIndex:rng.location lineHint:insertionPos.row];
         _auto pos2 = [self positionFromIndex:rng.location + rng.length lineHint:pos1.row];
-        XVimSourceEditorRange selectionRange = { .pos1 = pos1, .pos2 = pos2 };
+        XVimSourceEditorRange selectionRange = {.pos1 = pos1, .pos2 = pos2 };
         [self addSelectedRange:selectionRange modifiers:SelectionModifierExtension];
     }
     else {
@@ -318,14 +317,14 @@
             _auto pos1 = [self positionFromIndex:rng.location lineHint:lastLine];
             _auto pos2 = [self positionFromIndex:rng.location + rng.length lineHint:pos1.row];
             lastLine = pos2.row;
-            
-            XVimSourceEditorRange ser = { .pos1 = pos1, .pos2 = pos2 };
+
+            XVimSourceEditorRange ser = {.pos1 = pos1, .pos2 = pos2 };
             BOOL isInsertionLine = (pos1.row == insertionLine);
-            
-            _auto selectionModifiers = isInsertionLine
-                ? SelectionModifierDiscontiguous
-                : SelectionModifierDiscontiguous | SelectionModifierExtension ;
-            if (![self normalizeRange:&ser]) continue;
+
+            _auto selectionModifiers = isInsertionLine ? SelectionModifierDiscontiguous
+                                                       : SelectionModifierDiscontiguous | SelectionModifierExtension;
+            if (![self normalizeRange:&ser])
+                continue;
             [self addSelectedRange:ser modifiers:selectionModifiers reset:isFirst];
             isFirst = NO;
         }
@@ -404,12 +403,8 @@
 
 // Proxy methods
 
-- (void)selectPreviousPlaceholder:(id)arg1 {
-    [self.sourceCodeEditorView selectPreviousPlaceholder:self];
-}
-- (void)selectNextPlaceholder:(id)arg1 {
-    [self.sourceCodeEditorView selectNextPlaceholder:self];
-}
+- (void)selectPreviousPlaceholder:(id)arg1 { [self.sourceCodeEditorView selectPreviousPlaceholder:self]; }
+- (void)selectNextPlaceholder:(id)arg1 { [self.sourceCodeEditorView selectNextPlaceholder:self]; }
 
 - (void)mouseExited:(id)sender { [self.sourceCodeEditorView mouseExited:self]; }
 - (void)mouseEntered:(id)sender { [self.sourceCodeEditorView mouseEntered:self]; }
@@ -630,20 +625,19 @@
 static CGFloat XvimCommandLineHeight = 20;
 static CGFloat XvimCommandLineAnimationDuration = 0.1;
 
--(BOOL)isShowingCommandLine
-{
-    return self.commandLine.superview != nil;
-}
+- (BOOL)isShowingCommandLine { return self.commandLine.superview != nil; }
 
--(void)showCommandLine
+- (void)showCommandLine
 {
-    if (self.isShowingCommandLine) return;
-    
+    if (self.isShowingCommandLine)
+        return;
+
     _auto scrollView = [self.sourceCodeEditorView scrollView];
     if ([scrollView isKindOfClass:NSClassFromString(@"SourceEditorScrollView")]) {
         NSView* layoutView = [scrollView superview];
         [layoutView addSubview:self.commandLine];
-        _cmdLineBottomAnchor = [layoutView.bottomAnchor constraintEqualToAnchor:self.commandLine.bottomAnchor constant:-XvimCommandLineHeight];
+        _cmdLineBottomAnchor = [layoutView.bottomAnchor constraintEqualToAnchor:self.commandLine.bottomAnchor
+                                                                       constant:-XvimCommandLineHeight];
         _cmdLineBottomAnchor.active = YES;
         [layoutView.widthAnchor constraintEqualToAnchor:self.commandLine.widthAnchor multiplier:1.0].active = YES;
         [layoutView.leftAnchor constraintEqualToAnchor:self.commandLine.leftAnchor].active = YES;
@@ -651,41 +645,43 @@ static CGFloat XvimCommandLineAnimationDuration = 0.1;
         _auto height = [self.commandLine.heightAnchor constraintEqualToConstant:XvimCommandLineHeight];
         height.priority = 250;
         height.active = YES;
-        
-        [NSAnimationContext runAnimationGroup:^(NSAnimationContext * _Nonnull context) {
+
+        [NSAnimationContext runAnimationGroup:^(NSAnimationContext* _Nonnull context) {
             context.duration = XvimCommandLineAnimationDuration;
             NSEdgeInsets insets = scrollView.additionalContentInsets;
             _cmdLineBottomAnchor.animator.constant = 0;
             insets.bottom += XvimCommandLineHeight;
             scrollView.animator.additionalContentInsets = insets;
             [scrollView updateAutomaticContentInsets];
-        } completionHandler:^{
-            self.commandLine.needsDisplay = YES;
-        }];
+        }
+                    completionHandler:^{
+                        self.commandLine.needsDisplay = YES;
+                    }];
     }
 }
 
--(void)hideCommandLine
+- (void)hideCommandLine
 {
-    if (!self.isShowingCommandLine) return;
-    
+    if (!self.isShowingCommandLine)
+        return;
+
     _auto scrollView = [self.sourceCodeEditorView scrollView];
     if ([scrollView isKindOfClass:NSClassFromString(@"SourceEditorScrollView")]) {
         NSEdgeInsets insets = scrollView.additionalContentInsets;
         insets.bottom = 0;
-        
-        [NSAnimationContext runAnimationGroup:^(NSAnimationContext * _Nonnull context) {
+
+        [NSAnimationContext runAnimationGroup:^(NSAnimationContext* _Nonnull context) {
             context.duration = XvimCommandLineAnimationDuration;
             _cmdLineBottomAnchor.animator.constant = -XvimCommandLineHeight;
             scrollView.animator.additionalContentInsets = insets;
             [scrollView updateAutomaticContentInsets];
-        } completionHandler:^{
-            [self.commandLine removeFromSuperview];
-            self->_cmdLineBottomAnchor = nil;
-        }];
+        }
+                    completionHandler:^{
+                        [self.commandLine removeFromSuperview];
+                        self->_cmdLineBottomAnchor = nil;
+                    }];
     }
 }
-
 
 
 - (NSMutableArray*)foundRanges

@@ -132,8 +132,8 @@ XVimMotionEvaluator
 - (NSString*)modeString;
 - (XVIM_MODE)mode;
 - (BOOL)isRelatedTo:(XVimEvaluator*)other;
-- (void) beginUndoGrouping;
-- (void) endUndoGrouping;
+- (void)beginUndoGrouping;
+- (void)endUndoGrouping;
 
 - (XVimKeymap*)selectKeymapWithProvider:(id<XVimKeymapProvider>)keymapProvider;
 

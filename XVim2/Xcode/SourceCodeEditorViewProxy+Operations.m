@@ -536,7 +536,7 @@
         if (to.end == NSNotFound) {
             return;
         }
-        NSTextStorage *ts = self.textStorage;
+        NSTextStorage* ts = self.textStorage;
         lines = XVimMakeRange([ts xvim_lineNumberAtIndex:to.begin], [ts xvim_lineNumberAtIndex:to.end]);
         shiftWidth *= count;
     }
@@ -652,7 +652,7 @@
 {
     NSUInteger ip = self.insertionPoint;
     NSRange range;
-    
+
     range = [self xvim_currentNumber];
     if (range.location == NSNotFound) {
         NSUInteger pos = [self.textStorage xvim_nextDigitInLine:ip];
@@ -667,24 +667,27 @@
             return NO;
         }
     }
-    
+
     [self xvim_registerPositionForUndo:ip];
-    
-    const char *s = [[self.string substringWithRange:range] UTF8String];
-    NSString *repl;
+
+    const char* s = [[self.string substringWithRange:range] UTF8String];
+    NSString* repl;
     uint64_t u = strtoull(s, NULL, 0);
     int64_t i = strtoll(s, NULL, 0);
-    
+
     if (strncmp(s, "0x", 2) == 0) {
         repl = [NSString stringWithFormat:@"0x%0*llx", (int)strlen(s) - 2, u + (uint64_t)offset];
-    } else if (u && *s == '0' && s[1] && !strchr(s, '9') && !strchr(s, '8')) {
+    }
+    else if (u && *s == '0' && s[1] && !strchr(s, '9') && !strchr(s, '8')) {
         repl = [NSString stringWithFormat:@"0%0*llo", (int)strlen(s) - 1, u + (uint64_t)offset];
-    } else if (u && *s == '+') {
+    }
+    else if (u && *s == '+') {
         repl = [NSString stringWithFormat:@"%+lld", i + offset];
-    } else {
+    }
+    else {
         repl = [NSString stringWithFormat:@"%lld", i + offset];
     }
-    
+
     [self insertText:repl replacementRange:range];
     [self xvim_moveCursor:range.location + repl.length - 1 preserveColumn:NO];
     [self xvim_syncState];
@@ -694,20 +697,23 @@
 
 #pragma mark - SORT
 
-- (void)xvim_sortLinesFrom:(NSUInteger)line1 to:(NSUInteger)line2 withOptions:(XVimSortOptions)options{
-    NSAssert( line1 > 0, @"line1 must be greater than 0.");
-    NSAssert( line2 > 0, @"line2 must be greater than 0.");
-    
-    if( line2 < line1 ) xvim_swap(line1, line2);
+- (void)xvim_sortLinesFrom:(NSUInteger)line1 to:(NSUInteger)line2 withOptions:(XVimSortOptions)options
+{
+    NSAssert(line1 > 0, @"line1 must be greater than 0.");
+    NSAssert(line2 > 0, @"line2 must be greater than 0.");
+
+    if (line2 < line1)
+        xvim_swap(line1, line2);
 
     NSRange characterRange = [self.textStorage xvim_indexRangeForLines:NSMakeRange(line1, line2 - line1 + 1)];
-    NSString *str = [self.string substringWithRange:characterRange];
-    
-    NSMutableArray *lines = [[str componentsSeparatedByCharactersInSet:[NSCharacterSet newlineCharacterSet]] mutableCopy];
+    NSString* str = [self.string substringWithRange:characterRange];
+
+    NSMutableArray* lines =
+                [[str componentsSeparatedByCharactersInSet:[NSCharacterSet newlineCharacterSet]] mutableCopy];
     if ([[lines lastObject] length] == 0) {
         [lines removeLastObject];
     }
-    [lines sortUsingComparator:^NSComparisonResult(NSString *str1, NSString *str2) {
+    [lines sortUsingComparator:^NSComparisonResult(NSString* str1, NSString* str2) {
         NSStringCompareOptions compareOptions = 0;
         if (options & XVimSortOptionNumericSort) {
             compareOptions |= NSNumericSearch;
@@ -715,20 +721,21 @@
         if (options & XVimSortOptionIgnoreCase) {
             compareOptions |= NSCaseInsensitiveSearch;
         }
-        
+
         if (options & XVimSortOptionReversed) {
             return [str2 compare:str1 options:compareOptions];
-        } else {
+        }
+        else {
             return [str1 compare:str2 options:compareOptions];
         }
     }];
-    
+
     if (options & XVimSortOptionRemoveDuplicateLines) {
-        NSMutableIndexSet *removeIndices = [NSMutableIndexSet indexSet];
+        NSMutableIndexSet* removeIndices = [NSMutableIndexSet indexSet];
         // At this point the lines are already sorted
-        [lines enumerateObjectsUsingBlock:^(NSString *str, NSUInteger idx, BOOL *stop) {
+        [lines enumerateObjectsUsingBlock:^(NSString* str, NSUInteger idx, BOOL* stop) {
             if (idx < [lines count] - 1) {
-                NSString *nextStr = [lines objectAtIndex:idx + 1];
+                NSString* nextStr = [lines objectAtIndex:idx + 1];
                 if ([str isEqualToString:nextStr]) {
                     [removeIndices addIndex:idx + 1];
                 }
@@ -736,19 +743,17 @@
         }];
         [lines removeObjectsAtIndexes:removeIndices];
     }
-    
+
     NSUInteger insertionAfterOperation = characterRange.location;
-    NSString *sortedLinesString = [[lines componentsJoinedByString:@"\n"] stringByAppendingString:@"\n"];
-    
+    NSString* sortedLinesString = [[lines componentsJoinedByString:@"\n"] stringByAppendingString:@"\n"];
+
     {
-        IGNORE_SELECTION_UPDATES_SCOPE
-        [self insertText:sortedLinesString replacementRange:characterRange];
+        IGNORE_SELECTION_UPDATES_SCOPE [self insertText:sortedLinesString replacementRange:characterRange];
     }
 
     self.insertionPoint = insertionAfterOperation;
     [self xvim_syncState];
 }
-
 
 
 #pragma mark - UTILITY
@@ -811,8 +816,9 @@
         NSMakeRange(0, 0); // No range
     }
 
-    if (from > to) xvim_swap(from, to);
-        
+    if (from > to)
+        xvim_swap(from, to);
+
     // EOF can not be included in operation range.
     if ([self.textStorage isEOF:from]) {
         return NSMakeRange(from,

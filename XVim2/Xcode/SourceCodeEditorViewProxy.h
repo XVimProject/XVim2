@@ -21,27 +21,28 @@ typedef NS_OPTIONS(unsigned, XVimSelectionModifiers) {
 typedef struct {
     NSUInteger row;
     NSUInteger col;
-} XVimSourceEditorPosition ;
+} XVimSourceEditorPosition;
 
-static inline
-XVimSourceEditorPosition XvimMakeSourceEditorPosition(NSUInteger row, NSUInteger col) {
-    XVimSourceEditorPosition pos = { .row=row, .col=col };
+static inline XVimSourceEditorPosition XvimMakeSourceEditorPosition(NSUInteger row, NSUInteger col)
+{
+    XVimSourceEditorPosition pos = {.row = row, .col = col };
     return pos;
 }
 typedef struct {
     XVimSourceEditorPosition pos1;
     XVimSourceEditorPosition pos2;
-} XVimSourceEditorRange ;
+} XVimSourceEditorRange;
 
-static inline
-NSString * _Nonnull XVimSourceEditorRangeToString(XVimSourceEditorRange rng) {
-    return [NSString stringWithFormat:@"{ {row: %lu, col: %lu}, {row: %lu, col: %lu} }"
-            , rng.pos1.row, rng.pos1.col, rng.pos2.row, rng.pos2.col];
+static inline NSString* _Nonnull XVimSourceEditorRangeToString(XVimSourceEditorRange rng)
+{
+    return [NSString stringWithFormat:@"{ {row: %lu, col: %lu}, {row: %lu, col: %lu} }", rng.pos1.row, rng.pos1.col,
+                                      rng.pos2.row, rng.pos2.col];
 }
 
-static inline
-XVimSourceEditorRange XvimMakeSourceEditorRange(XVimSourceEditorPosition pos1, XVimSourceEditorPosition pos2) {
-    XVimSourceEditorRange rng = { .pos1=pos1, .pos2=pos2 };
+static inline XVimSourceEditorRange XvimMakeSourceEditorRange(XVimSourceEditorPosition pos1,
+                                                              XVimSourceEditorPosition pos2)
+{
+    XVimSourceEditorRange rng = {.pos1 = pos1, .pos2 = pos2 };
     return rng;
 }
 
@@ -64,16 +65,16 @@ XVimSourceEditorRange XvimMakeSourceEditorRange(XVimSourceEditorPosition pos1, X
 @property (readonly) XVimPosition selectionBeginPosition;
 @property (readonly) BOOL selectionToEOL;
 @property CURSOR_MODE cursorMode;
-@property (readonly, nullable) NSURL * documentURL;
+@property (readonly, nullable) NSURL* documentURL;
 @property (nonatomic) BOOL needsUpdateFoundRanges;
 @property (readonly, nonnull) NSMutableArray* foundRanges;
 @property (readonly) NSInteger currentLineNumber;
 @property (strong, nullable) id<XVimTextViewDelegateProtocol> xvimDelegate;
 @property (readonly, nullable) XVimCommandLine* commandLine;
 @property (readonly, nullable) NSWindow* window;
-@property (strong, nonnull) NSString * string;
+@property (strong, nonnull) NSString* string;
 @property BOOL xvim_lockSyncStateFromView;
-@property (strong, nullable) SourceCodeEditorViewWrapper * sourceCodeEditorViewWrapper;
+@property (strong, nullable) SourceCodeEditorViewWrapper* sourceCodeEditorViewWrapper;
 - (nullable instancetype)initWithSourceCodeEditorView:(nonnull SourceCodeEditorView*)sourceEditorView;
 
 // Data source
@@ -246,7 +247,6 @@ XVimSourceEditorRange XvimMakeSourceEditorRange(XVimSourceEditorPosition pos1, X
 #import "SourceCodeEditorViewProxy+Yank.h"
 
 
-
-#define IGNORE_SELECTION_UPDATES_SCOPE                                                                                         \
-    self.xvim_lockSyncStateFromView = YES; \
+#define IGNORE_SELECTION_UPDATES_SCOPE                                                                                 \
+    self.xvim_lockSyncStateFromView = YES;                                                                             \
     xvim_on_exit { self.xvim_lockSyncStateFromView = NO; };

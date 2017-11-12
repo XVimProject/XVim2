@@ -101,7 +101,7 @@
 { // zz / z.
     if (fnb) {
         _auto cursorIndexAfterScroll =
-            [self.textStorage xvim_firstNonblankInLineAtIndex:self.selectedRange.location allowEOL:YES];
+                    [self.textStorage xvim_firstNonblankInLineAtIndex:self.selectedRange.location allowEOL:YES];
         if (cursorIndexAfterScroll != self.selectedRange.location) {
             self.selectedRange = NSMakeRange(cursorIndexAfterScroll, 0);
             [self xvim_syncStateWithScroll:NO];

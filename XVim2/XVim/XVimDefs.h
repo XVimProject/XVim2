@@ -61,10 +61,10 @@ typedef enum {
 
 
 typedef NS_OPTIONS(NSUInteger, XVimSortOptions) {
-    XVimSortOptionReversed              = 1,
-    XVimSortOptionRemoveDuplicateLines  = 1 << 1,
-    XVimSortOptionNumericSort           = 1 << 2,
-    XVimSortOptionIgnoreCase            = 1 << 3
+    XVimSortOptionReversed = 1,
+    XVimSortOptionRemoveDuplicateLines = 1 << 1,
+    XVimSortOptionNumericSort = 1 << 2,
+    XVimSortOptionIgnoreCase = 1 << 3
 };
 
 typedef struct _XVimRange {

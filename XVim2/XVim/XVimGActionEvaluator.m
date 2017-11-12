@@ -8,18 +8,18 @@
 
 //#import "XVimJoinEvaluator.h"
 #import "XVimGActionEvaluator.h"
-#import "XVimInsertEvaluator.h"
-#import "XVimLowercaseEvaluator.h"
-#import "XVimUppercaseEvaluator.h"
 #import "NSTextStorage+VimOperation.h"
 #import "SourceViewProtocol.h"
 #import "XVim.h"
+#import "XVimInsertEvaluator.h"
+#import "XVimJoinEvaluator.h"
 #import "XVimKeyStroke.h"
+#import "XVimLowercaseEvaluator.h"
 #import "XVimMark.h"
 #import "XVimMarks.h"
 #import "XVimTildeEvaluator.h"
+#import "XVimUppercaseEvaluator.h"
 #import "XVimVisualEvaluator.h"
-#import "XVimJoinEvaluator.h"
 #import "XVimWindow.h"
 
 @implementation XVimGActionEvaluator
@@ -40,10 +40,8 @@
 
 - (XVimEvaluator*)d
 {
-    xvim_ignore_warning_undeclared_selector_push
-    [NSApp sendAction:@selector(jumpToDefinition:) to:nil from:self];
-    xvim_ignore_warning_pop
-    return nil;
+    xvim_ignore_warning_undeclared_selector_push [NSApp sendAction:@selector(jumpToDefinition:) to:nil from:self];
+    xvim_ignore_warning_pop return nil;
 }
 
 - (XVimEvaluator*)f
