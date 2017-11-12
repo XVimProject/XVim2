@@ -13,7 +13,6 @@ import Cocoa
 @_silgen_name("scev_wrapper_call3") func _get_data_source(_:UnsafeRawPointer) -> (UnsafeMutableRawPointer)
 @_silgen_name("scev_wrapper_call4") func _set_selected_range(_:UnsafeRawPointer, _:XVimSourceEditorRange, modifiers:UInt32) -> ()
 @_silgen_name("scev_wrapper_call5") func _add_selected_range(_:UnsafeRawPointer, _:XVimSourceEditorRange, modifiers:UInt32) -> ()
-@_silgen_name("scev_wrapper_call6") func _get_text_storage(_:UnsafeRawPointer) -> (UnsafeMutableRawPointer)
 
 
 class SourceCodeEditorViewWrapper: NSObject {
@@ -27,7 +26,6 @@ class SourceCodeEditorViewWrapper: NSObject {
     private let fpGetDataSource = function_ptr_from_name("_T012SourceEditor0aB4ViewC04dataA0AA0ab4DataA0Cfg", nil);
     private let fpSetSelectedRangeWithModifiers = function_ptr_from_name("_T012SourceEditor0aB4ViewC16setSelectedRangeyAA0abF0V_AA0aB18SelectionModifiersV9modifierstF", nil);
     private let fpAddSelectedRangeWithModifiers = function_ptr_from_name("_T012SourceEditor0aB4ViewC16addSelectedRangeyAA0abF0V_AA0aB18SelectionModifiersV9modifierstF", nil);
-    private let fpGetTextStorage = function_ptr_from_name("_T022IDEPegasusSourceEditor0B12CodeDocumentC16sdefSupport_textSo13NSTextStorageCyF", nil);
 
     private weak var editorViewProxy : SourceCodeEditorViewProxy?
     
@@ -42,9 +40,7 @@ class SourceCodeEditorViewWrapper: NSObject {
         contextPtr = UnsafeMutableBufferPointer<UnsafeMutableRawPointer>(start: context.assumingMemoryBound(to: UnsafeMutableRawPointer.self), count: 2)
     }
     
-    deinit {
-        free(context)
-    }
+    deinit { free(context) }
     
     @objc
     var cursorStyle : CursorStyle {
@@ -62,13 +58,6 @@ class SourceCodeEditorViewWrapper: NSObject {
     var dataSource : AnyObject? {
         return doCall(fpGetDataSource)
             ? Unmanaged.fromOpaque(_get_data_source(context).assumingMemoryBound(to: AnyObject?.self)).takeRetainedValue()
-            : nil
-    }
-    
-    @objc
-    var textStorage : NSTextStorage? {
-        return doCall(fpGetTextStorage)
-            ? Unmanaged.fromOpaque(_get_text_storage(context).assumingMemoryBound(to: AnyObject?.self)).takeRetainedValue()
             : nil
     }
     
@@ -96,11 +85,10 @@ class SourceCodeEditorViewWrapper: NSObject {
     private func doCall(_ funcPtr: UnsafeMutableRawPointer?) -> Bool
     {
         guard let evp = editorViewProxy,
-            let scev = evp.view,
+            let sourceCodeEditorView = evp.view,
             let fp = funcPtr else {return false}
 
-        let sourceCodeEditorViewPtr = Unmanaged.passUnretained(scev).toOpaque()
-        contextPtr[0] = sourceCodeEditorViewPtr
+        contextPtr[0] = Unmanaged.passUnretained(sourceCodeEditorView).toOpaque()
         contextPtr[1] = fp
         
         return true;

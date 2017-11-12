@@ -130,10 +130,12 @@
 
 - (void)addSelectedRange:(XVimSourceEditorRange)rng modifiers:(XVimSelectionModifiers)modifiers
 {
+    DEBUG_LOG(@"Add range: %@, modifiers: %lu", XVimSourceEditorRangeToString(rng), modifiers);
     [self.sourceCodeEditorViewWrapper addSelectedRange:rng modifiers:modifiers];
 }
 - (void)setSelectedRange:(XVimSourceEditorRange)rng modifiers:(XVimSelectionModifiers)modifiers
 {
+    DEBUG_LOG(@"Set range: %@, modifiers: %lu", XVimSourceEditorRangeToString(rng), modifiers);
     [self.sourceCodeEditorViewWrapper setSelectedRange:rng modifiers:modifiers];
 }
 
@@ -289,6 +291,12 @@
     
     if (ranges.count == 1) {
         _auto rng = ranges.firstObject.rangeValue;
+        
+        if (rng.length == 0) {
+            self.sourceCodeEditorView.selectedTextRange = rng;
+            return;
+        }
+        
         _auto insertionPos = [self positionFromIndex:self.insertionPoint lineHint:0];
         XVimSourceEditorRange insertionRange = { .pos1 = insertionPos, .pos2 = insertionPos };
         [self setSelectedRange:insertionRange modifiers:0];

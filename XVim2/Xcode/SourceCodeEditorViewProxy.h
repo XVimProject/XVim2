@@ -34,6 +34,12 @@ typedef struct {
 } XVimSourceEditorRange ;
 
 static inline
+NSString * _Nonnull XVimSourceEditorRangeToString(XVimSourceEditorRange rng) {
+    return [NSString stringWithFormat:@"{ {row: %lu, col: %lu}, {row: %lu, col: %lu} }"
+            , rng.pos1.row, rng.pos1.col, rng.pos2.row, rng.pos2.col];
+}
+
+static inline
 XVimSourceEditorRange XvimMakeSourceEditorRange(XVimSourceEditorPosition pos1, XVimSourceEditorPosition pos2) {
     XVimSourceEditorRange rng = { .pos1=pos1, .pos2=pos2 };
     return rng;
