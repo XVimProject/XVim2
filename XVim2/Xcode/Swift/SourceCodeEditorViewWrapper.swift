@@ -15,18 +15,50 @@ import Cocoa
 @_silgen_name("scev_wrapper_call5") func _add_selected_range(_:UnsafeRawPointer, _:XVimSourceEditorRange, modifiers:UInt32) -> ()
 
 
+fileprivate struct _SourceCodeEditorViewWrapper {
+
+    let contextPtr = UnsafeMutablePointer<UnsafeMutableRawPointer>.allocate(capacity: 8)
+
+    init?(_ view : AnyObject?, _ functionPtr : UnsafeMutableRawPointer?) {
+        
+        guard let sourceCodeEditorView = view,
+            let fp = functionPtr else {return nil}
+        
+        contextPtr[0] = Unmanaged.passRetained(sourceCodeEditorView).toOpaque()
+        contextPtr[1] = fp
+    }
+    
+    
+    func getCursorStyle() -> CursorStyle {
+        return _get_cursor_style(contextPtr)
+    }
+    func setCursorStyle(_ style: CursorStyle) {
+        _set_cursor_style(contextPtr, style)
+    }
+    
+    func getDataSource() -> AnyObject? {
+        return Unmanaged.fromOpaque(_get_data_source(contextPtr).assumingMemoryBound(to: AnyObject?.self)).takeRetainedValue()
+    }
+    func addSelectedRange(_ range:XVimSourceEditorRange, modifiers:XVimSelectionModifiers)
+    {
+        _add_selected_range(contextPtr, range, modifiers: modifiers.rawValue)
+    }
+    func setSelectedRange(_ range:XVimSourceEditorRange, modifiers:XVimSelectionModifiers)
+    {
+        _set_selected_range(contextPtr, range, modifiers: modifiers.rawValue)
+    }
+}
+
+
+
+
 class SourceCodeEditorViewWrapper: NSObject {
-
-    let context : UnsafeMutableRawPointer = malloc(2 * 8)!
-    let contextPtr : UnsafeMutableBufferPointer<UnsafeMutableRawPointer>!
-
-
     private let fpSetCursorStyle = function_ptr_from_name("_T012SourceEditor0aB4ViewC11cursorStyleAA0ab6CursorE0Ofs", nil);
     private let fpGetCursorStyle = function_ptr_from_name("_T012SourceEditor0aB4ViewC11cursorStyleAA0ab6CursorE0Ofg", nil);
     private let fpGetDataSource = function_ptr_from_name("_T012SourceEditor0aB4ViewC04dataA0AA0ab4DataA0Cfg", nil);
     private let fpSetSelectedRangeWithModifiers = function_ptr_from_name("_T012SourceEditor0aB4ViewC16setSelectedRangeyAA0abF0V_AA0aB18SelectionModifiersV9modifierstF", nil);
     private let fpAddSelectedRangeWithModifiers = function_ptr_from_name("_T012SourceEditor0aB4ViewC16addSelectedRangeyAA0abF0V_AA0aB18SelectionModifiersV9modifierstF", nil);
-
+    
     private weak var editorViewProxy : SourceCodeEditorViewProxy?
     
     @objc
@@ -37,61 +69,38 @@ class SourceCodeEditorViewWrapper: NSObject {
     @objc
     public init(withProxy proxy:SourceCodeEditorViewProxy) {
         editorViewProxy = proxy
-        contextPtr = UnsafeMutableBufferPointer<UnsafeMutableRawPointer>(start: context.assumingMemoryBound(to: UnsafeMutableRawPointer.self), count: 2)
     }
     
-    deinit { free(context) }
+    private var editorView : AnyObject? {
+        return editorViewProxy?.view
+    }
     
     @objc
     var cursorStyle : CursorStyle {
         get {
-            return doCall(fpGetCursorStyle) ? _get_cursor_style(context) : CursorStyle.block
+            return _SourceCodeEditorViewWrapper(editorView, fpGetCursorStyle)?.getCursorStyle() ?? CursorStyle.block
         }
         set {
-            if doCall(fpSetCursorStyle) {
-                _set_cursor_style(context, newValue)
-            }
+            _SourceCodeEditorViewWrapper(editorView, fpSetCursorStyle)?.setCursorStyle(newValue)
         }
     }
     
     @objc
     var dataSource : AnyObject? {
-        return doCall(fpGetDataSource)
-            ? Unmanaged.fromOpaque(_get_data_source(context).assumingMemoryBound(to: AnyObject?.self)).takeRetainedValue()
-            : nil
+        return _SourceCodeEditorViewWrapper(editorView, fpGetDataSource)?.getDataSource()
     }
     
     @objc
-    public func addSelectedRange(_ range:XVimSourceEditorRange, modifiers:XVimSelectionModifiers)
+    public func addSelectedRange(_ range:XVimSourceEditorRange, modifiers:XVimSelectionModifiers) -> Void
     {
-        if doCall(fpAddSelectedRangeWithModifiers) {
-            _add_selected_range(context, range, modifiers: modifiers.rawValue)
-        }
+        _SourceCodeEditorViewWrapper(editorView, fpAddSelectedRangeWithModifiers)?.addSelectedRange(range, modifiers: modifiers)
     }
     
     @objc
     public func setSelectedRange(_ range:XVimSourceEditorRange, modifiers:XVimSelectionModifiers)
     {
-        if doCall(fpSetSelectedRangeWithModifiers) {
-            _set_selected_range(context, range, modifiers: modifiers.rawValue)
-        }
+        _SourceCodeEditorViewWrapper(editorView, fpSetSelectedRangeWithModifiers)?.setSelectedRange(range, modifiers: modifiers)
     }
     
-    // PRIVATE
-    // =======
-    
-
-    @discardableResult
-    private func doCall(_ funcPtr: UnsafeMutableRawPointer?) -> Bool
-    {
-        guard let evp = editorViewProxy,
-            let sourceCodeEditorView = evp.view,
-            let fp = funcPtr else {return false}
-
-        contextPtr[0] = Unmanaged.passUnretained(sourceCodeEditorView).toOpaque()
-        contextPtr[1] = fp
-        
-        return true;
-    }
-
 }
+
