@@ -103,7 +103,7 @@
 
 - (void)xvim_put:(NSString*)text withType:(TEXT_TYPE)type afterCursor:(bool)after count:(NSUInteger)count
 {
-    EDIT_TRANSACTION_SCOPE
+    EDIT_TRANSACTION_SCOPE(self)
 
     TRACE_LOG(@"text:%@  type:%d   afterCursor:%d   count:%d", text, type, after, count);
     if (self.selectionMode != XVIM_VISUAL_NONE) {

@@ -33,16 +33,17 @@ fileprivate struct _SourceEditorDataSourceWrapper {
     }
     
     
+    
     var undoManager : AnyObject? {
         return Unmanaged.fromOpaque(_getUndoManager(contextPtr).assumingMemoryBound(to: AnyObject?.self)).takeRetainedValue()
     }
     
     func beginEditTransaction() -> () {
-        _beginEditTransaction(contextPtr)
+        // _beginEditTransaction(contextPtr)
     }
     
     func endEditTransaction() -> () {
-        _endEditTransaction(contextPtr)
+        // _endEditTransaction(contextPtr)
     }
     
     func positionFromInternalCharOffset(_ pos : Int, lineHint: Int = 0) -> XVimSourceEditorPosition {

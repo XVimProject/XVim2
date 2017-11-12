@@ -27,6 +27,7 @@
 @property (readwrite) NSUInteger preservedColumn;
 @property (readwrite) BOOL selectionToEOL;
 @property NSInteger editTransactionDepth;
+@property NSInteger undoGroupingDepth;
 @property (strong) NSString* lastYankedText;
 @property (strong) NSLayoutConstraint* cmdLineBottomAnchor;
 @property TEXT_TYPE lastYankedType;

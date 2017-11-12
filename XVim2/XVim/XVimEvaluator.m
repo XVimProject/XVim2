@@ -248,13 +248,13 @@ static XVimEvaluator* _popEvaluator = nil;
 -(void)beginUndoGrouping
 {
     self.beganUndoGrouping = YES;
-    [self.sourceView xvim_beginEditTransaction];
+    [self.sourceView xvim_beginUndoGrouping];
 }
 
 -(void)endUndoGrouping
 {
     if (self.beganUndoGrouping) {
-        [self.sourceView xvim_endEditTransaction];
+        [self.sourceView xvim_endUndoGrouping];
         self.beganUndoGrouping = NO;
     }
 }

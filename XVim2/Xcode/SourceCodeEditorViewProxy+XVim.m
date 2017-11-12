@@ -27,6 +27,7 @@
 @property (readwrite) BOOL selectionToEOL;
 @property (strong) NSString* lastYankedText;
 @property (readwrite) NSInteger editTransactionDepth;
+@property (readwrite) NSInteger undoGroupingDepth;
 @property TEXT_TYPE lastYankedType;
 - (void)_xvim_yankSelection:(XVimSelection)sel;
 - (void)_xvim_killSelection:(XVimSelection)sel;
@@ -42,11 +43,32 @@
     return [self indexFromPosition:XvimMakeSourceEditorPosition(line-1, col)];
 }
 
+- (void)xvim_beginUndoGrouping
+{
+    if (self.undoGroupingDepth == 0) {
+        [self.undoManager beginUndoGrouping];
+        [self xvim_registerInsertionPointForUndo];
+    }
+    self.undoGroupingDepth++;
+}
+
+- (void)xvim_endUndoGrouping
+{
+    if (self.undoGroupingDepth == 0) {
+        ERROR_LOG(@"Attempt to end a non-existent edit transaction");
+        return;
+    }
+    
+    --self.undoGroupingDepth;
+    if (self.undoGroupingDepth == 0) {
+        [self.undoManager endUndoGrouping];
+    }
+}
+
 - (void)xvim_beginEditTransaction
 {
     if (self.editTransactionDepth == 0) {
         [self beginEditTransaction];
-        [self.undoManager beginUndoGrouping];
         [self xvim_registerInsertionPointForUndo];
     }
     self.editTransactionDepth++;
@@ -61,7 +83,6 @@
     
     --self.editTransactionDepth;
     if (self.editTransactionDepth == 0) {
-        [self.undoManager endUndoGrouping];
         [self endEditTransaction];
     }
 }

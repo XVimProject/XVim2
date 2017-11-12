@@ -246,12 +246,6 @@ XVimSourceEditorRange XvimMakeSourceEditorRange(XVimSourceEditorPosition pos1, X
 #import "SourceCodeEditorViewProxy+Yank.h"
 
 
-#define EDIT_TRANSACTION_SCOPE                                                                                         \
-    [self xvim_beginEditTransaction];                                                                                  \
-    xvim_on_exit                                                                                                       \
-    {                                                                                                                  \
-        [self xvim_endEditTransaction];                                                                                \
-    };
 
 #define IGNORE_SELECTION_UPDATES_SCOPE                                                                                         \
     self.xvim_lockSyncStateFromView = YES; \

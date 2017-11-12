@@ -30,6 +30,7 @@ fileprivate struct _SourceCodeEditorViewWrapper {
     
     
     func getCursorStyle() -> CursorStyle {
+        // return CursorStyle.block
         return _get_cursor_style(contextPtr)
     }
     func setCursorStyle(_ style: CursorStyle) {

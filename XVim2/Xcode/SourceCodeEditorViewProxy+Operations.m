@@ -53,7 +53,7 @@
     }
     NSUInteger newPos = NSNotFound;
 
-    EDIT_TRANSACTION_SCOPE
+    EDIT_TRANSACTION_SCOPE(self)
 
     motion.info->deleteLastLine = NO;
     if (self.selectionMode == XVIM_VISUAL_NONE) {
@@ -293,7 +293,7 @@
 
 - (void)xvim_swapCaseForRange:(NSRange)range
 {
-    EDIT_TRANSACTION_SCOPE;
+    EDIT_TRANSACTION_SCOPE(self);
     NSString* text = self.string;
 
 
@@ -524,13 +524,12 @@
     if (motionPoint == 0 && self.string.length == 0) {
         return;
     }
-    EDIT_TRANSACTION_SCOPE;
+    EDIT_TRANSACTION_SCOPE(self);
 
     NSUInteger shiftWidth = self.textStorage.xvim_indentWidth;
     NSUInteger column = 0;
     XVimRange lines;
     BOOL blockMode = NO;
-    // NSUndoManager *undoManager = self.undoManager;
 
     if (self.selectionMode == XVIM_VISUAL_NONE) {
         XVimRange to = [self xvim_getMotionRange:motionPoint Motion:motion];

@@ -65,8 +65,23 @@ typedef NS_ENUM(char, CursorStyle) { CursorStyleVerticalBar, CursorStyleBlock, C
 
 // XVim extensions
 @protocol SourceViewXVimProtocol <NSObject>
+- (void)xvim_beginUndoGrouping;
+- (void)xvim_endUndoGrouping;
+
+// WARNING! xvim_endEditTransaction MUST be called on the main thread, after
+// xvim_beginEditTransaction, and during a single pass of the run-loop. So,
+// always use the macro EDIT_TRANSACTION_SCOPE instead of these calls
 - (void)xvim_beginEditTransaction;
 - (void)xvim_endEditTransaction;
+
+#define EDIT_TRANSACTION_SCOPE(_xvself)                                                                                         \
+    [_xvself xvim_beginEditTransaction];                                                                                  \
+    xvim_on_exit                                                                                                       \
+    {                                                                                                                  \
+        [_xvself xvim_endEditTransaction];                                                                                \
+    };
+
+
 - (void)xvim_syncState;
 - (void)xvim_syncStateFromView;
 - (void)xvim_insert:(XVimInsertionPoint)mode blockColumn:(NSUInteger*)column blockLines:(XVimRange*)lines;
