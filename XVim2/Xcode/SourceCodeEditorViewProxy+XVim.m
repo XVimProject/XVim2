@@ -53,6 +53,7 @@
         [self xvim_registerInsertionPointForUndo];
     }
     self.undoGroupingDepth++;
+    DEBUG_LOG(@"BEGIN UNDO: Undo grouping level = %lu", self.undoGroupingDepth);
 }
 
 - (void)xvim_endUndoGrouping
@@ -66,6 +67,7 @@
     if (self.undoGroupingDepth == 0) {
         [self.undoManager endUndoGrouping];
     }
+    DEBUG_LOG(@"END UNDO: Undo grouping level = %lu", self.undoGroupingDepth);
 }
 
 - (void)xvim_beginEditTransaction

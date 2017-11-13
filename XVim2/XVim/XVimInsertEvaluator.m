@@ -76,7 +76,6 @@
 
 - (void)becameHandler
 {
-    [self beginUndoGrouping];
     [super becameHandler];
     [self.sourceView xvim_insert:_mode blockColumn:&_blockEditColumn blockLines:&_blockLines];
     self.startRange = [[self sourceView] selectedRange];
