@@ -531,14 +531,14 @@ if (found.location != NSNotFound &&
     self.numReplacements = 0;
 
     // Find the position to start searching
-    self.replaceStartLocation = [window.sourceView.textStorage xvim_indexOfLineNumber:from column:0];
+    self.replaceStartLocation = [window.sourceView xvim_indexOfLineNumber:from column:0];
     if (NSNotFound == self.replaceStartLocation) {
         return;
     }
 
     // Find the position to end the searching
     self.replaceEndLocation =
-                [window.sourceView.textStorage xvim_indexOfLineNumber:to + 1
+                [window.sourceView xvim_indexOfLineNumber:to + 1
                                                                column:0]; // Next line of the end of range.
     if (NSNotFound == self.replaceEndLocation) {
         self.replaceEndLocation = [[[window sourceView] string] length];
@@ -563,12 +563,12 @@ if (found.location != NSNotFound &&
 
         // If search string contained a $, move to the next line
         if ([self.lastSearchCmd rangeOfString:@"$"].length > 0) {
-            self.replaceStartLocation = [window.sourceView.textStorage xvim_endOfLine:self.lastFoundRange.location] + 1;
+            self.replaceStartLocation = [window.sourceView xvim_endOfLine:self.lastFoundRange.location] + 1;
         }
     }
     // global option off; only one match per line
     else {
-        self.replaceStartLocation = [window.sourceView.textStorage xvim_endOfLine:self.lastFoundRange.location] + 1;
+        self.replaceStartLocation = [window.sourceView xvim_endOfLine:self.lastFoundRange.location] + 1;
     }
 }
 

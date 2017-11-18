@@ -33,6 +33,7 @@ typedef struct {
     XVimSourceEditorPosition pos2;
 } XVimSourceEditorRange;
 
+
 static inline NSString* _Nonnull XVimSourceEditorRangeToString(XVimSourceEditorRange rng)
 {
     return [NSString stringWithFormat:@"{ {row: %lu, col: %lu}, {row: %lu, col: %lu} }", rng.pos1.row, rng.pos1.col,
@@ -52,7 +53,7 @@ static inline XVimSourceEditorRange XvimMakeSourceEditorRange(XVimSourceEditorPo
 // SourceEditorSelection is an internal class
 
 @protocol XVimTextViewDelegateProtocol;
-@class SourceCodeEditorViewWrapper;
+@class SourceCodeEditorViewWrapper, SourceEditorDataSourceWrapper;
 
 @interface SourceCodeEditorViewProxy : NSObject <SourceViewProtocol>
 @property (readonly) XVIM_VISUAL_MODE selectionMode;
@@ -75,6 +76,7 @@ static inline XVimSourceEditorRange XvimMakeSourceEditorRange(XVimSourceEditorPo
 @property (strong, nonnull) NSString* string;
 @property BOOL xvim_lockSyncStateFromView;
 @property (strong, nullable) SourceCodeEditorViewWrapper* sourceCodeEditorViewWrapper;
+@property (readonly, nonatomic, nullable) SourceEditorDataSourceWrapper* sourceEditorDataSourceWrapper;
 - (nullable instancetype)initWithSourceCodeEditorView:(nonnull SourceCodeEditorView*)sourceEditorView;
 
 // Data source

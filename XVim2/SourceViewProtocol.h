@@ -9,6 +9,7 @@
 #ifndef SourceViewProtocol_h
 #define SourceViewProtocol_h
 #import "XVimMotionOption.h"
+#import "XVimTextStoring.h"
 #import <AppKit/AppKit.h>
 #import <SourceEditor/_TtC12SourceEditor23SourceEditorUndoManager.h>
 
@@ -22,7 +23,7 @@ typedef NS_ENUM(char, CursorStyle) { CursorStyleVerticalBar, CursorStyleBlock, C
 - (void)textView:(id)view didDelete:(NSString*)deletedText withType:(TEXT_TYPE)type;
 @end
 
-@protocol SourceViewProtocol <NSObject, NSTextInputClient>
+@protocol SourceViewProtocol <NSObject>
 - (void)showCommandLine;
 - (void)hideCommandLine;
 - (BOOL)isShowingCommandLine;
@@ -34,6 +35,7 @@ typedef NS_ENUM(char, CursorStyle) { CursorStyleVerticalBar, CursorStyleBlock, C
 - (void)scrollPageBackward:(NSUInteger)numPages;
 - (void)showFindIndicatorForRange:(NSRange)arg1;
 - (void)selectionChanged:(NSNotification*)changeNotification;
+- (void)insertText:(id)string replacementRange:(NSRange)replacementRange;
 
 // Properties
 @property (nonatomic, getter=isEnabled) BOOL enabled;
@@ -64,7 +66,7 @@ typedef NS_ENUM(char, CursorStyle) { CursorStyleVerticalBar, CursorStyleBlock, C
 
 
 // XVim extensions
-@protocol SourceViewXVimProtocol <NSObject>
+@protocol SourceViewXVimProtocol <NSObject, XVimTextStoring>
 - (void)xvim_beginUndoGrouping;
 - (void)xvim_endUndoGrouping;
 

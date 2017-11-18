@@ -25,7 +25,7 @@
 - (void)xvim_scrollCommon_moveCursorPos:(NSUInteger)lineNumber firstNonblank:(BOOL)fnb
 {
     if (lineNumber != 0) {
-        NSUInteger pos = [self.textStorage xvim_indexOfLineNumber:lineNumber];
+        NSUInteger pos = [self xvim_indexOfLineNumber:lineNumber];
         if (NSNotFound == pos) {
             pos = self.textStorage.length;
         }

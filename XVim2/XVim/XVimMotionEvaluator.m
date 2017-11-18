@@ -398,7 +398,7 @@ if( childEvaluator.keyStroke.toString.length != 1 ){
         XVimOpenDocumentAtPath(mark.document);
     }
 
-    NSUInteger to = [self.sourceView.textStorage xvim_indexOfLineNumber:mark.line column:mark.column];
+    NSUInteger to = [self.sourceView xvim_indexOfLineNumber:mark.line column:mark.column];
     if (NSNotFound == to) {
         return [XVimEvaluator invalidEvaluator];
     }

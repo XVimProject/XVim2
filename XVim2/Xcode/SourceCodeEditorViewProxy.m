@@ -31,7 +31,6 @@
 @property (strong) NSString* lastYankedText;
 @property (strong) NSLayoutConstraint* cmdLineBottomAnchor;
 @property TEXT_TYPE lastYankedType;
-@property (readonly, nonatomic) SourceEditorDataSourceWrapper* sourceEditorDataSourceWrapper;
 @end
 
 #define LOG_STATE()

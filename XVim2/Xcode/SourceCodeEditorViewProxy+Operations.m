@@ -127,7 +127,7 @@
         }
         [self _xvim_killSelection:sel];
 
-        newPos = [self.textStorage xvim_indexOfLineNumber:sel.top column:sel.left];
+        newPos = [self xvim_indexOfLineNumber:sel.top column:sel.left];
     }
 
     [self.xvimDelegate textView:self didDelete:self.lastYankedText withType:self.lastYankedType];
@@ -145,7 +145,7 @@
 
 - (void)xvim_insertText:(NSString*)str line:(NSUInteger)line column:(NSUInteger)column
 {
-    NSUInteger pos = [self.textStorage xvim_indexOfLineNumber:line column:column];
+    NSUInteger pos = [self xvim_indexOfLineNumber:line column:column];
     if (pos == NSNotFound) {
         return;
     }
@@ -155,11 +155,11 @@
 - (void)xvim_insertNewlineBelowLine:(NSUInteger)line
 {
     NSAssert(line != 0, @"line number starts from 1");
-    NSUInteger pos = [self.textStorage xvim_indexOfLineNumber:line];
+    NSUInteger pos = [self xvim_indexOfLineNumber:line];
     if (NSNotFound == pos) {
         return;
     }
-    pos = [self.textStorage xvim_endOfLine:pos];
+    pos = [self xvim_endOfLine:pos];
     [self insertText:@"\n" replacementRange:NSMakeRange(pos, 0)];
     [self xvim_moveCursor:pos + 1 preserveColumn:NO];
     [self xvim_syncState];
@@ -172,7 +172,7 @@
 
 - (void)xvim_insertNewlineBelowCurrentLineWithIndent
 {
-    NSUInteger tail = [self.textStorage xvim_endOfLine:self.insertionPoint];
+    NSUInteger tail = [self xvim_endOfLine:self.insertionPoint];
     [self setSelectedRange:NSMakeRange(tail, 0)];
     [self insertNewline:self];
 }
@@ -180,7 +180,7 @@
 - (void)xvim_insertNewlineAboveLine:(NSUInteger)line
 {
     NSAssert(line != 0, @"line number starts from 1");
-    NSUInteger pos = [self.textStorage xvim_indexOfLineNumber:line];
+    NSUInteger pos = [self xvim_indexOfLineNumber:line];
     if (NSNotFound == pos) {
         return;
     }
@@ -229,7 +229,7 @@
 
 - (BOOL)xvim_replaceCharacters:(unichar)c count:(NSUInteger)count
 {
-    NSUInteger eol = [self.textStorage xvim_endOfLine:self.insertionPoint];
+    NSUInteger eol = [self xvim_endOfLine:self.insertionPoint];
     // Note : endOfLine may return one less than self.insertionPoint if self.insertionPoint is on newline
     if (NSNotFound == eol) {
         return NO;
@@ -431,12 +431,12 @@
 - (void)xvim_joinAtLineNumber:(NSUInteger)line
 {
     BOOL needSpace = NO;
-    NSUInteger headOfLine = [self.textStorage xvim_indexOfLineNumber:line];
+    NSUInteger headOfLine = [self xvim_indexOfLineNumber:line];
     if (headOfLine == NSNotFound) {
         return;
     }
 
-    NSUInteger tail = [self.textStorage xvim_endOfLine:headOfLine];
+    NSUInteger tail = [self xvim_endOfLine:headOfLine];
     if ([self.textStorage isEOF:tail]) {
         // This is the last line and nothing to join
         return;
@@ -493,10 +493,10 @@
         }
     }
     else {
-        NSUInteger pos = [self.textStorage xvim_indexOfLineNumber:line];
+        NSUInteger pos = [self xvim_indexOfLineNumber:line];
 
         for (NSUInteger i = 0; i < count; i++) {
-            NSUInteger tail = [self.textStorage xvim_endOfLine:pos];
+            NSUInteger tail = [self xvim_endOfLine:pos];
 
             if (tail != NSNotFound && ![self.textStorage isEOF:tail]) {
                 [self insertText:@"" replacementRange:NSMakeRange(tail, 1)];
@@ -553,7 +553,7 @@
         shiftWidth *= motion.count;
     }
 
-    NSUInteger pos = [self.textStorage xvim_indexOfLineNumber:lines.begin column:0];
+    NSUInteger pos = [self xvim_indexOfLineNumber:lines.begin column:0];
 
     if (!blockMode) {
         [self xvim_registerPositionForUndo:[self.textStorage xvim_firstNonblankInLineAtIndex:pos allowEOL:YES]];
@@ -581,7 +581,7 @@
     }
 
     if (blockMode) {
-        pos = [self.textStorage xvim_indexOfLineNumber:lines.begin column:column];
+        pos = [self xvim_indexOfLineNumber:lines.begin column:column];
     }
     else {
         pos = [self.textStorage xvim_firstNonblankInLineAtIndex:pos allowEOL:YES];
@@ -626,8 +626,8 @@
     }
     else {
         XVimRange lines = [self _xvim_selectedLines];
-        NSUInteger from = [self.textStorage xvim_indexOfLineNumber:lines.begin];
-        NSUInteger to = [self.textStorage xvim_indexOfLineNumber:lines.end];
+        NSUInteger from = [self xvim_indexOfLineNumber:lines.begin];
+        NSUInteger to = [self xvim_indexOfLineNumber:lines.end];
         filterRange = [self xvim_getOperationRangeFrom:from To:to Type:LINEWISE];
     }
 
@@ -705,7 +705,7 @@
     if (line2 < line1)
         xvim_swap(line1, line2);
 
-    NSRange characterRange = [self.textStorage xvim_indexRangeForLines:NSMakeRange(line1, line2 - line1 + 1)];
+    NSRange characterRange = [self xvim_indexRangeForLines:NSMakeRange(line1, line2 - line1 + 1)];
     NSString* str = [self.string substringWithRange:characterRange];
 
     NSMutableArray* lines =
@@ -764,7 +764,7 @@
 {
     NSTextStorage* ts = self.textStorage;
     const NSUInteger tabWidth = ts.xvim_tabWidth;
-    NSUInteger head_pos = [ts xvim_indexOfLineNumber:line column:column];
+    NSUInteger head_pos = [self xvim_indexOfLineNumber:line column:column];
     NSString* s = self.string;
 
     if ([ts isEOL:head_pos]) {
@@ -840,7 +840,7 @@
         // Nothing special
     }
     else if (type == LINEWISE) {
-        to = [self.textStorage xvim_endOfLine:to];
+        to = [self xvim_endOfLine:to];
         if ([self.textStorage isEOF:to]) {
             to--;
         }
