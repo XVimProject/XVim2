@@ -33,6 +33,7 @@
 @property NSRange initialRange;
 @property (strong) NSString* input;
 @property (strong) NSString* expectedText;
+@property (copy) NSString* actualText;
 @property NSRange expectedRange;
 @property (strong) NSString* desc; // description is declared in NSObject and readonly.
 @property (strong) NSString* message;
