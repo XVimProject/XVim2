@@ -970,13 +970,12 @@ xvim_ignore_warning_undeclared_selector_push
 
 - (void)copymove:(XVimExArg*)args onlyCopy:(bool)onlyCopy inWindow:(XVimWindow*)window
 {
-#ifdef TODO
     // If we don't have a valid copy area, or a valid paste address, return
     if ((args.lineBegin == NSNotFound && args.lineEnd == NSNotFound) || args.arg == nil) {
         return;
     }
     unichar* parsing = [self _getUnicharArray:args.arg];
-    NSUInteger addr = [self getAddress:parsing:&parsing allowZero:YES inWindow:window];
+    NSUInteger addr = [self getAddress:parsing cmdLeft:&parsing allowZero:YES inWindow:window];
     // If there are trailing characters in the address, or the address is NotFound, return
     if (*parsing != 0 || addr == NSNotFound) {
         return;
@@ -994,7 +993,6 @@ xvim_ignore_warning_undeclared_selector_push
                 withInsertionPoint:[view xvim_indexOfLineNumber:addr == 0 ? 1 : addr]
                              after:addr != 0
                           onlyCopy:onlyCopy];
-#endif
 }
 
 - (void)shift:(XVimExArg*)args inWindow:(XVimWindow*)window
@@ -1280,7 +1278,7 @@ xvim_ignore_warning_undeclared_selector_push
 
 xvim_ignore_warning_pop
 
-            - (NSMenuItem*)findMenuItemIn : (NSMenu*)menu forAction : (NSString*)actionName
+- (NSMenuItem*)findMenuItemIn : (NSMenu*)menu forAction : (NSString*)actionName
 {
     if (nil == menu) {
         menu = [NSApp mainMenu];

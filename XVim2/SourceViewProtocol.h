@@ -134,6 +134,7 @@ typedef NS_ENUM(char, CursorStyle) { CursorStyleVerticalBar, CursorStyleBlock, C
 
 // Mutate Operations
 @protocol SourceViewOperationsProtocol <NSObject>
+- (void)xvim_copymove:(XVimMotion*)motion withMotionPoint:(NSUInteger)motionPoint withInsertionPoint:(NSUInteger)insertionPoint after:(BOOL)after onlyCopy:(BOOL)onlyCopy;
 - (BOOL)xvim_delete:(XVimMotion*)motion withMotionPoint:(NSUInteger)motionPoint andYank:(BOOL)yank;
 - (BOOL)xvim_delete:(XVimMotion*)motion andYank:(BOOL)yank;
 - (void)xvim_insertText:(NSString*)str line:(NSUInteger)line column:(NSUInteger)column;

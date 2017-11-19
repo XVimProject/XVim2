@@ -184,7 +184,8 @@
     IGNORE_SELECTION_UPDATES_SCOPE
 
     while ([scanner scanUpToCharactersFromSet:NSCharacterSet.newlineCharacterSet intoString:&nextLine]) {
-        [scanner scanCharactersFromSet:NSCharacterSet.newlineCharacterSet intoString:NULL];
+        if (!scanner.atEnd)
+                scanner.scanLocation += 1;
         [self insertText:nextLine replacementRange:nextRng];
 
         nextRng.location = self.string.length;

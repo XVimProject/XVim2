@@ -26,6 +26,7 @@
 - (void)xvim_moveCursor:(NSUInteger)pos preserveColumn:(BOOL)preserve;
 - (void)xvim_syncState;
 - (XVimRange)xvim_getMotionRange:(NSUInteger)current Motion:(XVimMotion*)motion;
+- (NSRange)_xvim_getYankRange:(XVimMotion*)motion withRange:(XVimRange)to;
 - (XVimSelection)_xvim_selectedBlock;
 - (NSRange)_xvim_selectedRange;
 - (void)xvim_changeSelectionMode:(XVIM_VISUAL_MODE)mode;
@@ -36,6 +37,65 @@
 
 
 @implementation SourceCodeEditorViewProxy (Operations)
+
+#pragma mark - COPYMOVE
+- (void)xvim_copymove:(XVimMotion*)motion withMotionPoint:(NSUInteger)motionPoint withInsertionPoint:(NSUInteger)insertionPoint after:(BOOL)after onlyCopy:(BOOL)onlyCopy{
+    [self xvim_registerInsertionPointForUndo];
+    
+    // Handle the copy
+    XVimRange to = [self xvim_getMotionRange:motionPoint Motion:motion];
+    if( NSNotFound == to.end ){
+        return;
+    }
+    NSUInteger motionPointLine = [self xvim_lineNumberAtIndex:motionPoint];
+    NSRange r = [self _xvim_getYankRange:motion withRange:to];
+    NSString* s = [self.string substringWithRange:r];
+    
+    // Handle the paste
+    NSUInteger targetPos = insertionPoint;
+    NSUInteger targetLine = [self xvim_lineNumberAtIndex:insertionPoint];
+    NSUInteger cursorOffset = 1;
+    // If we are pasting after any line but a blank last one, add a new line to paste into.
+    // then, the cursor will moved to this new line automatically, and we change targetPos to that
+    BOOL eof = [self.textStorage isEOF:targetPos];
+    BOOL blank = [self.textStorage isBlankline:targetPos];
+    if(after && !(eof && blank)){
+        [self xvim_insertNewlineBelowLine:targetLine];
+        targetPos = self.insertionPoint;
+        s = [s substringToIndex:s.length-1]; // Remove the last newline in the copied text, since we just added one above
+        cursorOffset = 0;
+    }
+    [self insertText:s replacementRange:NSMakeRange(targetPos,0)];
+    
+    // Move the cursor to last line of what we pasted.
+    NSUInteger cursorPos = [self.textStorage xvim_firstNonblankInLineAtIndex:(targetPos+s.length-cursorOffset) allowEOL:YES];
+    [self xvim_moveCursor: cursorPos preserveColumn:NO];
+    
+    // Delete the copied text if required
+    if(!onlyCopy){
+        NSUInteger cursorLine = self.insertionLine;
+        NSUInteger lineAdjustment = (cursorLine-targetLine)+(after ? 0 : 1);
+        
+        // Adjust the starting line of the text to delete, if required
+        if(motionPointLine>targetLine){
+            motionPointLine += lineAdjustment;
+        }
+        // Delete the copied text
+        XVimRange to = [self xvim_getMotionRange:[self.textStorage xvim_indexOfLineNumber:motionPointLine] Motion:motion];
+        [self insertText:@"" replacementRange:[self _xvim_getDeleteRange:motion withRange:to]];
+        
+        // Adjust the line of the last line of what we pasted, if required
+        if(cursorLine>motionPointLine){ // cursorLine needs to be adjusted
+            cursorLine -= lineAdjustment+(eof && blank ? 1 : 0); // If we targeted the last blank line, increase the line adjustment to account for it
+        }
+        // Redo the move of the cursor to last line of what we pasted.
+        cursorPos = [self.textStorage xvim_firstNonblankInLineAtIndex:[self.textStorage xvim_indexOfLineNumber:cursorLine] allowEOL:YES];
+        [self xvim_moveCursor: cursorPos preserveColumn:NO];
+    }
+    
+    [self xvim_syncState];
+    [self xvim_changeSelectionMode:XVIM_VISUAL_NONE];
+}
 
 #pragma mark - DELETE
 
@@ -560,7 +620,7 @@
     }
 
     if (right) {
-        [self shiftRight:self];
+        //[self shiftRight:self];
         NSString* s;
         if (XVIM.options.expandtab) {
             s = [NSString stringMadeOfSpaces:shiftWidth];
@@ -574,7 +634,7 @@
         [self xvim_blockInsertFixupWithText:s mode:XVIM_INSERT_SPACES count:1 column:column lines:lines];
     }
     else {
-        [self shiftLeft:self];
+        //[self shiftLeft:self];
         for (NSUInteger line = lines.begin; line <= lines.end; line++) {
             [self _xvim_removeSpacesAtLine:line column:column count:shiftWidth];
         }
