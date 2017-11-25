@@ -39,13 +39,23 @@
     }
 }
 
-
-- (void)xvim_scroll:(CGFloat)ratio count:(NSUInteger)count
+- (void)xvim_scroll:(XVIM_SCROLL_TYPE)type direction:(XVIM_SCROLL_DIRECTION)direction count:(NSUInteger)count
 {
     NSInteger cursorLine = self.insertionLine - 1;
 
     // Scroll to the new location
-    NSInteger numScrollLines = (NSInteger)(self.linesPerPage * ratio);
+    NSInteger numScrollLines;
+    switch (type) {
+        case XVIM_SCROLL_TYPE_PAGE:
+            numScrollLines = (NSInteger)(self.linesPerPage) * direction * count;
+            break;
+        case XVIM_SCROLL_TYPE_HALF_PAGE:
+            numScrollLines = (NSInteger)(self.linesPerPage * 0.5) * direction * count;
+            break;
+        case XVIM_SCROLL_TYPE_LINE:
+            numScrollLines = direction * count;
+            break;
+    }
 
     NSPoint bottomPoint = NSMakePoint(0.0, self.contentSize.height);
 
@@ -132,22 +142,32 @@
 
 - (void)xvim_pageForward:(NSUInteger)index count:(NSUInteger)count
 { // C-f
-    [self xvim_scroll:1.0 count:count];
+    [self xvim_scroll:XVIM_SCROLL_TYPE_PAGE direction:XVIM_SCROLL_DIRECTION_DOWN count:count];
 }
 
 - (void)xvim_pageBackward:(NSUInteger)index count:(NSUInteger)count
 { // C-b
-    [self xvim_scroll:-1.0 count:count];
+    [self xvim_scroll:XVIM_SCROLL_TYPE_PAGE direction:XVIM_SCROLL_DIRECTION_UP count:count];
 }
 
 - (void)xvim_halfPageForward:(NSUInteger)index count:(NSUInteger)count
 { // C-d
-    [self xvim_scroll:0.5 count:count];
+    [self xvim_scroll:XVIM_SCROLL_TYPE_HALF_PAGE direction:XVIM_SCROLL_DIRECTION_DOWN count:count];
 }
 
 - (void)xvim_halfPageBackward:(NSUInteger)index count:(NSUInteger)count
 { // C-u
-    [self xvim_scroll:-0.5 count:count];
+    [self xvim_scroll:XVIM_SCROLL_TYPE_HALF_PAGE direction:XVIM_SCROLL_DIRECTION_UP count:count];
+}
+
+- (void)xvim_lineDown:(NSUInteger)index count:(NSUInteger)count
+{ // C-e
+    [self xvim_scroll:XVIM_SCROLL_TYPE_LINE direction:XVIM_SCROLL_DIRECTION_DOWN count:count];
+}
+
+- (void)xvim_lineUp:(NSUInteger)index count:(NSUInteger)count
+{ // C-y
+    [self xvim_scroll:XVIM_SCROLL_TYPE_LINE direction:XVIM_SCROLL_DIRECTION_UP count:count];
 }
 
 - (void)xvim_scrollPageForward:(NSUInteger)count { [self xvim_pageForward:self.insertionPoint count:count]; }
@@ -158,17 +178,7 @@
 
 - (void)xvim_scrollHalfPageBackward:(NSUInteger)count { [self xvim_halfPageBackward:self.insertionPoint count:count]; }
 
-- (void)xvim_scrollLineForward:(NSUInteger)count
-{
-#ifdef TODO
-    [self xvim_lineDown:self.insertionPoint count:count];
-#endif
-}
+- (void)xvim_scrollLineForward:(NSUInteger)count { [self xvim_lineDown:self.insertionPoint count:count]; }
 
-- (void)xvim_scrollLineBackward:(NSUInteger)count
-{
-#ifdef TODO
-    [self xvim_lineUp:self.insertionPoint count:count];
-#endif
-}
+- (void)xvim_scrollLineBackward:(NSUInteger)count { [self xvim_lineUp:self.insertionPoint count:count]; }
 @end
