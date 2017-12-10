@@ -87,7 +87,7 @@
 
 - (NSString*)insertedText
 {
-    id<SourceViewProtocol> view = [self sourceView];
+    _auto view = [self sourceView];
     NSUInteger startLoc = self.startRange.location;
     NSUInteger endLoc = [view selectedRange].location;
     NSRange textRange = NSMakeRange(NSNotFound, 0);
@@ -140,6 +140,8 @@
     self.startRange = [[self sourceView] selectedRange];
 }
 
+// Used by visual block mode c, i, a to insert the last typed text in a range of rows,
+// starting at the same column
 - (void)repeatBlockText
 {
     NSString* text = [self insertedText];
@@ -167,35 +169,40 @@
 
     // Store off any needed text
     XVim* xvim = [XVim instance];
+    
     xvim.lastVisualMode = self.sourceView.selectionMode;
     [xvim fixOperationCommands];
+    
+#if 0
     if (!self.movementKeyPressed) {
-        //[self recordTextIntoRegister:xvim.recordingRegister];
-        //[self recordTextIntoRegister:xvim.repeatRegister];
+        [self recordTextIntoRegister:xvim.recordingRegister];
+        [self recordTextIntoRegister:xvim.repeatRegister];
     }
     else if (self.lastInsertedText.length > 0) {
-        //[xvim.repeatRegister appendText:self.lastInsertedText];
+        [xvim.repeatRegister appendText:self.lastInsertedText];
     }
-    _auto sourceView = [self sourceView];
-
+#endif
+    
+    _auto sourceView = self.sourceView;
+    
     [sourceView xvim_hideCompletions];
 
     // Position for "^" is before escaped from insert mode
-    NSUInteger pos = self.sourceView.insertionPoint;
+    NSUInteger pos = sourceView.insertionPoint;
     XVimMark* mark
                 = XVimMakeMark([self.sourceView.textStorage xvim_lineNumberAtIndex:pos],
                                [self.sourceView.textStorage xvim_columnOfIndex:pos], self.sourceView.documentURL.path);
     if (nil != mark.document) {
-        [[XVim instance].marks setMark:mark forName:@"^"];
+        [xvim.marks setMark:mark forName:@"^"];
     }
-    [[self sourceView] xvim_escapeFromInsert];
+    [sourceView xvim_escapeFromInsert];
 
     // Position for "." is after escaped from insert mode
-    pos = self.sourceView.insertionPoint;
-    mark = XVimMakeMark([self.sourceView.textStorage xvim_lineNumberAtIndex:pos],
-                        [self.sourceView.textStorage xvim_columnOfIndex:pos], self.sourceView.documentURL.path);
+    pos = sourceView.insertionPoint;
+    mark = XVimMakeMark([sourceView.textStorage xvim_lineNumberAtIndex:pos],
+                        [sourceView.textStorage xvim_columnOfIndex:pos], sourceView.documentURL.path);
     if (nil != mark.document) {
-        [[XVim instance].marks setMark:mark forName:@"."];
+        [xvim.marks setMark:mark forName:@"."];
     }
 }
 

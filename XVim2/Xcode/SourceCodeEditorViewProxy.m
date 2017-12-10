@@ -23,7 +23,11 @@ static void (*fpGetTextStorage)(void);
 static void (*fpGetSourceEditorDataSource)(void);
 static void (*fpBeginEditingTransaction)(void);
 static void (*fpEndEditingTransaction)(void);
+static void (*fpSetSelectedRangeWithModifiers)(void);
+static void (*fpAddSelectedRangeWithModifiers)(void);
 static void (*fpGetUndoManager)(void);
+static void (*fpPositionFromIndexLineHint)(void);
+static void (*fpIndexFromPosition)(void);
 
 
 @interface SourceCodeEditorViewProxy ()
@@ -32,9 +36,10 @@ static void (*fpGetUndoManager)(void);
 @property (readwrite) NSUInteger insertionPoint;
 @property (readwrite) NSUInteger preservedColumn;
 @property (readwrite) BOOL selectionToEOL;
+@property NSInteger editTransactionDepth;
 @property (strong) NSString* lastYankedText;
+@property (strong) NSLayoutConstraint* cmdLineBottomAnchor;
 @property TEXT_TYPE lastYankedType;
-@property BOOL xvim_lockSyncStateFromView;
 @end
 
 #define LOG_STATE()
@@ -43,6 +48,7 @@ static void (*fpGetUndoManager)(void);
     NSMutableArray<NSValue*>* _foundRanges;
     XVimCommandLine* _commandLine;
 }
+@synthesize enabled = _enabled;
 
 + (void)initialize
 {
@@ -54,10 +60,14 @@ static void (*fpGetUndoManager)(void);
                     "_T022IDEPegasusSourceEditor0B12CodeDocumentC16sdefSupport_textSo13NSTextStorageCyF", NULL);
         fpGetSourceEditorDataSource = function_ptr_from_name("_T012SourceEditor0aB4ViewC04dataA0AA0ab4DataA0Cfg", NULL);
         fpGetUndoManager = function_ptr_from_name("_T012SourceEditor0ab4DataA0C11undoManagerAA0ab4UndoE0Cfg", NULL);
+        fpSetSelectedRangeWithModifiers = function_ptr_from_name("_T012SourceEditor0aB4ViewC16setSelectedRangeyAA0abF0V_AA0aB18SelectionModifiersV9modifierstF", NULL);
+        fpAddSelectedRangeWithModifiers = function_ptr_from_name("_T012SourceEditor0aB4ViewC16addSelectedRangeyAA0abF0V_AA0aB18SelectionModifiersV9modifierstF", NULL);
         // Methdos on data source
         fpBeginEditingTransaction
                     = function_ptr_from_name("_T012SourceEditor0ab4DataA0C20beginEditTransactionyyF", NULL);
         fpEndEditingTransaction = function_ptr_from_name("_T012SourceEditor0ab4DataA0C18endEditTransactionyyF", NULL);
+        fpPositionFromIndexLineHint = function_ptr_from_name("_T012SourceEditor0ab4DataA0C30positionFromInternalCharOffsetAA0aB8PositionVSi_Si8lineHinttF", NULL);
+        fpIndexFromPosition = function_ptr_from_name("_T012SourceEditor0ab4DataA0C30internalCharOffsetFromPositionSiAA0abH0VF", NULL);
     }
 }
 
@@ -66,13 +76,29 @@ static void (*fpGetUndoManager)(void);
     self = [super init];
     if (self) {
         self.sourceCodeEditorView = sourceCodeEditorView;
-        self.cursorMode = CURSOR_MODE_COMMAND;
-        [NSNotificationCenter.defaultCenter addObserver:self
-                                               selector:@selector(selectionChanged:)
-                                                   name:@"SourceEditorSelectedSourceRangeChangedNotification"
-                                                 object:sourceCodeEditorView];
     }
     return self;
+}
+
+-(void)setEnabled:(BOOL)enable {
+    if (enable != _enabled) {
+        _enabled = enable;
+        if (enable) {[self _enable];} else {[self _disable];}
+    }
+}
+
+-(void)_enable {
+    self.originalCursorStyle = self.cursorStyle;
+    self.selectionMode = XVIM_MODE_NONE;
+    self.cursorMode = CURSOR_MODE_COMMAND;
+    [self showCommandLine];
+    [self xvim_syncStateFromView];
+}
+
+-(void)_disable {
+    [self xvim_changeSelectionMode:XVIM_VISUAL_NONE];
+    self.cursorStyle = self.originalCursorStyle;
+    [self hideCommandLine];
 }
 
 
@@ -115,6 +141,60 @@ static void (*fpGetUndoManager)(void);
     return cstyle;
 }
 
+-(BOOL)normalizeRange:(XVimSourceEditorRange*)rng
+{
+    if ((rng->pos1).row > (rng->pos2).row) xvim_swap((rng->pos1).row, (rng->pos2).row);
+    if ((rng->pos1).col > (rng->pos2).col) xvim_swap((rng->pos1).col, (rng->pos2).col);
+    clamp((rng->pos1).row, 0, self.lineCount-1);
+    clamp((rng->pos2).row, 0, self.lineCount-1);
+    
+    // Special handling for cursor on first col of last row
+    if ((rng->pos1).row == self.lineCount-1 && (rng->pos2).row == self.lineCount-1 && (rng->pos1).col == 0 && (rng->pos2).col == 0) return YES;
+    
+    _auto rr = [self characterRangeForLineRange:NSMakeRange((rng->pos1).row, 1)];
+    if (rr.location == NSNotFound) return NO;
+    clamp((rng->pos1).col, 0, rr.length);
+    if ((rng->pos2).row != (rng->pos1).row) {
+        rr = [self characterRangeForLineRange:NSMakeRange((rng->pos2).row, 1)];
+        if (rr.location == NSNotFound) return NO;
+    }
+    clamp((rng->pos2).col, 0, rr.length);
+    return YES;
+}
+
+- (void)addSelectedRange:(XVimSourceEditorRange)rng modifiers:(XVimSelectionModifiers)modifiers reset:(BOOL)reset
+{
+    if (![self normalizeRange:&rng]) return;
+    void* sev = (__bridge_retained void*)self.sourceCodeEditorView;
+    void *fpAddOrSet = reset ? fpSetSelectedRangeWithModifiers : fpAddSelectedRangeWithModifiers;
+    XVimSourceEditorRange *rngPtr = (void*)&rng;
+    uint64_t mods = modifiers;
+    uint64_t *modsPtr = &mods;
+    
+    __asm__("movq %[SourceEditorView], %%r13\n\t"
+            "movq (%[RangePtr])  , %%rdi\n\t"
+            "movq 8(%[RangePtr]) , %%rsi\n\t"
+            "movq 16(%[RangePtr]), %%rdx\n\t"
+            "movq 24(%[RangePtr]), %%rcx\n\t"
+            "movq %[Modifiers]   , %%r8\n\t"
+            "call *%[AddSelectedRangeWithModifiers]\n\t"
+            :
+            : [SourceEditorView] "m" (sev)
+            , [AddSelectedRangeWithModifiers] "m"(fpAddOrSet)
+            , [Modifiers] "r" (mods)
+            , [RangePtr] "r" (rngPtr)
+            , "m" (*rngPtr)
+            , "m" (*modsPtr)
+            : "memory", "%rax", "%r13", "%rdi", "%rsi", "%rdx", "%rcx", "%r8");
+}
+- (void)addSelectedRange:(XVimSourceEditorRange)rng modifiers:(XVimSelectionModifiers)modifiers
+{
+    [self addSelectedRange:rng modifiers:modifiers reset:NO];
+}
+- (void)setSelectedRange:(XVimSourceEditorRange)rng modifiers:(XVimSelectionModifiers)modifiers
+{
+    [self addSelectedRange:rng modifiers:modifiers reset:YES];
+}
 
 - (id)dataSource
 {
@@ -131,6 +211,67 @@ static void (*fpGetUndoManager)(void);
     return dataSource;
 }
 
+- (XVimSourceEditorPosition)positionFromIndex:(NSUInteger)idx lineHint:(NSUInteger)line
+{
+    void* sev = (__bridge_retained void*)self.sourceCodeEditorView;
+    uint64_t row = 0; uint64_t *rowPtr = &row;
+    uint64_t col = 0; uint64_t *colPtr = &col;
+    int64_t index = idx; int64_t *indexPtr = (void*)&idx;
+    
+    __asm__("movq %[SourceEditorView], %%r13\n\t"
+            "call *%[DataSourceGetter]\n\t"
+            "movq %%rax, %%r13\n\t"
+            "movq %[Index], %%rdi\n\t"
+            "movq %[LineHint], %%rsi\n\t"
+            "call *%[GetPosition]\n\t"
+            "movq %%rax, %[Row]\n\t"
+            "movq %%rdx, %[Col]\n\t"
+            
+            : [Row] "=r"(row)
+            , [Col] "=r"(col)
+            
+            : [SourceEditorView] "r"(sev)
+            , [Index] "m" (index)
+            , [LineHint] "m" (line)
+            , [DataSourceGetter] "m"(fpGetSourceEditorDataSource)
+            , [GetPosition] "m"(fpPositionFromIndexLineHint)
+            , "m"(rowPtr)
+            , "m"(colPtr)
+            , "m"(indexPtr)
+
+            : "memory", "%rax", "%rbx", "%rdx", "%r13", "%rdi", "%rsi");
+    
+    XVimSourceEditorPosition pos = { .row = row, .col = col };
+    return pos;
+}
+
+- (NSUInteger)indexFromPosition:(XVimSourceEditorPosition)pos
+{
+    void* sev = (__bridge_retained void*)self.sourceCodeEditorView;
+    uint64_t row = pos.row;
+    uint64_t col = pos.col;
+    int64_t index = 0;
+    
+    __asm__("movq %[SourceEditorView], %%r13\n\t"
+            "call *%[DataSourceGetter]\n\t"
+            "movq %%rax, %%r13\n\t"
+            "movq %[Row], %%rdi\n\t"
+            "movq %[Col], %%rsi\n\t"
+            "call *%[GetIndex]\n\t"
+            "movq %%rax, %[Index]\n\t"
+
+            : [Index] "=r"(index)
+
+            : [SourceEditorView] "r"(sev)
+            , [Row] "m" (row)
+            , [Col] "m" (col)
+            , [DataSourceGetter] "m"(fpGetSourceEditorDataSource)
+            , [GetIndex] "m"(fpIndexFromPosition)
+
+            : "memory", "%rax", "%rbx", "%rdx", "%r13", "%rdi", "%rsi");
+    
+    return index;
+}
 
 - (SourceEditorUndoManager*)undoManager
 {
@@ -180,6 +321,30 @@ static void (*fpGetUndoManager)(void);
 - (void)keyDown:(NSEvent*)event { [self.sourceCodeEditorView xvim_keyDown:event]; }
 
 - (NSString*)string { return self.sourceCodeEditorView.string; }
+
+- (void)setString:(NSString *)string {
+    _auto scanner = [NSScanner scannerWithString:string];
+    scanner.charactersToBeSkipped = [NSCharacterSet new];
+    
+    NSString * nextLine = nil;
+    
+    NSRange nextRng = NSMakeRange(0, self.string.length);
+    
+    IGNORE_SELECTION_UPDATES_SCOPE
+    
+    while ([scanner scanUpToCharactersFromSet:NSCharacterSet.newlineCharacterSet
+                                   intoString:&nextLine]) {
+        [scanner scanCharactersFromSet:NSCharacterSet.newlineCharacterSet
+                            intoString:NULL];
+        [self insertText:nextLine replacementRange:nextRng];
+        
+        nextRng.location = self.string.length;
+        nextRng.length = 0;
+    }
+    if (!scanner.atEnd) {
+        [self insertText:[string substringFromIndex:scanner.scanLocation] replacementRange:nextRng];
+    }
+}
 
 
 - (void)insertText:(id)string replacementRange:(NSRange)replacementRange
@@ -267,15 +432,44 @@ static void (*fpGetUndoManager)(void);
 #pragma mark-- selection
 
 - (void)setSelectedRanges:(NSArray<NSValue*>*)ranges
-                     affinity:(NSSelectionAffinity)affinity
-               stillSelecting:(BOOL)stillSelectingFlag
+                 affinity:(NSSelectionAffinity)affinity
+           stillSelecting:(BOOL)stillSelectingFlag
 {
-    // TODO
-    if (ranges.count == 0)
-        return;
-    [self.sourceCodeEditorView setSelectedTextRange:ranges[0].rangeValue];
-    for (NSValue* val in ranges)
-        DEBUG_LOG("Range: %@", NSStringFromRange(val.rangeValue));
+    if (ranges.count == 0) return;
+    
+    if (ranges.count == 1) {
+        _auto rng = ranges.firstObject.rangeValue;
+        _auto insertionPos = [self positionFromIndex:self.insertionPoint lineHint:0];
+        XVimSourceEditorRange insertionRange = { .pos1 = insertionPos, .pos2 = insertionPos };
+        [self setSelectedRange:insertionRange modifiers:0];
+        _auto pos1 = [self positionFromIndex:rng.location lineHint:insertionPos.row];
+        _auto pos2 = [self positionFromIndex:rng.location + rng.length lineHint:pos1.row];
+        XVimSourceEditorRange selectionRange = { .pos1 = pos1, .pos2 = pos2 };
+        [self addSelectedRange:selectionRange modifiers:SelectionModifierExtension];
+    }
+    else {
+        _auto rangeItr = (affinity == NSSelectionAffinityUpstream) ? [ranges reverseObjectEnumerator] : ranges;
+        _auto insertionPos = [self positionFromIndex:self.insertionPoint lineHint:0];
+        _auto insertionLine = insertionPos.row;
+        _auto lastLine = insertionLine;
+        BOOL isFirst = YES;
+
+        for (NSValue* val in rangeItr) {
+            _auto rng = val.rangeValue;
+            _auto pos1 = [self positionFromIndex:rng.location lineHint:lastLine];
+            _auto pos2 = [self positionFromIndex:rng.location + rng.length lineHint:pos1.row];
+            lastLine = pos2.row;
+            
+            XVimSourceEditorRange ser = { .pos1 = pos1, .pos2 = pos2 };
+            BOOL isInsertionLine = (pos1.row == insertionLine);
+            
+            _auto selectionModifiers = isInsertionLine
+                ? SelectionModifierDiscontiguous
+                : SelectionModifierDiscontiguous | SelectionModifierExtension ;
+            [self addSelectedRange:ser modifiers:selectionModifiers reset:isFirst];
+            isFirst = NO;
+        }
+    }
 }
 
 - (NSArray<NSValue*>*)selectedRanges
@@ -573,29 +767,66 @@ static void (*fpGetUndoManager)(void);
     }
     return _commandLine;
 }
+static CGFloat XvimCommandLineHeight = 20;
+static CGFloat XvimCommandLineAnimationDuration = 0.1;
+
+-(BOOL)isShowingCommandLine
+{
+    return self.commandLine.superview != nil;
+}
 
 -(void)showCommandLine
 {
+    if (self.isShowingCommandLine) return;
+    
     _auto scrollView = [self.sourceCodeEditorView scrollView];
     if ([scrollView isKindOfClass:NSClassFromString(@"SourceEditorScrollView")]) {
-        // TODO: Don't hardwire insets
-        NSEdgeInsets insets = scrollView.additionalContentInsets;
-        insets.bottom += 20;
-        scrollView.additionalContentInsets = insets;
-        [scrollView updateAutomaticContentInsets];
         NSView* layoutView = [scrollView superview];
         [layoutView addSubview:self.commandLine];
-        
-        [layoutView.bottomAnchor constraintEqualToAnchor:self.commandLine.bottomAnchor].active = YES;
+        _cmdLineBottomAnchor = [layoutView.bottomAnchor constraintEqualToAnchor:self.commandLine.bottomAnchor constant:-XvimCommandLineHeight];
+        _cmdLineBottomAnchor.active = YES;
         [layoutView.widthAnchor constraintEqualToAnchor:self.commandLine.widthAnchor multiplier:1.0].active = YES;
         [layoutView.leftAnchor constraintEqualToAnchor:self.commandLine.leftAnchor].active = YES;
         [layoutView.rightAnchor constraintEqualToAnchor:self.commandLine.rightAnchor].active = YES;
         _auto height = [self.commandLine.heightAnchor constraintEqualToConstant:0];
         height.priority = 250;
         height.active = YES;
-        self.commandLine.needsDisplay = YES;
+        
+        [NSAnimationContext runAnimationGroup:^(NSAnimationContext * _Nonnull context) {
+            context.duration = XvimCommandLineAnimationDuration;
+            NSEdgeInsets insets = scrollView.additionalContentInsets;
+            _cmdLineBottomAnchor.animator.constant = 0;
+            insets.bottom += XvimCommandLineHeight;
+            scrollView.animator.additionalContentInsets = insets;
+            [scrollView updateAutomaticContentInsets];
+        } completionHandler:^{
+            self.commandLine.needsDisplay = YES;
+        }];
     }
 }
+
+-(void)hideCommandLine
+{
+    if (!self.isShowingCommandLine) return;
+    
+    _auto scrollView = [self.sourceCodeEditorView scrollView];
+    if ([scrollView isKindOfClass:NSClassFromString(@"SourceEditorScrollView")]) {
+        NSEdgeInsets insets = scrollView.additionalContentInsets;
+        insets.bottom = 0;
+        
+        [NSAnimationContext runAnimationGroup:^(NSAnimationContext * _Nonnull context) {
+            context.duration = XvimCommandLineAnimationDuration;
+            _cmdLineBottomAnchor.animator.constant = -XvimCommandLineHeight;
+            scrollView.animator.additionalContentInsets = insets;
+            [scrollView updateAutomaticContentInsets];
+        } completionHandler:^{
+            [self.commandLine removeFromSuperview];
+            self->_cmdLineBottomAnchor = nil;
+        }];
+    }
+}
+
+
 
 - (NSMutableArray*)foundRanges
 {
@@ -608,5 +839,8 @@ static void (*fpGetUndoManager)(void);
 - (NSWindow*)window { return self.sourceCodeEditorView.window; }
 
 - (NSView*)view { return self.sourceCodeEditorView; }
+
+
+@synthesize originalCursorStyle;
 
 @end

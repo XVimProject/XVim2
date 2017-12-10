@@ -33,7 +33,7 @@
 @property (weak, readonly) XVimEvaluator* currentEvaluator;
 @property (weak, readonly) CommandResponder* commandResponder;
 @property (readonly) XVimCommandLine* commandLine;
-
+@property (nonatomic, getter=isEnabled) BOOL enabled;
 @property (strong, nonatomic) XVimMark* currentPositionMark;
 
 - (instancetype)initWithEditorView:(id<SourceViewProtocol>)responder;

@@ -26,14 +26,45 @@
 @property (readwrite) NSUInteger preservedColumn;
 @property (readwrite) BOOL selectionToEOL;
 @property (strong) NSString* lastYankedText;
+@property (readwrite) NSInteger editTransactionDepth;
 @property TEXT_TYPE lastYankedType;
-@property BOOL xvim_lockSyncStateFromView;
 - (void)_xvim_yankSelection:(XVimSelection)sel;
 - (void)_xvim_killSelection:(XVimSelection)sel;
 @end
 
 
 @implementation SourceCodeEditorViewProxy (XVim)
+
+-(NSUInteger)xvim_indexOfLineNumber:(NSUInteger)line column:(NSUInteger)col {
+    if (line > self.lineCount) return NSNotFound;
+    _auto cols = [self characterRangeForLineRange:NSMakeRange(line-1, 1)];
+    if (col >= cols.length) return NSNotFound;
+    return [self indexFromPosition:XvimMakeSourceEditorPosition(line-1, col)];
+}
+
+- (void)xvim_beginEditTransaction
+{
+    if (self.editTransactionDepth == 0) {
+        [self beginEditTransaction];
+        [self.undoManager beginUndoGrouping];
+        [self xvim_registerInsertionPointForUndo];
+    }
+    self.editTransactionDepth++;
+}
+
+- (void)xvim_endEditTransaction
+{
+    if (self.editTransactionDepth == 0) {
+        ERROR_LOG(@"Attempt to end a non-existent edit transaction");
+        return;
+    }
+    
+    --self.editTransactionDepth;
+    if (self.editTransactionDepth == 0) {
+        [self.undoManager endUndoGrouping];
+        [self endEditTransaction];
+    }
+}
 
 - (void)xvim_move:(XVimMotion*)motion
 {
@@ -65,7 +96,7 @@
             [self xvim_moveCursor:r.end preserveColumn:NO];
         }
     }
-    else {
+    else { // VISUAL MODE
         switch (motion.motion) {
         case MOTION_LINE_BACKWARD:
         case MOTION_LINE_FORWARD:
@@ -84,7 +115,7 @@
             [self xvim_moveCursor:r.end preserveColumn:YES];
             break;
         case MOTION_END_OF_LINE:
-            self.selectionToEOL = YES;
+            self.selectionToEOL = NO;
             [self xvim_moveCursor:r.end preserveColumn:NO];
             break;
         case MOTION_END_OF_WORD_BACKWARD:
@@ -136,6 +167,35 @@
 
     DEBUG_LOG(@"[%p]New Insertion Point:%d   Preserved Column:%d", self, self.insertionPoint, self.preservedColumn);
 }
+
+/**
+ * Adjust cursor position if the position is not valid as normal mode cursor position
+ * This method may changes selected range of the view.
+ **/
+- (void)xvim_adjustCursorPosition
+{
+    // If the current cursor position is not valid for normal mode move it.
+    if (nil == self.textStorage){
+        return;
+    }
+    if (![self.textStorage isValidCursorPosition:[self selectedRange].location]) {
+        NSRange currentRange = [self selectedRange];
+        // TODO: [self selectPreviousPlaceholder];
+        NSRange prevPlaceHolder = [self selectedRange];
+        if (currentRange.location != prevPlaceHolder.location
+            && currentRange.location == (prevPlaceHolder.location + prevPlaceHolder.length) ) {
+            //The condition here means that just before current insertion point is a placeholder.
+            //So we select the the place holder and its already selected by "selectedPreviousPlaceholder" above
+        }
+        else {
+            if ([[self string] length] > currentRange.location) {
+                [self setSelectedRange:NSMakeRange(UNSIGNED_DECREMENT(currentRange.location,1), 0)];
+            }
+        }
+    }
+    return;
+}
+
 
 - (void)_adjustCursorPosition
 {
@@ -630,9 +690,10 @@
     return r;
 }
 
+// Perform actions before entering insertion mode. For example, for visual block mode:
+// kill the current selection, and yank it.
 - (void)xvim_insert:(XVimInsertionPoint)mode blockColumn:(NSUInteger*)column blockLines:(XVimRange*)lines
 {
-    NSTextStorage* ts = self.textStorage;
 
     if (column)
         *column = NSNotFound;
@@ -650,7 +711,7 @@
             [self _xvim_killSelection:sel];
         /* falltrhough */
         case XVIM_INSERT_DEFAULT:
-            self.insertionPoint = [ts xvim_indexOfLineNumber:sel.top column:sel.left];
+            self.insertionPoint = [self xvim_indexOfLineNumber:sel.top column:sel.left];
             if (column)
                 *column = sel.left;
             break;
@@ -658,7 +719,7 @@
             if (sel.right != XVimSelectionEOL) {
                 sel.right++;
             }
-            self.insertionPoint = [ts xvim_indexOfLineNumber:sel.top column:sel.right];
+            self.insertionPoint = [self xvim_indexOfLineNumber:sel.top column:sel.right];
             if (column)
                 *column = sel.right;
             break;
@@ -668,6 +729,7 @@
         }
     }
     else if (mode != XVIM_INSERT_DEFAULT) {
+        NSTextStorage* ts = self.textStorage;
         NSUInteger pos = self.insertionPoint;
         switch (mode) {
         case XVIM_INSERT_APPEND_EOL:
@@ -688,7 +750,6 @@
     }
     self.cursorMode = CURSOR_MODE_INSERT;
     [self xvim_changeSelectionMode:XVIM_VISUAL_NONE];
-    [self xvim_syncState];
 }
 
 - (NSRange)xvim_currentWord:(MOTION_OPTION)opt
@@ -751,6 +812,8 @@
     return topLine + 1;
 }
 
+// Insert some text at the same column position, for a range of lines
+// Used by the XVim visual block mode, and shift functions
 - (void)xvim_blockInsertFixupWithText:(NSString*)text
                                      mode:(XVimInsertionPoint)mode
                                     count:(NSUInteger)count
@@ -761,6 +824,8 @@
     NSTextStorage* ts;
     NSUInteger tabWidth;
 
+    IGNORE_SELECTION_UPDATES_SCOPE
+    
     if (count == 0 || lines.begin > lines.end || text.length == 0) {
         return;
     }
@@ -775,11 +840,14 @@
         text = buf;
     }
 
-    ts = self.textStorage;
-    tabWidth = ts.xvim_tabWidth;
+    tabWidth = self.textStorage.xvim_tabWidth;
 
     for (NSUInteger line = lines.begin; line <= lines.end; line++) {
-        NSUInteger pos = [ts xvim_indexOfLineNumber:line column:column];
+        ts = self.textStorage;
+        _auto pos = [self xvim_indexOfLineNumber:line column:column];
+        if (pos == NSNotFound) {
+            continue;
+        }
 
         if (column != XVimSelectionEOL && [ts isEOL:pos]) {
             if (mode == XVIM_INSERT_SPACES && column == 0) {
@@ -948,7 +1016,6 @@
 
     // Find all the maches
     NSString* string = self.string;
-    // NSTextStorage* storage = self.textStorage;
     if (string == nil) {
         return;
     }
@@ -983,6 +1050,75 @@
                                forCharacterRange:NSMakeRange(0, string.length)];
 #endif
     [self setNeedsUpdateFoundRanges:NO];
+}
+    
+- (NSRange)xvim_currentNumber
+{
+    NSUInteger insertPoint = self.insertionPoint;
+    NSUInteger n_start, n_end;
+    NSUInteger x_start, x_end;
+    NSString *s = self.string;
+    unichar c;
+    BOOL isOctal = YES;
+    
+    n_start = insertPoint;
+    while (n_start > 0 && [s isDigit:n_start - 1]) {
+        if (![s isOctDigit:n_start]) {
+            isOctal = NO;
+        }
+        n_start--;
+    }
+    n_end = insertPoint;
+    while (n_end < s.length && [s isDigit:n_end]) {
+        if (![s isOctDigit:n_end]) {
+            isOctal = NO;
+        }
+        n_end++;
+    }
+    
+    x_start = n_start;
+    while (x_start > 0 && [s isHexDigit:x_start - 1]) {
+        x_start--;
+    }
+    x_end = n_end;
+    while (x_end < s.length && [s isHexDigit:x_end]) {
+        x_end++;
+    }
+    
+    // first deal with Hex: 0xNNNNN
+    // case 1: check for insertion point on the '0' or 'x'
+    if (x_end - x_start == 1) {
+        NSUInteger end = x_end;
+        if (end < s.length && [s characterAtIndex:end] == 'x') {
+            do {
+                end++;
+            } while (end < s.length && [s isHexDigit:end]);
+            if (insertPoint < end && end - x_start > 2) {
+                // YAY it's hex for real!!!
+                return NSMakeRange(x_start, end - x_start);
+            }
+        }
+    }
+    
+    // case 2: check whether we're after 0x
+    if (insertPoint < x_end && x_end - x_start >= 1) {
+        if (x_start >= 2 && [s characterAtIndex:x_start - 1] == 'x' && [s characterAtIndex:x_start - 2] == '0') {
+            return NSMakeRange(x_start - 2, x_end - x_start + 2);
+        }
+    }
+    
+    if (insertPoint == n_end || n_start - n_end == 0) {
+        return NSMakeRange(NSNotFound, 0);
+    }
+    
+    // okay it's not hex, if it's not octal, check for leading +/-
+    if (n_start > 0 && !(isOctal && [s characterAtIndex:n_start] == '0')) {
+        c = [s characterAtIndex:n_start - 1];
+        if (c == '+' || c == '-') {
+            n_start--;
+        }
+    }
+    return NSMakeRange(n_start, n_end - n_start);
 }
 
 -(void)xvim_hideCompletions {

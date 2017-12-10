@@ -10,14 +10,34 @@
 #import "SourceViewProtocol.h"
 #import <Foundation/Foundation.h>
 
-typedef NS_ENUM(NSInteger, CursorStyle) { CursorStyleVerticalBar, CursorStyleBlock, CursorStyleUnderline };
 
 // Raw values for SourceEditor.SourceEditorSelectionModifiers
-typedef NS_OPTIONS(unsigned, SelectionModifiers) {
+typedef NS_OPTIONS(unsigned, XVimSelectionModifiers) {
     SelectionModifierExtension = 1,
     SelectionModifierColumnar = 1 << 1,
     SelectionModifierDiscontiguous = 1 << 2
 };
+
+typedef struct {
+    NSUInteger row;
+    NSUInteger col;
+} XVimSourceEditorPosition ;
+
+static inline
+XVimSourceEditorPosition XvimMakeSourceEditorPosition(NSUInteger row, NSUInteger col) {
+    XVimSourceEditorPosition pos = { .row=row, .col=col };
+    return pos;
+}
+typedef struct {
+    XVimSourceEditorPosition pos1;
+    XVimSourceEditorPosition pos2;
+} XVimSourceEditorRange ;
+
+static inline
+XVimSourceEditorRange XvimMakeSourceEditorRange(XVimSourceEditorPosition pos1, XVimSourceEditorPosition pos2) {
+    XVimSourceEditorRange rng = { .pos1=pos1, .pos2=pos2 };
+    return rng;
+}
 
 @class XVimCommandLine;
 
@@ -27,7 +47,6 @@ typedef NS_OPTIONS(unsigned, SelectionModifiers) {
 @protocol XVimTextViewDelegateProtocol;
 
 @interface SourceCodeEditorViewProxy : NSObject <SourceViewProtocol>
-@property CursorStyle cursorStyle;
 @property (readonly) XVIM_VISUAL_MODE selectionMode;
 @property (readonly) NSUInteger insertionPoint;
 @property (readonly) XVimPosition insertionPosition;
@@ -45,7 +64,13 @@ typedef NS_OPTIONS(unsigned, SelectionModifiers) {
 @property (strong) id<XVimTextViewDelegateProtocol> xvimDelegate;
 @property (readonly) XVimCommandLine* commandLine;
 @property (readonly) NSWindow* window;
+@property (strong) NSString * string;
+@property BOOL xvim_lockSyncStateFromView;
 - (instancetype)initWithSourceCodeEditorView:(SourceCodeEditorView*)sourceEditorView;
+
+// Data source
+- (NSUInteger)indexFromPosition:(XVimSourceEditorPosition)pos;
+- (XVimSourceEditorPosition)positionFromIndex:(NSUInteger)idx lineHint:(NSUInteger)line;
 
 // Proxy methods
 - (NSRange)lineRangeForCharacterRange:(NSRange)arg1;
@@ -213,11 +238,12 @@ typedef NS_OPTIONS(unsigned, SelectionModifiers) {
 
 
 #define EDIT_TRANSACTION_SCOPE                                                                                         \
-    [self beginEditTransaction];                                                                                       \
-    [self.undoManager beginUndoGrouping];                                                                              \
-    [self xvim_registerInsertionPointForUndo];                                                                         \
+    [self xvim_beginEditTransaction];                                                                                  \
     xvim_on_exit                                                                                                       \
     {                                                                                                                  \
-        [self.undoManager endUndoGrouping];                                                                            \
-        [self endEditTransaction];                                                                                     \
+        [self xvim_endEditTransaction];                                                                                \
     };
+
+#define IGNORE_SELECTION_UPDATES_SCOPE                                                                                         \
+    self.xvim_lockSyncStateFromView = YES; \
+    xvim_on_exit { self.xvim_lockSyncStateFromView = NO; };

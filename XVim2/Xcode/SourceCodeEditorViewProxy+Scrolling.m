@@ -14,7 +14,6 @@
 @property (readwrite) NSUInteger insertionPoint;
 @property (readwrite) NSUInteger preservedColumn;
 @property (readwrite) BOOL selectionToEOL;
-@property BOOL xvim_lockSyncStateFromView;
 - (void)xvim_moveCursor:(NSUInteger)pos preserveColumn:(BOOL)preserve;
 - (void)xvim_syncState;
 - (void)xvim_syncStateWithScroll:(BOOL)scroll;
@@ -43,7 +42,7 @@
 
 - (void)xvim_scroll:(CGFloat)ratio count:(NSUInteger)count
 {
-    NSInteger cursorLine = self.currentLineNumber - 1;
+    NSInteger cursorLine = self.insertionLine - 1;
 
     // Scroll to the new location
     NSInteger numScrollLines = (NSInteger)(self.linesPerPage * ratio);
@@ -77,7 +76,7 @@
                 [self.textStorage xvim_firstNonblankInLineAtIndex:newCharRange.location allowEOL:YES];
 
     [self xvim_moveCursor:cursorIndexAfterScroll preserveColumn:NO];
-    [self xvim_syncStateWithScroll:NO];
+    [self xvim_syncState];
 }
 
 - (void)xvim_scrollBottom:(NSUInteger)lineNumber firstNonblank:(BOOL)fnb
