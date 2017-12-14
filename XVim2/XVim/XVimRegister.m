@@ -31,7 +31,7 @@
 
 - (void)appendXVimString:(XVimString*)string { [self.string appendString:string]; }
 
-- (void)setXVimString:(XVimString*)string { [self.string setString:string]; }
+- (void)setXVimString:(XVimString*)string { [self.string setString:string ?: @""]; }
 
 - (void)clear
 {
