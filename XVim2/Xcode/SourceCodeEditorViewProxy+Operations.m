@@ -560,7 +560,6 @@
     }
 
     if (right) {
-        [self shiftRight:self];
         NSString* s;
         if (XVIM.options.expandtab) {
             s = [NSString stringMadeOfSpaces:shiftWidth];
@@ -574,7 +573,6 @@
         [self xvim_blockInsertFixupWithText:s mode:XVIM_INSERT_SPACES count:1 column:column lines:lines];
     }
     else {
-        [self shiftLeft:self];
         for (NSUInteger line = lines.begin; line <= lines.end; line++) {
             [self _xvim_removeSpacesAtLine:line column:column count:shiftWidth];
         }
