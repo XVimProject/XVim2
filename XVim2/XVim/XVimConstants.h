@@ -7,6 +7,7 @@
 //
 
 #import <Foundation/Foundation.h>
+#import "XVimMacros.h"
 
 xvim_const_decl(NotificationEnabled);
 xvim_const_decl(NotificationEnabledFlag);

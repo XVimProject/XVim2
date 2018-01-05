@@ -356,7 +356,10 @@
 
 
 // This method correnspons parsing part of get_address in ex_cmds.c
-- (NSUInteger)getAddress:(unichar*)parsing cmdLeft:(unichar**)cmdLeft allowZero:(BOOL)allowZero inWindow:(XVimWindow*)window
+- (NSUInteger)getAddress:(unichar*)parsing
+                 cmdLeft:(unichar**)cmdLeft
+               allowZero:(BOOL)allowZero
+                inWindow:(XVimWindow*)window
 {
     _auto view = [window sourceView];
     // DVTFoldingTextStorage* storage = [view textStorage];
@@ -630,12 +633,11 @@
     XVimExArg* exarg = [self parseCommand:cmd inWindow:window];
     if (exarg.cmd == nil) {
         _auto srcView = [window sourceView];
-        NSTextStorage* storage = srcView.textStorage;
 
         // Jump to location
-        NSUInteger pos = [storage xvim_indexOfLineNumber:exarg.lineBegin column:0];
+        NSUInteger pos = [srcView xvim_indexOfLineNumber:exarg.lineBegin column:0];
         if (NSNotFound == pos) {
-            pos = [srcView.textStorage xvim_indexOfLineNumber:[srcView.textStorage xvim_numberOfLines] column:0];
+            pos = [srcView xvim_indexOfLineNumber:[srcView.textStorage xvim_numberOfLines] column:0];
         }
         NSUInteger pos_wo_space = [srcView.textStorage xvim_nextNonblankInLineAtIndex:pos allowEOL:NO];
         if (NSNotFound == pos_wo_space) {
@@ -673,7 +675,7 @@
 // TODO: Instead of ignoring 'undeclared-selector', we should import the relevant IDEKit headers
 xvim_ignore_warning_undeclared_selector_push
 
-- (void)commit:(XVimExArg*)args inWindow:(XVimWindow*)window
+            - (void)commit : (XVimExArg*)args inWindow : (XVimWindow*)window
 {
     [NSApp sendAction:@selector(commitCommand:) to:nil from:self];
 }
@@ -947,7 +949,7 @@ xvim_ignore_warning_undeclared_selector_push
     _auto view = [window sourceView];
     [view xvim_yank:XVIM_MAKE_MOTION(MOTION_LINE_FORWARD, LINEWISE, MOTION_OPTION_NONE,
                                      args.lineEnd != NSNotFound ? args.lineEnd - args.lineBegin : 1)
-                withMotionPoint:[view.textStorage xvim_indexOfLineNumber:args.lineBegin]];
+                withMotionPoint:[view xvim_indexOfLineNumber:args.lineBegin]];
 #endif
 }
 
@@ -958,7 +960,7 @@ xvim_ignore_warning_undeclared_selector_push
     _auto view = [window sourceView];
     [view xvim_delete:XVIM_MAKE_MOTION(MOTION_LINE_FORWARD, LINEWISE, MOTION_OPTION_NONE,
                                        args.lineEnd != NSNotFound ? args.lineEnd - args.lineBegin : 1)
-                withMotionPoint:[view.textStorage xvim_indexOfLineNumber:args.lineBegin]
+                withMotionPoint:[view xvim_indexOfLineNumber:args.lineBegin]
                         andYank:YES];
 }
 
@@ -968,13 +970,12 @@ xvim_ignore_warning_undeclared_selector_push
 
 - (void)copymove:(XVimExArg*)args onlyCopy:(bool)onlyCopy inWindow:(XVimWindow*)window
 {
-#ifdef TODO
     // If we don't have a valid copy area, or a valid paste address, return
     if ((args.lineBegin == NSNotFound && args.lineEnd == NSNotFound) || args.arg == nil) {
         return;
     }
     unichar* parsing = [self _getUnicharArray:args.arg];
-    NSUInteger addr = [self getAddress:parsing:&parsing allowZero:YES inWindow:window];
+    NSUInteger addr = [self getAddress:parsing cmdLeft:&parsing allowZero:YES inWindow:window];
     // If there are trailing characters in the address, or the address is NotFound, return
     if (*parsing != 0 || addr == NSNotFound) {
         return;
@@ -988,11 +989,10 @@ xvim_ignore_warning_undeclared_selector_push
     // An address of 0 means paste BEFORE the first line
     [view xvim_copymove:XVIM_MAKE_MOTION(MOTION_LINE_FORWARD, LINEWISE, MOTION_OPTION_NONE,
                                          args.lineEnd != NSNotFound ? args.lineEnd - args.lineBegin : 1)
-                   withMotionPoint:[view.textStorage xvim_indexOfLineNumber:args.lineBegin]
-                withInsertionPoint:[view.textStorage xvim_indexOfLineNumber:addr == 0 ? 1 : addr]
+                   withMotionPoint:[view xvim_indexOfLineNumber:args.lineBegin]
+                withInsertionPoint:[view xvim_indexOfLineNumber:addr == 0 ? 1 : addr]
                              after:addr != 0
                           onlyCopy:onlyCopy];
-#endif
 }
 
 - (void)shift:(XVimExArg*)args inWindow:(XVimWindow*)window
@@ -1010,7 +1010,7 @@ xvim_ignore_warning_undeclared_selector_push
     _auto view = [window sourceView];
     XVimMotion* motion = XVIM_MAKE_MOTION(MOTION_LINE_FORWARD, LINEWISE, MOTION_OPTION_NONE,
                                           args.lineEnd != NSNotFound ? args.lineEnd - args.lineBegin : 1);
-    NSUInteger motionPoint = [view.textStorage xvim_indexOfLineNumber:args.lineBegin];
+    NSUInteger motionPoint = [view xvim_indexOfLineNumber:args.lineBegin];
     NSUInteger count = 1 + (args.arg != nil ? args.arg.length : 0);
     if ([args.cmd characterAtIndex:0] == '>') {
         [view xvim_shiftRight:motion withMotionPoint:motionPoint count:count];
@@ -1170,7 +1170,6 @@ xvim_ignore_warning_undeclared_selector_push
 
 - (void)sort:(XVimExArg*)args inWindow:(XVimWindow*)window
 {
-#ifdef TODO
     _auto view = [window sourceView];
 
     NSString* cmdString = [[args cmd] stringByTrimmingCharactersInSet:[NSCharacterSet whitespaceCharacterSet]];
@@ -1196,7 +1195,6 @@ xvim_ignore_warning_undeclared_selector_push
     }
 
     [view xvim_sortLinesFrom:args.lineBegin to:args.lineEnd withOptions:options];
-#endif
 }
 
 - (void)splitview:(XVimExArg*)args inWindow:(XVimWindow*)window
@@ -1280,7 +1278,7 @@ xvim_ignore_warning_undeclared_selector_push
 
 xvim_ignore_warning_pop
 
-- (NSMenuItem*)findMenuItemIn:(NSMenu*)menu forAction:(NSString*)actionName
+- (NSMenuItem*)findMenuItemIn : (NSMenu*)menu forAction : (NSString*)actionName
 {
     if (nil == menu) {
         menu = [NSApp mainMenu];
@@ -1388,13 +1386,13 @@ xvim_ignore_warning_pop
 
     if (!args.noRangeSpecified && args.lineBegin != NSNotFound && args.lineEnd != NSNotFound) {
         // Find the position to start searching
-        inputStartLocation = [window.sourceView.textStorage xvim_indexOfLineNumber:args.lineBegin column:0];
+        inputStartLocation = [window.sourceView xvim_indexOfLineNumber:args.lineBegin column:0];
         if (NSNotFound == inputStartLocation) {
             return;
         }
 
         // Find the position to end the searching
-        inputEndLocation = [window.sourceView.textStorage xvim_indexOfLineNumber:args.lineEnd + 1
+        inputEndLocation = [window.sourceView xvim_indexOfLineNumber:args.lineEnd + 1
                                                                           column:0]; // Next line of the end of range.
         if (NSNotFound == inputEndLocation) {
             inputEndLocation = [[[window sourceView] string] length];

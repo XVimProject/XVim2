@@ -383,8 +383,9 @@ if( childEvaluator.keyStroke.toString.length != 1 ){
             KeepJumpMarkIndex:(BOOL)keepJumpMarkIndex
                NeedUpdateMark:(BOOL)needUpdateMark
 {
-    if (mark == nil) return [XVimEvaluator invalidEvaluator];
-    
+    if (mark == nil)
+        return [XVimEvaluator invalidEvaluator];
+
     MOTION_TYPE motionType = fol ? LINEWISE : CHARACTERWISE_EXCLUSIVE;
 
     if (mark.line == NSNotFound) {
@@ -397,7 +398,7 @@ if( childEvaluator.keyStroke.toString.length != 1 ){
         XVimOpenDocumentAtPath(mark.document);
     }
 
-    NSUInteger to = [self.sourceView.textStorage xvim_indexOfLineNumber:mark.line column:mark.column];
+    NSUInteger to = [self.sourceView xvim_indexOfLineNumber:mark.line column:mark.column];
     if (NSNotFound == to) {
         return [XVimEvaluator invalidEvaluator];
     }
@@ -440,19 +441,22 @@ if( childEvaluator.keyStroke.toString.length != 1 ){
     return [self jumpToMark:mark firstOfLine:YES KeepJumpMarkIndex:NO NeedUpdateMark:YES];
 }
 
-- (XVimEvaluator*)z{
+- (XVimEvaluator*)z
+{
     [self.argumentString appendString:@"z"];
     return [[XVimZEvaluator alloc] initWithWindow:self.window];
 }
 
 
-- (XVimEvaluator*)BACKQUOTE{
+- (XVimEvaluator*)BACKQUOTE
+{
     [self.argumentString appendString:@"`"];
     self.onChildCompleteHandler = @selector(onComplete_BACKQUOTE:);
     return [[XVimArgumentEvaluator alloc] initWithWindow:self.window];
 }
 
-- (XVimEvaluator*)onComplete_BACKQUOTE:(XVimArgumentEvaluator*)childEvaluator{
+- (XVimEvaluator*)onComplete_BACKQUOTE:(XVimArgumentEvaluator*)childEvaluator
+{
     // FIXME:
     // This will work for Ctrl-c as register c but it should not
     // NSString* key = [childEvaluator.keyStroke toString];

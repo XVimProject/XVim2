@@ -22,7 +22,9 @@
 //
 
 #import "XVim.h"
+#import "IDEWorkspaceTabController+XVim.h"
 #import "Logger.h"
+#import "XVimAboutDialog.h"
 #import "XVimExCommand.h"
 #import "XVimHistoryHandler.h"
 #import "XVimKeymap.h"
@@ -30,9 +32,7 @@
 #import "XVimOptions.h"
 #import "XVimRegister.h"
 #import "XVimSearch.h"
-#import "XVimAboutDialog.h"
 #import "XVimTester.h"
-#import "IDEWorkspaceTabController+XVim.h"
 #import "_TtC12SourceEditor23SourceEditorContentView.h"
 #import "_TtC22IDEPegasusSourceEditor20SourceCodeEditorView.h"
 
@@ -45,9 +45,9 @@
 
 @implementation XVim
 
-+ (void)pluginDidLoad:(NSBundle *)plugin
++ (void)pluginDidLoad:(NSBundle*)plugin
 {
-    NSArray *allowedLoaders = [plugin objectForInfoDictionaryKey:@"AllowedLoaders"];
+    NSArray* allowedLoaders = [plugin objectForInfoDictionaryKey:@"AllowedLoaders"];
     if ([allowedLoaders containsObject:[[NSBundle mainBundle] bundleIdentifier]]) {
         [self instance];
     }
@@ -64,20 +64,20 @@
         return;
     }
     [Logger defaultLogger].level = LogTrace;
-    
+
     // Make a list of classes that will be swizzled, so we can check if they have been loaded
     // before swizzling. If not, we will wait, observing NSBundle's class load notifications,
     // until all of these classes have been loaded before swizzling.
-    NSArray<NSString*> *swizzleClasses = @[IDEPegasusSourceCodeEditorClassName
-                                           , SourceEditorViewClassName
-                                           , @"IDEWorkspaceTabController"];
-    
-    NSMutableSet<NSString*> *requiredClassesWaitSet = [[NSMutableSet alloc] initWithArray:swizzleClasses];
-    NSMutableSet<NSString*> *loadedClasses = [NSMutableSet new];
-    
+    NSArray<NSString*>* swizzleClasses =
+                @[ IDEPegasusSourceCodeEditorClassName, SourceEditorViewClassName, @"IDEWorkspaceTabController" ];
+
+    NSMutableSet<NSString*>* requiredClassesWaitSet = [[NSMutableSet alloc] initWithArray:swizzleClasses];
+    NSMutableSet<NSString*>* loadedClasses = [NSMutableSet new];
+
     // Remove already loaded classes from wait set
-    for (NSString *className in requiredClassesWaitSet) {
-        if (NSClassFromString(className)) [loadedClasses addObject:className];
+    for (NSString* className in requiredClassesWaitSet) {
+        if (NSClassFromString(className))
+            [loadedClasses addObject:className];
     }
     [requiredClassesWaitSet minusSet:loadedClasses];
 
@@ -87,23 +87,24 @@
     else {
         // Entry Point of the Plugin.
         __weak Class weakXvim = self;
-        [NSNotificationCenter.defaultCenter addObserverForName:NSBundleDidLoadNotification
-                                                        object:nil
-                                                         queue:nil
-                                                    usingBlock:^(NSNotification * _Nonnull note) {
-                                                        Class XVimClass = weakXvim;
-                                                        NSArray<NSString*> * classes = [note.userInfo objectForKey:NSLoadedClasses];
-                                                        if (classes && requiredClassesWaitSet.count > 0) {
-                                                            [requiredClassesWaitSet minusSet:[NSSet setWithArray:classes]];
-                                                            if (requiredClassesWaitSet.count == 0) {
-                                                                [XVimClass hookClasses];
-                                                            }
-                                                        }
-                                                    }];
+        [NSNotificationCenter.defaultCenter
+                    addObserverForName:NSBundleDidLoadNotification
+                                object:nil
+                                 queue:nil
+                            usingBlock:^(NSNotification* _Nonnull note) {
+                                Class XVimClass = weakXvim;
+                                NSArray<NSString*>* classes = [note.userInfo objectForKey:NSLoadedClasses];
+                                if (classes && requiredClassesWaitSet.count > 0) {
+                                    [requiredClassesWaitSet minusSet:[NSSet setWithArray:classes]];
+                                    if (requiredClassesWaitSet.count == 0) {
+                                        [XVimClass hookClasses];
+                                    }
+                                }
+                            }];
     }
 }
 
-+(void)hookClasses
++ (void)hookClasses
 {
     [XVimIDEPegasusSourceEditorView xvim_hook];
     [IDEWorkspaceTabController_XVim xvim_hook];
@@ -134,7 +135,7 @@
         _searcher = [[XVimSearch alloc] init];
         _lastCharacterSearchMotion = nil;
         _marks = [[XVimMarks alloc] init];
-        _testRunner= [[XVimTester alloc] init];
+        _testRunner = [[XVimTester alloc] init];
         self.excmd = [[XVimExCommand alloc] init];
         self.lastPlaybackRegister = nil;
         self.lastOperationCommands = [[XVimMutableString alloc] init];
@@ -166,10 +167,12 @@
     return self;
 }
 
--(void)applicationDidFinishLaunching:(NSNotification*)note
+- (void)applicationDidFinishLaunching:(NSNotification*)note
 {
     [self addMenuItem];
-    [[NSNotificationCenter defaultCenter] removeObserver:self name:NSApplicationDidFinishLaunchingNotification object:nil];
+    [[NSNotificationCenter defaultCenter] removeObserver:self
+                                                    name:NSApplicationDidFinishLaunchingNotification
+                                                  object:nil];
 }
 
 - (void)instanceSetup { [self parseRcFile]; }
@@ -192,13 +195,18 @@
     }
 }
 
-- (void)observeValueForKeyPath:(NSString *)keyPath ofObject:(id)object change:(NSDictionary *)change context:(void *)context{
-    if( [keyPath isEqualToString:@"debug"]) {
-        if( [[XVim instance] options].debug ){
-            NSString *homeDir = NSHomeDirectoryForUser(NSUserName());
-            NSString *logPath = [homeDir stringByAppendingString: @"/.xvimlog"];
+- (void)observeValueForKeyPath:(NSString*)keyPath
+                          ofObject:(id)object
+                            change:(NSDictionary*)change
+                           context:(void*)context
+{
+    if ([keyPath isEqualToString:@"debug"]) {
+        if ([[XVim instance] options].debug) {
+            NSString* homeDir = NSHomeDirectoryForUser(NSUserName());
+            NSString* logPath = [homeDir stringByAppendingString:@"/.xvimlog"];
             [[Logger defaultLogger] setLogFile:logPath];
-        }else{
+        }
+        else {
             [[Logger defaultLogger] setLogFile:nil];
         }
     }
@@ -247,26 +255,32 @@ static id _startupObservation = nil;
 
 #pragma mark - Menu
 
-- (void)addMenuItem {
-    // It will fail in Xcode 6.4
-    // Check IDEApplicationController+Xvim.m
-    
-    // Add XVim menu keybinding into keybind preference
+- (void)addMenuItem
+{
+// It will fail in Xcode 6.4
+// Check IDEApplicationController+Xvim.m
+
+// Add XVim menu keybinding into keybind preference
 #ifdef TODO
-    IDEMenuKeyBindingSet *keyset = [(IDEKeyBindingPreferenceSet*)[[IDEKeyBindingPreferenceSet preferenceSetsManager] currentPreferenceSet] valueForKey:@"_menuKeyBindingSet"];
-    IDEKeyboardShortcut* shortcut = [[IDEKeyboardShortcut alloc] initWithKeyEquivalent:@"x" modifierMask:NSCommandKeyMask|NSShiftKeyMask];
-    IDEMenuKeyBinding *binding = [[IDEMenuKeyBinding alloc] initWithTitle:@"Enable" parentTitle:@"XVim" group:@"XVim" actions:@[ @"toggleXVim:"]  keyboardShortcuts:@[shortcut]];
-    binding.commandIdentifier = XVIM_MENU_TOGGLE_IDENTIFIER;// This must be same as menu items's represented Object.
+    IDEMenuKeyBindingSet* keyset = [(IDEKeyBindingPreferenceSet*)[[IDEKeyBindingPreferenceSet preferenceSetsManager]
+                currentPreferenceSet] valueForKey:@"_menuKeyBindingSet"];
+    IDEKeyboardShortcut* shortcut =
+                [[IDEKeyboardShortcut alloc] initWithKeyEquivalent:@"x" modifierMask:NSCommandKeyMask | NSShiftKeyMask];
+    IDEMenuKeyBinding* binding = [[IDEMenuKeyBinding alloc] initWithTitle:@"Enable"
+                                                              parentTitle:@"XVim"
+                                                                    group:@"XVim"
+                                                                  actions:@[ @"toggleXVim:" ]
+                                                        keyboardShortcuts:@[ shortcut ]];
+    binding.commandIdentifier = XVIM_MENU_TOGGLE_IDENTIFIER; // This must be same as menu items's represented Object.
     [keyset insertObject:binding inKeyBindingsAtIndex:0];
 #endif
-    
-    NSMenu *menu = [[NSApplication sharedApplication] menu];
-    
-    NSMenuItem *editorMenuItem = [menu itemWithTitle:@"Edit"];
-    NSMenuItem *xvimMenuItem = [self xvimMenuItem];
+
+    NSMenu* menu = [[NSApplication sharedApplication] menu];
+
+    NSMenuItem* editorMenuItem = [menu itemWithTitle:@"Edit"];
+    NSMenuItem* xvimMenuItem = [self xvimMenuItem];
     [editorMenuItem.submenu addItem:NSMenuItem.separatorItem];
     [editorMenuItem.submenu addItem:xvimMenuItem];
-    
 }
 
 
@@ -278,7 +292,7 @@ static id _startupObservation = nil;
     item.title = @"XVim";
     NSMenu* m = [[NSMenu alloc] initWithTitle:@"XVim"];
     [item setSubmenu:m];
-    
+
     NSMenuItem* subitem = [[NSMenuItem alloc] init];
     subitem.title = @"Enable";
     [subitem setEnabled:YES];
@@ -288,20 +302,20 @@ static id _startupObservation = nil;
     subitem.representedObject = XVIM_MENU_TOGGLE_IDENTIFIER;
     self.enabledMenuItem = subitem;
     [m addItem:subitem];
-    
+
     subitem = [[NSMenuItem alloc] init];
     subitem.title = @"About XVim";
     [subitem setEnabled:YES];
     subitem.target = [XVim class];
     subitem.action = @selector(about:);
     [m addItem:subitem];
-    
+
     // Test cases
-    if( self.options.debug ){
+    if (self.options.debug) {
         // Add category sub menu
         NSMenuItem* subm = [[NSMenuItem alloc] init];
         subm.title = @"Test categories";
-        
+
         // Create category menu
         NSMenu* cat_menu = [[NSMenu alloc] init];
         // Menu for run all test
@@ -311,7 +325,7 @@ static id _startupObservation = nil;
         subitem.action = @selector(runTest:);
         [cat_menu addItem:subitem];
         [cat_menu addItem:[NSMenuItem separatorItem]];
-        for( NSString* c in [[XVim instance].testRunner categories]){
+        for (NSString* c in [[XVim instance].testRunner categories]) {
             subitem = [[NSMenuItem alloc] init];
             subitem.title = c;
             subitem.target = [XVim instance];
@@ -322,37 +336,49 @@ static id _startupObservation = nil;
         [m addItem:subm];
         [subm setSubmenu:cat_menu];
     }
-    
+
     return item;
 }
 
 
-+ (void)about:(id)sender{
++ (void)about:(id)sender
+{
     XVimAboutDialog* p = [[XVimAboutDialog alloc] initWithWindowNibName:@"about"];
     NSWindow* win = [p window];
     [[NSApplication sharedApplication] runModalForWindow:win];
 }
 
-- (void)enableXVim {
+- (void)enableXVim
+{
     self.enabled = YES;
     self.enabledMenuItem.state = NSOnState;
     [self postEnabledChanged];
 }
-- (void)disableXVim {
+- (void)disableXVim
+{
     self.enabled = NO;
     self.enabledMenuItem.state = NSOffState;
     [self postEnabledChanged];
 }
 
 
--(void)postEnabledChanged {
+- (void)postEnabledChanged
+{
     [NSNotificationCenter.defaultCenter postNotificationName:XVimNotificationEnabled
                                                       object:self
-                                                    userInfo:@{XVimNotificationEnabledFlag:@(self.enabled)}];
+                                                    userInfo:@{
+                                                        XVimNotificationEnabledFlag : @(self.enabled)
+                                                    }];
 }
 
-- (void)toggleXVim:(id)sender{
-    if (self.isEnabled) {[self disableXVim];} else {[self enableXVim];}
+- (void)toggleXVim:(id)sender
+{
+    if (self.isEnabled) {
+        [self disableXVim];
+    }
+    else {
+        [self enableXVim];
+    }
 }
 
 
@@ -382,11 +408,13 @@ static id _startupObservation = nil;
 #endif
 }
 
-- (void)runTest:(id)sender{
+- (void)runTest:(id)sender
+{
     NSMenuItem* m = sender;
-    if( [m.title isEqualToString:@"All"] ){
+    if ([m.title isEqualToString:@"All"]) {
         [self.testRunner selectCategories:self.testRunner.categories];
-    }else{
+    }
+    else {
         NSMutableArray* arr = [[NSMutableArray alloc] init];
         [arr addObject:m.title];
         [self.testRunner selectCategories:arr];

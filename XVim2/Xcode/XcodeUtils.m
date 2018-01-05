@@ -7,8 +7,8 @@
 //
 
 #import "XcodeUtils.h"
-#import "XVimWindow.h"
 #import "IDEWorkspaceTabController+XVim.h"
+#import "XVimWindow.h"
 #import "_TtC22IDEPegasusSourceEditor20SourceCodeEditorView.h"
 
 
@@ -24,24 +24,31 @@ IDEWorkspaceTabController_XVim* XVimLastActiveWorkspaceTabController()
 
 IDEEditorArea* XVimLastActiveEditorArea() { return [XVimLastActiveWindowController() editorArea]; }
 
-_TtC22IDEPegasusSourceEditor20SourceCodeEditorView*
-XVimLastActiveEditorView() { return (id)[[[[[[[XVimLastActiveEditorArea() lastActiveEditorContext] supplementalMainViewController] view] subviews] objectAtIndex:0] subviews] objectAtIndex:0]; }
+_TtC22IDEPegasusSourceEditor20SourceCodeEditorView* XVimLastActiveEditorView()
+{
+    return (id)[[[[[[[XVimLastActiveEditorArea() lastActiveEditorContext] supplementalMainViewController] view]
+                subviews] objectAtIndex:0] subviews] objectAtIndex:0];
+}
 
 
-SourceCodeEditorViewProxy* XVimLastActiveSourceView() {
+SourceCodeEditorViewProxy* XVimLastActiveSourceView()
+{
     return (id)[[XVimLastActiveEditorView() xvim_window] sourceView];
 }
 
 
-BOOL XVimOpenDocumentAtPath(NSString *path) {
+BOOL XVimOpenDocumentAtPath(NSString* path)
+{
     NSError* error;
     NSURL* doc = [NSURL fileURLWithPath:path];
     DVTDocumentLocation* loc = [[DVTDocumentLocationClass() alloc] initWithDocumentURL:doc timestamp:nil];
     if (loc) {
         IDEEditorOpenSpecifier* spec = [IDEEditorOpenSpecifierClass()
-                                        structureEditorOpenSpecifierForDocumentLocation:loc
-                                        inWorkspace:[XVimLastActiveWindowController().activeWorkspaceTabController workspace]
-                                        error:&error];
+                    structureEditorOpenSpecifierForDocumentLocation:loc
+                                                        inWorkspace:[XVimLastActiveWindowController()
+                                                                                            .activeWorkspaceTabController
+                                                                                                        workspace]
+                                                              error:&error];
         if (error == nil) {
             [XVimLastActiveEditorArea() _openEditorOpenSpecifier:spec
                                                    editorContext:[XVimLastActiveEditorArea() lastActiveEditorContext]
@@ -60,14 +67,14 @@ BOOL XVimOpenDocumentAtPath(NSString *path) {
 }
 
 
-IDEEditorOpenSpecifier *XVimOpenSpecifier(IDENavigableItem *item, id locationToSelect)
+IDEEditorOpenSpecifier* XVimOpenSpecifier(IDENavigableItem* item, id locationToSelect)
 {
-    NSError *err = nil;
-    IDEEditorOpenSpecifier * spec = locationToSelect
-                        ? [[IDEEditorOpenSpecifierClass() alloc] initWithNavigableItem:item
-                                                               locationToSelect:locationToSelect
-                                                                          error:&err]
-                        : [[IDEEditorOpenSpecifierClass() alloc] initWithNavigableItem:item error:&err];
+    NSError* err = nil;
+    IDEEditorOpenSpecifier* spec
+                = locationToSelect ? [[IDEEditorOpenSpecifierClass() alloc] initWithNavigableItem:item
+                                                                                 locationToSelect:locationToSelect
+                                                                                            error:&err]
+                                   : [[IDEEditorOpenSpecifierClass() alloc] initWithNavigableItem:item error:&err];
     if (!spec || err != nil) {
         ERROR_LOG(@"Could not create IDEEditorOpenSpecifier. Error = %@", err.localizedDescription);
         return nil;

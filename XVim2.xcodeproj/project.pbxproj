@@ -26,7 +26,10 @@
 		ED0DED851F8C47F300886F6B /* XVimReplacePromptEvaluator.m in Sources */ = {isa = PBXBuildFile; fileRef = ED0DED841F8C47F200886F6B /* XVimReplacePromptEvaluator.m */; };
 		ED1286521F90B203007B6FC7 /* XVimAboutDialog.m in Sources */ = {isa = PBXBuildFile; fileRef = ED12864F1F90B1EB007B6FC7 /* XVimAboutDialog.m */; };
 		ED1286531F90B22A007B6FC7 /* about.xib in Resources */ = {isa = PBXBuildFile; fileRef = ED1286501F90B1EB007B6FC7 /* about.xib */; };
+		ED240B7A1F9DEB3900D03CD4 /* SourceCodeEditorViewWrapper.swift in Sources */ = {isa = PBXBuildFile; fileRef = ED240B791F9DEB3900D03CD4 /* SourceCodeEditorViewWrapper.swift */; };
+		ED240B7C1F9DEB5300D03CD4 /* SourceCodeEditorViewWrapper.s in Sources */ = {isa = PBXBuildFile; fileRef = ED240B7B1F9DEB5300D03CD4 /* SourceCodeEditorViewWrapper.s */; };
 		ED31C0C61F8164B800BE97B9 /* XVimInsertEvaluator.m in Sources */ = {isa = PBXBuildFile; fileRef = ED31C0C51F8164B800BE97B9 /* XVimInsertEvaluator.m */; };
+		ED38E74C1FA5DE1900A598FA /* SourceEditorDataSourceWrapper.swift in Sources */ = {isa = PBXBuildFile; fileRef = ED38E74B1FA5DE1900A598FA /* SourceEditorDataSourceWrapper.swift */; };
 		ED4382B11F85340200975127 /* XVimVisualEvaluator.m in Sources */ = {isa = PBXBuildFile; fileRef = ED4382AD1F85340100975127 /* XVimVisualEvaluator.m */; };
 		ED52829F1F8241C2000794A1 /* SourceCodeEditorViewProxy+Scrolling.m in Sources */ = {isa = PBXBuildFile; fileRef = ED52829E1F8241C2000794A1 /* SourceCodeEditorViewProxy+Scrolling.m */; };
 		ED5282A51F825974000794A1 /* XVimDeleteEvaluator.m in Sources */ = {isa = PBXBuildFile; fileRef = ED5282A41F82595F000794A1 /* XVimDeleteEvaluator.m */; };
@@ -145,9 +148,12 @@
 		ED12864F1F90B1EB007B6FC7 /* XVimAboutDialog.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = XVimAboutDialog.m; sourceTree = "<group>"; };
 		ED1286501F90B1EB007B6FC7 /* about.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = about.xib; sourceTree = "<group>"; };
 		ED1286511F90B1EC007B6FC7 /* XVimAboutDialog.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = XVimAboutDialog.h; sourceTree = "<group>"; };
+		ED240B791F9DEB3900D03CD4 /* SourceCodeEditorViewWrapper.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SourceCodeEditorViewWrapper.swift; sourceTree = "<group>"; };
+		ED240B7B1F9DEB5300D03CD4 /* SourceCodeEditorViewWrapper.s */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.asm; path = SourceCodeEditorViewWrapper.s; sourceTree = "<group>"; };
 		ED2521551F851C7300622B6A /* _TtC12SourceEditor23SourceEditorUndoManager.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = _TtC12SourceEditor23SourceEditorUndoManager.h; sourceTree = "<group>"; };
 		ED31C0C41F8164B800BE97B9 /* XVimInsertEvaluator.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = XVimInsertEvaluator.h; sourceTree = "<group>"; };
 		ED31C0C51F8164B800BE97B9 /* XVimInsertEvaluator.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = XVimInsertEvaluator.m; sourceTree = "<group>"; };
+		ED38E74B1FA5DE1900A598FA /* SourceEditorDataSourceWrapper.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SourceEditorDataSourceWrapper.swift; sourceTree = "<group>"; };
 		ED41F7E41F7FDA3000417142 /* SourceViewProtocol.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = SourceViewProtocol.h; sourceTree = "<group>"; };
 		ED4382AD1F85340100975127 /* XVimVisualEvaluator.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = XVimVisualEvaluator.m; sourceTree = "<group>"; };
 		ED4382B01F85340200975127 /* XVimVisualEvaluator.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = XVimVisualEvaluator.h; sourceTree = "<group>"; };
@@ -252,6 +258,7 @@
 		EDD27BB31F9B5F130006471C /* XVimTester.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = XVimTester.h; sourceTree = "<group>"; };
 		EDD27BB41F9B5F130006471C /* XVimTester.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = XVimTester.m; sourceTree = "<group>"; };
 		EDD27BB71F9B63350006471C /* IDEEditorCoordinator.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = IDEEditorCoordinator.h; sourceTree = "<group>"; };
+		EDDE4B041F9CF2D000153E00 /* XVim2-Bridging-Header.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "XVim2-Bridging-Header.h"; sourceTree = SOURCE_ROOT; };
 		EDDF5D081F83A85A00872094 /* XVimWindowEvaluator.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = XVimWindowEvaluator.m; sourceTree = "<group>"; };
 		EDDF5D0B1F83A85A00872094 /* XVimWindowEvaluator.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = XVimWindowEvaluator.h; sourceTree = "<group>"; };
 		EDDF5D0D1F83A99300872094 /* IDEWorkspaceWindow.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = IDEWorkspaceWindow.h; sourceTree = "<group>"; };
@@ -325,6 +332,7 @@
 		A2B52D381F514CC600D83C0A /* XVim2 */ = {
 			isa = PBXGroup;
 			children = (
+				EDDE4B041F9CF2D000153E00 /* XVim2-Bridging-Header.h */,
 				ED1286501F90B1EB007B6FC7 /* about.xib */,
 				ED1286511F90B1EC007B6FC7 /* XVimAboutDialog.h */,
 				ED12864F1F90B1EB007B6FC7 /* XVimAboutDialog.m */,
@@ -389,6 +397,7 @@
 				ED548FE21F82A91D00A8069D /* SourceCodeEditorViewProxy+XVim.m */,
 				ED0DED691F8C368900886F6B /* XcodeUtils.h */,
 				ED0DED6A1F8C368900886F6B /* XcodeUtils.m */,
+				ED240B781F9DEB3900D03CD4 /* Swift */,
 			);
 			path = Xcode;
 			sourceTree = "<group>";
@@ -433,6 +442,16 @@
 				ED0DED791F8C40DF00886F6B /* DVTTextPreferences.h */,
 			);
 			path = DVTFoundation;
+			sourceTree = "<group>";
+		};
+		ED240B781F9DEB3900D03CD4 /* Swift */ = {
+			isa = PBXGroup;
+			children = (
+				ED240B791F9DEB3900D03CD4 /* SourceCodeEditorViewWrapper.swift */,
+				ED240B7B1F9DEB5300D03CD4 /* SourceCodeEditorViewWrapper.s */,
+				ED38E74B1FA5DE1900A598FA /* SourceEditorDataSourceWrapper.swift */,
+			);
+			path = Swift;
 			sourceTree = "<group>";
 		};
 		ED5282A21F825944000794A1 /* Operators */ = {
@@ -655,7 +674,7 @@
 		A26E5C6B1F5145AB000BCC66 /* Project object */ = {
 			isa = PBXProject;
 			attributes = {
-				LastUpgradeCheck = 0900;
+				LastUpgradeCheck = 0910;
 				ORGANIZATIONNAME = "Shuichiro Suzuki";
 				TargetAttributes = {
 					A26E5C721F5145AB000BCC66 = {
@@ -731,6 +750,7 @@
 				ED6276921F817CD5005F8274 /* XVimGMotionEvaluator.m in Sources */,
 				ED0DED681F8C31FA00886F6B /* XVimCommandLineEvaluator.m in Sources */,
 				ED5282AB1F8259F5000794A1 /* XVimTextObjectEvaluator.m in Sources */,
+				ED240B7A1F9DEB3900D03CD4 /* SourceCodeEditorViewWrapper.swift in Sources */,
 				ED9CF2D71F6EFA2A00908DFB /* XVimNormalEvaluator.m in Sources */,
 				ED548FE01F8280B700A8069D /* XVimRegisterEvaluator.m in Sources */,
 				EDD27BAC1F9B5EB30006471C /* XVimTester+Options.m in Sources */,
@@ -751,6 +771,7 @@
 				ED52829F1F8241C2000794A1 /* SourceCodeEditorViewProxy+Scrolling.m in Sources */,
 				ED31C0C61F8164B800BE97B9 /* XVimInsertEvaluator.m in Sources */,
 				EDFA14961F8564DB0039B439 /* XVimMarks.m in Sources */,
+				ED38E74C1FA5DE1900A598FA /* SourceEditorDataSourceWrapper.swift in Sources */,
 				EDF010691F6EEFFC00461B2C /* XVimKeymap.m in Sources */,
 				EDD27BA51F9B5EB30006471C /* XVimTester+Operator.m in Sources */,
 				EDFA14951F8564DB0039B439 /* XVimMark.m in Sources */,
@@ -777,6 +798,7 @@
 				ED0DED711F8C3B0800886F6B /* XVimExCommand.m in Sources */,
 				EDF010671F6EEFFC00461B2C /* XVimArgumentEvaluator.m in Sources */,
 				EDF010741F6EF05E00461B2C /* NSEvent+VimHelper.m in Sources */,
+				ED240B7C1F9DEB5300D03CD4 /* SourceCodeEditorViewWrapper.s in Sources */,
 				EDEF0F241F84DB570087D30B /* XVimShiftEvaluator.m in Sources */,
 				ED548FD51F827B9D00A8069D /* SourceCodeEditorViewProxy+Yank.m in Sources */,
 				ED6331BA1F836D2100E9E6B0 /* IDEWorkspaceTabController+XVim.m in Sources */,
@@ -851,6 +873,7 @@
 				MTL_ENABLE_DEBUG_INFO = YES;
 				ONLY_ACTIVE_ARCH = YES;
 				SDKROOT = macosx;
+				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
 			};
 			name = Debug;
 		};
@@ -923,8 +946,8 @@
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SKIP_INSTALL = YES;
 				SWIFT_OBJC_BRIDGING_HEADER = "XVim2-Bridging-Header.h";
-				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
-				SWIFT_VERSION = 3.0;
+				SWIFT_SWIFT3_OBJC_INFERENCE = Off;
+				SWIFT_VERSION = 4.0;
 				WRAPPER_EXTENSION = xcplugin;
 			};
 			name = Debug;
@@ -935,6 +958,7 @@
 				CLANG_ENABLE_MODULES = YES;
 				COMBINE_HIDPI_IMAGES = YES;
 				FRAMEWORK_SEARCH_PATHS = "";
+				GCC_OPTIMIZATION_LEVEL = 2;
 				GCC_PREFIX_HEADER = "$(PROJECT_NAME)/XVim2-prefix.h";
 				HEADER_SEARCH_PATHS = "$(SOURCE_ROOT)/XVim2/Xcode";
 				INFOPLIST_FILE = XVim2/Info.plist;
@@ -950,7 +974,8 @@
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SKIP_INSTALL = YES;
 				SWIFT_OBJC_BRIDGING_HEADER = "XVim2-Bridging-Header.h";
-				SWIFT_VERSION = 3.0;
+				SWIFT_SWIFT3_OBJC_INFERENCE = Off;
+				SWIFT_VERSION = 4.0;
 				WRAPPER_EXTENSION = xcplugin;
 			};
 			name = Release;

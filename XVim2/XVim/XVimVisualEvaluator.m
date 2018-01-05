@@ -20,6 +20,7 @@
 #import "XVimLowercaseEvaluator.h"
 #import "XVimMarkSetEvaluator.h"
 #import "XVimOptions.h"
+#import "XVimRegister.h"
 #import "XVimRegisterEvaluator.h"
 #import "XVimReplacePromptEvaluator.h"
 #import "XVimSearch.h"
@@ -29,7 +30,6 @@
 #import "XVimUppercaseEvaluator.h"
 #import "XVimWindow.h"
 #import "XVimYankEvaluator.h"
-#import "XVimRegister.h"
 
 static NSString* MODE_STRINGS[] = { @"", @"-- VISUAL --", @"-- VISUAL LINE --", @"-- VISUAL BLOCK --" };
 
@@ -41,7 +41,6 @@ static NSString* MODE_STRINGS[] = { @"", @"-- VISUAL --", @"-- VISUAL LINE --", 
 @property XVimPosition initialFromPos;
 @property XVimPosition initialToPos;
 @property BOOL initialToEOL;
-@property BOOL beganUndoGroup;
 @end
 
 @implementation XVimVisualEvaluator
@@ -92,11 +91,6 @@ static NSString* MODE_STRINGS[] = { @"", @"-- VISUAL --", @"-- VISUAL LINE --", 
     return self;
 }
 
--(void)dealloc {
-    if (self.beganUndoGroup) {
-        [self.sourceView xvim_endEditTransaction];
-    }
-}
 
 - (NSString*)modeString { return MODE_STRINGS[_visual_mode]; }
 
@@ -166,10 +160,7 @@ static NSString* MODE_STRINGS[] = { @"", @"-- VISUAL --", @"-- VISUAL LINE --", 
 {
     if (!_waitForArgument) {
         [self.sourceView xvim_changeSelectionMode:XVIM_VISUAL_NONE];
-        if (self.beganUndoGroup) {
-            [self.sourceView xvim_endEditTransaction];
-            self.beganUndoGroup = NO;
-        }
+        [self endUndoGrouping];
         // TODO:
         //[[[XVim instance] repeatRegister] setVisualMode:_mode withRange:_operationRange];
     }
@@ -206,8 +197,9 @@ static NSString* MODE_STRINGS[] = { @"", @"-- VISUAL --", @"-- VISUAL LINE --", 
     return [[XVimTextObjectEvaluator alloc] initWithWindow:self.window inner:NO];
 }
 
-- (XVimEvaluator*)A {
-    [self _beginUndoGrouping];
+- (XVimEvaluator*)A
+{
+    [self beginUndoGrouping];
     return [[XVimInsertEvaluator alloc] initWithWindow:self.window mode:XVIM_INSERT_APPEND];
 }
 
@@ -234,7 +226,7 @@ static NSString* MODE_STRINGS[] = { @"", @"-- VISUAL --", @"-- VISUAL LINE --", 
 - (XVimEvaluator*)c
 {
     if (self.sourceView.selectionMode == XVIM_VISUAL_BLOCK) {
-        [self _beginUndoGrouping];
+        [self beginUndoGrouping];
         return [[XVimInsertEvaluator alloc] initWithWindow:self.window mode:XVIM_INSERT_BLOCK_KILL];
     }
     XVimDeleteEvaluator* eval = [[XVimDeleteEvaluator alloc] initWithWindow:self.window insertModeAtCompletion:YES];
@@ -248,7 +240,7 @@ static NSString* MODE_STRINGS[] = { @"", @"-- VISUAL --", @"-- VISUAL LINE --", 
         [self.sourceView xvim_changeSelectionMode:XVIM_VISUAL_LINE];
         return [self c];
     }
-    [self _beginUndoGrouping];
+    [self beginUndoGrouping];
     [self performSelector:@selector(DOLLAR)];
     return [[XVimInsertEvaluator alloc] initWithWindow:self.window mode:XVIM_INSERT_BLOCK_KILL];
 }
@@ -314,7 +306,7 @@ static NSString* MODE_STRINGS[] = { @"", @"-- VISUAL --", @"-- VISUAL LINE --", 
     if (self.sourceView.selectionMode != XVIM_VISUAL_BLOCK) {
         return [[XVimInsertEvaluator alloc] initWithWindow:self.window mode:XVIM_INSERT_BEFORE_FIRST_NONBLANK];
     }
-    [self _beginUndoGrouping];
+    [self beginUndoGrouping];
     return [[XVimInsertEvaluator alloc] initWithWindow:self.window mode:XVIM_INSERT_DEFAULT];
 }
 
@@ -396,7 +388,7 @@ static NSString* MODE_STRINGS[] = { @"", @"-- VISUAL --", @"-- VISUAL LINE --", 
 
 - (XVimEvaluator*)u
 {
-    [self _beginUndoGrouping];
+    [self beginUndoGrouping];
     XVimLowercaseEvaluator* eval = [[XVimLowercaseEvaluator alloc] initWithWindow:self.window];
     return [eval executeOperationWithMotion:XVIM_MAKE_MOTION(MOTION_NONE, CHARACTERWISE_INCLUSIVE, MOTION_OPTION_NONE,
                                                              self.numericArg)];
@@ -404,7 +396,7 @@ static NSString* MODE_STRINGS[] = { @"", @"-- VISUAL --", @"-- VISUAL LINE --", 
 
 - (XVimEvaluator*)U
 {
-    [self _beginUndoGrouping];
+    [self beginUndoGrouping];
     XVimUppercaseEvaluator* eval = [[XVimUppercaseEvaluator alloc] initWithWindow:self.window];
     return [eval executeOperationWithMotion:XVIM_MAKE_MOTION(MOTION_NONE, CHARACTERWISE_INCLUSIVE, MOTION_OPTION_NONE,
                                                              self.numericArg)];
@@ -677,9 +669,5 @@ return eval;
     return self;
 }
 
--(void) _beginUndoGrouping {
-    self.beganUndoGroup = YES;
-    [self.sourceView xvim_beginEditTransaction];
-}
 
 @end

@@ -61,6 +61,7 @@ XVimMotionEvaluator
 @property (strong) NSMutableString* argumentString;
 @property (nonatomic, strong) NSString* yankRegister;
 @property SEL onChildCompleteHandler;
+@property BOOL beganUndoGrouping;
 
 - (id)initWithWindow:(XVimWindow*)window;
 
@@ -117,6 +118,7 @@ XVimMotionEvaluator
 
 - (void)cancelHandler NS_REQUIRES_SUPER;
 
+
 /**
  * This is called when an evaluator has been finished its task and evicted from stack evaluatorhandler.
  * This happens when you return next evaluator as "nil" or other evaluators.
@@ -130,6 +132,8 @@ XVimMotionEvaluator
 - (NSString*)modeString;
 - (XVIM_MODE)mode;
 - (BOOL)isRelatedTo:(XVimEvaluator*)other;
+- (void)beginUndoGrouping;
+- (void)endUndoGrouping;
 
 - (XVimKeymap*)selectKeymapWithProvider:(id<XVimKeymapProvider>)keymapProvider;
 

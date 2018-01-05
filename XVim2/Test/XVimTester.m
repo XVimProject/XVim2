@@ -200,21 +200,33 @@
 {
     // Setup Table view to show result
     tableView = [[NSTableView alloc] init];
-    [tableView setDataSource:self];
     [tableView setDelegate:self];
+    [tableView setDataSource:self];
 
     // Create Columns
     NSTableColumn* column1 = [[NSTableColumn alloc] initWithIdentifier:@"Description"];
     [column1.headerCell setStringValue:@"Description"];
     NSTableColumn* column2 = [[NSTableColumn alloc] initWithIdentifier:@"Pass/Fail"];
+    [column2 setWidth:52.0];
     [column2.headerCell setStringValue:@"Pass/Fail"];
     NSTableColumn* column3 = [[NSTableColumn alloc] initWithIdentifier:@"Message"];
     [column3.headerCell setStringValue:@"Message"];
-    [column3 setWidth:500.0];
+    [column3 setWidth:200.0];
+    NSTableColumn* column4 = [[NSTableColumn alloc] initWithIdentifier:@"Expected"];
+    [column4 setWidth:200.0];
+    [column4.headerCell setStringValue:@"Expected"];
+    NSTableColumn* column5 = [[NSTableColumn alloc] initWithIdentifier:@"Actual"];
+    [column5.headerCell setStringValue:@"Actual"];
+    [column5 setWidth:200.0];
 
     [tableView addTableColumn:column1];
     [tableView addTableColumn:column2];
     [tableView addTableColumn:column3];
+    [tableView addTableColumn:column4];
+    [tableView addTableColumn:column5];
+    tableView.usesAutomaticRowHeights = YES;
+    tableView.usesAlternatingRowBackgroundColors = YES;
+
     [tableView setAllowsMultipleSelection:YES];
     [tableView reloadData];
 
@@ -252,7 +264,7 @@
     [resultsString setSelectable:NO];
 
     // setup the main content view for the window and add the controls to it.
-    NSView* resultsView = [[NSView alloc] initWithFrame:NSMakeRect(0, 0, 700, 450)];
+    NSView* resultsView = [[NSView alloc] initWithFrame:NSMakeRect(0, 0, 800, 450)];
 
     [results setContentView:resultsView];
 
@@ -309,11 +321,15 @@
     }
 }
 
-- (id)tableView:(NSTableView*)aTableView objectValueForTableColumn:(NSTableColumn*)aTableColumn row:(NSInteger)rowIndex
+- (NSView *)tableView:(NSTableView *)tableView viewForTableColumn:(NSTableColumn *)aTableColumn row:(NSInteger)rowIndex
 {
-
-    XVimTestCase* resultRow;
-
+    XVimTestCase * resultRow = nil;
+    NSTextField *cellView = [tableView makeViewWithIdentifier:aTableColumn.identifier owner:self];
+    if (!cellView) {
+        cellView = [NSTextField wrappingLabelWithString:@""];
+        cellView.editable = YES;
+    }
+    
     if (showPassing) {
         resultRow = (XVimTestCase*)[self.testCases objectAtIndex:(NSUInteger)rowIndex];
     }
@@ -321,18 +337,46 @@
         NSInteger index = [self getIndexOfNthFailingTestcase:rowIndex];
         resultRow = (XVimTestCase*)[self.testCases objectAtIndex:(NSUInteger)index];
     }
-
+    NSString *string = @"";
+    
+    if ([aTableColumn.identifier isEqualToString:@"Description"]
+        || [aTableColumn.identifier isEqualToString:@"Expected"]
+        || [aTableColumn.identifier isEqualToString:@"Actual"]
+        ) {
+        cellView.font = [NSFont userFixedPitchFontOfSize:11.0];
+    }
+    else {
+        cellView.font = [NSFont userFontOfSize:11.0];
+    }
+    
+    if ([aTableColumn.identifier isEqualToString:@"Pass/Fail"]) {
+        cellView.alignment = NSTextAlignmentCenter;
+        cellView.textColor = (resultRow.success ? NSColor.greenColor : NSColor.redColor);
+    }
+    else {
+        cellView.alignment = NSTextAlignmentLeft;
+        cellView.textColor = NSColor.labelColor;
+    }
+    
     if ([aTableColumn.identifier isEqualToString:@"Description"]) {
-        return [resultRow desc];
+        string = resultRow.desc;
     }
     else if ([aTableColumn.identifier isEqualToString:@"Pass/Fail"]) {
-        return resultRow.finished ? ((resultRow.success) ? @"Pass" : @"Fail") : @"Cancelled";
+        string = resultRow.finished ? ((resultRow.success) ? @"Pass" : @"Fail") : @"Cancelled";
     }
     else if ([aTableColumn.identifier isEqualToString:@"Message"]) {
-        return resultRow.message;
+        string = resultRow.message;
     }
-    return nil;
+    else if ([aTableColumn.identifier isEqualToString:@"Expected"]) {
+        string = [NSString stringWithFormat:@"'%@'", resultRow.expectedText];
+    }
+    else if ([aTableColumn.identifier isEqualToString:@"Actual"]) {
+        string = [NSString stringWithFormat:@"'%@'", resultRow.actualText];
+    }
+    cellView.stringValue = string;
+    return cellView;
 }
+
 
 - (NSInteger)getIndexOfNthFailingTestcase:(NSInteger)nth
 {
@@ -350,48 +394,9 @@
     return retval;
 }
 
-- (float)heightForString:(NSString*)myString withFont:(NSFont*)myFont withWidth:(float)myWidth
-{
-    NSTextStorage* textStorage = [[NSTextStorage alloc] initWithString:myString];
-    NSTextContainer* textContainer = [[NSTextContainer alloc] initWithContainerSize:NSMakeSize(myWidth, FLT_MAX)];
-    NSLayoutManager* layoutManager = [[NSLayoutManager alloc] init];
-    [layoutManager addTextContainer:textContainer];
-    [textStorage addLayoutManager:layoutManager];
-    [textStorage addAttribute:NSFontAttributeName value:myFont range:NSMakeRange(0, [textStorage length])];
-    [textContainer setLineFragmentPadding:0.0];
-
-    (void)[layoutManager glyphRangeForTextContainer:textContainer];
-    return [layoutManager usedRectForTextContainer:textContainer].size.height;
+-(CGFloat)tableView:(NSTableView *)tableView heightOfRow:(NSInteger)row {
+    return 200.0;
 }
-
-- (CGFloat)tableView:(NSTableView*)tv heightOfRow:(NSInteger)row
-{
-    NSFont* font;
-    NSTableColumn* column = [tv tableColumnWithIdentifier:@"Message"];
-    if (nil != column) {
-        NSCell* cell = (NSCell*)[column dataCell];
-        font = [NSFont fontWithName:@"Menlo" size:11];
-        [cell setFont:font]; // FIXME: This should not be done here.
-        float width = column.width;
-        NSString* msg;
-        if (showPassing) {
-            msg = ((XVimTestCase*)[self.testCases objectAtIndex:(NSUInteger)row]).message;
-        }
-        else {
-            NSInteger index = [self getIndexOfNthFailingTestcase:row];
-            if (index >= 0) {
-                msg = ((XVimTestCase*)[self.testCases objectAtIndex:(NSUInteger)index]).message;
-            }
-        }
-        if (nil == msg || [msg isEqualToString:@""]) {
-            msg = @" ";
-        }
-        float ret = [self heightForString:[msg stringByAppendingString:@"\n"] withFont:font withWidth:width];
-        return ret + 20;
-    }
-    return 13.0;
-}
-
 @end
 
 

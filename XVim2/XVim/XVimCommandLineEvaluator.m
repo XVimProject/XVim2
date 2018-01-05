@@ -29,7 +29,6 @@
     OnKeyPressHandler _onKeyPress;
     NSUInteger _historyNo;
 }
-@property (strong) id<SourceViewProtocol> lastTextView;
 @end
 
 @implementation XVimCommandLineEvaluator
@@ -47,7 +46,6 @@
         _onKeyPress = [keyPressHandler copy];
         _historyNo = 0;
         _evalutionResult = nil;
-        self.lastTextView = window.sourceView;
         XVimCommandField* commandField = window.commandLine.commandField;
         [commandField setString:firstLetter];
         [commandField moveToEndOfLine:self];
@@ -63,19 +61,19 @@
 
 - (void)becameHandler
 {
-    [self takeFocusFromWindow];
+    [self.window beginCommandEntry];
     [super becameHandler];
 }
 
 - (void)cancelHandler
 {
-    [self relinquishFocusToWindow];
+    [self.window endCommandEntry];
     [super cancelHandler];
 }
 
 - (void)didEndHandler
 {
-    [self relinquishFocusToWindow];
+    [self.window endCommandEntry];
     [super didEndHandler];
 }
 
@@ -96,21 +94,6 @@
     XVimEvaluator* ret = _onComplete(command, &result);
     self.evalutionResult = result;
     return ret;
-}
-
-- (void)takeFocusFromWindow
-{
-    XVimCommandField* commandField = self.window.commandLine.commandField;
-    [commandField setDelegate:self.window];
-    [[[self.window sourceView] window] makeFirstResponder:commandField];
-}
-
-- (void)relinquishFocusToWindow
-{
-    XVimCommandField* commandField = self.window.commandLine.commandField;
-    [commandField setDelegate:nil];
-    [[self.lastTextView window] makeFirstResponder:self.lastTextView.view];
-    [commandField setHidden:YES];
 }
 
 - (XVimEvaluator*)eval:(XVimKeyStroke*)keyStroke

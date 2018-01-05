@@ -6,16 +6,15 @@
 //  Copyright © 2017 Shuichiro Suzuki. All rights reserved.
 //
 
+#import <DVTFoundation/DVTTextPreferences.h>
+#import <DVTKit/DVTDocumentLocation.h>
 #import <Foundation/Foundation.h>
-#import <IDEKit/IDEWorkspaceWindow.h>
+#import <IDEKit/IDEEditorArea.h>
 #import <IDEKit/IDEEditorContext.h>
 #import <IDEKit/IDEEditorOpenSpecifier.h>
-#import <IDEKit/IDEEditorArea.h>
-#import <IDEKit/IDEWorkspaceWindowController.h>
 #import <IDEKit/IDEWorkspaceTabController.h>
-#import <IDEKit/IDEEditorOpenSpecifier.h>
-#import <DVTKit/DVTDocumentLocation.h>
-#import <DVTFoundation/DVTTextPreferences.h>
+#import <IDEKit/IDEWorkspaceWindow.h>
+#import <IDEKit/IDEWorkspaceWindowController.h>
 
 @class IDEWorkspaceWindow;
 @class IDEWorkspaceWindowController;
@@ -29,8 +28,8 @@
 IDEWorkspaceWindowController* XVimLastActiveWindowController(void);
 IDEWorkspaceTabController_XVim* XVimLastActiveWorkspaceTabController(void);
 IDEEditorArea* XVimLastActiveEditorArea(void);
-BOOL XVimOpenDocumentAtPath(NSString *path);
-IDEEditorOpenSpecifier *XVimOpenSpecifier(IDENavigableItem *item, id locationToSelect);
+BOOL XVimOpenDocumentAtPath(NSString* path);
+IDEEditorOpenSpecifier* XVimOpenSpecifier(IDENavigableItem* item, id locationToSelect);
 _TtC22IDEPegasusSourceEditor20SourceCodeEditorView* XVimLastActiveEditorView(void);
 SourceCodeEditorViewProxy* XVimLastActiveSourceView(void);
 
