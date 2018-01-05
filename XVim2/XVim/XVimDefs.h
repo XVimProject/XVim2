@@ -59,6 +59,16 @@ typedef enum {
     XVIM_VISUAL_BOTTOMRIGHT = 3,
 } XVIM_VISUAL_CORNER;
 
+typedef enum {
+    XVIM_SCROLL_TYPE_PAGE,
+    XVIM_SCROLL_TYPE_HALF_PAGE,
+    XVIM_SCROLL_TYPE_LINE,
+} XVIM_SCROLL_TYPE;
+
+typedef NS_ENUM(NSInteger, XVIM_SCROLL_DIRECTION) {
+    XVIM_SCROLL_DIRECTION_UP = -1,
+    XVIM_SCROLL_DIRECTION_DOWN = 1,
+};
 
 typedef NS_OPTIONS(NSUInteger, XVimSortOptions) {
     XVimSortOptionReversed = 1,
