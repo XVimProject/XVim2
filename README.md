@@ -67,7 +67,7 @@
 
 ### Manual uninstall 
 Delete the following directory:
-    $HOME/Library/Application\ Support/Developer/Shared/Xcode/Plug-ins/XVim.xcplugin
+    $HOME/Library/Application\ Support/Developer/Shared/Xcode/Plug-ins/XVim2.xcplugin
 
 ## Feature list
   See separate [FeatureList.md](Documents/Users/FeatureList.md)
