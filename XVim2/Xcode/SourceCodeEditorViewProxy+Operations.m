@@ -190,7 +190,7 @@
         newPos = [self xvim_indexOfLineNumber:sel.top column:sel.left];
     }
 
-    [self.xvimDelegate textView:self didDelete:self.lastYankedText withType:self.lastYankedType];
+    [self.xvimDelegate textView:self didDelete:self.lastYankedText withType:self.lastYankedType yanked:yank];
     [self xvim_changeSelectionMode:XVIM_VISUAL_NONE];
     if (newPos != NSNotFound) {
         [self xvim_moveCursor:newPos preserveColumn:NO];
