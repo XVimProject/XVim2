@@ -2,8 +2,8 @@
 
   XVim2是Xcode的Vim插件。该插件在提供Vim强大功能的同时完全不影响Xcode既有功能。
   
-  - Xcode 9 用户请按照本说明安装。
-  - Xcode 8 或者更早的用户可以使用 [XVim](https://github.com/XVimProject/XVim)。
+  - Xcode 9 用户请按照本说明安装。  
+  - Xcode 8 或者更早的用户可以使用 [XVim](https://github.com/XVimProject/XVim)。  
   - [Google XVim 开发者小组](https://groups.google.com/d/forum/xvim-developers) 已经创建。  
 
 ## 安装
@@ -58,16 +58,19 @@
  任何其他分支都是临时用于开发功能或错误修复的分支，最终它们都将被合并到'develop'分支中。  
  任何拉请求都应该被安排到'develop'分支。  
 
-## 卸载
-  ```bash
-  $ make uninstall
-  ```
+## 卸载  
 
-### 手动卸载
+```bash
+$ make uninstall
+```
+
+### 手动卸载  
+
 删除以下目录：  
     $HOME/Library/Application\ Support/Developer/Shared/Xcode/Plug-ins/XVim2.xcplugin
 
-## 特性清单
+## 特性清单  
+
   查看 [特性列表.md](Documents/Users/FeatureList.md)
 
 ## 错误报告
