@@ -33,7 +33,7 @@ extern NSString* const XVimDocumentPathKey;
 + (XVim*)instance;
 + (NSString*)xvimrc;
 @property (getter=isEnabled) BOOL enabled;
-@property (strong) NSMenuItem *enabledMenuItem;
+@property (strong) NSMenuItem* enabledMenuItem;
 @property (strong) XVimOptions* options;
 @property (strong) XVimSearch* searcher;
 @property (strong) XVimMotion* lastCharacterSearchMotion;

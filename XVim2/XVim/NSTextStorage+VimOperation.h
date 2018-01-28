@@ -11,12 +11,6 @@
 #import "XVimMotion.h"
 #import "XVimTextStoring.h"
 
-typedef enum {
-    XVimSortOptionReversed = 1,
-    XVimSortOptionRemoveDuplicateLines = 1 << 1,
-    XVimSortOptionNumericSort = 1 << 2,
-    XVimSortOptionIgnoreCase = 1 << 3
-} XVimSortOptions;
 
 /**
  VimOperation category on NSTextStorage

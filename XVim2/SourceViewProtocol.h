@@ -9,10 +9,11 @@
 #ifndef SourceViewProtocol_h
 #define SourceViewProtocol_h
 #import "XVimMotionOption.h"
+#import "XVimTextStoring.h"
 #import <AppKit/AppKit.h>
 #import <SourceEditor/_TtC12SourceEditor23SourceEditorUndoManager.h>
 
-typedef NS_ENUM(NSInteger, CursorStyle) { CursorStyleVerticalBar, CursorStyleBlock, CursorStyleUnderline };
+typedef NS_ENUM(char, CursorStyle) { CursorStyleVerticalBar, CursorStyleBlock, CursorStyleUnderline };
 
 @class XVimMotion;
 @class XVimCommandLine;
@@ -22,7 +23,7 @@ typedef NS_ENUM(NSInteger, CursorStyle) { CursorStyleVerticalBar, CursorStyleBlo
 - (void)textView:(id)view didDelete:(NSString*)deletedText withType:(TEXT_TYPE)type;
 @end
 
-@protocol SourceViewProtocol <NSObject, NSTextInputClient>
+@protocol SourceViewProtocol <NSObject>
 - (void)showCommandLine;
 - (void)hideCommandLine;
 - (BOOL)isShowingCommandLine;
@@ -34,6 +35,7 @@ typedef NS_ENUM(NSInteger, CursorStyle) { CursorStyleVerticalBar, CursorStyleBlo
 - (void)scrollPageBackward:(NSUInteger)numPages;
 - (void)showFindIndicatorForRange:(NSRange)arg1;
 - (void)selectionChanged:(NSNotification*)changeNotification;
+- (void)insertText:(id)string replacementRange:(NSRange)replacementRange;
 
 // Properties
 @property (nonatomic, getter=isEnabled) BOOL enabled;
@@ -64,9 +66,21 @@ typedef NS_ENUM(NSInteger, CursorStyle) { CursorStyleVerticalBar, CursorStyleBlo
 
 
 // XVim extensions
-@protocol SourceViewXVimProtocol <NSObject>
+@protocol SourceViewXVimProtocol <NSObject, XVimTextStoring>
+- (void)xvim_beginUndoGrouping;
+- (void)xvim_endUndoGrouping;
+
+// WARNING! xvim_endEditTransaction MUST be called on the main thread, after
+// xvim_beginEditTransaction, and during a single pass of the run-loop. So,
+// always use the macro EDIT_TRANSACTION_SCOPE instead of these calls
 - (void)xvim_beginEditTransaction;
 - (void)xvim_endEditTransaction;
+
+#define EDIT_TRANSACTION_SCOPE(_xvself)                                                                                \
+    [_xvself xvim_beginEditTransaction];                                                                               \
+    xvim_on_exit { [_xvself xvim_endEditTransaction]; };
+
+
 - (void)xvim_syncState;
 - (void)xvim_syncStateFromView;
 - (void)xvim_insert:(XVimInsertionPoint)mode blockColumn:(NSUInteger*)column blockLines:(XVimRange*)lines;
@@ -120,6 +134,7 @@ typedef NS_ENUM(NSInteger, CursorStyle) { CursorStyleVerticalBar, CursorStyleBlo
 
 // Mutate Operations
 @protocol SourceViewOperationsProtocol <NSObject>
+- (void)xvim_copymove:(XVimMotion*)motion withMotionPoint:(NSUInteger)motionPoint withInsertionPoint:(NSUInteger)insertionPoint after:(BOOL)after onlyCopy:(BOOL)onlyCopy;
 - (BOOL)xvim_delete:(XVimMotion*)motion withMotionPoint:(NSUInteger)motionPoint andYank:(BOOL)yank;
 - (BOOL)xvim_delete:(XVimMotion*)motion andYank:(BOOL)yank;
 - (void)xvim_insertText:(NSString*)str line:(NSUInteger)line column:(NSUInteger)column;
@@ -147,6 +162,7 @@ typedef NS_ENUM(NSInteger, CursorStyle) { CursorStyleVerticalBar, CursorStyleBlo
 - (void)xvim_filter:(XVimMotion*)motion;
 - (void)xvim_indentCharacterRange:(NSRange)range;
 - (BOOL)xvim_incrementNumber:(int64_t)offset;
+- (void)xvim_sortLinesFrom:(NSUInteger)line1 to:(NSUInteger)line2 withOptions:(XVimSortOptions)options;
 @end
 
 // Yank + Put

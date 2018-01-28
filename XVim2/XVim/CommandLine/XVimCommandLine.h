@@ -20,4 +20,5 @@
 - (NSUInteger)quickFixColWidth;
 #endif
 - (XVimCommandField*)commandField;
+@property (nonatomic, getter=isModeHidden) BOOL modeHidden;
 @end

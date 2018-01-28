@@ -65,6 +65,7 @@ static XVimEvaluator* _popEvaluator = nil;
     return self;
 }
 
+- (void)dealloc { [self endUndoGrouping]; }
 
 - (id<SourceViewProtocol>)sourceView { return self.window.sourceView; }
 
@@ -93,9 +94,17 @@ static XVimEvaluator* _popEvaluator = nil;
 
 - (void)becameHandler { self.sourceView.xvimDelegate = self; }
 
-- (void)cancelHandler { self.sourceView.xvimDelegate = nil; }
+- (void)cancelHandler
+{
+    self.sourceView.xvimDelegate = nil;
+    [self endUndoGrouping];
+}
 
-- (void)didEndHandler { self.sourceView.xvimDelegate = nil; }
+- (void)didEndHandler
+{
+    self.sourceView.xvimDelegate = nil;
+    [self endUndoGrouping];
+}
 
 - (XVimKeymap*)selectKeymapWithProvider:(id<XVimKeymapProvider>)keymapProvider
 {
@@ -240,6 +249,20 @@ static XVimEvaluator* _popEvaluator = nil;
                                                                             option:m.option];
                     }
                 }];
+}
+
+- (void)beginUndoGrouping
+{
+    self.beganUndoGrouping = YES;
+    [self.sourceView xvim_beginUndoGrouping];
+}
+
+- (void)endUndoGrouping
+{
+    if (self.beganUndoGrouping) {
+        [self.sourceView xvim_endUndoGrouping];
+        self.beganUndoGrouping = NO;
+    }
 }
 
 @end

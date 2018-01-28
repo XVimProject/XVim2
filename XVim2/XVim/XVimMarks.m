@@ -226,7 +226,7 @@ static NSString* FILE_MARKS = @"ABCDEFGHIJKLMNOPQRSTUVWXYZ";
 {
     NSAssert(aMark, @"Mark cannot be nil");
     // DEBUG_LOG( @"line[%d] keepjump[%d]", aMark.line, keepJumpMarkIndex );
-    
+
     NSMutableArray* aryDel = [NSMutableArray array];
     for (XVimMark* jump in _jumplist) {
         if (jump.line == aMark.line && [jump.document isEqualToString:aMark.document]) {

@@ -21,21 +21,29 @@ typedef NS_OPTIONS(unsigned, XVimSelectionModifiers) {
 typedef struct {
     NSUInteger row;
     NSUInteger col;
-} XVimSourceEditorPosition ;
+} XVimSourceEditorPosition;
 
-static inline
-XVimSourceEditorPosition XvimMakeSourceEditorPosition(NSUInteger row, NSUInteger col) {
-    XVimSourceEditorPosition pos = { .row=row, .col=col };
+static inline XVimSourceEditorPosition XvimMakeSourceEditorPosition(NSUInteger row, NSUInteger col)
+{
+    XVimSourceEditorPosition pos = {.row = row, .col = col };
     return pos;
 }
 typedef struct {
     XVimSourceEditorPosition pos1;
     XVimSourceEditorPosition pos2;
-} XVimSourceEditorRange ;
+} XVimSourceEditorRange;
 
-static inline
-XVimSourceEditorRange XvimMakeSourceEditorRange(XVimSourceEditorPosition pos1, XVimSourceEditorPosition pos2) {
-    XVimSourceEditorRange rng = { .pos1=pos1, .pos2=pos2 };
+
+static inline NSString* _Nonnull XVimSourceEditorRangeToString(XVimSourceEditorRange rng)
+{
+    return [NSString stringWithFormat:@"{ {row: %lu, col: %lu}, {row: %lu, col: %lu} }", rng.pos1.row, rng.pos1.col,
+                                      rng.pos2.row, rng.pos2.col];
+}
+
+static inline XVimSourceEditorRange XvimMakeSourceEditorRange(XVimSourceEditorPosition pos1,
+                                                              XVimSourceEditorPosition pos2)
+{
+    XVimSourceEditorRange rng = {.pos1 = pos1, .pos2 = pos2 };
     return rng;
 }
 
@@ -45,6 +53,7 @@ XVimSourceEditorRange XvimMakeSourceEditorRange(XVimSourceEditorPosition pos1, X
 // SourceEditorSelection is an internal class
 
 @protocol XVimTextViewDelegateProtocol;
+@class SourceCodeEditorViewWrapper, SourceEditorDataSourceWrapper;
 
 @interface SourceCodeEditorViewProxy : NSObject <SourceViewProtocol>
 @property (readonly) XVIM_VISUAL_MODE selectionMode;
@@ -57,18 +66,21 @@ XVimSourceEditorRange XvimMakeSourceEditorRange(XVimSourceEditorPosition pos1, X
 @property (readonly) XVimPosition selectionBeginPosition;
 @property (readonly) BOOL selectionToEOL;
 @property CURSOR_MODE cursorMode;
-@property (readonly) NSURL* documentURL;
+@property (readonly, nullable) NSURL* documentURL;
 @property (nonatomic) BOOL needsUpdateFoundRanges;
-@property (readonly) NSMutableArray* foundRanges;
+@property (readonly, nonnull) NSMutableArray* foundRanges;
 @property (readonly) NSInteger currentLineNumber;
-@property (strong) id<XVimTextViewDelegateProtocol> xvimDelegate;
-@property (readonly) XVimCommandLine* commandLine;
-@property (readonly) NSWindow* window;
-@property (strong) NSString * string;
+@property (strong, nullable) id<XVimTextViewDelegateProtocol> xvimDelegate;
+@property (readonly, nullable) XVimCommandLine* commandLine;
+@property (readonly, nullable) NSWindow* window;
+@property (strong, nonnull) NSString* string;
 @property BOOL xvim_lockSyncStateFromView;
-- (instancetype)initWithSourceCodeEditorView:(SourceCodeEditorView*)sourceEditorView;
+@property (strong, nullable) SourceCodeEditorViewWrapper* sourceCodeEditorViewWrapper;
+@property (readonly, nonatomic, nullable) SourceEditorDataSourceWrapper* sourceEditorDataSourceWrapper;
+- (nullable instancetype)initWithSourceCodeEditorView:(nonnull SourceCodeEditorView*)sourceEditorView;
 
 // Data source
+@property (readonly, nonatomic, nullable) id dataSource;
 - (NSUInteger)indexFromPosition:(XVimSourceEditorPosition)pos;
 - (XVimSourceEditorPosition)positionFromIndex:(NSUInteger)idx lineHint:(NSUInteger)line;
 
@@ -76,140 +88,140 @@ XVimSourceEditorRange XvimMakeSourceEditorRange(XVimSourceEditorPosition pos1, X
 - (NSRange)lineRangeForCharacterRange:(NSRange)arg1;
 - (NSRange)characterRangeForLineRange:(NSRange)arg1;
 - (NSUInteger)characterIndexForInsertionAtPoint:(CGPoint)arg1;
-- (void)mouseExited:(id)sender;
-- (void)mouseEntered:(id)sender;
-- (void)mouseMoved:(id)sender;
-- (void)rightMouseUp:(id)sender;
-- (void)mouseUp:(id)sender;
-- (void)mouseDragged:(id)sender;
-- (void)rightMouseDown:(id)sender;
-- (void)mouseDown:(id)sender;
-- (void)insertText:(id)sender;
-- (void)selectWord:(id)sender;
-- (void)selectLine:(id)sender;
-- (void)selectParagraph:(id)sender;
-- (void)selectAll:(id)sender;
-- (void)scrollToEndOfDocument:(id)sender;
-- (void)scrollToBeginningOfDocument:(id)sender;
-- (void)scrollLineDown:(id)sender;
-- (void)scrollLineUp:(id)sender;
-- (void)scrollPageDown:(id)sender;
-- (void)scrollPageUp:(id)sender;
-- (void)centerSelectionInVisibleArea:(id)sender;
-- (void)pageUpAndModifySelection:(id)sender;
-- (void)pageDownAndModifySelection:(id)sender;
-- (void)pageUp:(id)sender;
-- (void)pageDown:(id)sender;
-- (void)moveToEndOfDocumentAndModifySelection:(id)sender;
-- (void)moveToBeginningOfDocumentAndModifySelection:(id)sender;
-- (void)moveToEndOfDocument:(id)sender;
-- (void)moveToBeginningOfDocument:(id)sender;
-- (void)moveParagraphBackwardAndModifySelection:(id)sender;
-- (void)moveParagraphForwardAndModifySelection:(id)sender;
-- (void)moveToEndOfParagraphAndModifySelection:(id)sender;
-- (void)moveToBeginningOfParagraphAndModifySelection:(id)sender;
-- (void)moveToEndOfParagraph:(id)sender;
-- (void)moveToBeginningOfParagraph:(id)sender;
-- (void)moveToEndOfTextAndModifySelection:(id)sender;
-- (void)moveToEndOfText:(id)sender;
-- (void)moveToBeginningOfTextAndModifySelection:(id)sender;
-- (void)moveToBeginningOfText:(id)sender;
-- (void)moveToRightEndOfLineAndModifySelection:(id)sender;
-- (void)moveToLeftEndOfLineAndModifySelection:(id)sender;
-- (void)moveToRightEndOfLine:(id)sender;
-- (void)moveToLeftEndOfLine:(id)sender;
-- (void)moveToEndOfLineAndModifySelection:(id)sender;
-- (void)moveToBeginningOfLineAndModifySelection:(id)sender;
-- (void)moveToEndOfLine:(id)sender;
-- (void)moveToBeginningOfLine:(id)sender;
-- (void)moveExpressionBackwardAndModifySelection:(id)sender;
-- (void)moveExpressionForwardAndModifySelection:(id)sender;
-- (void)moveExpressionBackward:(id)sender;
-- (void)moveExpressionForward:(id)sender;
-- (void)moveSubWordBackwardAndModifySelection:(id)sender;
-- (void)moveSubWordForwardAndModifySelection:(id)sender;
-- (void)moveSubWordBackward:(id)sender;
-- (void)moveSubWordForward:(id)sender;
-- (void)moveWordLeftAndModifySelection:(id)sender;
-- (void)moveWordRightAndModifySelection:(id)sender;
-- (void)moveWordLeft:(id)sender;
-- (void)moveWordRight:(id)sender;
-- (void)moveWordBackwardAndModifySelection:(id)sender;
-- (void)moveWordForwardAndModifySelection:(id)sender;
-- (void)moveWordBackward:(id)sender;
-- (void)moveWordForward:(id)sender;
-- (void)moveDownAndModifySelection:(id)sender;
-- (void)moveUpAndModifySelection:(id)sender;
-- (void)moveDown:(id)sender;
-- (void)moveUp:(id)sender;
-- (void)moveLeftAndModifySelection:(id)sender;
-- (void)moveRightAndModifySelection:(id)sender;
-- (void)moveLeft:(id)sender;
-- (void)moveRight:(id)sender;
-- (void)moveBackwardAndModifySelection:(id)sender;
-- (void)moveForwardAndModifySelection:(id)sender;
-- (void)moveBackward:(id)sender;
-- (void)moveForward:(id)sender;
-- (void)unfoldAllComments:(id)sender;
-- (void)foldAllComments:(id)sender;
-- (void)unfoldAllMethods:(id)sender;
-- (void)foldAllMethods:(id)sender;
-- (void)unfoldAll:(id)sender;
-- (void)unfold:(id)sender;
-- (void)fold:(id)sender;
-- (void)balance:(id)sender;
-- (void)selectStructure:(id)sender;
-- (void)shiftRight:(id)sender;
-- (void)shiftLeft:(id)sender;
-- (void)indentSelection:(id)sender;
-- (void)moveCurrentLineDown:(id)sender;
-- (void)moveCurrentLineUp:(id)sender;
-- (void)complete:(id)sender;
-- (void)swapWithMark:(id)sender;
-- (void)selectToMark:(id)sender;
-- (void)deleteToMark:(id)sender;
-- (void)setMark:(id)sender;
-- (void)yankAndSelect:(id)sender;
-- (void)yank:(id)sender;
-- (void)capitalizeWord:(id)sender;
-- (void)lowercaseWord:(id)sender;
-- (void)uppercaseWord:(id)sender;
-- (void)transpose:(id)sender;
-- (void)deleteToEndOfText:(id)sender;
-- (void)deleteToBeginningOfText:(id)sender;
-- (void)deleteToEndOfParagraph:(id)sender;
-- (void)deleteToBeginningOfParagraph:(id)sender;
-- (void)deleteToEndOfLine:(id)sender;
-- (void)deleteToBeginningOfLine:(id)sender;
-- (void)deleteExpressionBackward:(id)sender;
-- (void)deleteExpressionForward:(id)sender;
-- (void)deleteSubWordBackward:(id)sender;
-- (void)deleteSubWordForward:(id)sender;
-- (void)deleteWordBackward:(id)sender;
-- (void)deleteWordForward:(id)sender;
-- (void)deleteBackwardByDecomposingPreviousCharacter:(id)sender;
-- (void)deleteBackward:(id)sender;
-- (void)deleteForward:(id)sender;
-- (void) delete:(id)sender;
-- (void)insertDoubleQuoteIgnoringSubstitution:(id)sender;
-- (void)insertSingleQuoteIgnoringSubstitution:(id)sender;
-- (void)insertContainerBreak:(id)sender;
-- (void)insertLineBreak:(id)sender;
-- (void)insertTabIgnoringFieldEditor:(id)sender;
-- (void)insertNewlineIgnoringFieldEditor:(id)sender;
-- (void)insertParagraphSeparator:(id)sender;
-- (void)insertNewline:(id)sender;
-- (void)insertBacktab:(id)sender;
-- (void)insertTab:(id)sender;
-- (void)flagsChanged:(id)sender;
-- (void)keyDown:(id)sender;
-- (void)concludeDragOperation:(id)sender;
-- (void)draggingExited:(id)sender;
-- (void)pasteAsPlainText:(id)sender;
-- (void)pasteAndPreserveFormatting:(id)sender;
-- (void)paste:(id)sender;
-- (void)cut:(id)sender;
-- (void)copy:(id)sender;
+- (void)mouseExited:(id _Nullable)sender;
+- (void)mouseEntered:(id _Nullable)sender;
+- (void)mouseMoved:(id _Nullable)sender;
+- (void)rightMouseUp:(id _Nullable)sender;
+- (void)mouseUp:(id _Nullable)sender;
+- (void)mouseDragged:(id _Nullable)sender;
+- (void)rightMouseDown:(id _Nullable)sender;
+- (void)mouseDown:(id _Nullable)sender;
+- (void)insertText:(id _Nullable)sender;
+- (void)selectWord:(id _Nullable)sender;
+- (void)selectLine:(id _Nullable)sender;
+- (void)selectParagraph:(id _Nullable)sender;
+- (void)selectAll:(id _Nullable)sender;
+- (void)scrollToEndOfDocument:(id _Nullable)sender;
+- (void)scrollToBeginningOfDocument:(id _Nullable)sender;
+- (void)scrollLineDown:(id _Nullable)sender;
+- (void)scrollLineUp:(id _Nullable)sender;
+- (void)scrollPageDown:(id _Nullable)sender;
+- (void)scrollPageUp:(id _Nullable)sender;
+- (void)centerSelectionInVisibleArea:(id _Nullable)sender;
+- (void)pageUpAndModifySelection:(id _Nullable)sender;
+- (void)pageDownAndModifySelection:(id _Nullable)sender;
+- (void)pageUp:(id _Nullable)sender;
+- (void)pageDown:(id _Nullable)sender;
+- (void)moveToEndOfDocumentAndModifySelection:(id _Nullable)sender;
+- (void)moveToBeginningOfDocumentAndModifySelection:(id _Nullable)sender;
+- (void)moveToEndOfDocument:(id _Nullable)sender;
+- (void)moveToBeginningOfDocument:(id _Nullable)sender;
+- (void)moveParagraphBackwardAndModifySelection:(id _Nullable)sender;
+- (void)moveParagraphForwardAndModifySelection:(id _Nullable)sender;
+- (void)moveToEndOfParagraphAndModifySelection:(id _Nullable)sender;
+- (void)moveToBeginningOfParagraphAndModifySelection:(id _Nullable)sender;
+- (void)moveToEndOfParagraph:(id _Nullable)sender;
+- (void)moveToBeginningOfParagraph:(id _Nullable)sender;
+- (void)moveToEndOfTextAndModifySelection:(id _Nullable)sender;
+- (void)moveToEndOfText:(id _Nullable)sender;
+- (void)moveToBeginningOfTextAndModifySelection:(id _Nullable)sender;
+- (void)moveToBeginningOfText:(id _Nullable)sender;
+- (void)moveToRightEndOfLineAndModifySelection:(id _Nullable)sender;
+- (void)moveToLeftEndOfLineAndModifySelection:(id _Nullable)sender;
+- (void)moveToRightEndOfLine:(id _Nullable)sender;
+- (void)moveToLeftEndOfLine:(id _Nullable)sender;
+- (void)moveToEndOfLineAndModifySelection:(id _Nullable)sender;
+- (void)moveToBeginningOfLineAndModifySelection:(id _Nullable)sender;
+- (void)moveToEndOfLine:(id _Nullable)sender;
+- (void)moveToBeginningOfLine:(id _Nullable)sender;
+- (void)moveExpressionBackwardAndModifySelection:(id _Nullable)sender;
+- (void)moveExpressionForwardAndModifySelection:(id _Nullable)sender;
+- (void)moveExpressionBackward:(id _Nullable)sender;
+- (void)moveExpressionForward:(id _Nullable)sender;
+- (void)moveSubWordBackwardAndModifySelection:(id _Nullable)sender;
+- (void)moveSubWordForwardAndModifySelection:(id _Nullable)sender;
+- (void)moveSubWordBackward:(id _Nullable)sender;
+- (void)moveSubWordForward:(id _Nullable)sender;
+- (void)moveWordLeftAndModifySelection:(id _Nullable)sender;
+- (void)moveWordRightAndModifySelection:(id _Nullable)sender;
+- (void)moveWordLeft:(id _Nullable)sender;
+- (void)moveWordRight:(id _Nullable)sender;
+- (void)moveWordBackwardAndModifySelection:(id _Nullable)sender;
+- (void)moveWordForwardAndModifySelection:(id _Nullable)sender;
+- (void)moveWordBackward:(id _Nullable)sender;
+- (void)moveWordForward:(id _Nullable)sender;
+- (void)moveDownAndModifySelection:(id _Nullable)sender;
+- (void)moveUpAndModifySelection:(id _Nullable)sender;
+- (void)moveDown:(id _Nullable)sender;
+- (void)moveUp:(id _Nullable)sender;
+- (void)moveLeftAndModifySelection:(id _Nullable)sender;
+- (void)moveRightAndModifySelection:(id _Nullable)sender;
+- (void)moveLeft:(id _Nullable)sender;
+- (void)moveRight:(id _Nullable)sender;
+- (void)moveBackwardAndModifySelection:(id _Nullable)sender;
+- (void)moveForwardAndModifySelection:(id _Nullable)sender;
+- (void)moveBackward:(id _Nullable)sender;
+- (void)moveForward:(id _Nullable)sender;
+- (void)unfoldAllComments:(id _Nullable)sender;
+- (void)foldAllComments:(id _Nullable)sender;
+- (void)unfoldAllMethods:(id _Nullable)sender;
+- (void)foldAllMethods:(id _Nullable)sender;
+- (void)unfoldAll:(id _Nullable)sender;
+- (void)unfold:(id _Nullable)sender;
+- (void)fold:(id _Nullable)sender;
+- (void)balance:(id _Nullable)sender;
+- (void)selectStructure:(id _Nullable)sender;
+- (void)shiftRight:(id _Nullable)sender;
+- (void)shiftLeft:(id _Nullable)sender;
+- (void)indentSelection:(id _Nullable)sender;
+- (void)moveCurrentLineDown:(id _Nullable)sender;
+- (void)moveCurrentLineUp:(id _Nullable)sender;
+- (void)complete:(id _Nullable)sender;
+- (void)swapWithMark:(id _Nullable)sender;
+- (void)selectToMark:(id _Nullable)sender;
+- (void)deleteToMark:(id _Nullable)sender;
+- (void)setMark:(id _Nullable)sender;
+- (void)yankAndSelect:(id _Nullable)sender;
+- (void)yank:(id _Nullable)sender;
+- (void)capitalizeWord:(id _Nullable)sender;
+- (void)lowercaseWord:(id _Nullable)sender;
+- (void)uppercaseWord:(id _Nullable)sender;
+- (void)transpose:(id _Nullable)sender;
+- (void)deleteToEndOfText:(id _Nullable)sender;
+- (void)deleteToBeginningOfText:(id _Nullable)sender;
+- (void)deleteToEndOfParagraph:(id _Nullable)sender;
+- (void)deleteToBeginningOfParagraph:(id _Nullable)sender;
+- (void)deleteToEndOfLine:(id _Nullable)sender;
+- (void)deleteToBeginningOfLine:(id _Nullable)sender;
+- (void)deleteExpressionBackward:(id _Nullable)sender;
+- (void)deleteExpressionForward:(id _Nullable)sender;
+- (void)deleteSubWordBackward:(id _Nullable)sender;
+- (void)deleteSubWordForward:(id _Nullable)sender;
+- (void)deleteWordBackward:(id _Nullable)sender;
+- (void)deleteWordForward:(id _Nullable)sender;
+- (void)deleteBackwardByDecomposingPreviousCharacter:(id _Nullable)sender;
+- (void)deleteBackward:(id _Nullable)sender;
+- (void)deleteForward:(id _Nullable)sender;
+- (void) delete:(id _Nullable)sender;
+- (void)insertDoubleQuoteIgnoringSubstitution:(id _Nullable)sender;
+- (void)insertSingleQuoteIgnoringSubstitution:(id _Nullable)sender;
+- (void)insertContainerBreak:(id _Nullable)sender;
+- (void)insertLineBreak:(id _Nullable)sender;
+- (void)insertTabIgnoringFieldEditor:(id _Nullable)sender;
+- (void)insertNewlineIgnoringFieldEditor:(id _Nullable)sender;
+- (void)insertParagraphSeparator:(id _Nullable)sender;
+- (void)insertNewline:(id _Nullable)sender;
+- (void)insertBacktab:(id _Nullable)sender;
+- (void)insertTab:(id _Nullable)sender;
+- (void)flagsChanged:(id _Nullable)sender;
+- (void)keyDown:(id _Nullable)sender;
+- (void)concludeDragOperation:(id _Nullable)sender;
+- (void)draggingExited:(id _Nullable)sender;
+- (void)pasteAsPlainText:(id _Nullable)sender;
+- (void)pasteAndPreserveFormatting:(id _Nullable)sender;
+- (void)paste:(id _Nullable)sender;
+- (void)cut:(id _Nullable)sender;
+- (void)copy:(id _Nullable)sender;
 - (void)showFindIndicatorForRange:(NSRange)arg1;
 
 - (NSRect)bounds;
@@ -219,10 +231,10 @@ XVimSourceEditorRange XvimMakeSourceEditorRange(XVimSourceEditorPosition pos1, X
 - (void)scrollRangeToVisible:(NSRange)arg1;
 @property (readonly) NSInteger linesPerPage;
 @property (readonly) NSInteger lineCount;
-- (void)insertText:(id)string replacementRange:(NSRange)replacementRange;
+- (void)insertText:(id _Nullable)string replacementRange:(NSRange)replacementRange;
 - (void)scrollPageBackward:(NSUInteger)numPages;
 - (void)scrollPageForward:(NSUInteger)numPages;
-- (void)setSelectedRanges:(NSArray<NSValue*>*)ranges
+- (void)setSelectedRanges:(nonnull NSArray<NSValue*>*)ranges
                      affinity:(NSSelectionAffinity)affinity
                stillSelecting:(BOOL)stillSelectingFlag;
 
@@ -237,13 +249,6 @@ XVimSourceEditorRange XvimMakeSourceEditorRange(XVimSourceEditorPosition pos1, X
 #import "SourceCodeEditorViewProxy+Yank.h"
 
 
-#define EDIT_TRANSACTION_SCOPE                                                                                         \
-    [self xvim_beginEditTransaction];                                                                                  \
-    xvim_on_exit                                                                                                       \
-    {                                                                                                                  \
-        [self xvim_endEditTransaction];                                                                                \
-    };
-
-#define IGNORE_SELECTION_UPDATES_SCOPE                                                                                         \
-    self.xvim_lockSyncStateFromView = YES; \
+#define IGNORE_SELECTION_UPDATES_SCOPE                                                                                 \
+    self.xvim_lockSyncStateFromView = YES;                                                                             \
     xvim_on_exit { self.xvim_lockSyncStateFromView = NO; };

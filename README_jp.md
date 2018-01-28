@@ -66,7 +66,7 @@
 ### 手動でのアンインストール
   以下のディレクトリを削除してください
 
-    $HOME/Library/Application\ Support/Developer/Shared/Xcode/Plug-ins/XVim.xcplugin
+    $HOME/Library/Application\ Support/Developer/Shared/Xcode/Plug-ins/XVim2.xcplugin
 
 ## 機能一覧
   別ファイルを参照ください。[FeatureList.md](Documents/Users/FeatureList.md)

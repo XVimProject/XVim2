@@ -89,7 +89,7 @@
     else {
         XVimSelection sel = [self _xvim_selectedBlock];
 
-        newPos = [self.textStorage xvim_indexOfLineNumber:sel.top column:sel.left];
+        newPos = [self xvim_indexOfLineNumber:sel.top column:sel.left];
         [self _xvim_yankSelection:sel];
     }
 
@@ -103,7 +103,7 @@
 
 - (void)xvim_put:(NSString*)text withType:(TEXT_TYPE)type afterCursor:(bool)after count:(NSUInteger)count
 {
-    EDIT_TRANSACTION_SCOPE
+    EDIT_TRANSACTION_SCOPE(self)
 
     TRACE_LOG(@"text:%@  type:%d   afterCursor:%d   count:%d", text, type, after, count);
     if (self.selectionMode != XVIM_VISUAL_NONE) {
@@ -163,11 +163,11 @@
         for (NSUInteger i = 0; i < lines.count; i++) {
             NSString* line = [lines objectAtIndex:i];
             NSUInteger targetLine = startLine + i;
-            NSUInteger head = [self.textStorage xvim_indexOfLineNumber:targetLine];
+            NSUInteger head = [self xvim_indexOfLineNumber:targetLine];
             if (NSNotFound == head) {
                 NSAssert(targetLine != 0, @"This should not be happen");
                 [self xvim_insertNewlineBelowLine:targetLine - 1];
-                head = [self.textStorage xvim_indexOfLineNumber:targetLine];
+                head = [self xvim_indexOfLineNumber:targetLine];
             }
             NSAssert(NSNotFound != head, @"Head of the target line must be found at this point");
 
@@ -176,7 +176,7 @@
             NSAssert(max != NSNotFound, @"Should not be NSNotFound");
             if (column > max) {
                 // If the line does not have enough column pad it with spaces
-                NSUInteger end = [self.textStorage xvim_endOfLine:head];
+                NSUInteger end = [self xvim_endOfLine:head];
 
                 [self _xvim_insertSpaces:column - max replacementRange:NSMakeRange(end, 0)];
             }
@@ -250,8 +250,8 @@
     self.lastYankedType = TEXT_TYPE_BLOCK;
 
     for (NSUInteger line = sel.top; line <= sel.bottom; line++) {
-        NSUInteger lpos = [ts xvim_indexOfLineNumber:line column:sel.left];
-        NSUInteger rpos = [ts xvim_indexOfLineNumber:line column:sel.right];
+        NSUInteger lpos = [self xvim_indexOfLineNumber:line column:sel.left];
+        NSUInteger rpos = [self xvim_indexOfLineNumber:line column:sel.right];
 
         /* if lpos points in the middle of a tab, split it and advance lpos */
         if (![ts isEOF:lpos] && [s characterAtIndex:lpos] == '\t') {
@@ -323,8 +323,8 @@
 
     for (NSUInteger line = sel.bottom; line >= sel.top; line--) {
         NSTextStorage* ts = self.textStorage;
-        NSUInteger lpos = [ts xvim_indexOfLineNumber:line column:sel.left];
-        NSUInteger rpos = [ts xvim_indexOfLineNumber:line column:sel.right];
+        NSUInteger lpos = [self xvim_indexOfLineNumber:line column:sel.left];
+        NSUInteger rpos = [self xvim_indexOfLineNumber:line column:sel.right];
         NSUInteger nspaces = 0;
 
         if ([ts isEOF:lpos]) {

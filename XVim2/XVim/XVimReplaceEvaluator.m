@@ -47,13 +47,13 @@
 - (void)didEndHandler
 {
     [super didEndHandler];
-    [self.sourceView xvim_endEditTransaction];
+    [self.sourceView xvim_endUndoGrouping];
 }
 
 - (void)becameHandler
 {
     [super becameHandler];
-    [self.sourceView xvim_beginEditTransaction];
+    [self.sourceView xvim_beginUndoGrouping];
 }
 
 - (XVimEvaluator*)eval:(XVimKeyStroke*)keyStroke
