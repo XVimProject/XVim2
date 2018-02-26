@@ -57,19 +57,9 @@
             break;
     }
 
-    NSPoint bottomPoint = NSMakePoint(0.0, self.contentSize.height);
-
-    NSInteger topLine =
-                [self lineRangeForCharacterRange:NSMakeRange([self characterIndexForInsertionAtPoint:NSZeroPoint], 0)]
-                            .location;
-    clamp(topLine, 0, self.lineCount - 1);
-
-    NSInteger bottomLine =
-                [self lineRangeForCharacterRange:NSMakeRange([self characterIndexForInsertionAtPoint:bottomPoint], 0)]
-                            .location;
-    clamp(bottomLine, 0, self.lineCount - 1);
-
-    NSInteger scrollToLine = (numScrollLines < 0) ? (topLine + numScrollLines) : (bottomLine + numScrollLines);
+    LineRange visibleLineRange = [self xvim_visibleLineRange];
+    
+    NSInteger scrollToLine = (numScrollLines < 0) ? (visibleLineRange.topLine + numScrollLines) : (visibleLineRange.bottomLine + numScrollLines);
     clamp(scrollToLine, 0, self.lineCount - 1);
 
     _auto scrollToCharRange = [self characterRangeForLineRange:NSMakeRange(scrollToLine, 1)];
@@ -89,22 +79,44 @@
     [self xvim_syncState];
 }
 
+typedef struct {
+    NSInteger topLine;
+    NSInteger bottomLine;
+} LineRange;
+
+// zero index
+- (LineRange)xvim_visibleLineRange
+{
+    NSPoint bottomPoint = NSMakePoint(0.0, self.contentSize.height);
+    
+    NSInteger topLine =
+    [self lineRangeForCharacterRange:NSMakeRange([self characterIndexForInsertionAtPoint:NSZeroPoint], 0)]
+    .location;
+    clamp(topLine, 0, self.lineCount - 1);
+    
+    NSInteger bottomLine =
+    [self lineRangeForCharacterRange:NSMakeRange([self characterIndexForInsertionAtPoint:bottomPoint], 0)]
+    .location;
+    clamp(bottomLine, 0, self.lineCount - 1);
+    
+    LineRange r;
+    r.topLine = topLine;
+    r.bottomLine = bottomLine;
+    return r;
+}
+
 - (void)xvim_scrollBottom:(NSUInteger)lineNumber firstNonblank:(BOOL)fnb
 { // zb / z-
-#ifdef TODO
-    [self xvim_scrollCommon_moveCursorPos:lineNumber firstNonblank:fnb];
-    NSScrollView* scrollView = [self enclosingScrollView];
-    NSTextContainer* container = [self textContainer];
-    NSRect glyphRect = [[self layoutManager] boundingRectForGlyphRange:NSMakeRange(self.insertionPoint, 0)
-                                                       inTextContainer:container];
-    NSPoint bottom = NSMakePoint(0.0f, NSMidY(glyphRect) + NSHeight(glyphRect) / 2.0f);
-    bottom.y -= NSHeight([[scrollView contentView] bounds]);
-    if (bottom.y < 0.0) {
-        bottom.y = 0.0;
-    }
-    [[scrollView contentView] scrollToPoint:bottom];
-    [scrollView reflectScrolledClipView:[scrollView contentView]];
-#endif
+    LineRange range = [self xvim_visibleLineRange];
+    NSUInteger currentLine = [self currentLineNumber];
+    NSInteger numScrollLines = (NSInteger)(currentLine - 1 - range.bottomLine);
+    
+    NSInteger scrollToLine = (numScrollLines < 0) ? (range.topLine + numScrollLines) : (range.bottomLine + numScrollLines);
+    clamp(scrollToLine, 0, self.lineCount - 1);
+    
+    _auto scrollToCharRange = [self characterRangeForLineRange:NSMakeRange(scrollToLine, 1)];
+    clamp(scrollToCharRange.location, 0, self.string.length);
+    [self scrollRangeToVisible:scrollToCharRange];
 }
 
 - (void)xvim_scrollCenter:(NSUInteger)lineNumber firstNonblank:(BOOL)fnb
@@ -122,16 +134,16 @@
 
 - (void)xvim_scrollTop:(NSUInteger)lineNumber firstNonblank:(BOOL)fnb
 { // zt / z<CR>
-#ifdef TODO
-    [self xvim_scrollCommon_moveCursorPos:lineNumber firstNonblank:fnb];
-    NSScrollView* scrollView = [self enclosingScrollView];
-    NSTextContainer* container = [self textContainer];
-    NSRect glyphRect = [[self layoutManager] boundingRectForGlyphRange:NSMakeRange(self.insertionPoint, 0)
-                                                       inTextContainer:container];
-    NSPoint top = NSMakePoint(0.0f, NSMidY(glyphRect) - NSHeight(glyphRect) / 2.0f);
-    [[scrollView contentView] scrollToPoint:top];
-    [scrollView reflectScrolledClipView:[scrollView contentView]];
-#endif
+    LineRange range = [self xvim_visibleLineRange];
+    NSUInteger currentLine = [self currentLineNumber];
+    NSInteger numScrollLines = (NSInteger)(currentLine - 1 - range.topLine);
+    
+    NSInteger scrollToLine = (numScrollLines < 0) ? (range.topLine + numScrollLines) : (range.bottomLine + numScrollLines);
+    clamp(scrollToLine, 0, self.lineCount - 1);
+    
+    _auto scrollToCharRange = [self characterRangeForLineRange:NSMakeRange(scrollToLine, 1)];
+    clamp(scrollToCharRange.location, 0, self.string.length);
+    [self scrollRangeToVisible:scrollToCharRange];
 }
 
 - (void)xvim_scrollTo:(NSUInteger)insertionPoint
