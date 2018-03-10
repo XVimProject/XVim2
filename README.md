@@ -1,4 +1,5 @@
-[\[日本語版\]](README_jp.md)
+[\[日本語版\]](README_jp.md)  
+[\[中文版\]](README_cn.md)
 
 # XVim2
 
