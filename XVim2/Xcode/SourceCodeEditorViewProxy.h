@@ -247,8 +247,3 @@ static inline XVimSourceEditorRange XvimMakeSourceEditorRange(XVimSourceEditorPo
 #import "SourceCodeEditorViewProxy+Scrolling.h"
 #import "SourceCodeEditorViewProxy+XVim.h"
 #import "SourceCodeEditorViewProxy+Yank.h"
-
-
-#define IGNORE_SELECTION_UPDATES_SCOPE                                                                                 \
-    self.xvim_lockSyncStateFromView = YES;                                                                             \
-    xvim_on_exit { self.xvim_lockSyncStateFromView = NO; };

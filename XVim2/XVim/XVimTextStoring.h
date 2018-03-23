@@ -76,7 +76,6 @@
 @protocol XVimTextStoring
 
 @property (nonatomic, readonly) NSString* xvim_string;
-
 @property (nonatomic, readonly) NSUInteger xvim_numberOfLines;
 
 #pragma mark Settings
@@ -243,8 +242,6 @@
 
 
 @end
-
-typedef NSTextStorage<XVimTextStoring> XVimTextStorage;
 
 #pragma mark Macros
 

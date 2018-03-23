@@ -5,19 +5,7 @@
 @class XVimKeyStroke;
 
 @interface _TtC22IDEPegasusSourceEditor20SourceCodeEditorView
-    : _TtC12SourceEditor16SourceEditorView // <DVTTextCompletionSupportingTextView, DVTSourceCodeLanguageEditorView,
-                                           // DVTMarkedScrollerDelegate>
-{
-    // Error parsing type: , name: hostingEditor
-    // Error parsing type: , name: completionController
-    // Error parsing type: , name: realCompletionsDataSource
-    // Error parsing type: , name: sharedFindStringNotificationToken
-    // Error parsing type: , name: sharedReplaceStringNotificationToken
-    // Error parsing type: , name: sharedFindOptionsNotificationToken
-    // Error parsing type: , name: isPullingFindConfiguration
-    // Error parsing type: , name: markedVerticalScroller
-    // Error parsing type: , name: updateMarkedVerticalScrollerContinuation.storage
-}
+    : _TtC12SourceEditor16SourceEditorView
 
 + (BOOL)appSupportsActionMonitoring;
 + (id)identifierCharacters;

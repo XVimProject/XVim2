@@ -122,18 +122,13 @@ static Logger* s_defaultLogger = nil;
     if (l < self.level) {
         return;
     }
-    NSDictionary* logLevelNames =
-                @{ @(LogTrace) : @"Trace",
-                   @(LogDebug) : @"Debug",
-                   @(LogError) : @"Error",
-                   @(LogFatal) : @"Fatal" };
     static NSDateFormatter* s_formatter = nil;
     if (s_formatter == nil) {
         s_formatter = [[NSDateFormatter alloc] init];
         [s_formatter setDateFormat:@"HH:mm:ss:SSS"];
     }
     NSString* sNow = [s_formatter stringFromDate:[NSDate date]];
-    NSString* fmt = [NSString stringWithFormat:@"[%@][%@]%@", logLevelNames[@(l)], sNow, format];
+    NSString* fmt = [NSString stringWithFormat:@"[%@]%@", sNow, format];
     [self write:fmt args:args];
 }
 

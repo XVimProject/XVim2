@@ -293,22 +293,25 @@ static id _startupObservation = nil;
     NSMenu* m = [[NSMenu alloc] initWithTitle:@"XVim"];
     [item setSubmenu:m];
 
-    NSMenuItem* subitem = [[NSMenuItem alloc] init];
-    subitem.title = @"Enable";
-    [subitem setEnabled:YES];
-    [subitem setState:NSOnState];
-    subitem.target = [XVim instance];
-    subitem.action = @selector(toggleXVim:);
-    subitem.representedObject = XVIM_MENU_TOGGLE_IDENTIFIER;
-    self.enabledMenuItem = subitem;
-    [m addItem:subitem];
-
-    subitem = [[NSMenuItem alloc] init];
-    subitem.title = @"About XVim";
-    [subitem setEnabled:YES];
-    subitem.target = [XVim class];
-    subitem.action = @selector(about:);
-    [m addItem:subitem];
+    {
+        NSMenuItem* subitem = [[NSMenuItem alloc] init];
+        subitem.title = @"Enable";
+        [subitem setEnabled:YES];
+        [subitem setState:NSOnState];
+        subitem.target = [XVim instance];
+        subitem.action = @selector(toggleXVim:);
+        subitem.representedObject = XVIM_MENU_TOGGLE_IDENTIFIER;
+        self.enabledMenuItem = subitem;
+        [m addItem:subitem];
+    }
+    {
+        NSMenuItem* subitem = [[NSMenuItem alloc] init];
+        subitem.title = @"About XVim";
+        [subitem setEnabled:YES];
+        subitem.target = [XVim class];
+        subitem.action = @selector(about:);
+        [m addItem:subitem];
+    }
 
     // Test cases
     if (self.options.debug) {

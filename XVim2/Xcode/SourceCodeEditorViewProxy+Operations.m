@@ -10,6 +10,7 @@
 #import "NSTextStorage+VimOperation.h"
 #import "SourceCodeEditorViewProxy+Operations.h"
 #import "SourceCodeEditorViewProxy+Yank.h"
+#import "SourceCodeEditorViewProxy+XVim.h"
 #import "XVim.h"
 #import "XVimMotion.h"
 #import "XVimOptions.h"
@@ -29,7 +30,6 @@
 - (NSRange)_xvim_getYankRange:(XVimMotion*)motion withRange:(XVimRange)to;
 - (XVimSelection)_xvim_selectedBlock;
 - (NSRange)_xvim_selectedRange;
-- (void)xvim_changeSelectionMode:(XVIM_VISUAL_MODE)mode;
 - (void)xvim_registerInsertionPointForUndo;
 - (void)xvim_registerPositionForUndo:(NSUInteger)pos;
 - (NSRange)xvim_currentNumber;
@@ -81,8 +81,8 @@
             motionPointLine += lineAdjustment;
         }
         // Delete the copied text
-        XVimRange to = [self xvim_getMotionRange:[self.textStorage xvim_indexOfLineNumber:motionPointLine] Motion:motion];
-        [self insertText:@"" replacementRange:[self _xvim_getDeleteRange:motion withRange:to]];
+        XVimRange to2 = [self xvim_getMotionRange:[self.textStorage xvim_indexOfLineNumber:motionPointLine] Motion:motion];
+        [self insertText:@"" replacementRange:[self _xvim_getDeleteRange:motion withRange:to2]];
         
         // Adjust the line of the last line of what we pasted, if required
         if(cursorLine>motionPointLine){ // cursorLine needs to be adjusted
@@ -113,7 +113,8 @@
     }
     NSUInteger newPos = NSNotFound;
 
-    EDIT_TRANSACTION_SCOPE(self)
+    [self xvim_beginEditTransaction];
+    xvim_on_exit { [self xvim_endEditTransaction]; };
 
     motion.info->deleteLastLine = NO;
     if (self.selectionMode == XVIM_VISUAL_NONE) {
@@ -353,7 +354,9 @@
 
 - (void)xvim_swapCaseForRange:(NSRange)range
 {
-    EDIT_TRANSACTION_SCOPE(self);
+    [self xvim_beginEditTransaction];
+    xvim_on_exit { [self xvim_endEditTransaction]; };
+
     NSString* text = self.string;
 
 
@@ -584,7 +587,8 @@
     if (motionPoint == 0 && self.string.length == 0) {
         return;
     }
-    EDIT_TRANSACTION_SCOPE(self);
+    [self xvim_beginEditTransaction];
+    xvim_on_exit { [self xvim_endEditTransaction]; };
 
     NSUInteger shiftWidth = self.textStorage.xvim_indentWidth;
     NSUInteger column = 0;
@@ -766,7 +770,7 @@
     NSRange characterRange = [self xvim_indexRangeForLines:NSMakeRange(line1, line2 - line1 + 1)];
     NSString* str = [self.string substringWithRange:characterRange];
 
-    NSMutableArray* lines =
+    NSMutableArray<NSString*>* lines =
                 [[str componentsSeparatedByCharactersInSet:[NSCharacterSet newlineCharacterSet]] mutableCopy];
     if ([[lines lastObject] length] == 0) {
         [lines removeLastObject];
@@ -791,10 +795,10 @@
     if (options & XVimSortOptionRemoveDuplicateLines) {
         NSMutableIndexSet* removeIndices = [NSMutableIndexSet indexSet];
         // At this point the lines are already sorted
-        [lines enumerateObjectsUsingBlock:^(NSString* str, NSUInteger idx, BOOL* stop) {
+        [lines enumerateObjectsUsingBlock:^(NSString* str2, NSUInteger idx, BOOL* stop) {
             if (idx < [lines count] - 1) {
                 NSString* nextStr = [lines objectAtIndex:idx + 1];
-                if ([str isEqualToString:nextStr]) {
+                if ([str2 isEqualToString:nextStr]) {
                     [removeIndices addIndex:idx + 1];
                 }
             }
@@ -806,7 +810,12 @@
     NSString* sortedLinesString = [[lines componentsJoinedByString:@"\n"] stringByAppendingString:@"\n"];
 
     {
-        IGNORE_SELECTION_UPDATES_SCOPE [self insertText:sortedLinesString replacementRange:characterRange];
+        self.xvim_lockSyncStateFromView = YES;
+        xvim_on_exit {
+            self.xvim_lockSyncStateFromView = NO;
+        };
+        
+        [self insertText:sortedLinesString replacementRange:characterRange];
     }
 
     self.insertionPoint = insertionAfterOperation;

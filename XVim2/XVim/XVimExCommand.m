@@ -1523,12 +1523,12 @@ xvim_ignore_warning_pop
                                                                                  nextMatchedRange.location
                                                                                              + nextMatchedRange.length
                                                                                              - matchedPos);
-                                              NSString* matchedToken = [arg.arg substringWithRange:matchedRange];
+                                              NSString* matchedToken2 = [arg.arg substringWithRange:matchedRange];
                                               // DEBUG_LOG(@"Modifiers at range %@ = %@",
                                               // NSStringFromRange(matchedRange), matchedToken );
-                                              for (NSUInteger modIdx = 1; modIdx < [matchedToken length];
+                                              for (NSUInteger modIdx = 1; modIdx < [matchedToken2 length];
                                                    modIdx++, modIdx++) {
-                                                  char modifier = (char)[matchedToken characterAtIndex:modIdx];
+                                                  char modifier = (char)[matchedToken2 characterAtIndex:modIdx];
                                                   switch (modifier) {
                                                   case 'p': // return full 'path' (expand tilde, etc.)
                                                       substituteValue = [substituteValue stringByStandardizingPath];

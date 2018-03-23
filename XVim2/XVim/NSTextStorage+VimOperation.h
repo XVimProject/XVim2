@@ -69,6 +69,8 @@
  **/
 
 @interface NSTextStorage (VimOperation) <XVimTextStoring>
+- (NSUInteger)xvim_columnOfIndex:(NSUInteger)index;
+- (NSUInteger)xvim_numberOfColumnsInLineAtIndex:(NSUInteger)index;
 
 #pragma mark Definitions
 

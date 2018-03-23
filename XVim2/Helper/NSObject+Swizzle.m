@@ -37,7 +37,7 @@ Method xvim_getClassSpecificInstanceMethod(Class aClass, SEL aSelector);
     [self xvim_swizzleClassMethod:origSel with:newSel of:self];
 }
 
-void xvim_methodAdd(Class targetClass, Class tempHolderClass, SEL targetSelector, BOOL skipIfMethodAlreadyPresent)
+static void xvim_methodAdd(Class targetClass, Class tempHolderClass, SEL targetSelector, BOOL skipIfMethodAlreadyPresent)
 {
     // Check for an existing method of the same name 'blocking' the new method
     Method origMethod __unused = xvim_getClassSpecificInstanceMethod(targetClass, targetSelector);
@@ -67,7 +67,7 @@ Method xvim_getClassSpecificInstanceMethod(Class aClass, SEL aSelector)
     return foundMethod;
 }
 
-void xvim_methodSwizzle(Class targetClass, Class tempHolderClass,
+static void xvim_methodSwizzle(Class targetClass, Class tempHolderClass,
                        SEL targetMethod, SEL swizzledSelector)
 {
     Method newMethod = class_getInstanceMethod(tempHolderClass, swizzledSelector);

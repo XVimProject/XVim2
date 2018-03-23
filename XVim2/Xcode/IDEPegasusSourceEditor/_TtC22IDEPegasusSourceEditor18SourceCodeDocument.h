@@ -23,45 +23,7 @@
 @protocol DVTCancellable;
 
 @interface _TtC22IDEPegasusSourceEditor18SourceCodeDocument
-    : IDEEditorDocument // <IDESourceCodeGenerationDestination, DVTSourceLanguagePrimaryCompletionStrategy,
-                        // IDESourceCodeDocument, IDEDocumentStructureProviding, DVTTextFindable, DVTTextReplacable,
-                        // IDEMediaLibraryDelegate, DVTSourceModelProvider>
-{
-    // Error parsing type: , name: identifier
-    // Error parsing type: , name: notifiesWhenClosing
-    // Error parsing type: , name: registeredEditors
-    // Error parsing type: , name: firstEditorWorkspaceObservingToken
-    // Error parsing type: , name: firstEditorWorkspaceBuildSettings
-    // Error parsing type: , name: variantContextForMediaLibrary
-    // Error parsing type: , name: variantForResolvingMediaResources
-    // Error parsing type: , name: firstEditorWorkspacePreferredIndexableIdentifiers
-    // Error parsing type: , name: activeSchemeObservingToken
-    // Error parsing type: , name: diagnosticsEnabledObservingToken
-    // Error parsing type: , name: activeSchemeBuildablesObservingToken
-    // Error parsing type: , name: dataSource
-    // Error parsing type: , name: languageServiceHostExtension.storage
-    // Error parsing type: , name: textEncoding
-    // Error parsing type: , name: lastEditTimestamp
-    // Error parsing type: , name: usesInferredLanguage
-    // Error parsing type: , name: language
-    // Error parsing type: , name: contentState
-    // Error parsing type: , name: contentStateObservers
-    // Error parsing type: , name: contentReadFromURL
-    // Error parsing type: , name: generatedContentContext
-    // Error parsing type: , name: currentGeneratedContentProvider
-    // Error parsing type: , name: currentGeneratedContentProviderDisplayNameObserver
-    // Error parsing type: , name: currentContentGenerationCoordinator
-    // Error parsing type: , name: sourceEditorDiagnosticManagerObserver
-    // Error parsing type: , name: sourceEditorDiagnosticManager.storage
-    // Error parsing type: , name: journal
-    // Error parsing type: , name: landmarkTimer
-    // Error parsing type: , name: _topLandmark
-    // Error parsing type: , name: inFlightExtensionCommandToken
-    // Error parsing type: , name: inFlightExtensionCommandTimer
-    // Error parsing type: , name: indentReplacements
-    // Error parsing type: , name: printInfo_.storage
-}
-
+    : IDEEditorDocument
 + (long long)topUndoGroupingLevel;
 //- (CDUnknownBlockType).cxx_destruct;
 //- (id)_classModelItemForClassNamed:(id)arg1 withConditionBlock:(CDUnknownBlockType)arg2;
