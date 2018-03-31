@@ -6,17 +6,6 @@
 
 #import <IDEKit/IDEEditorDocument.h>
 
-#if 0
-#import <IDEPegasusSourceEditor/DVTSourceLanguagePrimaryCompletionStrategy-Protocol.h>
-#import <IDEPegasusSourceEditor/DVTSourceModelProvider-Protocol.h>
-#import <IDEPegasusSourceEditor/DVTTextFindable-Protocol.h>
-#import <IDEPegasusSourceEditor/DVTTextReplacable-Protocol.h>
-#import <IDEPegasusSourceEditor/IDEDocumentStructureProviding-Protocol.h>
-#import <IDEPegasusSourceEditor/IDEMediaLibraryDelegate-Protocol.h>
-#import <IDEPegasusSourceEditor/IDESourceCodeDocument-Protocol.h>
-#import <IDEPegasusSourceEditor/IDESourceCodeGenerationDestination-Protocol.h>
-#endif
-
 @class DVTObservingToken, DVTSourceCodeLanguage, IDEMediaResourceVariantContext, NSArray, NSDictionary, NSPrintInfo,
             NSString, NSURL, _TtC18SourceModelSupport26SourceModelLanguageService,
             _TtC22IDEPegasusSourceEditor18SourceCodeLandmark;

@@ -1,12 +1,13 @@
 #import "XVimDefs.h"
-#import <IDEPegasusSourceEditor/_TtC22IDEPegasusSourceEditor16SourceCodeEditor.h>
-#import <SourceEditor/_TtC12SourceEditor16SourceEditorView.h>
+#import "_TtC22IDEPegasusSourceEditor16SourceCodeEditor.h"
+#import "_TtC12SourceEditor16SourceEditorView.h"
+#import "XVimXCode.h"
 
 @class XVimKeyStroke;
+@class XVimWindow;
+@class SourceCodeEditorViewProxy;
 
-@interface _TtC22IDEPegasusSourceEditor20SourceCodeEditorView
-    : _TtC12SourceEditor16SourceEditorView
-
+@interface _TtC22IDEPegasusSourceEditor20SourceCodeEditorView : _TtC12SourceEditor16SourceEditorView
 + (BOOL)appSupportsActionMonitoring;
 + (id)identifierCharacters;
 //- (CDUnknownBlockType).cxx_destruct;
@@ -53,8 +54,7 @@
 - (void)paste:(id)arg1;
 - (void)viewDidMoveToSuperview;
 - (void)dealloc;
-@property (nonatomic)
-            __weak _TtC22IDEPegasusSourceEditor16SourceCodeEditor* hostingEditor; // @synthesize hostingEditor;
+@property (nonatomic) __weak _TtC22IDEPegasusSourceEditor16SourceCodeEditor* hostingEditor; // @synthesize hostingEditor;
 - (void)selectionWillChange;
 - (id)initWithCoder:(id)arg1;
 - (id)initWithFrame:(struct CGRect)arg1;
@@ -62,47 +62,27 @@
 - (id)initWithFrame:(struct CGRect)arg1 sourceEditorScrollViewClass:(Class)arg2;
 // Remaining properties
 @property (nonatomic, readonly) BOOL currentlyDoingNonUserEditing;
-
-
 @end
 
 @interface _TtC22IDEPegasusSourceEditor20SourceCodeEditorView (IDEPegasusSourceEditor) // <DVTSourceModelProvider>
 - (id)sourceModel;
 @end
 
-@interface _TtC22IDEPegasusSourceEditor20SourceCodeEditorView (
-            IDEPegasusSourceEditor1) // <DVTSourceLandmarkItemContainer>
+@interface _TtC22IDEPegasusSourceEditor20SourceCodeEditorView (IDEPegasusSourceEditor1) // <DVTSourceLandmarkItemContainer>
 - (id)sourceLandmarkAtCharacterIndex:(unsigned long long)arg1;
 @end
 
-@interface _TtC22IDEPegasusSourceEditor20SourceCodeEditorView (
-            IDEPegasusSourceEditor2) // <DVTLineRangeCharacterRangeConverter>
+@interface _TtC22IDEPegasusSourceEditor20SourceCodeEditorView (IDEPegasusSourceEditor2) // <DVTLineRangeCharacterRangeConverter>
 - (struct _NSRange)lineRangeForCharacterRange:(struct _NSRange)arg1;
 - (struct _NSRange)characterRangeForLineRange:(struct _NSRange)arg1;
 @end
 
-@interface _TtC22IDEPegasusSourceEditor20SourceCodeEditorView (
-            IDEPegasusSourceEditor3) // <DVTCharacterRangeFrameConverter>
+@interface _TtC22IDEPegasusSourceEditor20SourceCodeEditorView (IDEPegasusSourceEditor3) // <DVTCharacterRangeFrameConverter>
 - (struct CGRect)frameForRange:(struct _NSRange)arg1 ignoreWhitespace:(BOOL)arg2;
 @end
 
-@interface _TtC22IDEPegasusSourceEditor20SourceCodeEditorView (
-            IDEPegasusSourceEditor4) // <DVTTextInsertionPointLocator>
+@interface _TtC22IDEPegasusSourceEditor20SourceCodeEditorView (IDEPegasusSourceEditor4) // <DVTTextInsertionPointLocator>
 - (unsigned long long)characterIndexForInsertionAtPoint:(struct CGPoint)arg1;
 @end
 
 
-typedef _TtC22IDEPegasusSourceEditor20SourceCodeEditorView SourceCodeEditorView;
-@class XVimWindow;
-
-@class SourceCodeEditorViewProxy;
-@interface _TtC22IDEPegasusSourceEditor20SourceCodeEditorView (XVim)
-+ (void)xvim_hook;
-@property (strong, readonly) XVimWindow* xvim_window;
-@end
-
-static NSString * const IDEPegasusSourceCodeEditorViewClassName = @"IDEPegasusSourceEditor.SourceCodeEditorView";
-
-@interface XVimIDEPegasusSourceEditorView : NSObject
-+(void)xvim_hook;
-@end

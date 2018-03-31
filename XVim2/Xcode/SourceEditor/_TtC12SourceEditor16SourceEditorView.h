@@ -319,16 +319,4 @@
 - (void)paste:(id)arg1;
 - (void)cut:(id)arg1;
 - (void)copy:(id)arg1;
-
-// Remaining properties
-// @property(nonatomic, readonly) BOOL flipped;
-
 @end
-
-typedef _TtC12SourceEditor16SourceEditorView SourceEditorView;
-
-@interface _TtC12SourceEditor16SourceEditorView(XVim)
--(void)xvim_keyDown:(NSEvent*)event;
-@end
-
-static NSString * const SourceEditorViewClassName = @"SourceEditor.SourceEditorView";

@@ -9,6 +9,7 @@
 #import "IDEPegasusSourceEditor/_TtC22IDEPegasusSourceEditor20SourceCodeEditorView.h"
 #import "SourceViewProtocol.h"
 #import <Foundation/Foundation.h>
+#import "XVimXcode.h"
 
 
 // Raw values for SourceEditor.SourceEditorSelectionModifiers

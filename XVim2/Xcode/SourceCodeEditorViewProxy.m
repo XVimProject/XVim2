@@ -15,10 +15,8 @@
 #import "XVimMotion.h"
 #import "rd_route.h"
 
-#import <IDEPegasusSourceEditor/_TtC22IDEPegasusSourceEditor16SourceCodeEditor.h>
-#import <IDEPegasusSourceEditor/_TtC22IDEPegasusSourceEditor18SourceCodeDocument.h>
-#import <SourceEditor/_TtC12SourceEditor23SourceEditorUndoManager.h>
-
+#import "_TtC22IDEPegasusSourceEditor18SourceCodeDocument.h"
+#import "_TtC12SourceEditor16SourceEditorView+XVim.h"
 
 @interface SourceCodeEditorViewProxy ()
 @property (weak) SourceCodeEditorView* sourceCodeEditorView;

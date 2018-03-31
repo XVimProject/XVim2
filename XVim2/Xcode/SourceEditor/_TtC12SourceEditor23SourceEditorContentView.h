@@ -91,6 +91,3 @@
 @property (nonatomic, readonly, getter=isFlipped) BOOL flipped;
 
 @end
-
-
-typedef _TtC12SourceEditor23SourceEditorContentView SourceEditorContentView;

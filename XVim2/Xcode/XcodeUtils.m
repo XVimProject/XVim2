@@ -10,7 +10,7 @@
 #import "IDEWorkspaceTabController+XVim.h"
 #import "XVimWindow.h"
 #import "_TtC22IDEPegasusSourceEditor20SourceCodeEditorView.h"
-
+#import "_TtC22IDEPegasusSourceEditor20SourceCodeEditorView+XVim.h"
 
 IDEWorkspaceWindowController* XVimLastActiveWindowController()
 {
@@ -24,7 +24,7 @@ IDEWorkspaceTabController_XVim* XVimLastActiveWorkspaceTabController()
 
 IDEEditorArea* XVimLastActiveEditorArea() { return [XVimLastActiveWindowController() editorArea]; }
 
-_TtC22IDEPegasusSourceEditor20SourceCodeEditorView* XVimLastActiveEditorView()
+SourceCodeEditorView* XVimLastActiveEditorView()
 {
     return (id)[[[[[[[XVimLastActiveEditorArea() lastActiveEditorContext] supplementalMainViewController] view]
                 subviews] objectAtIndex:0] subviews] objectAtIndex:0];

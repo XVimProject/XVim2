@@ -52,5 +52,3 @@
 @property (nonatomic, readonly, getter=isUndoing) BOOL undoing;
 
 @end
-
-typedef _TtC12SourceEditor23SourceEditorUndoManager SourceEditorUndoManager;

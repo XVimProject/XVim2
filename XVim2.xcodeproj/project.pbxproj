@@ -15,9 +15,9 @@
 		A2482F461F7251D000FEF4DE /* IDEFoundation in Frameworks */ = {isa = PBXBuildFile; fileRef = A2482F451F7251D000FEF4DE /* IDEFoundation */; };
 		A2482F4C1F725B6500FEF4DE /* StringUtil.m in Sources */ = {isa = PBXBuildFile; fileRef = A2482F4B1F725B6500FEF4DE /* StringUtil.m */; };
 		A26E5C801F514686000BCC66 /* XVim2.xcplugin in CopyFiles */ = {isa = PBXBuildFile; fileRef = A26E5C731F5145AB000BCC66 /* XVim2.xcplugin */; };
+		A2835A2B206FC12500332BFA /* XVimIDEPegasusSourceEditorView.m in Sources */ = {isa = PBXBuildFile; fileRef = A2835A2A206FC12500332BFA /* XVimIDEPegasusSourceEditorView.m */; };
 		A287A8C71F55D637009378BC /* NSObject+ExtraData.m in Sources */ = {isa = PBXBuildFile; fileRef = A287A8C61F55D636009378BC /* NSObject+ExtraData.m */; };
 		A2B52D3F1F514CC600D83C0A /* Logger.m in Sources */ = {isa = PBXBuildFile; fileRef = A2B52D3B1F514CC600D83C0A /* Logger.m */; };
-		A2B537A71F51C70000D83C0A /* _TtC22IDEPegasusSourceEditor20SourceCodeEditorView.m in Sources */ = {isa = PBXBuildFile; fileRef = A2B537A61F51C70000D83C0A /* _TtC22IDEPegasusSourceEditor20SourceCodeEditorView.m */; };
 		A2B537B11F51C94400D83C0A /* NSObject+Swizzle.m in Sources */ = {isa = PBXBuildFile; fileRef = A2B537B01F51C94400D83C0A /* NSObject+Swizzle.m */; };
 		ED0DED611F8C2CEC00886F6B /* XVimZEvaluator.m in Sources */ = {isa = PBXBuildFile; fileRef = ED0DED5D1F8C2CDD00886F6B /* XVimZEvaluator.m */; };
 		ED0DED621F8C2E1D00886F6B /* XVimGVisualEvaluator.m in Sources */ = {isa = PBXBuildFile; fileRef = ED0DED601F8C2CDF00886F6B /* XVimGVisualEvaluator.m */; };
@@ -128,6 +128,11 @@
 		A2482F4A1F725B6500FEF4DE /* StringUtil.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = StringUtil.h; sourceTree = "<group>"; };
 		A2482F4B1F725B6500FEF4DE /* StringUtil.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = StringUtil.m; sourceTree = "<group>"; };
 		A26E5C731F5145AB000BCC66 /* XVim2.xcplugin */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = XVim2.xcplugin; sourceTree = BUILT_PRODUCTS_DIR; };
+		A2835A28206FBFAC00332BFA /* XVimXcode.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = XVimXcode.h; sourceTree = "<group>"; };
+		A2835A29206FC12500332BFA /* XVimIDEPegasusSourceEditorView.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = XVimIDEPegasusSourceEditorView.h; path = XVim2/Xcode/XVimIDEPegasusSourceEditorView.h; sourceTree = SOURCE_ROOT; };
+		A2835A2A206FC12500332BFA /* XVimIDEPegasusSourceEditorView.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; name = XVimIDEPegasusSourceEditorView.m; path = XVim2/Xcode/XVimIDEPegasusSourceEditorView.m; sourceTree = SOURCE_ROOT; };
+		A2835A2C206FC5D400332BFA /* _TtC22IDEPegasusSourceEditor20SourceCodeEditorView+XVim.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "_TtC22IDEPegasusSourceEditor20SourceCodeEditorView+XVim.h"; sourceTree = "<group>"; };
+		A2835A2D206FC98200332BFA /* _TtC12SourceEditor16SourceEditorView+XVim.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "_TtC12SourceEditor16SourceEditorView+XVim.h"; sourceTree = "<group>"; };
 		A287A8C51F55D636009378BC /* NSObject+ExtraData.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "NSObject+ExtraData.h"; sourceTree = "<group>"; };
 		A287A8C61F55D636009378BC /* NSObject+ExtraData.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "NSObject+ExtraData.m"; sourceTree = "<group>"; };
 		A2B52D3A1F514CC600D83C0A /* Logger.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Logger.h; sourceTree = "<group>"; };
@@ -135,7 +140,6 @@
 		A2B52D3C1F514CC600D83C0A /* Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		A2B537361F51516C00D83C0A /* _TtC22IDEPegasusSourceEditor20SourceCodeEditorView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = _TtC22IDEPegasusSourceEditor20SourceCodeEditorView.h; sourceTree = "<group>"; };
 		A2B5378E1F51516C00D83C0A /* _TtC12SourceEditor16SourceEditorView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = _TtC12SourceEditor16SourceEditorView.h; sourceTree = "<group>"; };
-		A2B537A61F51C70000D83C0A /* _TtC22IDEPegasusSourceEditor20SourceCodeEditorView.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = _TtC22IDEPegasusSourceEditor20SourceCodeEditorView.m; sourceTree = "<group>"; };
 		A2B537A91F51C89A00D83C0A /* SourceEditor */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; name = SourceEditor; path = ../SharedFrameworks/SourceEditor.framework/Versions/A/SourceEditor; sourceTree = DEVELOPER_DIR; };
 		A2B537AD1F51C8D200D83C0A /* IDEPegasusSourceEditor */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; name = IDEPegasusSourceEditor; path = ../PlugIns/IDEPegasusSourceEditor.ideplugin/Contents/MacOS/IDEPegasusSourceEditor; sourceTree = DEVELOPER_DIR; };
 		A2B537AF1F51C94400D83C0A /* NSObject+Swizzle.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "NSObject+Swizzle.h"; sourceTree = "<group>"; };
@@ -235,9 +239,6 @@
 		ED6B8E4A1F80F896002F4A47 /* NSTextStorage+VimOperation.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = "NSTextStorage+VimOperation.m"; sourceTree = "<group>"; };
 		ED6B8E4D1F80F896002F4A47 /* NSTextStorage+VimOperation.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "NSTextStorage+VimOperation.h"; sourceTree = "<group>"; };
 		ED6B8E4F1F80F8E6002F4A47 /* XVimTextStoring.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = XVimTextStoring.h; sourceTree = "<group>"; };
-		ED6B8E531F812136002F4A47 /* SourceEditorDataSource.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = SourceEditorDataSource.h; sourceTree = "<group>"; };
-		ED6B8E541F812646002F4A47 /* SourceEditorPosition.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SourceEditorPosition.h; sourceTree = "<group>"; };
-		ED6B8E551F8126BF002F4A47 /* SourceEditorView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SourceEditorView.h; sourceTree = "<group>"; };
 		ED6BCEE01F83F018003517EB /* XVimJoinEvaluator.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = XVimJoinEvaluator.h; sourceTree = "<group>"; };
 		ED6BCEE11F83F019003517EB /* XVimJoinEvaluator.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = XVimJoinEvaluator.m; sourceTree = "<group>"; };
 		ED85683D1F80053D008494BB /* _TtC22IDEPegasusSourceEditor16SourceCodeEditor.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = _TtC22IDEPegasusSourceEditor16SourceCodeEditor.h; sourceTree = "<group>"; };
@@ -416,6 +417,7 @@
 		A2B537A51F51B87A00D83C0A /* Xcode */ = {
 			isa = PBXGroup;
 			children = (
+				A2835A28206FBFAC00332BFA /* XVimXcode.h */,
 				ED0DED781F8C40A300886F6B /* DVTFoundation */,
 				ED6331B61F836D1F00E9E6B0 /* IDEWorkspaceTabController+XVim.h */,
 				ED6331B91F836D2000E9E6B0 /* IDEWorkspaceTabController+XVim.m */,
@@ -462,10 +464,8 @@
 				ED91B6111F8D2D180000DD67 /* SourceEditorScrollView.h */,
 				ED91B60E1F8D1B2E0000DD67 /* _TtC12SourceEditor23SourceEditorContentView.h */,
 				ED2521551F851C7300622B6A /* _TtC12SourceEditor23SourceEditorUndoManager.h */,
-				ED6B8E551F8126BF002F4A47 /* SourceEditorView.h */,
-				ED6B8E541F812646002F4A47 /* SourceEditorPosition.h */,
-				ED6B8E531F812136002F4A47 /* SourceEditorDataSource.h */,
 				A2B5378E1F51516C00D83C0A /* _TtC12SourceEditor16SourceEditorView.h */,
+				A2835A2D206FC98200332BFA /* _TtC12SourceEditor16SourceEditorView+XVim.h */,
 			);
 			path = SourceEditor;
 			sourceTree = "<group>";
@@ -573,7 +573,9 @@
 				ED85683D1F80053D008494BB /* _TtC22IDEPegasusSourceEditor16SourceCodeEditor.h */,
 				ED8568451F800C3F008494BB /* _TtC22IDEPegasusSourceEditor18SourceCodeDocument.h */,
 				A2B537361F51516C00D83C0A /* _TtC22IDEPegasusSourceEditor20SourceCodeEditorView.h */,
-				A2B537A61F51C70000D83C0A /* _TtC22IDEPegasusSourceEditor20SourceCodeEditorView.m */,
+				A2835A2C206FC5D400332BFA /* _TtC22IDEPegasusSourceEditor20SourceCodeEditorView+XVim.h */,
+				A2835A29206FC12500332BFA /* XVimIDEPegasusSourceEditorView.h */,
+				A2835A2A206FC12500332BFA /* XVimIDEPegasusSourceEditorView.m */,
 			);
 			path = IDEPegasusSourceEditor;
 			sourceTree = "<group>";
@@ -846,6 +848,7 @@
 				EDF010671F6EEFFC00461B2C /* XVimArgumentEvaluator.m in Sources */,
 				EDF010741F6EF05E00461B2C /* NSEvent+VimHelper.m in Sources */,
 				ED240B7C1F9DEB5300D03CD4 /* SourceCodeEditorViewWrapper.s in Sources */,
+				A2835A2B206FC12500332BFA /* XVimIDEPegasusSourceEditorView.m in Sources */,
 				EDEF0F241F84DB570087D30B /* XVimShiftEvaluator.m in Sources */,
 				ED548FD51F827B9D00A8069D /* SourceCodeEditorViewProxy+Yank.m in Sources */,
 				ED6331BA1F836D2100E9E6B0 /* IDEWorkspaceTabController+XVim.m in Sources */,
@@ -859,7 +862,6 @@
 				ED60EB871F82E4D4000CBF9C /* XVimTildeEvaluator.m in Sources */,
 				ED1286521F90B203007B6FC7 /* XVimAboutDialog.m in Sources */,
 				A2482F311F72435D00FEF4DE /* ProcessRunner.m in Sources */,
-				A2B537A71F51C70000D83C0A /* _TtC22IDEPegasusSourceEditor20SourceCodeEditorView.m in Sources */,
 				EDF010681F6EEFFC00461B2C /* XVimEvaluator.m in Sources */,
 				EDB7F6031F6D8CE5007E0C41 /* rd_route.c in Sources */,
 				ED0DED821F8C444800886F6B /* NSColor+Extra.m in Sources */,

@@ -6,22 +6,6 @@
 
 #import <IDEKit/IDEEditor.h>
 
-#if 0
-#import <IDEPegasusSourceEditor/DVTColorLiteralQuickEditViewControllerDelegate-Protocol.h>
-#import <IDEPegasusSourceEditor/DVTFileLiteralQuickEditViewControllerDelegate-Protocol.h>
-#import <IDEPegasusSourceEditor/DVTImageLiteralQuickEditViewControllerDelegate-Protocol.h>
-#import <IDEPegasusSourceEditor/IDEAnalyzerResultsHostingEditor-Protocol.h>
-#import <IDEPegasusSourceEditor/IDEJumpToLineDestination-Protocol.h>
-#import <IDEPegasusSourceEditor/IDEPathCellDelegate-Protocol.h>
-#import <IDEPegasusSourceEditor/IDEQuickHelpDataContextService-Protocol.h>
-#import <IDEPegasusSourceEditor/IDESingleFileCommandSupportingEditor-Protocol.h>
-#import <IDEPegasusSourceEditor/IDESourceExpressionSource-Protocol.h>
-#import <IDEPegasusSourceEditor/IDETestingSelection-Protocol.h>
-#import <IDEPegasusSourceEditor/NSMenuDelegate-Protocol.h>
-#import <IDEPegasusSourceEditor/NSTouchBarDelegate-Protocol.h>
-#import <IDEPegasusSourceEditor/_TtP9DVTMarkup28PlaygroundMarkupViewDelegate_-Protocol.h>
-#endif
-
 
 @class DVTAnnotationManager, DVTNotificationToken, DVTObservingToken, DVTSDK, DVTScopeBarController,
             DVTSourceExpression, IDEAnalyzerResultsExplorer, IDEIssueManager, IDESchemeActionCodeCoverageFile, NSBox,
@@ -319,6 +303,3 @@
 
 @end
 
-typedef _TtC22IDEPegasusSourceEditor16SourceCodeEditor SourceCodeEditor;
-
-static NSString * const IDEPegasusSourceCodeEditorClassName = @"IDEPegasusSourceEditor.SourceCodeEditorView";
