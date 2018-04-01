@@ -9,10 +9,6 @@
 /* Begin PBXBuildFile section */
 		A2482F311F72435D00FEF4DE /* ProcessRunner.m in Sources */ = {isa = PBXBuildFile; fileRef = A2482F2E1F72435D00FEF4DE /* ProcessRunner.m */; };
 		A2482F321F72435D00FEF4DE /* XVimTaskRunner.m in Sources */ = {isa = PBXBuildFile; fileRef = A2482F301F72435D00FEF4DE /* XVimTaskRunner.m */; };
-		A2482F401F7251A100FEF4DE /* DVTKit in Frameworks */ = {isa = PBXBuildFile; fileRef = A2482F3F1F7251A100FEF4DE /* DVTKit */; };
-		A2482F421F7251AF00FEF4DE /* DVTFoundation in Frameworks */ = {isa = PBXBuildFile; fileRef = A2482F411F7251AF00FEF4DE /* DVTFoundation */; };
-		A2482F441F7251C400FEF4DE /* IDEKit in Frameworks */ = {isa = PBXBuildFile; fileRef = A2482F431F7251C400FEF4DE /* IDEKit */; };
-		A2482F461F7251D000FEF4DE /* IDEFoundation in Frameworks */ = {isa = PBXBuildFile; fileRef = A2482F451F7251D000FEF4DE /* IDEFoundation */; };
 		A2482F4C1F725B6500FEF4DE /* StringUtil.m in Sources */ = {isa = PBXBuildFile; fileRef = A2482F4B1F725B6500FEF4DE /* StringUtil.m */; };
 		A26E5C801F514686000BCC66 /* XVim2.xcplugin in CopyFiles */ = {isa = PBXBuildFile; fileRef = A26E5C731F5145AB000BCC66 /* XVim2.xcplugin */; };
 		A287A8C71F55D637009378BC /* NSObject+ExtraData.m in Sources */ = {isa = PBXBuildFile; fileRef = A287A8C61F55D636009378BC /* NSObject+ExtraData.m */; };
@@ -371,10 +367,6 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				A2482F401F7251A100FEF4DE /* DVTKit in Frameworks */,
-				A2482F441F7251C400FEF4DE /* IDEKit in Frameworks */,
-				A2482F421F7251AF00FEF4DE /* DVTFoundation in Frameworks */,
-				A2482F461F7251D000FEF4DE /* IDEFoundation in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
