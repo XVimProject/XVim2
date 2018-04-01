@@ -115,7 +115,7 @@ typedef NS_ENUM(char, CursorStyle) { CursorStyleVerticalBar, CursorStyleBlock, C
 
 // Scrolling
 @protocol SourceViewScrollingProtocol <NSObject>
-- (void)xvim_scroll:(CGFloat)ratio count:(NSUInteger)count;
+- (void)xvim_scroll:(XVIM_SCROLL_TYPE)type direction:(XVIM_SCROLL_DIRECTION)direction count:(NSUInteger)count;
 - (void)xvim_pageForward:(NSUInteger)index count:(NSUInteger)count;
 - (void)xvim_pageBackward:(NSUInteger)index count:(NSUInteger)count;
 - (void)xvim_halfPageForward:(NSUInteger)index count:(NSUInteger)count;

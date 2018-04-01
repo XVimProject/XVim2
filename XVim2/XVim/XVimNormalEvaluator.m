@@ -210,6 +210,11 @@
     return nil;
 }
 
+- (XVimEvaluator*)C_y {
+    [[self sourceView] xvim_scrollLineBackward:[self numericArg]];
+    return nil;
+}
+
 
 // MOTION
 #pragma mark - MOTION
@@ -554,11 +559,6 @@
 }
 
 
-
-- (XVimEvaluator*)C_y{
-    [[self sourceView] xvim_scrollLineBackward:[self numericArg]];
-    return nil;
-}
 
 - (XVimEvaluator*)AT{
     if( [XVim instance].isExecuting ){

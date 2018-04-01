@@ -278,6 +278,12 @@ static NSString* MODE_STRINGS[] = { @"", @"-- VISUAL --", @"-- VISUAL LINE --", 
     return [self d];
 }
 
+- (XVimEvaluator*)C_e
+{
+    [[self sourceView] xvim_scrollLineForward:[self numericArg]];
+    return self;
+}
+
 - (XVimEvaluator*)C_f
 {
     [[self sourceView] xvim_scrollPageForward:[self numericArg]];
@@ -460,6 +466,12 @@ static NSString* MODE_STRINGS[] = { @"", @"-- VISUAL --", @"-- VISUAL LINE --", 
         [self.sourceView xvim_changeSelectionMode:XVIM_VISUAL_LINE];
     }
     return [self y];
+}
+
+- (XVimEvaluator*)C_y
+{
+    [[self sourceView] xvim_scrollLineBackward:[self numericArg]];
+    return self;
 }
 
 - (XVimEvaluator*)DQUOTE
