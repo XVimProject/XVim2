@@ -25,9 +25,9 @@
   
   If this doesn't show your Xcode application path, use `xcode-select -s` to set.
   
-  4. make
+  4. `make`
   ```bash
-  $ make
+  $ cd XVim2; make
   ```
 
   If you see something like 
@@ -67,7 +67,7 @@
 
 ### Manual uninstall 
 Delete the following directory:
-    $HOME/Library/Application\ Support/Developer/Shared/Xcode/Plug-ins/XVim.xcplugin
+    $HOME/Library/Application\ Support/Developer/Shared/Xcode/Plug-ins/XVim2.xcplugin
 
 ## Feature list
   See separate [FeatureList.md](Documents/Users/FeatureList.md)

@@ -282,7 +282,8 @@ static inline BOOL xvim_horizontallyStackingModeForMode(GeniusLayoutMode mode)
         // change window focus.
         IDEEditorVersionsMode* mode = (IDEEditorVersionsMode*)[editorArea editorModeViewController];
         IDEComparisonEditorSubmode* submode = mode.comparisonEditorSubmode;
-        [submode.primaryEditor takeFocus];
+        // XCODE93
+        //[submode.primaryEditor takeFocus];
         // set current line number
         // XVimMotion* motion = XVIM_MAKE_MOTION(MOTION_LINENUMBER, LINEWISE, LEFT_RIGHT_NOWRAP, 1);
         // motion.line = line_number;
@@ -328,7 +329,8 @@ static inline BOOL xvim_horizontallyStackingModeForMode(GeniusLayoutMode mode)
         // change window focus.
         IDEEditorVersionsMode* mode = (IDEEditorVersionsMode*)[editorArea editorModeViewController];
         IDEComparisonEditorSubmode* submode = mode.comparisonEditorSubmode;
-        [submode.secondaryEditor takeFocus];
+        // XCODE93
+        //[submode.secondaryEditor takeFocus];
         // set current line number
         // XVimMotion* motion = XVIM_MAKE_MOTION(MOTION_LINENUMBER, LINEWISE, LEFT_RIGHT_NOWRAP, 1);
         // motion.line = line_number;

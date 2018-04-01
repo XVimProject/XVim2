@@ -6,6 +6,8 @@
 //  Copyright (c) 2012 __MyCompanyName__. All rights reserved.
 //
 
+#import "XVimDefs.h"
+
 typedef NS_OPTIONS(NSUInteger, MOTION_OPTION) {
     MOTION_OPTION_NONE = 0x00,
     LEFT_RIGHT_WRAP = 0x01,

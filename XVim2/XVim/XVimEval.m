@@ -62,12 +62,12 @@
             // double quatation string : "abc.."
             ++index;
             while (index < instr.length) {
-                unichar uc = [instr characterAtIndex:index];
-                if (uc == '"') {
+                unichar uc2 = [instr characterAtIndex:index];
+                if (uc2 == '"') {
                     ++index;
                     break;
                 }
-                [evaled appendFormat:@"%C", uc];
+                [evaled appendFormat:@"%C", uc2];
                 ++index;
             }
         }
@@ -84,13 +84,13 @@
             // begin function
             NSMutableString* cmd = [NSMutableString stringWithFormat:@""];
             while (index < instr.length) {
-                unichar uc = [instr characterAtIndex:index];
-                if (uc == ')') {
-                    [cmd appendFormat:@"%C", uc];
+                unichar uc2 = [instr characterAtIndex:index];
+                if (uc2 == ')') {
+                    [cmd appendFormat:@"%C", uc2];
                     ++index;
                     break;
                 }
-                [cmd appendFormat:@"%C", uc];
+                [cmd appendFormat:@"%C", uc2];
                 ++index;
             }
             XVimEvalArg* evalarg = [[XVimEvalArg alloc] init];

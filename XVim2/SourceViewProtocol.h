@@ -11,7 +11,7 @@
 #import "XVimMotionOption.h"
 #import "XVimTextStoring.h"
 #import <AppKit/AppKit.h>
-#import <SourceEditor/_TtC12SourceEditor23SourceEditorUndoManager.h>
+#import "_TtC12SourceEditor23SourceEditorUndoManager.h"
 
 typedef NS_ENUM(char, CursorStyle) { CursorStyleVerticalBar, CursorStyleBlock, CursorStyleUnderline };
 
@@ -42,7 +42,7 @@ typedef NS_ENUM(char, CursorStyle) { CursorStyleVerticalBar, CursorStyleBlock, C
 @property NSRange selectedRange;
 @property (readonly) NSString* string;
 @property (readonly) XVIM_VISUAL_MODE selectionMode;
-@property (readonly) SourceEditorUndoManager* undoManager;
+@property (readonly) _TtC12SourceEditor23SourceEditorUndoManager* undoManager;
 @property (strong) id<XVimTextViewDelegateProtocol> xvimDelegate;
 @property CURSOR_MODE cursorMode;
 @property (readonly) NSUInteger insertionPoint;
@@ -75,11 +75,6 @@ typedef NS_ENUM(char, CursorStyle) { CursorStyleVerticalBar, CursorStyleBlock, C
 // always use the macro EDIT_TRANSACTION_SCOPE instead of these calls
 - (void)xvim_beginEditTransaction;
 - (void)xvim_endEditTransaction;
-
-#define EDIT_TRANSACTION_SCOPE(_xvself)                                                                                \
-    [_xvself xvim_beginEditTransaction];                                                                               \
-    xvim_on_exit { [_xvself xvim_endEditTransaction]; };
-
 
 - (void)xvim_syncState;
 - (void)xvim_syncStateFromView;

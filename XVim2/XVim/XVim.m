@@ -34,7 +34,9 @@
 #import "XVimSearch.h"
 #import "XVimTester.h"
 #import "_TtC12SourceEditor23SourceEditorContentView.h"
-#import "_TtC22IDEPegasusSourceEditor20SourceCodeEditorView.h"
+#import "_TtC15IDESourceEditor19IDESourceEditorView.h"
+#import "XVimXcode.h"
+#import "XVimIDEPegasusSourceEditorView.h"
 
 @interface XVim () {
     XVimKeymap* _keymaps[XVIM_MODE_COUNT];
@@ -69,7 +71,7 @@
     // before swizzling. If not, we will wait, observing NSBundle's class load notifications,
     // until all of these classes have been loaded before swizzling.
     NSArray<NSString*>* swizzleClasses =
-                @[ IDEPegasusSourceCodeEditorClassName, SourceEditorViewClassName, @"IDEWorkspaceTabController" ];
+                @[ IDEPegasusSourceCodeEditorViewClassName, SourceEditorViewClassName, @"IDEWorkspaceTabController" ];
 
     NSMutableSet<NSString*>* requiredClassesWaitSet = [[NSMutableSet alloc] initWithArray:swizzleClasses];
     NSMutableSet<NSString*>* loadedClasses = [NSMutableSet new];
@@ -293,22 +295,25 @@ static id _startupObservation = nil;
     NSMenu* m = [[NSMenu alloc] initWithTitle:@"XVim"];
     [item setSubmenu:m];
 
-    NSMenuItem* subitem = [[NSMenuItem alloc] init];
-    subitem.title = @"Enable";
-    [subitem setEnabled:YES];
-    [subitem setState:NSOnState];
-    subitem.target = [XVim instance];
-    subitem.action = @selector(toggleXVim:);
-    subitem.representedObject = XVIM_MENU_TOGGLE_IDENTIFIER;
-    self.enabledMenuItem = subitem;
-    [m addItem:subitem];
-
-    subitem = [[NSMenuItem alloc] init];
-    subitem.title = @"About XVim";
-    [subitem setEnabled:YES];
-    subitem.target = [XVim class];
-    subitem.action = @selector(about:);
-    [m addItem:subitem];
+    {
+        NSMenuItem* subitem = [[NSMenuItem alloc] init];
+        subitem.title = @"Enable";
+        [subitem setEnabled:YES];
+        [subitem setState:NSOnState];
+        subitem.target = [XVim instance];
+        subitem.action = @selector(toggleXVim:);
+        subitem.representedObject = XVIM_MENU_TOGGLE_IDENTIFIER;
+        self.enabledMenuItem = subitem;
+        [m addItem:subitem];
+    }
+    {
+        NSMenuItem* subitem = [[NSMenuItem alloc] init];
+        subitem.title = @"About XVim";
+        [subitem setEnabled:YES];
+        subitem.target = [XVim class];
+        subitem.action = @selector(about:);
+        [m addItem:subitem];
+    }
 
     // Test cases
     if (self.options.debug) {

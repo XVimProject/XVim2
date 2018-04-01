@@ -40,7 +40,7 @@
 @synthesize tmpBuffer = _tmpBuffer;
 
 - (instancetype)initWithEditorView:
-            (id<SourceViewProtocol, SourceViewXVimProtocol, SourceViewScrollingProtocol, SourceViewOperationsProtocol>)
+            (id<SourceViewProtocol, SourceViewXVimProtocol, SourceViewScrollingProtocol, SourceViewOperationsProtocol, NSTextInputClient>)
                         editorArea
 {
     if (self = [super init]) {
@@ -220,7 +220,7 @@
 
     [NSObject cancelPreviousPerformRequestsWithTarget:self selector:@selector(handleTimeout) object:nil];
     if (mapped) {
-        DEBUG_LOG("Mapped = %@", mapped);
+        //DEBUG_LOG("Mapped = %@", mapped);
 
         [_keymapContext clear];
         for (XVimKeyStroke* keyStroke in XVimKeyStrokesFromXVimString(mapped)) {

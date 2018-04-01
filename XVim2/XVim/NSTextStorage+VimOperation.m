@@ -16,14 +16,12 @@
 #pragma mark XVimTextStoring Properties
 
 - (NSString*)xvim_string { return self.string; }
-
 - (NSUInteger)xvim_numberOfLines { return [self xvim_lineNumberAtIndex:self.length]; }
 
 #pragma mark Settings
 
 // TODO: These values should be taken from IDEFileTextSetting.
 - (NSUInteger)xvim_indentWidth { return 4; }
-
 - (NSUInteger)xvim_tabWidth { return 4; }
 
 #pragma mark Converting between Indexes and Line Numbers
@@ -453,10 +451,10 @@ static NSUInteger xvim_sb_count_columns(xvim_string_buffer_t* sb, NSUInteger tab
         start_with_c = xvim_sb_peek(&sb);
         xvim_sb_init(&sb, s, xvim_sb_index(&sb), NSMakeRange(0, s.length));
 
-        NSUInteger pos = (NSUInteger)(strchr(pairs, start_with_c) - pairs);
+        NSUInteger pos2 = (NSUInteger)(strchr(pairs, start_with_c) - pairs);
 
-        look_for_c = (unichar)pairs[pos ^ 1];
-        search_forward = !(pos & 1);
+        look_for_c = (unichar)pairs[pos2 ^ 1];
+        search_forward = !(pos2 & 1);
     }
     else {
         // src is not an open or close char
@@ -1926,9 +1924,9 @@ NSRange xv_current_block(NSString* string, NSUInteger index, NSUInteger count, B
         if (what == '{') {
             NSInteger oldIdx = index;
             index = end_pos;
-            NSInteger idx = xv_caret(string, index);
+            NSInteger idx2 = xv_caret(string, index);
 
-            if (idx == end_pos) {
+            if (idx2 == end_pos) {
                 // The '}' is only preceded by indent, skip that indent.
                 // end_pos = [self firstOfLine:index]-1;
                 end_pos = xv_0(string, index) - 1;
@@ -2276,10 +2274,10 @@ NSInteger xv_findChar(NSString* string, NSInteger index, int repeatCount, char c
             NSCharacterSet* charSet = obj;
             if ([charSet characterIsMember:currentCh]) {
 
-                NSInteger beginPos = seek_backwards(string, index + 1, charSet);
-                NSInteger endPos = seek_forwards(string, index + 1, charSet);
+                NSInteger beginPos2 = seek_backwards(string, index + 1, charSet);
+                NSInteger endPos2 = seek_forwards(string, index + 1, charSet);
 
-                result = NSMakeRange((NSUInteger)beginPos, (NSUInteger)(endPos - beginPos));
+                result = NSMakeRange((NSUInteger)beginPos2, (NSUInteger)(endPos2 - beginPos2));
                 *stop = YES;
             }
         }];

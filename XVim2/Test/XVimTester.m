@@ -69,7 +69,7 @@
 
 @interface XVimTester () {
     NSWindow* results;
-    NSTableView* tableView;
+    NSTableView* _tableView;
     NSTextField* resultsString;
     BOOL showPassing;
     NSNumber* totalTests;
@@ -199,9 +199,9 @@
 - (void)showResultsTable
 {
     // Setup Table view to show result
-    tableView = [[NSTableView alloc] init];
-    [tableView setDelegate:self];
-    [tableView setDataSource:self];
+    _tableView = [[NSTableView alloc] init];
+    [_tableView setDelegate:self];
+    [_tableView setDataSource:self];
 
     // Create Columns
     NSTableColumn* column1 = [[NSTableColumn alloc] initWithIdentifier:@"Description"];
@@ -219,16 +219,16 @@
     [column5.headerCell setStringValue:@"Actual"];
     [column5 setWidth:200.0];
 
-    [tableView addTableColumn:column1];
-    [tableView addTableColumn:column2];
-    [tableView addTableColumn:column3];
-    [tableView addTableColumn:column4];
-    [tableView addTableColumn:column5];
-    tableView.usesAutomaticRowHeights = YES;
-    tableView.usesAlternatingRowBackgroundColors = YES;
+    [_tableView addTableColumn:column1];
+    [_tableView addTableColumn:column2];
+    [_tableView addTableColumn:column3];
+    [_tableView addTableColumn:column4];
+    [_tableView addTableColumn:column5];
+    _tableView.usesAutomaticRowHeights = YES;
+    _tableView.usesAlternatingRowBackgroundColors = YES;
 
-    [tableView setAllowsMultipleSelection:YES];
-    [tableView reloadData];
+    [_tableView setAllowsMultipleSelection:YES];
+    [_tableView reloadData];
 
     // setup a window to show the tableview, scrollview, and results toggling button.
     NSUInteger mask = NSWindowStyleMaskTitled | NSWindowStyleMaskClosable | NSWindowStyleMaskMiniaturizable
@@ -243,7 +243,7 @@
     // Setup the table view into scroll view
     NSScrollView* scroll = [[NSScrollView alloc] initWithFrame:NSMakeRect(0, 40, 700, 445)];
     [scroll setAutoresizingMask:NSViewWidthSizable | NSViewHeightSizable];
-    [scroll setDocumentView:tableView];
+    [scroll setDocumentView:_tableView];
     [scroll setHasVerticalScroller:YES];
     [scroll setHasHorizontalScroller:YES];
 
@@ -301,7 +301,7 @@
 - (IBAction)toggleResults:(id)sender
 {
     showPassing = !showPassing;
-    [tableView reloadData];
+    [_tableView reloadData];
 }
 
 

@@ -15,6 +15,7 @@
 #import <IDEKit/IDEWorkspaceTabController.h>
 #import <IDEKit/IDEWorkspaceWindow.h>
 #import <IDEKit/IDEWorkspaceWindowController.h>
+#import "_TtC15IDESourceEditor19IDESourceEditorView.h"
 
 @class IDEWorkspaceWindow;
 @class IDEWorkspaceWindowController;
@@ -22,7 +23,6 @@
 @class IDEEditorArea;
 @class IDENavigableItem;
 @class IDEEditorOpenSpecifier;
-@class _TtC22IDEPegasusSourceEditor20SourceCodeEditorView;
 @class SourceCodeEditorViewProxy;
 
 IDEWorkspaceWindowController* XVimLastActiveWindowController(void);
@@ -30,7 +30,7 @@ IDEWorkspaceTabController_XVim* XVimLastActiveWorkspaceTabController(void);
 IDEEditorArea* XVimLastActiveEditorArea(void);
 BOOL XVimOpenDocumentAtPath(NSString* path);
 IDEEditorOpenSpecifier* XVimOpenSpecifier(IDENavigableItem* item, id locationToSelect);
-_TtC22IDEPegasusSourceEditor20SourceCodeEditorView* XVimLastActiveEditorView(void);
+_TtC15IDESourceEditor19IDESourceEditorView* XVimLastActiveEditorView(void);
 SourceCodeEditorViewProxy* XVimLastActiveSourceView(void);
 
 static inline Class IDEEditorOpenSpecifierClass() { return NSClassFromString(@"IDEEditorOpenSpecifier"); }

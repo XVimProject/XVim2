@@ -103,7 +103,8 @@
 
 - (void)xvim_put:(NSString*)text withType:(TEXT_TYPE)type afterCursor:(bool)after count:(NSUInteger)count
 {
-    EDIT_TRANSACTION_SCOPE(self)
+    [self xvim_beginEditTransaction];
+    xvim_on_exit { [self xvim_endEditTransaction]; };
 
     TRACE_LOG(@"text:%@  type:%d   afterCursor:%d   count:%d", text, type, after, count);
     if (self.selectionMode != XVIM_VISUAL_NONE) {
@@ -180,7 +181,7 @@
 
                 [self _xvim_insertSpaces:column - max replacementRange:NSMakeRange(end, 0)];
             }
-            for (NSUInteger i = 0; i < count; i++) {
+            for (NSUInteger j = 0; j < count; j++) {
                 [self xvim_insertText:line line:targetLine column:column];
             }
         }

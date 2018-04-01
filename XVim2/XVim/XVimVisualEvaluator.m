@@ -96,6 +96,13 @@ static NSString* MODE_STRINGS[] = { @"", @"-- VISUAL --", @"-- VISUAL LINE --", 
 
 - (XVIM_MODE)mode { return XVIM_MODE_VISUAL; }
 
+- (NSUInteger)numberOfColumns {
+    return labs((NSInteger)self.initialToPos.column - (NSInteger)self.initialFromPos.column);
+}
+- (NSUInteger)numberOfLines {
+    return labs((NSInteger)self.initialToPos.line - (NSInteger)self.initialFromPos.line);
+}
+
 - (void)becameHandler
 {
     [super becameHandler];
@@ -106,40 +113,23 @@ static NSString* MODE_STRINGS[] = { @"", @"-- VISUAL --", @"-- VISUAL LINE --", 
             if (_visual_mode == XVIM_VISUAL_CHARACTER) {
                 if (self.initialFromPos.line == self.initialToPos.line) {
                     // Same number of character if in one line
-                    NSUInteger numberOfColumns = self.initialToPos.column > self.initialFromPos.column
-                                                             ? (self.initialToPos.column - self.initialFromPos.column)
-                                                             : (self.initialFromPos.column - self.initialToPos.column);
                     [self.sourceView xvim_moveToPosition:XVimMakePosition(self.sourceView.insertionLine,
-                                                                          self.sourceView.insertionColumn
-                                                                                      + numberOfColumns)];
+                                                                          self.sourceView.insertionColumn + self.numberOfColumns)];
                 }
                 else {
-                    NSUInteger numberOfLines = self.initialToPos.line > self.initialFromPos.line
-                                                           ? (self.initialToPos.line - self.initialFromPos.line)
-                                                           : (self.initialFromPos.line - self.initialToPos.line);
-                    [self.sourceView xvim_moveToPosition:XVimMakePosition(self.sourceView.insertionLine + numberOfLines,
+                    [self.sourceView xvim_moveToPosition:XVimMakePosition(self.sourceView.insertionLine + self.numberOfLines,
                                                                           self.initialToPos.column)];
                 }
             }
             else if (_visual_mode == XVIM_VISUAL_LINE) {
                 // Same number of lines
-                NSUInteger numberOfLines = self.initialToPos.line > self.initialFromPos.line
-                                                       ? (self.initialToPos.line - self.initialFromPos.line)
-                                                       : (self.initialFromPos.line - self.initialToPos.line);
-                [self.sourceView xvim_moveToPosition:XVimMakePosition(self.sourceView.insertionLine + numberOfLines,
+                [self.sourceView xvim_moveToPosition:XVimMakePosition(self.sourceView.insertionLine + self.numberOfLines,
                                                                       self.sourceView.insertionColumn)];
             }
             else if (_visual_mode == XVIM_VISUAL_BLOCK) {
                 // Use same number of lines/colums
-                NSUInteger numberOfLines = self.initialToPos.line > self.initialFromPos.line
-                                                       ? (self.initialToPos.line - self.initialFromPos.line)
-                                                       : (self.initialFromPos.line - self.initialToPos.line);
-                NSUInteger numberOfColumns = self.initialToPos.column > self.initialFromPos.column
-                                                         ? (self.initialToPos.column - self.initialFromPos.column)
-                                                         : (self.initialFromPos.column - self.initialToPos.column);
-                [self.sourceView
-                            xvim_moveToPosition:XVimMakePosition(self.sourceView.insertionLine + numberOfLines,
-                                                                 self.sourceView.insertionColumn + numberOfColumns)];
+                [self.sourceView xvim_moveToPosition:XVimMakePosition(self.sourceView.insertionLine + self.numberOfLines,
+                                                                      self.sourceView.insertionColumn + self.numberOfColumns)];
             }
         }
         else {
@@ -552,14 +542,12 @@ contextWithArgument:@"\""] parent:self completion:^ XVimEvaluator* (NSString* rn
                         XVimExCommand* excmd = [[XVim instance] excmd];
                         NSString* commandExecuted = [excmd executeCommand:command inWindow:self.window];
 
-                        // NSTextView *sourceView = [window sourceView];
                         [[self sourceView] xvim_changeSelectionMode:XVIM_VISUAL_NONE];
 
                         if ([commandExecuted isEqualToString:@"substitute"]) {
                             XVimSearch* searcher = [[XVim instance] searcher];
                             if (searcher.confirmEach && searcher.lastFoundRange.location != NSNotFound) {
                                 [eval didEndHandler];
-                                //[[self sourceView] xvim_changeSelectionMode:XVIM_VISUAL_NONE];
                                 return [[XVimReplacePromptEvaluator alloc]
                                                initWithWindow:self.window
                                             replacementString:searcher.lastReplacementString];
@@ -680,6 +668,5 @@ return eval;
     [self.argumentString setString:@""];
     return self;
 }
-
 
 @end
