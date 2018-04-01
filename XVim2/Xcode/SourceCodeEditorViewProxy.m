@@ -14,12 +14,23 @@
 #import "XVimCommandLine.h"
 #import "XVimMotion.h"
 #import "rd_route.h"
+#import <IDEKit/IDEEditorArea.h>
+#import "XcodeUtils.h"
 
-#import "_TtC22IDEPegasusSourceEditor18SourceCodeDocument.h"
+#import "_TtC15IDESourceEditor18SourceCodeDocument.h"
+#import "_TtC15IDESourceEditor19IDESourceEditorView.h"
+#import "_TtC15IDESourceEditor19IDESourceEditorView+XVim.h"
+#import "_TtC12SourceEditor16SourceEditorView.h"
 #import "_TtC12SourceEditor16SourceEditorView+XVim.h"
+#import "XVimXcode.h"
+#import "_TtC15IDESourceEditor19IDESourceEditorView-IDESourceEditor.h"
+#import "_TtC15IDESourceEditor19IDESourceEditorView-IDESourceEditor1.h"
+#import "_TtC15IDESourceEditor19IDESourceEditorView-IDESourceEditor2.h"
+#import "_TtC15IDESourceEditor19IDESourceEditorView-IDESourceEditor3.h"
+#import "_TtC15IDESourceEditor19IDESourceEditorView-IDESourceEditor4.h"
 
 @interface SourceCodeEditorViewProxy ()
-@property (weak) SourceCodeEditorView* sourceCodeEditorView;
+@property (weak) _TtC15IDESourceEditor19IDESourceEditorView* sourceCodeEditorView;
 @property NSUInteger selectionBegin;
 @property NSUInteger insertionPoint;
 @property NSUInteger preservedColumn;
@@ -41,7 +52,7 @@
 //@synthesize enabled = _enabled;
 
 
-- (instancetype)initWithSourceCodeEditorView:(SourceCodeEditorView*)sourceCodeEditorView
+- (instancetype)initWithSourceCodeEditorView:(_TtC15IDESourceEditor19IDESourceEditorView*)sourceCodeEditorView
 {
     self = [super init];
     if (self) {
@@ -99,8 +110,8 @@
 {
     return [self.sourceCodeEditorView characterRangeForLineRange:arg1];
 }
-- (NSInteger)linesPerPage { return self.sourceCodeEditorView.linesPerPage; }
-- (NSInteger)lineCount { return self.sourceCodeEditorView.lineCount; }
+- (NSInteger)linesPerPage { return self.sourceCodeEditorViewWrapper.linesPerPage; }
+- (NSInteger)lineCount { return  self.sourceEditorDataSourceWrapper.lineCount; }
 - (void)scrollRangeToVisible:(NSRange)arg1 { [self.sourceCodeEditorView scrollRangeToVisible:arg1]; }
 
 - (void)setCursorStyle:(CursorStyle)cursorStyle { self.sourceCodeEditorViewWrapper.cursorStyle = cursorStyle; }
@@ -262,20 +273,34 @@
     return [self.sourceCodeEditorView firstRectForCharacterRange:range actualRange:actualRange];
 }
 
-- (BOOL)hasMarkedText { return self.sourceCodeEditorView.hasMarkedText; }
+- (BOOL)hasMarkedText {
+    // XCODE93
+    return NO;
+    //return self.sourceCodeEditorView.hasMarkedText;
+}
 
-- (NSRange)markedRange { return self.sourceCodeEditorView.markedRange; }
+- (NSRange)markedRange {
+    // XCODE93
+    //return self.sourceCodeEditorView.markedRange;
+    return NSMakeRange(0, 0);
+}
 
 - (void)setMarkedText:(nonnull id)string selectedRange:(NSRange)selectedRange replacementRange:(NSRange)replacementRange
 {
-    [self.sourceCodeEditorView setMarkedText:string selectedRange:selectedRange replacementRange:replacementRange];
+    // XCODE93
+    //[self.sourceCodeEditorView setMarkedText:string selectedRange:selectedRange replacementRange:replacementRange];
 }
 
-- (void)unmarkText { [self.sourceCodeEditorView unmarkText]; }
+- (void)unmarkText {
+    // XCODE93
+    // [self.sourceCodeEditorView unmarkText];
+}
 
 - (nonnull NSArray<NSAttributedStringKey>*)validAttributesForMarkedText
 {
-    return self.sourceCodeEditorView.validAttributesForMarkedText;
+    // XCODE93
+    //return self.sourceCodeEditorView.validAttributesForMarkedText;
+    return @[];
 }
 
 #pragma mark-- selection
@@ -392,18 +417,35 @@
 
 - (NSURL*)documentURL
 {
+    // XCODE93
+#if 0
     if ([self.sourceCodeEditorView.hostingEditor isKindOfClass:NSClassFromString(@"IDEEditor")]) {
         return [(IDEEditorDocument*)((IDEEditor*)self.sourceCodeEditorView.hostingEditor).document fileURL];
     }
     else {
         return nil;
     }
+#else
+    IDEEditorArea* area = XVimLastActiveEditorArea();
+    if (area != nil){
+        if (area.primaryEditorDocument != nil){
+            return area.primaryEditorDocument.readOnlyItemURL;
+        }
+    }
+#endif
+    return nil;
 }
 
 // Proxy methods
 
-- (void)selectPreviousPlaceholder:(id)arg1 { [self.sourceCodeEditorView selectPreviousPlaceholder:self]; }
-- (void)selectNextPlaceholder:(id)arg1 { [self.sourceCodeEditorView selectNextPlaceholder:self]; }
+- (void)selectPreviousPlaceholder:(id)arg1 {
+    // XCODE93
+    //[self.sourceCodeEditorView selectPreviousPlaceholder:self];
+}
+- (void)selectNextPlaceholder:(id)arg1 {
+    // XCODE93
+    //[self.sourceCodeEditorView selectNextPlaceholder:self];
+}
 - (void)mouseExited:(id)sender { [self.sourceCodeEditorView mouseExited:self]; }
 - (void)mouseEntered:(id)sender { [self.sourceCodeEditorView mouseEntered:self]; }
 - (void)mouseMoved:(id)sender { [self.sourceCodeEditorView mouseMoved:self]; }
@@ -536,7 +578,10 @@
 - (void)paste:(id)sender { [self.sourceCodeEditorView paste:self]; }
 - (void)cut:(id)sender { [self.sourceCodeEditorView cut:self]; }
 - (void)copy:(id)sender { [self.sourceCodeEditorView copy:self]; }
-- (void)showFindIndicatorForRange:(NSRange)arg1 { [self.sourceCodeEditorView showFindIndicatorForRange:arg1]; }
+- (void)showFindIndicatorForRange:(NSRange)arg1 {
+    // XCODE93
+    //[self.sourceCodeEditorView showFindIndicatorForRange:arg1];
+}
 - (NSUInteger)characterIndexForInsertionAtPoint:(CGPoint)arg1 { return [self.sourceCodeEditorView characterIndexForInsertionAtPoint:arg1]; }
 - (NSRect)bounds { return self.sourceCodeEditorView.bounds; }
 - (NSRect)frame { return self.sourceCodeEditorView.frame; }
@@ -556,9 +601,11 @@ static CGFloat XvimCommandLineAnimationDuration = 0.1;
 
 - (void)showCommandLine
 {
+    // XCODE93
+    /*
     if (self.isShowingCommandLine)
         return;
-
+    
     _auto scrollView = [self.sourceCodeEditorView scrollView];
     if ([scrollView isKindOfClass:NSClassFromString(@"SourceEditorScrollView")]) {
         NSView* layoutView = [scrollView superview];
@@ -585,10 +632,13 @@ static CGFloat XvimCommandLineAnimationDuration = 0.1;
                         self.commandLine.needsDisplay = YES;
                     }];
     }
+    */
 }
 
 - (void)hideCommandLine
 {
+    // XCODE93
+    /*
     if (!self.isShowingCommandLine)
         return;
 
@@ -608,6 +658,7 @@ static CGFloat XvimCommandLineAnimationDuration = 0.1;
                         self->_cmdLineBottomAnchor = nil;
                     }];
     }
+     */
 }
 
 - (NSMutableArray*)foundRanges

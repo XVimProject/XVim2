@@ -11,8 +11,7 @@
 #import "XVimMotionOption.h"
 #import "XVimTextStoring.h"
 #import <AppKit/AppKit.h>
-#import <SourceEditor/_TtC12SourceEditor23SourceEditorUndoManager.h>
-#import "XVimXCode.h"
+#import "_TtC12SourceEditor23SourceEditorUndoManager.h"
 
 typedef NS_ENUM(char, CursorStyle) { CursorStyleVerticalBar, CursorStyleBlock, CursorStyleUnderline };
 
@@ -43,7 +42,7 @@ typedef NS_ENUM(char, CursorStyle) { CursorStyleVerticalBar, CursorStyleBlock, C
 @property NSRange selectedRange;
 @property (readonly) NSString* string;
 @property (readonly) XVIM_VISUAL_MODE selectionMode;
-@property (readonly) SourceEditorUndoManager* undoManager;
+@property (readonly) _TtC12SourceEditor23SourceEditorUndoManager* undoManager;
 @property (strong) id<XVimTextViewDelegateProtocol> xvimDelegate;
 @property CURSOR_MODE cursorMode;
 @property (readonly) NSUInteger insertionPoint;

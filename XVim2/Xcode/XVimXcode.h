@@ -9,20 +9,15 @@
 #ifndef XVimXcode_h
 #define XVimXcode_h
 
-@class _TtC22IDEPegasusSourceEditor16SourceCodeEditor;
-@class _TtC22IDEPegasusSourceEditor20SourceCodeEditorView;
-@class _TtC12SourceEditor16SourceEditorView;
 @class _TtC12SourceEditor23SourceEditorContentView;
 @class _TtC12SourceEditor23SourceEditorUndoManager;
 
-typedef _TtC22IDEPegasusSourceEditor16SourceCodeEditor SourceCodeEditor;
-typedef _TtC22IDEPegasusSourceEditor20SourceCodeEditorView SourceCodeEditorView;
 typedef _TtC12SourceEditor16SourceEditorView SourceEditorView;
 typedef _TtC12SourceEditor23SourceEditorContentView SourceEditorContentView;
 typedef _TtC12SourceEditor23SourceEditorUndoManager SourceEditorUndoManager;
 
 static NSString * const IDEPegasusSourceCodeEditorViewClassName
-    = @"IDEPegasusSourceEditor.SourceCodeEditorView";
+    = @"IDESourceEditor.IDESourceEditorView";
 
 static NSString * const SourceEditorViewClassName
     = @"SourceEditor.SourceEditorView";

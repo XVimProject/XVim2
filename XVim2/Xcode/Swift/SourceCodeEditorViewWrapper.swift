@@ -13,7 +13,7 @@ import Cocoa
 @_silgen_name("scev_wrapper_call3") func _get_data_source(_:UnsafeRawPointer) -> (UnsafeMutableRawPointer)
 @_silgen_name("scev_wrapper_call4") func _set_selected_range(_:UnsafeRawPointer, _:XVimSourceEditorRange, modifiers:UInt32) -> ()
 @_silgen_name("scev_wrapper_call5") func _add_selected_range(_:UnsafeRawPointer, _:XVimSourceEditorRange, modifiers:UInt32) -> ()
-
+@_silgen_name("scev_wrapper_call6") func _scev_voidToInt(_:UnsafeRawPointer) -> (Int)
 
 fileprivate struct _SourceCodeEditorViewWrapper {
 
@@ -28,7 +28,10 @@ fileprivate struct _SourceCodeEditorViewWrapper {
         contextPtr[1] = fp
     }
     
-    
+    func voidToInt() -> Int {
+        return _scev_voidToInt(contextPtr)
+    }
+
     func getCursorStyle() -> CursorStyle {
         // return CursorStyle.block
         return _get_cursor_style(contextPtr)
@@ -54,11 +57,14 @@ fileprivate struct _SourceCodeEditorViewWrapper {
 
 
 class SourceCodeEditorViewWrapper: NSObject {
-    private let fpSetCursorStyle = function_ptr_from_name("_T012SourceEditor0aB4ViewC11cursorStyleAA0ab6CursorE0Ofs", nil);
-    private let fpGetCursorStyle = function_ptr_from_name("_T012SourceEditor0aB4ViewC11cursorStyleAA0ab6CursorE0Ofg", nil);
-    private let fpGetDataSource = function_ptr_from_name("_T012SourceEditor0aB4ViewC04dataA0AA0ab4DataA0Cfg", nil);
+    private let fpSetCursorStyle = function_ptr_from_name("__T012SourceEditor0aB4ViewC11cursorStyleAA0ab6CursorE0Ovs", nil)
+    private let fpGetCursorStyle = function_ptr_from_name("__T012SourceEditor0aB4ViewC11cursorStyleAA0ab6CursorE0Ovg", nil);
+    private let fpGetDataSource = function_ptr_from_name("__T012SourceEditor0aB4ViewC04dataA0AA0ab4DataA0Cvg", nil);
     private let fpSetSelectedRangeWithModifiers = function_ptr_from_name("_T012SourceEditor0aB4ViewC16setSelectedRangeyAA0abF0V_AA0aB18SelectionModifiersV9modifierstF", nil);
     private let fpAddSelectedRangeWithModifiers = function_ptr_from_name("_T012SourceEditor0aB4ViewC16addSelectedRangeyAA0abF0V_AA0aB18SelectionModifiersV9modifierstF", nil);
+
+    private let fpFuncLinesPerPage =
+        function_ptr_from_name("_T012SourceEditor0aB4ViewC12linesPerPageSiyF", nil)
     
     private weak var editorViewProxy : SourceCodeEditorViewProxy?
     
@@ -101,6 +107,12 @@ class SourceCodeEditorViewWrapper: NSObject {
     public func setSelectedRange(_ range:XVimSourceEditorRange, modifiers:XVimSelectionModifiers)
     {
         _SourceCodeEditorViewWrapper(editorView, fpSetSelectedRangeWithModifiers)?.setSelectedRange(range, modifiers: modifiers)
+    }
+    
+    @objc
+    public func linesPerPage() -> Int
+    {
+        return _SourceCodeEditorViewWrapper(editorView, fpFuncLinesPerPage)?.voidToInt() ?? 0
     }
     
 }

@@ -16,11 +16,11 @@
 #import "XVim2-Swift.h"
 #import "XVimMotion.h"
 #import "XVimOptions.h"
-#import <SourceEditor/_TtC12SourceEditor23SourceEditorUndoManager.h>
-
+//#import <SourceEditor/_TtC12SourceEditor23SourceEditorUndoManager.h>
+#import "XVimXcode.h"
 
 @interface SourceCodeEditorViewProxy ()
-@property (weak) SourceCodeEditorView* sourceCodeEditorView;
+@property (weak) _TtC15IDESourceEditor19IDESourceEditorView* sourceCodeEditorView;
 @property (readwrite) NSUInteger selectionBegin;
 @property (readwrite) XVIM_VISUAL_MODE selectionMode;
 @property (readwrite) NSUInteger insertionPoint;
@@ -985,7 +985,7 @@
 
 #pragma mark Status
 
--(NSUInteger)xvim_numberOfLinesInVisibleRect { return self.sourceCodeEditorView.linesPerPage; }
+-(NSUInteger)xvim_numberOfLinesInVisibleRect { return self.sourceCodeEditorViewWrapper.linesPerPage; }
 
 -(NSUInteger)xvim_displayNextLine : (NSUInteger)index column : (NSUInteger)column count : (NSUInteger)count option
     : (MOTION_OPTION)opt
@@ -1009,12 +1009,15 @@
         [self.sourceCodeEditorView moveUp:self];
     }
     // TODO
+    // XCODE93
+    //NSRange range = self.sourceCodeEditorView.contentView.accessibilityColumnIndexRange
+    NSRange range = NSMakeRange(0, 0);
     return [self.sourceCodeEditorView
                        characterRangeForLineRange:NSMakeRange(self.sourceCodeEditorView
                                                                           .accessibilityInsertionPointLineNumber,
                                                               1)]
                        .location
-           + self.sourceCodeEditorView.accessibilityColumnIndexRange.location;
+           + range.location;
 }
 
 // UNDO
@@ -1023,6 +1026,8 @@
 -(void)xvim_registerPositionForUndo : (NSUInteger)pos
 {
     __weak SourceCodeEditorViewProxy* weakSelf = self;
+    // XCODE93
+    /*
     [self.undoManager registerUndoWithTitle:@"BLAH"
                                   redoTitle:@"REBLAH"
                                   operation:^(void) {
@@ -1034,6 +1039,7 @@
                                       m.position = pos;
                                       [SELF xvim_move:m];
                                   }];
+     */
 }
 
 -(void)xvim_registerInsertionPointForUndo { [self xvim_registerPositionForUndo:self.selectedRange.location]; }

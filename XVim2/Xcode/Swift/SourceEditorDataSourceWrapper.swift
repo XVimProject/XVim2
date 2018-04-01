@@ -81,9 +81,9 @@ class SourceEditorDataSourceWrapper: NSObject {
     private let fpEndEditingTransaction = function_ptr_from_name("_T012SourceEditor0ab4DataA0C18endEditTransactionyyF", nil);
     private let fpPositionFromIndexLineHint = function_ptr_from_name("_T012SourceEditor0ab4DataA0C30positionFromInternalCharOffsetAA0aB8PositionVSi_Si8lineHinttF", nil);
     private let fpIndexFromPosition = function_ptr_from_name("_T012SourceEditor0ab4DataA0C30internalCharOffsetFromPositionSiAA0abH0VF", nil);
-    private let fpGetUndoManager = function_ptr_from_name("_T012SourceEditor0ab4DataA0C11undoManagerAA0ab4UndoE0Cfg", nil);
+    private let fpGetUndoManager = function_ptr_from_name("_T012SourceEditor0ab4DataA0C11undoManagerAA0ab4UndoE0Cvg", nil);
     private let fpLeadingWhitespaceWidthForLine = function_ptr_from_name("__T012SourceEditor0ab4DataA0C29leadingWhitespaceWidthForLineS2i_Sb10expandTabstF", nil);
-    private let fpLineCount = function_ptr_from_name("_T012SourceEditor0ab4DataA0C9lineCountSifg", nil);
+    private let fpLineCount = function_ptr_from_name("_T012SourceEditor0ab4DataA0C9lineCountSivg", nil);
     private let fpLineContentLength = function_ptr_from_name("_T012SourceEditor0ab4DataA0C24lineContentLengthForLineS2iF", nil);
     private let fpLineTerminatorLength = function_ptr_from_name("_T012SourceEditor0ab4DataA0C27lineTerminatorLengthForLineS2iF", nil);
     

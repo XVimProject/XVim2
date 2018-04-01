@@ -9,8 +9,8 @@
 #import "XcodeUtils.h"
 #import "IDEWorkspaceTabController+XVim.h"
 #import "XVimWindow.h"
-#import "_TtC22IDEPegasusSourceEditor20SourceCodeEditorView.h"
-#import "_TtC22IDEPegasusSourceEditor20SourceCodeEditorView+XVim.h"
+#import "_TtC15IDESourceEditor19IDESourceEditorView.h"
+#import "_TtC15IDESourceEditor19IDESourceEditorView+XVim.h"
 
 IDEWorkspaceWindowController* XVimLastActiveWindowController()
 {
@@ -24,7 +24,7 @@ IDEWorkspaceTabController_XVim* XVimLastActiveWorkspaceTabController()
 
 IDEEditorArea* XVimLastActiveEditorArea() { return [XVimLastActiveWindowController() editorArea]; }
 
-SourceCodeEditorView* XVimLastActiveEditorView()
+_TtC15IDESourceEditor19IDESourceEditorView* XVimLastActiveEditorView()
 {
     return (id)[[[[[[[XVimLastActiveEditorArea() lastActiveEditorContext] supplementalMainViewController] view]
                 subviews] objectAtIndex:0] subviews] objectAtIndex:0];

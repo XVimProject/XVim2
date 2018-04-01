@@ -34,7 +34,7 @@
 #import "XVimSearch.h"
 #import "XVimTester.h"
 #import "_TtC12SourceEditor23SourceEditorContentView.h"
-#import "_TtC22IDEPegasusSourceEditor20SourceCodeEditorView.h"
+#import "_TtC15IDESourceEditor19IDESourceEditorView.h"
 #import "XVimXcode.h"
 #import "XVimIDEPegasusSourceEditorView.h"
 

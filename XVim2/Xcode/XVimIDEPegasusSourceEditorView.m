@@ -8,7 +8,9 @@
 
 #import "XVimIDEPegasusSourceEditorView.h"
 
-#import "_TtC22IDEPegasusSourceEditor20SourceCodeEditorView.h"
+#import "_TtC15IDESourceEditor19IDESourceEditorView.h"
+#import "_TtC15IDESourceEditor19IDESourceEditorView+XVim.h"
+//#import "_TtC15IDESourceEditor19SourceCodeEditorView.h"
 #import "_TtC12SourceEditor16SourceEditorView.h"
 #import "Logger.h"
 #import "NSObject+ExtraData.h"
@@ -17,7 +19,7 @@
 #import "XVimKeyStroke.h"
 #import "XVimWindow.h"
 #import <QuartzCore/QuartzCore.h>
-#import <SourceEditor/SourceEditorScrollView.h>
+//#import <SourceEditor/SourceEditorScrollView.h>
 
 #import "NSObject+ExtraData.h"
 #import "IDEEditorArea.h"
@@ -26,12 +28,13 @@
 #import "XVimTaskRunner.h"
 #import "StringUtil.h"
 #import "XVimXcode.h"
+#import "XcodeUtils.h"
 
 CONST_STR(EDLastEvent);
 CONST_STR(EDMode);
 CONST_STR(EDWindow);
 
-#define SELF ((SourceCodeEditorView*)self)
+#define SELF ((_TtC15IDESourceEditor19SourceCodeEditorView*)self)
 
 @implementation XVimIDEPegasusSourceEditorView
 
