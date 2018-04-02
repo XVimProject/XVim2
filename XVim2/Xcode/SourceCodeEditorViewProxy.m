@@ -16,6 +16,7 @@
 #import "rd_route.h"
 #import <IDEKit/IDEEditorArea.h>
 #import "XcodeUtils.h"
+#import "SourceEditorScrollView.h"
 
 #import "_TtC15IDESourceEditor18SourceCodeDocument.h"
 #import "_TtC15IDESourceEditor19IDESourceEditorView.h"
@@ -600,8 +601,6 @@ static CGFloat XvimCommandLineAnimationDuration = 0.1;
 
 - (void)showCommandLine
 {
-    // XCODE93
-    /*
     if (self.isShowingCommandLine)
         return;
     
@@ -631,13 +630,10 @@ static CGFloat XvimCommandLineAnimationDuration = 0.1;
                         self.commandLine.needsDisplay = YES;
                     }];
     }
-    */
 }
 
 - (void)hideCommandLine
 {
-    // XCODE93
-    /*
     if (!self.isShowingCommandLine)
         return;
 
@@ -657,7 +653,6 @@ static CGFloat XvimCommandLineAnimationDuration = 0.1;
                         self->_cmdLineBottomAnchor = nil;
                     }];
     }
-     */
 }
 
 - (NSMutableArray*)foundRanges

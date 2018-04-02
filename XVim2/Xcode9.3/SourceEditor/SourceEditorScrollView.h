@@ -22,7 +22,7 @@
 @property BOOL updatingAutoContentInsets; // @synthesize updatingAutoContentInsets=_updatingAutoContentInsets;
 @property struct NSEdgeInsets additionalContentInsets; // @synthesize additionalContentInsets=_additionalContentInsets;
 @property __weak id <SourceEditorScrollViewDelegate> sourceEditorScrollViewDelegate; // @synthesize sourceEditorScrollViewDelegate=_sourceEditorScrollViewDelegate;
-- (void).cxx_destruct;
+//- (void).cxx_destruct;
 - (void)setFloatingSubviewsShouldMaskToBounds:(BOOL)arg1;
 - (id)floatingSubviewsForAxis:(long long)arg1;
 - (void)addFloatingSubview:(id)arg1 forAxis:(long long)arg2 positioned:(long long)arg3 relativeTo:(id)arg4;
