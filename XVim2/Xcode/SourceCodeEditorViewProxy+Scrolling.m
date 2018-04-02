@@ -107,16 +107,13 @@ typedef struct {
 
 - (void)xvim_scrollBottom:(NSUInteger)lineNumber firstNonblank:(BOOL)fnb
 { // zb / z-
-    LineRange range = [self xvim_visibleLineRange];
-    NSUInteger currentLine = [self currentLineNumber];
-    NSInteger numScrollLines = (NSInteger)(currentLine - 1 - range.bottomLine);
     
-    NSInteger scrollToLine = (numScrollLines < 0) ? (range.topLine + numScrollLines) : (range.bottomLine + numScrollLines);
-    clamp(scrollToLine, 0, self.lineCount - 1);
+    [self xvim_scrollCenter:lineNumber firstNonblank:fnb];
     
-    _auto scrollToCharRange = [self characterRangeForLineRange:NSMakeRange(scrollToLine, 1)];
-    clamp(scrollToCharRange.location, 0, self.string.length);
-    [self scrollRangeToVisible:scrollToCharRange];
+    NSInteger linesPerPage = [self linesPerPage];
+    for (int i = 0; i < linesPerPage/2; ++i){
+        [self scrollLineUp:self];
+    }
 }
 
 - (void)xvim_scrollCenter:(NSUInteger)lineNumber firstNonblank:(BOOL)fnb
@@ -134,16 +131,14 @@ typedef struct {
 
 - (void)xvim_scrollTop:(NSUInteger)lineNumber firstNonblank:(BOOL)fnb
 { // zt / z<CR>
-    LineRange range = [self xvim_visibleLineRange];
-    NSUInteger currentLine = [self currentLineNumber];
-    NSInteger numScrollLines = (NSInteger)(currentLine - 1 - range.topLine);
     
-    NSInteger scrollToLine = (numScrollLines < 0) ? (range.topLine + numScrollLines) : (range.bottomLine + numScrollLines);
-    clamp(scrollToLine, 0, self.lineCount - 1);
-    
-    _auto scrollToCharRange = [self characterRangeForLineRange:NSMakeRange(scrollToLine, 1)];
-    clamp(scrollToCharRange.location, 0, self.string.length);
-    [self scrollRangeToVisible:scrollToCharRange];
+    // first, scroll for cursor visible
+    [self xvim_scrollCenter:lineNumber firstNonblank:fnb];
+
+    NSInteger linesPerPage = [self linesPerPage];
+    for (int i = 0; i < linesPerPage/2; ++i){
+        [self scrollLineDown:self];
+    }
 }
 
 - (void)xvim_scrollTo:(NSUInteger)insertionPoint
