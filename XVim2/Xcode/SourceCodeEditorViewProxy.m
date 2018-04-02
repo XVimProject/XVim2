@@ -362,7 +362,6 @@
 
 - (void)selectionChanged:(NSNotification*)changeNotification
 {
-    DEBUG_LOG(@"");
     if (!self.xvim_lockSyncStateFromView) {
         /*
         DEBUG_LOG(@"SELECTION CHANGED from %@! Locked = %@", changeNotification.object,

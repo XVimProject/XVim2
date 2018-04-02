@@ -78,7 +78,7 @@ static XVimEvaluator* _popEvaluator = nil;
 
     SEL handler = keyStroke.selector;
     if ([self respondsToSelector:handler]) {
-        DEBUG_LOG("Calling SELECTOR %@", NSStringFromSelector(handler));
+        //DEBUG_LOG("Calling SELECTOR %@", NSStringFromSelector(handler));
 #pragma clang diagnostic push
 #pragma clang diagnostic ignored "-Warc-performSelector-leaks"
         return [self performSelector:handler];

@@ -240,7 +240,7 @@
         self.preservedColumn = [self.textStorage xvim_columnOfIndex:self.insertionPoint];
     }
 
-    DEBUG_LOG(@"[%p]New Insertion Point:%d   Preserved Column:%d", self, self.insertionPoint, self.preservedColumn);
+    //DEBUG_LOG(@"[%p]New Insertion Point:%d   Preserved Column:%d", self, self.insertionPoint, self.preservedColumn);
 }
 
 /**
@@ -328,7 +328,7 @@
         return;
     }
     NSRange r = [self selectedRange];
-    DEBUG_LOG(@"Selected Range(TotalLen:%d): Loc:%d Len:%d", self.string.length, r.location, r.length);
+    //DEBUG_LOG(@"Selected Range(TotalLen:%d): Loc:%d Len:%d", self.string.length, r.location, r.length);
     self.selectionMode = XVIM_VISUAL_NONE;
     [self xvim_moveCursor:r.location preserveColumn:NO];
     self.selectionBegin = self.insertionPoint;
@@ -772,7 +772,7 @@
         }
     }
     XVimRange r = XVimMakeRange(begin, end);
-    TRACE_LOG(@"range location:%u  length:%u", r.begin, r.end - r.begin + 1);
+    //TRACE_LOG(@"range location:%u  length:%u", r.begin, r.end - r.begin + 1);
     return r;
 }
 
