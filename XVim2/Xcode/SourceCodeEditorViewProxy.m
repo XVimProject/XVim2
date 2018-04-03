@@ -275,33 +275,25 @@
 }
 
 - (BOOL)hasMarkedText {
-    // XCODE93
-    return NO;
-    //return self.sourceCodeEditorView.hasMarkedText;
+    return self.sourceCodeEditorView.hasMarkedText;
 }
 
 - (NSRange)markedRange {
-    // XCODE93
-    //return self.sourceCodeEditorView.markedRange;
-    return NSMakeRange(0, 0);
+    return self.sourceCodeEditorView.markedRange;
 }
 
 - (void)setMarkedText:(nonnull id)string selectedRange:(NSRange)selectedRange replacementRange:(NSRange)replacementRange
 {
-    // XCODE93
-    //[self.sourceCodeEditorView setMarkedText:string selectedRange:selectedRange replacementRange:replacementRange];
+    [self.sourceCodeEditorView setMarkedText:string selectedRange:selectedRange replacementRange:replacementRange];
 }
 
 - (void)unmarkText {
-    // XCODE93
-    // [self.sourceCodeEditorView unmarkText];
+    [self.sourceCodeEditorView unmarkText];
 }
 
 - (nonnull NSArray<NSAttributedStringKey>*)validAttributesForMarkedText
 {
-    // XCODE93
-    //return self.sourceCodeEditorView.validAttributesForMarkedText;
-    return @[];
+    return self.sourceCodeEditorView.validAttributesForMarkedText;
 }
 
 #pragma mark-- selection
@@ -439,12 +431,10 @@
 // Proxy methods
 
 - (void)selectPreviousPlaceholder:(id)arg1 {
-    // XCODE93
-    //[self.sourceCodeEditorView selectPreviousPlaceholder:self];
+    [self.sourceCodeEditorView selectPreviousPlaceholder:self];
 }
 - (void)selectNextPlaceholder:(id)arg1 {
-    // XCODE93
-    //[self.sourceCodeEditorView selectNextPlaceholder:self];
+    [self.sourceCodeEditorView selectNextPlaceholder:self];
 }
 - (void)mouseExited:(id)sender { [self.sourceCodeEditorView mouseExited:self]; }
 - (void)mouseEntered:(id)sender { [self.sourceCodeEditorView mouseEntered:self]; }
@@ -579,8 +569,7 @@
 - (void)cut:(id)sender { [self.sourceCodeEditorView cut:self]; }
 - (void)copy:(id)sender { [self.sourceCodeEditorView copy:self]; }
 - (void)showFindIndicatorForRange:(NSRange)arg1 {
-    // XCODE93
-    //[self.sourceCodeEditorView showFindIndicatorForRange:arg1];
+    [self.sourceCodeEditorView showFindIndicatorForRange:arg1];
 }
 - (NSUInteger)characterIndexForInsertionAtPoint:(CGPoint)arg1 { return [self.sourceCodeEditorView characterIndexForInsertionAtPoint:arg1]; }
 - (NSRect)bounds { return self.sourceCodeEditorView.bounds; }
