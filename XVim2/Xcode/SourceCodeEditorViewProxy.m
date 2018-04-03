@@ -177,7 +177,7 @@
     return [self.sourceEditorDataSourceWrapper internalCharOffsetFromPosition:pos];
 }
 
-- (SourceEditorUndoManager*)undoManager { return self.sourceEditorDataSourceWrapper.undoManager; }
+- (_TtC12SourceEditor23SourceEditorUndoManager*)undoManager { return self.sourceEditorDataSourceWrapper.undoManager; }
 
 - (void)beginEditTransaction { [self.sourceEditorDataSourceWrapper beginEditTransaction]; }
 
