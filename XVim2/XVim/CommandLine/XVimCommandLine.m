@@ -25,6 +25,7 @@
     // TODO: XVimQuickFixView* _quickFixScrollView;
     id _quickFixObservation;
     NSTimer* _errorTimer;
+    DVTFontAndColorTheme* _theme;
 }
 @end
 
@@ -36,12 +37,17 @@ static const BOOL UseLayers = NO;
 {
     self = [super init];
     if (self) {
+        _theme = [NSClassFromString(@"DVTFontAndColorTheme") performSelector:@selector(currentTheme)];
         NSEdgeInsets insets = NSEdgeInsetsMake(3.0, 3.0, 3.0, 3.0);
 
         self.translatesAutoresizingMaskIntoConstraints = NO;
         self.wantsLayer = UseLayers;
         self.blendingMode = NSVisualEffectBlendingModeWithinWindow;
-        self.appearance = [NSAppearance appearanceNamed:NSAppearanceNameVibrantDark];
+        if (_theme.hasLightBackground){
+            self.appearance = [NSAppearance appearanceNamed:NSAppearanceNameVibrantLight];
+        } else {
+            self.appearance = [NSAppearance appearanceNamed:NSAppearanceNameVibrantDark];
+        }
 
         // Static Message ( This is behind the command view if the command is active)
         _static = [NSTextField labelWithString:@""];
