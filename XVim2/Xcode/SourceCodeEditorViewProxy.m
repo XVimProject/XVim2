@@ -13,6 +13,7 @@
 #import "XVim2-Swift.h"
 #import "XVimCommandLine.h"
 #import "XVimMotion.h"
+#import "XVimOptions.h"
 #import "rd_route.h"
 #import <IDEKit/IDEEditorArea.h>
 #import "XcodeUtils.h"
@@ -603,7 +604,13 @@ static CGFloat XvimCommandLineAnimationDuration = 0.1;
         [layoutView.widthAnchor constraintEqualToAnchor:self.commandLine.widthAnchor multiplier:1.0].active = YES;
         [layoutView.leftAnchor constraintEqualToAnchor:self.commandLine.leftAnchor].active = YES;
         [layoutView.rightAnchor constraintEqualToAnchor:self.commandLine.rightAnchor].active = YES;
-        _auto height = [self.commandLine.heightAnchor constraintEqualToConstant:20];
+        CGFloat commandline_height;
+        if (XVim.instance.options.laststatus == 0){
+            commandline_height = 0;
+        } else {
+            commandline_height = 20;
+        }
+        _auto height = [self.commandLine.heightAnchor constraintEqualToConstant:commandline_height];
         height.priority = 250;
         height.active = YES;
 
