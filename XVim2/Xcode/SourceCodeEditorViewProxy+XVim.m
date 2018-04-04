@@ -1008,10 +1008,7 @@
     for (NSUInteger i = 0; i < count; i++) {
         [self.sourceCodeEditorView moveUp:self];
     }
-    // TODO
-    // XCODE93
-    //NSRange range = self.sourceCodeEditorView.contentView.accessibilityColumnIndexRange
-    NSRange range = NSMakeRange(0, 0);
+    NSRange range = self.sourceCodeEditorView.accessibilityColumnIndexRange;
     return [self.sourceCodeEditorView
                        characterRangeForLineRange:NSMakeRange(self.sourceCodeEditorView
                                                                           .accessibilityInsertionPointLineNumber,
@@ -1026,20 +1023,15 @@
 -(void)xvim_registerPositionForUndo : (NSUInteger)pos
 {
     __weak SourceCodeEditorViewProxy* weakSelf = self;
-    // XCODE93
-    /*
-    [self.undoManager registerUndoWithTitle:@"BLAH"
-                                  redoTitle:@"REBLAH"
-                                  operation:^(void) {
-                                      SourceCodeEditorViewProxy* SELF = weakSelf;
-                                      if (!SELF)
-                                          return;
-                                      XVimMotion* m = XVIM_MAKE_MOTION(MOTION_POSITION, DEFAULT_MOTION_TYPE,
-                                                                       MOTION_OPTION_NONE, 1);
-                                      m.position = pos;
-                                      [SELF xvim_move:m];
-                                  }];
-     */
+    [self.undoManager registerUndoWithTarget:self handler:^(id _Nonnull target){
+        SourceCodeEditorViewProxy* SELF = weakSelf;
+        if (!SELF)
+            return;
+        XVimMotion* m = XVIM_MAKE_MOTION(MOTION_POSITION, DEFAULT_MOTION_TYPE,
+                                         MOTION_OPTION_NONE, 1);
+        m.position = pos;
+        [SELF xvim_move:m];
+    }];
 }
 
 -(void)xvim_registerInsertionPointForUndo { [self xvim_registerPositionForUndo:self.selectedRange.location]; }
