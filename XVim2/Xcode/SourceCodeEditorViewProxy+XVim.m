@@ -1022,6 +1022,8 @@
 
 -(void)xvim_registerPositionForUndo : (NSUInteger)pos
 {
+    // XCODE93
+    /*
     __weak SourceCodeEditorViewProxy* weakSelf = self;
     [self.undoManager registerUndoWithTarget:self handler:^(id _Nonnull target){
         SourceCodeEditorViewProxy* SELF = weakSelf;
@@ -1032,6 +1034,7 @@
         m.position = pos;
         [SELF xvim_move:m];
     }];
+     */
 }
 
 -(void)xvim_registerInsertionPointForUndo { [self xvim_registerPositionForUndo:self.selectedRange.location]; }
