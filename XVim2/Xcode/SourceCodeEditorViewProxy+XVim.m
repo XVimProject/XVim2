@@ -292,10 +292,13 @@
     }
 }
 
-
--(void)xvim_syncStateWithScroll : (BOOL)scroll
-{
-    //DEBUG_LOG(@"[%p]IP:%d", self, self.insertionPoint);
+/**
+ * Applies internal state to underlying view (self).
+ * This update self's property and applies the visual effect on it.
+ * All the state need to express Vim is held by this class and
+ * we use self to express it visually.
+ **/
+-(void)xvim_syncState {
     self.xvim_lockSyncStateFromView = YES;
     // Reset current selection
     if (self.cursorMode == CURSOR_MODE_COMMAND) {
@@ -305,20 +308,8 @@
 
     [self setSelectedRanges:[self xvim_selectedRanges] affinity:NSSelectionAffinityDownstream stillSelecting:NO];
 
-    if (scroll) {
-        [self xvim_scrollTo:self.insertionPoint];
-    }
     self.xvim_lockSyncStateFromView = NO;
 }
-
-
-/**
- * Applies internal state to underlying view (self).
- * This update self's property and applies the visual effect on it.
- * All the state need to express Vim is held by this class and
- * we use self to express it visually.
- **/
--(void)xvim_syncState { [self xvim_syncStateWithScroll:YES]; }
 
 -(void)xvim_syncStateFromView
 {
@@ -969,7 +960,7 @@
         self.selectionBegin = NSNotFound;
     }
     self.selectionMode = mode;
-    [self xvim_syncStateWithScroll:NO];
+    [self xvim_syncState];
 }
 
 -(void)xvim_escapeFromInsert
@@ -1060,6 +1051,7 @@
         range = [self.textStorage searchRegexBackward:regex from:self.insertionPoint count:count option:opt];
     }
     if (range.location != NSNotFound) {
+        clamp(range.location, 0, self.string.length);
         [self scrollRangeToVisible:range];
         [self showFindIndicatorForRange:range];
     }

@@ -16,7 +16,6 @@
 @property (readwrite) BOOL selectionToEOL;
 - (void)xvim_moveCursor:(NSUInteger)pos preserveColumn:(BOOL)preserve;
 - (void)xvim_syncState;
-- (void)xvim_syncStateWithScroll:(BOOL)scroll;
 @end
 
 @implementation SourceCodeEditorViewProxy (Scrolling)
@@ -123,7 +122,7 @@ typedef struct {
                     [self.textStorage xvim_firstNonblankInLineAtIndex:self.selectedRange.location allowEOL:YES];
         if (cursorIndexAfterScroll != self.selectedRange.location) {
             self.selectedRange = NSMakeRange(cursorIndexAfterScroll, 0);
-            [self xvim_syncStateWithScroll:NO];
+            [self xvim_syncState];
         }
     }
     [self centerSelectionInVisibleArea:self];
@@ -143,8 +142,6 @@ typedef struct {
 
 - (void)xvim_scrollTo:(NSUInteger)insertionPoint
 {
-    //_auto rng = [self.sourceCodeEditorView lineRangeForCharacterRange:NSMakeRange(insertionPoint, 0)];
-    [self scrollRangeToVisible:NSMakeRange(insertionPoint, 0)];
 }
 
 - (void)xvim_pageForward:(NSUInteger)index count:(NSUInteger)count
