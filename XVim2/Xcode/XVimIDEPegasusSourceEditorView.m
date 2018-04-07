@@ -34,25 +34,37 @@ CONST_STR(EDLastEvent);
 CONST_STR(EDMode);
 CONST_STR(EDWindow);
 
-#define SELF ((_TtC15IDESourceEditor19SourceCodeEditorView*)self)
+#define SELF ((_TtC15IDESourceEditor19IDESourceEditorView*)self)
 
 @implementation XVimIDEPegasusSourceEditorView
 
 +(void)xvim_hook
 {
-    [XVimIDEPegasusSourceEditorView xvim_swizzleInstanceMethodOfClassName:SourceEditorViewClassName
-                                                                 selector:@selector(keyDown:)
-                                                                     with:@selector(xvim_keyDown:)];
-    [XVimIDEPegasusSourceEditorView xvim_swizzleInstanceMethodOfClassName:IDEPegasusSourceCodeEditorViewClassName
-                                                                 selector:@selector(viewWillMoveToWindow:)
-                                                                     with:@selector(xvim_viewWillMoveToWindow:)];
+    [XVimIDEPegasusSourceEditorView
+     xvim_swizzleInstanceMethodOfClassName: SourceEditorViewClassName
+     selector:@selector(keyDown:)
+     with:@selector(xvim_keyDown:)];
+    [XVimIDEPegasusSourceEditorView
+     xvim_swizzleInstanceMethodOfClassName: IDEPegasusSourceCodeEditorViewClassName
+     selector:@selector(viewWillMoveToWindow:)
+     with:@selector(xvim_viewWillMoveToWindow:)];
+    [XVimIDEPegasusSourceEditorView
+     xvim_swizzleInstanceMethodOfClassName:IDEPegasusSourceCodeEditorViewClassName
+     selector:@selector(scrollRangeToVisible:)
+     with:@selector(xvim_scrollRangeToVisible:)];
+    
     [XVimIDEPegasusSourceEditorView xvim_addInstanceMethod:@selector(xvim_window)
-                                               toClassName:IDEPegasusSourceCodeEditorViewClassName];
-    [XVimIDEPegasusSourceEditorView xvim_addInstanceMethod:@selector(xvim_setupOnFirstAppearance)
-                                               toClassName:IDEPegasusSourceCodeEditorViewClassName];
+         toClassName:IDEPegasusSourceCodeEditorViewClassName];
+    [XVimIDEPegasusSourceEditorView xvim_addInstanceMethod: @selector(xvim_setupOnFirstAppearance)
+         toClassName:IDEPegasusSourceCodeEditorViewClassName];
     
 }
 
+- (void)xvim_scrollRangeToVisible:(NSRange)range
+{
+    // prevent crash for `ciw` in Xcode93
+    //[self xvim_scrollRangeToVisible:range];
+}
 
 - (void)xvim_viewWillMoveToWindow:(id)window
 {

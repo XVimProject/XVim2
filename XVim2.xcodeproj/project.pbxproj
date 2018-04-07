@@ -11,6 +11,7 @@
 		A2482F321F72435D00FEF4DE /* XVimTaskRunner.m in Sources */ = {isa = PBXBuildFile; fileRef = A2482F301F72435D00FEF4DE /* XVimTaskRunner.m */; };
 		A2482F4C1F725B6500FEF4DE /* StringUtil.m in Sources */ = {isa = PBXBuildFile; fileRef = A2482F4B1F725B6500FEF4DE /* StringUtil.m */; };
 		A26E5C801F514686000BCC66 /* XVim2.xcplugin in CopyFiles */ = {isa = PBXBuildFile; fileRef = A26E5C731F5145AB000BCC66 /* XVim2.xcplugin */; };
+		A27A7AEB2077BD68006A0E4F /* XVimUtil.m in Sources */ = {isa = PBXBuildFile; fileRef = A27A7AEA2077BD68006A0E4F /* XVimUtil.m */; };
 		A287A8C71F55D637009378BC /* NSObject+ExtraData.m in Sources */ = {isa = PBXBuildFile; fileRef = A287A8C61F55D636009378BC /* NSObject+ExtraData.m */; };
 		A2A298DC2070A962001B5F9E /* XcodeUtils.m in Sources */ = {isa = PBXBuildFile; fileRef = A2A298DB2070A962001B5F9E /* XcodeUtils.m */; };
 		A2A9F9232070A7B500E7BB53 /* SourceEditorDataSourceWrapper.swift in Sources */ = {isa = PBXBuildFile; fileRef = A2A9F9202070A7B500E7BB53 /* SourceEditorDataSourceWrapper.swift */; };
@@ -25,6 +26,7 @@
 		A2A9F93E2070A85200E7BB53 /* XVimIDEPegasusSourceEditorView.m in Sources */ = {isa = PBXBuildFile; fileRef = A2A9F93C2070A85200E7BB53 /* XVimIDEPegasusSourceEditorView.m */; };
 		A2B52D3F1F514CC600D83C0A /* Logger.m in Sources */ = {isa = PBXBuildFile; fileRef = A2B52D3B1F514CC600D83C0A /* Logger.m */; };
 		A2B537B11F51C94400D83C0A /* NSObject+Swizzle.m in Sources */ = {isa = PBXBuildFile; fileRef = A2B537B01F51C94400D83C0A /* NSObject+Swizzle.m */; };
+		A2FB1EE12077B65100D3E634 /* File.swift in Sources */ = {isa = PBXBuildFile; fileRef = A2FB1EE02077B65100D3E634 /* File.swift */; };
 		ED0DED611F8C2CEC00886F6B /* XVimZEvaluator.m in Sources */ = {isa = PBXBuildFile; fileRef = ED0DED5D1F8C2CDD00886F6B /* XVimZEvaluator.m */; };
 		ED0DED621F8C2E1D00886F6B /* XVimGVisualEvaluator.m in Sources */ = {isa = PBXBuildFile; fileRef = ED0DED601F8C2CDF00886F6B /* XVimGVisualEvaluator.m */; };
 		ED0DED681F8C31FA00886F6B /* XVimCommandLineEvaluator.m in Sources */ = {isa = PBXBuildFile; fileRef = ED0DED661F8C31F900886F6B /* XVimCommandLineEvaluator.m */; };
@@ -117,6 +119,8 @@
 		A2482F4A1F725B6500FEF4DE /* StringUtil.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = StringUtil.h; sourceTree = "<group>"; };
 		A2482F4B1F725B6500FEF4DE /* StringUtil.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = StringUtil.m; sourceTree = "<group>"; };
 		A26E5C731F5145AB000BCC66 /* XVim2.xcplugin */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = XVim2.xcplugin; sourceTree = BUILT_PRODUCTS_DIR; };
+		A27A7AE92077BD68006A0E4F /* XVimUtil.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = XVimUtil.h; sourceTree = "<group>"; };
+		A27A7AEA2077BD68006A0E4F /* XVimUtil.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = XVimUtil.m; sourceTree = "<group>"; };
 		A2835A3D206FCCFC00332BFA /* _TtC15IDESourceEditor45SourceCodeInvocationGeniusResultNavigableItem.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = _TtC15IDESourceEditor45SourceCodeInvocationGeniusResultNavigableItem.h; sourceTree = "<group>"; };
 		A2835A40206FCCFC00332BFA /* _TtC15IDESourceEditor19IDESourceEditorView-IDESourceEditor1.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "_TtC15IDESourceEditor19IDESourceEditorView-IDESourceEditor1.h"; sourceTree = "<group>"; };
 		A2835A47206FCCFC00332BFA /* _TtC15IDESourceEditor18SourceCodeDocument-IDESourceEditor1.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "_TtC15IDESourceEditor18SourceCodeDocument-IDESourceEditor1.h"; sourceTree = "<group>"; };
@@ -198,6 +202,7 @@
 		A2B52D3C1F514CC600D83C0A /* Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		A2B537AF1F51C94400D83C0A /* NSObject+Swizzle.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "NSObject+Swizzle.h"; sourceTree = "<group>"; };
 		A2B537B01F51C94400D83C0A /* NSObject+Swizzle.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "NSObject+Swizzle.m"; sourceTree = "<group>"; };
+		A2FB1EE02077B65100D3E634 /* File.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = File.swift; sourceTree = "<group>"; };
 		ED0DED5D1F8C2CDD00886F6B /* XVimZEvaluator.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = XVimZEvaluator.m; sourceTree = "<group>"; };
 		ED0DED5E1F8C2CDD00886F6B /* XVimZEvaluator.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = XVimZEvaluator.h; sourceTree = "<group>"; };
 		ED0DED5F1F8C2CDE00886F6B /* XVimGVisualEvaluator.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = XVimGVisualEvaluator.h; sourceTree = "<group>"; };
@@ -525,6 +530,7 @@
 				A2A9F91F2070A71600E7BB53 /* Xcode */,
 				A2835A2E206FCCDC00332BFA /* Xcode9.3 */,
 				A2B537A51F51B87A00D83C0A /* Xcode */,
+				A2FB1EE02077B65100D3E634 /* File.swift */,
 			);
 			path = XVim2;
 			sourceTree = "<group>";
@@ -553,6 +559,8 @@
 				A2B52D3A1F514CC600D83C0A /* Logger.h */,
 				A2B52D3B1F514CC600D83C0A /* Logger.m */,
 				ED9CF2D81F6EFB6100908DFB /* Macros.h */,
+				A27A7AE92077BD68006A0E4F /* XVimUtil.h */,
+				A27A7AEA2077BD68006A0E4F /* XVimUtil.m */,
 			);
 			path = Helper;
 			sourceTree = "<group>";
@@ -908,6 +916,8 @@
 				EDD27BAB1F9B5EB30006471C /* XVimTester+map.m in Sources */,
 				ED0DED7F1F8C41F100886F6B /* NSURL+XVimXcodeModule.m in Sources */,
 				ED6BCEE21F83F019003517EB /* XVimJoinEvaluator.m in Sources */,
+				A2FB1EE12077B65100D3E634 /* File.swift in Sources */,
+				A27A7AEB2077BD68006A0E4F /* XVimUtil.m in Sources */,
 				EDD27BB51F9B5F140006471C /* XVimTester+Recording.m in Sources */,
 				A2A9F9232070A7B500E7BB53 /* SourceEditorDataSourceWrapper.swift in Sources */,
 				ED31C0C61F8164B800BE97B9 /* XVimInsertEvaluator.m in Sources */,
