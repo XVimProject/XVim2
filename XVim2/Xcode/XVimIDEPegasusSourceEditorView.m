@@ -10,7 +10,6 @@
 
 #import "_TtC15IDESourceEditor19IDESourceEditorView.h"
 #import "_TtC15IDESourceEditor19IDESourceEditorView+XVim.h"
-//#import "_TtC15IDESourceEditor19SourceCodeEditorView.h"
 #import "_TtC12SourceEditor16SourceEditorView.h"
 #import "Logger.h"
 #import "NSObject+ExtraData.h"
@@ -19,7 +18,6 @@
 #import "XVimKeyStroke.h"
 #import "XVimWindow.h"
 #import <QuartzCore/QuartzCore.h>
-//#import <SourceEditor/SourceEditorScrollView.h>
 
 #import "NSObject+ExtraData.h"
 #import "IDEEditorArea.h"

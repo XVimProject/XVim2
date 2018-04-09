@@ -6,11 +6,10 @@
 //  Copyright © 2017 Shuichiro Suzuki. All rights reserved.
 //
 
-#import "_TtC15IDESourceEditor19IDESourceEditorView.h"
 #import "SourceViewProtocol.h"
 #import <Foundation/Foundation.h>
 
-@class _TtC15IDESourceEditor19SourceCodeEditorView;
+@class _TtC15IDESourceEditor19IDESourceEditorView;
 
 // Raw values for SourceEditor.SourceEditorSelectionModifiers
 typedef NS_OPTIONS(unsigned, XVimSelectionModifiers) {
@@ -78,7 +77,7 @@ static inline XVimSourceEditorRange XvimMakeSourceEditorRange(XVimSourceEditorPo
 @property BOOL xvim_lockSyncStateFromView;
 @property (strong, nullable) SourceCodeEditorViewWrapper* sourceCodeEditorViewWrapper;
 @property (readonly, nonatomic, nullable) SourceEditorDataSourceWrapper* sourceEditorDataSourceWrapper;
-- (nullable instancetype)initWithSourceCodeEditorView:(nonnull _TtC15IDESourceEditor19SourceCodeEditorView *)sourceEditorView;
+- (nullable instancetype)initWithSourceCodeEditorView:(nonnull _TtC15IDESourceEditor19IDESourceEditorView *)sourceEditorView;
 
 // Data source
 @property (readonly, nonatomic, nullable) id dataSource;

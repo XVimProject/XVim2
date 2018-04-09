@@ -16,8 +16,8 @@
 #import "XVim2-Swift.h"
 #import "XVimMotion.h"
 #import "XVimOptions.h"
-//#import <SourceEditor/_TtC12SourceEditor23SourceEditorUndoManager.h>
 #import "XVimXcode.h"
+#import "_TtC15IDESourceEditor19IDESourceEditorView.h"
 
 @interface SourceCodeEditorViewProxy ()
 @property (weak) _TtC15IDESourceEditor19IDESourceEditorView* sourceCodeEditorView;
