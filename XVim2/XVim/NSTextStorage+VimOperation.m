@@ -499,25 +499,32 @@ static NSUInteger xvim_sb_count_columns(xvim_string_buffer_t* sb, NSUInteger tab
             break;
         }
 
+        int len;
         if ([self isNewline:pos - 1]) {
             // skip the newline letter at the end of line
-            --pos;
-            ++index_count;
+            len = 1;
+            pos -= len;
         }
         else {
             NSRange rph = [self rangePlaceHolder:pos option:opt];
             if (rph.location != NSNotFound) {
                 pos = rph.location;
             }
+            
+            if (pos > 0 && [self isLowSurrogate:pos-1]){
+                len = 2;
+            } else {
+                len = 1;
+            }
 
-            --pos;
-            ++index_count;
+            pos -= len;
 
             rph = [self rangePlaceHolder:pos option:opt];
             if (rph.location != NSNotFound) {
                 pos = rph.location;
             }
         }
+        index_count += len;
     }
     return pos;
 }
@@ -542,17 +549,23 @@ static NSUInteger xvim_sb_count_columns(xvim_string_buffer_t* sb, NSUInteger tab
             break;
         }
 
-        ++index_count;
+        int len;
         NSRange rph = [self rangePlaceHolder:pos option:opt];
         if (rph.location != NSNotFound) {
             pos = NSMaxRange(rph);
+            len = 1;
+        } else {
+            if ([self isHighSurrogate:pos]){
+                len = 2;
+            } else {
+                len = 1;
+            }
+            pos += len;
         }
-        else {
-            ++pos;
-        }
+        index_count += len;
 
         if ([self isEOF:pos] || ((opt & LEFT_RIGHT_NOWRAP) && [self isNewline:pos])) {
-            --pos;
+            pos -= len;
             info->reachedEndOfLine = YES;
             break;
         }
@@ -2413,5 +2426,18 @@ NSInteger xv_findChar(NSString* string, NSInteger index, int repeatCount, char c
     return result;
 }
 
+- (BOOL)isHighSurrogate:(NSUInteger)index
+{
+    NSString* string = [self xvim_string];
+    const unichar uc = [self safetyCharacterAtIndex:index fromString:string];
+    return (0xd800 <= uc && uc <= 0xdbff);
+}
+
+- (BOOL)isLowSurrogate:(NSUInteger)index
+{
+    NSString* string = [self xvim_string];
+    const unichar uc = [self safetyCharacterAtIndex:index fromString:string];
+    return (0xdc00 <= uc && uc <= 0xdfff);
+}
 
 @end
