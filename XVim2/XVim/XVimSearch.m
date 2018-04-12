@@ -443,9 +443,11 @@ if (found.location != NSNotFound &&
 
     // search text beyond the search_base
     // Since self.lastSearchCmd may include ^ or $, NSMatchingWithoutAnchoringBounds option needs to set.
-    self.lastFoundRange = [regex rangeOfFirstMatchInString:[srcView string]
+    NSString* str = [srcView string];
+    if (str == nil){ return; }
+    self.lastFoundRange = [regex rangeOfFirstMatchInString:str
                                                    options:NSMatchingWithoutAnchoringBounds
-                                                     range:NSMakeRange(from, [[srcView string] length] - from)];
+                                                     range:NSMakeRange(from, [str length] - from)];
 
     if (self.lastFoundRange.location >= to) {
         self.lastFoundRange = NSMakeRange(NSNotFound, 0);
