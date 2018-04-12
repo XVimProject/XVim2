@@ -20,7 +20,7 @@ typedef NS_ENUM(char, CursorStyle) { CursorStyleVerticalBar, CursorStyleBlock, C
 
 @protocol XVimTextViewDelegateProtocol
 - (void)textView:(id)view didYank:(NSString*)yankedText withType:(TEXT_TYPE)type;
-- (void)textView:(id)view didDelete:(NSString*)deletedText withType:(TEXT_TYPE)type;
+- (void)textView:(id)view didDelete:(NSString*)deletedText withType:(TEXT_TYPE)type yanked:(BOOL)yanked;
 @end
 
 @protocol SourceViewProtocol <NSObject>

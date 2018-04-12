@@ -194,9 +194,11 @@ static XVimEvaluator* _popEvaluator = nil;
     return;
 }
 
-- (void)textView:(NSTextView*)view didDelete:(NSString*)deletedText withType:(TEXT_TYPE)type
+- (void)textView:(NSTextView*)view didDelete:(NSString*)deletedText withType:(TEXT_TYPE)type yanked:(BOOL)yanked
 {
-    [XVIM.registerManager delete:deletedText withType:type onRegister:self.yankRegister];
+    if (yanked) {
+        [XVIM.registerManager delete:deletedText withType:type onRegister:self.yankRegister];
+    }
     return;
 }
 
