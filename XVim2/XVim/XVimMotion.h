@@ -10,13 +10,13 @@
 #import "XVimMotionType.h"
 #import <Foundation/Foundation.h>
 
-typedef struct {
-    BOOL reachedEndOfLine;
-    BOOL isFirstWordInLine;
-    BOOL deleteLastLine;
-    NSUInteger lastEndOfLine;
-    NSUInteger lastEndOfWord;
-} XVimMotionInfo;
+@interface XVimMotionInfo : NSObject
+@property (nonatomic) BOOL reachedEndOfLine;
+@property (nonatomic) BOOL isFirstWordInLine;
+@property (nonatomic) BOOL deleteLastLine;
+@property (nonatomic) NSUInteger lastEndOfLine;
+@property (nonatomic) NSUInteger lastEndOfWord;
+@end
 
 #define XVIM_MAKE_MOTION(MOTION, TYPE, OPTION, COUNT)                                                                  \
     [[XVimMotion alloc] initWithMotion:MOTION type:TYPE option:OPTION count:COUNT]

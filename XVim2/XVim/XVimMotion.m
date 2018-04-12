@@ -8,6 +8,9 @@
 
 #import "XVimMotion.h"
 
+@implementation XVimMotionInfo
+@end
+
 @implementation XVimMotion
 
 - (BOOL)isJumpMotion
@@ -43,19 +46,17 @@
         _count = count;
         _regex = nil;
 
-        _info = malloc(sizeof(XVimMotionInfo));
-        _info->reachedEndOfLine = NO;
-        _info->isFirstWordInLine = NO;
-        _info->lastEndOfLine = NSNotFound;
-        _info->lastEndOfWord = NSNotFound;
+        _info = [[XVimMotionInfo alloc] init];
+        _info.reachedEndOfLine = NO;
+        _info.isFirstWordInLine = NO;
+        _info.lastEndOfLine = NSNotFound;
+        _info.lastEndOfWord = NSNotFound;
 
         _jumpToAnotherFile = NO;
         _keepJumpMarkIndex = NO;
     }
     return self;
 }
-
-- (void)dealloc { free(_info); }
 
 - (BOOL)isTextObject { return TEXTOBJECT_WORD <= self.motion && self.motion <= TEXTOBJECT_UNDERSCORE; }
 

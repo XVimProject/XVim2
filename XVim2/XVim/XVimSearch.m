@@ -361,7 +361,7 @@ if((self.matchStart || self.matchEnd) && found.location != NSNotFound){
         return NSMakeRange(NSNotFound, 0);
     }
 
-    XVimMotionInfo info;
+    XVimMotionInfo* info = [[XVimMotionInfo alloc] init];
     NSUInteger wordStart = searchStart;
     if (wordStart > 0) {
         unichar curChar = [string characterAtIndex:wordStart];
@@ -372,7 +372,7 @@ if((self.matchStart || self.matchEnd) && found.location != NSNotFound){
         }
     }
 
-    NSUInteger wordEnd = [view.textStorage wordsForward:wordStart count:1 option:LEFT_RIGHT_NOWRAP info:&info];
+    NSUInteger wordEnd = [view.textStorage wordsForward:wordStart count:1 option:LEFT_RIGHT_NOWRAP info:info];
     if (info.lastEndOfWord != NSNotFound) {
         wordEnd = info.lastEndOfWord;
     }
