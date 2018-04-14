@@ -9,7 +9,6 @@
 #import "XVimDeleteEvaluator.h"
 #import "XVimInsertEvaluator.h"
 #import "XVimWindow.h"
-//#import "NSTextView+VimOperation.h"
 #import "Logger.h"
 #import "SourceCodeEditorViewProxy.h"
 #import "XVim.h"
@@ -25,7 +24,7 @@
 - (id)initWithWindow:(XVimWindow*)window insertModeAtCompletion:(BOOL)insertModeAtCompletion
 {
     if (self = [super initWithWindow:window]) {
-        self->_insertModeAtCompletion = insertModeAtCompletion;
+        _insertModeAtCompletion = insertModeAtCompletion;
     }
     return self;
 }
@@ -73,7 +72,7 @@
 
 - (XVimEvaluator*)motionFixed:(XVimMotion*)motion
 {
-    if (_insertModeAtCompletion == TRUE) {
+    if (_insertModeAtCompletion) {
         // Do not repeat the insert, that is how vim works so for
         // example 'c3wWord<ESC>' results in Word not WordWordWord
         if (![[self sourceView] xvim_change:motion]) {

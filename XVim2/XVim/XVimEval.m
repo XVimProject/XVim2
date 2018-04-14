@@ -37,12 +37,12 @@
 
 //
 @implementation XVimEval
-#define EVALFUNC(funcname, methodname) [[XVimEvalFunc alloc] initWithFuncName:funcname MethodName:methodname]
 - (id)init
 {
     self = [super init];
     if (self) {
-        _evalFuncs = [[NSArray alloc] initWithObjects:EVALFUNC(@"line", @"line:inWindow:"), nil];
+        _auto func = [[XVimEvalFunc alloc] initWithFuncName:@"line"  MethodName:@"line:inWindow:"];
+        _evalFuncs = @[func];
     }
     return self;
 }
