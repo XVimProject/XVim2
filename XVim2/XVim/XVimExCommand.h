@@ -55,8 +55,7 @@
 
 @class XVimWindow;
 
-@interface XVimExArg : NSObject {
-}
+@interface XVimExArg : NSObject
 @property (strong) NSString* arg;
 @property (strong) NSString* cmd;
 @property BOOL forceit;
@@ -67,8 +66,7 @@
 @end
 
 // XVimExCmd corresponds cmdname struct in ex_cmds.h
-@interface XVimExCmdname : NSObject {
-}
+@interface XVimExCmdname : NSObject
 @property (weak, readonly) NSString* cmdName;
 @property (weak, readonly) NSString* methodName;
 @end

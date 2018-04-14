@@ -18,35 +18,29 @@
 #import "XVimOptions.h"
 #import "XVimSearch.h"
 #import "XVimWindow.h"
-//#import "XVimTester.h"
 #import "XVimEval.h"
-//#import "IDEKit.h"
-//#import "XVimDebug.h"
 #import "XVimKeyStroke.h"
 #import "XVimKeymap.h"
 #import "XVimMark.h"
 #import "XVimMarks.h"
 #import "XVimRegister.h"
 #import "XcodeUtils.h"
-//#import "XVimTester.h"
 #import "NSTextStorage+VimOperation.h"
 #import "NSURL+XVimXcodeModule.h"
 
 @implementation XVimExArg
-@synthesize arg, cmd, forceit, noRangeSpecified, lineBegin, lineEnd, addr_count;
 @end
 
 // Maximum time in seconds for a 'bang' command to run before being killed as taking too long
 // static const NSTimeInterval EXTERNAL_COMMAND_TIMEOUT_SECS = 5.0;
 
 @implementation XVimExCmdname
-@synthesize cmdName, methodName;
 
 - (id)initWithCmd:(NSString*)cmd method:(NSString*)method
 {
     if (self = [super init]) {
-        cmdName = cmd;
-        methodName = method;
+        _cmdName = cmd;
+        _methodName = method;
     }
     return self;
 }
@@ -1577,7 +1571,7 @@ xvim_ignore_warning_pop
     evalarg.invar = args.arg;
     [eval evaluateWhole:evalarg inWindow:window];
 
-    NSString* cmd = (NSString*)evalarg.rvar;
+    NSString* cmd = evalarg.rvar;
     if (cmd.length > 2) {
         if ([cmd characterAtIndex:0] == '"' && [cmd characterAtIndex:cmd.length - 1] == '"') {
             NSString* nextcmd =

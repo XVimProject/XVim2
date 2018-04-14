@@ -9,6 +9,18 @@
 #import "XVimMotion.h"
 
 @implementation XVimMotionInfo
+- (id)init
+{
+    self = [super init];
+    if (self){
+        _reachedEndOfLine = NO;
+        _isFirstWordInLine = NO;
+        _deleteLastLine = NO;
+        _lastEndOfLine = NSNotFound;
+        _lastEndOfWord = NSNotFound;
+    }
+    return self;
+}
 @end
 
 @implementation XVimMotion
@@ -47,10 +59,6 @@
         _regex = nil;
 
         _info = [[XVimMotionInfo alloc] init];
-        _info.reachedEndOfLine = NO;
-        _info.isFirstWordInLine = NO;
-        _info.lastEndOfLine = NSNotFound;
-        _info.lastEndOfWord = NSNotFound;
 
         _jumpToAnotherFile = NO;
         _keepJumpMarkIndex = NO;

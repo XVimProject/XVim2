@@ -9,9 +9,6 @@
 #import "XVimMark.h"
 
 @implementation XVimMark
-@synthesize line = _line;
-@synthesize column = _column;
-@synthesize document = _document;
 
 - (id)initWithLine:(NSUInteger)line column:(NSUInteger)col document:(NSString*)doc
 {

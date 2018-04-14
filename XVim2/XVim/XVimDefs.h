@@ -30,7 +30,7 @@ typedef NS_ENUM(NSUInteger, XVimInsertionPoint) {
     XVIM_INSERT_BLOCK_KILL,
 };
 
-typedef enum {
+typedef NS_ENUM(NSUInteger, XVIM_MODE) {
     XVIM_MODE_NONE,
     XVIM_MODE_NORMAL,
     XVIM_MODE_CMDLINE,
@@ -39,17 +39,16 @@ typedef enum {
     XVIM_MODE_VISUAL,
     XVIM_MODE_SELECT,
     XVIM_MODE_COUNT, // This is the count of modes
-} XVIM_MODE;
-typedef XVIM_MODE XVimMode;
+};
 
-typedef enum {
+typedef NS_ENUM(NSUInteger, XVIM_VISUAL_MODE) {
     XVIM_VISUAL_NONE,
     XVIM_VISUAL_CHARACTER, // for 'v'
     XVIM_VISUAL_LINE, // for 'V'
     XVIM_VISUAL_BLOCK, // for 'CTRL-V'
-} XVIM_VISUAL_MODE;
+};
 
-typedef enum {
+typedef NS_ENUM(NSUInteger, XVIM_VISUAL_CORNER) {
     _XVIM_VISUAL_RIGHT = 1,
     _XVIM_VISUAL_BOTTOM = 2,
 
@@ -57,13 +56,13 @@ typedef enum {
     XVIM_VISUAL_TOPRIGHT = 1,
     XVIM_VISUAL_BOTTOMLEFT = 2,
     XVIM_VISUAL_BOTTOMRIGHT = 3,
-} XVIM_VISUAL_CORNER;
+};
 
-typedef enum {
+typedef NS_ENUM(NSUInteger, XVIM_SCROLL_TYPE) {
     XVIM_SCROLL_TYPE_PAGE,
     XVIM_SCROLL_TYPE_HALF_PAGE,
     XVIM_SCROLL_TYPE_LINE,
-} XVIM_SCROLL_TYPE;
+};
 
 typedef NS_ENUM(NSInteger, XVIM_SCROLL_DIRECTION) {
     XVIM_SCROLL_DIRECTION_UP = -1,
@@ -119,7 +118,11 @@ NS_INLINE XVimRange XVimRangeSwap(XVimRange range) { return XVimMakeRange(range.
  */
 NS_INLINE NSRange XVimMakeNSRange(XVimRange range) { return NSMakeRange(range.begin, range.end - range.begin + 1); }
 
-typedef enum { TEXT_TYPE_CHARACTERS, TEXT_TYPE_BLOCK, TEXT_TYPE_LINES } TEXT_TYPE;
+typedef NS_ENUM(NSUInteger, TEXT_TYPE) {
+    TEXT_TYPE_CHARACTERS,
+    TEXT_TYPE_BLOCK,
+    TEXT_TYPE_LINES
+};
 
 typedef NSMutableString XVimMutableString;
 

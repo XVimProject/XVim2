@@ -13,7 +13,7 @@
 // @ref eval.c in original vim
 @interface XVimEvalArg : NSObject
 @property (strong) NSString* invar; // [in] in variable
-@property (strong) id rvar; // [out] return variable
+@property (strong) NSString* rvar; // [out] return variable
 @end
 
 //

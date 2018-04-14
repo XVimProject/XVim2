@@ -13,15 +13,10 @@
 
 //
 @implementation XVimEvalArg
-@synthesize invar = _invar;
-@synthesize rvar = _rvar;
 @end
 
 //
 @implementation XVimEvalFunc
-
-@synthesize funcName = _funcName;
-@synthesize methodName = _methodName;
 
 - (id)initWithFuncName:(NSString*)aFuncName MethodName:(NSString*)aMethodName
 {
@@ -96,7 +91,7 @@
             XVimEvalArg* evalarg = [[XVimEvalArg alloc] init];
             evalarg.invar = cmd;
             [self evaluateFunc:evalarg inWindow:window];
-            NSString* ret = (NSString*)evalarg.rvar;
+            NSString* ret = evalarg.rvar;
             if (concat) {
                 if (ret != nil) {
                     [evaled appendString:ret];
