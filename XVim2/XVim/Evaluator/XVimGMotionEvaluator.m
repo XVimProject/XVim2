@@ -32,7 +32,7 @@
 - (XVimEvaluator*)e
 {
     // Select previous word end
-    self.motion = XVIM_MAKE_MOTION(MOTION_END_OF_WORD_BACKWARD, CHARACTERWISE_INCLUSIVE, MOTION_OPTION_NONE,
+    self.motion = XVIM_MAKE_MOTION(MOTION_END_OF_WORD_BACKWARD, CHARACTERWISE_INCLUSIVE, MOPT_NONE,
                                    [self numericArg]);
     return nil;
 }
@@ -40,33 +40,33 @@
 - (XVimEvaluator*)E
 {
     // Select previous WORD end
-    self.motion = XVIM_MAKE_MOTION(MOTION_END_OF_WORD_BACKWARD, CHARACTERWISE_INCLUSIVE, BIGWORD, [self numericArg]);
+    self.motion = XVIM_MAKE_MOTION(MOTION_END_OF_WORD_BACKWARD, CHARACTERWISE_INCLUSIVE, MOPT_BIGWORD, [self numericArg]);
     return nil;
 }
 
 - (XVimEvaluator*)g
 {
-    self.motion = XVIM_MAKE_MOTION(MOTION_LINENUMBER, LINEWISE, MOTION_OPTION_NONE, 1);
+    self.motion = XVIM_MAKE_MOTION(MOTION_LINENUMBER, LINEWISE, MOPT_NONE, 1);
     self.motion.line = self.numericArg;
     return nil;
 }
 
 - (XVimEvaluator*)j
 {
-    self.motion = XVIM_MAKE_MOTION(MOTION_LINE_FORWARD, CHARACTERWISE_EXCLUSIVE, DISPLAY_LINE, self.numericArg);
+    self.motion = XVIM_MAKE_MOTION(MOTION_LINE_FORWARD, CHARACTERWISE_EXCLUSIVE, MOPT_DISPLAY_LINE, self.numericArg);
     return nil;
 }
 
 - (XVimEvaluator*)k
 {
-    self.motion = XVIM_MAKE_MOTION(MOTION_LINE_BACKWARD, CHARACTERWISE_EXCLUSIVE, DISPLAY_LINE, self.numericArg);
+    self.motion = XVIM_MAKE_MOTION(MOTION_LINE_BACKWARD, CHARACTERWISE_EXCLUSIVE, MOPT_DISPLAY_LINE, self.numericArg);
     return nil;
 }
 
 - (XVimEvaluator*)searchCurrentWord:(BOOL)forward
 {
     XVimCommandLineEvaluator* eval = [self searchEvaluatorForward:forward];
-    NSRange r = [self.sourceView xvim_currentWord:MOTION_OPTION_NONE];
+    NSRange r = [self.sourceView xvim_currentWord:MOPT_NONE];
     if (r.location == NSNotFound) {
         return nil;
     }

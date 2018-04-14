@@ -324,7 +324,7 @@
     if (motion.motion == MOTION_WORD_FORWARD && [self.textStorage isNonblank:self.insertionPoint]) {
         motion.motion = MOTION_END_OF_WORD_FORWARD;
         motion.type = CHARACTERWISE_INCLUSIVE;
-        motion.option |= MOTION_OPTION_CHANGE_WORD;
+        motion.option |= MOPT_CHANGE_WORD;
     }
     // We have to set cursor mode insert before calling delete
     // because delete adjust cursor position when the cursor is end of line. (e.g. C command).
@@ -387,7 +387,7 @@
 
     if (self.selectionMode == XVIM_VISUAL_NONE) {
         if (motion.motion == MOTION_NONE) {
-            XVimMotion* m = XVIM_MAKE_MOTION(MOTION_FORWARD, CHARACTERWISE_EXCLUSIVE, LEFT_RIGHT_NOWRAP, motion.count);
+            XVimMotion* m = XVIM_MAKE_MOTION(MOTION_FORWARD, CHARACTERWISE_EXCLUSIVE, MOPT_LEFT_RIGHT_NOWRAP, motion.count);
             XVimRange r = [self xvim_getMotionRange:self.insertionPoint Motion:m];
             if (r.end == NSNotFound) {
                 return;
@@ -515,7 +515,7 @@
     }
 
     // Search in next line for the position to join(skip white spaces in next line)
-    NSUInteger posToJoin = [self.textStorage nextLine:headOfLine column:0 count:1 option:MOTION_OPTION_NONE];
+    NSUInteger posToJoin = [self.textStorage nextLine:headOfLine column:0 count:1 option:MOPT_NONE];
 
     posToJoin = [self.textStorage xvim_nextNonblankInLineAtIndex:posToJoin allowEOL:YES];
     if (![self.textStorage isEOF:posToJoin] && [self.string characterAtIndex:posToJoin] == ')') {

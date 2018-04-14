@@ -46,7 +46,7 @@
     self = [super initWithWindow:window];
     if (self) {
         _forcedMotionType = DEFAULT_MOTION_TYPE;
-        _motion = XVIM_MAKE_MOTION(MOTION_NONE, CHARACTERWISE_INCLUSIVE, MOTION_OPTION_NONE, 1);
+        _motion = XVIM_MAKE_MOTION(MOTION_NONE, CHARACTERWISE_INCLUSIVE, MOPT_NONE, 1);
     }
     return self;
 }
@@ -62,7 +62,7 @@
     NSUInteger motionTo = (NSUInteger)
                 [view performSelector:motion withObject:[NSNumber numberWithUnsignedInteger:[self numericArg]]];
 #pragma clang diagnostic pop
-    XVimMotion* m = XVIM_MAKE_MOTION(MOTION_POSITION, type, MOTION_OPTION_NONE, [self numericArg]);
+    XVimMotion* m = XVIM_MAKE_MOTION(MOTION_POSITION, type, MOPT_NONE, [self numericArg]);
     m.position = motionTo;
     return [self _motionFixed:m];
 }
@@ -126,13 +126,13 @@
 
 - (XVimEvaluator*)b
 {
-    return [self _motionFixed:XVIM_MAKE_MOTION(MOTION_WORD_BACKWARD, CHARACTERWISE_EXCLUSIVE, MOTION_OPTION_NONE,
+    return [self _motionFixed:XVIM_MAKE_MOTION(MOTION_WORD_BACKWARD, CHARACTERWISE_EXCLUSIVE, MOPT_NONE,
                                                [self numericArg])];
 }
 
 - (XVimEvaluator*)B
 {
-    return [self _motionFixed:XVIM_MAKE_MOTION(MOTION_WORD_BACKWARD, CHARACTERWISE_EXCLUSIVE, BIGWORD,
+    return [self _motionFixed:XVIM_MAKE_MOTION(MOTION_WORD_BACKWARD, CHARACTERWISE_EXCLUSIVE, MOPT_BIGWORD,
                                                [self numericArg])];
 }
 
@@ -143,7 +143,7 @@
 
 - (XVimEvaluator*)e
 {
-    XVimMotion* motion = XVIM_MAKE_MOTION(MOTION_END_OF_WORD_FORWARD, CHARACTERWISE_INCLUSIVE, MOTION_OPTION_NONE,
+    XVimMotion* motion = XVIM_MAKE_MOTION(MOTION_END_OF_WORD_FORWARD, CHARACTERWISE_INCLUSIVE, MOPT_NONE,
                                           [self numericArg]);
     return [self _motionFixed:motion];
 }
@@ -151,7 +151,7 @@
 - (XVimEvaluator*)E
 {
     XVimMotion* motion
-                = XVIM_MAKE_MOTION(MOTION_END_OF_WORD_FORWARD, CHARACTERWISE_INCLUSIVE, BIGWORD, [self numericArg]);
+                = XVIM_MAKE_MOTION(MOTION_END_OF_WORD_FORWARD, CHARACTERWISE_INCLUSIVE, MOPT_BIGWORD, [self numericArg]);
     return [self _motionFixed:motion];
 }
 
@@ -220,7 +220,7 @@ if( childEvaluator.keyStroke.toString.length != 1 ){
 
 - (XVimEvaluator*)G
 {
-    XVimMotion* m = XVIM_MAKE_MOTION(MOTION_LINENUMBER, LINEWISE, LEFT_RIGHT_NOWRAP, [self numericArg]);
+    XVimMotion* m = XVIM_MAKE_MOTION(MOTION_LINENUMBER, LINEWISE, MOPT_LEFT_RIGHT_NOWRAP, [self numericArg]);
     if ([self numericMode]) {
         m.line = [self numericArg];
     }
@@ -232,48 +232,48 @@ if( childEvaluator.keyStroke.toString.length != 1 ){
 
 - (XVimEvaluator*)h
 {
-    return [self _motionFixed:XVIM_MAKE_MOTION(MOTION_BACKWARD, CHARACTERWISE_EXCLUSIVE, LEFT_RIGHT_NOWRAP,
+    return [self _motionFixed:XVIM_MAKE_MOTION(MOTION_BACKWARD, CHARACTERWISE_EXCLUSIVE, MOPT_LEFT_RIGHT_NOWRAP,
                                                [self numericArg])];
 }
 
 - (XVimEvaluator*)H
 {
-    return [self _motionFixed:XVIM_MAKE_MOTION(MOTION_HOME, LINEWISE, MOTION_OPTION_NONE, [self numericArg])];
+    return [self _motionFixed:XVIM_MAKE_MOTION(MOTION_HOME, LINEWISE, MOPT_NONE, [self numericArg])];
 }
 
 - (XVimEvaluator*)j
 {
-    return [self _motionFixed:XVIM_MAKE_MOTION(MOTION_LINE_FORWARD, LINEWISE, MOTION_OPTION_NONE, [self numericArg])];
+    return [self _motionFixed:XVIM_MAKE_MOTION(MOTION_LINE_FORWARD, LINEWISE, MOPT_NONE, [self numericArg])];
 }
 - (XVimEvaluator*)J
 {
-    return [self _motionFixed:XVIM_MAKE_MOTION(MOTION_LINE_FORWARD, LINEWISE, EXTEND_SELECTION, [self numericArg])];
+    return [self _motionFixed:XVIM_MAKE_MOTION(MOTION_LINE_FORWARD, LINEWISE, MOPT_EXTEND_SELECTION, [self numericArg])];
 }
 
 
 - (XVimEvaluator*)k
 {
-    return [self _motionFixed:XVIM_MAKE_MOTION(MOTION_LINE_BACKWARD, LINEWISE, MOTION_OPTION_NONE, [self numericArg])];
+    return [self _motionFixed:XVIM_MAKE_MOTION(MOTION_LINE_BACKWARD, LINEWISE, MOPT_NONE, [self numericArg])];
 }
 - (XVimEvaluator*)K
 {
-    return [self _motionFixed:XVIM_MAKE_MOTION(MOTION_LINE_BACKWARD, LINEWISE, EXTEND_SELECTION, [self numericArg])];
+    return [self _motionFixed:XVIM_MAKE_MOTION(MOTION_LINE_BACKWARD, LINEWISE, MOPT_EXTEND_SELECTION, [self numericArg])];
 }
 
 - (XVimEvaluator*)l
 {
-    return [self _motionFixed:XVIM_MAKE_MOTION(MOTION_FORWARD, CHARACTERWISE_EXCLUSIVE, LEFT_RIGHT_NOWRAP,
+    return [self _motionFixed:XVIM_MAKE_MOTION(MOTION_FORWARD, CHARACTERWISE_EXCLUSIVE, MOPT_LEFT_RIGHT_NOWRAP,
                                                [self numericArg])];
 }
 
 - (XVimEvaluator*)L
 {
-    return [self _motionFixed:XVIM_MAKE_MOTION(MOTION_BOTTOM, LINEWISE, MOTION_OPTION_NONE, [self numericArg])];
+    return [self _motionFixed:XVIM_MAKE_MOTION(MOTION_BOTTOM, LINEWISE, MOPT_NONE, [self numericArg])];
 }
 
 - (XVimEvaluator*)M
 {
-    return [self _motionFixed:XVIM_MAKE_MOTION(MOTION_MIDDLE, LINEWISE, MOTION_OPTION_NONE, [self numericArg])];
+    return [self _motionFixed:XVIM_MAKE_MOTION(MOTION_MIDDLE, LINEWISE, MOPT_NONE, [self numericArg])];
 }
 
 
@@ -347,20 +347,20 @@ if( childEvaluator.keyStroke.toString.length != 1 ){
 
 - (XVimEvaluator*)w
 {
-    return [self _motionFixed:XVIM_MAKE_MOTION(MOTION_WORD_FORWARD, CHARACTERWISE_EXCLUSIVE, MOTION_OPTION_NONE,
+    return [self _motionFixed:XVIM_MAKE_MOTION(MOTION_WORD_FORWARD, CHARACTERWISE_EXCLUSIVE, MOPT_NONE,
                                                [self numericArg])];
 }
 
 - (XVimEvaluator*)W
 {
-    return [self _motionFixed:XVIM_MAKE_MOTION(MOTION_WORD_FORWARD, CHARACTERWISE_EXCLUSIVE, BIGWORD,
+    return [self _motionFixed:XVIM_MAKE_MOTION(MOTION_WORD_FORWARD, CHARACTERWISE_EXCLUSIVE, MOPT_BIGWORD,
                                                [self numericArg])];
 }
 
 
 - (XVimEvaluator*)NUM0
 {
-    return [self _motionFixed:XVIM_MAKE_MOTION(MOTION_BEGINNING_OF_LINE, CHARACTERWISE_INCLUSIVE, MOTION_OPTION_NONE,
+    return [self _motionFixed:XVIM_MAKE_MOTION(MOTION_BEGINNING_OF_LINE, CHARACTERWISE_INCLUSIVE, MOPT_NONE,
                                                [self numericArg])];
 }
 
@@ -409,7 +409,7 @@ if( childEvaluator.keyStroke.toString.length != 1 ){
     }
 
     XVimMotion* m = XVIM_MAKE_MOTION(needUpdateMark ? MOTION_POSITION_JUMP : MOTION_POSITION, motionType,
-                                     MOTION_OPTION_NONE, self.numericArg);
+                                     MOPT_NONE, self.numericArg);
     m.position = to;
     if (needUpdateMark) {
         m.jumpToAnotherFile = jumpToAnotherFile;
@@ -469,13 +469,13 @@ if( childEvaluator.keyStroke.toString.length != 1 ){
 // Note: CARET always moves to start of the current line ignoring any numericArg.
 - (XVimEvaluator*)CARET
 {
-    return [self _motionFixed:XVIM_MAKE_MOTION(MOTION_FIRST_NONBLANK, CHARACTERWISE_EXCLUSIVE, MOTION_OPTION_NONE,
+    return [self _motionFixed:XVIM_MAKE_MOTION(MOTION_FIRST_NONBLANK, CHARACTERWISE_EXCLUSIVE, MOPT_NONE,
                                                [self numericArg])];
 }
 
 - (XVimEvaluator*)DOLLAR
 {
-    return [self _motionFixed:XVIM_MAKE_MOTION(MOTION_END_OF_LINE, CHARACTERWISE_EXCLUSIVE, MOTION_OPTION_NONE,
+    return [self _motionFixed:XVIM_MAKE_MOTION(MOTION_END_OF_LINE, CHARACTERWISE_EXCLUSIVE, MOPT_NONE,
                                                [self numericArg])];
 }
 
@@ -489,7 +489,7 @@ if( childEvaluator.keyStroke.toString.length != 1 ){
     NSRange r = [view selectedRange];
     NSUInteger repeat = self.numericArg;
     NSUInteger linesUpCursorloc =
-                [view.textStorage nextLine:r.location column:0 count:(repeat - 1) option:MOTION_OPTION_NONE];
+                [view.textStorage nextLine:r.location column:0 count:(repeat - 1) option:MOPT_NONE];
     NSUInteger head = [view.textStorage xvim_firstNonblankInLineAtIndex:linesUpCursorloc allowEOL:NO];
     if (NSNotFound == head && linesUpCursorloc != NSNotFound) {
         head = linesUpCursorloc;
@@ -497,7 +497,7 @@ if( childEvaluator.keyStroke.toString.length != 1 ){
     else if (NSNotFound == head) {
         head = r.location;
     }
-    XVimMotion* m = XVIM_MAKE_MOTION(MOTION_POSITION, CHARACTERWISE_EXCLUSIVE, MOTION_OPTION_NONE, 0);
+    XVimMotion* m = XVIM_MAKE_MOTION(MOTION_POSITION, CHARACTERWISE_EXCLUSIVE, MOPT_NONE, 0);
     m.position = head;
     return [self _motionFixed:m];
 }
@@ -505,11 +505,11 @@ if( childEvaluator.keyStroke.toString.length != 1 ){
 - (XVimEvaluator*)PERCENT
 {
     if (self.numericMode) {
-        return [self _motionFixed:XVIM_MAKE_MOTION(MOTION_PERCENT, LINEWISE, MOTION_OPTION_NONE, [self numericArg])];
+        return [self _motionFixed:XVIM_MAKE_MOTION(MOTION_PERCENT, LINEWISE, MOPT_NONE, [self numericArg])];
     }
     else {
         return [self _motionFixed:XVIM_MAKE_MOTION(MOTION_NEXT_MATCHED_ITEM, CHARACTERWISE_INCLUSIVE,
-                                                   MOTION_OPTION_NONE, [self numericArg])];
+                                                   MOPT_NONE, [self numericArg])];
     }
 }
 /*
@@ -524,7 +524,7 @@ if( childEvaluator.keyStroke.toString.length != 1 ){
 
 - (XVimEvaluator*)PLUS
 {
-    return [self _motionFixed:XVIM_MAKE_MOTION(MOTION_NEXT_FIRST_NONBLANK, LINEWISE, MOTION_OPTION_NONE,
+    return [self _motionFixed:XVIM_MAKE_MOTION(MOTION_NEXT_FIRST_NONBLANK, LINEWISE, MOPT_NONE,
                                                [self numericArg])];
 }
 /*
@@ -534,7 +534,7 @@ if( childEvaluator.keyStroke.toString.length != 1 ){
 
 - (XVimEvaluator*)MINUS
 {
-    return [self _motionFixed:XVIM_MAKE_MOTION(MOTION_PREV_FIRST_NONBLANK, LINEWISE, MOTION_OPTION_NONE,
+    return [self _motionFixed:XVIM_MAKE_MOTION(MOTION_PREV_FIRST_NONBLANK, LINEWISE, MOPT_NONE,
                                                [self numericArg])];
 }
 
@@ -553,26 +553,26 @@ if( childEvaluator.keyStroke.toString.length != 1 ){
 
 - (XVimEvaluator*)LBRACE
 { // {
-    return [self _motionFixed:XVIM_MAKE_MOTION(MOTION_PARAGRAPH_BACKWARD, CHARACTERWISE_EXCLUSIVE, MOTION_OPTION_NONE,
+    return [self _motionFixed:XVIM_MAKE_MOTION(MOTION_PARAGRAPH_BACKWARD, CHARACTERWISE_EXCLUSIVE, MOPT_NONE,
                                                [self numericArg])];
 }
 
 - (XVimEvaluator*)RBRACE
 { // }
-    return [self _motionFixed:XVIM_MAKE_MOTION(MOTION_PARAGRAPH_FORWARD, CHARACTERWISE_EXCLUSIVE, MOTION_OPTION_NONE,
+    return [self _motionFixed:XVIM_MAKE_MOTION(MOTION_PARAGRAPH_FORWARD, CHARACTERWISE_EXCLUSIVE, MOPT_NONE,
                                                [self numericArg])];
 }
 
 
 - (XVimEvaluator*)LPARENTHESIS
 { // (
-    return [self _motionFixed:XVIM_MAKE_MOTION(MOTION_SENTENCE_BACKWARD, CHARACTERWISE_EXCLUSIVE, MOTION_OPTION_NONE,
+    return [self _motionFixed:XVIM_MAKE_MOTION(MOTION_SENTENCE_BACKWARD, CHARACTERWISE_EXCLUSIVE, MOPT_NONE,
                                                [self numericArg])];
 }
 
 - (XVimEvaluator*)RPARENTHESIS
 { // )
-    return [self _motionFixed:XVIM_MAKE_MOTION(MOTION_SENTENCE_FORWARD, CHARACTERWISE_EXCLUSIVE, MOTION_OPTION_NONE,
+    return [self _motionFixed:XVIM_MAKE_MOTION(MOTION_SENTENCE_FORWARD, CHARACTERWISE_EXCLUSIVE, MOPT_NONE,
                                                [self numericArg])];
 }
 
@@ -593,11 +593,11 @@ if( childEvaluator.keyStroke.toString.length != 1 ){
         break;
     case MOTION_TILL_NEXT_CHARACTER:
         new_motion = MOTION_TILL_PREV_CHARACTER;
-        new_option |= MOTION_OPTION_SKIP_ADJACENT_CHAR;
+        new_option |= MOPT_SKIP_ADJACENT_CHAR;
         break;
     case MOTION_TILL_PREV_CHARACTER:
         new_motion = MOTION_TILL_NEXT_CHARACTER;
-        new_option |= MOTION_OPTION_SKIP_ADJACENT_CHAR;
+        new_option |= MOPT_SKIP_ADJACENT_CHAR;
         break;
     default:
         NSAssert(NO, @"Should not reach here");
@@ -615,7 +615,7 @@ if( childEvaluator.keyStroke.toString.length != 1 ){
         return [XVimEvaluator invalidEvaluator];
     }
 
-    XVimMotion* n = XVIM_MAKE_MOTION(m.motion, m.type, m.option | MOTION_OPTION_SKIP_ADJACENT_CHAR, [self numericArg]);
+    XVimMotion* n = XVIM_MAKE_MOTION(m.motion, m.type, m.option | MOPT_SKIP_ADJACENT_CHAR, [self numericArg]);
     n.character = m.character;
     return [self _motionFixed:n];
 }
@@ -675,7 +675,7 @@ if( childEvaluator.keyStroke.toString.length != 1 ){
 - (XVimEvaluator*)searchCurrentWordForward:(BOOL)forward
 {
     XVimCommandLineEvaluator* eval = [self searchEvaluatorForward:forward];
-    NSRange r = [self.sourceView xvim_currentWord:MOTION_OPTION_NONE];
+    NSRange r = [self.sourceView xvim_currentWord:MOPT_NONE];
     if (r.location == NSNotFound) {
         return nil;
     }

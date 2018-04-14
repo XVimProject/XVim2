@@ -111,7 +111,7 @@
         // FIXME: Make them not to change text from register...
         text = [NSString stringWithString:text]; // copy string because the text may be changed with folloing delete if
                                                  // it is from the same register...
-        [self xvim_delete:XVIM_MAKE_MOTION(MOTION_NONE, CHARACTERWISE_INCLUSIVE, MOTION_OPTION_NONE, 1) andYank:YES];
+        [self xvim_delete:XVIM_MAKE_MOTION(MOTION_NONE, CHARACTERWISE_INCLUSIVE, MOPT_NONE, 1) andYank:YES];
         after = NO;
     }
 

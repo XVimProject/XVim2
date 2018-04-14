@@ -284,7 +284,7 @@
 
 - (XVimEvaluator*)C_w
 {
-    XVimMotion* m = XVIM_MAKE_MOTION(MOTION_WORD_BACKWARD, CHARACTERWISE_EXCLUSIVE, MOTION_OPTION_NONE, 1);
+    XVimMotion* m = XVIM_MAKE_MOTION(MOTION_WORD_BACKWARD, CHARACTERWISE_EXCLUSIVE, MOPT_NONE, 1);
     [[self sourceView] xvim_delete:m andYank:NO];
     return self;
 }
@@ -305,13 +305,13 @@
         newCharIndex = [self.sourceView.textStorage prevLine:currentCursorIndex
                                                       column:currentColumnIndex
                                                        count:[self numericArg]
-                                                      option:MOTION_OPTION_NONE];
+                                                      option:MOPT_NONE];
     }
     else {
         newCharIndex = [self.sourceView.textStorage nextLine:currentCursorIndex
                                                       column:currentColumnIndex
                                                        count:[self numericArg]
-                                                      option:MOTION_OPTION_NONE];
+                                                      option:MOPT_NONE];
     }
     NSUInteger newColumnIndex = [self.sourceView.textStorage xvim_columnOfIndex:newCharIndex];
     NSLog(@"Old column: %ld\tNew column: %ld", currentColumnIndex, newColumnIndex);
