@@ -240,26 +240,4 @@
  */
 - (NSUInteger)xvim_nextDigitInLine:(NSUInteger)index;
 
-
 @end
-
-#pragma mark Macros
-
-#ifdef DEBUG
-// The methods here often take index as current interest position and index can be at EOF
-// The following macros asserts the range of index.
-// WITH_EOF permits the index at EOF position.
-// WITHOUT_EOF doesn't permit the index at EOF position.
-#define ASSERT_VALID_RANGE_WITH_EOF(x)                                                                                 \
-    NSAssert(x <= [self length] || [self length] == 0,                                                                 \
-             @"index can not exceed the length of string.   TextLength:%lu   SpecifiedIndex:%lu [%s:%d]",              \
-             (long)[self length], x, __FILE__, __LINE__)
-
-// Some methods assume that "index" is at valid cursor position in Normal mode.
-// See isValidCursorPosition's description the condition of the valid cursor position.
-#define ASSERT_VALID_CURSOR_POS(x)                                                                                     \
-    NSAssert([self isValidCursorPosition:x], @"index can not be invalid cursor position [%s:%d]", __FILE__, __LINE__)
-#else
-#define ASSERT_VALID_RANGE_WITH_EOF(x)
-#define ASSERT_VALID_CURSOR_POS(x)
-#endif
