@@ -60,8 +60,11 @@ CONST_STR(EDWindow);
 
 - (void)xvim_scrollRangeToVisible:(NSRange)range
 {
-    // prevent crash for `ciw` in Xcode93
-    //[self xvim_scrollRangeToVisible:range];
+    if (self.xvim_window != nil && self.xvim_window.scrollHalt){
+        // skip to prevent crash in Xcode9.3
+    } else {
+        [self xvim_scrollRangeToVisible:range];
+    }
 }
 
 - (void)xvim_viewWillMoveToWindow:(id)window

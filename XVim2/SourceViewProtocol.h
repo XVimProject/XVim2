@@ -76,7 +76,7 @@ typedef NS_ENUM(char, CursorStyle) { CursorStyleVerticalBar, CursorStyleBlock, C
 - (void)xvim_beginEditTransaction;
 - (void)xvim_endEditTransaction;
 
-- (void)xvim_syncState;
+- (void)xvim_syncStateWithScroll:(BOOL)scroll;
 - (void)xvim_syncStateFromView;
 - (void)xvim_insert:(XVimInsertionPoint)mode blockColumn:(NSUInteger*)column blockLines:(XVimRange*)lines;
 - (void)xvim_blockInsertFixupWithText:(NSString*)text

@@ -18,7 +18,7 @@
 @property (readwrite) NSUInteger preservedColumn;
 @property (readwrite) BOOL selectionToEOL;
 - (void)xvim_moveCursor:(NSUInteger)pos preserveColumn:(BOOL)preserve;
-- (void)xvim_syncState;
+- (void)xvim_syncStateWithScroll:(BOOL)scroll;
 @end
 
 @implementation SourceCodeEditorViewProxy (Scrolling)
@@ -32,12 +32,12 @@
             pos = self.textStorage.length;
         }
         [self xvim_moveCursor:pos preserveColumn:NO];
-        [self xvim_syncState];
+        [self xvim_syncStateWithScroll:YES];
     }
     if (fnb) {
         NSUInteger pos = [self.textStorage xvim_firstNonblankInLineAtIndex:self.insertionPoint allowEOL:YES];
         [self xvim_moveCursor:pos preserveColumn:NO];
-        [self xvim_syncState];
+        [self xvim_syncStateWithScroll:YES];
     }
 }
 
@@ -78,7 +78,7 @@
                 [self.textStorage xvim_firstNonblankInLineAtIndex:newCharRange.location allowEOL:YES];
 
     [self xvim_moveCursor:cursorIndexAfterScroll preserveColumn:NO];
-    [self xvim_syncState];
+    [self xvim_syncStateWithScroll:YES];
 }
 
 typedef struct {
@@ -125,7 +125,7 @@ typedef struct {
                     [self.textStorage xvim_firstNonblankInLineAtIndex:self.selectedRange.location allowEOL:YES];
         if (cursorIndexAfterScroll != self.selectedRange.location) {
             self.selectedRange = NSMakeRange(cursorIndexAfterScroll, 0);
-            [self xvim_syncState];
+            [self xvim_syncStateWithScroll:NO];
         }
     }
     [self centerSelectionInVisibleArea:self];
@@ -145,6 +145,7 @@ typedef struct {
 
 - (void)xvim_scrollTo:(NSUInteger)insertionPoint
 {
+    [self scrollRangeToVisible:NSMakeRange(insertionPoint, 0)];
 }
 
 - (void)xvim_pageForward:(NSUInteger)index count:(NSUInteger)count

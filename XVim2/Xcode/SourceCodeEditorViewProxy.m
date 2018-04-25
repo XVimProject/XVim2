@@ -14,6 +14,7 @@
 #import "XVimCommandLine.h"
 #import "XVimMotion.h"
 #import "XVimOptions.h"
+#import "XVimWindow.h"
 #import "rd_route.h"
 #import <IDEKit/IDEEditorArea.h>
 #import "XcodeUtils.h"
@@ -52,8 +53,16 @@
     XVimCommandLine* _commandLine;
     BOOL _enabled;
 }
-//@synthesize enabled = _enabled;
 
+- (void)haltScroll
+{
+    self.sourceCodeEditorView.xvim_window.scrollHalt = YES;
+}
+
+- (void)restoreScroll
+{
+    self.sourceCodeEditorView.xvim_window.scrollHalt = NO;
+}
 
 - (instancetype)initWithSourceCodeEditorView:(_TtC15IDESourceEditor19IDESourceEditorView*)sourceCodeEditorView
 {
@@ -220,10 +229,16 @@
 
 - (void)insertText:(id)string replacementRange:(NSRange)replacementRange
 {
+    [self haltScroll];
     [self.sourceCodeEditorView insertText:string replacementRange:replacementRange];
+    [self restoreScroll];
 }
 
-- (void)insertText:(NSString*)text { [self.sourceCodeEditorView insertText:text]; }
+- (void)insertText:(NSString*)text {
+    [self haltScroll];
+    [self.sourceCodeEditorView insertText:text];
+    [self restoreScroll];
+}
 
 - (NSTextStorage*)textStorage
 {

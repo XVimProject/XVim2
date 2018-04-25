@@ -21,7 +21,7 @@
 @property (strong) NSString* lastYankedText;
 @property TEXT_TYPE lastYankedType;
 - (void)xvim_moveCursor:(NSUInteger)pos preserveColumn:(BOOL)preserve;
-- (void)xvim_syncState;
+- (void)xvim_syncStateWithScroll:(BOOL)scroll;
 - (XVimRange)xvim_getMotionRange:(NSUInteger)current Motion:(XVimMotion*)motion;
 - (XVimSelection)_xvim_selectedBlock;
 - (NSRange)_xvim_selectedRange;
@@ -191,7 +191,7 @@
 
 
     [self xvim_moveCursor:insertionPointAfterPut preserveColumn:NO];
-    [self xvim_syncState];
+    [self xvim_syncStateWithScroll:YES];
     [self xvim_changeSelectionMode:XVIM_VISUAL_NONE];
 }
 

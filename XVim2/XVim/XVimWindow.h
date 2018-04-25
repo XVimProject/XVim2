@@ -35,6 +35,7 @@
 @property (readonly) XVimCommandLine* commandLine;
 @property (nonatomic, getter=isEnabled) BOOL enabled;
 @property (strong, nonatomic) XVimMark* currentPositionMark;
+@property BOOL scrollHalt;
 
 - (instancetype)initWithEditorView:(id<SourceViewProtocol>)responder;
 - (void)setupAfterEditorViewSetup;

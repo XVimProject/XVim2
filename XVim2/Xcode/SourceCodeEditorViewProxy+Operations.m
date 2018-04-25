@@ -25,7 +25,7 @@
 @property TEXT_TYPE lastYankedType;
 - (XVimRange)_xvim_selectedLines;
 - (void)xvim_moveCursor:(NSUInteger)pos preserveColumn:(BOOL)preserve;
-- (void)xvim_syncState;
+- (void)xvim_syncStateWithScroll:(BOOL)scroll;
 - (XVimRange)xvim_getMotionRange:(NSUInteger)current Motion:(XVimMotion*)motion;
 - (NSRange)_xvim_getYankRange:(XVimMotion*)motion withRange:(XVimRange)to;
 - (XVimSelection)_xvim_selectedBlock;
@@ -93,7 +93,7 @@
         [self xvim_moveCursor: cursorPos preserveColumn:NO];
     }
     
-    [self xvim_syncState];
+    [self xvim_syncStateWithScroll:YES];
     [self xvim_changeSelectionMode:XVIM_VISUAL_NONE];
 }
 
@@ -195,7 +195,7 @@
     [self xvim_changeSelectionMode:XVIM_VISUAL_NONE];
     if (newPos != NSNotFound) {
         [self xvim_moveCursor:newPos preserveColumn:NO];
-        [self xvim_syncState];
+        [self xvim_syncStateWithScroll:NO];
     }
     return YES;
 }
@@ -223,7 +223,7 @@
     pos = [self xvim_endOfLine:pos];
     [self insertText:@"\n" replacementRange:NSMakeRange(pos, 0)];
     [self xvim_moveCursor:pos + 1 preserveColumn:NO];
-    [self xvim_syncState];
+    [self xvim_syncStateWithScroll:YES];
 }
 
 - (void)xvim_insertNewlineBelowCurrentLine
@@ -345,7 +345,7 @@
     else {
     }
     [self xvim_changeSelectionMode:XVIM_VISUAL_NONE];
-    [self xvim_syncState];
+    [self xvim_syncStateWithScroll:NO];
     return YES;
 }
 
@@ -423,7 +423,7 @@
         [self xvim_moveCursor:[[ranges objectAtIndex:0] rangeValue].location preserveColumn:NO];
     }
 
-    [self xvim_syncState];
+    [self xvim_syncStateWithScroll:YES];
     [self xvim_changeSelectionMode:XVIM_VISUAL_NONE];
 }
 
@@ -452,7 +452,7 @@
         [self xvim_moveCursor:[[ranges objectAtIndex:0] rangeValue].location preserveColumn:NO];
     }
 
-    [self xvim_syncState];
+    [self xvim_syncStateWithScroll:YES];
     [self xvim_changeSelectionMode:XVIM_VISUAL_NONE];
 }
 
@@ -484,7 +484,7 @@
         [self xvim_moveCursor:[[ranges objectAtIndex:0] rangeValue].location preserveColumn:NO];
     }
 
-    [self xvim_syncState];
+    [self xvim_syncStateWithScroll:YES];
     [self xvim_changeSelectionMode:XVIM_VISUAL_NONE];
 }
 
@@ -650,7 +650,7 @@
     }
 
     [self xvim_moveCursor:pos preserveColumn:NO];
-    [self xvim_syncState];
+    [self xvim_syncStateWithScroll:YES];
     [self xvim_changeSelectionMode:XVIM_VISUAL_NONE];
 }
 
@@ -752,7 +752,7 @@
 
     [self insertText:repl replacementRange:range];
     [self xvim_moveCursor:range.location + repl.length - 1 preserveColumn:NO];
-    [self xvim_syncState];
+    [self xvim_syncStateWithScroll:YES];
     return YES;
 }
 
@@ -819,7 +819,7 @@
     }
 
     self.insertionPoint = insertionAfterOperation;
-    [self xvim_syncState];
+    [self xvim_syncStateWithScroll:YES];
 }
 
 

@@ -206,13 +206,13 @@
         }
     }
     //[self setNeedsDisplay:YES];
-    [self xvim_syncState];
+    [self xvim_syncStateWithScroll:YES];
 }
 
 - (void)xvim_moveToPosition:(XVimPosition)pos
 {
     [self xvim_moveCursor:[self xvim_indexOfLineNumber:pos.line column:pos.column] preserveColumn:NO];
-    [self xvim_syncState];
+    [self xvim_syncStateWithScroll:YES];
 }
 
 - (void)xvim_moveCursor:(NSUInteger)pos preserveColumn:(BOOL)preserve
@@ -299,7 +299,7 @@
  * All the state need to express Vim is held by this class and
  * we use self to express it visually.
  **/
--(void)xvim_syncState {
+-(void)xvim_syncStateWithScroll: (BOOL)scroll {
     self.xvim_lockSyncStateFromView = YES;
     // Reset current selection
     if (self.cursorMode == CURSOR_MODE_COMMAND) {
@@ -309,6 +309,9 @@
 
     [self setSelectedRanges:[self xvim_selectedRanges] affinity:NSSelectionAffinityDownstream stillSelecting:NO];
 
+    if (scroll) {
+        [self xvim_scrollTo:self.insertionPoint];
+    }
     self.xvim_lockSyncStateFromView = NO;
 }
 
@@ -961,7 +964,7 @@
         self.selectionBegin = NSNotFound;
     }
     self.selectionMode = mode;
-    [self xvim_syncState];
+    [self xvim_syncStateWithScroll:NO];
 }
 
 -(void)xvim_escapeFromInsert
@@ -971,7 +974,7 @@
         if (![self.textStorage isBOL:self.insertionPoint]) {
             [self xvim_moveCursor:self.insertionPoint - 1 preserveColumn:NO];
         }
-        [self xvim_syncState];
+        [self xvim_syncStateWithScroll:YES];
     }
 }
 
