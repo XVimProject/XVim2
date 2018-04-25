@@ -18,6 +18,7 @@
 #import <IDEKit/IDEEditorArea.h>
 #import "XcodeUtils.h"
 #import "SourceEditorScrollView.h"
+#import "SourceCodeEditorViewProxy+XVim.h"
 
 #import "_TtC15IDESourceEditor18SourceCodeDocument.h"
 #import "_TtC15IDESourceEditor19IDESourceEditorView.h"

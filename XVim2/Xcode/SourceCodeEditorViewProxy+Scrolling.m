@@ -7,7 +7,10 @@
 //
 
 #import "NSTextStorage+VimOperation.h"
+#import "SourceViewProtocol.h"
 #import "SourceCodeEditorViewProxy+Scrolling.h"
+#import "SourceCodeEditorViewProxy+XVim.h"
+#import "SourceCodeEditorViewProxy+Yank.h"
 
 @interface SourceCodeEditorViewProxy ()
 @property (readwrite) NSUInteger selectionBegin;

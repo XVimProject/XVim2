@@ -9,6 +9,7 @@
 #import "XVimTestCase.h"
 #import "Logger.h"
 #import "SourceCodeEditorViewProxy.h"
+#import "SourceCodeEditorViewProxy+XVim.h"
 #import "XVimKeyStroke.h"
 #import "XVimWindow.h"
 #import "XcodeUtils.h"

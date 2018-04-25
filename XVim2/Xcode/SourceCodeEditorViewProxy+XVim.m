@@ -12,6 +12,7 @@
 #import "NSTextStorage+VimOperation.h"
 #import "SourceCodeEditorViewProxy+XVim.h"
 #import "SourceCodeEditorViewProxy.h"
+#import "SourceCodeEditorViewProxy+Scrolling.h"
 #import "XVim.h"
 #import "XVim2-Swift.h"
 #import "XVimMotion.h"

@@ -23,5 +23,6 @@
 - (void)xvim_blockInsertFixupWithText :(NSString*)text mode:(XVimInsertionPoint)mode
                                  count:(NSUInteger)count column:(NSUInteger)column lines:(XVimRange)lines;
 - (void)xvim_syncStateFromView;
+- (void)xvim_syncStateWithScroll:(BOOL)scroll;
 - (void)xvim_changeSelectionMode:(XVIM_VISUAL_MODE)mode;
 @end

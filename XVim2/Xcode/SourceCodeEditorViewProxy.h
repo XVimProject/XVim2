@@ -242,8 +242,3 @@ static inline XVimSourceEditorRange XvimMakeSourceEditorRange(XVimSourceEditorPo
 - (void)endEditTransaction;
 
 @end
-
-#import "SourceCodeEditorViewProxy+Operations.h"
-#import "SourceCodeEditorViewProxy+Scrolling.h"
-#import "SourceCodeEditorViewProxy+XVim.h"
-#import "SourceCodeEditorViewProxy+Yank.h"

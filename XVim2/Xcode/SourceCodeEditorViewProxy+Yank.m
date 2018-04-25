@@ -9,6 +9,8 @@
 #import "NSString+VimHelper.h"
 #import "NSTextStorage+VimOperation.h"
 #import "SourceCodeEditorViewProxy+Yank.h"
+#import "SourceCodeEditorViewProxy+XVim.h"
+#import "SourceCodeEditorViewProxy+Operations.h"
 #import "XVimMotion.h"
 
 @interface SourceCodeEditorViewProxy ()
