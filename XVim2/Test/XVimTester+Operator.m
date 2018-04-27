@@ -162,6 +162,10 @@
     static NSString* r_result5 = @"aXa\n"
                                  @"bbb\n"
                                  @"ccc";
+    static NSString* r_result6 = @"aAa b\nb ccc\n";
+    // Assumes the tab key setting is set to "indent always"
+    static NSString* r_result7_tab = @"aAa b\tb ccc\n";
+    static NSString* r_result7_space = @"aAa b   b ccc\n";
 
     static NSString* R_result1 = @"aXX bbb ccc\n";
     static NSString* R_result2 = @"aXXXXXX ccc\n";
@@ -565,6 +569,10 @@
                             XVimMakeTestCase(text0, 5, 0, @"rXl.l.", r_result3, 7, 0), // Repeat
                             XVimMakeTestCase(text1, 1, 0, @"rXjj`^", r_result4, 2, 0), // ^ Mark
                             XVimMakeTestCase(text1, 1, 0, @"rXjj`.", r_result5, 1, 0), // . Mark
+                            XVimMakeTestCase(text0, 5, 0, @"r<CR>", r_result6, 6, 0),
+                            ([XcodeTextPreferences() useTabsToIndent]) // check for tab/space indentation
+                                        ? XVimMakeTestCase(text0, 5, 0, @"r<TAB>", r_result7_tab, 5, 0)
+                                        : XVimMakeTestCase(text0, 5, 0, @"r<TAB>", r_result7_space, 7, 0),
 
                             // R
                             XVimMakeTestCase(text0, 1, 0, @"RXX<ESC>", R_result1, 2, 0),

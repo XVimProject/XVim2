@@ -44,6 +44,7 @@ NSString* XVimKeyNotationFromXVimString(XVimString* string);
 @property NSEvent* event;
 @property (nonatomic, readonly) BOOL isNumeric;
 @property (nonatomic, readonly) BOOL isPrintable;
+@property (nonatomic, readonly) BOOL isWhitespace;
 
 - (id)initWithCharacter:(unichar)c modifier:(unsigned char)mod event:(NSEvent*)e;
 
