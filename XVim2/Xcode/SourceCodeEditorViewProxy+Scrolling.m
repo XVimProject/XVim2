@@ -69,7 +69,16 @@
     [self scrollRangeToVisible:scrollToCharRange];
 
     // Update cursor
-    cursorLine += numScrollLines;
+    switch (type) {
+      case XVIM_SCROLL_TYPE_LINE:
+        visibleLineRange = [self xvim_visibleLineRange];
+        cursorLine = MAX(cursorLine, visibleLineRange.topLine);
+        cursorLine = MIN(cursorLine, visibleLineRange.bottomLine);
+        break;
+      default:
+        cursorLine += numScrollLines;
+        break;
+    }
     clamp(cursorLine, 0, self.lineCount - 1);
 
     _auto newCharRange = [self characterRangeForLineRange:NSMakeRange(cursorLine, 1)];
