@@ -57,14 +57,12 @@ fileprivate struct _SourceCodeEditorViewWrapper {
 
 
 class SourceCodeEditorViewWrapper: NSObject {
-    private let fpSetCursorStyle = function_ptr_from_name("__T012SourceEditor0aB4ViewC11cursorStyleAA0ab6CursorE0Ovs", nil)
-    private let fpGetCursorStyle = function_ptr_from_name("__T012SourceEditor0aB4ViewC11cursorStyleAA0ab6CursorE0Ovg", nil);
-    private let fpGetDataSource = function_ptr_from_name("__T012SourceEditor0aB4ViewC04dataA0AA0ab4DataA0Cvg", nil);
-    private let fpSetSelectedRangeWithModifiers = function_ptr_from_name("_T012SourceEditor0aB4ViewC16setSelectedRangeyAA0abF0V_AA0aB18SelectionModifiersV9modifierstF", nil);
-    private let fpAddSelectedRangeWithModifiers = function_ptr_from_name("_T012SourceEditor0aB4ViewC16addSelectedRangeyAA0abF0V_AA0aB18SelectionModifiersV9modifierstF", nil);
-
-    private let fpFuncLinesPerPage =
-        function_ptr_from_name("_T012SourceEditor0aB4ViewC12linesPerPageSiyF", nil)
+    private let fpSetCursorStyle                = function_ptr_from_name("_$S12SourceEditor0aB4ViewC11cursorStyleAA0ab6CursorE0Ovs", nil)
+    private let fpGetCursorStyle                = function_ptr_from_name("_$S12SourceEditor0aB4ViewC11cursorStyleAA0ab6CursorE0Ovg", nil)
+    private let fpGetDataSource                 = function_ptr_from_name("_$S12SourceEditor0aB4ViewC04dataA0AA0ab4DataA0Cvg", nil)
+    private let fpSetSelectedRangeWithModifiers = function_ptr_from_name("_$S12SourceEditor0aB4ViewC16setSelectedRange_9modifiersyAA0abF0V_AA0aB18SelectionModifiersVtF", nil)
+    private let fpAddSelectedRangeWithModifiers = function_ptr_from_name("_$S12SourceEditor0aB4ViewC16addSelectedRange_9modifiersyAA0abF0V_AA0aB18SelectionModifiersVtF", nil)
+    private let fpFuncLinesPerPage              = function_ptr_from_name("_$S12SourceEditor0aB4ViewC12linesPerPageSiyF", nil)
     
     private weak var editorViewProxy : SourceCodeEditorViewProxy?
     
