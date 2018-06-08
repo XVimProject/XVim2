@@ -5,14 +5,17 @@
 //
 
 #import <AppKit/NSView.h>
+#import <AppKit/AppKit.h>
 
-#import <SourceEditor/NSServicesMenuRequestor-Protocol.h>
-#import <SourceEditor/NSTextInputClient-Protocol.h>
-#import <SourceEditor/_TtP12SourceEditor34SourceEditorViewMissingKeyBindings_-Protocol.h>
+//#import <SourceEditor/NSServicesMenuRequestor-Protocol.h>
+//#import <SourceEditor/NSTextInputClient-Protocol.h>
+//#import <SourceEditor/_TtP12SourceEditor34SourceEditorViewMissingKeyBindings_-Protocol.h>
 
 @class NSString, SourceEditorScrollView, _TtC12SourceEditor23SourceEditorContentView;
 
-@interface _TtC12SourceEditor16SourceEditorView : NSView <NSTextInputClient, _TtP12SourceEditor34SourceEditorViewMissingKeyBindings_, NSServicesMenuRequestor>
+@interface _TtC12SourceEditor16SourceEditorView : NSView <NSTextInputClient,
+//_TtP12SourceEditor34SourceEditorViewMissingKeyBindings_,
+NSServicesMenuRequestor>
 {
     // Error parsing type: , name: delegate
     // Error parsing type: , name: contentViewOffset
@@ -84,7 +87,7 @@
 }
 
 + (id)defaultMenu;
-- (CDUnknownBlockType).cxx_destruct;
+//- (CDUnknownBlockType).cxx_destruct;
 @property(nonatomic, readonly) NSString *description;
 - (void)viewDidEndLiveResize;
 - (void)viewWillStartLiveResize;

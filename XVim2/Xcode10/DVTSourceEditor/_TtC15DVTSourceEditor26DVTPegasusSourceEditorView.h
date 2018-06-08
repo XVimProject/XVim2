@@ -4,11 +4,16 @@
 //     class-dump is Copyright (C) 1997-1998, 2000-2001, 2004-2015 by Steve Nygard.
 //
 
-#import "_$S12SourceEditor0aB4ViewCN.h"
+//#import "_$S12SourceEditor0aB4ViewCN.h"
+#import "_TtC12SourceEditor16SourceEditorView.h"
 
-#import <DVTSourceEditor/DVTFindPatternManager-Protocol.h>
+//#import <DVTSourceEditor/DVTFindPatternManager-Protocol.h>
+#import "DVTFindPatternManager-Protocol.h"
 
-@interface _TtC15DVTSourceEditor26DVTPegasusSourceEditorView : _$S12SourceEditor0aB4ViewCN <DVTFindPatternManager>
+@interface _TtC15DVTSourceEditor26DVTPegasusSourceEditorView :
+_TtC12SourceEditor16SourceEditorView
+//_$S12SourceEditor0aB4ViewCN
+<DVTFindPatternManager>
 {
     // Error parsing type: , name: textPreferences
     // Error parsing type: , name: featureControllers
@@ -34,7 +39,7 @@
     // Error parsing type: , name: overscrollRegionPreferenceObservingToken
 }
 
-- (CDUnknownBlockType).cxx_destruct;
+//- (CDUnknownBlockType).cxx_destruct;
 - (void)dealloc;
 - (void)selectFindMatchesInSelection:(id)arg1;
 - (void)selectAllFindMatches:(id)arg1;

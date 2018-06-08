@@ -6,7 +6,7 @@
 
 #import <AppKit/NSView.h>
 
-#import <SourceEditor/CALayerDelegate-Protocol.h>
+//#import "SourceEditor/CALayerDelegate-Protocol.h"
 
 @class NSString;
 
@@ -29,7 +29,7 @@
 }
 
 + (BOOL)isCompatibleWithResponsiveScrolling;
-- (CDUnknownBlockType).cxx_destruct;
+//- (CDUnknownBlockType).cxx_destruct;
 - (BOOL)becomeFirstResponder;
 @property(nonatomic, readonly) BOOL acceptsFirstResponder;
 - (void)layoutIfNeeded;

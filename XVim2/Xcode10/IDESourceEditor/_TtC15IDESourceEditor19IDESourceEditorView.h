@@ -4,15 +4,19 @@
 //     class-dump is Copyright (C) 1997-1998, 2000-2001, 2004-2015 by Steve Nygard.
 //
 
-#import "_$S15DVTSourceEditor016DVTPegasusSourceB4ViewCN.h"
+//#import "_$S15DVTSourceEditor016DVTPegasusSourceB4ViewCN.h"
+#import "_TtC15DVTSourceEditor26DVTPegasusSourceEditorView.h"
 
-#import <IDESourceEditor/DVTMarkedScrollerDelegate-Protocol.h>
-#import <IDESourceEditor/DVTSourceEditorViewProtocol-Protocol.h>
-#import <IDESourceEditor/DVTTextCompletionSupportingTextView-Protocol.h>
+#import "DVTMarkedScrollerDelegate-Protocol.h"
+#import "DVTSourceEditorViewProtocol-Protocol.h"
+#import "DVTTextCompletionSupportingTextView-Protocol.h"
 
 @class DVTSourceCodeLanguage, DVTTextCompletionController, DVTTextCompletionDataSource, NSScrollView, NSString;
 
-@interface _TtC15IDESourceEditor19IDESourceEditorView : _$S15DVTSourceEditor016DVTPegasusSourceB4ViewCN <DVTSourceEditorViewProtocol, DVTTextCompletionSupportingTextView, DVTMarkedScrollerDelegate>
+@interface _TtC15IDESourceEditor19IDESourceEditorView : 
+//$S15DVTSourceEditor016DVTPegasusSourceB4ViewCN
+_TtC15DVTSourceEditor26DVTPegasusSourceEditorView
+<DVTSourceEditorViewProtocol, DVTTextCompletionSupportingTextView, DVTMarkedScrollerDelegate>
 {
     // Error parsing type: , name: hostingEditor
     // Error parsing type: , name: completionController
@@ -30,7 +34,7 @@
 
 + (BOOL)appSupportsActionMonitoring;
 + (id)identifierCharacters;
-- (CDUnknownBlockType).cxx_destruct;
+//- (CDUnknownBlockType).cxx_destruct;
 - (void)didClickMarkForLine:(long long)arg1;
 - (void)resignKeyWindow;
 - (BOOL)resignFirstResponder;

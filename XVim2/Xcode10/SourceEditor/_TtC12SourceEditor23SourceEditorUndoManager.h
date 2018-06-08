@@ -27,7 +27,6 @@
     // Error parsing type: , name: redoLevel
 }
 
-- (CDUnknownBlockType).cxx_destruct;
 - (id)init;
 @property(nonatomic, readonly) BOOL redoActionIsDiscardable;
 @property(nonatomic, readonly) BOOL undoActionIsDiscardable;

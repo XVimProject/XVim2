@@ -22,7 +22,7 @@
 @property BOOL updatingAutoContentInsets; // @synthesize updatingAutoContentInsets=_updatingAutoContentInsets;
 @property struct NSEdgeInsets additionalContentInsets; // @synthesize additionalContentInsets=_additionalContentInsets;
 @property __weak id <SourceEditorScrollViewScrollerMoved> scrollerMovedDelegate; // @synthesize scrollerMovedDelegate=_scrollerMovedDelegate;
-- (void).cxx_destruct;
+//- (void).cxx_destruct;
 - (BOOL)dvt_autoforwardsScrollWheelEvents;
 - (void)dvt_setAutoforwardsScrollWheelEvents:(BOOL)arg1;
 - (void)setFloatingSubviewsShouldMaskToBounds:(BOOL)arg1;
