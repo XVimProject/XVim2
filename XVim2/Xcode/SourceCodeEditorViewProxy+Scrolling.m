@@ -60,7 +60,14 @@
     }
 
     LineRange visibleLineRange = [self xvim_visibleLineRange];
-    
+    NSInteger actualScrolledLines = numScrollLines;
+    if (numScrollLines < 0) {
+      actualScrolledLines = -MIN(visibleLineRange.topLine, -numScrollLines);
+    } else {
+      actualScrolledLines =
+      MIN(self.lineCount - visibleLineRange.bottomLine - 1, numScrollLines);
+    }
+
     NSInteger scrollToLine = (numScrollLines < 0) ? (visibleLineRange.topLine + numScrollLines) : (visibleLineRange.bottomLine + numScrollLines);
     clamp(scrollToLine, 0, self.lineCount - 1);
 
@@ -71,9 +78,9 @@
     // Update cursor
     switch (type) {
       case XVIM_SCROLL_TYPE_LINE:
-        visibleLineRange = [self xvim_visibleLineRange];
-        cursorLine = MAX(cursorLine, visibleLineRange.topLine);
-        cursorLine = MIN(cursorLine, visibleLineRange.bottomLine);
+        clamp(cursorLine,
+              visibleLineRange.topLine + actualScrolledLines,
+              visibleLineRange.bottomLine + actualScrolledLines);
         break;
       default:
         cursorLine += numScrollLines;
