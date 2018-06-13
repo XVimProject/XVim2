@@ -73,9 +73,9 @@
       case XVIM_SCROLL_TYPE_LINE: {
         NSInteger numLinesActuallyScrolled;
         if (numScrollLines < 0) {
-          numLinesActuallyScrolled = -MIN(visibleLineRange.topLine, -numScrollLines);
+          numLinesActuallyScrolled = -MIN(visibleLineRange.topLine+1, -numScrollLines);
         } else {
-          numLinesActuallyScrolled = MIN(self.lineCount - visibleLineRange.bottomLine - 1, numScrollLines);
+          numLinesActuallyScrolled = MIN(self.lineCount - visibleLineRange.bottomLine, numScrollLines);
         }
         clamp(cursorLine,
               visibleLineRange.topLine + numLinesActuallyScrolled,
