@@ -26,6 +26,7 @@
 		A2A9F93E2070A85200E7BB53 /* XVimIDEPegasusSourceEditorView.m in Sources */ = {isa = PBXBuildFile; fileRef = A2A9F93C2070A85200E7BB53 /* XVimIDEPegasusSourceEditorView.m */; };
 		A2B52D3F1F514CC600D83C0A /* Logger.m in Sources */ = {isa = PBXBuildFile; fileRef = A2B52D3B1F514CC600D83C0A /* Logger.m */; };
 		A2B537B11F51C94400D83C0A /* NSObject+Swizzle.m in Sources */ = {isa = PBXBuildFile; fileRef = A2B537B01F51C94400D83C0A /* NSObject+Swizzle.m */; };
+		A2D464BC20D4042B00A43EC7 /* SwiftLogger.swift in Sources */ = {isa = PBXBuildFile; fileRef = A2D464BB20D4042B00A43EC7 /* SwiftLogger.swift */; };
 		A2FB1EE12077B65100D3E634 /* File.swift in Sources */ = {isa = PBXBuildFile; fileRef = A2FB1EE02077B65100D3E634 /* File.swift */; };
 		ED0DED611F8C2CEC00886F6B /* XVimZEvaluator.m in Sources */ = {isa = PBXBuildFile; fileRef = ED0DED5D1F8C2CDD00886F6B /* XVimZEvaluator.m */; };
 		ED0DED621F8C2E1D00886F6B /* XVimGVisualEvaluator.m in Sources */ = {isa = PBXBuildFile; fileRef = ED0DED601F8C2CDF00886F6B /* XVimGVisualEvaluator.m */; };
@@ -663,6 +664,7 @@
 		A2B52D3C1F514CC600D83C0A /* Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		A2B537AF1F51C94400D83C0A /* NSObject+Swizzle.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "NSObject+Swizzle.h"; sourceTree = "<group>"; };
 		A2B537B01F51C94400D83C0A /* NSObject+Swizzle.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "NSObject+Swizzle.m"; sourceTree = "<group>"; };
+		A2D464BB20D4042B00A43EC7 /* SwiftLogger.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = SwiftLogger.swift; path = XVim2/Helper/SwiftLogger.swift; sourceTree = SOURCE_ROOT; };
 		A2FB1EE02077B65100D3E634 /* File.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = File.swift; sourceTree = "<group>"; };
 		ED0DED5D1F8C2CDD00886F6B /* XVimZEvaluator.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = XVimZEvaluator.m; sourceTree = "<group>"; };
 		ED0DED5E1F8C2CDD00886F6B /* XVimZEvaluator.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = XVimZEvaluator.h; sourceTree = "<group>"; };
@@ -1516,6 +1518,7 @@
 				A2B537B01F51C94400D83C0A /* NSObject+Swizzle.m */,
 				A2B52D3A1F514CC600D83C0A /* Logger.h */,
 				A2B52D3B1F514CC600D83C0A /* Logger.m */,
+				A2D464BB20D4042B00A43EC7 /* SwiftLogger.swift */,
 				ED9CF2D81F6EFB6100908DFB /* Macros.h */,
 				A27A7AE92077BD68006A0E4F /* XVimUtil.h */,
 				A27A7AEA2077BD68006A0E4F /* XVimUtil.m */,
@@ -1870,6 +1873,7 @@
 				ED0DED771F8C3BF100886F6B /* XVimOptions.m in Sources */,
 				EDDF5D0C1F83A85B00872094 /* XVimWindowEvaluator.m in Sources */,
 				ED548FDA1F827EEC00A8069D /* XVimYankEvaluator.m in Sources */,
+				A2D464BC20D4042B00A43EC7 /* SwiftLogger.swift in Sources */,
 				EDD27BAA1F9B5EB30006471C /* XVimTester+Register.m in Sources */,
 				EDB8EF4F1F91F8DA004188F5 /* XVimConstants.m in Sources */,
 				A2A9F9242070A7B500E7BB53 /* SourceCodeEditorViewWrapper.s in Sources */,

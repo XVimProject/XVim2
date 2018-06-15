@@ -30,8 +30,12 @@
 #endif
 
 #define REGISTER_CLASS_FOR_METHOD_TRACING(cls) [Logger registerTracing:cls]
-typedef enum LogLevel_t { LogTrace, LogDebug, LogError, LogFatal } LogLevel;
-
+typedef NS_ENUM(NSInteger, LogLevel) {
+    LogTrace,
+    LogDebug,
+    LogError,
+    LogFatal
+};
 
 @class NSView;
 @class NSMenu;
@@ -43,12 +47,13 @@ typedef enum LogLevel_t { LogTrace, LogDebug, LogError, LogFatal } LogLevel;
 
 + (void)logWithLevel:(LogLevel)level format:(NSString*)format, ...;
 + (void)registerTracing:(NSString*)name;
-+ (Logger*)defaultLogger;
++ (nonnull Logger*)defaultLogger;
 
 - (id)initWithName:(NSString*)name; // "Root.MyPackage.MyComponent"
 - (id)initWithName:(NSString*)n level:(LogLevel)l;
 
 - (void)logWithLevel:(LogLevel)level format:(NSString*)format, ...;
+- (void)logWithString:(NSString*)s;
 - (void)setLogFile:(NSString*)path;
 
 // Support Functions

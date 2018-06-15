@@ -140,6 +140,11 @@ static Logger* s_defaultLogger = nil;
     va_end(argumentList);
 }
 
+- (void)logWithString:(NSString*)s
+{
+    [self logWithLevel:LogDebug format:s];
+}
+
 + (void)logWithLevel:(LogLevel)l format:(NSString*)fmt, ...
 {
     va_list argumentList;

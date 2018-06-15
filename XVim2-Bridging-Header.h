@@ -11,5 +11,6 @@
 
 #import "XVim2/Xcode/SourceCodeEditorViewProxy.h"
 #import "XVim2/Helper/rd_route.h"
+#import "XVim2/Helper/Logger.h"
 
 #endif /* XVim2_Bridging_Header_h */
