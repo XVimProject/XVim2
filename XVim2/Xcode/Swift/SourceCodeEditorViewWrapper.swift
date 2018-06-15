@@ -83,34 +83,49 @@ class SourceCodeEditorViewWrapper: NSObject {
     @objc
     var cursorStyle : CursorStyle {
         get {
-            return _SourceCodeEditorViewWrapper(editorView, fpGetCursorStyle)?.getCursorStyle() ?? CursorStyle.block
+            if let fp = fpGetCursorStyle {
+                if let w = _SourceCodeEditorViewWrapper(editorView, fp) {
+                    return w.getCursorStyle()
+                }
+            }
+            return CursorStyle.block
         }
         set {
-            _SourceCodeEditorViewWrapper(editorView, fpSetCursorStyle)?.setCursorStyle(newValue)
+            guard let fp = fpSetCursorStyle else { return }
+            guard let w = _SourceCodeEditorViewWrapper(editorView, fp) else { return }
+            w.setCursorStyle(newValue)
         }
     }
     
     @objc
     var dataSource : AnyObject? {
-        return _SourceCodeEditorViewWrapper(editorView, fpGetDataSource)?.getDataSource()
+        guard let fp = fpGetDataSource else { return nil }
+        guard let w = _SourceCodeEditorViewWrapper(editorView, fp) else { return nil }
+        return w.getDataSource()
     }
     
     @objc
     public func addSelectedRange(_ range:XVimSourceEditorRange, modifiers:XVimSelectionModifiers) -> Void
     {
-        _SourceCodeEditorViewWrapper(editorView, fpAddSelectedRangeWithModifiers)?.addSelectedRange(range, modifiers: modifiers)
+        guard let fp = fpAddSelectedRangeWithModifiers else { return }
+        guard let w = _SourceCodeEditorViewWrapper(editorView, fp) else { return }
+        w.addSelectedRange(range, modifiers: modifiers)
     }
     
     @objc
     public func setSelectedRange(_ range:XVimSourceEditorRange, modifiers:XVimSelectionModifiers)
     {
-        _SourceCodeEditorViewWrapper(editorView, fpSetSelectedRangeWithModifiers)?.setSelectedRange(range, modifiers: modifiers)
+        guard let fp = fpSetSelectedRangeWithModifiers else { return }
+        guard let w = _SourceCodeEditorViewWrapper(editorView, fp) else { return }
+        w.setSelectedRange(range, modifiers: modifiers)
     }
     
     @objc
     public func linesPerPage() -> Int
     {
-        return _SourceCodeEditorViewWrapper(editorView, fpFuncLinesPerPage)?.voidToInt() ?? 0
+        guard let fp = fpFuncLinesPerPage else { return 0 }
+        guard let w = _SourceCodeEditorViewWrapper(editorView, fp) else { return 0 }
+        return w.voidToInt()
     }
     
 }
