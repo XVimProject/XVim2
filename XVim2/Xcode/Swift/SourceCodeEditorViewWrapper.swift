@@ -62,7 +62,9 @@ class SourceCodeEditorViewWrapper: NSObject {
     private let fpGetDataSource                 = function_ptr_from_name("_$S12SourceEditor0aB4ViewC04dataA0AA0ab4DataA0Cvg", nil)
     private let fpSetSelectedRangeWithModifiers = function_ptr_from_name("_$S12SourceEditor0aB4ViewC16setSelectedRange_9modifiersyAA0abF0V_AA0aB18SelectionModifiersVtF", nil)
     private let fpAddSelectedRangeWithModifiers = function_ptr_from_name("_$S12SourceEditor0aB4ViewC16addSelectedRange_9modifiersyAA0abF0V_AA0aB18SelectionModifiersVtF", nil)
+    /* not work in Xcode10
     private let fpFuncLinesPerPage              = function_ptr_from_name("_$S12SourceEditor0aB4ViewC12linesPerPageSiyF", nil)
+     */
     
     private weak var editorViewProxy : SourceCodeEditorViewProxy?
     
@@ -120,6 +122,7 @@ class SourceCodeEditorViewWrapper: NSObject {
         w.setSelectedRange(range, modifiers: modifiers)
     }
     
+    /* not work in Xcode10
     @objc
     public func linesPerPage() -> Int
     {
@@ -127,6 +130,7 @@ class SourceCodeEditorViewWrapper: NSObject {
         guard let w = _SourceCodeEditorViewWrapper(editorView, fp) else { return 0 }
         return w.voidToInt()
     }
+     */
     
 }
 

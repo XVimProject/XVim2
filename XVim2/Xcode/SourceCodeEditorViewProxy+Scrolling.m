@@ -107,6 +107,11 @@ typedef struct {
     return r;
 }
 
+- (NSInteger)linesPerPage {
+    LineRange linerange = [self xvim_visibleLineRange];
+    return linerange.bottomLine - linerange.topLine;
+}
+
 - (void)xvim_scrollBottom:(NSUInteger)lineNumber firstNonblank:(BOOL)fnb
 { // zb / z-
     

@@ -122,7 +122,6 @@
 {
     return [self.sourceCodeEditorView characterRangeForLineRange:arg1];
 }
-- (NSInteger)linesPerPage { return self.sourceCodeEditorViewWrapper.linesPerPage; }
 - (NSInteger)lineCount { return  self.sourceEditorDataSourceWrapper.lineCount; }
 - (void)scrollRangeToVisible:(NSRange)arg1 { [self.sourceCodeEditorView scrollRangeToVisible:arg1]; }
 

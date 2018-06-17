@@ -980,8 +980,6 @@
 
 #pragma mark Status
 
--(NSUInteger)xvim_numberOfLinesInVisibleRect { return self.sourceCodeEditorViewWrapper.linesPerPage; }
-
 -(NSUInteger)xvim_displayNextLine : (NSUInteger)index column : (NSUInteger)column count : (NSUInteger)count option
     : (MOTION_OPTION)opt
 {
