@@ -95,8 +95,10 @@ CONST_STR(EDWindow);
     }
     // </TODO>
     
-    if (![self.xvim_window handleKeyEvent:event])
+    if (![self respondsToSelector:@selector(xvim_window)] ||
+        ![self.xvim_window handleKeyEvent:event]){
         [self xvim_keyDown:event];
+    }
 }
 
 
