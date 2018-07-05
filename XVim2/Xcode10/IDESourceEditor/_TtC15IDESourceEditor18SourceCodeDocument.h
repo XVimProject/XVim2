@@ -84,6 +84,7 @@
 @property(nonatomic, retain) IDEMediaResourceVariantContext *variantContextForMediaLibrary; // @synthesize variantContextForMediaLibrary;
 - (void)unregisterDocumentEditor:(id)arg1;
 - (void)registerDocumentEditor:(id)arg1;
+- (id)newUndoManager;
 - (void)editorDocumentWillClose;
 - (id)init;
 - (id)lineRangeCharacterRangeConverter;

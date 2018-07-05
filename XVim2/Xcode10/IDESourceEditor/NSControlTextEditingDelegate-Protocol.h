@@ -6,7 +6,7 @@
 
 #import <IDESourceEditor/NSObject-Protocol.h>
 
-@class NSArray, NSControl, NSString, NSText, NSTextView;
+@class NSArray, NSControl, NSNotification, NSString, NSText, NSTextView;
 
 @protocol NSControlTextEditingDelegate <NSObject>
 
@@ -18,5 +18,8 @@
 - (BOOL)control:(NSControl *)arg1 didFailToFormatString:(NSString *)arg2 errorDescription:(NSString *)arg3;
 - (BOOL)control:(NSControl *)arg1 textShouldEndEditing:(NSText *)arg2;
 - (BOOL)control:(NSControl *)arg1 textShouldBeginEditing:(NSText *)arg2;
+- (void)controlTextDidChange:(NSNotification *)arg1;
+- (void)controlTextDidEndEditing:(NSNotification *)arg1;
+- (void)controlTextDidBeginEditing:(NSNotification *)arg1;
 @end
 

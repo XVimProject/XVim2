@@ -18,6 +18,7 @@
     // Error parsing type: , name: marginBackgroundView
     // Error parsing type: , name: marginContentView
     // Error parsing type: , name: lastLayoutSelection
+    // Error parsing type: , name: lineNumbersEnabled
     // Error parsing type: , name: lineNumberAttributesOverrideProviders
     // Error parsing type: , name: hiddenGutterContentOverrideProviders
     // Error parsing type: , name: invalidatedLineNumbers

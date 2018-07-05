@@ -10,12 +10,11 @@
 //#import <SourceEditor/NSServicesMenuRequestor-Protocol.h>
 //#import <SourceEditor/NSTextInputClient-Protocol.h>
 //#import <SourceEditor/_TtP12SourceEditor34SourceEditorViewMissingKeyBindings_-Protocol.h>
+#import "_TtP12SourceEditor34SourceEditorViewMissingKeyBindings_-Protocol.h"
 
 @class NSString, SourceEditorScrollView, _TtC12SourceEditor23SourceEditorContentView;
 
-@interface _TtC12SourceEditor16SourceEditorView : NSView <NSTextInputClient,
-//_TtP12SourceEditor34SourceEditorViewMissingKeyBindings_,
-NSServicesMenuRequestor>
+@interface _TtC12SourceEditor16SourceEditorView : NSView <NSTextInputClient, _TtP12SourceEditor34SourceEditorViewMissingKeyBindings_, NSServicesMenuRequestor>
 {
     // Error parsing type: , name: delegate
     // Error parsing type: , name: contentViewOffset
@@ -28,14 +27,15 @@ NSServicesMenuRequestor>
     // Error parsing type: , name: frameChangeObserver
     // Error parsing type: , name: undoObserver
     // Error parsing type: , name: redoObserver
+    // Error parsing type: , name: commandInterface.storage
+    // Error parsing type: , name: pasteboard
+    // Error parsing type: , name: contentViewWidthConstraint
+    // Error parsing type: , name: contentViewWidthLimitConstraint
+    // Error parsing type: , name: contentViewHeightConstraint
     // Error parsing type: , name: scrollView
     // Error parsing type: , name: defaultScrollViewContentInsets
     // Error parsing type: , name: additionalScrollViewContentInsets
     // Error parsing type: , name: overscroll
-    // Error parsing type: , name: commandInterface.storage
-    // Error parsing type: , name: contentViewWidthConstraint
-    // Error parsing type: , name: contentViewWidthLimitConstraint
-    // Error parsing type: , name: contentViewHeightConstraint
     // Error parsing type: , name: structuredEditingController
     // Error parsing type: , name: trimTrailingWhitespaceController
     // Error parsing type: , name: automaticallyAdjustsContentMargins
@@ -94,6 +94,7 @@ NSServicesMenuRequestor>
 - (void)performTextFinderAction:(id)arg1;
 - (void)performFindPanelAction:(id)arg1;
 - (void)resetCursorRects;
+@property(nonatomic, readonly) SourceEditorScrollView *scrollView; // @synthesize scrollView;
 - (BOOL)_wantsKeyDownForEvent:(id)arg1;
 - (void)updateSelectionManagerIsActive;
 - (BOOL)resignFirstResponder;
@@ -102,7 +103,6 @@ NSServicesMenuRequestor>
 - (void)doesNotRecognizeSelector:(SEL)arg1;
 - (id *)performSelector:(SEL)arg1 withObject:(id)arg2;
 - (BOOL)respondsToSelector:(SEL)arg1;
-@property(nonatomic, readonly) SourceEditorScrollView *scrollView; // @synthesize scrollView;
 - (void)viewDidMoveToWindow;
 - (BOOL)isFlipped;
 - (void)dealloc;

@@ -11,6 +11,7 @@
     // Error parsing type: , name: foldingController
     // Error parsing type: , name: backgroundView
     // Error parsing type: , name: ribbonContentView
+    // Error parsing type: , name: mouseInRibbon
     // Error parsing type: , name: expandedLayer
 }
 

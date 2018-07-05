@@ -11,6 +11,7 @@
     // Error parsing type: , name: viewportOrigin
     // Error parsing type: , name: viewportOffset
     // Error parsing type: , name: viewportLineRange
+    // Error parsing type: , name: estimateViewportOffsetForTesting
 }
 
 @end

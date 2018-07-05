@@ -17,6 +17,7 @@
     // Error parsing type: , name: allowAnimations
     // Error parsing type: , name: lineAnnotationLayouts
     // Error parsing type: , name: previousLineAnnotationLayouts
+    // Error parsing type: , name: annotationAuxViewIdentifier
     // Error parsing type: , name: lineAnnotationInsetForVerticalScroller
     // Error parsing type: , name: displayedDropdown
     // Error parsing type: , name: fontTheme

@@ -6,7 +6,7 @@
 
 #import <IDESourceEditor/IDECodeLibraryDetailController.h>
 
-@class _TtC15IDESourceEditor19IDESourceEditorView;
+@class _TtC15IDESourceEditor37IDECodeLibraryPegasusSourceEditorView;
 
 __attribute__((visibility("hidden")))
 @interface _TtC15IDESourceEditor37IDECodeLibraryPegasusDetailController : IDECodeLibraryDetailController
@@ -24,7 +24,7 @@ __attribute__((visibility("hidden")))
 - (void)detailEditorControllerWillChangeCurrentDetailController:(id)arg1;
 - (void)viewWillUninstall;
 - (void)viewDidInstall;
-@property(nonatomic) __weak _TtC15IDESourceEditor19IDESourceEditorView *sourceEditorView; // @synthesize sourceEditorView;
+@property(nonatomic) __weak _TtC15IDESourceEditor37IDECodeLibraryPegasusSourceEditorView *sourceEditorView; // @synthesize sourceEditorView;
 
 @end
 

@@ -39,8 +39,11 @@
     // Error parsing type: , name: _appendItemsLock
     // Error parsing type: , name: logMode
     // Error parsing type: , name: shouldDisableCloseBracket
+    // Error parsing type: , name: scrollWheelMonitor
     // Error parsing type: , name: consoleTextPreferences
     // Error parsing type: , name: autoCompletionToken
+    // Error parsing type: , name: tryClosingBracket
+    // Error parsing type: , name: _isClearingConsole
     // Error parsing type: , name: _appendInterval
 }
 
@@ -62,6 +65,8 @@
 - (id)textStorage;
 - (void)setSelectedRange:(struct _NSRange)arg1;
 - (void)moveToBeginningOfParagraph:(id)arg1;
+- (void)moveToBeginningOfLine:(id)arg1;
+- (void)moveToBeginningOfText:(id)arg1;
 - (void)keyDown:(id)arg1;
 - (void)insertText:(id)arg1 replacementRange:(struct _NSRange)arg2;
 - (void)themeFontsAndColorsUpdates;

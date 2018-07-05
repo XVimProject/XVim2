@@ -6,11 +6,8 @@
 
 #import <swiftCore/SwiftObject.h>
 
-@interface _TtCC12SourceEditor27RangePopLayoutVisualization8RangePop : SwiftObject
+@interface _TtC12SourceEditor8DebugLog : SwiftObject
 {
-    // Error parsing type: , name: managedRange
-    // Error parsing type: , name: journal
-    // Error parsing type: , name: layer
 }
 
 @end

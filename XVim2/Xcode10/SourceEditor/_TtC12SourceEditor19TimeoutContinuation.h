@@ -6,8 +6,11 @@
 
 #import <swiftCore/SwiftObject.h>
 
-@interface _TtC12SourceEditor39SourceEditorMultipleSelectionController : SwiftObject
+@interface _TtC12SourceEditor19TimeoutContinuation : SwiftObject
 {
+    // Error parsing type: , name: continuation
+    // Error parsing type: , name: timeout
+    // Error parsing type: , name: expirationTime
 }
 
 @end

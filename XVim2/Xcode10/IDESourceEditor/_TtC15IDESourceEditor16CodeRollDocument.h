@@ -16,6 +16,7 @@
 - (void)unregisterDocumentEditor:(id)arg1;
 - (void)registerDocumentEditor:(id)arg1;
 - (void)updateChangeCount:(unsigned long long)arg1;
+- (id)newUndoManager;
 - (BOOL)writeSafelyToURL:(id)arg1 ofType:(id)arg2 forSaveOperation:(unsigned long long)arg3 error:(id *)arg4;
 - (BOOL)readFromURL:(id)arg1 ofType:(id)arg2 error:(id *)arg3;
 @property(nonatomic, readonly) int readOnlyStatus;

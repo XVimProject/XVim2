@@ -17,6 +17,7 @@
     // Error parsing type: , name: reusableCursorLayers
     // Error parsing type: , name: selectionLayers
     // Error parsing type: , name: reusableSelectionLayers
+    // Error parsing type: , name: shouldDifferentiatePrimarySelection
     // Error parsing type: , name: insertionPointColor
     // Error parsing type: , name: selectionColor
     // Error parsing type: , name: allowCursorBlinkAnimation.storage

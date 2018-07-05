@@ -11,6 +11,7 @@ __attribute__((visibility("hidden")))
 {
     // Error parsing type: , name: dividerLineLayer
     // Error parsing type: , name: dividerLineWidth
+    // Error parsing type: , name: dividerLineColor
     // Error parsing type: , name: drawDividerLine
 }
 

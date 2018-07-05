@@ -13,8 +13,8 @@
 
 @class DVTSourceCodeLanguage, DVTTextCompletionController, DVTTextCompletionDataSource, NSScrollView, NSString;
 
-@interface _TtC15IDESourceEditor19IDESourceEditorView : 
-//$S15DVTSourceEditor016DVTPegasusSourceB4ViewCN
+@interface _TtC15IDESourceEditor19IDESourceEditorView :
+//_$S15DVTSourceEditor016DVTPegasusSourceB4ViewCN
 _TtC15DVTSourceEditor26DVTPegasusSourceEditorView
 <DVTSourceEditorViewProtocol, DVTTextCompletionSupportingTextView, DVTMarkedScrollerDelegate>
 {
