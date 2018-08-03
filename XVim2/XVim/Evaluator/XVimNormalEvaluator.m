@@ -37,11 +37,8 @@
 #import "XVimWindow.h"
 #import "XVimWindowEvaluator.h"
 #import "XVimYankEvaluator.h"
-
-#if 0
 #import "XVimKeyStroke.h"
 #import "XVimRecordingEvaluator.h"
-#endif
 
 @interface XVimNormalEvaluator () {
 }
@@ -514,7 +511,8 @@
     return nil;
 }
 
-#if 0
+
+
 // Should be moved to XVimMotionEvaluator
 - (XVimEvaluator*)q{
     if( [XVim instance].isExecuting ){
@@ -546,13 +544,13 @@
     [self.argumentString appendString:@"@"];
     XVimEvaluator *eval = [[XVimRecordingRegisterEvaluator alloc] initWithWindow:self.window];
     self.onChildCompleteHandler = @selector(onComplete_AT:);
-	return eval;
+    return eval;
 }
 
 - (XVimEvaluator*)onComplete_AT:(XVimRecordingRegisterEvaluator*)childEvaluator{
     self.onChildCompleteHandler = @selector(onChildComplete:);
     XVimRegister* reg = [[[XVim instance] registerManager] registerByName:childEvaluator.reg];
-    
+
     [XVim instance].isExecuting = YES;
     NSUInteger count = self.numericArg;
     [self resetNumericArg];
@@ -565,6 +563,12 @@
     [XVim instance].isExecuting = NO;
     return [XVimEvaluator noOperationEvaluator];
 }
+
+
+
+
+#if 0
+
 
 - (XVimEvaluator*)HT{
     [[self sourceView] xvim_selectNextPlaceholder];
