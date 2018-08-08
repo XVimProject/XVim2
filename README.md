@@ -94,9 +94,6 @@ Delete the following directory:
   
   https://www.bountysource.com/teams/xvim
 
-## Contributing Guidelines
-  See separate [CONTRIBUTING.md](.github/CONTRIBUTING.md)
-
 ## Donations
   If you think the plugin is useful, please donate.
   There are two options you can take. Donate for Japan Earthquake and Tsunami Relief or back the project via [BountySource](https://www.bountysource.com/teams/xvim). There is no rule that you cannot take both :) .
