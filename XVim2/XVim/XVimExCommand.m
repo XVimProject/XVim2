@@ -1191,6 +1191,10 @@ xvim_ignore_warning_undeclared_selector_push
     [view xvim_sortLinesFrom:args.lineBegin to:args.lineEnd withOptions:options];
 }
 
+- (void)source:(XVimExArg*)args inWindow:(XVimWindow*)window{
+	[XVIM sourceRcFile];
+}
+
 - (void)splitview:(XVimExArg*)args inWindow:(XVimWindow*)window
 {
     [XVimLastActiveWorkspaceTabController() xvim_addEditorHorizontally];
