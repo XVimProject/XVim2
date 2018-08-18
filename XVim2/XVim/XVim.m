@@ -197,6 +197,17 @@
     }
 }
 
+- (void)sourceRcFile{
+    for (NSUInteger mode = XVIM_MODE_NONE; mode < XVIM_MODE_COUNT; mode++) {
+        XVimKeymap *keymap = [self keymapForMode:mode];
+        [keymap clear];
+    }
+    [self.options removeObserver:self forKeyPath:@"debug"];
+    self.options = [[XVimOptions alloc] init];
+    [_options addObserver:self forKeyPath:@"debug" options:NSKeyValueObservingOptionNew context:nil];
+    [self parseRcFile];
+}
+
 - (void)observeValueForKeyPath:(NSString*)keyPath
                           ofObject:(id)object
                             change:(NSDictionary*)change
@@ -382,6 +393,7 @@ static id _startupObservation = nil;
         [self disableXVim];
     }
     else {
+        [self sourceRcFile];
         [self enableXVim];
     }
 }

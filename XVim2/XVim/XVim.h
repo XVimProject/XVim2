@@ -98,6 +98,7 @@ extern NSString* const XVimDocumentPathKey;
  **/
 - (void)writeToConsole:(NSString*)fmt, ...;
 - (void)registerWindow:(XVimWindow*)win;
+- (void)sourceRcFile;
 
 @end
 
