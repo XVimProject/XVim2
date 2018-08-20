@@ -51,16 +51,20 @@
   7. Relaunch Xcode.
     
 ## Branches and Releases
- XVim has several branches and releases. Usually you only need to download one of 'releases' and use it.
- Here is an explanation about each release and branch.
  
- - Releases(tags) : Releases are tags on master branch. All the code and documents on these tags are well arranged. Usual XVim user should use one of releases.
- - master : Most stable branch. Critical bug fixes and stable feature developed in 'develop' branch are merged into 'master'. If you find a critical bug in a release, try latest 'master' branch.
- - develop : New features and non critical bug fixes are merged into this branch. If you want experimental features use this branch.
+ - `master`  : for the lastest GM Xcode.
+             
+ - `develop` : for the next beta Xcode and develop branch.
 
- Any other branches are temporary branches to develop features or bug fixes which will be merged into 'develop' branch after all.
- Any pull requests should be made to 'develop' branch.
+ - tags
+   - `xcode9.2`
+   - `xcode9.4`
 
+ Please use appropriate tags or branches.
+
+ Please pull request to the master branch for easy bugfix and typo, or 
+     to develop branch for new feature or beta Xcode support.
+     
 ## Uninstall
   ```bash
   $ make uninstall
