@@ -37,37 +37,35 @@
                                    @"ggg hhh i_i\n"
                                    @"    jjj kkk";
 
-    return [NSArray
-                arrayWithObjects:
-                            // Operation using registers
-                            XVimMakeTestCase(text, 0, 0, @"\"adw\"aP", text, 0, 0), // Cut and paste
-                            XVimMakeTestCase(text, 12, 0, @"\"bdw\"ady\"bP", text, 15, 0), // use 'a' and 'b' register
+    return @[
+        // Operation using registers
+        XVimMakeTestCase(text, 0, 0, @"\"adw\"aP", text, 0, 0), // Cut and paste
+        XVimMakeTestCase(text, 12, 0, @"\"bdw\"ady\"bP", text, 15, 0), // use 'a' and 'b' register
 
-                            // Numbered registers
-                            // "0
-                            XVimMakeTestCase(text, 0, 0, @"yyjddk\"0P", reg0_result, 0,
-                                             0), // Yank stores "0 and delete does not affect it
+        // Numbered registers
+        // "0
+        XVimMakeTestCase(text, 0, 0, @"yyjddk\"0P", reg0_result, 0,
+                         0), // Yank stores "0 and delete does not affect it
 
-                            // Numbered register rotation with delete/change
-                            XVimMakeTestCase(text, 0, 0, @"dwdwdl\"2P\"2P\"2P", delete_result, 0,
-                                             0), // Yank stores "0 and delete does not affect it
+        // Numbered register rotation with delete/change
+        XVimMakeTestCase(text, 0, 0, @"dwdwdl\"2P\"2P\"2P", delete_result, 0,
+                         0), // Yank stores "0 and delete does not affect it
 
-                            // Blackhole register
-                            // "_dd never affect registers (including numbered register rotation)
-                            // Delete 2 lines but 2nd deletion is for blackhole
-                            XVimMakeTestCase(text, 0, 0, @"dd\"_dd\"_p\"1P", blackhole_result, 0,
-                                             0), // Yank stores "0 and delete does not affect it
+        // Blackhole register
+        // "_dd never affect registers (including numbered register rotation)
+        // Delete 2 lines but 2nd deletion is for blackhole
+        XVimMakeTestCase(text, 0, 0, @"dd\"_dd\"_p\"1P", blackhole_result, 0,
+                         0), // Yank stores "0 and delete does not affect it
 
-                            // Repeat(.)
-                            XVimMakeTestCase(@"aaa bbb ccc", 0, 0, @"iabc<ESC>b.", @"abcabcaaa bbb ccc", 2, 0),
-                            XVimMakeTestCase(@"aaa bbb ccc", 0, 0, @"dw.", @"ccc", 0, 0),
-                            // Numeric arg should be ignored when . with numeric arg
-                            XVimMakeTestCase(text, 0, 0, @"2x3.", dot_result1, 0, 0),
+        // Repeat(.)
+        XVimMakeTestCase(@"aaa bbb ccc", 0, 0, @"iabc<ESC>b.", @"abcabcaaa bbb ccc", 2, 0),
+        XVimMakeTestCase(@"aaa bbb ccc", 0, 0, @"dw.", @"ccc", 0, 0),
+        // Numeric arg should be ignored when . with numeric arg
+        XVimMakeTestCase(text, 0, 0, @"2x3.", dot_result1, 0, 0),
 
-                            // Repeat by @@
-                            XVimMakeTestCase(@"aaa bbb ccc", 0, 0, @"qallq@a2@@", @"aaa bbb ccc", 8, 0),
-
-                            nil];
+        // Repeat by @@
+        XVimMakeTestCase(@"aaa bbb ccc", 0, 0, @"qallq@a2@@", @"aaa bbb ccc", 8, 0),
+    ];
 }
 
 @end

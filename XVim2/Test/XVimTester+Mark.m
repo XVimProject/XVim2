@@ -16,7 +16,9 @@
                              @"ggg hhh i_i\n" // 24 28 32
                              @"    jjj kkk"; // 36 40 44
 
-    return [NSArray arrayWithObjects:XVimMakeTestCase(text2, 5, 0, @"majj3l`a", text2, 5, 0),
-                                     XVimMakeTestCase(text2, 5, 0, @"majj3l'a", text2, 0, 0), nil];
+    return @[
+		XVimMakeTestCase(text2, 5, 0, @"majj3l`a", text2, 5, 0),
+        XVimMakeTestCase(text2, 5, 0, @"majj3l'a", text2, 0, 0),
+	];
 }
 @end

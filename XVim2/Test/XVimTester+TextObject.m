@@ -63,108 +63,107 @@
     static NSString* text_object_ya_result0 = @"(aaa)aaa(aaa)aaa";
 
     // Text Objects(TODO: with Numeric Arg)
-    return [NSArray arrayWithObjects:
-                                // (), b
-                                XVimMakeTestCase(text_object0, 5, 0, @"di(", text_object_i_result0, 4, 0),
-                                XVimMakeTestCase(text_object0, 5, 0, @"di)", text_object_i_result0, 4, 0),
-                                XVimMakeTestCase(text_object0, 5, 0, @"da(", text_object_a_result0, 3, 0),
-                                XVimMakeTestCase(text_object0, 5, 0, @"da)", text_object_a_result0, 3, 0),
-                                XVimMakeTestCase(text_object0, 5, 0, @"dib", text_object_i_result0, 4, 0),
-                                XVimMakeTestCase(text_object0, 5, 0, @"dab", text_object_a_result0, 3, 0),
-                                XVimMakeTestCase(text_object0, 3, 0, @"di(", text_object_i_result0, 4, 0), // begin on (
-                                XVimMakeTestCase(text_object10, 3, 0, @"di(", text_object_i_result10, 4, 0),
+    return @[
+        // (), b
+        XVimMakeTestCase(text_object0, 5, 0, @"di(", text_object_i_result0, 4, 0),
+        XVimMakeTestCase(text_object0, 5, 0, @"di)", text_object_i_result0, 4, 0),
+        XVimMakeTestCase(text_object0, 5, 0, @"da(", text_object_a_result0, 3, 0),
+        XVimMakeTestCase(text_object0, 5, 0, @"da)", text_object_a_result0, 3, 0),
+        XVimMakeTestCase(text_object0, 5, 0, @"dib", text_object_i_result0, 4, 0),
+        XVimMakeTestCase(text_object0, 5, 0, @"dab", text_object_a_result0, 3, 0),
+        XVimMakeTestCase(text_object0, 3, 0, @"di(", text_object_i_result0, 4, 0), // begin on (
+        XVimMakeTestCase(text_object10, 3, 0, @"di(", text_object_i_result10, 4, 0),
 
-                                XVimMakeTestCase(text_object0, 5, 0, @"yi(0P", text_object_yi_result0, 2, 0),
-                                XVimMakeTestCase(text_object0, 5, 0, @"yi)0P", text_object_yi_result0, 2, 0),
-                                XVimMakeTestCase(text_object0, 5, 0, @"ya(0P", text_object_ya_result0, 4, 0),
-                                XVimMakeTestCase(text_object0, 5, 0, @"ya)0P", text_object_ya_result0, 4, 0),
-                                XVimMakeTestCase(text_object0, 5, 0, @"yib0P", text_object_yi_result0, 2, 0),
-                                XVimMakeTestCase(text_object0, 5, 0, @"yab0P", text_object_ya_result0, 4, 0),
+        XVimMakeTestCase(text_object0, 5, 0, @"yi(0P", text_object_yi_result0, 2, 0),
+        XVimMakeTestCase(text_object0, 5, 0, @"yi)0P", text_object_yi_result0, 2, 0),
+        XVimMakeTestCase(text_object0, 5, 0, @"ya(0P", text_object_ya_result0, 4, 0),
+        XVimMakeTestCase(text_object0, 5, 0, @"ya)0P", text_object_ya_result0, 4, 0),
+        XVimMakeTestCase(text_object0, 5, 0, @"yib0P", text_object_yi_result0, 2, 0),
+        XVimMakeTestCase(text_object0, 5, 0, @"yab0P", text_object_ya_result0, 4, 0),
 
-                                // "
-                                XVimMakeTestCase(text_object1, 5, 0, @"di\"", text_object_i_result1, 4, 0),
-                                XVimMakeTestCase(text_object1, 5, 0, @"da\"", text_object_a_result1, 3, 0),
-                                XVimMakeTestCase(text_object1, 0, 0, @"di\"", text_object_i_result1, 4, 0),
+        // "
+        XVimMakeTestCase(text_object1, 5, 0, @"di\"", text_object_i_result1, 4, 0),
+        XVimMakeTestCase(text_object1, 5, 0, @"da\"", text_object_a_result1, 3, 0),
+        XVimMakeTestCase(text_object1, 0, 0, @"di\"", text_object_i_result1, 4, 0),
 
-                                // {}, B
-                                XVimMakeTestCase(text_object2, 5, 0, @"di{", text_object_i_result2, 4, 0),
-                                XVimMakeTestCase(text_object2, 5, 0, @"di}", text_object_i_result2, 4, 0),
-                                XVimMakeTestCase(text_object2, 5, 0, @"da{", text_object_a_result2, 3, 0),
-                                XVimMakeTestCase(text_object2, 5, 0, @"da}", text_object_a_result2, 3, 0),
-                                XVimMakeTestCase(text_object2, 5, 0, @"diB", text_object_i_result2, 4, 0),
-                                XVimMakeTestCase(text_object2, 5, 0, @"daB", text_object_a_result2, 3, 0),
-                                XVimMakeTestCase(text_object2, 3, 0, @"di{", text_object_i_result2, 4, 0), // begin on {
+        // {}, B
+        XVimMakeTestCase(text_object2, 5, 0, @"di{", text_object_i_result2, 4, 0),
+        XVimMakeTestCase(text_object2, 5, 0, @"di}", text_object_i_result2, 4, 0),
+        XVimMakeTestCase(text_object2, 5, 0, @"da{", text_object_a_result2, 3, 0),
+        XVimMakeTestCase(text_object2, 5, 0, @"da}", text_object_a_result2, 3, 0),
+        XVimMakeTestCase(text_object2, 5, 0, @"diB", text_object_i_result2, 4, 0),
+        XVimMakeTestCase(text_object2, 5, 0, @"daB", text_object_a_result2, 3, 0),
+        XVimMakeTestCase(text_object2, 3, 0, @"di{", text_object_i_result2, 4, 0), // begin on {
 
-                                // []
-                                XVimMakeTestCase(text_object3, 5, 0, @"di[", text_object_i_result3, 4, 0),
-                                XVimMakeTestCase(text_object3, 5, 0, @"di]", text_object_i_result3, 4, 0),
-                                XVimMakeTestCase(text_object3, 5, 0, @"da[", text_object_a_result3, 3, 0),
-                                XVimMakeTestCase(text_object3, 5, 0, @"da]", text_object_a_result3, 3, 0),
-                                XVimMakeTestCase(text_object3, 3, 0, @"di[", text_object_i_result3, 4, 0), // begin on [
+        // []
+        XVimMakeTestCase(text_object3, 5, 0, @"di[", text_object_i_result3, 4, 0),
+        XVimMakeTestCase(text_object3, 5, 0, @"di]", text_object_i_result3, 4, 0),
+        XVimMakeTestCase(text_object3, 5, 0, @"da[", text_object_a_result3, 3, 0),
+        XVimMakeTestCase(text_object3, 5, 0, @"da]", text_object_a_result3, 3, 0),
+        XVimMakeTestCase(text_object3, 3, 0, @"di[", text_object_i_result3, 4, 0), // begin on [
 
-                                // '
-                                XVimMakeTestCase(text_object4, 5, 0, @"di'", text_object_i_result4, 4, 0),
-                                XVimMakeTestCase(text_object4, 5, 0, @"da'", text_object_a_result4, 3, 0),
-                                XVimMakeTestCase(text_object4, 0, 0, @"di'", text_object_i_result4, 4, 0),
+        // '
+        XVimMakeTestCase(text_object4, 5, 0, @"di'", text_object_i_result4, 4, 0),
+        XVimMakeTestCase(text_object4, 5, 0, @"da'", text_object_a_result4, 3, 0),
+        XVimMakeTestCase(text_object4, 0, 0, @"di'", text_object_i_result4, 4, 0),
 
-                                // <>
-                                XVimMakeTestCase(text_object5, 5, 0, @"di<", text_object_i_result5, 4, 0),
-                                XVimMakeTestCase(text_object5, 5, 0, @"di>", text_object_i_result5, 4, 0),
-                                XVimMakeTestCase(text_object5, 5, 0, @"da<", text_object_a_result5, 3, 0),
-                                XVimMakeTestCase(text_object5, 5, 0, @"da>", text_object_a_result5, 3, 0),
+        // <>
+        XVimMakeTestCase(text_object5, 5, 0, @"di<", text_object_i_result5, 4, 0),
+        XVimMakeTestCase(text_object5, 5, 0, @"di>", text_object_i_result5, 4, 0),
+        XVimMakeTestCase(text_object5, 5, 0, @"da<", text_object_a_result5, 3, 0),
+        XVimMakeTestCase(text_object5, 5, 0, @"da>", text_object_a_result5, 3, 0),
 
-                                XVimMakeTestCase(text_object5, 3, 0, @"di<", text_object_i_result5, 4, 0), // begin on <
-                                // `
-                                XVimMakeTestCase(text_object6, 5, 0, @"di`", text_object_i_result6, 4, 0),
-                                XVimMakeTestCase(text_object6, 5, 0, @"da`", text_object_a_result6, 3, 0),
-                                XVimMakeTestCase(text_object6, 0, 0, @"di`", text_object_i_result6, 4, 0),
+        XVimMakeTestCase(text_object5, 3, 0, @"di<", text_object_i_result5, 4, 0), // begin on <
+        // `
+        XVimMakeTestCase(text_object6, 5, 0, @"di`", text_object_i_result6, 4, 0),
+        XVimMakeTestCase(text_object6, 5, 0, @"da`", text_object_a_result6, 3, 0),
+        XVimMakeTestCase(text_object6, 0, 0, @"di`", text_object_i_result6, 4, 0),
 
-                                // w
-                                XVimMakeTestCase(text_object7, 5, 0, @"diw", text_object_i_result7, 4, 0),
-                                XVimMakeTestCase(text_object7, 5, 0, @"daw", text_object_a_result7, 4, 0),
+        // w
+        XVimMakeTestCase(text_object7, 5, 0, @"diw", text_object_i_result7, 4, 0),
+        XVimMakeTestCase(text_object7, 5, 0, @"daw", text_object_a_result7, 4, 0),
 
-                                // c ()
-                                XVimMakeTestCase(text_object0, 5, 0, @"ci(bbb<ESC>", text_object_i_result0_i, 6, 0),
-                                XVimMakeTestCase(text_object0, 5, 0, @"ci)bbb<ESC>", text_object_i_result0_i, 6, 0),
-                                XVimMakeTestCase(text_object10, 5, 0, @"ci)bbb<ESC>", text_object_i_result10_i, 6, 0),
+        // c ()
+        XVimMakeTestCase(text_object0, 5, 0, @"ci(bbb<ESC>", text_object_i_result0_i, 6, 0),
+        XVimMakeTestCase(text_object0, 5, 0, @"ci)bbb<ESC>", text_object_i_result0_i, 6, 0),
+        XVimMakeTestCase(text_object10, 5, 0, @"ci)bbb<ESC>", text_object_i_result10_i, 6, 0),
 
-                                // c "
-                                XVimMakeTestCase(text_object1, 5, 0, @"ci\"aaa<ESC>", text_object_i_result1_i, 6, 0),
-                                XVimMakeTestCase(text_object1, 0, 0, @"ci\"aaa<ESC>", text_object_i_result1_i, 6, 0),
+        // c "
+        XVimMakeTestCase(text_object1, 5, 0, @"ci\"aaa<ESC>", text_object_i_result1_i, 6, 0),
+        XVimMakeTestCase(text_object1, 0, 0, @"ci\"aaa<ESC>", text_object_i_result1_i, 6, 0),
 
-                                // c {}
-                                XVimMakeTestCase(text_object2, 5, 0, @"ci{bbb<ESC>", text_object_i_result2_i, 6, 0),
-                                XVimMakeTestCase(text_object2, 5, 0, @"ci}bbb<ESC>", text_object_i_result2_i, 6, 0),
+        // c {}
+        XVimMakeTestCase(text_object2, 5, 0, @"ci{bbb<ESC>", text_object_i_result2_i, 6, 0),
+        XVimMakeTestCase(text_object2, 5, 0, @"ci}bbb<ESC>", text_object_i_result2_i, 6, 0),
 
-                                // []
-                                XVimMakeTestCase(text_object3, 5, 0, @"ci[eee<ESC>", text_object_i_result3_i, 6, 0),
-                                XVimMakeTestCase(text_object3, 5, 0, @"ci]eee<ESC>", text_object_i_result3_i, 6, 0),
+        // []
+        XVimMakeTestCase(text_object3, 5, 0, @"ci[eee<ESC>", text_object_i_result3_i, 6, 0),
+        XVimMakeTestCase(text_object3, 5, 0, @"ci]eee<ESC>", text_object_i_result3_i, 6, 0),
 
-                                // '
-                                XVimMakeTestCase(text_object4, 5, 0, @"ci'fff<ESC>", text_object_i_result4_i, 6, 0),
-                                XVimMakeTestCase(text_object4, 0, 0, @"ci'fff<ESC>", text_object_i_result4_i, 6, 0),
+        // '
+        XVimMakeTestCase(text_object4, 5, 0, @"ci'fff<ESC>", text_object_i_result4_i, 6, 0),
+        XVimMakeTestCase(text_object4, 0, 0, @"ci'fff<ESC>", text_object_i_result4_i, 6, 0),
 
-                                // <>
-                                XVimMakeTestCase(text_object5, 5, 0, @"ci<ggg<ESC>", text_object_i_result5_i, 6, 0),
-                                XVimMakeTestCase(text_object5, 5, 0, @"ci>ggg<ESC>", text_object_i_result5_i, 6, 0),
+        // <>
+        XVimMakeTestCase(text_object5, 5, 0, @"ci<ggg<ESC>", text_object_i_result5_i, 6, 0),
+        XVimMakeTestCase(text_object5, 5, 0, @"ci>ggg<ESC>", text_object_i_result5_i, 6, 0),
 
-                                // `
-                                XVimMakeTestCase(text_object6, 5, 0, @"ci`hhh<ESC>", text_object_i_result6_i, 6, 0),
-                                XVimMakeTestCase(text_object6, 0, 0, @"ci`hhh<ESC>", text_object_i_result6_i, 6, 0),
+        // `
+        XVimMakeTestCase(text_object6, 5, 0, @"ci`hhh<ESC>", text_object_i_result6_i, 6, 0),
+        XVimMakeTestCase(text_object6, 0, 0, @"ci`hhh<ESC>", text_object_i_result6_i, 6, 0),
 
-                                // ci, search not matched (no insert mode)
-                                XVimMakeTestCase(text_object0, 5, 0, @"ci0[", text_object0, 5, 0),
+        // ci, search not matched (no insert mode)
+        XVimMakeTestCase(text_object0, 5, 0, @"ci0[", text_object0, 5, 0),
 
-                                // camel case
-                                XVimMakeTestCase(text_object8, 5, 0, @"di_", text_object_i_result8, 4, 0),
-                                XVimMakeTestCase(text_object8, 5, 0, @"ci_JJJ<ESC>", text_object_i_result8_i, 6, 0),
-                                XVimMakeTestCase(text_object8, 5, 0, @"da_", text_object_a_result8, 4, 0),
+        // camel case
+        XVimMakeTestCase(text_object8, 5, 0, @"di_", text_object_i_result8, 4, 0),
+        XVimMakeTestCase(text_object8, 5, 0, @"ci_JJJ<ESC>", text_object_i_result8_i, 6, 0),
+        XVimMakeTestCase(text_object8, 5, 0, @"da_", text_object_a_result8, 4, 0),
 
-                                // underscore
-                                XVimMakeTestCase(text_object9, 5, 0, @"di_", text_object_i_result9, 4, 0),
-                                XVimMakeTestCase(text_object9, 5, 0, @"ci_kkk<ESC>", text_object_i_result9_i, 6, 0),
-                                XVimMakeTestCase(text_object9, 5, 0, @"da_", text_object_a_result9, 3, 0),
-
-                                nil];
+        // underscore
+        XVimMakeTestCase(text_object9, 5, 0, @"di_", text_object_i_result9, 4, 0),
+        XVimMakeTestCase(text_object9, 5, 0, @"ci_kkk<ESC>", text_object_i_result9_i, 6, 0),
+        XVimMakeTestCase(text_object9, 5, 0, @"da_", text_object_a_result9, 3, 0),
+    ];
 }
 @end

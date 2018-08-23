@@ -47,57 +47,56 @@
                                     @"    jjj kkk";
 
 
-    return [NSArray arrayWithObjects:
-                                // map
-                                // unmap
-                                // mapclear
-                                XVimMakeTestCase(text2, 5, 0, @":map h l<CR>h", text2, 6, 0),
-                                XVimMakeTestCase(text2, 5, 0, @":unmap h<CR>h", text2, 4, 0),
-                                XVimMakeTestCase(text2, 5, 0, @":map jj l<CR>jj", text2, 6, 0),
-                                XVimMakeTestCase(text2, 5, 0, @":mapclear<CR>jj", text2, 29, 0),
+    return @[
+        // map
+        // unmap
+        // mapclear
+        XVimMakeTestCase(text2, 5, 0, @":map h l<CR>h", text2, 6, 0),
+        XVimMakeTestCase(text2, 5, 0, @":unmap h<CR>h", text2, 4, 0),
+        XVimMakeTestCase(text2, 5, 0, @":map jj l<CR>jj", text2, 6, 0),
+        XVimMakeTestCase(text2, 5, 0, @":mapclear<CR>jj", text2, 29, 0),
 
-                                // remapping
-                                // abc->def and def->lll.  abc must resutls in lll
-                                XVimMakeTestCase(text2, 5, 0, @":map abc def<CR>:map def lll<CR>abc", text2, 8, 0),
-                                XVimMakeTestCase(text2, 5, 0, @":mapclear<CR>", text2, 5,
-                                                 0), // Just for reset the previous mapping
+        // remapping
+        // abc->def and def->lll.  abc must resutls in lll
+        XVimMakeTestCase(text2, 5, 0, @":map abc def<CR>:map def lll<CR>abc", text2, 8, 0),
+        XVimMakeTestCase(text2, 5, 0, @":mapclear<CR>", text2, 5,
+                         0), // Just for reset the previous mapping
 
-                                // noremap
-                                // abc->lll (noremap) and lll->hhh.  abc must resutls in lll (not hhh)
-                                XVimMakeTestCase(text2, 5, 0, @":noremap abc lll<CR>:map lll hhh<CR>abc", text2, 8, 0),
-                                XVimMakeTestCase(text2, 5, 0, @":mapclear<CR>", text2, 5,
-                                                 0), // Just for reset the previous mapping
+        // noremap
+        // abc->lll (noremap) and lll->hhh.  abc must resutls in lll (not hhh)
+        XVimMakeTestCase(text2, 5, 0, @":noremap abc lll<CR>:map lll hhh<CR>abc", text2, 8, 0),
+        XVimMakeTestCase(text2, 5, 0, @":mapclear<CR>", text2, 5,
+                         0), // Just for reset the previous mapping
 
-                                // imap
-                                XVimMakeTestCase(text2, 4, 0, @":imap abc def<CR>xxxiabc<ESC>", imap_result1, 6, 0),
-                                XVimMakeTestCase(text2, 4, 0, @":iunmap abc<CR>xxxiabc<ESC>", imap_result2, 6, 0),
-                                XVimMakeTestCase(text2, 4, 0, @":imap abc def<CR>:imapclear<CR>xxxiabc<ESC>",
-                                                 imap_result2, 6, 0),
-                                XVimMakeTestCase(text2, 4, 0, @":imap lll hhh<CR>lll", text2, 7,
-                                                 0), // imap does not affect NORMAL mode
-                                XVimMakeTestCase(text2, 4, 0, @":imapclear<CR>", text2, 4, 0), // Reset mapping
+        // imap
+        XVimMakeTestCase(text2, 4, 0, @":imap abc def<CR>xxxiabc<ESC>", imap_result1, 6, 0),
+        XVimMakeTestCase(text2, 4, 0, @":iunmap abc<CR>xxxiabc<ESC>", imap_result2, 6, 0),
+        XVimMakeTestCase(text2, 4, 0, @":imap abc def<CR>:imapclear<CR>xxxiabc<ESC>",
+                         imap_result2, 6, 0),
+        XVimMakeTestCase(text2, 4, 0, @":imap lll hhh<CR>lll", text2, 7,
+                         0), // imap does not affect NORMAL mode
+        XVimMakeTestCase(text2, 4, 0, @":imapclear<CR>", text2, 4, 0), // Reset mapping
 
-                                // nmap
-                                XVimMakeTestCase(text2, 4, 0, @":nmap abc dw<CR>abc", nmap_result1, 4, 0),
-                                XVimMakeTestCase(text2, 4, 0, @":nunmap abc<CR>abc<ESC>", nmap_result2, 6, 0),
-                                XVimMakeTestCase(text2, 4, 0, @":nmap abc dw<CR>:nmapclear<CR>abc<ESC>", nmap_result3,
-                                                 6, 0),
-                                XVimMakeTestCase(text2, 4, 0, @":nmap abc dw<CR>iabc<ESC>", nmap_result4, 6,
-                                                 0), // nmap does not affect insert mode
-                                XVimMakeTestCase(text2, 4, 0, @":nmapclear<CR>", text2, 4, 0),
+        // nmap
+        XVimMakeTestCase(text2, 4, 0, @":nmap abc dw<CR>abc", nmap_result1, 4, 0),
+        XVimMakeTestCase(text2, 4, 0, @":nunmap abc<CR>abc<ESC>", nmap_result2, 6, 0),
+        XVimMakeTestCase(text2, 4, 0, @":nmap abc dw<CR>:nmapclear<CR>abc<ESC>", nmap_result3,
+                         6, 0),
+        XVimMakeTestCase(text2, 4, 0, @":nmap abc dw<CR>iabc<ESC>", nmap_result4, 6,
+                         0), // nmap does not affect insert mode
+        XVimMakeTestCase(text2, 4, 0, @":nmapclear<CR>", text2, 4, 0),
 
-                                // omap
-                                // vmap
+        // omap
+        // vmap
 
 
-                                // mapping should not affect arguments
-                                XVimMakeTestCase(text2, 0, 0, @":nmap b c<CR>fb", text2, 4, 0), // Issue #510
+        // mapping should not affect arguments
+        XVimMakeTestCase(text2, 0, 0, @":nmap b c<CR>fb", text2, 4, 0), // Issue #510
 
-                                // <Nop>
-                                XVimMakeTestCase(text2, 0, 0, @":map abc <Nop><CR>abc", text2, 0, 0),
-                                XVimMakeTestCase(text2, 0, 0, @":noremap xyz <nop><CR>xyz", text2, 0, 0),
-
-                                nil];
+        // <Nop>
+        XVimMakeTestCase(text2, 0, 0, @":map abc <Nop><CR>abc", text2, 0, 0),
+        XVimMakeTestCase(text2, 0, 0, @":noremap xyz <nop><CR>xyz", text2, 0, 0),
+    ];
 }
 
 @end

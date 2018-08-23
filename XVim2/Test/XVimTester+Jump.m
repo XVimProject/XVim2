@@ -74,7 +74,6 @@
         // Re-Indent key bind need to be cleared in Xcode Preferences to pass these test.
         XVimMakeTestCase(text1, 1, 0, @"/bb<CR>/cc<CR><C-o><C-i>", text1, 6, 0), // <C-i>
         XVimMakeTestCase(text1, 1, 0, @"/bb<CR>/cc<CR><C-o><C-o><C-i><C-i>", text1, 6, 0), // <C-i>
-
     ];
 }
 

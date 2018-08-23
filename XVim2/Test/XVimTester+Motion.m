@@ -33,144 +33,143 @@
 
     static NSString* text5 = @"aaa:<#bbb ccc ddd#> eee"; // 0 3 4 20
 
-    return [NSArray arrayWithObjects:
-                                // b, B
-                                XVimMakeTestCase(text2, 6, 0, @"b", text2, 4, 0),
-                                XVimMakeTestCase(text2, 14, 0, @"3b", text2, 4, 0),
-                                XVimMakeTestCase(text2, 4, 0, @"B", text2, 0, 0),
-                                XVimMakeTestCase(text2, 27, 0, @"3B", text2, 16, 0),
-                                XVimMakeTestCase(text5, 20, 0, @"b", text5, 4, 0), // Placeholder
-                                XVimMakeTestCase(text5, 20, 0, @"3b", text5, 0, 0), // Placeholder
+    return @[
+        // b, B
+        XVimMakeTestCase(text2, 6, 0, @"b", text2, 4, 0),
+        XVimMakeTestCase(text2, 14, 0, @"3b", text2, 4, 0),
+        XVimMakeTestCase(text2, 4, 0, @"B", text2, 0, 0),
+        XVimMakeTestCase(text2, 27, 0, @"3B", text2, 16, 0),
+        XVimMakeTestCase(text5, 20, 0, @"b", text5, 4, 0), // Placeholder
+        XVimMakeTestCase(text5, 20, 0, @"3b", text5, 0, 0), // Placeholder
 
-                                // e, E
-                                XVimMakeTestCase(text2, 16, 0, @"e", text2, 17, 0),
-                                XVimMakeTestCase(text2, 17, 0, @"3e", text2, 26, 0),
-                                XVimMakeTestCase(text2, 16, 0, @"E", text2, 18, 0),
-                                XVimMakeTestCase(text2, 16, 0, @"3E", text2, 26, 0),
-                                XVimMakeTestCase(text5, 3, 0, @"e", text5, 4, 0), // Placeholder
-                                XVimMakeTestCase(text5, 3, 0, @"2e", text5, 22, 0), // Placeholder
+        // e, E
+        XVimMakeTestCase(text2, 16, 0, @"e", text2, 17, 0),
+        XVimMakeTestCase(text2, 17, 0, @"3e", text2, 26, 0),
+        XVimMakeTestCase(text2, 16, 0, @"E", text2, 18, 0),
+        XVimMakeTestCase(text2, 16, 0, @"3E", text2, 26, 0),
+        XVimMakeTestCase(text5, 3, 0, @"e", text5, 4, 0), // Placeholder
+        XVimMakeTestCase(text5, 3, 0, @"2e", text5, 22, 0), // Placeholder
 
-                                // f, F
-                                XVimMakeTestCase(text2, 0, 0, @"fc", text2, 8, 0),
-                                XVimMakeTestCase(text2, 0, 0, @"2fc", text2, 9, 0),
-                                XVimMakeTestCase(text2, 18, 0, @"Fd", text2, 14, 0),
-                                XVimMakeTestCase(text2, 18, 0, @"2Fd", text2, 13, 0),
-                                XVimMakeTestCase(text2, 24, 0, @"4fi", text2, 24, 0), // error case
+        // f, F
+        XVimMakeTestCase(text2, 0, 0, @"fc", text2, 8, 0),
+        XVimMakeTestCase(text2, 0, 0, @"2fc", text2, 9, 0),
+        XVimMakeTestCase(text2, 18, 0, @"Fd", text2, 14, 0),
+        XVimMakeTestCase(text2, 18, 0, @"2Fd", text2, 13, 0),
+        XVimMakeTestCase(text2, 24, 0, @"4fi", text2, 24, 0), // error case
 
-                                // g, G
-                                XVimMakeTestCase(text2, 44, 0, @"gg", text2, 0, 0),
-                                XVimMakeTestCase(text2, 44, 0, @"3gg", text2, 24, 0),
-                                XVimMakeTestCase(text2, 8, 0, @"9gg", text2, 40, 0),
-                                XVimMakeTestCase(text2, 4, 0, @"G", text2, 40, 0),
-                                XVimMakeTestCase(text2, 44, 0, @"3G", text2, 24, 0),
-                                XVimMakeTestCase(text2, 8, 0, @"9G", text2, 40, 0),
+        // g, G
+        XVimMakeTestCase(text2, 44, 0, @"gg", text2, 0, 0),
+        XVimMakeTestCase(text2, 44, 0, @"3gg", text2, 24, 0),
+        XVimMakeTestCase(text2, 8, 0, @"9gg", text2, 40, 0),
+        XVimMakeTestCase(text2, 4, 0, @"G", text2, 40, 0),
+        XVimMakeTestCase(text2, 44, 0, @"3G", text2, 24, 0),
+        XVimMakeTestCase(text2, 8, 0, @"9G", text2, 40, 0),
 
-                                // ge, gE
-                                XVimMakeTestCase(text2, 9, 0, @"gE", text2, 6, 0),
-                                XVimMakeTestCase(text2, 9, 0, @"2gE", text2, 2, 0),
-                                XVimMakeTestCase(text2, 2, 0, @"gE", text2, 0, 0),
-                                XVimMakeTestCase(text2, 2, 0, @"ge", text2, 1, 0),
-                                XVimMakeTestCase(text2, 4, 0, @"2ge", text2, 1, 0),
+        // ge, gE
+        XVimMakeTestCase(text2, 9, 0, @"gE", text2, 6, 0),
+        XVimMakeTestCase(text2, 9, 0, @"2gE", text2, 2, 0),
+        XVimMakeTestCase(text2, 2, 0, @"gE", text2, 0, 0),
+        XVimMakeTestCase(text2, 2, 0, @"ge", text2, 1, 0),
+        XVimMakeTestCase(text2, 4, 0, @"2ge", text2, 1, 0),
 
-                                // h,j,k,l, <space>
-                                XVimMakeTestCase(text1, 0, 0, @"l", text1, 1, 0),
-                                XVimMakeTestCase(text1, 0, 0, @"10l", text1, 2, 0),
-                                XVimMakeTestCase(text1, 0, 0, @"j", text1, 4, 0),
-                                XVimMakeTestCase(text1, 0, 0, @"10j", text1, 12, 0),
-                                XVimMakeTestCase(text1, 4, 0, @"k", text1, 0, 0),
-                                XVimMakeTestCase(text1, 1, 0, @"h", text1, 0, 0),
-                                XVimMakeTestCase(text1, 0, 0, @"<Space>", text1, 1, 0),
-                                XVimMakeTestCase(text1, 0, 0, @"10<Space>", text1, 2, 0),
-                                XVimMakeTestCase(text5, 3, 0, @"l", text5, 4, 0), // Placeholder
-                                XVimMakeTestCase(text5, 4, 0, @"l", text5, 19, 0), // Placeholder
-                                XVimMakeTestCase(text5, 19, 0, @"h", text5, 4, 0), // Placeholder
-                                XVimMakeTestCase(text5, 4, 0, @"h", text5, 3, 0), // Placeholder
+        // h,j,k,l, <space>
+        XVimMakeTestCase(text1, 0, 0, @"l", text1, 1, 0),
+        XVimMakeTestCase(text1, 0, 0, @"10l", text1, 2, 0),
+        XVimMakeTestCase(text1, 0, 0, @"j", text1, 4, 0),
+        XVimMakeTestCase(text1, 0, 0, @"10j", text1, 12, 0),
+        XVimMakeTestCase(text1, 4, 0, @"k", text1, 0, 0),
+        XVimMakeTestCase(text1, 1, 0, @"h", text1, 0, 0),
+        XVimMakeTestCase(text1, 0, 0, @"<Space>", text1, 1, 0),
+        XVimMakeTestCase(text1, 0, 0, @"10<Space>", text1, 2, 0),
+        XVimMakeTestCase(text5, 3, 0, @"l", text5, 4, 0), // Placeholder
+        XVimMakeTestCase(text5, 4, 0, @"l", text5, 19, 0), // Placeholder
+        XVimMakeTestCase(text5, 19, 0, @"h", text5, 4, 0), // Placeholder
+        XVimMakeTestCase(text5, 4, 0, @"h", text5, 3, 0), // Placeholder
 
-                                // t, T
-                                XVimMakeTestCase(text2, 0, 0, @"tc", text2, 7, 0),
-                                XVimMakeTestCase(text2, 0, 0, @"2tc", text2, 8, 0),
-                                XVimMakeTestCase(text2, 18, 0, @"Td", text2, 15, 0),
-                                XVimMakeTestCase(text2, 18, 0, @"2Td", text2, 14, 0),
-                                XVimMakeTestCase(text2, 24, 0, @"4ti", text2, 24, 0), // error case
+        // t, T
+        XVimMakeTestCase(text2, 0, 0, @"tc", text2, 7, 0),
+        XVimMakeTestCase(text2, 0, 0, @"2tc", text2, 8, 0),
+        XVimMakeTestCase(text2, 18, 0, @"Td", text2, 15, 0),
+        XVimMakeTestCase(text2, 18, 0, @"2Td", text2, 14, 0),
+        XVimMakeTestCase(text2, 24, 0, @"4ti", text2, 24, 0), // error case
 
-                                // w, W
-                                XVimMakeTestCase(text2, 0, 0, @"w", text2, 1, 0),
-                                XVimMakeTestCase(text2, 0, 0, @"4w", text2, 8, 0),
-                                XVimMakeTestCase(text2, 0, 0, @"W", text2, 4, 0),
-                                XVimMakeTestCase(text2, 0, 0, @"4W", text2, 16, 0),
-                                XVimMakeTestCase(text5, 3, 0, @"w", text5, 4, 0), // Placeholder
-                                XVimMakeTestCase(text5, 4, 0, @"w", text5, 20, 0), // Placeholder
+        // w, W
+        XVimMakeTestCase(text2, 0, 0, @"w", text2, 1, 0),
+        XVimMakeTestCase(text2, 0, 0, @"4w", text2, 8, 0),
+        XVimMakeTestCase(text2, 0, 0, @"W", text2, 4, 0),
+        XVimMakeTestCase(text2, 0, 0, @"4W", text2, 16, 0),
+        XVimMakeTestCase(text5, 3, 0, @"w", text5, 4, 0), // Placeholder
+        XVimMakeTestCase(text5, 4, 0, @"w", text5, 20, 0), // Placeholder
 
-                                // 0, $, ^
-                                XVimMakeTestCase(text2, 10, 0, @"0", text2, 0, 0),
-                                XVimMakeTestCase(text2, 0, 0, @"$", text2, 10, 0),
-                                XVimMakeTestCase(text2, 44, 0, @"^", text2, 40, 0),
-                                XVimMakeTestCase(text2, 44, 0, @"10^", text2, 40, 0), // Number does not affect caret
-                                XVimMakeTestCase(text2, 36, 0, @"^", text2, 40, 0),
-                                XVimMakeTestCase(text2, 36, 0, @"_", text2, 40, 0),
-                                XVimMakeTestCase(text2, 32, 0, @"2_", text2, 40, 0),
+        // 0, $, ^
+        XVimMakeTestCase(text2, 10, 0, @"0", text2, 0, 0),
+        XVimMakeTestCase(text2, 0, 0, @"$", text2, 10, 0),
+        XVimMakeTestCase(text2, 44, 0, @"^", text2, 40, 0),
+        XVimMakeTestCase(text2, 44, 0, @"10^", text2, 40, 0), // Number does not affect caret
+        XVimMakeTestCase(text2, 36, 0, @"^", text2, 40, 0),
+        XVimMakeTestCase(text2, 36, 0, @"_", text2, 40, 0),
+        XVimMakeTestCase(text2, 32, 0, @"2_", text2, 40, 0),
 
-                                // %
-                                XVimMakeTestCase(text4, 0, 0, @"%", text4, 28, 0),
-                                XVimMakeTestCase(text4, 12, 0, @"%", text4, 18, 0),
-                                XVimMakeTestCase(text4, 16, 0, @"%", text4, 13, 0),
-                                XVimMakeTestCase(text4, 24, 0, @"%", text4, 42, 0),
-                                XVimMakeTestCase(text4, 40, 0, @"%", text4, 25, 0),
-                                XVimMakeTestCase(text4, 26, 0, @"%", text4, 4, 0),
-                                XVimMakeTestCase(text4, 8, 0, @"%", text4, 8, 0),
+        // %
+        XVimMakeTestCase(text4, 0, 0, @"%", text4, 28, 0),
+        XVimMakeTestCase(text4, 12, 0, @"%", text4, 18, 0),
+        XVimMakeTestCase(text4, 16, 0, @"%", text4, 13, 0),
+        XVimMakeTestCase(text4, 24, 0, @"%", text4, 42, 0),
+        XVimMakeTestCase(text4, 40, 0, @"%", text4, 25, 0),
+        XVimMakeTestCase(text4, 26, 0, @"%", text4, 4, 0),
+        XVimMakeTestCase(text4, 8, 0, @"%", text4, 8, 0),
 
-                                // numericArg + %
-                                // Go to the position of specified percentage down from head
-                                // Must keep current column position
-                                // XVimMakeTestCase(text4,12, 0, @"2%",text4,  4, 0), // Not supported correctly
+        // numericArg + %
+        // Go to the position of specified percentage down from head
+        // Must keep current column position
+        // XVimMakeTestCase(text4,12, 0, @"2%",text4,  4, 0), // Not supported correctly
 
 
-                                // +, -, <CR>
-                                XVimMakeTestCase(text2, 28, 0, @"+", text2, 40, 0),
-                                XVimMakeTestCase(text2, 16, 0, @"2+", text2, 40, 0),
-                                XVimMakeTestCase(text2, 40, 0, @"-", text2, 24, 0),
-                                XVimMakeTestCase(text2, 40, 0, @"2-", text2, 12, 0),
-                                XVimMakeTestCase(text2, 28, 0, @"<CR>", text2, 40, 0),
-                                XVimMakeTestCase(text2, 16, 0, @"2<CR>", text2, 40, 0),
+        // +, -, <CR>
+        XVimMakeTestCase(text2, 28, 0, @"+", text2, 40, 0),
+        XVimMakeTestCase(text2, 16, 0, @"2+", text2, 40, 0),
+        XVimMakeTestCase(text2, 40, 0, @"-", text2, 24, 0),
+        XVimMakeTestCase(text2, 40, 0, @"2-", text2, 12, 0),
+        XVimMakeTestCase(text2, 28, 0, @"<CR>", text2, 40, 0),
+        XVimMakeTestCase(text2, 16, 0, @"2<CR>", text2, 40, 0),
 
-                                // Motion with k,l should remember column position
-                                XVimMakeTestCase(text3, 30, 0, @"k", text3, 18, 0),
-                                XVimMakeTestCase(text3, 30, 0, @"kk", text3, 10, 0),
+        // Motion with k,l should remember column position
+        XVimMakeTestCase(text3, 30, 0, @"k", text3, 18, 0),
+        XVimMakeTestCase(text3, 30, 0, @"kk", text3, 10, 0),
 
-                                // H,M,L
-                                // TODO: Implement test for H,M,L. These needs some special test check method since we
-                                // have to calc the height of the view.
+        // H,M,L
+        // TODO: Implement test for H,M,L. These needs some special test check method since we
+        // have to calc the height of the view.
 
-                                // Arrows( left,right,up,down )
+        // Arrows( left,right,up,down )
 
-                                // Home, End, DEL
+        // Home, End, DEL
 
-                                // Motion type enforcing(v,V, Ctrl-v)
+        // Motion type enforcing(v,V, Ctrl-v)
 
-                                // Searches (/,?,n,N,*,#) are implemented in XVimTester+Search.m
+        // Searches (/,?,n,N,*,#) are implemented in XVimTester+Search.m
 
-                                // , ; (comma semicolon) for f F
-                                XVimMakeTestCase(text2, 0, 0, @"2fb;", text2, 6, 0),
-                                XVimMakeTestCase(text2, 0, 0, @"fb2;", text2, 6, 0),
-                                XVimMakeTestCase(text2, 0, 0, @"2fb,", text2, 4, 0),
-                                XVimMakeTestCase(text2, 0, 0, @"3fb2,", text2, 4, 0),
+        // , ; (comma semicolon) for f F
+        XVimMakeTestCase(text2, 0, 0, @"2fb;", text2, 6, 0),
+        XVimMakeTestCase(text2, 0, 0, @"fb2;", text2, 6, 0),
+        XVimMakeTestCase(text2, 0, 0, @"2fb,", text2, 4, 0),
+        XVimMakeTestCase(text2, 0, 0, @"3fb2,", text2, 4, 0),
 
-                                XVimMakeTestCase(text2, 8, 0, @"2Fb;", text2, 4, 0),
-                                XVimMakeTestCase(text2, 8, 0, @"Fb2;", text2, 4, 0),
-                                XVimMakeTestCase(text2, 8, 0, @"2Fb,", text2, 6, 0),
-                                XVimMakeTestCase(text2, 8, 0, @"3Fb2,", text2, 6, 0),
+        XVimMakeTestCase(text2, 8, 0, @"2Fb;", text2, 4, 0),
+        XVimMakeTestCase(text2, 8, 0, @"Fb2;", text2, 4, 0),
+        XVimMakeTestCase(text2, 8, 0, @"2Fb,", text2, 6, 0),
+        XVimMakeTestCase(text2, 8, 0, @"3Fb2,", text2, 6, 0),
 
-                                // , ; (comma semicolon) for t T
-                                XVimMakeTestCase(text2, 0, 0, @"2tb;", text2, 5, 0),
-                                XVimMakeTestCase(text2, 0, 0, @"tb2;", text2, 4, 0),
-                                XVimMakeTestCase(text2, 0, 0, @"2t ,", text2, 4, 0),
-                                XVimMakeTestCase(@"01a345aaaa", 0, 0, @"5ta2,", @"01a345aaaa", 7, 0),
+        // , ; (comma semicolon) for t T
+        XVimMakeTestCase(text2, 0, 0, @"2tb;", text2, 5, 0),
+        XVimMakeTestCase(text2, 0, 0, @"tb2;", text2, 4, 0),
+        XVimMakeTestCase(text2, 0, 0, @"2t ,", text2, 4, 0),
+        XVimMakeTestCase(@"01a345aaaa", 0, 0, @"5ta2,", @"01a345aaaa", 7, 0),
 
-                                XVimMakeTestCase(text2, 8, 0, @"2Tb;", text2, 5, 0),
-                                XVimMakeTestCase(text2, 8, 0, @"Tb2;", text2, 6, 0),
-                                XVimMakeTestCase(text2, 8, 0, @"2T ,", text2, 6, 0),
-                                XVimMakeTestCase(@"01a345aaaa", 9, 0, @"4Ta3,", @"01a345aaaa", 7, 0),
-
-                                nil];
+        XVimMakeTestCase(text2, 8, 0, @"2Tb;", text2, 5, 0),
+        XVimMakeTestCase(text2, 8, 0, @"Tb2;", text2, 6, 0),
+        XVimMakeTestCase(text2, 8, 0, @"2T ,", text2, 6, 0),
+        XVimMakeTestCase(@"01a345aaaa", 9, 0, @"4Ta3,", @"01a345aaaa", 7, 0),
+    ];
 }
 @end
