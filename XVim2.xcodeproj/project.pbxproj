@@ -102,7 +102,7 @@
 		A26E5C7F1F51466B000BCC66 /* CopyFiles */ = {
 			isa = PBXCopyFilesBuildPhase;
 			buildActionMask = 2147483647;
-			dstPath = "~/Library/Application Support/Developer/Shared/Xcode/Plug-ins";
+			dstPath = "$(HOME)/Library/Application Support/Developer/Shared/Xcode/Plug-ins";
 			dstSubfolderSpec = 0;
 			files = (
 				A26E5C801F514686000BCC66 /* XVim2.xcplugin in CopyFiles */,
