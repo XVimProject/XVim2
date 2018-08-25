@@ -1,6 +1,6 @@
 ## Contributions
   Any suggestions, bug reports are welcome.  
-  XVim2 depends highly Xcode's structure and Apple will modify Xcode's structure every year. So new feature requests depend on Xcode's structure is not recommended. 
+  XVim2 depends highly Xcode's structure and Apple will modify Xcode's structure every year. So new feature requests depend on Xcode's structure are not recommended. 
   
 ### Debugging
   1. Make sure you have Xcode.app installed at /Applications/Xcode.app,
