@@ -96,7 +96,7 @@ Delete the following directory:
 ## Contributing
   If you fix a bug by yourself and add new feature, see here.
 
-  [Contributing.md](Documents/contributing.md)
+  [Contributing.md](Documents/Contributing.md)
 
 ## Bountysource
   XVim supports Bountysource. If you want to solve your issue sooner make bounty on your issue is one option. A contributer should work on it preferentially (not guaranteed though). To make bounty visit following link and go to "Issue" tab. Select your issue and make bounty on it. 
