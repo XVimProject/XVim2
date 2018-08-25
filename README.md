@@ -93,6 +93,11 @@ Delete the following directory:
 
   We appreciate if you write test case for the bug. Read "Write test" section in Documents/Developsers/PullRequest.md how to write test case. You do not need to update any source code but just write 7 items explained there in an issue you create.
 
+## Contributing
+  If you fix a bug by yourself and add new feature, see here.
+
+  [Contributing.md](Documents/contributing.md)
+
 ## Bountysource
   XVim supports Bountysource. If you want to solve your issue sooner make bounty on your issue is one option. A contributer should work on it preferentially (not guaranteed though). To make bounty visit following link and go to "Issue" tab. Select your issue and make bounty on it. 
   
