@@ -486,20 +486,16 @@
 - (void)moveToEndOfParagraph:(id)sender { [self.sourceCodeEditorView moveToEndOfParagraph:self]; }
 - (void)moveToBeginningOfParagraph:(id)sender { [self.sourceCodeEditorView moveToBeginningOfParagraph:self]; }
 - (void)moveToEndOfTextAndModifySelection:(id)sender {
-    // TODO:Xcode10
-    //[self.sourceCodeEditorView moveToEndOfTextAndModifySelection:self];
+    [self.sourceCodeEditorView moveToEndOfTextAndModifySelection:self];
 }
 - (void)moveToEndOfText:(id)sender {
-    // TODO:Xcode10
-    //[self.sourceCodeEditorView moveToEndOfText:self];
+    [self.sourceCodeEditorView moveToEndOfText:self];
 }
 - (void)moveToBeginningOfTextAndModifySelection:(id)sender {
-    // TODO:Xcode10
-    //[self.sourceCodeEditorView moveToBeginningOfTextAndModifySelection:self];
+    [self.sourceCodeEditorView moveToBeginningOfTextAndModifySelection:self];
 }
 - (void)moveToBeginningOfText:(id)sender {
-    // TODO:Xcode10
-    //[self.sourceCodeEditorView moveToBeginningOfText:self];
+    [self.sourceCodeEditorView moveToBeginningOfText:self];
 }
 - (void)moveToRightEndOfLineAndModifySelection:(id)sender { [self.sourceCodeEditorView moveToRightEndOfLineAndModifySelection:self]; }
 - (void)moveToLeftEndOfLineAndModifySelection:(id)sender { [self.sourceCodeEditorView moveToLeftEndOfLineAndModifySelection:self]; }
@@ -510,36 +506,28 @@
 - (void)moveToEndOfLine:(id)sender { [self.sourceCodeEditorView moveToEndOfLine:self]; }
 - (void)moveToBeginningOfLine:(id)sender { [self.sourceCodeEditorView moveToBeginningOfLine:self]; }
 - (void)moveExpressionBackwardAndModifySelection:(id)sender {
-    // TODO:Xcode10
-    //[self.sourceCodeEditorView moveExpressionBackwardAndModifySelection:self];
+    [self.sourceCodeEditorView moveExpressionBackwardAndModifySelection:self];
 }
 - (void)moveExpressionForwardAndModifySelection:(id)sender {
-    // TODO:Xcode10
-    //[self.sourceCodeEditorView moveExpressionForwardAndModifySelection:self];
+    [self.sourceCodeEditorView moveExpressionForwardAndModifySelection:self];
 }
 - (void)moveExpressionBackward:(id)sender {
-    // TODO:Xcode10
-    //[self.sourceCodeEditorView moveExpressionBackward:self];
+    [self.sourceCodeEditorView moveExpressionBackward:self];
 }
 - (void)moveExpressionForward:(id)sender {
-    // TODO:Xcode10
-    //[self.sourceCodeEditorView moveExpressionForward:self];
+    [self.sourceCodeEditorView moveExpressionForward:self];
 }
 - (void)moveSubWordBackwardAndModifySelection:(id)sender {
-    // TODO:Xcode10
-    //[self.sourceCodeEditorView moveSubWordBackwardAndModifySelection:self];
+    [self.sourceCodeEditorView moveSubWordBackwardAndModifySelection:self];
 }
 - (void)moveSubWordForwardAndModifySelection:(id)sender {
-    // TODO:Xcode10
-    //[self.sourceCodeEditorView moveSubWordForwardAndModifySelection:self];
+    [self.sourceCodeEditorView moveSubWordForwardAndModifySelection:self];
 }
 - (void)moveSubWordBackward:(id)sender {
-    // TODO:Xcode10
-    //[self.sourceCodeEditorView moveSubWordBackward:self];
+    [self.sourceCodeEditorView moveSubWordBackward:self];
 }
 - (void)moveSubWordForward:(id)sender {
-    // TODO:Xcode10
-    //[self.sourceCodeEditorView moveSubWordForward:self];
+    [self.sourceCodeEditorView moveSubWordForward:self];
 }
 - (void)moveWordLeftAndModifySelection:(id)sender { [self.sourceCodeEditorView moveWordLeftAndModifySelection:self]; }
 - (void)moveWordRightAndModifySelection:(id)sender { [self.sourceCodeEditorView moveWordRightAndModifySelection:self]; }
@@ -569,29 +557,23 @@
 - (void)unfold:(id)sender { [self.sourceCodeEditorView unfold:self]; }
 - (void)fold:(id)sender { [self.sourceCodeEditorView fold:self]; }
 - (void)balance:(id)sender {
-    // TODO:Xcode10
-    //[self.sourceCodeEditorView balance:self];
+    [self.sourceCodeEditorView balance:self];
 }
 - (void)selectStructure:(id)sender { [self.sourceCodeEditorView selectStructure:self]; }
 - (void)shiftRight:(id)sender {
-    // TODO:Xcode10
-    //[self.sourceCodeEditorView shiftRight:self];
+    [self.sourceCodeEditorView shiftRight:self];
 }
 - (void)shiftLeft:(id)sender {
-    // TODO:Xcode10
-    //[self.sourceCodeEditorView shiftLeft:self];
+    [self.sourceCodeEditorView shiftLeft:self];
 }
 - (void)indentSelection:(id)sender {
-    // TODO:Xcode10
-    //[self.sourceCodeEditorView indentSelection:self];
+    [self.sourceCodeEditorView indentSelection:self];
 }
 - (void)moveCurrentLineDown:(id)sender {
-    // TODO:Xcode10
-    //[self.sourceCodeEditorView moveCurrentLineDown:self];
+    [self.sourceCodeEditorView moveCurrentLineDown:self];
 }
 - (void)moveCurrentLineUp:(id)sender {
-    // TODO:Xcode10
-    //[self.sourceCodeEditorView moveCurrentLineUp:self];
+    [self.sourceCodeEditorView moveCurrentLineUp:self];
 }
 - (void)complete:(id)sender { [self.sourceCodeEditorView complete:self]; }
 - (void)swapWithMark:(id)sender { [self.sourceCodeEditorView swapWithMark:self]; }
@@ -605,32 +587,26 @@
 - (void)uppercaseWord:(id)sender { [self.sourceCodeEditorView uppercaseWord:self]; }
 - (void)transpose:(id)sender { [self.sourceCodeEditorView transpose:self]; }
 - (void)deleteToEndOfText:(id)sender {
-    // TODO:Xcode10
-    //[self.sourceCodeEditorView deleteToEndOfText:self];
+    [self.sourceCodeEditorView deleteToEndOfText:self];
 }
 - (void)deleteToBeginningOfText:(id)sender {
-    // TODO:Xcode10
-    //[self.sourceCodeEditorView deleteToBeginningOfText:self];
+    [self.sourceCodeEditorView deleteToBeginningOfText:self];
 }
 - (void)deleteToEndOfParagraph:(id)sender { [self.sourceCodeEditorView deleteToEndOfParagraph:self]; }
 - (void)deleteToBeginningOfParagraph:(id)sender { [self.sourceCodeEditorView deleteToBeginningOfParagraph:self]; }
 - (void)deleteToEndOfLine:(id)sender { [self.sourceCodeEditorView deleteToEndOfLine:self]; }
 - (void)deleteToBeginningOfLine:(id)sender { [self.sourceCodeEditorView deleteToBeginningOfLine:self]; }
 - (void)deleteExpressionBackward:(id)sender {
-    // TODO:Xcode10
-    //[self.sourceCodeEditorView deleteExpressionBackward:self];
+    [self.sourceCodeEditorView deleteExpressionBackward:self];
 }
 - (void)deleteExpressionForward:(id)sender {
-    // TODO:Xcode10
-    //[self.sourceCodeEditorView deleteExpressionForward:self];
+    [self.sourceCodeEditorView deleteExpressionForward:self];
 }
 - (void)deleteSubWordBackward:(id)sender {
-    // TODO:Xcode10
-    //[self.sourceCodeEditorView deleteSubWordBackward:self];
+    [self.sourceCodeEditorView deleteSubWordBackward:self];
 }
 - (void)deleteSubWordForward:(id)sender {
-    // TODO:Xcode10
-    //[self.sourceCodeEditorView deleteSubWordForward:self];
+    [self.sourceCodeEditorView deleteSubWordForward:self];
 }
 - (void)deleteWordBackward:(id)sender { [self.sourceCodeEditorView deleteWordBackward:self]; }
 - (void)deleteWordForward:(id)sender { [self.sourceCodeEditorView deleteWordForward:self]; }
@@ -638,8 +614,7 @@
 - (void)deleteBackward:(id)sender { [self.sourceCodeEditorView deleteBackward:self]; }
 - (void)deleteForward:(id)sender { [self.sourceCodeEditorView deleteForward:self]; }
 - (void) delete:(id)sender {
-    // TODO:Xcode10
-    //[self.sourceCodeEditorView delete:self];
+    [self.sourceCodeEditorView delete:self];
 }
 - (void)insertDoubleQuoteIgnoringSubstitution:(id)sender { [self.sourceCodeEditorView insertDoubleQuoteIgnoringSubstitution:self]; }
 - (void)insertSingleQuoteIgnoringSubstitution:(id)sender { [self.sourceCodeEditorView insertSingleQuoteIgnoringSubstitution:self]; }
