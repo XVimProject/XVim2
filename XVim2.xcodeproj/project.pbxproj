@@ -56,7 +56,6 @@
 		ED6276911F817CD5005F8274 /* XVimGActionEvaluator.m in Sources */ = {isa = PBXBuildFile; fileRef = ED62768D1F817CD4005F8274 /* XVimGActionEvaluator.m */; };
 		ED6276921F817CD5005F8274 /* XVimGMotionEvaluator.m in Sources */ = {isa = PBXBuildFile; fileRef = ED6276901F817CD5005F8274 /* XVimGMotionEvaluator.m */; };
 		ED6331C11F83719200E9E6B0 /* Geometry.m in Sources */ = {isa = PBXBuildFile; fileRef = ED6331BF1F83719200E9E6B0 /* Geometry.m */; };
-		ED6331D71F837BC800E9E6B0 /* NSInsetTextView.m in Sources */ = {isa = PBXBuildFile; fileRef = ED6331D61F837BC800E9E6B0 /* NSInsetTextView.m */; };
 		ED6331D81F83862600E9E6B0 /* XVimCommandLine.m in Sources */ = {isa = PBXBuildFile; fileRef = ED6331CF1F8379A700E9E6B0 /* XVimCommandLine.m */; };
 		ED6331D91F83862900E9E6B0 /* XVimCommandField.m in Sources */ = {isa = PBXBuildFile; fileRef = ED6331D01F8379A700E9E6B0 /* XVimCommandField.m */; };
 		ED6331DC1F83864E00E9E6B0 /* NSAttributedString+Geometrics.m in Sources */ = {isa = PBXBuildFile; fileRef = ED6331DA1F83864E00E9E6B0 /* NSAttributedString+Geometrics.m */; };
@@ -736,8 +735,6 @@
 		ED6331D21F8379FA00E9E6B0 /* IDEEditorMultipleContext.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = IDEEditorMultipleContext.h; sourceTree = "<group>"; };
 		ED6331D31F837A5600E9E6B0 /* IDEEditorGeniusMode.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = IDEEditorGeniusMode.h; sourceTree = "<group>"; };
 		ED6331D41F837AA100E9E6B0 /* IDEWorkspaceWindowController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = IDEWorkspaceWindowController.h; sourceTree = "<group>"; };
-		ED6331D51F837BC700E9E6B0 /* NSInsetTextView.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = NSInsetTextView.h; sourceTree = "<group>"; };
-		ED6331D61F837BC800E9E6B0 /* NSInsetTextView.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = NSInsetTextView.m; sourceTree = "<group>"; };
 		ED6331DA1F83864E00E9E6B0 /* NSAttributedString+Geometrics.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = "NSAttributedString+Geometrics.m"; sourceTree = "<group>"; };
 		ED6331DB1F83864E00E9E6B0 /* NSAttributedString+Geometrics.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "NSAttributedString+Geometrics.h"; sourceTree = "<group>"; };
 		ED6331DD1F8389F800E9E6B0 /* DVTFontAndColorTheme.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = DVTFontAndColorTheme.h; sourceTree = "<group>"; };
@@ -1508,8 +1505,6 @@
 				ED6331DA1F83864E00E9E6B0 /* NSAttributedString+Geometrics.m */,
 				ED0DED811F8C444800886F6B /* NSColor+Extra.h */,
 				ED0DED801F8C444700886F6B /* NSColor+Extra.m */,
-				ED6331D51F837BC700E9E6B0 /* NSInsetTextView.h */,
-				ED6331D61F837BC800E9E6B0 /* NSInsetTextView.m */,
 				EDB7F6011F6D8CE5007E0C41 /* rd_route.c */,
 				EDB7F6021F6D8CE5007E0C41 /* rd_route.h */,
 				A287A8C51F55D636009378BC /* NSObject+ExtraData.h */,
@@ -1859,7 +1854,6 @@
 				A2482F321F72435D00FEF4DE /* XVimTaskRunner.m in Sources */,
 				A2482F4C1F725B6500FEF4DE /* StringUtil.m in Sources */,
 				A2B537B11F51C94400D83C0A /* NSObject+Swizzle.m in Sources */,
-				ED6331D71F837BC800E9E6B0 /* NSInsetTextView.m in Sources */,
 				EDF0106E1F6EEFFC00461B2C /* XVimWindow.m in Sources */,
 				EDD27BAE1F9B5EB30006471C /* XVimTester+Jump.m in Sources */,
 				EDF0106B1F6EEFFC00461B2C /* XVimMotion.m in Sources */,

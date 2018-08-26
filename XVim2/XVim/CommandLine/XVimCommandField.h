@@ -6,7 +6,6 @@
 //  Copyright 2012 JugglerShu.Net. All rights reserved.
 //
 
-#import "NSInsetTextView.h"
 #import <AppKit/AppKit.h>
 
 @class XVimKeyStroke;
