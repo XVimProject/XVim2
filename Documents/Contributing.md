@@ -3,10 +3,13 @@
   XVim2 depends highly Xcode's structure and Apple will modify Xcode's structure every year. So new feature requests depend on Xcode's structure are not recommended. 
   
 ### Debugging
-  1. Make sure you have Xcode.app installed at /Applications/Xcode.app,
-     if that's true just open XVim.xcodeproj and Run (CMD + R).
+  1. Select `Xcode` - `Edit scheme...` - `Run` - `Info` tab - `Executable` - `Ask on Launch`
 
-  2. You can surprisingly debug Xcode instance with Xcode.
+  2. `Product` - `Run`
+
+  3. Select `Xcode` app on `Choose an app to run:`
+  
+  4. You can surprisingly debug Xcode instance with Xcode.
 
 ### Debug with log
   1. In your ~/.xvimrc, add a line "set debug"
