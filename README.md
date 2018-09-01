@@ -1,5 +1,3 @@
-[\[中文版\]](README_cn.md)
-
 # XVim2
 
   XVim2 (or 'XVim for Xcode 9 and above') is a Vim plugin for Xcode. The plugin intends to offer a compelling Vim experience without the need to give up any Xcode features.
