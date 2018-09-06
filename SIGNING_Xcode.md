@@ -34,3 +34,10 @@ Since Apple no longer loads 3rd party plugins (in Xcode 8 and above), we have to
 4. Build XVim
 
    Go to XVim directory you cloned and build it as usual (Read INSTALL section in [README.md](README.md)).
+
+5. Certificate Expiration
+
+   A self-signed root certificate has a short expire date (1 year).
+   Please check expire date of your certificate `XcodeSigner` in Keychain Access App.
+   If it expires, please re-create it.
+
