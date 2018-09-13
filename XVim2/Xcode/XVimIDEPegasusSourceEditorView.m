@@ -114,7 +114,7 @@ CONST_STR(EDWindow);
 {
     XVimWindow* w = [self extraDataForName:EDWindow];
     if ((w == nil || (NSNull*)w == NSNull.null)
-            && [self.class isEqual:NSClassFromString(@"IDESourceEditor.IDESourceEditorView")]) {
+            && [self.class isEqual:NSClassFromString(IDEPegasusSourceCodeEditorViewClassName)]) {
         _auto p = [[SourceCodeEditorViewProxy alloc] initWithSourceCodeEditorView:SELF];
         w = [[XVimWindow alloc] initWithEditorView:p];
         [self setExtraData:w forName:EDWindow];
