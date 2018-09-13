@@ -113,7 +113,8 @@ CONST_STR(EDWindow);
 - (XVimWindow*)xvim_window
 {
     XVimWindow* w = [self extraDataForName:EDWindow];
-    if (w == nil || (NSNull*)w == NSNull.null) {
+    if ((w == nil || (NSNull*)w == NSNull.null)
+            && [self.class isEqual:NSClassFromString(@"IDESourceEditor.IDESourceEditorView")]) {
         _auto p = [[SourceCodeEditorViewProxy alloc] initWithSourceCodeEditorView:SELF];
         w = [[XVimWindow alloc] initWithEditorView:p];
         [self setExtraData:w forName:EDWindow];
