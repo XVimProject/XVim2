@@ -9,15 +9,10 @@
 #import "XVimKeymapProvider.h"
 #import <AppKit/AppKit.h>
 
-@class XVimKeymap;
 @class XVimOptions;
-@class XVimRegister;
 @class XVimSearch;
-@class XVimCharacterSearch;
 @class XVimExCommand;
 @class XVimHistoryHandler;
-@class XVimCommandLine;
-@class XVimCommandField;
 @class XVimMarks;
 @class XVimMotion;
 @class XVimRegisterManager;
