@@ -10,7 +10,7 @@
 
   1. Sign Xcode with your own certificate. You can [read the instructions for how to do this](SIGNING_Xcode.md) and if you have questions or concerns about what this means you can [read the FAQ on why you need to resign Xcode to use XVim2](why_resign_xcode.md).
   
-  2. Clonse the repo. 
+  2. Clone the repo. 
   ```bash
   $ git clone https://github.com/XVimProject/XVim2.git
   ```
