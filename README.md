@@ -1,8 +1,8 @@
 # XVim2
 
-  XVim2 (or 'XVim for Xcode 9 and above') is a Vim plugin for Xcode. The plugin intends to offer a compelling Vim experience without the need to give up any Xcode features.
+  XVim2 is a Vim plugin for Xcode. The plugin intends to offer a compelling Vim experience without the need to give up any Xcode features.
   
-  - Xcode 9 Users, follow the installation instructions below.
+  - Xcode 9 or above, follow the installation instructions below.
   - Xcode 8 or below, you should use [XVim](https://github.com/XVimProject/XVim)
   - [Google Group for XVim developers](https://groups.google.com/d/forum/xvim-developers) has been created.
 
@@ -10,7 +10,7 @@
 
   1. Sign Xcode with your own certificate. You can [read the instructions for how to do this](SIGNING_Xcode.md) and if you have questions or concerns about what this means you can [read the FAQ on why you need to resign Xcode to use XVim2](why_resign_xcode.md).
   
-  2. Download the source code or clone the repo. 
+  2. Clonse the repo. 
   ```bash
   $ git clone https://github.com/XVimProject/XVim2.git
   ```
@@ -20,12 +20,15 @@
   $ xcode-select -p
   /Applications/Xcode.app/Contents/Developer
   ```
+
+  4. Check out a branch for your Xcode version. @see Branches and Releases section
   
   If this doesn't show your Xcode application path, use `xcode-select -s` to set.
   
-  4. `make`
+  5. `make`
   ```bash
-  $ cd XVim2; make
+  $ cd XVim2
+  $ make
   ```
 
   If you see something like 
@@ -36,16 +39,16 @@
   ```
   Press y if you want to use XVim with your Xcode version (even it is not confirmed it works)
   
-  5. Create `.xvimrc` as you need. 
+  6. Create `.xvimrc` as you need. 
 
-  6. Launch Xcode. You'll be asked if you load XVim. Press 'Yes' to it.
+  7. Launch Xcode. You'll be asked if you load XVim. Press 'Yes' to it.
      If you press 'No' by mistake, close the Xcode and execute the following from a terminal
 
   ```
   defaults delete  com.apple.dt.Xcode DVTPlugInManagerNonApplePlugIns-Xcode-X.X     (X.X is your Xcode version)
   ```
     
-  7. Relaunch Xcode.
+  8. Relaunch Xcode.
     
 ## Branches and Releases
  
