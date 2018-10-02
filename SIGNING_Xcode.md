@@ -6,8 +6,6 @@ Since Apple no longer loads 3rd party plugins (in Xcode 8 and above), we have to
     
 2. Prepare code sign certificate
    
-   If you already have a certificate from Apple's developer program you can use it (so skip to next section now). If you don't have one or don't want to use the existing certificate create new one as follows.
-
    2.1 Open "Keychain Access" (in Applications -> Utilities) and select "login" in the left pane.
    
    2.2 Select Create a Certificate ( in KeyChain Access -> Certificate Assistant )
