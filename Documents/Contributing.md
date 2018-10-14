@@ -1,6 +1,8 @@
 ## Contributions
   Any suggestions, bug reports are welcome.  
   XVim2 depends highly Xcode's structure and Apple will modify Xcode's structure every year. So new feature requests depend on Xcode's structure are not recommended. 
+
+  Please don't sumbit a pull request for a local language translation for maintenability.
   
 ### Debugging
   1. Open XVim2.xcodeproj by Xcode that we call it `First Xcode instance`.
