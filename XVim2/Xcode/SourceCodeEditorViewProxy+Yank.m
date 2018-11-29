@@ -215,7 +215,6 @@
     else if (self.selectionMode == XVIM_VISUAL_BLOCK) {
         self.lastYankedType = TEXT_TYPE_BLOCK;
     }
-    TRACE_LOG(@"YANKED START WITH TYPE:%d", self.lastYankedType);
 }
 
 - (void)_xvim_yankRange:(NSRange)range withType:(MOTION_TYPE)type
@@ -240,7 +239,6 @@
     }
 
     self.lastYankedText = s;
-    TRACE_LOG(@"YANKED STRING : %@", s);
 }
 
 - (void)_xvim_yankSelection:(XVimSelection)sel

@@ -275,7 +275,6 @@
 
 - (void)_adjustCursorPosition
 {
-    //TRACE_LOG(@"[%p]ENTER", self);
     if (![self.textStorage isValidCursorPosition:self.insertionPoint]) {
 #ifdef TODO
         NSRange placeholder = [(DVTSourceTextView*)self rangeOfPlaceholderFromCharacterIndex:self.insertionPoint
@@ -305,7 +304,6 @@
     if (self.cursorMode == CURSOR_MODE_COMMAND) {
         [self _adjustCursorPosition];
     }
-    [self dumpState];
 
     [self setSelectedRanges:[self xvim_selectedRanges] affinity:NSSelectionAffinityDownstream stillSelecting:NO];
 
