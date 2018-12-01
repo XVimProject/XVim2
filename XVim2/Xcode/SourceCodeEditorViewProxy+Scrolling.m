@@ -70,21 +70,22 @@
 
     // Update cursor
     switch (type) {
-      case XVIM_SCROLL_TYPE_LINE: {
-        NSInteger numLinesActuallyScrolled;
-        if (numScrollLines < 0) {
-          numLinesActuallyScrolled = -MIN(visibleLineRange.topLine+1, -numScrollLines);
-        } else {
-          numLinesActuallyScrolled = MIN(self.lineCount - visibleLineRange.bottomLine, numScrollLines);
-        }
-        clamp(cursorLine,
-              visibleLineRange.topLine + numLinesActuallyScrolled,
-              visibleLineRange.bottomLine + numLinesActuallyScrolled);
-        break;
-      }
-      default:
-        cursorLine += numScrollLines;
-        break;
+    	case XVIM_SCROLL_TYPE_LINE:
+    		{
+                NSInteger numLinesActuallyScrolled;
+                if (numScrollLines < 0) {
+                  	numLinesActuallyScrolled = -MIN(visibleLineRange.topLine+1, -numScrollLines);
+                } else {
+                  	numLinesActuallyScrolled = MIN(self.lineCount - visibleLineRange.bottomLine, numScrollLines);
+                }
+                clamp(cursorLine,
+                      visibleLineRange.topLine + numLinesActuallyScrolled,
+                      visibleLineRange.bottomLine + numLinesActuallyScrolled);
+        		break;
+            }
+		default:
+        	cursorLine += numScrollLines;
+        	break;
     }
     clamp(cursorLine, 0, self.lineCount - 1);
 
