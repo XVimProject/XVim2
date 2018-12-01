@@ -241,6 +241,7 @@ Examples:
   :pcounterpart | Invoke "jump to previous counterpart". ":pc" does the same.
   :njump        | Invoke "go forward". ":nj" does the same.
   :pjump        | Invoke "go back". ":pj" does the same.
+  :macvim       | Launch macvim.
 
 ## Options
 
