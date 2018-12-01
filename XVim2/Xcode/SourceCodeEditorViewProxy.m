@@ -156,14 +156,6 @@
     return YES;
 }
 
-- (void)addSelectedRange:(XVimSourceEditorRange)rng modifiers:(XVimSelectionModifiers)modifiers reset:(BOOL)reset
-{
-    if (reset)
-        [self setSelectedRange:rng modifiers:modifiers];
-    else
-        [self addSelectedRange:rng modifiers:modifiers];
-}
-
 - (void)addSelectedRange:(XVimSourceEditorRange)rng modifiers:(XVimSelectionModifiers)modifiers
 {
     DEBUG_LOG(@"Add range: %@, modifiers: %lu", XVimSourceEditorRangeToString(rng), modifiers);
@@ -335,7 +327,7 @@
         _auto pos1 = [self positionFromIndex:rng.location lineHint:insertionPos.row];
         _auto pos2 = [self positionFromIndex:rng.location + rng.length lineHint:pos1.row];
         XVimSourceEditorRange selectionRange = {.pos1 = pos1, .pos2 = pos2 };
-        [self addSelectedRange:selectionRange modifiers:SelectionModifierExtension];
+		[self setSelectedRange:selectionRange modifiers:SelectionModifierExtension];
     }
     else {
         _auto rangeItr = (affinity == NSSelectionAffinityUpstream) ? [ranges reverseObjectEnumerator] : ranges;
@@ -357,7 +349,11 @@
                                                        : SelectionModifierDiscontiguous | SelectionModifierExtension;
             if (![self normalizeRange:&ser])
                 continue;
-            [self addSelectedRange:ser modifiers:selectionModifiers reset:isFirst];
+			if (isFirst){
+				[self setSelectedRange:ser modifiers:selectionModifiers];
+			} else {
+				[self addSelectedRange:ser modifiers:selectionModifiers];
+			}
             isFirst = NO;
         }
     }
