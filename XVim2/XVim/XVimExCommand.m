@@ -27,6 +27,8 @@
 #import "XcodeUtils.h"
 #import "NSTextStorage+VimOperation.h"
 #import "NSURL+XVimXcodeModule.h"
+#import "StringUtil.h"
+#import "XVimTaskRunner.h"
 
 @implementation XVimExArg
 @end
@@ -190,6 +192,7 @@
                                     CMD(@"lvimgrep", @"vimgrep:inWindow:"), CMD(@"lvimgrepadd", @"vimgrep:inWindow:"),
                                     CMD(@"lwindow", @"cwindow:inWindow:"), CMD(@"ls", @"	buflist_list:inWindow:"),
                                     CMD(@"move", @"move:inWindow:"), CMD(@"mark", @"mark:inWindow:"),
+					                CMD(@"macvim", @"macvim:inWindow:"), // XVim Original
                                     CMD(@"make", @"make:inWindow:"), CMD(@"map", @"map:inWindow:"),
                                     CMD(@"mapclear", @"mapclear:inWindow:"), CMD(@"marks", @"marks:inWindow:"),
                                     CMD(@"match", @"match:inWindow:"), CMD(@"menu", @"menu:inWindow:"),
@@ -1596,6 +1599,19 @@ xvim_ignore_warning_pop
     XVim* xvim = XVIM;
     NSString* str = [xvim.marks dumpJumpList];
     [xvim writeToConsole:str];
+}
+
+- (void)macvim:(XVimExArg*)args inWindow:(XVimWindow*)window
+{
+	NSURL* documentURL = window.sourceView.documentURL;
+	NSString* filepath = documentURL.path;
+	if (filepath != nil){
+		NSUInteger pos = window.sourceView.insertionPoint;
+		NSUInteger linenumber = [StringUtil lineWithPath:filepath pos:pos];
+		// use `brew install macvim`
+		NSString* str = [NSString stringWithFormat:@"/usr/local/bin/mvim +%ld %@", linenumber, filepath];
+		[XVimTaskRunner runScript:str];
+	}
 }
 
 @end
