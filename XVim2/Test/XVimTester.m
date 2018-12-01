@@ -76,7 +76,7 @@
     NSNumber* passingTests;
 }
 @property (strong) NSMutableArray* testCases;
-@property (strong) NSArray* currentTestsCases;;
+@property (strong) NSArray* currentTestsCases;
 @property (weak) NSWindow* testWindow;
 @property NSUInteger currentTestCaseIndex;
 @end
@@ -185,6 +185,7 @@
         self.currentTestsCases = nil;
         [self.testWindow performClose:self];
         [self showResultsTable];
+		[self dump];				
         return;
     }
     
@@ -362,7 +363,7 @@
         string = resultRow.desc;
     }
     else if ([aTableColumn.identifier isEqualToString:@"Pass/Fail"]) {
-        string = resultRow.finished ? ((resultRow.success) ? @"Pass" : @"Fail") : @"Cancelled";
+		string = resultRow.resultDescription;
     }
     else if ([aTableColumn.identifier isEqualToString:@"Message"]) {
         string = resultRow.message;
@@ -396,6 +397,15 @@
 
 -(CGFloat)tableView:(NSTableView *)tableView heightOfRow:(NSInteger)row {
     return 200.0;
+}
+
+- (void)dump
+{
+	for (XVimTestCase* testCase in self.testCases) {
+		if ([testCase isFinishedAndFailed]){
+			DEBUG_LOG("%@", testCase.description);
+		}
+	}
 }
 @end
 

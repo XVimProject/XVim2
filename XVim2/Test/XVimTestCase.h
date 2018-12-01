@@ -42,6 +42,8 @@
 @property BOOL finished;
 @property NSString* file;
 @property NSUInteger line;
+@property (readonly) BOOL isFinishedAndFailed; 
+@property (readonly) NSString* resultDescription;
 
 
 + (XVimTestCase*)testCaseWithInitialText:(NSString*)it

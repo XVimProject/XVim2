@@ -172,7 +172,7 @@ static Logger* s_defaultLogger = nil;
         // If the logfile is being held open by another XVim, try adding a
         // discriminator to the file name, and try again.
         while (attempts++ < 20 && fd < 0) {
-            fd = open( fullpath.UTF8String, O_RDWR + O_EXLOCK + O_NONBLOCK + O_CREAT );
+            fd = open( fullpath.UTF8String, O_RDWR + O_NONBLOCK + O_CREAT );
             if (fd < 0 && (errno == EWOULDBLOCK || errno == EDEADLK)) {
                 filenum++;
                 fullpath = [path stringByAppendingString:[@(filenum) stringValue]];

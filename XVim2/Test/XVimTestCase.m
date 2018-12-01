@@ -212,4 +212,30 @@ static atomic_uint dispatchQueueCount = ATOMIC_VAR_INIT(0);
         continuation();
     }];
 }
+
+- (BOOL)isFinishedAndFailed
+{
+	return _finished && !_success;
+}
+
+- (NSString *)resultDescription
+{
+	return _finished ? (_success ? @"Pass" : @"Fail") : @"Cancelled";
+}
+
+- (NSString *)description
+{
+	NSMutableString* s = [NSMutableString string];;
+	[s appendString:_desc];
+	[s appendString:@" "];
+	[s appendString:self.resultDescription];
+	[s appendString:@" "];
+	[s appendString:self.message];
+	[s appendString:@" "];	
+	[s appendFormat:@"'%@'", _expectedText];
+	[s appendString:@" "];		
+	[s appendFormat:@"'%@'", _actualText];
+	return s;
+}
+
 @end
