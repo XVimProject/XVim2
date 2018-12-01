@@ -9,6 +9,3 @@
 #import "Geometry.h"
 
 
-@implementation Utils
-
-@end
