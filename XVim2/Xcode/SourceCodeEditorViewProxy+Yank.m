@@ -119,76 +119,77 @@
 
     NSUInteger insertionPointAfterPut = self.insertionPoint;
     NSUInteger targetPos = self.insertionPoint;
-    if (type == TEXT_TYPE_CHARACTERS) {
-        // Forward insertion point +1 if after flag if on
-        if (0 != text.length) {
-            if (![self.textStorage isNewline:self.insertionPoint] && after) {
-                targetPos++;
+	switch (type){
+		case TEXT_TYPE_CHARACTERS:
+            // Forward insertion point +1 if after flag if on
+            if (0 != text.length) {
+                if (![self.textStorage isNewline:self.insertionPoint] && after) {
+                    targetPos++;
+                }
+                insertionPointAfterPut = targetPos;
+                for (NSUInteger i = 0; i < count; i++) {
+                    [self insertText:text replacementRange:NSMakeRange(targetPos, 0)];
+                }
+                insertionPointAfterPut += text.length * count - 1;
+            }
+    		break;
+		case TEXT_TYPE_LINES:
+            if (after) {
+                [self xvim_insertNewlineBelowCurrentLine];
+                targetPos = self.insertionPoint;
+            }
+            else {
+                targetPos = [self.textStorage xvim_startOfLine:self.insertionPoint];
             }
             insertionPointAfterPut = targetPos;
             for (NSUInteger i = 0; i < count; i++) {
-                [self insertText:text replacementRange:NSMakeRange(targetPos, 0)];
+                if (after && i == 0) {
+                    // delete newline at the end. (TEXT_TYPE_LINES always have newline at the end of the text)
+                    NSString* t = [text substringToIndex:text.length - 1];
+                    [self insertText:t replacementRange:NSMakeRange(targetPos, 0)];
+                }
+                else {
+                    [self insertText:text replacementRange:NSMakeRange(targetPos, 0)];
+                }
             }
-            insertionPointAfterPut += text.length * count - 1;
-        }
-    }
-    else if (type == TEXT_TYPE_LINES) {
-        if (after) {
-            [self xvim_insertNewlineBelowCurrentLine];
-            targetPos = self.insertionPoint;
-        }
-        else {
-            targetPos = [self.textStorage xvim_startOfLine:self.insertionPoint];
-        }
-        insertionPointAfterPut = targetPos;
-        for (NSUInteger i = 0; i < count; i++) {
-            if (after && i == 0) {
-                // delete newline at the end. (TEXT_TYPE_LINES always have newline at the end of the text)
-                NSString* t = [text substringToIndex:text.length - 1];
-                [self insertText:t replacementRange:NSMakeRange(targetPos, 0)];
+			break;
+		case TEXT_TYPE_BLOCK:
+            // Forward insertion point +1 if after flag if on
+            if (![self.textStorage isNewline:self.insertionPoint] && ![self.textStorage isEOF:self.insertionPoint]
+                && after) {
+                self.insertionPoint++;
             }
-            else {
-                [self insertText:text replacementRange:NSMakeRange(targetPos, 0)];
-            }
-        }
-    }
-    else if (type == TEXT_TYPE_BLOCK) {
-        // Forward insertion point +1 if after flag if on
-        if (![self.textStorage isNewline:self.insertionPoint] && ![self.textStorage isEOF:self.insertionPoint]
-            && after) {
-            self.insertionPoint++;
-        }
-        insertionPointAfterPut = self.insertionPoint;
-        NSUInteger insertPos = self.insertionPoint;
-        NSUInteger column = [self.textStorage xvim_columnOfIndex:insertPos];
-        NSUInteger startLine = [self.textStorage xvim_lineNumberAtIndex:insertPos];
-        NSArray* lines = [text componentsSeparatedByString:@"\n"];
-        for (NSUInteger i = 0; i < lines.count; i++) {
-            NSString* line = [lines objectAtIndex:i];
-            NSUInteger targetLine = startLine + i;
-            NSUInteger head = [self xvim_indexOfLineNumber:targetLine];
-            if (NSNotFound == head) {
-                NSAssert(targetLine != 0, @"This should not be happen");
-                [self xvim_insertNewlineBelowLine:targetLine - 1];
-                head = [self xvim_indexOfLineNumber:targetLine];
-            }
-            NSAssert(NSNotFound != head, @"Head of the target line must be found at this point");
+            insertionPointAfterPut = self.insertionPoint;
+            NSUInteger insertPos = self.insertionPoint;
+            NSUInteger column = [self.textStorage xvim_columnOfIndex:insertPos];
+            NSUInteger startLine = [self.textStorage xvim_lineNumberAtIndex:insertPos];
+            NSArray* lines = [text componentsSeparatedByString:@"\n"];
+            for (NSUInteger i = 0; i < lines.count; i++) {
+                NSString* line = [lines objectAtIndex:i];
+                NSUInteger targetLine = startLine + i;
+                NSUInteger head = [self xvim_indexOfLineNumber:targetLine];
+                if (NSNotFound == head) {
+                    NSAssert(targetLine != 0, @"This should not be happen");
+                    [self xvim_insertNewlineBelowLine:targetLine - 1];
+                    head = [self xvim_indexOfLineNumber:targetLine];
+                }
+                NSAssert(NSNotFound != head, @"Head of the target line must be found at this point");
 
-            // Find next insertion point
-            NSUInteger max = [self.textStorage xvim_numberOfColumnsInLineAtIndex:head];
-            NSAssert(max != NSNotFound, @"Should not be NSNotFound");
-            if (column > max) {
-                // If the line does not have enough column pad it with spaces
-                NSUInteger end = [self xvim_endOfLine:head];
+                // Find next insertion point
+                NSUInteger max = [self.textStorage xvim_numberOfColumnsInLineAtIndex:head];
+                NSAssert(max != NSNotFound, @"Should not be NSNotFound");
+                if (column > max) {
+                    // If the line does not have enough column pad it with spaces
+                    NSUInteger end = [self xvim_endOfLine:head];
 
-                [self _xvim_insertSpaces:column - max replacementRange:NSMakeRange(end, 0)];
+                    [self _xvim_insertSpaces:column - max replacementRange:NSMakeRange(end, 0)];
+                }
+                for (NSUInteger j = 0; j < count; j++) {
+                    [self xvim_insertText:line line:targetLine column:column];
+                }
             }
-            for (NSUInteger j = 0; j < count; j++) {
-                [self xvim_insertText:line line:targetLine column:column];
-            }
-        }
+    		break;
     }
-
 
     [self xvim_moveCursor:insertionPointAfterPut preserveColumn:NO];
     [self xvim_syncStateWithScroll:YES];
@@ -219,12 +220,10 @@
 
 - (void)_xvim_yankRange:(NSRange)range withType:(MOTION_TYPE)type
 {
-    NSString* s;
-    BOOL needsNL;
-
     [self __xvim_startYankWithType:type];
 
-    needsNL = self.lastYankedType == TEXT_TYPE_LINES;
+    BOOL needsNL = self.lastYankedType == TEXT_TYPE_LINES;
+    NSString* s;
     if (range.length) {
         s = [self.string substringWithRange:range];
         if (needsNL && !isNewline([s characterAtIndex:s.length - 1])) {

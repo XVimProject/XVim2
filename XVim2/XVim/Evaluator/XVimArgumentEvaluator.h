@@ -27,8 +27,7 @@
  *
  * Do not try to override eval: method
  **/
-@interface XVimArgumentEvaluator : XVimEvaluator {
-}
-@property (strong) XVimKeyStroke* keyStroke;
+@interface XVimArgumentEvaluator : XVimEvaluator
+@property XVimKeyStroke* keyStroke;
 - (XVimEvaluator*)onArgumentProvided:(XVimKeyStroke*)key;
 @end

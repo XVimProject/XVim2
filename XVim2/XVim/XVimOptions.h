@@ -28,7 +28,7 @@
 @property BOOL blinkcursor;
 @property BOOL startofline;
 @property BOOL expandtab;
-@property (nonatomic, strong) NSDictionary* highlight;
+@property (nonatomic) NSDictionary* highlight;
 
 - (id)getOption:(NSString*)name;
 - (void)setOption:(NSString*)name value:(id)value;

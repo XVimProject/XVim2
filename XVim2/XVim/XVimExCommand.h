@@ -56,8 +56,8 @@
 @class XVimWindow;
 
 @interface XVimExArg : NSObject
-@property (strong) NSString* arg;
-@property (strong) NSString* cmd;
+@property NSString* arg;
+@property NSString* cmd;
 @property BOOL forceit;
 @property BOOL noRangeSpecified;
 @property NSUInteger lineBegin; // line1

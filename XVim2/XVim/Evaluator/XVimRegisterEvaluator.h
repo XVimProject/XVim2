@@ -10,7 +10,7 @@
 #import "XVimEvaluator.h"
 
 @interface XVimRegisterEvaluator : XVimArgumentEvaluator
-@property (strong) NSString* reg;
+@property NSString* reg;
 @end
 
 @interface XVimRecordingRegisterEvaluator : XVimRegisterEvaluator

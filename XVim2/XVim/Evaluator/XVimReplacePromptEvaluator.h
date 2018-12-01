@@ -12,7 +12,7 @@
 // This evaluator is waiting for the user to verify a replacement.
 @interface XVimReplacePromptEvaluator : XVimEvaluator
 
-@property (strong) NSString* replaceModeString;
+@property NSString* replaceModeString;
 
 - (instancetype)initWithWindow:(XVimWindow*)window replacementString:(NSString*)replacementString;
 

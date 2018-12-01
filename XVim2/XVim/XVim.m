@@ -41,8 +41,8 @@
 @interface XVim () {
     XVimKeymap* _keymaps[XVIM_MODE_COUNT];
 }
-@property (strong, nonatomic) XVimMutableString* lastOperationCommands;
-@property (strong, nonatomic) XVimMutableString* tempRepeatRegister;
+@property (nonatomic) XVimMutableString* lastOperationCommands;
+@property (nonatomic) XVimMutableString* tempRepeatRegister;
 @end
 
 @implementation XVim
@@ -438,6 +438,5 @@ static id _startupObservation = nil;
     }
     [self.testRunner runTest];
 }
-
 
 @end

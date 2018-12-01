@@ -54,12 +54,12 @@ XVimMotionEvaluator
 @protocol XVimKeymapProvider;
 
 @interface XVimEvaluator : NSObject <XVimTextViewDelegateProtocol>
-@property (strong) XVimWindow* window;
-@property (strong) XVimEvaluator* parent;
+@property XVimWindow* window;
+@property XVimEvaluator* parent;
 @property (nonatomic) NSUInteger numericArg;
 @property BOOL numericMode;
-@property (strong) NSMutableString* argumentString;
-@property (nonatomic, strong) NSString* yankRegister;
+@property NSMutableString* argumentString;
+@property (nonatomic) NSString* yankRegister;
 @property SEL onChildCompleteHandler;
 @property BOOL beganUndoGrouping;
 

@@ -19,10 +19,10 @@ typedef enum { XVimSearchCaseDefault, XVimSearchCaseSensitive, XVimSearchCaseIns
 @interface XVimSearch : NSObject
 @property BOOL lastSearchBackword; // If the last search was '?' command this is true
 @property XVimSearchCase lastSearchCase; // If the last search had "\c" or "\C"
-@property (strong) NSString* lastSearchCmd;
-@property (strong) NSString* lastSearchString;
-@property (strong) NSString* lastSearchDisplayString;
-@property (strong) NSString* lastReplacementString;
+@property NSString* lastSearchCmd;
+@property NSString* lastSearchString;
+@property NSString* lastSearchDisplayString;
+@property NSString* lastReplacementString;
 @property BOOL matchStart;
 @property BOOL matchEnd;
 @property BOOL isGlobal;

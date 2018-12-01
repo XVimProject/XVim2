@@ -191,8 +191,8 @@
     // Position for "^" is before escaped from insert mode
     NSUInteger pos = sourceView.insertionPoint;
     XVimMark* mark
-                = XVimMakeMark([self.sourceView.textStorage xvim_lineNumberAtIndex:pos],
-                               [self.sourceView.textStorage xvim_columnOfIndex:pos], self.sourceView.documentURL.path);
+	= [XVimMark markWithLine:[self.sourceView.textStorage xvim_lineNumberAtIndex:pos]
+					  column: [self.sourceView.textStorage xvim_columnOfIndex:pos] document: self.sourceView.documentURL.path];
     if (nil != mark.document) {
         [xvim.marks setMark:mark forName:@"^"];
     }
@@ -200,8 +200,8 @@
 
     // Position for "." is after escaped from insert mode
     pos = sourceView.insertionPoint;
-    mark = XVimMakeMark([sourceView.textStorage xvim_lineNumberAtIndex:pos],
-                        [sourceView.textStorage xvim_columnOfIndex:pos], sourceView.documentURL.path);
+	mark = [XVimMark markWithLine:[sourceView.textStorage xvim_lineNumberAtIndex:pos] column:
+			[sourceView.textStorage xvim_columnOfIndex:pos] document: sourceView.documentURL.path];
     if (nil != mark.document) {
         [xvim.marks setMark:mark forName:@"."];
     }

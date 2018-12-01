@@ -10,7 +10,6 @@
 
 @class XVimKeyStroke;
 @class XVimWindow;
-@class XVimCommandField;
 
 @interface XVimCommandField : NSTextView
 - (void)setDelegate:(XVimWindow*)delegate;

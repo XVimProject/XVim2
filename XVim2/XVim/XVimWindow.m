@@ -29,8 +29,8 @@
     NSTextInputContext* _inputContext;
     id _enabledNotificationObserver;
 }
-@property (strong, atomic) NSEvent* tmpBuffer;
-@property (strong) id<SourceViewProtocol> lastTextView;
+@property (atomic) NSEvent* tmpBuffer;
+@property id<SourceViewProtocol> lastTextView;
 
 - (void)_resetEvaluatorStack:(NSMutableArray*)stack activateNormalHandler:(BOOL)activate;
 

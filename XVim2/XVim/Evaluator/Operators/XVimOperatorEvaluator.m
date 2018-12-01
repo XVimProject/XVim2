@@ -75,14 +75,13 @@
             if ([className isEqualToString:@"XVimJoinEvaluator"]) {
                 // This is specical case for join operation.
                 // The mark is set at the head of next line of the insertion point after the operation
-                mark = XVimMakeMark([self.sourceView insertionLine] + 1, 0, view.documentURL.path);
+				mark = [XVimMark markWithLine:[self.sourceView insertionLine] + 1 column:0 document:view.documentURL.path];
             }
             else if ([className isEqualToString:@"XVimShiftEvaluator"]) {
-                mark = XVimMakeMark([self.sourceView insertionLine], 0, view.documentURL.path);
+				mark = [XVimMark markWithLine:[self.sourceView insertionLine] column: 0 document: view.documentURL.path];
             }
             else {
-                mark = XVimMakeMark([self.sourceView insertionLine], [self.sourceView insertionColumn],
-                                    view.documentURL.path);
+				mark = [XVimMark markWithLine:[self.sourceView insertionLine] column: [self.sourceView insertionColumn] document:view.documentURL.path];
             }
 
             if (nil != mark.document) {

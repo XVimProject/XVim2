@@ -44,14 +44,17 @@
     }
 }
 
-- (id)init { return [self initWithMark:nil]; }
+- (id)init {
+	return [self initWithMark:nil];
+}
 
 + (id)markWithLine:(NSUInteger)line column:(NSUInteger)col document:(NSString*)doc
 {
     return [[self alloc] initWithLine:line column:col document:doc];
 }
 
-+ (id)markWithMark:(XVimMark*)mark { return [[self alloc] initWithMark:mark]; }
-
++ (id)markWithMark:(XVimMark*)mark {
+	return [[self alloc] initWithMark:mark];
+}
 
 @end

@@ -21,7 +21,7 @@
 #define XVIM_MAKE_MOTION(MOTION, TYPE, OPTION, COUNT)                                                                  \
     [[XVimMotion alloc] initWithMotion:MOTION type:TYPE option:OPTION count:COUNT]
 
-typedef enum _MOTION {
+typedef NS_ENUM(NSInteger, MOTION) {
     MOTION_NONE,
     MOTION_FORWARD, // l
     MOTION_BACKWARD, // h
@@ -69,7 +69,7 @@ typedef enum _MOTION {
     MOTION_LINE_COLUMN, // For custom (Line,Column) position
     MOTION_POSITION, // For custom position
     MOTION_POSITION_JUMP, // For custom position with jump
-} MOTION;
+};
 
 @interface XVimMotion : NSObject
 @property MOTION motion;
@@ -80,7 +80,7 @@ typedef enum _MOTION {
 @property NSUInteger column;
 @property NSUInteger position;
 @property unichar character;
-@property (strong) NSString* regex;
+@property NSString* regex;
 @property XVimMotionInfo* info;
 @property BOOL jumpToAnotherFile;
 @property BOOL keepJumpMarkIndex;
