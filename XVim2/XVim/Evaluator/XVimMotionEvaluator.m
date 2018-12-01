@@ -46,7 +46,7 @@
     self = [super initWithWindow:window];
     if (self) {
         _forcedMotionType = DEFAULT_MOTION_TYPE;
-        _motion = XVIM_MAKE_MOTION(MOTION_NONE, CHARACTERWISE_INCLUSIVE, MOPT_NONE, 1);
+        _motion = XVIM_MAKE_MOTION(MOTION_NONE, CHARWISE_INCLUSIVE, MOPT_NONE, 1);
     }
     return self;
 }
@@ -70,13 +70,13 @@
 /*
 - (XVimEvaluator*)_motionFixedFrom:(NSUInteger)from To:(NSUInteger)to Type:(MOTION_TYPE)type{
     TRACE_LOG(@"from:%d to:%d type:%d", from, to, type);
-    if( _forcedMotionType != CHARACTERWISE_EXCLUSIVE){
+    if( _forcedMotionType != CHARWISE_EXCLUSIVE){
         if ( type == LINEWISE) {
-            type = CHARACTERWISE_EXCLUSIVE;
-        } else if ( type == CHARACTERWISE_EXCLUSIVE ){
-            type = CHARACTERWISE_INCLUSIVE;
-        } else if(type == CHARACTERWISE_INCLUSIVE) {
-            type = CHARACTERWISE_EXCLUSIVE;
+            type = CHARWISE_EXCLUSIVE;
+        } else if ( type == CHARWISE_EXCLUSIVE ){
+            type = CHARWISE_INCLUSIVE;
+        } else if(type == CHARWISE_INCLUSIVE) {
+            type = CHARWISE_EXCLUSIVE;
         }
     }
 
@@ -87,17 +87,17 @@
 
 - (XVimEvaluator*)_motionFixed:(XVimMotion*)motion
 {
-    if (_forcedMotionType == CHARACTERWISE_EXCLUSIVE) { // CHARACTERWISE_EXCLUSIVE means 'v' is pressed and it means
+    if (_forcedMotionType == CHARWISE_EXCLUSIVE) { // CHARWISE_EXCLUSIVE means 'v' is pressed and it means
                                                         // toggle inclusive/exclusive. So its not always "exclusive"
         if (motion.type == LINEWISE) {
-            motion.type = CHARACTERWISE_EXCLUSIVE;
+            motion.type = CHARWISE_EXCLUSIVE;
         }
         else {
-            if (motion.type == CHARACTERWISE_EXCLUSIVE) {
-                motion.type = CHARACTERWISE_INCLUSIVE;
+            if (motion.type == CHARWISE_EXCLUSIVE) {
+                motion.type = CHARWISE_INCLUSIVE;
             }
-            else if (motion.type == CHARACTERWISE_INCLUSIVE) {
-                motion.type = CHARACTERWISE_EXCLUSIVE;
+            else if (motion.type == CHARWISE_INCLUSIVE) {
+                motion.type = CHARWISE_EXCLUSIVE;
             }
         }
     }
@@ -126,13 +126,13 @@
 
 - (XVimEvaluator*)b
 {
-    return [self _motionFixed:XVIM_MAKE_MOTION(MOTION_WORD_BACKWARD, CHARACTERWISE_EXCLUSIVE, MOPT_NONE,
+    return [self _motionFixed:XVIM_MAKE_MOTION(MOTION_WORD_BACKWARD, CHARWISE_EXCLUSIVE, MOPT_NONE,
                                                [self numericArg])];
 }
 
 - (XVimEvaluator*)B
 {
-    return [self _motionFixed:XVIM_MAKE_MOTION(MOTION_WORD_BACKWARD, CHARACTERWISE_EXCLUSIVE, MOPT_BIGWORD,
+    return [self _motionFixed:XVIM_MAKE_MOTION(MOTION_WORD_BACKWARD, CHARWISE_EXCLUSIVE, MOPT_BIGWORD,
                                                [self numericArg])];
 }
 
@@ -143,7 +143,7 @@
 
 - (XVimEvaluator*)e
 {
-    XVimMotion* motion = XVIM_MAKE_MOTION(MOTION_END_OF_WORD_FORWARD, CHARACTERWISE_INCLUSIVE, MOPT_NONE,
+    XVimMotion* motion = XVIM_MAKE_MOTION(MOTION_END_OF_WORD_FORWARD, CHARWISE_INCLUSIVE, MOPT_NONE,
                                           [self numericArg]);
     return [self _motionFixed:motion];
 }
@@ -151,7 +151,7 @@
 - (XVimEvaluator*)E
 {
     XVimMotion* motion
-                = XVIM_MAKE_MOTION(MOTION_END_OF_WORD_FORWARD, CHARACTERWISE_INCLUSIVE, MOPT_BIGWORD, [self numericArg]);
+                = XVIM_MAKE_MOTION(MOTION_END_OF_WORD_FORWARD, CHARWISE_INCLUSIVE, MOPT_BIGWORD, [self numericArg]);
     return [self _motionFixed:motion];
 }
 
@@ -177,7 +177,7 @@ if( childEvaluator.keyStroke.toString.length != 1 ){
     [self.argumentString appendString:@"f"];
     self.onChildCompleteHandler = @selector(onComplete_fFtT:);
     self.motion.motion = MOTION_NEXT_CHARACTER;
-    self.motion.type = CHARACTERWISE_INCLUSIVE;
+    self.motion.type = CHARWISE_INCLUSIVE;
     return [[XVimArgumentEvaluator alloc] initWithWindow:self.window];
 }
 
@@ -186,7 +186,7 @@ if( childEvaluator.keyStroke.toString.length != 1 ){
     [self.argumentString appendString:@"F"];
     self.onChildCompleteHandler = @selector(onComplete_fFtT:);
     self.motion.motion = MOTION_PREV_CHARACTER;
-    self.motion.type = CHARACTERWISE_EXCLUSIVE;
+    self.motion.type = CHARWISE_EXCLUSIVE;
     return [[XVimArgumentEvaluator alloc] initWithWindow:self.window];
 }
 
@@ -232,7 +232,7 @@ if( childEvaluator.keyStroke.toString.length != 1 ){
 
 - (XVimEvaluator*)h
 {
-    return [self _motionFixed:XVIM_MAKE_MOTION(MOTION_BACKWARD, CHARACTERWISE_EXCLUSIVE, MOPT_LEFT_RIGHT_NOWRAP,
+    return [self _motionFixed:XVIM_MAKE_MOTION(MOTION_BACKWARD, CHARWISE_EXCLUSIVE, MOPT_LEFT_RIGHT_NOWRAP,
                                                [self numericArg])];
 }
 
@@ -262,7 +262,7 @@ if( childEvaluator.keyStroke.toString.length != 1 ){
 
 - (XVimEvaluator*)l
 {
-    return [self _motionFixed:XVIM_MAKE_MOTION(MOTION_FORWARD, CHARACTERWISE_EXCLUSIVE, MOPT_LEFT_RIGHT_NOWRAP,
+    return [self _motionFixed:XVIM_MAKE_MOTION(MOTION_FORWARD, CHARWISE_EXCLUSIVE, MOPT_LEFT_RIGHT_NOWRAP,
                                                [self numericArg])];
 }
 
@@ -309,7 +309,7 @@ if( childEvaluator.keyStroke.toString.length != 1 ){
     [self.argumentString appendString:@"t"];
     self.onChildCompleteHandler = @selector(onComplete_fFtT:);
     self.motion.motion = MOTION_TILL_NEXT_CHARACTER;
-    self.motion.type = CHARACTERWISE_INCLUSIVE;
+    self.motion.type = CHARWISE_INCLUSIVE;
     return [[XVimArgumentEvaluator alloc] initWithWindow:self.window];
 }
 
@@ -318,13 +318,13 @@ if( childEvaluator.keyStroke.toString.length != 1 ){
     [self.argumentString appendString:@"T"];
     self.onChildCompleteHandler = @selector(onComplete_fFtT:);
     self.motion.motion = MOTION_TILL_PREV_CHARACTER;
-    self.motion.type = CHARACTERWISE_EXCLUSIVE;
+    self.motion.type = CHARWISE_EXCLUSIVE;
     return [[XVimArgumentEvaluator alloc] initWithWindow:self.window];
 }
 
 - (XVimEvaluator*)v
 {
-    _forcedMotionType = CHARACTERWISE_EXCLUSIVE; // This does not mean the motion will always be "exclusive". This is
+    _forcedMotionType = CHARWISE_EXCLUSIVE; // This does not mean the motion will always be "exclusive". This is
                                                  // just for remembering that its type is "characterwise" forced.
     // Actual motion is decided by motions' default inclusive/exclusive attribute and _toggleInclusiveExclusive flag.
     _toggleInclusiveExclusive = !_toggleInclusiveExclusive;
@@ -347,20 +347,20 @@ if( childEvaluator.keyStroke.toString.length != 1 ){
 
 - (XVimEvaluator*)w
 {
-    return [self _motionFixed:XVIM_MAKE_MOTION(MOTION_WORD_FORWARD, CHARACTERWISE_EXCLUSIVE, MOPT_NONE,
+    return [self _motionFixed:XVIM_MAKE_MOTION(MOTION_WORD_FORWARD, CHARWISE_EXCLUSIVE, MOPT_NONE,
                                                [self numericArg])];
 }
 
 - (XVimEvaluator*)W
 {
-    return [self _motionFixed:XVIM_MAKE_MOTION(MOTION_WORD_FORWARD, CHARACTERWISE_EXCLUSIVE, MOPT_BIGWORD,
+    return [self _motionFixed:XVIM_MAKE_MOTION(MOTION_WORD_FORWARD, CHARWISE_EXCLUSIVE, MOPT_BIGWORD,
                                                [self numericArg])];
 }
 
 
 - (XVimEvaluator*)NUM0
 {
-    return [self _motionFixed:XVIM_MAKE_MOTION(MOTION_BEGINNING_OF_LINE, CHARACTERWISE_INCLUSIVE, MOPT_NONE,
+    return [self _motionFixed:XVIM_MAKE_MOTION(MOTION_BEGINNING_OF_LINE, CHARWISE_INCLUSIVE, MOPT_NONE,
                                                [self numericArg])];
 }
 
@@ -386,7 +386,7 @@ if( childEvaluator.keyStroke.toString.length != 1 ){
     if (mark == nil)
         return [XVimEvaluator invalidEvaluator];
 
-    MOTION_TYPE motionType = fol ? LINEWISE : CHARACTERWISE_EXCLUSIVE;
+    MOTION_TYPE motionType = fol ? LINEWISE : CHARWISE_EXCLUSIVE;
 
     if (mark.line == NSNotFound) {
         return [XVimEvaluator invalidEvaluator];
@@ -469,13 +469,13 @@ if( childEvaluator.keyStroke.toString.length != 1 ){
 // Note: CARET always moves to start of the current line ignoring any numericArg.
 - (XVimEvaluator*)CARET
 {
-    return [self _motionFixed:XVIM_MAKE_MOTION(MOTION_FIRST_NONBLANK, CHARACTERWISE_EXCLUSIVE, MOPT_NONE,
+    return [self _motionFixed:XVIM_MAKE_MOTION(MOTION_FIRST_NONBLANK, CHARWISE_EXCLUSIVE, MOPT_NONE,
                                                [self numericArg])];
 }
 
 - (XVimEvaluator*)DOLLAR
 {
-    return [self _motionFixed:XVIM_MAKE_MOTION(MOTION_END_OF_LINE, CHARACTERWISE_EXCLUSIVE, MOPT_NONE,
+    return [self _motionFixed:XVIM_MAKE_MOTION(MOTION_END_OF_LINE, CHARWISE_EXCLUSIVE, MOPT_NONE,
                                                [self numericArg])];
 }
 
@@ -497,7 +497,7 @@ if( childEvaluator.keyStroke.toString.length != 1 ){
     else if (NSNotFound == head) {
         head = r.location;
     }
-    XVimMotion* m = XVIM_MAKE_MOTION(MOTION_POSITION, CHARACTERWISE_EXCLUSIVE, MOPT_NONE, 0);
+    XVimMotion* m = XVIM_MAKE_MOTION(MOTION_POSITION, CHARWISE_EXCLUSIVE, MOPT_NONE, 0);
     m.position = head;
     return [self _motionFixed:m];
 }
@@ -508,7 +508,7 @@ if( childEvaluator.keyStroke.toString.length != 1 ){
         return [self _motionFixed:XVIM_MAKE_MOTION(MOTION_PERCENT, LINEWISE, MOPT_NONE, [self numericArg])];
     }
     else {
-        return [self _motionFixed:XVIM_MAKE_MOTION(MOTION_NEXT_MATCHED_ITEM, CHARACTERWISE_INCLUSIVE,
+        return [self _motionFixed:XVIM_MAKE_MOTION(MOTION_NEXT_MATCHED_ITEM, CHARWISE_INCLUSIVE,
                                                    MOPT_NONE, [self numericArg])];
     }
 }
@@ -553,26 +553,26 @@ if( childEvaluator.keyStroke.toString.length != 1 ){
 
 - (XVimEvaluator*)LBRACE
 { // {
-    return [self _motionFixed:XVIM_MAKE_MOTION(MOTION_PARAGRAPH_BACKWARD, CHARACTERWISE_EXCLUSIVE, MOPT_NONE,
+    return [self _motionFixed:XVIM_MAKE_MOTION(MOTION_PARAGRAPH_BACKWARD, CHARWISE_EXCLUSIVE, MOPT_NONE,
                                                [self numericArg])];
 }
 
 - (XVimEvaluator*)RBRACE
 { // }
-    return [self _motionFixed:XVIM_MAKE_MOTION(MOTION_PARAGRAPH_FORWARD, CHARACTERWISE_EXCLUSIVE, MOPT_NONE,
+    return [self _motionFixed:XVIM_MAKE_MOTION(MOTION_PARAGRAPH_FORWARD, CHARWISE_EXCLUSIVE, MOPT_NONE,
                                                [self numericArg])];
 }
 
 
 - (XVimEvaluator*)LPARENTHESIS
 { // (
-    return [self _motionFixed:XVIM_MAKE_MOTION(MOTION_SENTENCE_BACKWARD, CHARACTERWISE_EXCLUSIVE, MOPT_NONE,
+    return [self _motionFixed:XVIM_MAKE_MOTION(MOTION_SENTENCE_BACKWARD, CHARWISE_EXCLUSIVE, MOPT_NONE,
                                                [self numericArg])];
 }
 
 - (XVimEvaluator*)RPARENTHESIS
 { // )
-    return [self _motionFixed:XVIM_MAKE_MOTION(MOTION_SENTENCE_FORWARD, CHARACTERWISE_EXCLUSIVE, MOPT_NONE,
+    return [self _motionFixed:XVIM_MAKE_MOTION(MOTION_SENTENCE_FORWARD, CHARWISE_EXCLUSIVE, MOPT_NONE,
                                                [self numericArg])];
 }
 

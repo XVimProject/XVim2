@@ -62,20 +62,20 @@
         }
         // We have to treat some special cases (same as delete)
         if (motion.motion == MOTION_FORWARD && motion.info.reachedEndOfLine) {
-            motion.type = CHARACTERWISE_INCLUSIVE;
+            motion.type = CHARWISE_INCLUSIVE;
         }
         if (motion.motion == MOTION_WORD_FORWARD) {
             if ((motion.info.isFirstWordInLine && motion.info.lastEndOfLine != NSNotFound)) {
                 // Special cases for word move over a line break.
                 to.end = motion.info.lastEndOfLine;
-                motion.type = CHARACTERWISE_INCLUSIVE;
+                motion.type = CHARWISE_INCLUSIVE;
             }
             else if (motion.info.reachedEndOfLine) {
-                if (motion.type == CHARACTERWISE_EXCLUSIVE) {
-                    motion.type = CHARACTERWISE_INCLUSIVE;
+                if (motion.type == CHARWISE_EXCLUSIVE) {
+                    motion.type = CHARWISE_INCLUSIVE;
                 }
-                else if (motion.type == CHARACTERWISE_INCLUSIVE) {
-                    motion.type = CHARACTERWISE_EXCLUSIVE;
+                else if (motion.type == CHARWISE_INCLUSIVE) {
+                    motion.type = CHARWISE_EXCLUSIVE;
                 }
             }
         }
@@ -113,7 +113,7 @@
         // FIXME: Make them not to change text from register...
         text = [NSString stringWithString:text]; // copy string because the text may be changed with folloing delete if
                                                  // it is from the same register...
-        [self xvim_delete:XVIM_MAKE_MOTION(MOTION_NONE, CHARACTERWISE_INCLUSIVE, MOPT_NONE, 1) andYank:YES];
+        [self xvim_delete:XVIM_MAKE_MOTION(MOTION_NONE, CHARWISE_INCLUSIVE, MOPT_NONE, 1) andYank:YES];
         after = NO;
     }
 
@@ -200,7 +200,7 @@
 - (void)__xvim_startYankWithType:(MOTION_TYPE)type
 {
     if (self.selectionMode == XVIM_VISUAL_NONE) {
-        if (type == CHARACTERWISE_EXCLUSIVE || type == CHARACTERWISE_INCLUSIVE) {
+        if (type == CHARWISE_EXCLUSIVE || type == CHARWISE_INCLUSIVE) {
             self.lastYankedType = TEXT_TYPE_CHARACTERS;
         }
         else if (type == LINEWISE) {

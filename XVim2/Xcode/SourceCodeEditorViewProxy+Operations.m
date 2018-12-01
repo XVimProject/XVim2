@@ -117,78 +117,88 @@
     xvim_on_exit { [self xvim_endEditTransaction]; };
 
     motion.info.deleteLastLine = NO;
-    if (self.selectionMode == XVIM_VISUAL_NONE) {
-        XVimRange motionRange = [self xvim_getMotionRange:motionPoint Motion:motion];
-        if (motionRange.end == NSNotFound) {
-            return NO;
-        }
-        // We have to treat some special cases
-        // When a cursor get end of line with "l" motion, make the motion type to inclusive.
-        // This make you to delete the last character. (if its exclusive last character never deleted with "dl")
-        if (motion.motion == MOTION_FORWARD && motion.info.reachedEndOfLine) {
-            if (motion.type == CHARACTERWISE_EXCLUSIVE) {
-                motion.type = CHARACTERWISE_INCLUSIVE;
-            }
-            else if (motion.type == CHARACTERWISE_INCLUSIVE) {
-                motion.type = CHARACTERWISE_EXCLUSIVE;
-            }
-        }
-        if (motion.motion == MOTION_WORD_FORWARD) {
-            if ((motion.info.isFirstWordInLine && motion.info.lastEndOfLine != NSNotFound)) {
-                // Special cases for word move over a line break.
-                motionRange.end = motion.info.lastEndOfLine;
-                motion.type = CHARACTERWISE_INCLUSIVE;
-            }
-            else if (motion.info.reachedEndOfLine) {
-                if (motion.type == CHARACTERWISE_EXCLUSIVE) {
-                    motion.type = CHARACTERWISE_INCLUSIVE;
+	switch (self.selectionMode){
+		case XVIM_VISUAL_NONE:
+    		{
+                XVimRange motionRange = [self xvim_getMotionRange:motionPoint Motion:motion];
+                if (motionRange.end == NSNotFound) {
+                    return NO;
                 }
-                else if (motion.type == CHARACTERWISE_INCLUSIVE) {
-                    motion.type = CHARACTERWISE_EXCLUSIVE;
+                // We have to treat some special cases
+                // When a cursor get end of line with "l" motion, make the motion type to inclusive.
+                // This make you to delete the last character. (if its exclusive last character never deleted with "dl")
+                if (motion.motion == MOTION_FORWARD && motion.info.reachedEndOfLine) {
+                    if (motion.type == CHARWISE_EXCLUSIVE) {
+                        motion.type = CHARWISE_INCLUSIVE;
+                    }
+                    else if (motion.type == CHARWISE_INCLUSIVE) {
+                        motion.type = CHARWISE_EXCLUSIVE;
+                    }
                 }
-            }
-        }
-        NSRange r = [self _xvim_getDeleteRange:motion withRange:motionRange];
-        if (yank) {
-            [self _xvim_yankRange:r withType:motion.type];
-        }
-        [self insertText:@"" replacementRange:r];
-        if (motion.motion == TEXTOBJECT_SQUOTE || motion.motion == TEXTOBJECT_DQUOTE
-            || motion.motion == TEXTOBJECT_BACKQUOTE || motion.motion == TEXTOBJECT_PARENTHESES
-            || motion.motion == TEXTOBJECT_BRACES || motion.motion == TEXTOBJECT_SQUAREBRACKETS
-            || motion.motion == TEXTOBJECT_ANGLEBRACKETS) {
-            newPos = r.location;
-        }
-        else if (motion.type == LINEWISE) {
-            newPos = [self.textStorage xvim_firstNonblankInLineAtIndex:r.location allowEOL:YES];
-        }
-    }
-    else if (self.selectionMode != XVIM_VISUAL_BLOCK) {
-        BOOL toFirstNonBlank = (self.selectionMode == XVIM_VISUAL_LINE);
-        NSRange range = [self _xvim_selectedRange];
+                if (motion.motion == MOTION_WORD_FORWARD) {
+                    if ((motion.info.isFirstWordInLine && motion.info.lastEndOfLine != NSNotFound)) {
+                        // Special cases for word move over a line break.
+                        motionRange.end = motion.info.lastEndOfLine;
+                        motion.type = CHARWISE_INCLUSIVE;
+                    }
+                    else if (motion.info.reachedEndOfLine) {
+                        if (motion.type == CHARWISE_EXCLUSIVE) {
+                            motion.type = CHARWISE_INCLUSIVE;
+                        }
+                        else if (motion.type == CHARWISE_INCLUSIVE) {
+                            motion.type = CHARWISE_EXCLUSIVE;
+                        }
+                    }
+                }
+                NSRange r = [self _xvim_getDeleteRange:motion withRange:motionRange];
+                if (yank) {
+                    [self _xvim_yankRange:r withType:motion.type];
+                }
+                [self insertText:@"" replacementRange:r];
+                if (motion.motion == TEXTOBJECT_SQUOTE || motion.motion == TEXTOBJECT_DQUOTE
+                    || motion.motion == TEXTOBJECT_BACKQUOTE || motion.motion == TEXTOBJECT_PARENTHESES
+                    || motion.motion == TEXTOBJECT_BRACES || motion.motion == TEXTOBJECT_SQUAREBRACKETS
+                    || motion.motion == TEXTOBJECT_ANGLEBRACKETS) {
+                    newPos = r.location;
+                }
+                else if (motion.type == LINEWISE) {
+                    newPos = [self.textStorage xvim_firstNonblankInLineAtIndex:r.location allowEOL:YES];
+                }
+    		}
+			break;
+		case XVIM_VISUAL_BLOCK:
+    		{
+    			XVimSelection sel = [self _xvim_selectedBlock];
+    			if (yank) {
+    				[self _xvim_yankSelection:sel];
+    			}
+    			[self _xvim_killSelection:sel];
+    			newPos = [self xvim_indexOfLineNumber:sel.top column:sel.left];			
+    		}
+			break;
+		case XVIM_VISUAL_CHARACTER:
+		case XVIM_VISUAL_LINE:
+    		{
+                BOOL toFirstNonBlank = (self.selectionMode == XVIM_VISUAL_LINE);
+                NSRange range = [self _xvim_selectedRange];
 
-        // Currently not supportin deleting EOF with selection mode.
-        // This is because of the fact that NSTextView does not allow select EOF
+                // Currently not supportin deleting EOF with selection mode.
+                // This is because of the fact that NSTextView does not allow select EOF
 
-        if (yank) {
-            [self _xvim_yankRange:range withType:DEFAULT_MOTION_TYPE];
-        }
-        [self insertText:@"" replacementRange:range];
-        if (toFirstNonBlank) {
-            newPos = [self.textStorage xvim_firstNonblankInLineAtIndex:range.location allowEOL:YES];
-        }
-        else {
-            newPos = range.location;
-        }
-    }
-    else {
-        XVimSelection sel = [self _xvim_selectedBlock];
-        if (yank) {
-            [self _xvim_yankSelection:sel];
-        }
-        [self _xvim_killSelection:sel];
-
-        newPos = [self xvim_indexOfLineNumber:sel.top column:sel.left];
+                if (yank) {
+                    [self _xvim_yankRange:range withType:DEFAULT_MOTION_TYPE];
+                }
+                [self insertText:@"" replacementRange:range];
+                if (toFirstNonBlank) {
+                    newPos = [self.textStorage xvim_firstNonblankInLineAtIndex:range.location allowEOL:YES];
+                }
+                else {
+                    newPos = range.location;
+                }
+    		}
+			break;
+		default:
+			break;
     }
 
     [self.xvimDelegate textView:self didDelete:self.lastYankedText withType:self.lastYankedType];
@@ -323,7 +333,7 @@
     // "cw" is like "ce" if the cursor is on a word ( in this case blank line is not treated as a word )
     if (motion.motion == MOTION_WORD_FORWARD && [self.textStorage isNonblank:self.insertionPoint]) {
         motion.motion = MOTION_END_OF_WORD_FORWARD;
-        motion.type = CHARACTERWISE_INCLUSIVE;
+        motion.type = CHARWISE_INCLUSIVE;
         motion.option |= MOPT_CHANGE_WORD;
     }
     // We have to set cursor mode insert before calling delete
@@ -387,7 +397,7 @@
 
     if (self.selectionMode == XVIM_VISUAL_NONE) {
         if (motion.motion == MOTION_NONE) {
-            XVimMotion* m = XVIM_MAKE_MOTION(MOTION_FORWARD, CHARACTERWISE_EXCLUSIVE, MOPT_LEFT_RIGHT_NOWRAP, motion.count);
+            XVimMotion* m = XVIM_MAKE_MOTION(MOTION_FORWARD, CHARWISE_EXCLUSIVE, MOPT_LEFT_RIGHT_NOWRAP, motion.count);
             XVimRange r = [self xvim_getMotionRange:self.insertionPoint Motion:m];
             if (r.end == NSNotFound) {
                 return;
@@ -395,12 +405,12 @@
             if (m.info.reachedEndOfLine) {
                 [self xvim_swapCaseForRange:[self xvim_getOperationRangeFrom:r.begin
                                                                                 To:r.end
-                                                                              Type:CHARACTERWISE_INCLUSIVE]];
+                                                                              Type:CHARWISE_INCLUSIVE]];
             }
             else {
                 [self xvim_swapCaseForRange:[self xvim_getOperationRangeFrom:r.begin
                                                                                 To:r.end
-                                                                              Type:CHARACTERWISE_EXCLUSIVE]];
+                                                                              Type:CHARWISE_EXCLUSIVE]];
             }
             [self xvim_moveCursor:r.end preserveColumn:NO];
         }
@@ -894,16 +904,16 @@
 
     // EOF should not be included.
     // If type is exclusive we do not subtract 1 because we do it later below
-    if ([self.textStorage isEOF:to] && type != CHARACTERWISE_EXCLUSIVE) {
+    if ([self.textStorage isEOF:to] && type != CHARWISE_EXCLUSIVE) {
         to--; // Note that we already know that "to" is not 0 so not chekcing if its 0.
     }
 
     // At this point "from" and "to" is not EOF
-    if (type == CHARACTERWISE_EXCLUSIVE) {
+    if (type == CHARWISE_EXCLUSIVE) {
         // to will not be included.
         to--;
     }
-    else if (type == CHARACTERWISE_INCLUSIVE) {
+    else if (type == CHARWISE_INCLUSIVE) {
         // Nothing special
     }
     else if (type == LINEWISE) {

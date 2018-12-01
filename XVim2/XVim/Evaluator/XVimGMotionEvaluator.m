@@ -32,7 +32,7 @@
 - (XVimEvaluator*)e
 {
     // Select previous word end
-    self.motion = XVIM_MAKE_MOTION(MOTION_END_OF_WORD_BACKWARD, CHARACTERWISE_INCLUSIVE, MOPT_NONE,
+    self.motion = XVIM_MAKE_MOTION(MOTION_END_OF_WORD_BACKWARD, CHARWISE_INCLUSIVE, MOPT_NONE,
                                    [self numericArg]);
     return nil;
 }
@@ -40,7 +40,7 @@
 - (XVimEvaluator*)E
 {
     // Select previous WORD end
-    self.motion = XVIM_MAKE_MOTION(MOTION_END_OF_WORD_BACKWARD, CHARACTERWISE_INCLUSIVE, MOPT_BIGWORD, [self numericArg]);
+    self.motion = XVIM_MAKE_MOTION(MOTION_END_OF_WORD_BACKWARD, CHARWISE_INCLUSIVE, MOPT_BIGWORD, [self numericArg]);
     return nil;
 }
 
@@ -53,13 +53,13 @@
 
 - (XVimEvaluator*)j
 {
-    self.motion = XVIM_MAKE_MOTION(MOTION_LINE_FORWARD, CHARACTERWISE_EXCLUSIVE, MOPT_DISPLAY_LINE, self.numericArg);
+    self.motion = XVIM_MAKE_MOTION(MOTION_LINE_FORWARD, CHARWISE_EXCLUSIVE, MOPT_DISPLAY_LINE, self.numericArg);
     return nil;
 }
 
 - (XVimEvaluator*)k
 {
-    self.motion = XVIM_MAKE_MOTION(MOTION_LINE_BACKWARD, CHARACTERWISE_EXCLUSIVE, MOPT_DISPLAY_LINE, self.numericArg);
+    self.motion = XVIM_MAKE_MOTION(MOTION_LINE_BACKWARD, CHARWISE_EXCLUSIVE, MOPT_DISPLAY_LINE, self.numericArg);
     return nil;
 }
 
