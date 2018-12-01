@@ -625,7 +625,7 @@
     xvim_on_exit { [self.sourceView xvim_endEditTransaction]; };
 
     XVimString* repeatRegister = [[XVim instance] lastOperationCommands];
-    TRACE_LOG(@"Repeat:%@", repeatRegister);
+    //TRACE_LOG(@"Repeat:%@", repeatRegister);
 
     NSMutableArray* stack = [[NSMutableArray alloc] init];
 
@@ -647,7 +647,7 @@
             continue;
         }
         nonNumFound = YES;
-        TRACE_LOG("Feeding stroke: %@", stroke);
+        //TRACE_LOG("Feeding stroke: %@", stroke);
         [self.window handleKeyStroke:stroke onStack:stack];
     }
     [[XVim instance] endRepeat];

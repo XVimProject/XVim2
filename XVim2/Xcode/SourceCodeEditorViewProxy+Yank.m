@@ -108,7 +108,7 @@
     [self xvim_beginEditTransaction];
     xvim_on_exit { [self xvim_endEditTransaction]; };
 
-    TRACE_LOG(@"text:%@  type:%d   afterCursor:%d   count:%d", text, type, after, count);
+    //TRACE_LOG(@"text:%@  type:%d   afterCursor:%d   count:%d", text, type, after, count);
     if (self.selectionMode != XVIM_VISUAL_NONE) {
         // FIXME: Make them not to change text from register...
         text = [NSString stringWithString:text]; // copy string because the text may be changed with folloing delete if

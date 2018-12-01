@@ -158,12 +158,12 @@
 
 - (void)addSelectedRange:(XVimSourceEditorRange)rng modifiers:(XVimSelectionModifiers)modifiers
 {
-    DEBUG_LOG(@"Add range: %@, modifiers: %lu", XVimSourceEditorRangeToString(rng), modifiers);
+    //DEBUG_LOG(@"Add range: %@, modifiers: %lu", XVimSourceEditorRangeToString(rng), modifiers);
     [self.sourceCodeEditorViewWrapper addSelectedRange:rng modifiers:modifiers];
 }
 - (void)setSelectedRange:(XVimSourceEditorRange)rng modifiers:(XVimSelectionModifiers)modifiers
 {
-    DEBUG_LOG(@"Set range: %@, modifiers: %lu", XVimSourceEditorRangeToString(rng), modifiers);
+    //DEBUG_LOG(@"Set range: %@, modifiers: %lu", XVimSourceEditorRangeToString(rng), modifiers);
     [self.sourceCodeEditorViewWrapper setSelectedRange:rng modifiers:modifiers];
 }
 
