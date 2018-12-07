@@ -23,7 +23,7 @@
   
   If this doesn't show your Xcode application path, use `xcode-select -s` to set.
 
-  4. Check out a branch for your Xcode version. @see Branches and Releases section
+  4. Check out a branch for your Xcode version. See [Branches and Releases](#branches-and-releases) section for more information.
   
   5. `make`
   ```bash
