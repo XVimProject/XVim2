@@ -20,10 +20,10 @@
   $ xcode-select -p
   /Applications/Xcode.app/Contents/Developer
   ```
-
-  4. Check out a branch for your Xcode version. @see Branches and Releases section
   
   If this doesn't show your Xcode application path, use `xcode-select -s` to set.
+
+  4. Check out a branch for your Xcode version. @see Branches and Releases section
   
   5. `make`
   ```bash
