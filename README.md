@@ -52,9 +52,9 @@
     
 ## Branches and Releases
  
- - `master`  : for the lastest GM Xcode.
+ - `master`: for the lastest GM Xcode.
              
- - `develop` : for the next beta Xcode and develop.
+ - `develop`: for the next beta Xcode and develop.
 
  - tags
    - `xcode9.2`
