@@ -115,7 +115,7 @@
     /*
     // This is tu get preference window controller (
     IDEPreferencesController* ctrl = [IDEPreferencesController defaultPreferencesController];
-    TRACE_LOG(@"%@", [ctrl toolbarAllowedItemIdentifiers:nil]);
+    DEBUG_LOG(@"%@", [ctrl toolbarAllowedItemIdentifiers:nil]);
 
     // Directly manipulate user defaults does not work (It can change the value but not applied to currently existing
     views) NSUserDefaults* defaults = [NSUserDefaults standardUserDefaults]; [defaults setBool:n

@@ -81,7 +81,6 @@ NSString* expandTabs(NSString* inStr);
 
     if (commandFile && [commandFile length])
     {
-        //TRACE_LOG(@"Input = %@", input);
         DEBUG_LOG(@"Created temporary command file %@ for command %@", commandFile, scriptAndArgs );
         
         if (input == nil)
@@ -127,8 +126,6 @@ NSString* expandTabs(NSString* inStr);
     {
         ERROR_LOG(@"Could not create temporary command file for command %@", scriptAndArgs );
     }
-
-    //TRACE_LOG(@"Output = %@", returnString);
 
     return outputReceived ? returnString : nil;
 

@@ -24,7 +24,6 @@ static Logger* s_defaultLogger = nil;
 
 
 @implementation Logger
-@synthesize level, name;
 
 + (Logger*)defaultLogger
 {
@@ -44,10 +43,10 @@ static Logger* s_defaultLogger = nil;
     NSString* forward =
                 [[NSString alloc] initWithFormat:@"LOGGER_HIDDEN_%@", NSStringFromSelector([invocation selector])];
     if ([[invocation target] respondsToSelector:NSSelectorFromString(forward)]) {
-        [Logger logWithLevel:LogTrace format:@"ENTER METHOD - %@ %@", NSStringFromClass([self class]), selector];
+        [Logger logWithLevel:LogDebug format:@"ENTER METHOD - %@ %@", NSStringFromClass([self class]), selector];
         [invocation setSelector:NSSelectorFromString(forward)];
         [invocation invoke];
-        [Logger logWithLevel:LogTrace format:@"LEAVE METHOD - %@ %@", NSStringFromClass([self class]), selector];
+        [Logger logWithLevel:LogDebug format:@"LEAVE METHOD - %@ %@", NSStringFromClass([self class]), selector];
     }
     else {
         [super forwardInvocation:invocation];
@@ -128,7 +127,7 @@ static Logger* s_defaultLogger = nil;
         [s_formatter setDateFormat:@"HH:mm:ss:SSS"];
     }
     NSString* sNow = [s_formatter stringFromDate:[NSDate date]];
-    NSString* fmt = [NSString stringWithFormat:@"[%@]%@", sNow, format];
+    NSString* fmt = [NSString stringWithFormat:@"%@ %@", sNow, format];
     [self write:fmt args:args];
 }
 
@@ -191,7 +190,7 @@ static Logger* s_defaultLogger = nil;
 {
     for (NSString* e in [ex callStackSymbols]) {
         (void)(e);
-        TRACE_LOG(@"%@", e);
+        DEBUG_LOG(@"%@", e);
     }
 }
 
@@ -203,14 +202,14 @@ static Logger* s_defaultLogger = nil;
     }
     unsigned int num;
     Method* m = class_copyMethodList(c, &num);
-    TRACE_LOG(@"METHOD LIST : %@", class);
+    DEBUG_LOG(@"METHOD LIST : %@", class);
     for (unsigned int i = 0; i < num; i++) {
         SEL selector __unused = method_getName(m[i]);
-        TRACE_LOG(@"%@", NSStringFromSelector(selector));
+        DEBUG_LOG(@"%@", NSStringFromSelector(selector));
     }
 }
 
-            + (void)logAvailableClasses : (LogLevel)l
++ (void)logAvailableClasses: (LogLevel)l
 {
     int numClasses;
     Class* classes = NULL;
@@ -238,7 +237,6 @@ static Logger* s_defaultLogger = nil;
             for (NSUInteger j = 0; j < num; j++) {
                 NSString* methodName = NSStringFromSelector(method_getName(m[j]));
                 [text appendFormat:@"<li>%@</li>\n", methodName];
-                //[Logger logWithLevel:l format:@"    %@",NSStringFromSelector(method_getName(m[j]))];
             }
             [text appendString:@"</ul>\n"];
             NSError* error;
@@ -258,7 +256,7 @@ static Logger* s_defaultLogger = nil;
     NSString* className = NSStringFromClass([obj class]);
     NSRect f __unused = obj.frame;
     NSRect b __unused = obj.bounds;
-    TRACE_LOG(@"%@ViewInfo : Class:%@ frame:%f,%f,%f,%f bounds:%f,%f,%f,%f", pre, className, f.origin.x, f.origin.y,
+    DEBUG_LOG(@"%@ViewInfo : Class:%@ frame:%f,%f,%f,%f bounds:%f,%f,%f,%f", pre, className, f.origin.x, f.origin.y,
               f.size.width, f.size.height, b.origin.x, b.origin.y, b.size.width, b.size.height);
 
     if (sub) {
@@ -293,7 +291,7 @@ static Logger* s_defaultLogger = nil;
     }
     for (NSMenuItem* item in [menu itemArray]) {
         if (![item isSeparatorItem]) {
-            TRACE_LOG(@"%@Title:%@    Action:%@", tabs, [item title], NSStringFromSelector([item action]));
+            DEBUG_LOG(@"%@Title:%@    Action:%@", tabs, [item title], NSStringFromSelector([item action]));
         }
         [Logger traceMenu:[item submenu] depth:depth + 1];
     }
@@ -301,7 +299,6 @@ static Logger* s_defaultLogger = nil;
 
 + (void)traceMenu:(NSMenu*)menu
 {
-    TRACE_LOG(@"Tracing menu items in menu(%p)", menu);
     [Logger traceMenu:menu depth:0];
 }
 @end

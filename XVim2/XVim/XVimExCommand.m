@@ -360,7 +360,7 @@
 {
     _auto view = [window sourceView];
     // DVTFoldingTextStorage* storage = [view textStorage];
-    // TRACE_LOG(@"Storage Class:%@", NSStringFromClass([storage class]));
+    // DEBUG_LOG(@"Storage Class:%@", NSStringFromClass([storage class]));
     NSUInteger addr = NSNotFound;
     NSUInteger begin = view.selectionBegin;
     NSUInteger end = view.insertionPoint;
@@ -1285,7 +1285,6 @@ xvim_ignore_warning_pop
         menu = [NSApp mainMenu];
     }
     for (NSMenuItem* mi in [menu itemArray]) {
-        TRACE_LOG(@"%@", mi.title);
         if ([mi action] == NSSelectorFromString(actionName)) {
             return mi;
         }
@@ -1611,6 +1610,8 @@ xvim_ignore_warning_pop
 		// use `brew install macvim`
 		NSString* str = [NSString stringWithFormat:@"/usr/local/bin/mvim +%ld %@", linenumber, filepath];
 		[XVimTaskRunner runScript:str];
+		
+		DEBUG_LOG("macvim")
 	}
 }
 

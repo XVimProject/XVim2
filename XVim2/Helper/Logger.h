@@ -10,31 +10,22 @@
 
 
 #if defined DEBUG && !defined LOGGER_DISABLE_DEBUG && !defined LOGGER_DISABLE_ALL
-#define TRACE_LOG(fmt, ...)                                                                                            \
-    [Logger logWithLevel:LogTrace format:@"%50s%5d: " fmt, __PRETTY_FUNCTION__, __LINE__, ##__VA_ARGS__];
 #define DEBUG_LOG(fmt, ...)                                                                                            \
-    [Logger logWithLevel:LogDebug format:@"%50s%5d: " fmt, __PRETTY_FUNCTION__, __LINE__, ##__VA_ARGS__];
+[Logger logWithLevel:LogDebug format:@"%s:%d " fmt, __PRETTY_FUNCTION__, __LINE__, ##__VA_ARGS__];
 #else
-#define TRACE_LOG(fmt, ...)
 #define DEBUG_LOG(fmt, ...)
 #endif
 
 #if defined DEBUG && !defined LOGGER_DISABLE_ALL
 #define ERROR_LOG(fmt, ...)                                                                                            \
-    [Logger logWithLevel:LogError format:@"%50s%5d: " fmt, __PRETTY_FUNCTION__, __LINE__, ##__VA_ARGS__]
-#define FATAL_LOG(fmt, ...)                                                                                            \
-    [Logger logWithLevel:LogFatal format:@"%50s%5d: " fmt, __PRETTY_FUNCTION__, __LINE__, ##__VA_ARGS__]
+[Logger logWithLevel:LogError format:@"%s:%d " fmt, __PRETTY_FUNCTION__, __LINE__, ##__VA_ARGS__]
 #else
 #define ERROR_LOG(fmt, ...)
-#define FATAL_LOG(fmt, ...)
 #endif
 
-#define REGISTER_CLASS_FOR_METHOD_TRACING(cls) [Logger registerTracing:cls]
 typedef NS_ENUM(NSInteger, LogLevel) {
-    LogTrace,
     LogDebug,
     LogError,
-    LogFatal
 };
 
 @class NSView;

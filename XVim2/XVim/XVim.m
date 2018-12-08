@@ -65,7 +65,7 @@
     if (![identifier isEqualToString:@"com.apple.dt.Xcode"]) {
         return;
     }
-    [Logger defaultLogger].level = LogTrace;
+    [Logger defaultLogger].level = LogDebug;
 
     // Make a list of classes that will be swizzled, so we can check if they have been loaded
     // before swizzling. If not, we will wait, observing NSBundle's class load notifications,
@@ -229,7 +229,7 @@
 + (void)receiveNotification:(NSNotification*)notification
 {
     if ([notification.name hasPrefix:@"IDE"] || [notification.name hasPrefix:@"DVT"]) {
-        TRACE_LOG(@"Got notification name : %@    object : %@", notification.name,
+        DEBUG_LOG(@"Got notification name : %@    object : %@", notification.name,
                   NSStringFromClass([[notification object] class]));
     }
 }

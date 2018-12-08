@@ -108,7 +108,6 @@
     [self xvim_beginEditTransaction];
     xvim_on_exit { [self xvim_endEditTransaction]; };
 
-    //TRACE_LOG(@"text:%@  type:%d   afterCursor:%d   count:%d", text, type, after, count);
     if (self.selectionMode != XVIM_VISUAL_NONE) {
         // FIXME: Make them not to change text from register...
         text = [NSString stringWithString:text]; // copy string because the text may be changed with folloing delete if
@@ -258,7 +257,6 @@
             NSUInteger lcol = sel.left - (sel.left % tabWidth);
 
             if (lcol < sel.left) {
-                TRACE_LOG("lcol %ld  left %ld tab %ld", (long)lcol, (long)sel.left, (long)tabWidth);
                 NSUInteger count = tabWidth - (sel.left - lcol);
 
                 if (lpos == rpos) {
@@ -313,7 +311,6 @@
     }
 
     self.lastYankedText = ybuf;
-    TRACE_LOG(@"YANKED STRING : %@", ybuf);
 }
 
 - (void)_xvim_killSelection:(XVimSelection)sel

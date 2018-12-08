@@ -125,7 +125,7 @@ static NSString* FILE_MARKS = @"ABCDEFGHIJKLMNOPQRSTUVWXYZ";
         return [_fileMarks objectForKey:name];
     }
     else {
-        TRACE_LOG(@"Unsupported name for mark is passed");
+        DEBUG_LOG(@"Unsupported name for mark is passed");
         return nil;
     }
 }
@@ -151,7 +151,7 @@ static NSString* FILE_MARKS = @"ABCDEFGHIJKLMNOPQRSTUVWXYZ";
         [self setFileMark:mark forName:name];
     }
     else {
-        TRACE_LOG(@"Unsupported name for mark is passed");
+        DEBUG_LOG(@"Unsupported name for mark is passed");
     }
 
     return;
@@ -182,7 +182,7 @@ static NSString* FILE_MARKS = @"ABCDEFGHIJKLMNOPQRSTUVWXYZ";
     }
     unichar c = [name characterAtIndex:0];
     if (![_localMarkSet characterIsMember:c]) {
-        TRACE_LOG(@"Local Mark '%C' not found", c);
+        DEBUG_LOG(@"Local Mark '%C' not found", c);
         return;
     }
 
@@ -206,7 +206,7 @@ static NSString* FILE_MARKS = @"ABCDEFGHIJKLMNOPQRSTUVWXYZ";
     }
     unichar c = [name characterAtIndex:0];
     if (![_fileMarkSet characterIsMember:c]) {
-        TRACE_LOG(@"File Mark '%C' not found", c);
+        DEBUG_LOG(@"File Mark '%C' not found", c);
         return;
     }
 

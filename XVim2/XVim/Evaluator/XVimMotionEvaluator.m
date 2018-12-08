@@ -69,7 +69,7 @@
 
 /*
 - (XVimEvaluator*)_motionFixedFrom:(NSUInteger)from To:(NSUInteger)to Type:(MOTION_TYPE)type{
-    TRACE_LOG(@"from:%d to:%d type:%d", from, to, type);
+    DEBUG_LOG(@"from:%d to:%d type:%d", from, to, type);
     if( _forcedMotionType != CHARWISE_EXCLUSIVE){
         if ( type == LINEWISE) {
             type = CHARWISE_EXCLUSIVE;

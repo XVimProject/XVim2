@@ -315,7 +315,6 @@
 
 -(void)xvim_syncStateFromView
 {
-    //TRACE_LOG(@"[%p]ENTER", self);
     // TODO: handle block selection (if selectedRanges have multiple ranges )
     if (self.xvim_lockSyncStateFromView) {
         return;
@@ -765,7 +764,7 @@
         }
     }
     XVimRange r = XVimMakeRange(begin, end);
-    //TRACE_LOG(@"range location:%u  length:%u", r.begin, r.end - r.begin + 1);
+    //DEBUG_LOG(@"range location:%u  length:%u", r.begin, r.end - r.begin + 1);
     return r;
 }
 

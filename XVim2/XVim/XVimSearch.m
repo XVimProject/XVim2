@@ -428,7 +428,6 @@ if (found.location != NSNotFound &&
     }
 
     NSError* error = NULL;
-    TRACE_LOG(@"%@", self.lastReplacementString);
     // Taking pattern from search command. If not available, take the pattern from the last search string.
     NSString* pattern = self.lastSearchCmd.length ? self.lastSearchCmd : self.lastSearchString;
     NSRegularExpression* regex = [NSRegularExpression regularExpressionWithPattern:pattern options:r_opts error:&error];
@@ -520,8 +519,8 @@ if (found.location != NSNotFound &&
                 previous = current;
             }
         }
-        TRACE_LOG("replaced=%@", replaced);
-        TRACE_LOG("replacement=%@", replacement);
+        DEBUG_LOG("replaced=%@", replaced);
+        DEBUG_LOG("replacement=%@", replacement);
     }
     self.lastSearchCmd = replaced;
     self.lastSearchDisplayString = replaced;
