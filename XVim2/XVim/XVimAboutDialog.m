@@ -7,7 +7,7 @@
 //
 
 #import "XVimAboutDialog.h"
-#import "../gitrevision.h"
+#import "../../gitrevision.h"
 #import "XVim.h"
 
 @interface XVimAboutDialog ()
