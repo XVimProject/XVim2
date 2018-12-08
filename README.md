@@ -20,10 +20,10 @@
   $ xcode-select -p
   /Applications/Xcode.app/Contents/Developer
   ```
-
-  4. Check out a branch for your Xcode version. @see Branches and Releases section
   
   If this doesn't show your Xcode application path, use `xcode-select -s` to set.
+
+  4. Check out a branch for your Xcode version. See [Branches and Releases](#branches-and-releases) section for more information.
   
   5. `make`
   ```bash
@@ -52,9 +52,9 @@
     
 ## Branches and Releases
  
- - `master`  : for the lastest GM Xcode.
+ - `master`: for the lastest GM Xcode.
              
- - `develop` : for the next beta Xcode and develop.
+ - `develop`: for the next beta Xcode and develop.
 
  - tags
    - `xcode9.2`
@@ -72,20 +72,20 @@
 
 ### Manual uninstall 
 Delete the following directory:
-    $HOME/Library/Application\ Support/Developer/Shared/Xcode/Plug-ins/XVim2.xcplugin
+`$HOME/Library/Application\ Support/Developer/Shared/Xcode/Plug-ins/XVim2.xcplugin`
 
 ## Feature list
   See separate [FeatureList.md](Documents/Users/FeatureList.md)
 
 ## Bug reports
   Unfortunately XVim sometimes crashes Xcode. We are working on eliminating all the bugs, but it's really hard work.
-  It helps greatly when we have your bug reports, with the following information:
+  All bug reports are appreciated, and they are especially helpful when they include the following information:
 
-   * Crash information ( Xcode shows threads stack trace when crashes. Copy them. )
-   * The operations you did to cause the crash ( series of key strokes or mouse clicks )
-   * The text you were manipulating
-   * Xcode version 
-   * XVim version ( Version number of the revision you built )
+   * **Crash information**. Xcode shows threads stack trace when it crashes. Please copy the stack trace and include it in your report.
+   * **The operations you performed to cause the crash**, e.g. the series of key strokes or mouse clicks you performed.
+   * **The text you were manipulating**.
+   * **Xcode version**.
+   * **XVim version**. The version number of the revision you built.
   
   When it is hard to solve a problem with information above, take debug log according to the following movie please.
   
