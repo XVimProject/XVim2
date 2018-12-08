@@ -205,7 +205,7 @@ static XVimEvaluator* _popEvaluator = nil;
     return [[XVimCommandLineEvaluator alloc] initWithWindow:self.window
                 firstLetter:forward ? @"/" : @"?"
                 history:[[XVim instance] searchHistory]
-                completion:^XVimEvaluator*(NSString* command, id* result) {
+                completion:^XVimEvaluator*(NSString* command, XVimMotion** result) {
                     if (command.length == 0) {
                         return nil;
                     }

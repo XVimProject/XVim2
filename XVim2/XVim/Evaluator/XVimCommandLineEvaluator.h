@@ -11,7 +11,7 @@
 @class XVimHistoryHandler;
 
 typedef XVimEvaluator* (^OnCompleteHandler)(NSString* command,
-                                            id* result); // returned "result" will be stored in evaluationResult
+                                            XVimMotion** result); // returned "result" will be stored in evaluationResult
 typedef void (^OnKeyPressHandler)(NSString* command);
 
 @interface XVimCommandLineEvaluator : XVimEvaluator
