@@ -90,7 +90,7 @@
                 stringByTrimmingCharactersInSet:[NSCharacterSet whitespaceAndNewlineCharacterSet]];
     [_history addEntry:command];
     //DEBUG_LOG(@"Command:%@", command);
-    id result = nil;
+    XVimMotion* result = nil;
     XVimEvaluator* ret = _onComplete(command, &result);
     self.evalutionResult = result;
     return ret;

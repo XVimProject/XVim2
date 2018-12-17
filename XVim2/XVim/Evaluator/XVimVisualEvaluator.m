@@ -538,7 +538,7 @@ contextWithArgument:@"\""] parent:self completion:^ XVimEvaluator* (NSString* rn
                 initWithWindow:self.window
                    firstLetter:@":'<,'>"
                        history:[[XVim instance] exCommandHistory]
-                    completion:^XVimEvaluator*(NSString* command, id* result) {
+                    completion:^XVimEvaluator*(NSString* command, XVimMotion** result) {
                         XVimExCommand* excmd = [[XVim instance] excmd];
                         NSString* commandExecuted = [excmd executeCommand:command inWindow:self.window];
 

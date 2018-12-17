@@ -15,7 +15,7 @@ typedef XVimEvaluator* (^OnCompleteHandler)(NSString* command,
 typedef void (^OnKeyPressHandler)(NSString* command);
 
 @interface XVimCommandLineEvaluator : XVimEvaluator
-@property (strong) id evalutionResult;
+@property XVimMotion* evalutionResult;
 
 - (id)initWithWindow:(XVimWindow*)window
                firstLetter:(NSString*)firstLetter

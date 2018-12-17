@@ -553,7 +553,6 @@ NSString* XVimKeyNotationFromXVimString(XVimString* string)
 
 
 @implementation XVimKeyStroke
-@synthesize character = _character, modifier = _modifier;
 
 + (void)initialize { init_maps(); }
 
