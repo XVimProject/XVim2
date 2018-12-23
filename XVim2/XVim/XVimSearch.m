@@ -166,7 +166,6 @@
 
 
     NSRange found = { NSNotFound, 0 };
-#ifdef __MAC_10_7
     XVimOptions* options = [[XVim instance] options];
 
     _auto srcView = [window sourceView];
@@ -220,7 +219,6 @@ if((self.matchStart || self.matchEnd) && found.location != NSNotFound){
     }
 }
  */
-#endif
     return found;
 }
 
@@ -237,7 +235,6 @@ if((self.matchStart || self.matchEnd) && found.location != NSNotFound){
     // optimization is warranted until slowness is experienced at the user level.
 
     NSRange found = { NSNotFound, 0 };
-#ifdef __MAC_10_7
     XVimOptions* options = [[XVim instance] options];
     _auto srcView = [window sourceView];
     NSUInteger search_base = from;
@@ -296,7 +293,6 @@ if((self.matchStart || self.matchEnd) && found.location != NSNotFound){
     }
 }
  */
-#endif
     return found;
 }
 
@@ -326,7 +322,6 @@ if((self.matchStart || self.matchEnd) && found.location != NSNotFound){
                          inWindow:(XVimWindow*)window
 {
     NSRange found = { NSNotFound, 0 };
-#ifdef __MAC_10_7
     _auto view = [window sourceView];
 
     NSRange begin = [view selectedRange];
@@ -407,7 +402,6 @@ if (found.location != NSNotFound &&
         found = [self searchNextFrom:found.location inWindow:window];
 }
  */
-#endif
     return found;
 }
 
@@ -417,8 +411,6 @@ if (found.location != NSNotFound &&
     // We use NSRegularExpression which does (if you tell it to)
 
     self.lastFoundRange = NSMakeRange(NSNotFound, 0);
-
-#ifdef __MAC_10_7
 
     _auto srcView = [window sourceView];
 
@@ -458,13 +450,10 @@ if (found.location != NSNotFound &&
         [srcView xvim_moveCursor:self.lastFoundRange.location preserveColumn:NO];
         [srcView showFindIndicatorForRange:self.lastFoundRange];
     }
-#endif
 }
 
 - (NSRange)replaceForwardFrom:(NSUInteger)from to:(NSUInteger)to inWindow:(XVimWindow*)window
 {
-#ifdef __MAC_10_7
-
     _auto srcView = [window sourceView];
 
     [self findForwardFrom:from to:to inWindow:window];
@@ -477,7 +466,6 @@ if (found.location != NSNotFound &&
         // The following method is undoable
         [srcView insertText:self.lastReplacementString replacementRange:self.lastFoundRange];
     }
-#endif
     return self.lastFoundRange;
 }
 
