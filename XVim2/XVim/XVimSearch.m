@@ -204,21 +204,6 @@
         [window errorMessage:[NSString stringWithFormat:@"Search wrapped for '%@'", self.lastSearchDisplayString]
                         ringBell:TRUE];
     }
-/*
-if((self.matchStart || self.matchEnd) && found.location != NSNotFound){
-    //figure out the true start and end of the word because the NSRegularExpression engine treats
-    // . and : characters are part of the larger word and will not match on a \b regular expression search.
-    unichar firstChar = [[srcView string] characterAtIndex:found.location];
-    unichar lastChar = [[srcView string] characterAtIndex:(found.location + found.length - 1)];
-    if (self.matchStart && (firstChar == '.' || firstChar == ':')) {
-        found.location++;
-        found.length--;
-    }
-    if(self.matchEnd && (lastChar == '.' || lastChar == ':')){
-        found.length--;
-    }
-}
- */
     return found;
 }
 
@@ -277,22 +262,6 @@ if((self.matchStart || self.matchEnd) && found.location != NSNotFound){
                             ringBell:FALSE];
         }
     }
-
-/*
-if((self.matchStart || self.matchEnd) && found.location != NSNotFound){
-    //figure out the true start and end of the word because the NSRegularExpression engine treats
-    // . and : characters are part of the larger word and will not match on a \b regular expression search.
-    unichar firstChar = [[srcView string] characterAtIndex:found.location];
-    unichar lastChar = [[srcView string] characterAtIndex:(found.location + found.length - 1)];
-    if (self.matchStart && (firstChar == '.' || firstChar == ':')) {
-        found.location++;
-        found.length--;
-    }
-    if(self.matchEnd && (lastChar == '.' || lastChar == ':')){
-        found.length--;
-    }
-}
- */
     return found;
 }
 
@@ -394,14 +363,6 @@ if((self.matchStart || self.matchEnd) && found.location != NSNotFound){
                                from:wordStart < from ? wordStart : from
                            inWindow:window];
     }
-
-/*
-if (found.location != NSNotFound &&
-    ((!forward && begin.location != wordRange.location) ||
-     (forward && searchStart != begin.location))){
-        found = [self searchNextFrom:found.location inWindow:window];
-}
- */
     return found;
 }
 
