@@ -12,7 +12,7 @@
 @implementation XVimTester (Operator)
 - (NSArray*)operator_testcases
 {
-    static NSString* text0 = @"aAa bbb ccc\n";
+    static NSString* text0 = @"aAa bbb ccc\n\n";
 
     static NSString* text1 = @"aaa\n" // 0  (index of each WORD)
                              @"bbb\n" // 4
@@ -63,20 +63,20 @@
     static NSString* text7 = @"a bbb ccc";
     static NSString* text8 = @"aaa:<#(bbb ccc ddd)#> eee";
 
-    static NSString* a_result = @"aAa bbXXXb ccc\n";
-    static NSString* a_result2 = @"aAa bbXXXXXXXXXb ccc\n";
+    static NSString* a_result = @"aAa bbXXXb ccc\n\n";
+    static NSString* a_result2 = @"aAa bbXXXXXXXXXb ccc\n\n";
     static NSString* a_result3 = @"aXXXaa\n"
                                  @"bbb\n"
                                  @"ccc";
 
-    static NSString* A_result = @"aAa bbb cccXXX\n";
-    static NSString* A_result2 = @"aAa bbb cccXXXXXXXXX\n";
+    static NSString* A_result = @"aAa bbb cccXXX\n\n";
+    static NSString* A_result2 = @"aAa bbb cccXXXXXXXXX\n\n";
     static NSString* A_result3 = @"aaaXXX\n"
                                  @"bbb\n"
                                  @"ccc";
 
-    static NSString* cw_result1 = @"aAa baaa ccc\n";
-    static NSString* cw_result2 = @"aAa bbb caaa\n";
+    static NSString* cw_result1 = @"aAa baaa ccc\n\n";
+    static NSString* cw_result2 = @"aAa bbb caaa\n\n";
     static NSString* cw_result3 = @"aaa\nccc";
     static NSString* cw_result4 = @"aAa bXXXXXXX";
     static NSString* cw_result5 = @"XXX\n"
@@ -86,18 +86,18 @@
     static NSString* cw_result7 = @"AAA BBB ccc";
     static NSString* cw_result8 = @"aaa:AAA eee";
 
-    static NSString* C_result1 = @"aAa baaa\n";
+    static NSString* C_result1 = @"aAa baaa\n\n";
     static NSString* C_result2 = @"aaaa\n"
                                  @"ccc";
-    static NSString* C_result3 = @"aAa baaaaaaa\n";
+    static NSString* C_result3 = @"aAa baaaaaaa\n\n";
     static NSString* C_result4 = @"XXX\n"
                                  @"bbb\n"
                                  @"ccc";
 
-    static NSString* cc_result1 = @"aaa\n";
+    static NSString* cc_result1 = @"aaa\n\n";
     static NSString* cc_result2 = @"aaa\n"
                                   @"ccc";
-    static NSString* cc_result3 = @"aaa\n";
+    static NSString* cc_result3 = @"aaa\n\n";
     static NSString* cc_result4 = @"aaa\n"
                                   @"bbb\n"
                                   @"ccc";
@@ -149,27 +149,27 @@
     static NSString* dd_result1 = @"bbb\n"
                                   @"ccc";
     static NSString* dd_result2 = @"ccc";
-    static NSString* dd_result3 = @"";
+    static NSString* dd_result3 = @"\n";
     static NSString* dd_result4 = @"bbb\n"
                                   @"ccc";
 
-    static NSString* r_result1 = @"aAa bXb ccc\n";
-    static NSString* r_result2 = @"aAa bXXXccc\n";
-    static NSString* r_result3 = @"aAa bXXXccc\n";
+    static NSString* r_result1 = @"aAa bXb ccc\n\n";
+    static NSString* r_result2 = @"aAa bXXXccc\n\n";
+    static NSString* r_result3 = @"aAa bXXXccc\n\n";
     static NSString* r_result4 = @"aXa\n"
                                  @"bbb\n"
                                  @"ccc";
     static NSString* r_result5 = @"aXa\n"
                                  @"bbb\n"
                                  @"ccc";
-    static NSString* r_result6 = @"aAa b\nb ccc\n";
+    static NSString* r_result6 = @"aAa b\nb ccc\n\n";
     // Assumes the tab key setting is set to "indent always"
-    static NSString* r_result7_tab = @"aAa b\tb ccc\n";
+    static NSString* r_result7_tab = @"aAa b\tb ccc\n\n";
     static NSString* r_result7_space = @"aAa b   b ccc\n";
 
-    static NSString* R_result1 = @"aXX bbb ccc\n";
-    static NSString* R_result2 = @"aXXXXXX ccc\n";
-    static NSString* R_result3 = @"XYXYXYb ccc\n";
+    static NSString* R_result1 = @"aXX bbb ccc\n\n";
+    static NSString* R_result2 = @"aXXXXXX ccc\n\n";
+    static NSString* R_result3 = @"XYXYXYb ccc\n\n";
     static NSString* R_result4 = @"aXa\n"
                                  @"bbb\n"
                                  @"ccc";
@@ -180,8 +180,8 @@
                                  @"bbb\n"
                                  @"ccc";
 
-    static NSString* s_result1 = @"aaaaa bbb ccc\n";
-    static NSString* s_result2 = @"aaa bbb ccc\n";
+    static NSString* s_result1 = @"aaaaa bbb ccc\n\n";
+    static NSString* s_result2 = @"aaa bbb ccc\n\n";
     static NSString* s_result3 = @"aaaa\n"
                                  @"bbaa\n"
                                  @"ccaa";
@@ -189,8 +189,8 @@
                                  @"bbb\n"
                                  @"ccc";
 
-    static NSString* x_result1 = @"aa bbb ccc\n";
-    static NSString* x_result2 = @"abbb ccc\n";
+    static NSString* x_result1 = @"aa bbb ccc\n\n";
+    static NSString* x_result2 = @"abbb ccc\n\n";
     static NSString* x_result3 = @"a\n"
                                  @"bbb\n"
                                  @"ccc";
@@ -201,8 +201,8 @@
                                  @"bbb\n"
                                  @"ccc";
 
-    static NSString* X_result1 = @"Aa bbb ccc\n";
-    static NSString* X_result2 = @"abbb ccc\n";
+    static NSString* X_result1 = @"Aa bbb ccc\n\n";
+    static NSString* X_result2 = @"abbb ccc\n\n";
     static NSString* X_result3 = @"aaa\n"
                                  @"bb\n"
                                  @"ccc";
@@ -213,7 +213,7 @@
                                  @"bbb\n"
                                  @"ccc";
 
-    static NSString* y_result1 = @"aAa aAa bbb ccc\n";
+    static NSString* y_result1 = @"aAa aAa bbb ccc\n\n";
     static NSString* y_result2 = @"aAa bbb cccccc";
     static NSString* y_result3 = @"aaa\n"
                                  @"aaa\n"
@@ -260,10 +260,10 @@
                                  @"\n"
                                  @"aAa bbb ccc"; // 13
     static NSString* p_result2 = @"aAa bbb ccc\n"
-                                 @"aAa bbb ccc\n"; // 12
+                                 @"aAa bbb ccc\n\n"; // 12
 
-    static NSString* yp_result1 = @"aAa AaAabbb ccc\n";
-    static NSString* yp_result2 = @"aAa AAaabbb ccc\n";
+    static NSString* yp_result1 = @"aAa AaAabbb ccc\n\n";
+    static NSString* yp_result2 = @"aAa AAaabbb ccc\n\n";
 
     static NSString* oO_text = @"int abc(){\n" // 0 4
                                @"}\n"; // 11
@@ -280,17 +280,17 @@
                                   @"}\n"
                                   @"\n";
 
-    static NSString* guw_result = @"aaa bbb ccc\n";
-    static NSString* gUw_result = @"AAA bbb ccc\n";
-    static NSString* guu_result = @"aaa bbb ccc\n";
-    static NSString* gUU_result = @"AAA BBB CCC\n";
+    static NSString* guw_result = @"aaa bbb ccc\n\n";
+    static NSString* gUw_result = @"AAA bbb ccc\n\n";
+    static NSString* guu_result = @"aaa bbb ccc\n\n";
+    static NSString* gUU_result = @"AAA BBB CCC\n\n";
 
-    static NSString* tilde_result = @"Aaa bbb ccc\n";
-    static NSString* g_tilde_w_result = @"AaA bbb ccc\n";
+    static NSString* tilde_result = @"Aaa bbb ccc\n\n";
+    static NSString* g_tilde_w_result = @"AaA bbb ccc\n\n";
 
-    static NSString* C_o_result = @"abcdefbbb ccc\n";
-    static NSString* C_w_result = @"aAa bbb \n";
-    static NSString* C_w_result2 = @"aAa bbb c\n";
+    static NSString* C_o_result = @"abcdefbbb ccc\n\n";
+    static NSString* C_w_result = @"aAa bbb \n\n";
+    static NSString* C_w_result2 = @"aAa bbb c\n\n";
     // static NSString* C_w_resutl3= @"aaabbb\n"
     //                              @"ccc";
 
