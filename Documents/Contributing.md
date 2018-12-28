@@ -29,3 +29,5 @@
   6. Choose a category to run
   7. A separate window shows up and unit tests are run inside that window.
   8. Results will be shown when all the tests in that category are completed.
+
+  ![Unit test menu](unittestmenu.png)
