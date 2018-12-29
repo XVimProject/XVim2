@@ -6,8 +6,8 @@
 //  Copyright © 2017 Shuichiro Suzuki. All rights reserved.
 //
 
-#import "IDEEditor.h"
-#import "IDEEditorDocument.h"
+#import <IDEKit/IDEEditor.h>
+#import <IDEKit/IDEEditorDocument.h>
 #import "NSString+VimHelper.h"
 #import "NSTextStorage+VimOperation.h"
 #import "SourceCodeEditorViewProxy+XVim.h"
@@ -18,7 +18,7 @@
 #import "XVimMotion.h"
 #import "XVimOptions.h"
 #import "XVimXcode.h"
-#import "_TtC15IDESourceEditor19IDESourceEditorView.h"
+#import <IDESourceEditor/_TtC15IDESourceEditor19IDESourceEditorView.h>
 
 @interface SourceCodeEditorViewProxy ()
 @property (weak) _TtC15IDESourceEditor19IDESourceEditorView* sourceCodeEditorView;

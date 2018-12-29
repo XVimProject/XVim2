@@ -11,7 +11,7 @@
 
 @class XVimWindow;
 
-#import "_TtC15IDESourceEditor19IDESourceEditorView.h"
+#import <IDESourceEditor/_TtC15IDESourceEditor19IDESourceEditorView.h>
 
 @interface _TtC15IDESourceEditor19IDESourceEditorView (XVim)
 + (void)xvim_hook;

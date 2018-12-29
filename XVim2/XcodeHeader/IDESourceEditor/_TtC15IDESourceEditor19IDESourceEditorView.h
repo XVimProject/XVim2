@@ -5,7 +5,7 @@
 //
 
 //#import "_$S15DVTSourceEditor016DVTPegasusSourceB4ViewCN.h"
-#import "_TtC15DVTSourceEditor26DVTPegasusSourceEditorView.h"
+#import <DVTSourceEditor/_TtC15DVTSourceEditor26DVTPegasusSourceEditorView.h>
 
 #import "DVTMarkedScrollerDelegate-Protocol.h"
 #import "DVTSourceEditorViewProtocol-Protocol.h"

@@ -5,7 +5,7 @@
 //
 
 //#import "_$S12SourceEditor0aB4ViewCN.h"
-#import "_TtC12SourceEditor16SourceEditorView.h"
+#import <SourceEditor/_TtC12SourceEditor16SourceEditorView.h>
 
 //#import <DVTSourceEditor/DVTFindPatternManager-Protocol.h>
 #import "DVTFindPatternManager-Protocol.h"

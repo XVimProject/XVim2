@@ -8,9 +8,9 @@
 
 #import "XVimIDEPegasusSourceEditorView.h"
 
-#import "_TtC15IDESourceEditor19IDESourceEditorView.h"
+#import <IDESourceEditor/_TtC15IDESourceEditor19IDESourceEditorView.h>
 #import "_TtC15IDESourceEditor19IDESourceEditorView+XVim.h"
-#import "_TtC12SourceEditor16SourceEditorView.h"
+#import <SourceEditor/_TtC12SourceEditor16SourceEditorView.h>
 #import "Logger.h"
 #import "NSObject+ExtraData.h"
 #import "NSObject+Swizzle.h"
@@ -20,9 +20,9 @@
 #import <QuartzCore/QuartzCore.h>
 
 #import "NSObject+ExtraData.h"
-#import "IDEEditorArea.h"
-#import "IDEEditorContext.h"
-#import "IDEEditorDocument.h"
+#import <IDEKit/IDEEditorArea.h>
+#import <IDEKit/IDEEditorContext.h>
+#import <IDEKit/IDEEditorDocument.h>
 #import "XVimTaskRunner.h"
 #import "StringUtil.h"
 #import "XVimXcode.h"

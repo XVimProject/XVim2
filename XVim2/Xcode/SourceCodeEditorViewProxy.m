@@ -18,20 +18,20 @@
 #import "rd_route.h"
 #import <IDEKit/IDEEditorArea.h>
 #import "XcodeUtils.h"
-#import "SourceEditorScrollView.h"
+#import <SourceEditor/SourceEditorScrollView.h>
 #import "SourceCodeEditorViewProxy+XVim.h"
 
-#import "_TtC15IDESourceEditor18SourceCodeDocument.h"
-#import "_TtC15IDESourceEditor19IDESourceEditorView.h"
+#import <IDESourceEditor/_TtC15IDESourceEditor18SourceCodeDocument.h>
+#import <IDESourceEditor/_TtC15IDESourceEditor19IDESourceEditorView.h>
 #import "_TtC15IDESourceEditor19IDESourceEditorView+XVim.h"
-#import "_TtC12SourceEditor16SourceEditorView.h"
+#import <SourceEditor/_TtC12SourceEditor16SourceEditorView.h>
 #import "_TtC12SourceEditor16SourceEditorView+XVim.h"
 #import "XVimXcode.h"
-#import "_TtC15IDESourceEditor19IDESourceEditorView-IDESourceEditor.h"
-#import "_TtC15IDESourceEditor19IDESourceEditorView-IDESourceEditor1.h"
-#import "_TtC15IDESourceEditor19IDESourceEditorView-IDESourceEditor2.h"
-#import "_TtC15IDESourceEditor19IDESourceEditorView-IDESourceEditor3.h"
-#import "_TtC15IDESourceEditor19IDESourceEditorView-IDESourceEditor4.h"
+#import <IDESourceEditor/_TtC15IDESourceEditor19IDESourceEditorView-IDESourceEditor.h>
+#import <IDESourceEditor/_TtC15IDESourceEditor19IDESourceEditorView-IDESourceEditor1.h>
+#import <IDESourceEditor/_TtC15IDESourceEditor19IDESourceEditorView-IDESourceEditor2.h>
+#import <IDESourceEditor/_TtC15IDESourceEditor19IDESourceEditorView-IDESourceEditor3.h>
+#import <IDESourceEditor/_TtC15IDESourceEditor19IDESourceEditorView-IDESourceEditor4.h>
 
 @interface SourceCodeEditorViewProxy ()
 @property (weak) _TtC15IDESourceEditor19IDESourceEditorView* sourceCodeEditorView;

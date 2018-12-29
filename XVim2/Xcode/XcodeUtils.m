@@ -9,7 +9,7 @@
 #import "XcodeUtils.h"
 #import "IDEWorkspaceTabController+XVim.h"
 #import "XVimWindow.h"
-#import "_TtC15IDESourceEditor19IDESourceEditorView.h"
+#import <IDESourceEditor/_TtC15IDESourceEditor19IDESourceEditorView.h>
 #import "_TtC15IDESourceEditor19IDESourceEditorView+XVim.h"
 
 IDEWorkspaceWindowController* XVimLastActiveWindowController()

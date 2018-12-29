@@ -15,7 +15,7 @@
 #import <IDEKit/IDEWorkspaceTabController.h>
 #import <IDEKit/IDEWorkspaceWindow.h>
 #import <IDEKit/IDEWorkspaceWindowController.h>
-#import "_TtC15IDESourceEditor19IDESourceEditorView.h"
+#import <IDESourceEditor/_TtC15IDESourceEditor19IDESourceEditorView.h>
 
 @class IDEWorkspaceWindow;
 @class IDEWorkspaceWindowController;

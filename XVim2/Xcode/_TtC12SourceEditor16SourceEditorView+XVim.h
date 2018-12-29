@@ -9,7 +9,7 @@
 #ifndef _TtC12SourceEditor16SourceEditorView_XVim_h
 #define _TtC12SourceEditor16SourceEditorView_XVim_h
 
-#import "_TtC12SourceEditor16SourceEditorView.h"
+#import <SourceEditor/_TtC12SourceEditor16SourceEditorView.h>
 
 @interface _TtC12SourceEditor16SourceEditorView (XVim)
 -(void)xvim_keyDown:(NSEvent*)event;

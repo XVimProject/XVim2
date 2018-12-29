@@ -11,7 +11,7 @@
 #import "XVimMotionOption.h"
 #import "XVimTextStoring.h"
 #import <AppKit/AppKit.h>
-#import "_TtC12SourceEditor23SourceEditorUndoManager.h"
+#import <SourceEditor/_TtC12SourceEditor23SourceEditorUndoManager.h>
 
 typedef NS_ENUM(char, CursorStyle) { CursorStyleVerticalBar, CursorStyleBlock, CursorStyleUnderline };
 
