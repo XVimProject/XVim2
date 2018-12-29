@@ -165,7 +165,7 @@
     static NSString* r_result6 = @"aAa b\nb ccc\n\n";
     // Assumes the tab key setting is set to "indent always"
     static NSString* r_result7_tab = @"aAa b\tb ccc\n\n";
-    static NSString* r_result7_space = @"aAa b   b ccc\n";
+    static NSString* r_result7_space = @"aAa b   b ccc\n\n";
 
     static NSString* R_result1 = @"aXX bbb ccc\n\n";
     static NSString* R_result2 = @"aXXXXXX ccc\n\n";
