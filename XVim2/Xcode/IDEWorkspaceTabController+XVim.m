@@ -430,7 +430,6 @@ static inline BOOL xvim_horizontallyStackingModeForMode(GeniusLayoutMode mode)
     IDEEditorGeniusMode* geniusMode;
     switch ([editorArea editorMode]) {
     case STANDARD:
-        return;
         break;
     case GENIUS:
         geniusMode = (IDEEditorGeniusMode*)[editorArea editorModeViewController];
@@ -442,7 +441,6 @@ static inline BOOL xvim_horizontallyStackingModeForMode(GeniusLayoutMode mode)
         }
         break;
     case VERSION:
-        return;
         break;
     }
 }

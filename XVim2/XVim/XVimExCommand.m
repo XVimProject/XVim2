@@ -1242,7 +1242,6 @@ xvim_ignore_warning_undeclared_selector_push
 - (void)undo:(XVimExArg*)args inWindow:(XVimWindow*)window
 {
     [window.sourceView.undoManager undo];
-    return;
 }
 
 - (void)vmap:(XVimExArg*)args inWindow:(XVimWindow*)window

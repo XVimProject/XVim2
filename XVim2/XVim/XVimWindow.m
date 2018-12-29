@@ -395,7 +395,6 @@
     if (ringBell) {
         [XVIM ringBell];
     }
-    return;
 }
 
 - (void)statusMessage:(NSString*)message { [self.commandLine errorMessage:message Timer:NO RedColorSetting:NO]; }

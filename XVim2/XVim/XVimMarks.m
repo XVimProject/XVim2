@@ -153,8 +153,6 @@ static NSString* FILE_MARKS = @"ABCDEFGHIJKLMNOPQRSTUVWXYZ";
     else {
         DEBUG_LOG(@"Unsupported name for mark is passed");
     }
-
-    return;
 }
 
 - (NSDictionary*)marksForDocument:(NSString*)documentPath
@@ -191,7 +189,6 @@ static NSString* FILE_MARKS = @"ABCDEFGHIJKLMNOPQRSTUVWXYZ";
     }
     NSDictionary<NSString*, XVimMark*>* marks = [_localMarksDictionary objectForKey:mark.document];
     [[marks objectForKey:[NSString stringWithFormat:@"%C", c]] setMark:mark];
-    return;
 }
 
 - (void)setFileMark:(XVimMark*)mark forName:(NSString*)name
@@ -212,7 +209,6 @@ static NSString* FILE_MARKS = @"ABCDEFGHIJKLMNOPQRSTUVWXYZ";
 
     // Never replace object in dictionary (just change the value of the mark)
     [[_fileMarks objectForKey:[NSString stringWithFormat:@"%C", c]] setMark:mark];
-    return;
 }
 
 #pragma mark - JumpList

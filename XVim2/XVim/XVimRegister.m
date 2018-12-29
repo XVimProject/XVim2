@@ -59,14 +59,12 @@
 - (void)appendXVimString:(XVimString*)string
 {
     NSAssert(false, @"Clipboard register should never be called as appending string");
-    return;
 }
 
 - (void)setXVimString:(XVimString*)string
 {
     [[NSPasteboard generalPasteboard] declareTypes:[NSArray arrayWithObject:NSStringPboardType] owner:nil];
     [[NSPasteboard generalPasteboard] setString:string forType:NSStringPboardType];
-    return;
 }
 
 - (XVimString*)string { return [[NSPasteboard generalPasteboard] stringForType:NSStringPboardType]; }
