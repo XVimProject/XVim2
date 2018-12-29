@@ -234,7 +234,6 @@
     }
 }
 
-static id _startupObservation = nil;
 - (XVimKeymap*)keymapForMode:(XVIM_MODE)mode { return _keymaps[(int)mode]; }
 
 - (void)appendOperationKeyStroke:(XVimString*)stroke { [self.tempRepeatRegister appendString:stroke]; }
@@ -258,7 +257,6 @@ static id _startupObservation = nil;
     if (self.options.errorbells) {
         NSBeep();
     }
-    return;
 }
 
 - (void)registerWindow:(XVimWindow*)win
