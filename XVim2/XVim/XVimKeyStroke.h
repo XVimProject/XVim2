@@ -8,6 +8,7 @@
 
 #import <Cocoa/Cocoa.h>
 #import <Foundation/Foundation.h>
+#include "XVimDefs.h"
 
 
 #define KS_MODIFIER 0xF8 // This value is not the same as Vim's one
@@ -23,8 +24,6 @@
 
 @class XVimKeyStroke;
 typedef uint32_t XVimKeyCode;
-typedef NSString XVimString;
-typedef NSMutableString XVimMutableString;
 
 // Helper Functions
 XVimString* XVimStringFromKeyNotation(NSString* notation);
