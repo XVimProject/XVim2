@@ -9,11 +9,16 @@
 // class-dump -H /Applications/Xcode.app/Contents/SharedFrameworks/DVTSourceEditor.framework/DVTSourceEditor
 // class-dump -H /Applications/Xcode.app/Contents/Plugins/IDESourceEditor.framework/IDESourceEditor
 // class-dump -H /Applications/Xcode.app/Contents/SharedFrameworks/SourceEditor.framework/SourceEditor
+//
+// demangle prefix
+// Swift 4 "_T0"
+// Swift 4.x "$S", "_$S"
+// Swift 5+ "$s", "_$s"
 
 import Cocoa
 
-// SourceEditor.SourceEditorView.addSelectedRange(_: SourceEditor.SourceEditorRange, modifiers: SourceEditor.SourceEditorSelectionModifiers, scrollPlacement: SourceEditor.ScrollPlacement?, alwaysScroll: Swift.Bool) -> ()
-// _$S12SourceEditor0aB4ViewC16addSelectedRange_9modifiers15scrollPlacement12alwaysScrollyAA0abF0V_AA0aB18SelectionModifiersVAA0kI0OSgSbtF
+// swift demangle '_$S12SourceEditor0aB4ViewC16addSelectedRange_9modifiers15scrollPlacement12alwaysScrollyAA0abF0V_AA0aB18SelectionModifiersVAA0kI0OSgSbtF'
+// _$S12SourceEditor0aB4ViewC16addSelectedRange_9modifiers15scrollPlacement12alwaysScrollyAA0abF0V_AA0aB18SelectionModifiersVAA0kI0OSgSbtF ---> SourceEditor.SourceEditorView.addSelectedRange(_: SourceEditor.SourceEditorRange, modifiers: SourceEditor.SourceEditorSelectionModifiers, scrollPlacement: SourceEditor.ScrollPlacement?, alwaysScroll: Swift.Bool) -> ()
 
 @_silgen_name("scev_wrapper_call") func _get_cursor_style(_:UnsafeRawPointer) -> (CursorStyle)
 @_silgen_name("scev_wrapper_call2") func _set_cursor_style(_:UnsafeRawPointer, _:CursorStyle) -> ()
@@ -40,7 +45,6 @@ fileprivate struct _SourceCodeEditorViewWrapper {
     }
 
     func getCursorStyle() -> CursorStyle {
-        // return CursorStyle.block
         return _get_cursor_style(contextPtr)
     }
     func setCursorStyle(_ style: CursorStyle) {
@@ -129,7 +133,7 @@ class SourceCodeEditorViewWrapper: NSObject {
         w.setSelectedRange(range, modifiers: modifiers)
     }
     
-    /* not work in Xcode10
+    /* not work in Xcode10 because it is removed.
     @objc
     public func linesPerPage() -> Int
     {
