@@ -75,7 +75,7 @@ Delete the following directory:
 `$HOME/Library/Application\ Support/Developer/Shared/Xcode/Plug-ins/XVim2.xcplugin`
 
 ## Feature list
-  See separate [FeatureList.md](Documents/Users/FeatureList.md)
+  See separate [FeatureList.md](Documents/FeatureList.md)
 
 ## Bug reports
   Unfortunately XVim sometimes crashes Xcode. We are working on eliminating all the bugs, but it's really hard work.
