@@ -6,8 +6,11 @@
 //  Copyright © 2017 Shuichiro Suzuki. All rights reserved.
 //
 
+// cd XcodeHeader/DVTSourceEditor
 // class-dump -H /Applications/Xcode.app/Contents/SharedFrameworks/DVTSourceEditor.framework/DVTSourceEditor
+// cd XcodeHeader/IDESourceEditor 
 // class-dump -H /Applications/Xcode.app/Contents/Plugins/IDESourceEditor.framework/IDESourceEditor
+// cd XcodeHeader/SourceEditor
 // class-dump -H /Applications/Xcode.app/Contents/SharedFrameworks/SourceEditor.framework/SourceEditor
 //
 // demangle prefix
@@ -17,8 +20,11 @@
 
 import Cocoa
 
-// swift demangle '_$S12SourceEditor0aB4ViewC16addSelectedRange_9modifiers15scrollPlacement12alwaysScrollyAA0abF0V_AA0aB18SelectionModifiersVAA0kI0OSgSbtF'
-// _$S12SourceEditor0aB4ViewC16addSelectedRange_9modifiers15scrollPlacement12alwaysScrollyAA0abF0V_AA0aB18SelectionModifiersVAA0kI0OSgSbtF ---> SourceEditor.SourceEditorView.addSelectedRange(_: SourceEditor.SourceEditorRange, modifiers: SourceEditor.SourceEditorSelectionModifiers, scrollPlacement: SourceEditor.ScrollPlacement?, alwaysScroll: Swift.Bool) -> ()
+// nm /Applications/Xcode.app/Contents/SharedFrameworks/SourceEditor.framework/SourceEditor > a.txt
+//
+// xcode10.2
+// swift demangle '_$s12SourceEditor0aB4ViewC16addSelectedRange_9modifiers15scrollPlacement12alwaysScrollyAA0abF0V_AA0aB18SelectionModifiersVAA0kI0OSgSbtF'
+// _$s12SourceEditor0aB4ViewC16addSelectedRange_9modifiers15scrollPlacement12alwaysScrollyAA0abF0V_AA0aB18SelectionModifiersVAA0kI0OSgSbtF ---> SourceEditor.SourceEditorView.addSelectedRange(_: SourceEditor.SourceEditorRange, modifiers: SourceEditor.SourceEditorSelectionModifiers, scrollPlacement: SourceEditor.ScrollPlacement?, alwaysScroll: Swift.Bool) -> ()
 
 @_silgen_name("scev_wrapper_call") func _get_cursor_style(_:UnsafeRawPointer) -> (CursorStyle)
 @_silgen_name("scev_wrapper_call2") func _set_cursor_style(_:UnsafeRawPointer, _:CursorStyle) -> ()
@@ -64,19 +70,13 @@ fileprivate struct _SourceCodeEditorViewWrapper {
     }
 }
 
-
-
-
 class SourceCodeEditorViewWrapper: NSObject {
-    private let fpSetCursorStyle                = function_ptr_from_name("_$S12SourceEditor0aB4ViewC11cursorStyleAA0ab6CursorE0Ovs", nil)
-    private let fpGetCursorStyle                = function_ptr_from_name("_$S12SourceEditor0aB4ViewC11cursorStyleAA0ab6CursorE0Ovg", nil)
-    private let fpGetDataSource                 = function_ptr_from_name("_$S12SourceEditor0aB4ViewC04dataA0AA0ab4DataA0Cvg", nil)
-    private let fpSetSelectedRangeWithModifiers = function_ptr_from_name("_$S12SourceEditor0aB4ViewC16setSelectedRange_9modifiersyAA0abF0V_AA0aB18SelectionModifiersVtF", nil)
-    private let fpAddSelectedRangeWithModifiers = function_ptr_from_name("_$S12SourceEditor0aB4ViewC16addSelectedRange_9modifiers15scrollPlacement12alwaysScrollyAA0abF0V_AA0aB18SelectionModifiersVAA0kI0OSgSbtF", nil)
-    /* not work in Xcode10
-    private let fpFuncLinesPerPage              = function_ptr_from_name("_$S12SourceEditor0aB4ViewC12linesPerPageSiyF", nil)
-     */
-    
+    /* xcode10.2 */
+    private let fpSetCursorStyle                = function_ptr_from_name("_$s12SourceEditor0aB4ViewC11cursorStyleAA0ab6CursorE0Ovs", nil)
+    private let fpGetCursorStyle                = function_ptr_from_name("_$s12SourceEditor0aB4ViewC11cursorStyleAA0ab6CursorE0Ovg", nil)
+    private let fpGetDataSource                 = function_ptr_from_name("_$s12SourceEditor0aB4ViewC04dataA0AA0ab4DataA0Cvg", nil)
+    private let fpSetSelectedRangeWithModifiers = function_ptr_from_name("_$s12SourceEditor0aB4ViewC16setSelectedRange_9modifiersyAA0abF0V_AA0aB18SelectionModifiersVtF", nil)
+    private let fpAddSelectedRangeWithModifiers = function_ptr_from_name("_$s12SourceEditor0aB4ViewC16addSelectedRange_9modifiers15scrollPlacement12alwaysScrollyAA0abF0V_AA0aB18SelectionModifiersVAA0kI0OSgSbtF", nil)
     private weak var editorViewProxy : SourceCodeEditorViewProxy?
     
     @objc
@@ -132,16 +132,6 @@ class SourceCodeEditorViewWrapper: NSObject {
         guard let w = _SourceCodeEditorViewWrapper(editorView, fp) else { return }
         w.setSelectedRange(range, modifiers: modifiers)
     }
-    
-    /* not work in Xcode10 because it is removed.
-    @objc
-    public func linesPerPage() -> Int
-    {
-        guard let fp = fpFuncLinesPerPage else { return 0 }
-        guard let w = _SourceCodeEditorViewWrapper(editorView, fp) else { return 0 }
-        return w.voidToInt()
-    }
-     */
     
 }
 
