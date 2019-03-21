@@ -13,6 +13,7 @@
 #import "XVimTestCase.h"
 #import "XcodeUtils.h"
 #import <IDEKit/IDEEditorCoordinator.h>
+#import <DVTFoundation/DVTDocumentLocation.h>
 #import <objc/runtime.h>
 
 /**

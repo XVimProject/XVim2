@@ -7,7 +7,7 @@
 //
 
 #import <DVTFoundation/DVTTextPreferences.h>
-#import <DVTKit/DVTDocumentLocation.h>
+#import <DVTFoundation/DVTDocumentLocation.h>
 #import <Foundation/Foundation.h>
 #import <IDEKit/IDEEditorArea.h>
 #import <IDEKit/IDEEditorContext.h>

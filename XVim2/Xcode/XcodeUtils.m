@@ -10,6 +10,7 @@
 #import "IDEWorkspaceTabController+XVim.h"
 #import "XVimWindow.h"
 #import <IDESourceEditor/_TtC15IDESourceEditor19IDESourceEditorView.h>
+#import <DVTFoundation/DVTDocumentLocation.h>
 #import "_TtC15IDESourceEditor19IDESourceEditorView+XVim.h"
 
 IDEWorkspaceWindowController* XVimLastActiveWindowController()

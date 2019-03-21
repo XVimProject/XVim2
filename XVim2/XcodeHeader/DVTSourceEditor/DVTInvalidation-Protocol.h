@@ -8,6 +8,7 @@
 
 @class DVTStackBacktrace;
 
+/*
 @protocol DVTInvalidation <NSObject>
 - (void)primitiveInvalidate;
 
@@ -23,4 +24,4 @@
 // Remaining properties
 @property(nonatomic, readonly) BOOL valid;
 @end
-
+*/
