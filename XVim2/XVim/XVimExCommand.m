@@ -1377,8 +1377,6 @@ xvim_ignore_warning_pop
 
 - (void)bang:(XVimExArg*)args inWindow:(XVimWindow*)window
 {
-#ifdef TODO
-    NSUInteger firstFilteredLine = args.lineBegin;
     NSString* selectedText = nil;
     NSUInteger inputStartLocation = 0;
     NSUInteger inputEndLocation;
@@ -1435,12 +1433,17 @@ xvim_ignore_warning_pop
             [self _expandSpecialExTokens:args contextDict:contextForExCmd];
         }
     }
-
+	
+#if true
+	[XVimTaskRunner runScript:args.arg withInput:selectedText];
+#else 
+	// TODO:quickfix
+    NSUInteger firstFilteredLine = args.lineBegin;
     NSString* scriptReturn = [XVimTaskRunner runScript:args.arg
                                              withInput:selectedText
-                                           withTimeout:EXTERNAL_COMMAND_TIMEOUT_SECS
+										   withTimeout:EXTERNAL_COMMAND_TIMEOUT_SECS
                                           runDirectory:runDir
-                                              colWidth:window.commandLine.quickFixColWidth];
+											  colWidth:window.commandLine.quickFixColWidth];
     if (scriptReturn != nil) {
         if (args.noRangeSpecified) {
             // No text range was specified -- open quickfix window to display the result
