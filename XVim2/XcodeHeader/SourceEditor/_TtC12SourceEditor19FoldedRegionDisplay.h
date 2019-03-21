@@ -4,12 +4,13 @@
 //     class-dump is Copyright (C) 1997-1998, 2000-2001, 2004-2015 by Steve Nygard.
 //
 
-#import <swiftCore/SwiftObject.h>
+#import <swiftCore/_TtCs12_SwiftObject.h>
 
-@interface _TtC12SourceEditor19FoldedRegionDisplay : SwiftObject
+@interface _TtC12SourceEditor19FoldedRegionDisplay : _TtCs12_SwiftObject
 {
+    // Error parsing type: , name: colorTheme
+    // Error parsing type: , name: tokenCornerRadius
     // Error parsing type: , name: foldingController
-    // Error parsing type: , name: layoutManager
     // Error parsing type: , name: foldLayers
     // Error parsing type: , name: priority
 }

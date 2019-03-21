@@ -37,6 +37,7 @@
     // Error parsing type: , name: replacePanelHeightConstraint
     // Error parsing type: , name: client
     // Error parsing type: , name: recentQueries
+    // Error parsing type: , name: wrapAroundMenuItem.storage
     // Error parsing type: , name: colorTheme
     // Error parsing type: , name: controlFont
     // Error parsing type: , name: boldControlFont
@@ -46,7 +47,7 @@
     // Error parsing type: , name: replaceMode
 }
 
-- (CDUnknownBlockType).cxx_destruct;
+- (void).cxx_destruct;
 - (id)initWithNibName:(id)arg1 bundle:(id)arg2;
 - (void)searchPatternPopUpAction:(id)arg1;
 - (void)caseSensitiveButtonAction:(id)arg1;
@@ -55,10 +56,11 @@
 - (void)nextPreviousControlAction:(id)arg1;
 - (void)findFieldAction:(id)arg1;
 - (BOOL)control:(id)arg1 textView:(id)arg2 doCommandBySelector:(SEL)arg3;
-- (void)controlTextDidChange:(id)arg1;
-- (void)controlTextDidBeginEditing:(id)arg1;
+- (void)textFieldTextDidChange:(id)arg1;
+- (void)textFieldDidBeginEditing:(id)arg1;
 - (void)popUpButtonWillDisplay:(id)arg1;
 - (void)updateDisplayForColorTheme;
+- (void)toggleWrapAround:(id)arg1;
 - (void)clearRecentQueries;
 - (void)applyRecentQueryMenuItem:(id)arg1;
 - (void)toggleFindReplaceMode:(id)arg1;

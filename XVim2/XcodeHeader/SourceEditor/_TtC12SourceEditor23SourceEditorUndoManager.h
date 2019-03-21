@@ -21,12 +21,15 @@
     // Error parsing type: , name: isTyping
     // Error parsing type: , name: postingCheckpoint
     // Error parsing type: , name: initialSelection
+    // Error parsing type: , name: closeUndoGroupUserInfoEmpty
+    // Error parsing type: , name: closeUndoGroupUserInfoNotEmpty
     // Error parsing type: , name: _undoGroupingLevel
     // Error parsing type: , name: _redoGroupingLevel
     // Error parsing type: , name: undoLevel
     // Error parsing type: , name: redoLevel
 }
 
+//- (void).cxx_destruct;
 - (id)init;
 @property(nonatomic, readonly) BOOL redoActionIsDiscardable;
 @property(nonatomic, readonly) BOOL undoActionIsDiscardable;

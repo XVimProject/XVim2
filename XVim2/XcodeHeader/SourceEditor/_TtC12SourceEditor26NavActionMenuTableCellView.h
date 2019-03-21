@@ -8,13 +8,12 @@
 
 @class NSTextField;
 
-__attribute__((visibility("hidden")))
 @interface _TtC12SourceEditor26NavActionMenuTableCellView : _TtC12SourceEditor23ActionMenuTableCellView
 {
     // Error parsing type: , name: subtitleTextField
 }
 
-- (CDUnknownBlockType).cxx_destruct;
+- (void).cxx_destruct;
 - (id)initWithCoder:(id)arg1;
 - (id)initWithFrame:(struct CGRect)arg1;
 - (void)awakeFromNib;

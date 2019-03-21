@@ -4,38 +4,13 @@
 //     class-dump is Copyright (C) 1997-1998, 2000-2001, 2004-2015 by Steve Nygard.
 //
 
-//#import "_$S12SourceEditor0aB4ViewCN.h"
-#import <SourceEditor/_TtC12SourceEditor16SourceEditorView.h>
+#import <DVTSourceEditor/_TtC15DVTSourceEditor19DVTSourceEditorView.h>
 
-//#import <DVTSourceEditor/DVTFindPatternManager-Protocol.h>
-#import "DVTFindPatternManager-Protocol.h"
-
-@interface _TtC15DVTSourceEditor26DVTPegasusSourceEditorView :
-_TtC12SourceEditor16SourceEditorView
-<DVTFindPatternManager>
+@interface _TtC15DVTSourceEditor26DVTPegasusSourceEditorView : _TtC15DVTSourceEditor19DVTSourceEditorView
 {
 }
 
-- (void)selectFindMatchesInSelection:(id)arg1;
-- (void)selectAllFindMatches:(id)arg1;
-- (void)selectPreviousOccurrence:(id)arg1;
-- (void)selectNextOccurrence:(id)arg1;
-- (void)useSelectionForReplace:(id)arg1;
-- (void)useSelectionForFind:(id)arg1;
-- (void)hideFindBar:(id)arg1;
-- (void)replaceAndFindPrevious:(id)arg1;
-- (void)replaceAndFindNext:(id)arg1;
-- (void)replaceAll:(id)arg1;
-- (void)replace:(id)arg1;
-- (void)findAndSelectPrevious:(id)arg1;
-- (void)findAndSelectNext:(id)arg1;
-- (void)findPrevious:(id)arg1;
-- (void)findNext:(id)arg1;
-- (void)findAndReplace:(id)arg1;
-- (void)find:(id)arg1;
-- (BOOL)supportsPatterns;
-- (id)replaceFieldForField:(id)arg1;
-- (id)findFieldForField:(id)arg1;
+- (id)initWithCoder:(id)arg1;
 
 @end
 

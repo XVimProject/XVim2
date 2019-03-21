@@ -15,7 +15,7 @@
     // Error parsing type: , name: pages.storage
 }
 
-- (CDUnknownBlockType).cxx_destruct;
+- (void).cxx_destruct;
 - (id)initWithFrame:(struct CGRect)arg1;
 - (void)beginPageInRect:(struct CGRect)arg1 atPlacement:(struct CGPoint)arg2;
 - (void)drawRect:(struct CGRect)arg1;

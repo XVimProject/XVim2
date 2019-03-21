@@ -7,10 +7,10 @@
 #import <IDESourceEditor/NSCopying-Protocol.h>
 #import <IDESourceEditor/NSObject-Protocol.h>
 
-@class DVTFilePath, IDEContainer, IDERefactoringBuildSettings, IDEWorkspace, NSArray, NSDictionary, NSMutableSet, NSString;
+@class DVTFilePath, IDEContainer, IDERefactoringBuildSettings, IDEWorkspace, NSArray, NSDictionary, NSMutableSet, NSString, OS_dispatch_queue;
 @protocol IDEIndexable;
 
-@protocol IDEIndexable <NSCopying, NSObject>
+@protocol IDEIndexable <NSObject, NSCopying>
 - (IDERefactoringBuildSettings *)buildSettingsForMainFile:(DVTFilePath *)arg1 workspace:(IDEWorkspace *)arg2;
 @property(nonatomic, readonly) NSString *localizedIndexableDescription;
 - (void)languageOfMainFile:(DVTFilePath *)arg1 workspace:(IDEWorkspace *)arg2 completionBlock:(void (^)(DVTSourceCodeLanguage *))arg3;
@@ -30,6 +30,7 @@
 - (void)clearCachedBuildSettings;
 @property(nonatomic) __weak id <IDEIndexable> proxy;
 - (NSDictionary *)settingsForFile:(DVTFilePath *)arg1;
+- (void)settingsForFilesInWorkspace:(IDEWorkspace *)arg1 shouldWriteAuxiliaryFiles:(BOOL)arg2 queue:(OS_dispatch_queue *)arg3 withCompletionBlock:(void (^)(NSDictionary *))arg4;
 - (void)settingsForFilesInWorkspace:(IDEWorkspace *)arg1 shouldWriteAuxiliaryFiles:(BOOL)arg2 withCompletionBlock:(void (^)(NSDictionary *))arg3;
 
 // Remaining properties

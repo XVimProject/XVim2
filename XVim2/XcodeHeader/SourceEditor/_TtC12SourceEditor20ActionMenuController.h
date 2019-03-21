@@ -17,6 +17,7 @@
 {
     // Error parsing type: , name: delegate
     // Error parsing type: , name: accessoryView
+    // Error parsing type: , name: dividerBelowFilterField
     // Error parsing type: , name: accessoryViewArea
     // Error parsing type: , name: accessoryViewDivider
     // Error parsing type: , name: accessoryViewWidthConstraint
@@ -40,7 +41,7 @@
     // Error parsing type: , name: itemsRequiringMoreTime
 }
 
-- (CDUnknownBlockType).cxx_destruct;
+- (void).cxx_destruct;
 - (id)initWithNibName:(id)arg1 bundle:(id)arg2;
 - (BOOL)control:(id)arg1 textView:(id)arg2 doCommandBySelector:(SEL)arg3;
 - (void)filterStringChanged:(id)arg1;
@@ -60,6 +61,7 @@
 @property(nonatomic) __weak NSLayoutConstraint *accessoryViewWidthConstraint; // @synthesize accessoryViewWidthConstraint;
 @property(nonatomic) __weak ActionMenuDivider *accessoryViewDivider; // @synthesize accessoryViewDivider;
 @property(nonatomic) __weak NSView *accessoryViewArea; // @synthesize accessoryViewArea;
+@property(nonatomic) __weak ActionMenuDivider *dividerBelowFilterField; // @synthesize dividerBelowFilterField;
 
 @end
 

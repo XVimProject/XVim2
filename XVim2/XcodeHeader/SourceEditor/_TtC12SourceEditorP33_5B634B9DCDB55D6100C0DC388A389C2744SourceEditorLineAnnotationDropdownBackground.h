@@ -10,11 +10,14 @@
 {
     // Error parsing type: , name: topConstraint
     // Error parsing type: , name: heightConstraint
-    // Error parsing type: , name: backgroundColor
+    // Error parsing type: , name: iconAreaWidthConstraint
+    // Error parsing type: , name: iconArea
+    // Error parsing type: , name: contentArea
+    // Error parsing type: , name: innerBackgroundView
+    // Error parsing type: , name: cornerRadius
 }
 
-- (CDUnknownBlockType).cxx_destruct;
-- (void)viewDidChangeBackingProperties;
+- (void).cxx_destruct;
 - (id)initWithCoder:(id)arg1;
 - (id)initWithFrame:(struct CGRect)arg1;
 

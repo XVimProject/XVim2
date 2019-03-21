@@ -18,7 +18,7 @@ __attribute__((visibility("hidden")))
 }
 
 + (id)keyPathsForValuesAffectingNavigableItem_childRepresentedObjects;
-- (CDUnknownBlockType).cxx_destruct;
+- (void).cxx_destruct;
 - (id)init;
 @property(nonatomic, readonly) NSString *description;
 @property(nonatomic, readonly) DVTDocumentLocation *navigableItem_contentDocumentLocation;

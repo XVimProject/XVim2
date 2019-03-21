@@ -6,7 +6,6 @@
 
 #import <QuartzCore/CATextLayer.h>
 
-__attribute__((visibility("hidden")))
 @interface _TtC12SourceEditor18CoverageCountLayer : CATextLayer
 {
 }

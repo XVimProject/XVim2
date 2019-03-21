@@ -7,6 +7,9 @@
 @class NSScroller;
 
 @protocol SourceEditorScrollViewScrollerMoved
+- (void)scrollViewDidEndLiveScrolling;
+- (void)scrollViewDidLiveScrolling;
+- (void)scrollViewDidStartLiveScrolling;
 - (void)userDidScroll:(NSScroller *)arg1;
 @end
 

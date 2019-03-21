@@ -13,7 +13,7 @@ __attribute__((visibility("hidden")))
 }
 
 + (id)annotationProviderForContext:(id)arg1 error:(id *)arg2;
-- (CDUnknownBlockType).cxx_destruct;
+- (void).cxx_destruct;
 - (id)init;
 
 @end

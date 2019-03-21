@@ -4,22 +4,21 @@
 //     class-dump is Copyright (C) 1997-1998, 2000-2001, 2004-2015 by Steve Nygard.
 //
 
-#import <swiftCore/SwiftObject.h>
+#import <swiftCore/_TtCs12_SwiftObject.h>
 
-@interface _TtC12SourceEditor17FoldingController : SwiftObject
+@interface _TtC12SourceEditor17FoldingController : _TtCs12_SwiftObject
 {
     // Error parsing type: , name: delegate
-    // Error parsing type: , name: animationDelegate
+    // Error parsing type: , name: animationController
     // Error parsing type: , name: delimiterData
-    // Error parsing type: , name: foldedRegionDisplay
-    // Error parsing type: , name: _foldableRegions
+    // Error parsing type: , name: foldedRegionDisplay.storage
+    // Error parsing type: , name: _foldableRanges
     // Error parsing type: , name: dataSource
+    // Error parsing type: , name: layoutManager
+    // Error parsing type: , name: gutter
     // Error parsing type: , name: allFolds
     // Error parsing type: , name: _cascadedFoldedRanges
-    // Error parsing type: , name: lowWaterMarkPosition
-    // Error parsing type: , name: highWaterMarkPosition
-    // Error parsing type: , name: transientFoldRegion
-    // Error parsing type: , name: isAnimating
+    // Error parsing type: , name: transientFoldedRange
 }
 
 @end

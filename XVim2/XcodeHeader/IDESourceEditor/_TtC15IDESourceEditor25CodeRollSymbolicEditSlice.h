@@ -24,7 +24,7 @@ __attribute__((visibility("hidden")))
     // Error parsing type: , name: disableAll
 }
 
-- (CDUnknownBlockType).cxx_destruct;
+- (void).cxx_destruct;
 - (id)initWithNibName:(id)arg1 bundle:(id)arg2;
 - (void)cellClicked:(id)arg1;
 - (double)tableView:(id)arg1 heightOfRow:(long long)arg2;

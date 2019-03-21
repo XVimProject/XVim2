@@ -12,6 +12,7 @@ __attribute__((visibility("hidden")))
     // Error parsing type: , name: setUpComplete
 }
 
+- (id)initWithCoder:(id)arg1;
 - (void)resetCursorRects;
 @property(nonatomic, readonly) BOOL acceptsFirstResponder;
 - (void)changeToStandardEditor:(id)arg1;

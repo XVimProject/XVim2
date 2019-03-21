@@ -9,6 +9,7 @@
 #import <SourceEditor/NSCollectionViewDataSource-Protocol.h>
 
 @interface _TtC12SourceEditor34SourceEditorLineAnnotationDropdown (SourceEditor1) <NSCollectionViewDataSource>
+- (id)collectionView:(id)arg1 viewForSupplementaryElementOfKind:(id)arg2 atIndexPath:(id)arg3;
 - (id)collectionView:(id)arg1 itemForRepresentedObjectAtIndexPath:(id)arg2;
 - (long long)collectionView:(id)arg1 numberOfItemsInSection:(long long)arg2;
 - (long long)numberOfSectionsInCollectionView:(id)arg1;

@@ -8,7 +8,8 @@
 
 #import <IDESourceEditor/IDEQuickHelpDataContext-Protocol.h>
 
-@class DVTSourceCodeLanguage, DVTSourceCodeSymbolKind, IDEIndexSymbol, NSArray, NSXMLElement;
+@class DVTSourceCodeLanguage, DVTSourceCodeSymbolKind, NSArray, NSXMLElement;
+@protocol IDEIndexSymbol;
 
 __attribute__((visibility("hidden")))
 @interface _TtC15IDESourceEditor30SourceCodeQuickHelpDataContext : NSObject <IDEQuickHelpDataContext>
@@ -17,7 +18,7 @@ __attribute__((visibility("hidden")))
     // Error parsing type: , name: symbolDocumentation
 }
 
-- (CDUnknownBlockType).cxx_destruct;
+- (void).cxx_destruct;
 - (id)init;
 - (void)enumerateRelatedDeclarationsUsingBlock:(CDUnknownBlockType)arg1;
 - (void)enumerateOverriddenSymbolResolutionsUsingBlock:(CDUnknownBlockType)arg1;
@@ -28,7 +29,7 @@ __attribute__((visibility("hidden")))
 @property(nonatomic, readonly) DVTSourceCodeSymbolKind *documentationSymbolKind;
 @property(nonatomic, readonly) NSXMLElement *documentationMarkup;
 @property(nonatomic, readonly) NSXMLElement *declarationSymbolMarkup;
-@property(nonatomic, readonly) IDEIndexSymbol *indexSymbol; // @synthesize indexSymbol;
+@property(nonatomic, readonly) id <IDEIndexSymbol> indexSymbol; // @synthesize indexSymbol;
 
 @end
 

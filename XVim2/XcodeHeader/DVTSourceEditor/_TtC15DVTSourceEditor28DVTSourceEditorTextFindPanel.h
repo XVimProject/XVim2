@@ -4,22 +4,22 @@
 //     class-dump is Copyright (C) 1997-1998, 2000-2001, 2004-2015 by Steve Nygard.
 //
 
-#import "_$S12SourceEditor0aB13TextFindPanelCN.h"
+#import "_$s12SourceEditor0aB13TextFindPanelCN.h"
 
 #import <DVTSourceEditor/DVTSourceEditorFindPatternPanel-Protocol.h>
 
 @class NSButton, NSLayoutConstraint, NSView;
 
 __attribute__((visibility("hidden")))
-@interface _TtC15DVTSourceEditor28DVTSourceEditorTextFindPanel : _$S12SourceEditor0aB13TextFindPanelCN <DVTSourceEditorFindPatternPanel>
+@interface _TtC15DVTSourceEditor28DVTSourceEditorTextFindPanel : _$s12SourceEditor0aB13TextFindPanelCN <DVTSourceEditorFindPatternPanel>
 {
     // Error parsing type: , name: addPatternSeparator
     // Error parsing type: , name: addPatternSeparatorHeightConstraint
     // Error parsing type: , name: addPatternButton
 }
 
-- (CDUnknownBlockType).cxx_destruct;
-- (void)controlTextDidChange:(id)arg1;
+- (void).cxx_destruct;
+- (void)textFieldTextDidChange:(id)arg1;
 - (id)replacePatternField;
 - (id)findPatternField;
 - (void)addPatternButtonAction:(id)arg1;

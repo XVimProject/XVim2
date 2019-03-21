@@ -9,6 +9,7 @@
 @class CALayer, NSString;
 @protocol CAAction;
 
+/*
 @protocol CALayerDelegate <NSObject>
 
 @optional
@@ -18,4 +19,4 @@
 - (void)drawLayer:(CALayer *)arg1 inContext:(struct CGContext *)arg2;
 - (void)displayLayer:(CALayer *)arg1;
 @end
-
+*/

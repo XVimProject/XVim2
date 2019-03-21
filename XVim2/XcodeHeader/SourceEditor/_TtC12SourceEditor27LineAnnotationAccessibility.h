@@ -6,13 +6,12 @@
 
 #import <AppKit/NSAccessibilityElement.h>
 
-__attribute__((visibility("hidden")))
 @interface _TtC12SourceEditor27LineAnnotationAccessibility : NSAccessibilityElement
 {
     // Error parsing type: , name: annotation
 }
 
-- (CDUnknownBlockType).cxx_destruct;
+- (void).cxx_destruct;
 - (id)init;
 - (BOOL)accessibilityPerformPress;
 - (struct CGRect)accessibilityFrame;

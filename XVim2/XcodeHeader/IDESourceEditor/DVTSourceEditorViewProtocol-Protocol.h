@@ -4,13 +4,13 @@
 //     class-dump is Copyright (C) 1997-1998, 2000-2001, 2004-2015 by Steve Nygard.
 //
 
-#import "DVTCharacterRangeFrameConverter-Protocol.h"
-#import "DVTLineRangeCharacterRangeConverter-Protocol.h"
-#import "DVTSourceCodeLanguageEditorView-Protocol.h"
-#import "DVTSourceLandmarkItemContainer-Protocol.h"
-#import "DVTSourceModelProvider-Protocol.h"
-#import "DVTTextInsertionPointLocator-Protocol.h"
+#import <IDESourceEditor/DVTCharacterRangeFrameConverter-Protocol.h>
+#import <IDESourceEditor/DVTLineRangeCharacterRangeConverter-Protocol.h>
+#import <IDESourceEditor/DVTSourceCodeLanguageEditorView-Protocol.h>
+#import <IDESourceEditor/DVTSourceLandmarkItemContainer-Protocol.h>
+#import <IDESourceEditor/DVTSourceModelProvider-Protocol.h>
+#import <IDESourceEditor/DVTTextInsertionPointLocator-Protocol.h>
 
-@protocol DVTSourceEditorViewProtocol <DVTLineRangeCharacterRangeConverter, DVTSourceModelProvider, DVTCharacterRangeFrameConverter, DVTSourceCodeLanguageEditorView, DVTSourceLandmarkItemContainer, DVTTextInsertionPointLocator>
+@protocol DVTSourceEditorViewProtocol <DVTSourceModelProvider, DVTSourceCodeLanguageEditorView, DVTSourceLandmarkItemContainer, DVTLineRangeCharacterRangeConverter, DVTCharacterRangeFrameConverter, DVTTextInsertionPointLocator>
 @end
 

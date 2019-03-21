@@ -5,16 +5,15 @@
 //
 
 #import <AppKit/NSView.h>
-#import <AppKit/AppKit.h>
 
-//#import <SourceEditor/NSServicesMenuRequestor-Protocol.h>
-//#import <SourceEditor/NSTextInputClient-Protocol.h>
-//#import <SourceEditor/_TtP12SourceEditor34SourceEditorViewMissingKeyBindings_-Protocol.h>
-#import "_TtP12SourceEditor34SourceEditorViewMissingKeyBindings_-Protocol.h"
+#import <SourceEditor/NSServicesMenuRequestor-Protocol.h>
+#import <SourceEditor/NSTextInputClient-Protocol.h>
+#import <SourceEditor/NSUserInterfaceValidations-Protocol.h>
+#import <SourceEditor/_TtP12SourceEditor34SourceEditorViewMissingKeyBindings_-Protocol.h>
 
 @class NSString, SourceEditorScrollView, _TtC12SourceEditor23SourceEditorContentView;
 
-@interface _TtC12SourceEditor16SourceEditorView : NSView <NSTextInputClient, _TtP12SourceEditor34SourceEditorViewMissingKeyBindings_, NSServicesMenuRequestor>
+@interface _TtC12SourceEditor16SourceEditorView : NSView <NSTextInputClient, _TtP12SourceEditor34SourceEditorViewMissingKeyBindings_, NSUserInterfaceValidations, NSServicesMenuRequestor>
 {
     // Error parsing type: , name: delegate
     // Error parsing type: , name: contentViewOffset
@@ -49,9 +48,11 @@
     // Error parsing type: , name: textFindPanel.storage
     // Error parsing type: , name: textFindPanelDisplayed
     // Error parsing type: , name: findQuery
+    // Error parsing type: , name: findResultSelectionShouldWrap
     // Error parsing type: , name: findResult
     // Error parsing type: , name: findReplaceWith
     // Error parsing type: , name: findResultNeedUpdate
+    // Error parsing type: , name: findPasteboard
     // Error parsing type: , name: selectedSymbolHighlight.storage
     // Error parsing type: , name: lineHighlightLayoutVisualization
     // Error parsing type: , name: delimiterHighlight.storage
@@ -62,12 +63,6 @@
     // Error parsing type: , name: selection
     // Error parsing type: , name: oldSubstitutionView
     // Error parsing type: , name: calloutVisualization.storage
-    // Error parsing type: , name: isCodeCompletionEnabled
-    // Error parsing type: , name: languageServiceCompletionStrategy
-    // Error parsing type: , name: codeCompletionController
-    // Error parsing type: , name: currentListShownExplicitly
-    // Error parsing type: , name: currentListWordStart
-    // Error parsing type: , name: shouldProvideCodeCompletion
     // Error parsing type: , name: markedEditTransaction
     // Error parsing type: , name: markedStyle
     // Error parsing type: , name: asyncContinuations
@@ -87,7 +82,7 @@
 }
 
 + (id)defaultMenu;
-//- (CDUnknownBlockType).cxx_destruct;
+//- (void).cxx_destruct;
 @property(nonatomic, readonly) NSString *description;
 - (void)viewDidEndLiveResize;
 - (void)viewWillStartLiveResize;
@@ -153,7 +148,6 @@
 - (void)unfold:(id)arg1;
 - (void)fold:(id)arg1;
 - (void)selectStructure:(id)arg1;
-- (void)complete:(id)arg1;
 - (void)redo:(id)arg1;
 - (void)undo:(id)arg1;
 - (void)swapWithMark:(id)arg1;
@@ -175,7 +169,7 @@
 - (void)insertBacktab:(id)arg1;
 - (void)insertTab:(id)arg1;
 - (void)doCommandBySelector:(SEL)arg1;
-- (BOOL)validateMenuItem:(id)arg1;
+- (BOOL)validateUserInterfaceItem:(id)arg1;
 - (void)flagsChanged:(id)arg1;
 - (void)keyDown:(id)arg1;
 - (void)concludeDragOperation:(id)arg1;

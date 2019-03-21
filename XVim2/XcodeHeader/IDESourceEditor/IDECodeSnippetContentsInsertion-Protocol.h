@@ -6,8 +6,9 @@
 
 #import <IDESourceEditor/NSObject-Protocol.h>
 
-@protocol DVTSourceControlCancellable <NSObject>
-@property(nonatomic, readonly) unsigned long long authenticationOptions;
-- (void)cancel;
+@class NSPasteboard;
+
+@protocol IDECodeSnippetContentsInsertion <NSObject>
+- (BOOL)insertCodeSnippetContentsFromPasteboard:(NSPasteboard *)arg1;
 @end
 

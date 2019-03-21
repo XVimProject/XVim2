@@ -10,7 +10,7 @@
 @class DVTFilePath, DVTSDK, DVTSourceCodeLanguage, DVTToolsVersion, IDEBuildParameters, IDEContainer, IDEFileReference, IDEGroup, IDEPIFGUID, IDESourceFileBuildInfo, IDETestBlueprintHostSettings, IDETypeIdentifier, IDEWorkspaceArenaSnapshot, NSArray, NSDictionary, NSSet, NSString;
 @protocol IDEBlueprintProvider, IDEBuildable, IDECustomDataStoring, IDEProvisionable;
 
-@protocol IDEBlueprint <IDEIssueLogDataSource, NSObject>
+@protocol IDEBlueprint <NSObject, IDEIssueLogDataSource>
 - (DVTFilePath *)entitlementsFilePathForBuildConfiguration:(NSString *)arg1;
 - (void)addFileReference:(IDEFileReference *)arg1 toBuildablesContainingFileReference:(IDEFileReference *)arg2;
 - (BOOL)containsFilePath:(DVTFilePath *)arg1;
@@ -37,6 +37,7 @@
 @property(nonatomic, readonly) NSSet *knownAssetTags;
 @property(nonatomic, readonly) DVTToolsVersion *createdOnToolsVersion;
 - (DVTFilePath *)infoDictionaryFilePathForConfiguration:(NSString *)arg1;
+- (NSDictionary *)resolvedInfoDictionaryForBuildParameters:(IDEBuildParameters *)arg1;
 - (NSDictionary *)infoDictionaryForConfiguration:(NSString *)arg1;
 @property(nonatomic, readonly) DVTFilePath *bundleBaselineRecordFilePath;
 - (NSString *)pathToLargestAssetCatalogAppIconPassingTest:(BOOL (^)(NSDictionary *))arg1;

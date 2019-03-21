@@ -4,9 +4,9 @@
 //     class-dump is Copyright (C) 1997-1998, 2000-2001, 2004-2015 by Steve Nygard.
 //
 
-#import <swiftCore/SwiftObject.h>
+#import <swiftCore/_TtCs12_SwiftObject.h>
 
-@interface _TtCC12SourceEditor20ActionMenuControllerP33_7BD8C7A954834164802CF40D70281F817Context : SwiftObject
+@interface _TtCC12SourceEditor20ActionMenuControllerP33_7BD8C7A954834164802CF40D70281F817Context : _TtCs12_SwiftObject
 {
     // Error parsing type: , name: title
     // Error parsing type: , name: identifier

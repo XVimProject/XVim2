@@ -4,9 +4,9 @@
 //     class-dump is Copyright (C) 1997-1998, 2000-2001, 2004-2015 by Steve Nygard.
 //
 
-#import <swiftCore/SwiftObject.h>
+#import <swiftCore/_TtCs12_SwiftObject.h>
 
-@interface _TtC15IDESourceEditorP33_3D16E535F05923485BACC5F644BB596242SourceCodeDocumentLanguageServiceExtension : SwiftObject
+@interface _TtC15IDESourceEditorP33_3D16E535F05923485BACC5F644BB596242SourceCodeDocumentLanguageServiceExtension : _TtCs12_SwiftObject
 {
     // Error parsing type: , name: document
     // Error parsing type: , name: nodeAdjustRequests

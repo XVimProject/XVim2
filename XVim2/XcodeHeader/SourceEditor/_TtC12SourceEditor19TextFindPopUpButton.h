@@ -11,7 +11,7 @@
     // Error parsing type: , name: textColor
 }
 
-- (CDUnknownBlockType).cxx_destruct;
+- (void).cxx_destruct;
 - (id)initWithCoder:(id)arg1;
 - (id)initWithFrame:(struct CGRect)arg1;
 - (id)initWithFrame:(struct CGRect)arg1 pullsDown:(BOOL)arg2;

@@ -6,7 +6,6 @@
 
 #import <AppKit/NSView.h>
 
-__attribute__((visibility("hidden")))
 @interface _TtC12SourceEditor26ElidedLineSubstitutionView : NSView
 {
     // Error parsing type: , name: shouldDrawDivider

@@ -6,7 +6,6 @@
 
 #import <QuartzCore/CALayer.h>
 
-__attribute__((visibility("hidden")))
 @interface _TtCC12SourceEditor28SourceEditorGutterMarginView33SourceEditorGutterMarginViewLayer : CALayer
 {
 }

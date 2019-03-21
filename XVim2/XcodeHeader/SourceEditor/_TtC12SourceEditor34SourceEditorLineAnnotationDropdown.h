@@ -6,7 +6,6 @@
 
 #import <AppKit/NSView.h>
 
-__attribute__((visibility("hidden")))
 @interface _TtC12SourceEditor34SourceEditorLineAnnotationDropdown : NSView
 {
     // Error parsing type: , name: delegate
@@ -21,7 +20,7 @@ __attribute__((visibility("hidden")))
     // Error parsing type: , name: backgroundViews
 }
 
-- (CDUnknownBlockType).cxx_destruct;
+- (void).cxx_destruct;
 @property(nonatomic, readonly) struct CGSize intrinsicContentSize;
 - (void)viewDidChangeBackingProperties;
 - (id)initWithCoder:(id)arg1;

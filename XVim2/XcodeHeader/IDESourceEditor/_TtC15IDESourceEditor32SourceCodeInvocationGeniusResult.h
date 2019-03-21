@@ -15,7 +15,7 @@ __attribute__((visibility("hidden")))
     // Error parsing type: , name: callerSymbol
 }
 
-- (CDUnknownBlockType).cxx_destruct;
+- (void).cxx_destruct;
 - (id)init;
 @property(nonatomic, readonly) DVTFileDataType *navigableItem_documentType;
 @property(nonatomic, readonly) DVTDocumentLocation *navigableItem_contentDocumentLocation;

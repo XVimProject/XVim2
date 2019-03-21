@@ -6,11 +6,11 @@
 
 #import <SourceEditor/_TtC12SourceEditor28SourceEditorGutterMarginView.h>
 
-__attribute__((visibility("hidden")))
 @interface _TtC12SourceEditor35SourceEditorGutterMarginContentView : _TtC12SourceEditor28SourceEditorGutterMarginView
 {
     // Error parsing type: , name: gutter
     // Error parsing type: , name: requiredWidth
+    // Error parsing type: , name: lineNumbersHostingLayer
     // Error parsing type: , name: lastVisibleLineRange
     // Error parsing type: , name: axAnnotations
     // Error parsing type: , name: needAnnotationAccessibilityUpdate
@@ -26,7 +26,7 @@ __attribute__((visibility("hidden")))
     // Error parsing type: , name: layoutIntentMap
 }
 
-- (CDUnknownBlockType).cxx_destruct;
+- (void).cxx_destruct;
 - (BOOL)isFlipped;
 - (id)initWithCoder:(id)arg1;
 - (id)initWithFrame:(struct CGRect)arg1;

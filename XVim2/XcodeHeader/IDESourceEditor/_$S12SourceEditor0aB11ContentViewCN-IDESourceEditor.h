@@ -4,13 +4,13 @@
 //     class-dump is Copyright (C) 1997-1998, 2000-2001, 2004-2015 by Steve Nygard.
 //
 
-#import "_$S12SourceEditor0aB11ContentViewCN.h"
+#import "_$s12SourceEditor0aB11ContentViewCN.h"
 
 #import <IDESourceEditor/DVTSourceCodeComparisonTextView-Protocol.h>
 
 @class NSColor;
 
-@interface _$S12SourceEditor0aB11ContentViewCN (IDESourceEditor) <DVTSourceCodeComparisonTextView>
+@interface _$s12SourceEditor0aB11ContentViewCN (IDESourceEditor) <DVTSourceCodeComparisonTextView>
 - (BOOL)scrollToRange:(struct _NSRange)arg1;
 @property(nonatomic, readonly) double defaultLineHeight;
 @property(nonatomic, readonly) NSColor *backgroundColor;

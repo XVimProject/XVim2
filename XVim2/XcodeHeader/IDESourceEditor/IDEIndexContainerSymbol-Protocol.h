@@ -4,13 +4,11 @@
 //     class-dump is Copyright (C) 1997-1998, 2000-2001, 2004-2015 by Steve Nygard.
 //
 
-#import <IDESourceEditor/NSObject-Protocol.h>
+#import <IDESourceEditor/IDEIndexSymbol-Protocol.h>
 
-@protocol DVTCancellable <NSObject>
-- (BOOL)isCancelled;
-- (void)cancel;
+@class IDEIndexCollection;
 
-// Remaining properties
-@property(nonatomic, readonly) BOOL cancelled;
+@protocol IDEIndexContainerSymbol <IDEIndexSymbol>
+- (IDEIndexCollection *)children;
 @end
 

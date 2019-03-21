@@ -4,11 +4,11 @@
 //     class-dump is Copyright (C) 1997-1998, 2000-2001, 2004-2015 by Steve Nygard.
 //
 
-#import "_$S15DVTSourceEditor0aB8LandmarkCN.h"
+#import "_$s15DVTSourceEditor0aB8LandmarkCN.h"
 
 @class NSArray, NSImage, NSString;
 
-@interface _$S15DVTSourceEditor0aB8LandmarkCN (IDESourceEditor)
+@interface _$s15DVTSourceEditor0aB8LandmarkCN (IDESourceEditor)
 - (id)navigableItem_contentDocumentLocationInDocumentURL:(id)arg1;
 @property(nonatomic, readonly) NSArray *navigableItem_childRepresentedObjects;
 @property(nonatomic, readonly) BOOL navigableItem_isLeaf;

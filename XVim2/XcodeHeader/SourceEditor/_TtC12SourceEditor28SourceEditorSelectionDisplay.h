@@ -4,9 +4,9 @@
 //     class-dump is Copyright (C) 1997-1998, 2000-2001, 2004-2015 by Steve Nygard.
 //
 
-#import <swiftCore/SwiftObject.h>
+#import <swiftCore/_TtCs12_SwiftObject.h>
 
-@interface _TtC12SourceEditor28SourceEditorSelectionDisplay : SwiftObject
+@interface _TtC12SourceEditor28SourceEditorSelectionDisplay : _TtCs12_SwiftObject
 {
     // Error parsing type: , name: sourceView
     // Error parsing type: , name: isSelecting
@@ -31,7 +31,6 @@
     // Error parsing type: , name: childrenNeedSelectionInfoUpdate
     // Error parsing type: , name: textAttributeOverrideProviders.storage
     // Error parsing type: , name: cursorTextAttributeOverrideProvider
-    // Error parsing type: , name: selectionTextAttributeOverrideProvider
 }
 
 - (void)cursorBlinkTimerFired:(id)arg1;

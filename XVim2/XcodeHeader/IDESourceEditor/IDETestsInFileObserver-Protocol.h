@@ -9,6 +9,9 @@
 @class NSSet;
 
 @protocol IDETestsInFileObserver <IDETestObserver>
+
+@optional
+- (void)testLocationsInFileUpdated:(NSSet *)arg1;
 - (void)testsInFileUpdated:(NSSet *)arg1;
 @end
 

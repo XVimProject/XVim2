@@ -8,7 +8,7 @@
 
 @class NSSet;
 
-@protocol AuxiliaryEditorShimForJustice <NSObject>
+@protocol AuxiliaryInspectorCategoryProvider <NSObject>
 @property(nonatomic, readonly) NSSet *inspectorCategoryIdentifiers;
 @end
 

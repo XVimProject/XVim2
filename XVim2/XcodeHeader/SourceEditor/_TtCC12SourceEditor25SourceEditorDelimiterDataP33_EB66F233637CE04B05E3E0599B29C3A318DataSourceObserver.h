@@ -4,9 +4,9 @@
 //     class-dump is Copyright (C) 1997-1998, 2000-2001, 2004-2015 by Steve Nygard.
 //
 
-#import <swiftCore/SwiftObject.h>
+#import <swiftCore/_TtCs12_SwiftObject.h>
 
-@interface _TtCC12SourceEditor25SourceEditorDelimiterDataP33_EB66F233637CE04B05E3E0599B29C3A318DataSourceObserver : SwiftObject
+@interface _TtCC12SourceEditor25SourceEditorDelimiterDataP33_EB66F233637CE04B05E3E0599B29C3A318DataSourceObserver : _TtCs12_SwiftObject
 {
     // Error parsing type: , name: delimiterData
 }

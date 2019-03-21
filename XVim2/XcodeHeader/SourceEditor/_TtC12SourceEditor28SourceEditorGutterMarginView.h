@@ -6,7 +6,6 @@
 
 #import <AppKit/NSView.h>
 
-__attribute__((visibility("hidden")))
 @interface _TtC12SourceEditor28SourceEditorGutterMarginView : NSView
 {
     // Error parsing type: , name: dividerLineLayer
@@ -15,7 +14,7 @@ __attribute__((visibility("hidden")))
     // Error parsing type: , name: drawDividerLine
 }
 
-- (CDUnknownBlockType).cxx_destruct;
+- (void).cxx_destruct;
 - (BOOL)isFlipped;
 - (id)initWithCoder:(id)arg1;
 - (id)initWithFrame:(struct CGRect)arg1;

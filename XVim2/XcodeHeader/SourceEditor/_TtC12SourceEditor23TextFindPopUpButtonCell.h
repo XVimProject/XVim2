@@ -11,7 +11,7 @@
     // Error parsing type: , name: indicatorIconOverride
 }
 
-- (CDUnknownBlockType).cxx_destruct;
+- (void).cxx_destruct;
 - (id)initWithCoder:(id)arg1;
 - (id)initTextCell:(id)arg1 pullsDown:(BOOL)arg2;
 - (struct CGRect)drawTitle:(id)arg1 withFrame:(struct CGRect)arg2 inView:(id)arg3;

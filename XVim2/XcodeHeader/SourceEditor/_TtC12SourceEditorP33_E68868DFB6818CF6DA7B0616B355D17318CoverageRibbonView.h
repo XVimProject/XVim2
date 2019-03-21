@@ -11,9 +11,10 @@
     // Error parsing type: , name: borderLayer
     // Error parsing type: , name: backgroundColor
     // Error parsing type: , name: edgeColor
+    // Error parsing type: , name: accessibilityElements
 }
 
-- (CDUnknownBlockType).cxx_destruct;
+- (void).cxx_destruct;
 - (BOOL)isFlipped;
 - (id)initWithCoder:(id)arg1;
 - (id)initWithFrame:(struct CGRect)arg1;

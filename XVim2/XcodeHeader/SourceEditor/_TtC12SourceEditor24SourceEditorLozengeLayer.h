@@ -24,7 +24,7 @@
     // Error parsing type: , name: animationDuration
 }
 
-- (CDUnknownBlockType).cxx_destruct;
+- (void).cxx_destruct;
 - (id)actionForKey:(id)arg1;
 - (void)layoutSublayers;
 - (id)initWithCoder:(id)arg1;

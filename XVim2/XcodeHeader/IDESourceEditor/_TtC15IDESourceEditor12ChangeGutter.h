@@ -32,7 +32,7 @@
     // Error parsing type: , name: diffDescriptors
 }
 
-- (CDUnknownBlockType).cxx_destruct;
+- (void).cxx_destruct;
 - (id)init;
 - (void)diffSessionDidChange;
 

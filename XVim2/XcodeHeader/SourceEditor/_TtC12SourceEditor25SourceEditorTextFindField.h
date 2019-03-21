@@ -10,14 +10,13 @@
 
 @class NSFont, _TtC12SourceEditor25SourceEditorTextFindPanel;
 
-__attribute__((visibility("hidden")))
 @interface _TtC12SourceEditor25SourceEditorTextFindField : NSSearchField <_TtP12SourceEditor34SourceEditorTextFindPanelFieldType_>
 {
     // Error parsing type: , name: panel
     // Error parsing type: , name: insets
 }
 
-- (CDUnknownBlockType).cxx_destruct;
+- (void).cxx_destruct;
 - (id)initWithCoder:(id)arg1;
 - (id)initWithFrame:(struct CGRect)arg1;
 - (void)cancelOperation:(id)arg1;

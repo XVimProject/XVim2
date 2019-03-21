@@ -4,9 +4,9 @@
 //     class-dump is Copyright (C) 1997-1998, 2000-2001, 2004-2015 by Steve Nygard.
 //
 
-#import "_TtC15IDESourceEditor19IDESourceEditorView.h"
+#import <IDESourceEditor/_TtC15IDESourceEditor19IDESourceEditorView.h>
 
-#import "DVTSourceLandmarkItemContainer-Protocol.h"
+#import <IDESourceEditor/DVTSourceLandmarkItemContainer-Protocol.h>
 
 @interface _TtC15IDESourceEditor19IDESourceEditorView (IDESourceEditor1) <DVTSourceLandmarkItemContainer>
 - (id)sourceLandmarkAtCharacterIndex:(unsigned long long)arg1;

@@ -12,7 +12,7 @@ __attribute__((visibility("hidden")))
     // Error parsing type: , name: replacement
 }
 
-- (CDUnknownBlockType).cxx_destruct;
+- (void).cxx_destruct;
 - (id)init;
 - (id)initWithFoundLocation:(id)arg1 withRange:(struct _NSRange)arg2 inContext:(id)arg3;
 - (id)stringForReplacementString:(id)arg1;

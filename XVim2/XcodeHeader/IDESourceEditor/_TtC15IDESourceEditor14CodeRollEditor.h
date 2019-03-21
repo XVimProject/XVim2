@@ -52,7 +52,7 @@ __attribute__((visibility("hidden")))
 }
 
 + (id)defaultViewNibName;
-- (CDUnknownBlockType).cxx_destruct;
+- (void).cxx_destruct;
 - (id)initWithCoder:(id)arg1;
 - (id)initWithNibName:(id)arg1 bundle:(id)arg2;
 - (id)initWithNibName:(id)arg1 bundle:(id)arg2 document:(id)arg3;

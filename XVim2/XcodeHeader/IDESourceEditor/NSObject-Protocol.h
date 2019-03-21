@@ -6,6 +6,7 @@
 
 @class NSString, Protocol;
 
+/*
 @protocol NSObject
 @property(nonatomic, readonly) NSString *description;
 - (void *)zone;
@@ -30,4 +31,5 @@
 @optional
 @property(nonatomic, readonly) NSString *debugDescription;
 @end
+*/
 

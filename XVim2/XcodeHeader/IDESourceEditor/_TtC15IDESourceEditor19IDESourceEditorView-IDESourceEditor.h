@@ -4,9 +4,9 @@
 //     class-dump is Copyright (C) 1997-1998, 2000-2001, 2004-2015 by Steve Nygard.
 //
 
-#import "_TtC15IDESourceEditor19IDESourceEditorView.h"
+#import <IDESourceEditor/_TtC15IDESourceEditor19IDESourceEditorView.h>
 
-#import "DVTSourceModelProvider-Protocol.h"
+#import <IDESourceEditor/DVTSourceModelProvider-Protocol.h>
 
 @interface _TtC15IDESourceEditor19IDESourceEditorView (IDESourceEditor) <DVTSourceModelProvider>
 - (id)sourceModel;

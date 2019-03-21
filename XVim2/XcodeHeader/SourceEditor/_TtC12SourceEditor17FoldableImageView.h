@@ -10,16 +10,18 @@
 {
     // Error parsing type: , name: image
     // Error parsing type: , name: foldedLineRange
+    // Error parsing type: , name: firstLineIdentifier
     // Error parsing type: , name: containerLayer
     // Error parsing type: , name: topFoldLayer
     // Error parsing type: , name: topDarkeningLayer
     // Error parsing type: , name: bottomFoldLayer
     // Error parsing type: , name: bottomDarkeningLayer
     // Error parsing type: , name: desiredHeight
+    // Error parsing type: , name: finalHeight
     // Error parsing type: , name: isDark
 }
 
-- (CDUnknownBlockType).cxx_destruct;
+- (void).cxx_destruct;
 - (id)initWithFrame:(struct CGRect)arg1;
 - (void)layoutSublayersOfLayer:(id)arg1;
 - (id)makeBackingLayer;

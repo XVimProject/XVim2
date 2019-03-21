@@ -6,7 +6,8 @@
 
 #import <IDESourceEditor/NSObject-Protocol.h>
 
-@class DVTSourceCodeLanguage, DVTSourceCodeSymbolKind, IDEIndexSymbol, NSArray, NSXMLElement;
+@class DVTSourceCodeLanguage, DVTSourceCodeSymbolKind, NSArray, NSXMLElement;
+@protocol IDEIndexSymbol;
 
 @protocol IDEQuickHelpDataContext <NSObject>
 - (void)enumerateRelatedDeclarationsUsingBlock:(void (^)(NSXMLElement *, char *))arg1;
@@ -18,6 +19,6 @@
 @property(nonatomic, readonly) DVTSourceCodeSymbolKind *documentationSymbolKind;
 @property(nonatomic, readonly) NSXMLElement *documentationMarkup;
 @property(nonatomic, readonly) NSXMLElement *declarationSymbolMarkup;
-@property(nonatomic, readonly) IDEIndexSymbol *indexSymbol;
+@property(nonatomic, readonly) id <IDEIndexSymbol> indexSymbol;
 @end
 

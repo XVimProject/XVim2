@@ -16,6 +16,7 @@
 #import "XVimConstants.h"
 #import "XVimDefs.h"
 #import "XVimMacros.h"
+#import <AppKit/AppKit.h>
 #endif
 
 #endif /* XVim2_prefix_h */

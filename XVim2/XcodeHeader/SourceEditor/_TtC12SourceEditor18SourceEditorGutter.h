@@ -24,7 +24,7 @@
     // Error parsing type: , name: invalidatedLineNumbers
 }
 
-- (CDUnknownBlockType).cxx_destruct;
+- (void).cxx_destruct;
 - (void)dealloc;
 - (id)init;
 

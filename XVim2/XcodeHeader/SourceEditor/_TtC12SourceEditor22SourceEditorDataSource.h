@@ -4,15 +4,16 @@
 //     class-dump is Copyright (C) 1997-1998, 2000-2001, 2004-2015 by Steve Nygard.
 //
 
-#import <swiftCore/SwiftObject.h>
+#import <swiftCore/_TtCs12_SwiftObject.h>
 
-@interface _TtC12SourceEditor22SourceEditorDataSource : SwiftObject
+@interface _TtC12SourceEditor22SourceEditorDataSource : _TtCs12_SwiftObject
 {
     // Error parsing type: , name: lineData
     // Error parsing type: , name: utf8RangeData
     // Error parsing type: , name: contents
     // Error parsing type: , name: transactionNesting
     // Error parsing type: , name: editedRange
+    // Error parsing type: , name: invalidatedRange
     // Error parsing type: , name: lockedDocument
     // Error parsing type: , name: name
     // Error parsing type: , name: language

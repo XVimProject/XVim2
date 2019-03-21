@@ -6,13 +6,13 @@
 
 #import <IDEKit/IDEEditorDocument.h>
 
-#import "DVTSourceLanguagePrimaryCompletionStrategy-Protocol.h"
-#import "DVTTextFindable-Protocol.h"
-#import "IDEDocumentStructureProviding-Protocol.h"
-#import "IDEIndexCompatibleDocumentLocationConverter-Protocol.h"
-#import "IDEMediaLibraryDelegate-Protocol.h"
-#import "IDESourceCodeDocument-Protocol.h"
-#import "IDESourceCodeGenerationDestination-Protocol.h"
+#import <IDESourceEditor/DVTSourceLanguagePrimaryCompletionStrategy-Protocol.h>
+#import <IDESourceEditor/DVTTextFindable-Protocol.h>
+#import <IDESourceEditor/IDEDocumentStructureProviding-Protocol.h>
+#import <IDESourceEditor/IDEIndexCompatibleDocumentLocationConverter-Protocol.h>
+#import <IDESourceEditor/IDEMediaLibraryDelegate-Protocol.h>
+#import <IDESourceEditor/IDESourceCodeDocument-Protocol.h>
+#import <IDESourceEditor/IDESourceCodeGenerationDestination-Protocol.h>
 
 @class DVTSourceCodeLanguage, IDEMediaResourceVariantContext, NSArray, NSDictionary, NSPrintInfo, NSString, NSURL, _TtC18SourceModelSupport26SourceModelLanguageService;
 
@@ -23,6 +23,7 @@
     // Error parsing type: , name: registeredEditors
     // Error parsing type: , name: firstEditorWorkspaceObservingToken
     // Error parsing type: , name: firstEditorWorkspaceBuildSettings
+    // Error parsing type: , name: lastKnownBuildOperation
     // Error parsing type: , name: variantContextForMediaLibrary
     // Error parsing type: , name: variantForResolvingMediaResources
     // Error parsing type: , name: firstEditorWorkspacePreferredIndexableIdentifiers
@@ -54,7 +55,7 @@
 }
 
 + (long long)topUndoGroupingLevel;
-//- (CDUnknownBlockType).cxx_destruct;
+//- (void).cxx_destruct;
 - (id)printOperationWithSettings:(id)arg1 error:(id *)arg2;
 @property(nonatomic, retain) NSPrintInfo *printInfo;
 - (id)emptyPrivateCopy;

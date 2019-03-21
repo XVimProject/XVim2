@@ -8,19 +8,20 @@
 
 @class NSProgressIndicator, NSTextField;
 
-__attribute__((visibility("hidden")))
 @interface _TtC12SourceEditor23ActionMenuTableCellView : NSTableCellView
 {
     // Error parsing type: , name: modifierTextField
     // Error parsing type: , name: progressIndicator
+    // Error parsing type: , name: rowView
     // Error parsing type: , name: icon
     // Error parsing type: , name: tintedIcon
     // Error parsing type: , name: isEnabled
+    // Error parsing type: , name: backgroundVisualEffectView
     // Error parsing type: , name: isSelected
     // Error parsing type: , name: requiresMoreTime
 }
 
-- (CDUnknownBlockType).cxx_destruct;
+- (void).cxx_destruct;
 - (id)initWithCoder:(id)arg1;
 - (id)initWithFrame:(struct CGRect)arg1;
 - (void)awakeFromNib;

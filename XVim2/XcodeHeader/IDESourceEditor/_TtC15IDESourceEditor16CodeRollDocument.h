@@ -12,7 +12,7 @@
     // Error parsing type: , name: registeredEditors
 }
 
-- (CDUnknownBlockType).cxx_destruct;
+- (void).cxx_destruct;
 - (void)unregisterDocumentEditor:(id)arg1;
 - (void)registerDocumentEditor:(id)arg1;
 - (void)updateChangeCount:(unsigned long long)arg1;

@@ -13,10 +13,9 @@ __attribute__((visibility("hidden")))
     // Error parsing type: , name: slices
     // Error parsing type: , name: symbolName
     // Error parsing type: , name: originalNamePieces
-    // Error parsing type: , name: language
 }
 
-- (CDUnknownBlockType).cxx_destruct;
+- (void).cxx_destruct;
 - (void)includeFileChanged:(id)arg1;
 - (id)initWithCoder:(id)arg1;
 

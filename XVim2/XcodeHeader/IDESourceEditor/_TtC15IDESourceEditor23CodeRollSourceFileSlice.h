@@ -30,7 +30,7 @@ __attribute__((visibility("hidden")))
     // Error parsing type: , name: viewHeightConstraint
 }
 
-- (CDUnknownBlockType).cxx_destruct;
+- (void).cxx_destruct;
 - (void)discloseChanged:(id)arg1;
 - (void)includeFileChanged:(id)arg1;
 - (void)primitiveInvalidate;

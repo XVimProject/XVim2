@@ -4,19 +4,19 @@
 //     class-dump is Copyright (C) 1997-1998, 2000-2001, 2004-2015 by Steve Nygard.
 //
 
-#import "_$S12SourceEditor0aB11UndoManagerCN.h"
+#import "_$s12SourceEditor0aB11UndoManagerCN.h"
 
 #import <DVTSourceEditor/DVTUndo-Protocol.h>
 
 @protocol DVTUndoManagerDelegate;
 
-@interface _TtC15DVTSourceEditor26DVTSourceEditorUndoManager : _$S12SourceEditor0aB11UndoManagerCN <DVTUndo>
+@interface _TtC15DVTSourceEditor26DVTSourceEditorUndoManager : _$s12SourceEditor0aB11UndoManagerCN <DVTUndo>
 {
     // Error parsing type: , name: willAutomaticallyUndoNextChangeGroup
     // Error parsing type: , name: delegate
 }
 
-- (CDUnknownBlockType).cxx_destruct;
+- (void).cxx_destruct;
 - (void)primitiveInvalidate;
 - (void)invalidate;
 - (void)automaticallyUndoNextChangeGroup;

@@ -4,9 +4,9 @@
 //     class-dump is Copyright (C) 1997-1998, 2000-2001, 2004-2015 by Steve Nygard.
 //
 
-#import <swiftCore/SwiftObject.h>
+#import <swiftCore/_TtCs12_SwiftObject.h>
 
-@interface _TtC15IDESourceEditorP33_E44BFBDE090BC90056BC41FC200A6A7040PathTokenVisualizationDataSourceObserver : SwiftObject
+@interface _TtC15IDESourceEditorP33_E44BFBDE090BC90056BC41FC200A6A7040PathTokenVisualizationDataSourceObserver : _TtCs12_SwiftObject
 {
     // Error parsing type: , name: pathTokenVisualization
     // Error parsing type: , name: observedDataSource

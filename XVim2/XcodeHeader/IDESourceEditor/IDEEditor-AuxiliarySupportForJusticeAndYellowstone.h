@@ -6,10 +6,9 @@
 
 #import <IDEKit/IDEEditor.h>
 
-@class IDEViewController;
-@protocol AuxiliaryEditorShimForJustice;
+@protocol AuxiliaryInspectorCategoryProvider;
 
 @interface IDEEditor (AuxiliarySupportForJusticeAndYellowstone)
-@property(readonly, nonatomic) IDEViewController<AuxiliaryEditorShimForJustice> *typeErasedAuxiliaryEditor;
+@property(readonly, nonatomic) id <AuxiliaryInspectorCategoryProvider> auxiliaryInspectorCategoryProvider;
 @end
 

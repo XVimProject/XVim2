@@ -8,17 +8,17 @@
 
 @interface _TtC12SourceEditorP33_E01BB93BD6F4269A0E3F1B73BF59929419FoldableRegionLayer : CAShapeLayer
 {
-    // Error parsing type: , name: foldableRegion
+    // Error parsing type: , name: foldableRange
     // Error parsing type: , name: lightTheme
     // Error parsing type: , name: lineRange.storage
+    // Error parsing type: , name: disclosureLayers.storage
+    // Error parsing type: , name: isHighlighted
+    // Error parsing type: , name: shape
     // Error parsing type: , name: shapePath
     // Error parsing type: , name: strokeLayer
-    // Error parsing type: , name: disclosureDownLayer
-    // Error parsing type: , name: disclosureUpLayer
-    // Error parsing type: , name: isHighlighted
 }
 
-- (CDUnknownBlockType).cxx_destruct;
+- (void).cxx_destruct;
 - (id)init;
 @property(nonatomic) struct CGRect frame;
 - (id)initWithCoder:(id)arg1;

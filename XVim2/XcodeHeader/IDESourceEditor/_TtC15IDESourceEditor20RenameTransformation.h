@@ -8,7 +8,8 @@
 
 #import <IDESourceEditor/IDERefactoringTransformation-Protocol.h>
 
-@class IDEIndexSymbol, IDEWorkspaceDocument, NSString;
+@class IDEWorkspaceDocument, NSString;
+@protocol IDEIndexSymbol;
 
 __attribute__((visibility("hidden")))
 @interface _TtC15IDESourceEditor20RenameTransformation : NSObject <IDERefactoringTransformation>
@@ -19,12 +20,12 @@ __attribute__((visibility("hidden")))
     // Error parsing type: , name: renameNewName
 }
 
-- (CDUnknownBlockType).cxx_destruct;
+- (void).cxx_destruct;
 - (id)init;
 @property(nonatomic, copy) NSString *renameNewName; // @synthesize renameNewName;
 @property(nonatomic, readonly) NSString *renameOldName;
 @property(nonatomic, retain) IDEWorkspaceDocument *workspaceDocument; // @synthesize workspaceDocument;
-@property(nonatomic, retain) IDEIndexSymbol *selectedSymbol; // @synthesize selectedSymbol;
+@property(nonatomic, retain) id <IDEIndexSymbol> selectedSymbol; // @synthesize selectedSymbol;
 
 @end
 

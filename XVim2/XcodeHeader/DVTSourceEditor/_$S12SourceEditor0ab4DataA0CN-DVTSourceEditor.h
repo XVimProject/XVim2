@@ -4,11 +4,11 @@
 //     class-dump is Copyright (C) 1997-1998, 2000-2001, 2004-2015 by Steve Nygard.
 //
 
-#import "_$S12SourceEditor0ab4DataA0CN.h"
+#import "_$s12SourceEditor0ab4DataA0CN.h"
 
 #import <DVTSourceEditor/DVTLineRangeCharacterRangeConverter-Protocol.h>
 
-@interface _$S12SourceEditor0ab4DataA0CN (DVTSourceEditor) <DVTLineRangeCharacterRangeConverter>
+@interface _$s12SourceEditor0ab4DataA0CN (DVTSourceEditor) <DVTLineRangeCharacterRangeConverter>
 - (struct _NSRange)lineRangeForCharacterRange:(struct _NSRange)arg1;
 - (struct _NSRange)characterRangeForLineRange:(struct _NSRange)arg1;
 @end

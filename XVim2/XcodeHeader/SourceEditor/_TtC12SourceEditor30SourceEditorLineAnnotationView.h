@@ -6,7 +6,6 @@
 
 #import <AppKit/NSView.h>
 
-__attribute__((visibility("hidden")))
 @interface _TtC12SourceEditor30SourceEditorLineAnnotationView : NSView
 {
     // Error parsing type: , name: sourceEditorView
@@ -26,7 +25,7 @@ __attribute__((visibility("hidden")))
     // Error parsing type: , name: currentAnimationUUID
 }
 
-- (CDUnknownBlockType).cxx_destruct;
+- (void).cxx_destruct;
 - (void)updateTrackingAreas;
 @property(nonatomic) struct CGRect frame;
 - (struct CGSize)sizeThatFits:(struct CGSize)arg1;

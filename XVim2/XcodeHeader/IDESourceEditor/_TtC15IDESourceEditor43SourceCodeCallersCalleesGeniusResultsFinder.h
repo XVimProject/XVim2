@@ -15,7 +15,7 @@ __attribute__((visibility("hidden")))
 }
 
 + (Class)editorDocumentClass;
-- (CDUnknownBlockType).cxx_destruct;
+- (void).cxx_destruct;
 - (id)init;
 - (void)_updateGeniusResultsWithMostRecentFetch:(CDUnknownBlockType)arg1;
 - (BOOL)_fetchResultsFromIndex:(id)arg1 oldResults:(id)arg2 cancellationChecker:(CDUnknownBlockType)arg3;

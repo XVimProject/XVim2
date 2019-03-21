@@ -6,7 +6,6 @@
 
 #import <AppKit/NSView.h>
 
-__attribute__((visibility("hidden")))
 @interface _TtC12SourceEditor41SourceEditorLineAnnotationCategoryControl : NSView
 {
     // Error parsing type: , name: countLabel
@@ -15,7 +14,7 @@ __attribute__((visibility("hidden")))
     // Error parsing type: , name: removedCategoryControls
 }
 
-- (CDUnknownBlockType).cxx_destruct;
+- (void).cxx_destruct;
 - (id)initWithFrame:(struct CGRect)arg1;
 - (void)resetCursorRects;
 - (id)hitTest:(struct CGPoint)arg1;

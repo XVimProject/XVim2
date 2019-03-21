@@ -4,17 +4,19 @@
 //     class-dump is Copyright (C) 1997-1998, 2000-2001, 2004-2015 by Steve Nygard.
 //
 
-#import <DVTKit/DVTLibraryController.h>
+#import <IDEKit/IDELibraryController.h>
 
-@class DVTObservingToken, NSArray, NSMapTable, NSSet;
+@class DVTObservingToken, IDEEditor, NSArray, NSMapTable, NSSet;
+@protocol IDECodeSnippetContentsInsertion;
 
-@interface IDECodeSnippetLibrary : DVTLibraryController
+@interface IDECodeSnippetLibrary : IDELibraryController
 {
     DVTObservingToken *_kvoSnippetRepositoryToken;
     NSMapTable *_strongSnippetToAssetMap;
     NSArray *_orderedPlatformFamilies;
     BOOL _isAddingUserCodeSnippet;
     NSSet *_lastSnippets;
+    IDEEditor<IDECodeSnippetContentsInsertion> *_activeSourceCodeEditor;
 }
 
 - (void).cxx_destruct;
@@ -23,6 +25,8 @@
 - (id)codeDetailController:(id)arg1 languageForAsset:(id)arg2 representedObject:(id)arg3;
 - (BOOL)wantsDetailView;
 - (id)editorViewControllerForAsset:(id)arg1;
+- (void)activeEditorDidChange:(id)arg1;
+- (BOOL)depositAssets:(id)arg1;
 - (BOOL)canRemoveAsset:(id)arg1;
 - (BOOL)canEditAsset:(id)arg1;
 - (BOOL)removeAssets:(id)arg1 error:(id *)arg2;

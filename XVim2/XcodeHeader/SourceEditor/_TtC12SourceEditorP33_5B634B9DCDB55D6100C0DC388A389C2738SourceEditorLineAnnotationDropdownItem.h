@@ -15,7 +15,7 @@
     // Error parsing type: , name: referenceFont
 }
 
-- (CDUnknownBlockType).cxx_destruct;
+- (void).cxx_destruct;
 - (void)loadView;
 - (void)prepareForReuse;
 - (void)viewDidLayout;

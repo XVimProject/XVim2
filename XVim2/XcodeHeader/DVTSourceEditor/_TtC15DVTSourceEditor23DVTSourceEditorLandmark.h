@@ -16,7 +16,7 @@
     // Error parsing type: , name: owner
 }
 
-- (CDUnknownBlockType).cxx_destruct;
+- (void).cxx_destruct;
 - (id)init;
 - (void)invalidate;
 - (void)primitiveInvalidate;

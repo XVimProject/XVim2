@@ -25,7 +25,7 @@
 }
 
 + (id)defaultActionForKey:(id)arg1;
-- (CDUnknownBlockType).cxx_destruct;
+- (void).cxx_destruct;
 - (id)init;
 @property(nonatomic, readonly) NSString *debugDescription;
 @property(nonatomic, readonly) NSString *description;

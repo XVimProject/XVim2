@@ -12,7 +12,7 @@ __attribute__((visibility("hidden")))
     // Error parsing type: , name: url
 }
 
-- (CDUnknownBlockType).cxx_destruct;
+- (void).cxx_destruct;
 - (id)init;
 - (id)initWithDocumentURL:(id)arg1 timestamp:(id)arg2;
 - (id)initWithCoder:(id)arg1;

@@ -10,10 +10,10 @@
 #import <IDESourceEditor/DVTColorLiteralQuickEditViewControllerDelegate-Protocol.h>
 #import <IDESourceEditor/DVTFileLiteralQuickEditViewControllerDelegate-Protocol.h>
 #import <IDESourceEditor/DVTImageLiteralQuickEditViewControllerDelegate-Protocol.h>
+#import <IDESourceEditor/DVTPathCellDelegate-Protocol.h>
 #import <IDESourceEditor/IDEAnalyzerResultsHostingEditor-Protocol.h>
 #import <IDESourceEditor/IDEBreakpointObserver-Protocol.h>
 #import <IDESourceEditor/IDEJumpToLineDestination-Protocol.h>
-#import <IDESourceEditor/IDEPathCellDelegate-Protocol.h>
 #import <IDESourceEditor/IDEQuickHelpDataContextService-Protocol.h>
 #import <IDESourceEditor/IDESingleFileCommandSupportingEditor-Protocol.h>
 #import <IDESourceEditor/IDESourceControlWorkingCopyMetadataObserver-Protocol.h>
@@ -23,11 +23,13 @@
 #import <IDESourceEditor/IDETestsInFileObserver-Protocol.h>
 #import <IDESourceEditor/NSMenuDelegate-Protocol.h>
 #import <IDESourceEditor/NSTouchBarDelegate-Protocol.h>
+#import <IDESourceEditor/NSUserInterfaceValidations-Protocol.h>
 #import <IDESourceEditor/_TtP9DVTMarkup28PlaygroundMarkupViewDelegate_-Protocol.h>
 
 @class DVTSDK, DVTSourceExpression, IDEAnalyzerResultsExplorer, IDENoteAnnotationExplorer, NSColor, NSString, NSView, _TtC15IDESourceEditor19IDESourceEditorView;
+@protocol IDETestCollection;
 
-@interface _TtC15IDESourceEditor16SourceCodeEditor : IDEEditor <IDESourceControlWorkingCopyObserver, IDESourceControlWorkingCopyMetadataObserver, NSTouchBarDelegate, NSMenuDelegate, DVTAnnotationManagerDelegate, IDETestsInFileObserver, IDESourceExpressionSource, IDEQuickHelpDataContextService, IDEBreakpointObserver, IDEJumpToLineDestination, IDETestingSelection, IDEAnalyzerResultsHostingEditor, IDESingleFileCommandSupportingEditor, DVTColorLiteralQuickEditViewControllerDelegate, DVTImageLiteralQuickEditViewControllerDelegate, DVTFileLiteralQuickEditViewControllerDelegate, _TtP9DVTMarkup28PlaygroundMarkupViewDelegate_, IDEPathCellDelegate>
+@interface _TtC15IDESourceEditor16SourceCodeEditor : IDEEditor <IDESourceControlWorkingCopyObserver, IDESourceControlWorkingCopyMetadataObserver, NSTouchBarDelegate, NSUserInterfaceValidations, NSMenuDelegate, DVTAnnotationManagerDelegate, IDETestsInFileObserver, IDESourceExpressionSource, IDEQuickHelpDataContextService, IDEBreakpointObserver, IDEJumpToLineDestination, IDETestingSelection, IDEAnalyzerResultsHostingEditor, IDESingleFileCommandSupportingEditor, DVTColorLiteralQuickEditViewControllerDelegate, DVTImageLiteralQuickEditViewControllerDelegate, DVTFileLiteralQuickEditViewControllerDelegate, _TtP9DVTMarkup28PlaygroundMarkupViewDelegate_, DVTPathCellDelegate>
 {
     // Error parsing type: , name: sourceEditorView
     // Error parsing type: , name: containerView
@@ -59,6 +61,8 @@
     // Error parsing type: , name: currentRenderedMarkupView
     // Error parsing type: , name: dataSource
     // Error parsing type: , name: currentStructuredSelectionMenuController
+    // Error parsing type: , name: actionMenuItemProviders
+    // Error parsing type: , name: colorPanelNotificationToken
     // Error parsing type: , name: quickHelpForceTouchController
     // Error parsing type: , name: issueObserverToken
     // Error parsing type: , name: issueManager
@@ -76,7 +80,6 @@
     // Error parsing type: , name: workspaceFinishedLoadingToken
     // Error parsing type: , name: logRecordsToken
     // Error parsing type: , name: currentBuildOperationObservingToken
-    // Error parsing type: , name: lastKnownBuildOperation
     // Error parsing type: , name: quickHelpExpression
     // Error parsing type: , name: capturedContinueToHereDocumentLocation
     // Error parsing type: , name: capturedContinueToLineDocumentLocation
@@ -92,7 +95,7 @@
 + (id)keyPathsForValuesAffectingSelectedExpression;
 + (id)keyPathsForValuesAffectingIsWorkspaceBuilding;
 + (void)configureStateSavingObjectPersistenceByName:(id)arg1;
-- (CDUnknownBlockType).cxx_destruct;
+- (void).cxx_destruct;
 - (id)initWithNibName:(id)arg1 bundle:(id)arg2;
 - (void)addDocumentation:(id)arg1;
 - (void)toggleComments:(id)arg1;
@@ -122,6 +125,7 @@
 @property(nonatomic, readonly) NSString *selectedText;
 @property(nonatomic, readonly) DVTSourceExpression *selectedExpression;
 - (void)quickHelpDataContextForExpression:(id)arg1 queue:(id)arg2 completionBlock:(CDUnknownBlockType)arg3;
+@property(nonatomic, readonly) id <IDETestCollection> selectedTests;
 - (id)selectedTestsAndTestables;
 - (id)selectedTest;
 - (void)allTestablesChanged;
@@ -169,7 +173,6 @@
 - (void)fileQuickEdit:(id)arg1 didSelectFilePath:(id)arg2;
 - (void)imageQuickEdit:(id)arg1 didClickMoreButtonForFilePath:(id)arg2;
 - (void)imageQuickEdit:(id)arg1 didSelectFilePath:(id)arg2;
-- (void)changeColor:(id)arg1;
 - (void)colorQuickEdit:(id)arg1 didSelectMoreColorOptions:(id)arg2;
 - (void)colorQuickEdit:(id)arg1 didHighlightColor:(id)arg2;
 - (void)colorQuickEdit:(id)arg1 didSelectColor:(id)arg2;
@@ -182,18 +185,19 @@
 - (id)currentSelectedDocumentLocations;
 - (id)currentSelectedItems;
 - (void)navigateToAnnotationWithRepresentedObject:(id)arg1 wantsIndicatorAnimation:(BOOL)arg2 exploreAnnotationRepresentedObject:(id)arg3;
-- (void)selectAndHighlight:(id)arg1;
+- (void)selectAndHighlightDocumentLocations:(id)arg1;
 - (void)selectDocumentLocations:(id)arg1;
 @property(nonatomic, readonly) BOOL canBecomeMainViewController;
 @property(nonatomic) BOOL allowBecomeMainViewController; // @synthesize allowBecomeMainViewController;
 - (void)takeFocus;
 - (id)initialQueryForJumpToLine;
 - (id)documentLocationForJumpToLineQuery:(id)arg1;
+- (BOOL)insertCodeSnippetContentsFromPasteboard:(id)arg1;
 - (void)createCodeSnippetFromSelection:(id)arg1;
 - (void)toggleInvisibleCharactersShown:(id)arg1;
 - (void)changeSourceCodeLanguageAction:(id)arg1;
 - (void)useSourceCodeLanguageFromFileDataTypeAction:(id)arg1;
-- (BOOL)validateMenuItem:(id)arg1;
+- (BOOL)validateUserInterfaceItem:(id)arg1;
 - (void)jumpBetweenSourceFileAndGeneratedFile:(id)arg1;
 - (void)jumpToLine:(id)arg1;
 - (void)resetFontSize:(id)arg1;

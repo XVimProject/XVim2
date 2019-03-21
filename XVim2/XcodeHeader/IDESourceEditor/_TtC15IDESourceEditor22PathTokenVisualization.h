@@ -4,11 +4,11 @@
 //     class-dump is Copyright (C) 1997-1998, 2000-2001, 2004-2015 by Steve Nygard.
 //
 
-#import <swiftCore/SwiftObject.h>
+#import <swiftCore/_TtCs12_SwiftObject.h>
 
 #import <IDESourceEditor/SourceEditorPathTokenLayerDelegate-Protocol.h>
 
-@interface _TtC15IDESourceEditor22PathTokenVisualization : SwiftObject <SourceEditorPathTokenLayerDelegate>
+@interface _TtC15IDESourceEditor22PathTokenVisualization : _TtCs12_SwiftObject <SourceEditorPathTokenLayerDelegate>
 {
     // Error parsing type: , name: layoutManager
     // Error parsing type: , name: dataSourceObserver

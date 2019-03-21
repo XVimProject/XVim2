@@ -39,7 +39,7 @@
     // Error parsing type: , name: _appendItemsLock
     // Error parsing type: , name: logMode
     // Error parsing type: , name: shouldDisableCloseBracket
-    // Error parsing type: , name: scrollWheelMonitor
+    // Error parsing type: , name: scrollToBottomBufferHeight
     // Error parsing type: , name: consoleTextPreferences
     // Error parsing type: , name: autoCompletionToken
     // Error parsing type: , name: tryClosingBracket
@@ -47,7 +47,7 @@
     // Error parsing type: , name: _appendInterval
 }
 
-- (CDUnknownBlockType).cxx_destruct;
+- (void).cxx_destruct;
 - (id)contextForCompletionStrategiesAtWordStartLocation:(unsigned long long)arg1;
 - (void)setViewController:(id)arg1;
 - (void)setCompletionStrategies:(id)arg1;
@@ -62,6 +62,9 @@
 - (void)scrollToEndOfDocument:(id)arg1;
 - (void)scrollToBeginningOfDocument:(id)arg1;
 - (void)userDidScroll:(id)arg1;
+- (void)scrollViewDidEndLiveScrolling;
+- (void)scrollViewDidLiveScrolling;
+- (void)scrollViewDidStartLiveScrolling;
 - (id)textStorage;
 - (void)setSelectedRange:(struct _NSRange)arg1;
 - (void)moveToBeginningOfParagraph:(id)arg1;
@@ -70,9 +73,13 @@
 - (void)keyDown:(id)arg1;
 - (void)insertText:(id)arg1 replacementRange:(struct _NSRange)arg2;
 - (void)themeFontsAndColorsUpdates;
+- (BOOL)validateUserInterfaceItem:(id)arg1;
+- (BOOL)readSelectionFromPasteboard:(id)arg1;
+- (void)resizeWithOldSuperviewSize:(struct CGSize)arg1;
 - (void)dealloc;
 - (id)initWithCoder:(id)arg1;
 @property(nonatomic) int logMode; // @synthesize logMode;
+@property(nonatomic, readonly) BOOL shouldSuppressTextCompletion;
 - (id)initWithFrame:(struct CGRect)arg1;
 @property(nonatomic, retain) id <IDEConsoleTextViewObjectiveCExpressionRangeDelegate> openingBracketLocationDelegate;
 @property(nonatomic, retain) id <IDEConsoleTextViewStandardIODelegate> standardIODelegate;

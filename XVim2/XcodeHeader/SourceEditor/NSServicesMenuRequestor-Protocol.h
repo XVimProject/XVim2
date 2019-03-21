@@ -8,10 +8,12 @@
 
 @class NSArray, NSPasteboard;
 
+/*
 @protocol NSServicesMenuRequestor <NSObject>
 
 @optional
 - (BOOL)readSelectionFromPasteboard:(NSPasteboard *)arg1;
 - (BOOL)writeSelectionToPasteboard:(NSPasteboard *)arg1 types:(NSArray *)arg2;
 @end
+*/
 

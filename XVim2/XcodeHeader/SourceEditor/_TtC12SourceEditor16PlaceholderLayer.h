@@ -6,7 +6,6 @@
 
 #import <QuartzCore/CALayer.h>
 
-__attribute__((visibility("hidden")))
 @interface _TtC12SourceEditor16PlaceholderLayer : CALayer
 {
 }

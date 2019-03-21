@@ -6,7 +6,6 @@
 
 #import <QuartzCore/CAShapeLayer.h>
 
-__attribute__((visibility("hidden")))
 @interface _TtC12SourceEditor31SourceEditorRangeHighlightLayer : CAShapeLayer
 {
     // Error parsing type: , name: rangeHighlights
@@ -17,7 +16,7 @@ __attribute__((visibility("hidden")))
 }
 
 + (id)defaultActionForKey:(id)arg1;
-- (CDUnknownBlockType).cxx_destruct;
+- (void).cxx_destruct;
 - (id)initWithCoder:(id)arg1;
 - (id)initWithLayer:(id)arg1;
 - (id)init;

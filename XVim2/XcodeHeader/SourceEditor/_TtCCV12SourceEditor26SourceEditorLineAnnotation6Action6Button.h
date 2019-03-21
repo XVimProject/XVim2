@@ -6,7 +6,6 @@
 
 #import <AppKit/NSButton.h>
 
-__attribute__((visibility("hidden")))
 @interface _TtCCV12SourceEditor26SourceEditorLineAnnotation6Action6Button : NSButton
 {
     // Error parsing type: , name: message
@@ -16,7 +15,7 @@ __attribute__((visibility("hidden")))
     // Error parsing type: , name: cornerRadius
 }
 
-- (CDUnknownBlockType).cxx_destruct;
+- (void).cxx_destruct;
 - (id)initWithCoder:(id)arg1;
 - (id)initWithFrame:(struct CGRect)arg1;
 - (void)updateLayer;

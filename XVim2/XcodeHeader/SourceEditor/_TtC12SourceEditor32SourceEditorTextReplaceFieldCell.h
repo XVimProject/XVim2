@@ -6,7 +6,6 @@
 
 #import <AppKit/NSSearchFieldCell.h>
 
-__attribute__((visibility("hidden")))
 @interface _TtC12SourceEditor32SourceEditorTextReplaceFieldCell : NSSearchFieldCell
 {
 }

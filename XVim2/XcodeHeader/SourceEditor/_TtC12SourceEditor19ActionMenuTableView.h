@@ -6,7 +6,6 @@
 
 #import <AppKit/NSTableView.h>
 
-__attribute__((visibility("hidden")))
 @interface _TtC12SourceEditor19ActionMenuTableView : NSTableView
 {
 }

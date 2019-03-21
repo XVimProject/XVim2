@@ -6,6 +6,7 @@
 
 @class NSArray, NSAttributedString;
 
+/*
 @protocol NSTextInputClient
 - (long long)characterIndexForPoint:(struct CGPoint)arg1;
 - (struct CGRect)firstRectForCharacterRange:(struct _NSRange)arg1 actualRange:(struct _NSRange *)arg2;
@@ -26,4 +27,5 @@
 - (double)fractionOfDistanceThroughGlyphForPoint:(struct CGPoint)arg1;
 - (NSAttributedString *)attributedString;
 @end
+*/
 

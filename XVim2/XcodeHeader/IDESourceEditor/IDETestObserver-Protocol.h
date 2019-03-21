@@ -9,7 +9,7 @@
 
 @class NSSet;
 
-@protocol IDETestObserver <IDETestablesObserver, NSObject>
+@protocol IDETestObserver <NSObject, IDETestablesObserver>
 - (void)testsChanged:(NSSet *)arg1;
 @end
 

@@ -9,10 +9,11 @@
 @interface _TtC15IDESourceEditorP33_D9F7DEA52371DE60B1D00820C5602ED425BreakpointAnnotationLayer : CALayer
 {
     // Error parsing type: , name: breakpoint
+    // Error parsing type: , name: appearanceCustomizationProxy
 }
 
 + (id)defaultActionForKey:(id)arg1;
-- (CDUnknownBlockType).cxx_destruct;
+- (void).cxx_destruct;
 - (id)init;
 - (void)display;
 @property(nonatomic) struct CGRect frame;

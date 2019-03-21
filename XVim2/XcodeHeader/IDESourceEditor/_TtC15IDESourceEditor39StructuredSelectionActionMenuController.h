@@ -4,17 +4,17 @@
 //     class-dump is Copyright (C) 1997-1998, 2000-2001, 2004-2015 by Steve Nygard.
 //
 
-#import "_$S12SourceEditor20ActionMenuControllerCN.h"
+#import "_$s12SourceEditor20ActionMenuControllerCN.h"
 
 __attribute__((visibility("hidden")))
-@interface _TtC15IDESourceEditor39StructuredSelectionActionMenuController : _$S12SourceEditor20ActionMenuControllerCN
+@interface _TtC15IDESourceEditor39StructuredSelectionActionMenuController : _$s12SourceEditor20ActionMenuControllerCN
 {
     // Error parsing type: , name: range
     // Error parsing type: , name: context
     // Error parsing type: , name: nameRange
 }
 
-- (CDUnknownBlockType).cxx_destruct;
+- (void).cxx_destruct;
 - (id)initWithCoder:(id)arg1;
 
 @end

@@ -17,7 +17,7 @@ __attribute__((visibility("hidden")))
     // Error parsing type: , name: propertyNameSpacingConstraint
 }
 
-- (CDUnknownBlockType).cxx_destruct;
+- (void).cxx_destruct;
 - (id)initWithCoder:(id)arg1;
 - (id)initWithFrame:(struct CGRect)arg1;
 @property(nonatomic, retain) NSLayoutConstraint *propertyNameSpacingConstraint; // @synthesize propertyNameSpacingConstraint;

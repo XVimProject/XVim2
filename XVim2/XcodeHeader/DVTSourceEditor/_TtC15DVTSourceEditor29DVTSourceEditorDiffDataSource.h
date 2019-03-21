@@ -6,16 +6,22 @@
 
 #import <DVTFoundation/DVTDiffLineDataSource.h>
 
-@interface _TtC15DVTSourceEditor29DVTSourceEditorDiffDataSource : DVTDiffLineDataSource
+#import <DVTSourceEditor/DVTFineGrainDiffDataSource-Protocol.h>
+
+@protocol DVTFineGrainDiffObserver;
+
+@interface _TtC15DVTSourceEditor29DVTSourceEditorDiffDataSource : DVTDiffLineDataSource <DVTFineGrainDiffDataSource>
 {
+    // Error parsing type: , name: fineGrainDiffObserver
     // Error parsing type: , name: dataSourceObserver
 }
 
-- (CDUnknownBlockType).cxx_destruct;
+- (void).cxx_destruct;
 - (id)init;
 - (void)dealloc;
 - (id)arrangedContent;
 - (id)initWithContent:(id)arg1;
+@property(nonatomic, retain) id <DVTFineGrainDiffObserver> fineGrainDiffObserver; // @synthesize fineGrainDiffObserver;
 
 @end
 

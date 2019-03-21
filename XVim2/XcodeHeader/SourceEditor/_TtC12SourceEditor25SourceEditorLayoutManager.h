@@ -4,9 +4,9 @@
 //     class-dump is Copyright (C) 1997-1998, 2000-2001, 2004-2015 by Steve Nygard.
 //
 
-#import <swiftCore/SwiftObject.h>
+#import <swiftCore/_TtCs12_SwiftObject.h>
 
-@interface _TtC12SourceEditor25SourceEditorLayoutManager : SwiftObject
+@interface _TtC12SourceEditor25SourceEditorLayoutManager : _TtCs12_SwiftObject
 {
     // Error parsing type: , name: dataSource
     // Error parsing type: , name: delegate
@@ -40,6 +40,7 @@
     // Error parsing type: , name: lineFragmentOverlayProviders
     // Error parsing type: , name: lineLayerRangeOverrideProviders
     // Error parsing type: , name: additionalLineSpacing
+    // Error parsing type: , name: maxContentWidth
     // Error parsing type: , name: previouslyVisibleAuxAndSubstitutionViews
     // Error parsing type: , name: visibleAuxAndSubstitutionViews
     // Error parsing type: , name: separatorViews

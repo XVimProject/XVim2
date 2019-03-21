@@ -9,11 +9,9 @@
 @interface _TtC12SourceEditorP33_E01BB93BD6F4269A0E3F1B73BF59929417FoldedRegionLayer : CALayer
 {
     // Error parsing type: , name: lineRange
-    // Error parsing type: , name: lightTheme
-    // Error parsing type: , name: disclosureLayer.storage
 }
 
-- (CDUnknownBlockType).cxx_destruct;
+- (void).cxx_destruct;
 - (id)init;
 - (id)initWithCoder:(id)arg1;
 - (id)initWithLayer:(id)arg1;

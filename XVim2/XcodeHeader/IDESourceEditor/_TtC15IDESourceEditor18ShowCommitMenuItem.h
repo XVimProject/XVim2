@@ -4,9 +4,9 @@
 //     class-dump is Copyright (C) 1997-1998, 2000-2001, 2004-2015 by Steve Nygard.
 //
 
-#import "_$S12SourceEditor14ActionMenuItemCN.h"
+#import <IDESourceEditor/_TtC15IDESourceEditor18ViewActionMenuItem.h>
 
-@interface _TtC15IDESourceEditor18ShowCommitMenuItem : _$S12SourceEditor14ActionMenuItemCN
+@interface _TtC15IDESourceEditor18ShowCommitMenuItem : _TtC15IDESourceEditor18ViewActionMenuItem
 {
     // Error parsing type: , name: logItem
 }

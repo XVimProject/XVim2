@@ -4,11 +4,11 @@
 //     class-dump is Copyright (C) 1997-1998, 2000-2001, 2004-2015 by Steve Nygard.
 //
 
-#import <DVTSourceEditor/NSObject-Protocol.h>
+@protocol NSValidatedUserInterfaceItem;
 
-@class DVTUndoManager;
-
-@protocol DVTUndoManagerDelegate <NSObject>
-- (void)undoManagerWillModifyItself:(DVTUndoManager *)arg1;
+/*
+@protocol NSUserInterfaceValidations
+- (BOOL)validateUserInterfaceItem:(id <NSValidatedUserInterfaceItem>)arg1;
 @end
+*/
 

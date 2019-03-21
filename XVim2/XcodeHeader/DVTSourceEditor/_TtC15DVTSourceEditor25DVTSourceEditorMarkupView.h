@@ -4,9 +4,9 @@
 //     class-dump is Copyright (C) 1997-1998, 2000-2001, 2004-2015 by Steve Nygard.
 //
 
-#import "_$S9DVTMarkup20PlaygroundMarkupViewCN.h"
+#import "_$s9DVTMarkup20PlaygroundMarkupViewCN.h"
 
-@interface _TtC15DVTSourceEditor25DVTSourceEditorMarkupView : _$S9DVTMarkup20PlaygroundMarkupViewCN
+@interface _TtC15DVTSourceEditor25DVTSourceEditorMarkupView : _$s9DVTMarkup20PlaygroundMarkupViewCN
 {
 }
 

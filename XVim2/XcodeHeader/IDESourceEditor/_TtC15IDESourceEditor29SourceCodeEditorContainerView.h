@@ -14,7 +14,7 @@ __attribute__((visibility("hidden")))
     // Error parsing type: , name: editor
 }
 
-- (CDUnknownBlockType).cxx_destruct;
+- (void).cxx_destruct;
 - (id)initWithFrame:(struct CGRect)arg1;
 @property(nonatomic, readonly) NSView *viewToInstallScrollerIn;
 - (id)initWithCoder:(id)arg1;

@@ -6,15 +6,15 @@
 
 #import <AppKit/NSView.h>
 
-__attribute__((visibility("hidden")))
-@interface _TtC12SourceEditor51SourceEditorLineAnnotationCategoryControlBorderView : NSView
+#import <SourceEditor/NSCollectionViewElement-Protocol.h>
+
+@interface _TtC12SourceEditorP33_5B634B9DCDB55D6100C0DC388A389C2743SourceEditorLineAnnotationSupplementaryView : NSView <NSCollectionViewElement>
 {
 }
 
+- (void).cxx_destruct;
 - (id)initWithCoder:(id)arg1;
 - (id)initWithFrame:(struct CGRect)arg1;
-- (void)viewDidChangeBackingProperties;
-- (id)makeBackingLayer;
 
 @end
 

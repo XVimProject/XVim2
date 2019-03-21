@@ -6,22 +6,21 @@
 
 #import <AppKit/NSView.h>
 
-__attribute__((visibility("hidden")))
 @interface _TtC12SourceEditor37SourceEditorLineAnnotationContentView : NSView
 {
     // Error parsing type: , name: label
-    // Error parsing type: , name: categoryControlBorderView
     // Error parsing type: , name: categoryControlBackgroundView
+    // Error parsing type: , name: categoryControlDividerView
     // Error parsing type: , name: categoryControl
     // Error parsing type: , name: actionButton
-    // Error parsing type: , name: layoutLabel.storage
+    // Error parsing type: , name: layoutLabel
     // Error parsing type: , name: additionalContentTrailing
     // Error parsing type: , name: referenceFont
     // Error parsing type: , name: isDark
     // Error parsing type: , name: referenceLineSpacing
 }
 
-- (CDUnknownBlockType).cxx_destruct;
+- (void).cxx_destruct;
 - (BOOL)isFlipped;
 - (BOOL)isOpaque;
 - (id)initWithCoder:(id)arg1;

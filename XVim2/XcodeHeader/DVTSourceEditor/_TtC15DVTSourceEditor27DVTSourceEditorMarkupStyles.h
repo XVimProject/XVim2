@@ -19,7 +19,7 @@
     // Error parsing type: , name: sharedResourcesDirectory
 }
 
-- (CDUnknownBlockType).cxx_destruct;
+- (void).cxx_destruct;
 - (id)init;
 
 @end

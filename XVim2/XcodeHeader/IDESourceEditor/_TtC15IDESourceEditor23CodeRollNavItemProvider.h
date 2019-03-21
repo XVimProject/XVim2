@@ -16,7 +16,7 @@ __attribute__((visibility("hidden")))
 
 + (id)domainObjectForURL:(id)arg1 forWorkspace:(id)arg2;
 + (id)domainObjectForWorkspace:(id)arg1;
-- (CDUnknownBlockType).cxx_destruct;
+- (void).cxx_destruct;
 - (id)init;
 
 @end

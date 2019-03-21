@@ -4,17 +4,15 @@
 //     class-dump is Copyright (C) 1997-1998, 2000-2001, 2004-2015 by Steve Nygard.
 //
 
-#import <AppKit/NSImageView.h>
+#import <SourceEditor/_TtC12SourceEditor35SourceEditorLineAnnotationImageView.h>
 
-__attribute__((visibility("hidden")))
-@interface _TtCC12SourceEditor41SourceEditorLineAnnotationCategoryControl15CategoryControl : NSImageView
+@interface _TtCC12SourceEditor41SourceEditorLineAnnotationCategoryControl15CategoryControl : _TtC12SourceEditor35SourceEditorLineAnnotationImageView
 {
     // Error parsing type: , name: category
 }
 
-- (CDUnknownBlockType).cxx_destruct;
+- (void).cxx_destruct;
 - (id)initWithFrame:(struct CGRect)arg1;
-- (id)animationForKey:(id)arg1;
 - (id)initWithCoder:(id)arg1;
 
 @end

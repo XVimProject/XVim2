@@ -9,7 +9,7 @@
 
 @class DVTSDK, DVTSourceExpression, DVTSourceLanguageService, NSString;
 
-@protocol DVTSourceExpressionSource <DVTInvalidation, NSObject>
+@protocol DVTSourceExpressionSource <NSObject, DVTInvalidation>
 - (struct CGRect)expressionFrameForExpression:(DVTSourceExpression *)arg1;
 @property(nonatomic, readonly) DVTSourceExpression *mouseOverExpression;
 @property(nonatomic, readonly) struct CGRect currentSelectionFrame;

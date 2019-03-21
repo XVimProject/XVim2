@@ -6,7 +6,6 @@
 
 #import <SourceEditor/_TtC12SourceEditor28SourceEditorGutterMarginView.h>
 
-__attribute__((visibility("hidden")))
 @interface _TtC12SourceEditor38SourceEditorGutterMarginBackgroundView : _TtC12SourceEditor28SourceEditorGutterMarginView
 {
 }

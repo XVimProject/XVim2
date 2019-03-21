@@ -8,7 +8,6 @@
 
 #import <SourceEditor/NSDraggingSource-Protocol.h>
 
-__attribute__((visibility("hidden")))
 @interface _TtC12SourceEditor30SourceEditorViewDraggingSource : NSObject <NSDraggingSource>
 {
     // Error parsing type: , name: defaultDragAndDropTextDelay
@@ -19,7 +18,7 @@ __attribute__((visibility("hidden")))
     // Error parsing type: , name: mouseDragMovementThreshold
 }
 
-- (CDUnknownBlockType).cxx_destruct;
+- (void).cxx_destruct;
 - (id)init;
 - (BOOL)ignoreModifierKeysForDraggingSession:(id)arg1;
 - (void)draggingSession:(id)arg1 endedAtPoint:(struct CGPoint)arg2 operation:(unsigned long long)arg3;

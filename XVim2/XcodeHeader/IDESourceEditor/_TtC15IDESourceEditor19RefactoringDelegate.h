@@ -4,11 +4,11 @@
 //     class-dump is Copyright (C) 1997-1998, 2000-2001, 2004-2015 by Steve Nygard.
 //
 
-#import <swiftCore/SwiftObject.h>
+#import <swiftCore/_TtCs12_SwiftObject.h>
 
 #import <IDESourceEditor/IDESourceKitRefactoringDelegate-Protocol.h>
 
-@interface _TtC15IDESourceEditor19RefactoringDelegate : SwiftObject <IDESourceKitRefactoringDelegate>
+@interface _TtC15IDESourceEditor19RefactoringDelegate : _TtCs12_SwiftObject <IDESourceKitRefactoringDelegate>
 {
     // Error parsing type: , name: queue
     // Error parsing type: , name: sem

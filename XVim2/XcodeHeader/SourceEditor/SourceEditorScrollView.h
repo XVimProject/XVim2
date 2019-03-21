@@ -6,21 +6,23 @@
 
 #import <AppKit/NSScrollView.h>
 
-@class NSScroller;
-@protocol SourceEditorScrollViewScrollerMoved;
+@protocol NSObject, SourceEditorScrollViewScrollerMoved;
 
 @interface SourceEditorScrollView : NSScrollView
 {
     BOOL _floatingSubviewsShouldMaskToBounds;
+    id <NSObject> _willStartLiveScrollNotificationToken;
+    id <NSObject> _didLiveScrollNotificationToken;
+    id <NSObject> _didEndLiveScrollNotificationToken;
+    BOOL _isLiveScrolling;
     BOOL _updatingAutoContentInsets;
     id <SourceEditorScrollViewScrollerMoved> _scrollerMovedDelegate;
-    NSScroller *_observedVerticalScroller;
     struct NSEdgeInsets _additionalContentInsets;
 }
 
-@property __weak NSScroller *observedVerticalScroller; // @synthesize observedVerticalScroller=_observedVerticalScroller;
 @property BOOL updatingAutoContentInsets; // @synthesize updatingAutoContentInsets=_updatingAutoContentInsets;
 @property struct NSEdgeInsets additionalContentInsets; // @synthesize additionalContentInsets=_additionalContentInsets;
+@property BOOL isLiveScrolling; // @synthesize isLiveScrolling=_isLiveScrolling;
 @property __weak id <SourceEditorScrollViewScrollerMoved> scrollerMovedDelegate; // @synthesize scrollerMovedDelegate=_scrollerMovedDelegate;
 //- (void).cxx_destruct;
 - (BOOL)dvt_autoforwardsScrollWheelEvents;
@@ -34,6 +36,13 @@
 - (void)_doScroller:(id)arg1 hitPart:(long long)arg2 multiplier:(double)arg3;
 - (void)_updateAutomaticContentInsets;
 - (void)updateAutomaticContentInsets;
+- (void)didEndLiveScrolling;
+- (void)didLiveScrolling;
+- (void)didStartLiveScrolling;
+- (void)stopObservingLiveScrollingNotifications;
+- (void)startObservingLiveScrollingNotifications;
+- (void)viewWillMoveToWindow:(id)arg1;
+- (void)dealloc;
 
 @end
 

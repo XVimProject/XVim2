@@ -6,7 +6,6 @@
 
 #import <QuartzCore/CALayer.h>
 
-__attribute__((visibility("hidden")))
 @interface _TtCC12SourceEditor34SourceEditorLineAnnotationDropdown39SourceEditorLineAnnotationDropdownLayer : CALayer
 {
 }

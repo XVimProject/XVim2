@@ -14,7 +14,7 @@ __attribute__((visibility("hidden")))
 }
 
 + (int)providerType;
-- (CDUnknownBlockType).cxx_destruct;
+- (void).cxx_destruct;
 - (BOOL)allowsNewIssuesToBeCoalesced;
 - (id)displayNameForIssueTypeIdentifier:(id)arg1;
 - (void)blueprintFilesRemovedNotification:(id)arg1;

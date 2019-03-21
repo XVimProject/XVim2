@@ -12,7 +12,7 @@
 }
 
 + (id)defaultActionForKey:(id)arg1;
-- (CDUnknownBlockType).cxx_destruct;
+- (void).cxx_destruct;
 - (id)init;
 - (void)display;
 - (struct CGSize)preferredFrameSize;

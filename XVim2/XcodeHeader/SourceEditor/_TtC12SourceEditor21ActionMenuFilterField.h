@@ -6,7 +6,6 @@
 
 #import <AppKit/NSSearchField.h>
 
-__attribute__((visibility("hidden")))
 @interface _TtC12SourceEditor21ActionMenuFilterField : NSSearchField
 {
 }

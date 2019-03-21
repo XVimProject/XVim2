@@ -6,11 +6,13 @@
 
 #import <AppKit/NSView.h>
 
-__attribute__((visibility("hidden")))
 @interface _TtC12SourceEditor23FoldingRibbonMarginView : NSView
 {
+    // Error parsing type: , name: foldingController
+    // Error parsing type: , name: needsAccessibilityUpdate
 }
 
+- (void).cxx_destruct;
 - (BOOL)isFlipped;
 - (id)initWithCoder:(id)arg1;
 - (id)initWithFrame:(struct CGRect)arg1;

@@ -4,17 +4,17 @@
 //     class-dump is Copyright (C) 1997-1998, 2000-2001, 2004-2015 by Steve Nygard.
 //
 
-//#import "_$S15DVTSourceEditor016DVTPegasusSourceB4ViewCN.h"
+//#import "_$s15DVTSourceEditor0aB4ViewCN.h"
 #import <DVTSourceEditor/_TtC15DVTSourceEditor26DVTPegasusSourceEditorView.h>
 
-#import "DVTMarkedScrollerDelegate-Protocol.h"
-#import "DVTSourceEditorViewProtocol-Protocol.h"
-#import "DVTTextCompletionSupportingTextView-Protocol.h"
+#import <IDESourceEditor/DVTMarkedScrollerDelegate-Protocol.h>
+#import <IDESourceEditor/DVTSourceEditorViewProtocol-Protocol.h>
+#import <IDESourceEditor/DVTTextCompletionSupportingTextView-Protocol.h>
 
 @class DVTSourceCodeLanguage, DVTTextCompletionController, DVTTextCompletionDataSource, NSScrollView, NSString;
 
 @interface _TtC15IDESourceEditor19IDESourceEditorView :
-//_$S15DVTSourceEditor016DVTPegasusSourceB4ViewCN
+//_$s15DVTSourceEditor0aB4ViewCN
 _TtC15DVTSourceEditor26DVTPegasusSourceEditorView
 <DVTSourceEditorViewProtocol, DVTTextCompletionSupportingTextView, DVTMarkedScrollerDelegate>
 {
@@ -34,7 +34,8 @@ _TtC15DVTSourceEditor26DVTPegasusSourceEditorView
 
 + (BOOL)appSupportsActionMonitoring;
 + (id)identifierCharacters;
-//- (CDUnknownBlockType).cxx_destruct;
+//- (void).cxx_destruct;
+- (id)accessibilityChildren;
 - (void)didClickMarkForLine:(long long)arg1;
 - (void)resignKeyWindow;
 - (BOOL)resignFirstResponder;

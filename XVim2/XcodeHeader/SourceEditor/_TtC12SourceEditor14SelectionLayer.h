@@ -6,7 +6,6 @@
 
 #import <QuartzCore/CAShapeLayer.h>
 
-__attribute__((visibility("hidden")))
 @interface _TtC12SourceEditor14SelectionLayer : CAShapeLayer
 {
 }

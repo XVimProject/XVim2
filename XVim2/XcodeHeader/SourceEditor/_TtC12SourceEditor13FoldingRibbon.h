@@ -4,15 +4,18 @@
 //     class-dump is Copyright (C) 1997-1998, 2000-2001, 2004-2015 by Steve Nygard.
 //
 
-#import <swiftCore/SwiftObject.h>
+#import <swiftCore/_TtCs12_SwiftObject.h>
 
-@interface _TtC12SourceEditor13FoldingRibbon : SwiftObject
+@interface _TtC12SourceEditor13FoldingRibbon : _TtCs12_SwiftObject
 {
     // Error parsing type: , name: foldingController
+    // Error parsing type: , name: marginWidth
     // Error parsing type: , name: backgroundView
     // Error parsing type: , name: ribbonContentView
-    // Error parsing type: , name: mouseInRibbon
     // Error parsing type: , name: expandedLayer
+    // Error parsing type: , name: cachedLayers
+    // Error parsing type: , name: consumerPriority
+    // Error parsing type: , name: interaction
 }
 
 @end

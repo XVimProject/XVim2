@@ -6,7 +6,7 @@
 
 #import <AppKit/NSView.h>
 
-//#import "SourceEditor/CALayerDelegate-Protocol.h"
+#import <SourceEditor/CALayerDelegate-Protocol.h>
 
 @class NSString;
 
@@ -18,6 +18,7 @@
     // Error parsing type: , name: visibleLineRange
     // Error parsing type: , name: layoutManager
     // Error parsing type: , name: fullBleedFrame
+    // Error parsing type: , name: requiredVisibleY
     // Error parsing type: , name: accessoryMargins
     // Error parsing type: , name: contentMargins
     // Error parsing type: , name: additionalLeftPadding
@@ -29,7 +30,7 @@
 }
 
 + (BOOL)isCompatibleWithResponsiveScrolling;
-//- (CDUnknownBlockType).cxx_destruct;
+//- (void).cxx_destruct;
 - (BOOL)becomeFirstResponder;
 @property(nonatomic, readonly) BOOL acceptsFirstResponder;
 - (void)layoutIfNeeded;
