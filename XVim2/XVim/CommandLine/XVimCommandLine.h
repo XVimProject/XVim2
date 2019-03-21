@@ -10,7 +10,6 @@
 #import <AppKit/AppKit.h>
 
 @interface XVimCommandLine : NSVisualEffectView
-
 - (id)init;
 - (void)setModeString:(NSString*)string;
 - (void)setArgumentString:(NSString*)string;

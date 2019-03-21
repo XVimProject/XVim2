@@ -9,44 +9,33 @@
 #include <unistd.h>
 #include <util.h>
 
-
 @interface ProcessRunner ()
 {
     NSString* _ttyName;
 }
-
 @end
 
 @implementation ProcessRunner
-
 @synthesize launchPath;
 @synthesize arguments;
 @synthesize environment;
 @synthesize workingDirectory;
 @synthesize outputColWidth;
-
 @synthesize input;
 @synthesize inputString;
 @synthesize inputPath;
 //TODO: @synthesize usesAuthorization;
-
 @synthesize receivedOutputData;
 @synthesize receivedOutputString;
 //TODO: @synthesize processExited;
-
 @synthesize timeoutIfNothing;
-
 // The amount of time to wait for stdout if stderr HAS been read
 @synthesize timeoutSinceOutput;
-
 @synthesize priority;
-
 
 + (id)task {
     return [[[self class] alloc] init];
 }
-
-
 
 - (id)init {
     self = [super init];
@@ -60,12 +49,10 @@
 
     self.workingDirectory = [[NSFileManager defaultManager] currentDirectoryPath];
 
-    priority    = NSIntegerMax;
+    priority = NSIntegerMax;
 
     return self;
 }
-
-
 
 static const char*
 CHAllocateCopyString(NSString *str) {
@@ -79,8 +66,6 @@ CHAllocateCopyString(NSString *str) {
 
     return newString;
 }
-
-
 
 - (void)populateWithCurrentEnvironment {
     [environment addEntriesFromDictionary:[[NSProcessInfo processInfo] environment]];
@@ -176,7 +161,6 @@ static const int EXEC_FAILED=122; // as in os_unix.c
 
     if (receivedOutputData || receivedOutputString)
     {
-
         CFRetain((__bridge CFTypeRef)(self));
         hasRetainedForOutput = YES;
 
@@ -194,8 +178,6 @@ static const int EXEC_FAILED=122; // as in os_unix.c
 
     if (p == 0)
     {
-
-
         close([processInputFileHandleWrite fileDescriptor]);
         dup2([processInputFileHandleRead fileDescriptor], STDIN_FILENO);
         close([processInputFileHandleRead fileDescriptor]);
@@ -290,11 +272,8 @@ static const int EXEC_FAILED=122; // as in os_unix.c
     {
         close(masterfd);
     }
-
     return YES;
 }
-
-
 
 - (BOOL)isRunning {
 
@@ -319,13 +298,9 @@ static const int EXEC_FAILED=122; // as in os_unix.c
     return isRunning;
 }
 
-
-
 - (NSInteger)processIdentifier {
     return pid;
 }
-
-
 
 - (NSInteger)terminationStatus {
     if (WIFEXITED(waitpid_status))
@@ -333,8 +308,6 @@ static const int EXEC_FAILED=122; // as in os_unix.c
 
     return 1; // lie
 }
-
-
 
 - (NSTaskTerminationReason)terminationReason {
     if (WIFEXITED(waitpid_status))
@@ -346,8 +319,6 @@ static const int EXEC_FAILED=122; // as in os_unix.c
     return 0;
 }
 
-
-
 - (NSInteger)terminationSignal {
     if (WIFSIGNALED(waitpid_status))
         return WTERMSIG(waitpid_status);
@@ -355,15 +326,11 @@ static const int EXEC_FAILED=122; // as in os_unix.c
     return 0;
 }
 
-
-
 - (void)interrupt // Not always possible. Sends SIGINT.
 {
     if ([self isRunning])
         kill(pid, SIGINT);
 }
-
-
 
 - (void)terminate // Not always possible. Sends SIGTERM.
 {
@@ -373,8 +340,6 @@ static const int EXEC_FAILED=122; // as in os_unix.c
         [self isRunning];
     }
 }
-
-
 
 - (void)kill
 {
@@ -387,8 +352,6 @@ static const int EXEC_FAILED=122; // as in os_unix.c
     }
 }
 
-
-
 - (BOOL)suspend
 {
     if ([self isRunning])
@@ -397,8 +360,6 @@ static const int EXEC_FAILED=122; // as in os_unix.c
     return [self isRunning];
 }
 
-
-
 - (BOOL)resume
 {
     if ([self isRunning])
@@ -406,8 +367,6 @@ static const int EXEC_FAILED=122; // as in os_unix.c
 
     return [self isRunning];
 }
-
-
 
 #pragma mark Blocking methods
 
@@ -429,8 +388,6 @@ static const int EXEC_FAILED=122; // as in os_unix.c
     }
 }
 
-
-
 - (void)waitUntilExit {
 
     NSRunLoop *runloop   = [NSRunLoop currentRunLoop];
@@ -438,7 +395,6 @@ static const int EXEC_FAILED=122; // as in os_unix.c
 
     while ([self isRunning])
     {
-
         [runloop runMode:@"taskitwait" beforeDate:[NSDate dateWithTimeIntervalSinceNow:delay]];
 
         delay *= 1.5;
@@ -448,22 +404,18 @@ static const int EXEC_FAILED=122; // as in os_unix.c
     }
 }
 
-
-
 - (BOOL)waitUntilExitWithTimeout:(NSTimeInterval)timeout {
 
     BOOL hitTimeout = NO;
 
     if (timeout != 0 )
     {
-        NSRunLoop *runloop       = [NSRunLoop currentRunLoop];
-        NSTimeInterval delay     = 0.01;
-
+        NSRunLoop *runloop = [NSRunLoop currentRunLoop];
+        NSTimeInterval delay = 0.01;
         NSTimeInterval startTime = [NSDate timeIntervalSinceReferenceDate];
 
         while ([self isRunning])
         {
-
             NSTimeInterval currentTime = [NSDate timeIntervalSinceReferenceDate];
 
             if (timeout > 0 && currentTime - startTime > timeout)
@@ -491,8 +443,6 @@ static const int EXEC_FAILED=122; // as in os_unix.c
     return hitTimeout;
 }
 
-
-
 - (NSData *)waitForOutput {
 
     NSData *ret = nil;
@@ -500,8 +450,6 @@ static const int EXEC_FAILED=122; // as in os_unix.c
 
     return ret;
 }
-
-
 
 - (NSString *)waitForOutputString {
 
@@ -511,28 +459,18 @@ static const int EXEC_FAILED=122; // as in os_unix.c
     return ret;
 }
 
-
-
 // Want to either wait for it to exit, or for it to EOF
 - (NSData *)waitForError {
-
     NSData *ret = nil;
     [self waitForOutputData:NULL errorData:&ret];
-
     return ret;
 }
-
-
 
 - (NSString *)waitForErrorString {
-
     NSString *ret = nil;
     [self waitForOutputString:NULL errorString:&ret];
-
     return ret;
 }
-
-
 
 - (void)asyncFileHandleReadCompletion:(NSNotification *)notif {
 
@@ -542,7 +480,6 @@ static const int EXEC_FAILED=122; // as in os_unix.c
 
     if ([[notif object] isEqual:processOutputFileHandleRead])
     {
-
         hasFinishedReadingOutput = YES;
         [processOutputFileHandleRead closeFile];
 
@@ -565,8 +502,6 @@ static const int EXEC_FAILED=122; // as in os_unix.c
     }
 }
 
-
-
 - (BOOL)waitForOutputData:(NSData **)output errorData:(NSData **)error {
 
     NSMutableData *outdata = [NSMutableData data];
@@ -583,11 +518,8 @@ static const int EXEC_FAILED=122; // as in os_unix.c
     return hadWhoopsie;
 }
 
-
-
 - (BOOL)waitForIntoOutputData:(NSMutableData *)outdata
 {
-
     if (receivedOutputData || receivedOutputString )
         @throw [[NSException alloc] initWithName : @"TaskitAsyncSyncCombination" reason : @
                 "-waitForOutputData:errorData: called when async output is in use. These two features are mutually exclusive!" userInfo :[NSDictionary dictionary]];
@@ -597,15 +529,13 @@ static const int EXEC_FAILED=122; // as in os_unix.c
         return YES;
     }
 
-    int outfd    = [processOutputFileHandleRead fileDescriptor];
-
+    int outfd  = [processOutputFileHandleRead fileDescriptor];
     int outflags = fcntl(outfd, F_GETFL, 0);
     fcntl(outfd, F_SETFL, outflags | O_NONBLOCK);
 
 #define TASKIT_BUFLEN 200
 
     char outbuf[TASKIT_BUFLEN];
-
     BOOL hasFinishedOutput  = NO;
     BOOL outputHadAWhoopsie = NO;
 
@@ -640,11 +570,8 @@ static const int EXEC_FAILED=122; // as in os_unix.c
             break;
         }
     }
-
     return !outputHadAWhoopsie;
 }
-
-
 
 - (void)waitForOutputString:(NSString **)output errorString:(NSString **)error {
     NSData *outputData = nil;
@@ -658,8 +585,6 @@ static const int EXEC_FAILED=122; // as in os_unix.c
     if (errorData)
         *error = [[NSString alloc] initWithData:errorData encoding:NSUTF8StringEncoding];
 }
-
-
 
 #pragma mark Goodbye!
 

@@ -17,12 +17,11 @@ char* spaces(NSUInteger num);
 NSString* expandTabs(NSString* inStr);
 
 @interface XVimTaskRunner ()
-+(NSString*)_createTempFileWithContents:(NSString*)contents shell:(NSString*)shell;
++ (NSString*)_createTempFileWithContents:(NSString*)contents shell:(NSString*)shell;
 @end
 
 @implementation XVimTaskRunner
-
-+(BOOL)_waitForTaskToTerminate:(NSTask*)task
++ (BOOL)_waitForTaskToTerminate:(NSTask*)task
 {
     NSUInteger waitCount = 0;
     BOOL taskKilled = NO;
@@ -42,9 +41,7 @@ NSString* expandTabs(NSString* inStr);
     return taskKilled;
 }
 
-
-
-+(NSString*) runScript:(NSString*)scriptAndArgs withInput:(NSString*)input withTimeout:(NSTimeInterval)timeout runDirectory:(NSString*)rundir colWidth:(NSUInteger)colWidth
++ (NSString*)runScript:(NSString*)scriptAndArgs withInput:(NSString*)input withTimeout:(NSTimeInterval)timeout runDirectory:(NSString*)rundir colWidth:(NSUInteger)colWidth
 {
     // If we have no input, then this is a 'rangeless' bang command, and we will display the output
     // in the quickfix window, which should behave something like a terminal.
@@ -128,33 +125,27 @@ NSString* expandTabs(NSString* inStr);
     }
 
     return outputReceived ? returnString : nil;
-
 }
 
-+(NSString*)runScript:(NSString *)scriptName withInput:(NSString *)input
++ (NSString*)runScript:(NSString *)scriptName withInput:(NSString *)input
 {
     return [ self runScript:scriptName withInput:input withTimeout:0 runDirectory:@"/" colWidth:80 ];
 }
 
-
-
-+(NSString*)runScript:(NSString *)scriptName
++ (NSString*)runScript:(NSString *)scriptName
 {
     return [ self runScript:scriptName withInput:nil ];
 }
 
-
-
-+(NSString*)runScript:(NSString *)scriptName withTimeout:(NSTimeInterval)timeout
++ (NSString*)runScript:(NSString *)scriptName withTimeout:(NSTimeInterval)timeout
 {
     return [ self runScript:scriptName withInput:nil withTimeout:timeout runDirectory:@"/" colWidth:80 ];
 }
 
-
 static NSString* commandSuffix = @".command";
 static NSString* dataSuffix = @".txt";
 
-+(NSString*)_createTempFileWithContents:(NSString*)contents shell:(NSString *)shell
++ (NSString*)_createTempFileWithContents:(NSString*)contents shell:(NSString *)shell
 {
     NSString *tempFileTemplate     = [@"xvim.XXXXXX" stringByAppendingString:(shell?commandSuffix:dataSuffix)];
     NSString *tempFilePath    = [NSTemporaryDirectory () stringByAppendingPathComponent:tempFileTemplate];
@@ -191,9 +182,6 @@ static NSString* dataSuffix = @".txt";
 
     return filePath;
 }
-
-
-
 @end
 
 #define MAX_TAB_WIDTH 100
@@ -206,11 +194,8 @@ spaces(NSUInteger num)
     {
         memset(SPACES, ' ',MAX_TAB_WIDTH);
     }
-
     return SPACES+MAX_TAB_WIDTH-num;
 }
-
-
 
 NSString*
 expandTabs(NSString* inStr)

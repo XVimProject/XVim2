@@ -126,16 +126,13 @@
 extern int gNSStringGeometricsTypesetterBehavior;
 
 @interface NSAttributedString (Geometrics)
-
 // Measuring Attributed Strings
 - (NSSize)sizeForWidth:(float)width height:(float)height;
 - (float)heightForWidth:(float)width;
 - (float)widthForHeight:(float)height;
-
 @end
 
 @interface NSString (Geometrics)
-
 // Measuring a String With Attributes
 - (NSSize)sizeForWidth:(float)width height:(float)height attributes:(NSDictionary*)attributes;
 - (float)heightForWidth:(float)width attributes:(NSDictionary*)attributes;
@@ -145,5 +142,4 @@ extern int gNSStringGeometricsTypesetterBehavior;
 - (NSSize)sizeForWidth:(float)width height:(float)height font:(NSFont*)font;
 - (float)heightForWidth:(float)width font:(NSFont*)font;
 - (float)widthForHeight:(float)height font:(NSFont*)font;
-
 @end

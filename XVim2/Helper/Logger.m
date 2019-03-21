@@ -11,17 +11,14 @@
 #import <Foundation/Foundation.h>
 #import <objc/runtime.h>
 
-
 #define LOGGER_DEFAULT_NAME @"LoggerDefaultName"
 
 static Logger* s_defaultLogger = nil;
-
 
 @interface Logger () {
     NSFileHandle* _logFile;
 }
 @end
-
 
 @implementation Logger
 
@@ -268,7 +265,6 @@ static Logger* s_defaultLogger = nil;
 
 + (void)traceViewInfo:(NSView*)obj subView:(BOOL)sub { [Logger traceViewInfoImpl:obj subView:sub prefix:@""]; }
 
-
 + (void)traceView:(NSView*)view depth:(NSUInteger)depth
 {
     NSMutableString* str = [[NSMutableString alloc] init];
@@ -281,7 +277,6 @@ static Logger* s_defaultLogger = nil;
         [self traceView:v depth:depth + 1];
     }
 }
-
 
 + (void)traceMenu:(NSMenu*)menu depth:(int)depth
 {

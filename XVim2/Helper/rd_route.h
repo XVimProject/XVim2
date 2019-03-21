@@ -11,9 +11,7 @@
 extern "C" {
 #endif
 
-
 void* function_ptr_from_name(const char* function_name, const char* suggested_image_name);
-
 
 /**
  * Override `function` to jump directly into `replacement` location. Caller can later

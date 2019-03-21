@@ -4,7 +4,6 @@
 //
 //  Created by John AppleSeed on 21/11/13.
 //
-//
 
 /**
  ### How swizzling is working and XVim uses it ###

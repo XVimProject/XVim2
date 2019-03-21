@@ -35,7 +35,6 @@ BOOL isKeyword(unichar ch);
  * This means that if nothing is specified in the Vim regex, "options" stays unchanged.
  **/
 - (NSString*)convertToICURegex:(NSRegularExpressionOptions*)options;
-
 + (NSString*)stringMadeOfSpaces:(NSUInteger)count;
 @end
 

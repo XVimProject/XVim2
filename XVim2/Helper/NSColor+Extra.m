@@ -16,7 +16,6 @@
                     blueInt:(NSInteger)blueInt
                    alphaInt:(NSInteger)alphaInt
 {
-
     CGFloat red = redInt / 255.0;
     CGFloat green = greenInt / 255.0;
     CGFloat blue = blueInt / 255.0;
@@ -62,7 +61,6 @@
 
 + (NSColor*)colorWithColorName:(NSString*)colorName
 {
-
     colorName = [colorName stringByTrimmingCharactersInSet:[NSCharacterSet whitespaceAndNewlineCharacterSet]];
     if (![colorName hasSuffix:@"Color"]) {
         colorName = [colorName stringByAppendingString:@"Color"];
@@ -75,6 +73,5 @@
     }
     return result;
 }
-
 
 @end

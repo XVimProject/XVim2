@@ -4,7 +4,6 @@
 //
 //  Created by John AppleSeed on 21/11/13.
 //
-//
 
 #import "NSObject+Swizzle.h"
 #import <objc/runtime.h>
@@ -12,7 +11,6 @@
 Method xvim_getClassSpecificInstanceMethod(Class aClass, SEL aSelector);
 
 @implementation NSObject (Swizzle)
-
 
 + (void)xvim_swizzleClassMethod:(SEL)origSel with:(SEL)newSel of:(Class)c2
 {

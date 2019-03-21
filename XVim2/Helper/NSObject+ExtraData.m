@@ -4,12 +4,10 @@
 //
 //  Created by Suzuki Shuichiro on 3/24/13.
 //
-//
 
 #import "Logger.h"
 #import "NSObject+ExtraData.h"
 #import <objc/runtime.h>
-
 
 static const NSString* EXTRA_DATA_KEY = @"EXTRADATAKEY";
 @implementation NSObject (ExtraData)

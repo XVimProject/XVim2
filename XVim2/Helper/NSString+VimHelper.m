@@ -34,17 +34,11 @@ static NSString* precomputed[9] = {
 
 @implementation NSString (VimHelper)
 - (BOOL)isDigit:(NSUInteger)index { return isDigit([self characterAtIndex:index]); }
-
 - (BOOL)isOctDigit:(NSUInteger)index { return isOctDigit([self characterAtIndex:index]); }
-
 - (BOOL)isHexDigit:(NSUInteger)index { return isHexDigit([self characterAtIndex:index]); }
-
 - (BOOL)isAlpha:(NSUInteger)index { return isAlpha([self characterAtIndex:index]); }
-
 - (BOOL)isDelimeter:(NSUInteger)index { return isDelimeter([self characterAtIndex:index]); }
-
 - (BOOL)isNewline:(NSUInteger)index { return isNewline([self characterAtIndex:index]); }
-
 - (BOOL)isKeyword:(NSUInteger)index { return isKeyword([self characterAtIndex:index]); }
 
 - (NSString*)convertToICURegex:(NSRegularExpressionOptions*)options
