@@ -1,13 +1,13 @@
 //
-//  XVimUtil.h
+//  XVimRangeUtil.h
 //  XVim2
 //
 //  Created by pebble8888 on 2018/04/06.
 //  Copyright © 2018年 Shuichiro Suzuki. All rights reserved.
 //
 
-#ifndef XVimUtil_h
-#define XVimUtil_h
+#ifndef XVimRangeUtil_h
+#define XVimRangeUtil_h
 
 #import <Foundation/Foundation.h>
 

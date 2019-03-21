@@ -1,12 +1,11 @@
 //
-//  XVimUtil.m
-//  XVim2
+//  XVimRangeUtil.m
 //
 //  Created by pebble8888 on 2018/04/06.
 //  Copyright © 2018年 Shuichiro Suzuki. All rights reserved.
 //
 
-#import "XVimUtil.h"
+#import "XVimRangeUtil.h"
 
 NSRange NSMakeNormalizedRangeFromRange(NSRange r, NSUInteger maxloc)
 {
