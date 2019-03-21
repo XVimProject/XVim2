@@ -14,11 +14,11 @@
 #import "XVimMotion.h"
 
 @interface SourceCodeEditorViewProxy ()
-@property (readwrite) NSUInteger selectionBegin;
-@property (readwrite) NSUInteger insertionPoint;
-@property (readwrite) NSUInteger preservedColumn;
-@property (readwrite) BOOL selectionToEOL;
-@property (strong) NSString* lastYankedText;
+@property NSUInteger selectionBegin;
+@property NSUInteger insertionPoint;
+@property NSUInteger preservedColumn;
+@property BOOL selectionToEOL;
+@property NSString* lastYankedText;
 @property TEXT_TYPE lastYankedType;
 - (void)xvim_moveCursor:(NSUInteger)pos preserveColumn:(BOOL)preserve;
 - (void)xvim_syncStateWithScroll:(BOOL)scroll;

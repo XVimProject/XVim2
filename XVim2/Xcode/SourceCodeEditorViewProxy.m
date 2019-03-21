@@ -41,8 +41,8 @@
 @property BOOL selectionToEOL;
 @property NSInteger editTransactionDepth;
 @property NSInteger undoGroupingDepth;
-@property (strong) NSString* lastYankedText;
-@property (strong) NSLayoutConstraint* cmdLineBottomAnchor;
+@property NSString* lastYankedText;
+@property NSLayoutConstraint* cmdLineBottomAnchor;
 @property TEXT_TYPE lastYankedType;
 @end
 

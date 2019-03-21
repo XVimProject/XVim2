@@ -15,7 +15,7 @@
 
 @interface _TtC15IDESourceEditor19IDESourceEditorView (XVim)
 + (void)xvim_hook;
-@property (strong, readonly) XVimWindow* xvim_window;
+@property (readonly) XVimWindow* xvim_window;
 @end
 
 #endif /* _TtC15IDESourceEditor19IDESourceEditorView_XVim_h */

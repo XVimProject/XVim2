@@ -36,7 +36,7 @@ CONST_STR(EDWindow);
 
 @implementation XVimIDEPegasusSourceEditorView
 
-+(void)xvim_hook
++ (void)xvim_hook
 {
     [XVimIDEPegasusSourceEditorView
      xvim_swizzleInstanceMethodOfClassName: SourceEditorViewClassName
@@ -85,14 +85,11 @@ CONST_STR(EDWindow);
     }
 }
 
-
-// ADDED
 - (void)xvim_setupOnFirstAppearance
 {
     [self.xvim_window setupAfterEditorViewSetup];
     
 }
-
 
 - (XVimWindow*)xvim_window
 {
@@ -106,6 +103,4 @@ CONST_STR(EDWindow);
     return w;
 }
 
-
 @end
-

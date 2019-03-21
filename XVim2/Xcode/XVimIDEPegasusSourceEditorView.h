@@ -9,5 +9,5 @@
 #import <Foundation/Foundation.h>
 
 @interface XVimIDEPegasusSourceEditorView : NSObject
-+(void)xvim_hook;
++ (void)xvim_hook;
 @end
