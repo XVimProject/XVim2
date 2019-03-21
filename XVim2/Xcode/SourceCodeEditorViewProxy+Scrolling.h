@@ -10,5 +10,5 @@
 #import <Foundation/Foundation.h>
 
 @interface SourceCodeEditorViewProxy (Scrolling) <SourceViewScrollingProtocol>
-
+@property (readonly) NSInteger linesPerPage;
 @end

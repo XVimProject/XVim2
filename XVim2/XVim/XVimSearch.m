@@ -15,7 +15,6 @@
 #import "XVimOptions.h"
 #import "XVimWindow.h"
 #import "XcodeUtils.h"
-//#import "IDEKit.h"
 
 @implementation XVimSearch
 

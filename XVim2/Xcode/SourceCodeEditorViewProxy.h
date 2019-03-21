@@ -229,7 +229,6 @@ static inline XVimSourceEditorRange XvimMakeSourceEditorRange(XVimSourceEditorPo
 - (NSSize)contentSize;
 // Utilities
 - (void)scrollRangeToVisible:(NSRange)arg1;
-@property (readonly) NSInteger linesPerPage;
 @property (readonly) NSInteger lineCount;
 - (void)insertText:(id _Nullable)string replacementRange:(NSRange)replacementRange;
 - (void)scrollPageBackward:(NSUInteger)numPages;
