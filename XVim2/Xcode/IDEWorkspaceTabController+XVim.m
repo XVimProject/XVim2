@@ -280,8 +280,8 @@ static inline BOOL xvim_horizontallyStackingModeForMode(GeniusLayoutMode mode)
         // preserve current line number.
         // NSUInteger line_number = (NSUInteger)editorArea.xvim_window.sourceView.currentLineNumber;
         // change window focus.
-        IDEEditorVersionsMode* mode = (IDEEditorVersionsMode*)[editorArea editorModeViewController];
-        IDEComparisonEditorSubmode* submode = mode.comparisonEditorSubmode;
+        //IDEEditorVersionsMode* mode = (IDEEditorVersionsMode*)[editorArea editorModeViewController];
+        //IDEComparisonEditorSubmode* submode = mode.comparisonEditorSubmode;
         // XCODE93
         //[submode.primaryEditor takeFocus];
         // set current line number
@@ -327,8 +327,8 @@ static inline BOOL xvim_horizontallyStackingModeForMode(GeniusLayoutMode mode)
         // preserve current line number.
         // NSUInteger line_number = (NSUInteger)editorArea.xvim_window.sourceView.currentLineNumber;
         // change window focus.
-        IDEEditorVersionsMode* mode = (IDEEditorVersionsMode*)[editorArea editorModeViewController];
-        IDEComparisonEditorSubmode* submode = mode.comparisonEditorSubmode;
+        //IDEEditorVersionsMode* mode = (IDEEditorVersionsMode*)[editorArea editorModeViewController];
+        //IDEComparisonEditorSubmode* submode = mode.comparisonEditorSubmode;
         // XCODE93
         //[submode.secondaryEditor takeFocus];
         // set current line number
