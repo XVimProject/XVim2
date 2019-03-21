@@ -13,6 +13,13 @@
 // cd XcodeHeader/SourceEditor
 // class-dump -H /Applications/Xcode.app/Contents/SharedFrameworks/SourceEditor.framework/SourceEditor
 //
+// cd XcodeHeader/DVTFoundation
+// class-dump -H /Applications/Xcode.app/Contents/SharedFrameworks/DVTFoundation.framework/DVTFoundation
+// cd XcodeHeader/DVTKit
+// class-dump -H /Applications/Xcode.app/Contents/SharedFrameworks/DVTKit.framework/DVTKit
+// cd XcodeHeader/IDEKit
+// class-dump -H /Applications/Xcode.app/Contents/Frameworks/IDEKit.framework/IDEKit
+//
 // demangle prefix
 // Swift 4 "_T0"
 // Swift 4.x "$S", "_$S"
