@@ -22,14 +22,14 @@
 
 @interface SourceCodeEditorViewProxy ()
 @property (weak) _TtC15IDESourceEditor19IDESourceEditorView* sourceCodeEditorView;
-@property (readwrite) NSUInteger selectionBegin;
-@property (readwrite) XVIM_VISUAL_MODE selectionMode;
-@property (readwrite) NSUInteger insertionPoint;
-@property (readwrite) NSUInteger preservedColumn;
-@property (readwrite) BOOL selectionToEOL;
-@property (strong) NSString* lastYankedText;
-@property (readwrite) NSInteger editTransactionDepth;
-@property (readwrite) NSInteger undoGroupingDepth;
+@property NSUInteger selectionBegin;
+@property XVIM_VISUAL_MODE selectionMode;
+@property NSUInteger insertionPoint;
+@property NSUInteger preservedColumn;
+@property BOOL selectionToEOL;
+@property NSString* lastYankedText;
+@property NSInteger editTransactionDepth;
+@property NSInteger undoGroupingDepth;
 @property TEXT_TYPE lastYankedType;
 - (void)_xvim_yankSelection:(XVimSelection)sel;
 - (void)_xvim_killSelection:(XVimSelection)sel;
@@ -73,17 +73,18 @@
     return charRange;
 }
 
--(NSRange)xvim_indexRangeForLines:(NSRange)lineRange {
+- (NSRange)xvim_indexRangeForLines:(NSRange)lineRange
+{
     return [self xvim_indexRangeForLines:lineRange includeEOL:YES];
 }
 
-
--(NSUInteger)xvim_lineNumberAtIndex:(NSUInteger)idx {
+- (NSUInteger)xvim_lineNumberAtIndex:(NSUInteger)idx
+{
     _auto l = [self lineRangeForCharacterRange:NSMakeRange(idx, 0)].location;
     return l != NSNotFound ? l + 1 : 1;
 }
 
--(NSUInteger)xvim_endOfLine:(NSUInteger)startIdx
+- (NSUInteger)xvim_endOfLine:(NSUInteger)startIdx
 {
     if (startIdx == self.string.length)
         return startIdx;
@@ -297,7 +298,8 @@
  * All the state need to express Vim is held by this class and
  * we use self to express it visually.
  **/
--(void)xvim_syncStateWithScroll: (BOOL)scroll {
+- (void)xvim_syncStateWithScroll:(BOOL)scroll
+{
     self.xvim_lockSyncStateFromView = YES;
     // Reset current selection
     if (self.cursorMode == CURSOR_MODE_COMMAND) {
@@ -312,7 +314,7 @@
     self.xvim_lockSyncStateFromView = NO;
 }
 
--(void)xvim_syncStateFromView
+- (void)xvim_syncStateFromView
 {
     // TODO: handle block selection (if selectedRanges have multiple ranges )
     if (self.xvim_lockSyncStateFromView) {
@@ -326,7 +328,7 @@
 }
 
 
--(void)dumpState
+- (void)dumpState
 {
     // LOG_STATE();
 }
@@ -341,7 +343,7 @@
 // It means that
 //   - setSelectedRange:NSMakeRange( indexOfEOF, 0 )   is allowed
 //   - setSelectedRange:NSMakeRange( indexOfEOF, 1 )   is not allowed
--(void)xvim_setSelectedRange : (NSRange)range
+- (void)xvim_setSelectedRange:(NSRange)range
 {
     if ([self.textStorage isEOF:range.location]) {
         [self setSelectedRange:NSMakeRange(range.location, 0)];
@@ -363,9 +365,8 @@
     // LOG_STATE();
 }
 
--(NSArray*)xvim_selectedRanges
+- (NSArray*)xvim_selectedRanges
 {
-
     if (self.selectionMode != XVIM_VISUAL_BLOCK) {
         return [NSArray arrayWithObject:[NSValue valueWithRange:[self _xvim_selectedRange]]];
     }
@@ -392,8 +393,7 @@
     return rangeArray;
 }
 
-
--(XVimRange)_xvim_selectedLines
+- (XVimRange)_xvim_selectedLines
 {
     if (self.selectionMode == XVIM_VISUAL_NONE) { // its not in selecting mode
         return (XVimRange){ NSNotFound, NSNotFound };
@@ -406,7 +406,7 @@
     }
 }
 
--(NSRange)_xvim_selectedRange
+- (NSRange)_xvim_selectedRange
 {
     if (self.selectionMode == XVIM_VISUAL_NONE) {
         return NSMakeRange(self.insertionPoint, 0);
@@ -439,7 +439,7 @@
     return NSMakeRange(NSNotFound, 0);
 }
 
--(XVimSelection)_xvim_selectedBlock
+- (XVimSelection)_xvim_selectedBlock
 {
     XVimSelection result = {};
 
@@ -490,11 +490,10 @@
     return result;
 }
 
-
 // Text Range Queries
 #pragma mark - TEXT RANGE QUERIES
 
--(XVimRange)xvim_getMotionRange : (NSUInteger)current Motion : (XVimMotion*)motion
+- (XVimRange)xvim_getMotionRange : (NSUInteger)current Motion : (XVimMotion*)motion
 {
     NSRange range = NSMakeRange(NSNotFound, 0);
     NSUInteger begin = current;
@@ -769,9 +768,8 @@
 
 // Perform actions before entering insertion mode. For example, for visual block mode:
 // kill the current selection, and yank it.
--(void)xvim_insert : (XVimInsertionPoint)mode blockColumn : (NSUInteger*)column blockLines : (XVimRange*)lines
+- (void)xvim_insert:(XVimInsertionPoint)mode blockColumn:(NSUInteger*)column blockLines:(XVimRange*)lines
 {
-
     if (column)
         *column = NSNotFound;
     if (lines)
@@ -829,23 +827,22 @@
     [self xvim_changeSelectionMode:XVIM_VISUAL_NONE];
 }
 
--(NSRange)xvim_currentWord : (MOTION_OPTION)opt
+- (NSRange)xvim_currentWord:(MOTION_OPTION)opt
 {
     return [self.textStorage currentWord:self.insertionPoint count:1 option:opt | MOPT_TEXTOBJECT_INNER];
 }
 
-
 // UTILITY
 #pragma MARK - UTILITY
 
--(void)_xvim_insertSpaces : (NSUInteger)count replacementRange : (NSRange)replacementRange
+- (void)_xvim_insertSpaces:(NSUInteger)count replacementRange:(NSRange)replacementRange
 {
     if (count || replacementRange.length) {
         [self insertText:[NSString stringMadeOfSpaces:count] replacementRange:replacementRange];
     }
 }
 
--(unichar)xvim_characterAtIndex : (NSInteger)idx
+- (unichar)xvim_characterAtIndex:(NSInteger)idx
 {
     if (self.string.length == 0)
         return 0;
@@ -853,14 +850,11 @@
     return [self.string characterAtIndex:idx];
 }
 
--(NSUInteger)xvim_lineNumberFromBottom : (NSUInteger)count
+- (NSUInteger)xvim_lineNumberFromBottom:(NSUInteger)count
 {
     NSAssert(0 != count, @"count starts from 1");
     NSPoint bottomPoint = NSMakePoint(0.0, self.contentSize.height);
-    NSInteger bottomLine =
-                [self lineRangeForCharacterRange:NSMakeRange([self characterIndexForInsertionAtPoint:bottomPoint],
-                                                             0)]
-                            .location;
+    NSInteger bottomLine = [self lineRangeForCharacterRange:NSMakeRange([self characterIndexForInsertionAtPoint:bottomPoint], 0)].location;
     clamp(bottomLine, 0, self.lineCount - 1);
     if (count > 1) {
         bottomLine -= (count - 1);
@@ -869,20 +863,17 @@
     return bottomLine + 1;
 }
 
--(NSUInteger)xvim_lineNumberAtMiddle
+- (NSUInteger)xvim_lineNumberAtMiddle
 {
     _auto topLine = [self xvim_lineNumberFromTop:1];
     _auto bottomLine = [self xvim_lineNumberFromBottom:1];
     return (topLine + bottomLine) / 2;
 }
 
--(NSUInteger)xvim_lineNumberFromTop : (NSUInteger)count
+- (NSUInteger)xvim_lineNumberFromTop:(NSUInteger)count
 {
     NSAssert(0 != count, @"count starts from 1");
-    NSInteger topLine =
-                [self lineRangeForCharacterRange:NSMakeRange([self characterIndexForInsertionAtPoint:NSZeroPoint],
-                                                             0)]
-                            .location;
+    NSInteger topLine = [self lineRangeForCharacterRange:NSMakeRange([self characterIndexForInsertionAtPoint:NSZeroPoint], 0)].location;
     clamp(topLine, 0, self.lineCount - 1);
     if (count > 1) {
         topLine += (count - 1);
@@ -893,7 +884,7 @@
 
 // Insert some text at the same column position, for a range of lines
 // Used by the XVim visual block mode, and shift functions
--(void)xvim_blockInsertFixupWithText:(NSString*)text mode:(XVimInsertionPoint)mode
+- (void)xvim_blockInsertFixupWithText:(NSString*)text mode:(XVimInsertionPoint)mode
     count:(NSUInteger)count column:(NSUInteger)column lines:(XVimRange)lines
 {
     NSMutableString* buf = nil;
@@ -951,7 +942,7 @@
     }
 }
 
--(void)xvim_changeSelectionMode:(XVIM_VISUAL_MODE)mode
+- (void)xvim_changeSelectionMode:(XVIM_VISUAL_MODE)mode
 {
     if (self.selectionMode == XVIM_VISUAL_NONE && mode != XVIM_VISUAL_NONE) {
         self.selectionBegin = self.insertionPoint;
@@ -963,7 +954,7 @@
     [self xvim_syncStateWithScroll:NO];
 }
 
--(void)xvim_escapeFromInsert
+- (void)xvim_escapeFromInsert
 {
     if (self.cursorMode == CURSOR_MODE_INSERT) {
         self.cursorMode = CURSOR_MODE_COMMAND;
@@ -976,8 +967,7 @@
 
 #pragma mark Status
 
--(NSUInteger)xvim_displayNextLine : (NSUInteger)index column : (NSUInteger)column count : (NSUInteger)count option
-    : (MOTION_OPTION)opt
+- (NSUInteger)xvim_displayNextLine:(NSUInteger)index column:(NSUInteger)column count:(NSUInteger)count option:(MOTION_OPTION)opt
 {
     for (NSUInteger i = 0; i < count; i++) {
         [self.sourceCodeEditorView moveDown:self];
@@ -991,8 +981,7 @@
            + self.sourceCodeEditorView.accessibilityColumnIndexRange.location;
 }
 
--(NSUInteger)xvim_displayPrevLine : (NSUInteger)index column : (NSUInteger)column count : (NSUInteger)count option
-    : (MOTION_OPTION)opt
+- (NSUInteger)xvim_displayPrevLine:(NSUInteger)index column:(NSUInteger)column count:(NSUInteger)count option:(MOTION_OPTION)opt
 {
     for (NSUInteger i = 0; i < count; i++) {
         [self.sourceCodeEditorView moveUp:self];
@@ -1008,8 +997,7 @@
 
 // UNDO
 
-
--(void)xvim_registerPositionForUndo : (NSUInteger)pos
+- (void)xvim_registerPositionForUndo:(NSUInteger)pos
 {
     // XCODE93
     /*
@@ -1026,9 +1014,12 @@
      */
 }
 
--(void)xvim_registerInsertionPointForUndo { [self xvim_registerPositionForUndo:self.selectedRange.location]; }
+- (void)xvim_registerInsertionPointForUndo
+{
+	[self xvim_registerPositionForUndo:self.selectedRange.location];
+}
 
--(NSUInteger)numberOfSelectedLines
+- (NSUInteger)numberOfSelectedLines
 {
     if (XVIM_VISUAL_NONE == self.selectionMode) {
         return 0;
@@ -1037,9 +1028,7 @@
     return lines.end - lines.begin + 1;
 }
 
-
--(void)xvim_highlightNextSearchCandidate : (NSString*)regex count : (NSUInteger)count option
-    : (MOTION_OPTION)opt forward : (BOOL)forward
+- (void)xvim_highlightNextSearchCandidate:(NSString*)regex count:(NSUInteger)count option:(MOTION_OPTION)opt forward:(BOOL)forward
 {
     NSRange range = NSMakeRange(NSNotFound, 0);
     if (forward) {
@@ -1055,19 +1044,17 @@
     }
 }
 
--(void)xvim_highlightNextSearchCandidateForward : (NSString*)regex count : (NSUInteger)count option
-    : (MOTION_OPTION)opt
+- (void)xvim_highlightNextSearchCandidateForward:(NSString*)regex count:(NSUInteger)count option:(MOTION_OPTION)opt
 {
     [self xvim_highlightNextSearchCandidate:regex count:count option:opt forward:YES];
 }
 
--(void)xvim_highlightNextSearchCandidateBackward : (NSString*)regex count : (NSUInteger)count option
-    : (MOTION_OPTION)opt
+- (void)xvim_highlightNextSearchCandidateBackward:(NSString*)regex count:(NSUInteger)count option:(MOTION_OPTION)opt
 {
     [self xvim_highlightNextSearchCandidate:regex count:count option:opt forward:NO];
 }
 
--(void)xvim_updateFoundRanges : (NSString*)pattern withOption : (MOTION_OPTION)opt
+- (void)xvim_updateFoundRanges:(NSString*)pattern withOption:(MOTION_OPTION)opt
 {
     NSAssert(nil != pattern, @"pattern munst not be nil");
     if (!self.needsUpdateFoundRanges) {
@@ -1080,8 +1067,7 @@
     }
 
     NSError* error = nil;
-    NSRegularExpression* regex =
-                [NSRegularExpression regularExpressionWithPattern:pattern options:r_opts error:&error];
+    NSRegularExpression* regex = [NSRegularExpression regularExpressionWithPattern:pattern options:r_opts error:&error];
     if (nil != error) {
         [self.foundRanges removeAllObjects];
         return;
@@ -1112,7 +1098,7 @@
     [self setNeedsUpdateFoundRanges:NO];
 }
 
--(void)xvim_clearHighlightText
+- (void)xvim_clearHighlightText
 {
     if (!self.needsUpdateFoundRanges) {
         return;
@@ -1125,7 +1111,7 @@
     [self setNeedsUpdateFoundRanges:NO];
 }
 
--(NSRange)xvim_currentNumber
+- (NSRange)xvim_currentNumber
 {
     NSUInteger insertPoint = self.insertionPoint;
     NSUInteger n_start, n_end;
@@ -1194,7 +1180,7 @@
     return NSMakeRange(n_start, n_end - n_start);
 }
 
--(void)xvim_hideCompletions
+- (void)xvim_hideCompletions
 {
     // TODO
 }

@@ -24,11 +24,8 @@
 @protocol SourceViewOperationsProtocol;
 @protocol SourceViewScrollingProtocol;
 
-
 @interface XVimWindow : NSObject <NSTextInputClient, NSTextFieldDelegate>
-@property (strong, readonly)
-            id<SourceViewProtocol, SourceViewXVimProtocol, SourceViewScrollingProtocol, SourceViewOperationsProtocol, NSTextInputClient>
-                        sourceView; // This represents currently focused sourceView
+@property (strong, readonly) id<SourceViewProtocol, SourceViewXVimProtocol, SourceViewScrollingProtocol, SourceViewOperationsProtocol, NSTextInputClient> sourceView; // This represents currently focused sourceView
 @property (weak, readonly) NSTextView* inputView;
 @property (weak, readonly) XVimEvaluator* currentEvaluator;
 @property (weak, readonly) CommandResponder* commandResponder;
@@ -42,16 +39,12 @@
 - (void)handleKeyStroke:(XVimKeyStroke*)keyStroke onStack:(NSMutableArray*)stack;
 - (BOOL)handleKeyEvent:(NSEvent*)event;
 - (BOOL)shouldAutoCompleteAtLocation:(unsigned long long)location;
-
 - (void)errorMessage:(NSString*)message ringBell:(BOOL)ringBell;
 - (void)statusMessage:(NSString*)message;
 - (void)clearErrorMessage;
 - (void)beginCommandEntry;
 - (void)endCommandEntry;
-
 - (void)setForcusBackToSourceView;
-
 - (void)syncEvaluatorStack;
-
 - (void)preMotion:(XVimMotion*)motion;
 @end

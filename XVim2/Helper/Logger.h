@@ -34,11 +34,11 @@ typedef NS_ENUM(NSInteger, LogLevel) {
 @interface Logger : NSObject
 
 @property LogLevel level;
-@property (strong) NSString* name;
+@property NSString* name;
 
 + (void)logWithLevel:(LogLevel)level format:(NSString*)format, ...;
 + (void)registerTracing:(NSString*)name;
-+ (nonnull Logger*)defaultLogger;
++ (Logger*)defaultLogger;
 
 - (id)initWithName:(NSString*)name; // "Root.MyPackage.MyComponent"
 - (id)initWithName:(NSString*)n level:(LogLevel)l;

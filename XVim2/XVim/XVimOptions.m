@@ -17,7 +17,6 @@
 @end
 
 @implementation XVimOptions
-
 @synthesize number = _number;
 
 - (id)init
@@ -125,8 +124,6 @@
     [[IDEApplicationController sharedAppController] _currentPreferenceSetChanged];
     */
 }
-
-// Helper Methods
 
 - (BOOL)clipboardHasUnnamed { return [self.clipboard rangeOfString:@"unnamed"].location != NSNotFound; }
 

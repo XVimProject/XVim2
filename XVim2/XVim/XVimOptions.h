@@ -29,11 +29,7 @@
 @property BOOL startofline;
 @property BOOL expandtab;
 @property (nonatomic) NSDictionary* highlight;
-
 - (id)getOption:(NSString*)name;
 - (void)setOption:(NSString*)name value:(id)value;
-
-
-// Helper Methods
 - (BOOL)clipboardHasUnnamed;
 @end

@@ -22,7 +22,7 @@
 // Never implement direct access to XVimRegister object.
 // XVimRegisterManager must handle all the requests.
 @interface XVimRegisterManager : NSObject
-@property (strong) NSString* lastExecutedRegister;
+@property NSString* lastExecutedRegister;
 /**
  * Returns XVimRegister object for the registry "name".
  * The register may be invalid after a few key input because
@@ -42,7 +42,7 @@
  **/
 - (XVimString*)xvimStringForRegister:(NSString*)name;
 - (void)yank:(XVimString*)string withType:(TEXT_TYPE)type onRegister:(NSString*)name;
-- (void) delete:(XVimString*)string withType:(TEXT_TYPE)type onRegister:(NSString*)name;
+- (void)delete:(XVimString*)string withType:(TEXT_TYPE)type onRegister:(NSString*)name;
 - (void)textInserted:(XVimString*)string withType:(TEXT_TYPE)type;
 - (void)commandExecuted:(XVimString*)string withType:(TEXT_TYPE)type;
 - (void)registerExecuted:(NSString*)name;
