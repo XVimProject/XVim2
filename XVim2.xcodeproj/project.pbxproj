@@ -15,10 +15,10 @@
 		A26E5C801F514686000BCC66 /* XVim2.xcplugin in CopyFiles */ = {isa = PBXBuildFile; fileRef = A26E5C731F5145AB000BCC66 /* XVim2.xcplugin */; };
 		A27A7AEB2077BD68006A0E4F /* XVimRangeUtil.m in Sources */ = {isa = PBXBuildFile; fileRef = A27A7AEA2077BD68006A0E4F /* XVimRangeUtil.m */; };
 		A287A8C71F55D637009378BC /* NSObject+ExtraData.m in Sources */ = {isa = PBXBuildFile; fileRef = A287A8C61F55D636009378BC /* NSObject+ExtraData.m */; };
+		A29BA5722243D6160032C3E2 /* SourceCodeEditorViewWrapper.s in Sources */ = {isa = PBXBuildFile; fileRef = A29BA56F2243D6160032C3E2 /* SourceCodeEditorViewWrapper.s */; };
+		A29BA5732243D6160032C3E2 /* SourceEditorDataSourceWrapper.swift in Sources */ = {isa = PBXBuildFile; fileRef = A29BA5702243D6160032C3E2 /* SourceEditorDataSourceWrapper.swift */; };
+		A29BA5742243D6160032C3E2 /* SourceCodeEditorViewWrapper.swift in Sources */ = {isa = PBXBuildFile; fileRef = A29BA5712243D6160032C3E2 /* SourceCodeEditorViewWrapper.swift */; };
 		A2A298DC2070A962001B5F9E /* XcodeUtils.m in Sources */ = {isa = PBXBuildFile; fileRef = A2A298DB2070A962001B5F9E /* XcodeUtils.m */; };
-		A2A9F9232070A7B500E7BB53 /* SourceEditorDataSourceWrapper.swift in Sources */ = {isa = PBXBuildFile; fileRef = A2A9F9202070A7B500E7BB53 /* SourceEditorDataSourceWrapper.swift */; };
-		A2A9F9242070A7B500E7BB53 /* SourceCodeEditorViewWrapper.s in Sources */ = {isa = PBXBuildFile; fileRef = A2A9F9212070A7B500E7BB53 /* SourceCodeEditorViewWrapper.s */; };
-		A2A9F9252070A7B500E7BB53 /* SourceCodeEditorViewWrapper.swift in Sources */ = {isa = PBXBuildFile; fileRef = A2A9F9222070A7B500E7BB53 /* SourceCodeEditorViewWrapper.swift */; };
 		A2A9F9352070A84600E7BB53 /* SourceCodeEditorViewProxy.m in Sources */ = {isa = PBXBuildFile; fileRef = A2A9F9292070A84600E7BB53 /* SourceCodeEditorViewProxy.m */; };
 		A2A9F9362070A84600E7BB53 /* SourceCodeEditorViewProxy+Operations.m in Sources */ = {isa = PBXBuildFile; fileRef = A2A9F9302070A84600E7BB53 /* SourceCodeEditorViewProxy+Operations.m */; };
 		A2A9F9372070A84600E7BB53 /* SourceCodeEditorViewProxy+XVim.m in Sources */ = {isa = PBXBuildFile; fileRef = A2A9F9312070A84600E7BB53 /* SourceCodeEditorViewProxy+XVim.m */; };
@@ -127,11 +127,11 @@
 		A27A7AEA2077BD68006A0E4F /* XVimRangeUtil.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = XVimRangeUtil.m; sourceTree = "<group>"; };
 		A287A8C51F55D636009378BC /* NSObject+ExtraData.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "NSObject+ExtraData.h"; sourceTree = "<group>"; };
 		A287A8C61F55D636009378BC /* NSObject+ExtraData.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "NSObject+ExtraData.m"; sourceTree = "<group>"; };
+		A29BA56F2243D6160032C3E2 /* SourceCodeEditorViewWrapper.s */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.asm; name = SourceCodeEditorViewWrapper.s; path = XVim2/Xcode/SourceCodeEditorViewWrapper.s; sourceTree = SOURCE_ROOT; };
+		A29BA5702243D6160032C3E2 /* SourceEditorDataSourceWrapper.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = SourceEditorDataSourceWrapper.swift; path = XVim2/Xcode/SourceEditorDataSourceWrapper.swift; sourceTree = SOURCE_ROOT; };
+		A29BA5712243D6160032C3E2 /* SourceCodeEditorViewWrapper.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = SourceCodeEditorViewWrapper.swift; path = XVim2/Xcode/SourceCodeEditorViewWrapper.swift; sourceTree = SOURCE_ROOT; };
 		A2A298DA2070A962001B5F9E /* XcodeUtils.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = XcodeUtils.h; path = XVim2/Xcode/XcodeUtils.h; sourceTree = SOURCE_ROOT; };
 		A2A298DB2070A962001B5F9E /* XcodeUtils.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = XcodeUtils.m; path = XVim2/Xcode/XcodeUtils.m; sourceTree = SOURCE_ROOT; };
-		A2A9F9202070A7B500E7BB53 /* SourceEditorDataSourceWrapper.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = SourceEditorDataSourceWrapper.swift; path = XVim2/Xcode/Swift/SourceEditorDataSourceWrapper.swift; sourceTree = SOURCE_ROOT; };
-		A2A9F9212070A7B500E7BB53 /* SourceCodeEditorViewWrapper.s */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.asm; name = SourceCodeEditorViewWrapper.s; path = XVim2/Xcode/Swift/SourceCodeEditorViewWrapper.s; sourceTree = SOURCE_ROOT; };
-		A2A9F9222070A7B500E7BB53 /* SourceCodeEditorViewWrapper.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = SourceCodeEditorViewWrapper.swift; path = XVim2/Xcode/Swift/SourceCodeEditorViewWrapper.swift; sourceTree = SOURCE_ROOT; };
 		A2A9F9272070A84600E7BB53 /* IDEWorkspaceTabController+XVim.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = "IDEWorkspaceTabController+XVim.h"; path = "XVim2/Xcode/IDEWorkspaceTabController+XVim.h"; sourceTree = SOURCE_ROOT; };
 		A2A9F9282070A84600E7BB53 /* SourceCodeEditorViewProxy.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = SourceCodeEditorViewProxy.h; path = XVim2/Xcode/SourceCodeEditorViewProxy.h; sourceTree = SOURCE_ROOT; };
 		A2A9F9292070A84600E7BB53 /* SourceCodeEditorViewProxy.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = SourceCodeEditorViewProxy.m; path = XVim2/Xcode/SourceCodeEditorViewProxy.m; sourceTree = SOURCE_ROOT; };
@@ -385,7 +385,9 @@
 				A2A9F9312070A84600E7BB53 /* SourceCodeEditorViewProxy+XVim.m */,
 				A2A9F92A2070A84600E7BB53 /* SourceCodeEditorViewProxy+Yank.h */,
 				A2A9F9342070A84600E7BB53 /* SourceCodeEditorViewProxy+Yank.m */,
-				ED240B781F9DEB3900D03CD4 /* Swift */,
+				A29BA56F2243D6160032C3E2 /* SourceCodeEditorViewWrapper.s */,
+				A29BA5712243D6160032C3E2 /* SourceCodeEditorViewWrapper.swift */,
+				A29BA5702243D6160032C3E2 /* SourceEditorDataSourceWrapper.swift */,
 				A2A298DA2070A962001B5F9E /* XcodeUtils.h */,
 				A2A298DB2070A962001B5F9E /* XcodeUtils.m */,
 				A2A9F93D2070A85200E7BB53 /* XVimIDEPegasusSourceEditorView.h */,
@@ -457,16 +459,6 @@
 				ED0DED601F8C2CDF00886F6B /* XVimGVisualEvaluator.m */,
 			);
 			path = MotionArgument;
-			sourceTree = "<group>";
-		};
-		ED240B781F9DEB3900D03CD4 /* Swift */ = {
-			isa = PBXGroup;
-			children = (
-				A2A9F9212070A7B500E7BB53 /* SourceCodeEditorViewWrapper.s */,
-				A2A9F9222070A7B500E7BB53 /* SourceCodeEditorViewWrapper.swift */,
-				A2A9F9202070A7B500E7BB53 /* SourceEditorDataSourceWrapper.swift */,
-			);
-			path = Swift;
 			sourceTree = "<group>";
 		};
 		ED5282A21F825944000794A1 /* Operators */ = {
@@ -705,6 +697,7 @@
 				ED0DED7C1F8C418300886F6B /* XVimEval.m in Sources */,
 				EDD27BAD1F9B5EB30006471C /* XVimTester+TextObject.m in Sources */,
 				EDD27BA71F9B5EB30006471C /* XVimTester+Mark.m in Sources */,
+				A29BA5732243D6160032C3E2 /* SourceEditorDataSourceWrapper.swift in Sources */,
 				A287A8C71F55D637009378BC /* NSObject+ExtraData.m in Sources */,
 				A2A9F93A2070A84600E7BB53 /* SourceCodeEditorViewProxy+Yank.m in Sources */,
 				ED60EB8D1F82E5C5000CBF9C /* XVimLowercaseEvaluator.m in Sources */,
@@ -719,7 +712,6 @@
 				A2FB1EE12077B65100D3E634 /* File.swift in Sources */,
 				A27A7AEB2077BD68006A0E4F /* XVimRangeUtil.m in Sources */,
 				EDD27BB51F9B5F140006471C /* XVimTester+Recording.m in Sources */,
-				A2A9F9232070A7B500E7BB53 /* SourceEditorDataSourceWrapper.swift in Sources */,
 				ED31C0C61F8164B800BE97B9 /* XVimInsertEvaluator.m in Sources */,
 				EDFA14961F8564DB0039B439 /* XVimMarks.m in Sources */,
 				EDF010691F6EEFFC00461B2C /* XVimKeymap.m in Sources */,
@@ -738,15 +730,14 @@
 				EDD27BB11F9B5EB30006471C /* XVimTester+ExCmd.m in Sources */,
 				ED0DED621F8C2E1D00886F6B /* XVimGVisualEvaluator.m in Sources */,
 				A2A9F9372070A84600E7BB53 /* SourceCodeEditorViewProxy+XVim.m in Sources */,
-				A2A9F9252070A7B500E7BB53 /* SourceCodeEditorViewWrapper.swift in Sources */,
 				EDF010771F6EF16600461B2C /* XVim.m in Sources */,
 				ED0DED771F8C3BF100886F6B /* XVimOptions.m in Sources */,
 				EDDF5D0C1F83A85B00872094 /* XVimWindowEvaluator.m in Sources */,
 				ED548FDA1F827EEC00A8069D /* XVimYankEvaluator.m in Sources */,
+				A29BA5722243D6160032C3E2 /* SourceCodeEditorViewWrapper.s in Sources */,
 				A2D464BC20D4042B00A43EC7 /* SwiftLogger.swift in Sources */,
 				EDD27BAA1F9B5EB30006471C /* XVimTester+Register.m in Sources */,
 				EDB8EF4F1F91F8DA004188F5 /* XVimConstants.m in Sources */,
-				A2A9F9242070A7B500E7BB53 /* SourceCodeEditorViewWrapper.s in Sources */,
 				EDF010731F6EF05E00461B2C /* NSString+VimHelper.m in Sources */,
 				ED0DED711F8C3B0800886F6B /* XVimExCommand.m in Sources */,
 				EDF010671F6EEFFC00461B2C /* XVimArgumentEvaluator.m in Sources */,
@@ -755,6 +746,7 @@
 				A2A9F9362070A84600E7BB53 /* SourceCodeEditorViewProxy+Operations.m in Sources */,
 				ED6331D81F83862600E9E6B0 /* XVimCommandLine.m in Sources */,
 				ED4382B11F85340200975127 /* XVimVisualEvaluator.m in Sources */,
+				A29BA5742243D6160032C3E2 /* SourceCodeEditorViewWrapper.swift in Sources */,
 				EDF0106D1F6EEFFC00461B2C /* XVimNumericEvaluator.m in Sources */,
 				ED0DED851F8C47F300886F6B /* XVimReplacePromptEvaluator.m in Sources */,
 				EDF0106A1F6EEFFC00461B2C /* XVimKeyStroke.m in Sources */,
