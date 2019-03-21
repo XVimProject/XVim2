@@ -678,7 +678,7 @@ static CGFloat XvimCommandLineAnimationDuration = 0.1;
         [NSAnimationContext runAnimationGroup:^(NSAnimationContext* _Nonnull context) {
             context.duration = XvimCommandLineAnimationDuration;
             NSEdgeInsets insets = scrollView.additionalContentInsets;
-            _cmdLineBottomAnchor.animator.constant = 0;
+            self->_cmdLineBottomAnchor.animator.constant = 0;
             insets.bottom += XvimCommandLineHeight;
             scrollView.animator.additionalContentInsets = insets;
             [scrollView updateAutomaticContentInsets];
@@ -701,7 +701,7 @@ static CGFloat XvimCommandLineAnimationDuration = 0.1;
 
         [NSAnimationContext runAnimationGroup:^(NSAnimationContext* _Nonnull context) {
             context.duration = XvimCommandLineAnimationDuration;
-            _cmdLineBottomAnchor.animator.constant = -XvimCommandLineHeight;
+            self->_cmdLineBottomAnchor.animator.constant = -XvimCommandLineHeight;
             scrollView.animator.additionalContentInsets = insets;
             [scrollView updateAutomaticContentInsets];
         }

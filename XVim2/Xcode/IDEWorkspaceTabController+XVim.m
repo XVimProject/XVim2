@@ -116,7 +116,6 @@ static inline BOOL xvim_horizontallyStackingModeForMode(GeniusLayoutMode mode)
     return nil;
 }
 
-
 - (GeniusLayoutMode)xvim_currentLayout
 {
     return (SELF.editorArea.editorMode == GENIUS) ? SELF.assistantEditorsLayout : NOT_GENIUS;
@@ -369,8 +368,6 @@ static inline BOOL xvim_horizontallyStackingModeForMode(GeniusLayoutMode mode)
     if ([editorArea editorMode] != GENIUS) {
         return;
     }
-
-
     IDEEditorGeniusMode* geniusMode = (IDEEditorGeniusMode*)[editorArea editorModeViewController];
     IDEEditorMultipleContext* multipleContext = [geniusMode alternateEditorMultipleContext];
     IDEEditorContext* primaryContext = [geniusMode primaryEditorContext];
@@ -386,7 +383,6 @@ static inline BOOL xvim_horizontallyStackingModeForMode(GeniusLayoutMode mode)
     }
     [SELF changeToStandardEditor:SELF];
 }
-
 
 - (void)xvim_closeCurrentEditor
 {
@@ -444,8 +440,6 @@ static inline BOOL xvim_horizontallyStackingModeForMode(GeniusLayoutMode mode)
         break;
     }
 }
-
-
 @end
 
 IDEEditorOpenSpecifier* xvim_openSpecifierForContext(IDEEditorContext* context)

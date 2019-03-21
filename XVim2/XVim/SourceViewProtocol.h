@@ -13,14 +13,18 @@
 #import <AppKit/AppKit.h>
 #import <SourceEditor/_TtC12SourceEditor23SourceEditorUndoManager.h>
 
-typedef NS_ENUM(char, CursorStyle) { CursorStyleVerticalBar, CursorStyleBlock, CursorStyleUnderline };
+typedef NS_ENUM(char, CursorStyle) {
+	CursorStyleVerticalBar, 
+	CursorStyleBlock, 
+	CursorStyleUnderline
+};
 
 @class XVimMotion;
 @class XVimCommandLine;
 
 @protocol XVimTextViewDelegateProtocol
-- (void)textView:(NSTextView*)view didYank:(NSString*)yankedText withType:(TEXT_TYPE)type;
-- (void)textView:(NSTextView*)view didDelete:(NSString*)deletedText withType:(TEXT_TYPE)type;
+- (void)textView:(id)view didYank:(NSString*)yankedText withType:(TEXT_TYPE)type;
+- (void)textView:(id)view didDelete:(NSString*)deletedText withType:(TEXT_TYPE)type;
 @end
 
 @protocol SourceViewProtocol <NSObject>
@@ -64,7 +68,6 @@ typedef NS_ENUM(char, CursorStyle) { CursorStyleVerticalBar, CursorStyleBlock, C
 @property CursorStyle cursorStyle;
 @end
 
-
 // XVim extensions
 @protocol SourceViewXVimProtocol <NSObject, XVimTextStoring>
 - (void)xvim_beginUndoGrouping;
@@ -106,7 +109,6 @@ typedef NS_ENUM(char, CursorStyle) { CursorStyleVerticalBar, CursorStyleBlock, C
 - (void)xvim_highlightNextSearchCandidateBackward:(NSString*)regex count:(NSUInteger)count option:(MOTION_OPTION)opt;
 - (void)xvim_hideCompletions;
 @end
-
 
 // Scrolling
 @protocol SourceViewScrollingProtocol <NSObject>
@@ -166,6 +168,5 @@ typedef NS_ENUM(char, CursorStyle) { CursorStyleVerticalBar, CursorStyleBlock, C
 - (void)xvim_yank:(XVimMotion*)motion withMotionPoint:(NSUInteger)motionPoint;
 - (void)xvim_put:(NSString*)text withType:(TEXT_TYPE)type afterCursor:(bool)after count:(NSUInteger)count;
 @end
-
 
 #endif /* SourceViewProtocol_h */
