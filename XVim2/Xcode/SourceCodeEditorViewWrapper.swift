@@ -41,9 +41,7 @@ import Cocoa
 @_silgen_name("scev_wrapper_call6") func _scev_voidToInt(_:UnsafeRawPointer) -> (Int)
 
 fileprivate struct _SourceCodeEditorViewWrapper {
-
     let contextPtr = UnsafeMutablePointer<UnsafeMutableRawPointer>.allocate(capacity: 8)
-
     init?(_ view : AnyObject?, _ functionPtr : UnsafeMutableRawPointer?) {
         
         guard let sourceCodeEditorView = view,
@@ -52,18 +50,15 @@ fileprivate struct _SourceCodeEditorViewWrapper {
         contextPtr[0] = Unmanaged.passRetained(sourceCodeEditorView).toOpaque()
         contextPtr[1] = fp
     }
-    
     func voidToInt() -> Int {
         return _scev_voidToInt(contextPtr)
     }
-
     func getCursorStyle() -> CursorStyle {
         return _get_cursor_style(contextPtr)
     }
     func setCursorStyle(_ style: CursorStyle) {
         _set_cursor_style(contextPtr, style)
     }
-    
     func getDataSource() -> AnyObject? {
         return Unmanaged.fromOpaque(_get_data_source(contextPtr).assumingMemoryBound(to: AnyObject?.self)).takeRetainedValue()
     }
@@ -139,6 +134,4 @@ class SourceCodeEditorViewWrapper: NSObject {
         guard let w = _SourceCodeEditorViewWrapper(editorView, fp) else { return }
         w.setSelectedRange(range, modifiers: modifiers)
     }
-    
 }
-

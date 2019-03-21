@@ -27,13 +27,10 @@ public struct XVimLineData {
     var isHidden: Bool;
 }
 
-
 fileprivate struct _SourceEditorDataSourceWrapper {
-    
     let contextPtr = UnsafeMutablePointer<UnsafeMutableRawPointer>.allocate(capacity: 8)
     
     public init?(_ dataSrc : AnyObject?, _ functionPtr : UnsafeMutableRawPointer?) {
-
         guard let dataSource = dataSrc
             , let fp = functionPtr
             else {return nil}
@@ -41,8 +38,6 @@ fileprivate struct _SourceEditorDataSourceWrapper {
         contextPtr[0] = Unmanaged.passRetained(dataSource).toOpaque()
         contextPtr[1] = fp
     }
-    
-    
     
     var undoManager : AnyObject? {
         return Unmanaged.fromOpaque(_getUndoManager(contextPtr).assumingMemoryBound(to: AnyObject?.self)).takeRetainedValue()
@@ -74,7 +69,6 @@ fileprivate struct _SourceEditorDataSourceWrapper {
 }
 
 class SourceEditorDataSourceWrapper: NSObject {
-    
     private let fpBeginEditingTransaction       = function_ptr_from_name("_$s12SourceEditor0ab4DataA0C20beginEditTransactionyyF", nil)
     private let fpEndEditingTransaction         = function_ptr_from_name("_$s12SourceEditor0ab4DataA0C18endEditTransactionyyF", nil)
     private let fpPositionFromIndexLineHint     = function_ptr_from_name("_$s12SourceEditor0ab4DataA0C30positionFromInternalCharOffset_8lineHintAA0aB8PositionVSi_SitF", nil)
@@ -86,10 +80,7 @@ class SourceEditorDataSourceWrapper: NSObject {
     private let fpLineTerminatorLength          = function_ptr_from_name("_$s12SourceEditor0ab4DataA0C27lineTerminatorLengthForLineyS2iF", nil)
 
     private weak var sourceCodeEditorViewWrapper : SourceCodeEditorViewWrapper?
-    // MARK - Utility
-    
-    // MARK - Wrappers
-    
+	
     private var dataSource : AnyObject? {
         return sourceCodeEditorViewWrapper?.dataSource
     }
@@ -143,12 +134,10 @@ class SourceEditorDataSourceWrapper: NSObject {
         return _SourceEditorDataSourceWrapper(dataSource, fpLineTerminatorLength)?.intToInt(forLine) ?? 0
     }
     
-    
     @objc
     public func leadingWhitespaceWidthForLine(_ line:Int, expandTabs:Bool) -> Int {
         return _SourceEditorDataSourceWrapper(dataSource, fpLeadingWhitespaceWidthForLine)?
             .leadingWhitespaceWidthForLine(line, expandTabs: expandTabs)
             ?? 0
     }
-    
 }

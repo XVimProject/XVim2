@@ -127,7 +127,3 @@ _seds_wrapper_call9:
     movq %rbp, %rsp
     popq %rbp
     ret
-
-
-
-
