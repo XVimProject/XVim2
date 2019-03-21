@@ -405,7 +405,7 @@
 				A2B52D391F514CC600D83C0A /* Helper */,
 				A2B52D3C1F514CC600D83C0A /* Info.plist */,
 				A2482F2C1F72435D00FEF4DE /* Process */,
-				EDD27B961F9B5EB30006471C /* Test */,
+				EDD27B961F9B5EB30006471C /* UnitTest */,
 				A2A9F91F2070A71600E7BB53 /* Xcode */,
 				A2B5D78C2243319A00BD289D /* XcodeHeader */,
 				EDF010501F6EEEF600461B2C /* XVim */,
@@ -508,7 +508,7 @@
 			path = CommandLine;
 			sourceTree = "<group>";
 		};
-		EDD27B961F9B5EB30006471C /* Test */ = {
+		EDD27B961F9B5EB30006471C /* UnitTest */ = {
 			isa = PBXGroup;
 			children = (
 				EDD27BB31F9B5F130006471C /* XVimTester.h */,
@@ -529,7 +529,7 @@
 				EDD27BA31F9B5EB30006471C /* XVimTester+Visual.m */,
 				EDD27BA41F9B5EB30006471C /* XVimTester+ExCmd.m */,
 			);
-			path = Test;
+			path = UnitTest;
 			sourceTree = "<group>";
 		};
 		EDF010501F6EEEF600461B2C /* XVim */ = {
