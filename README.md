@@ -57,8 +57,10 @@
  - `develop`: for the next beta Xcode and develop.
 
  - tags
-   - `xcode9.2`
+   - `xcode10.1`
+   - `xcode9.3`
    - `xcode9.4`
+   - `xcode9.2`
 
  Please use appropriate tags or branches.
 
