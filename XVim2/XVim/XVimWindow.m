@@ -61,7 +61,7 @@
     __weak XVimWindow* weakSelf = self;
     [NSOperationQueue.mainQueue addOperationWithBlock:^{
         XVimWindow* strongSelf = weakSelf;
-        strongSelf.sourceView.cursorMode = CURSOR_MODE_COMMAND;
+        strongSelf.sourceView.cursorMode = XVIM_CURSOR_MODE_COMMAND;
     }];
     _enabledNotificationObserver = [NSNotificationCenter.defaultCenter
                 addObserverForName:XVimNotificationEnabled

@@ -43,7 +43,7 @@
 @property NSInteger undoGroupingDepth;
 @property NSString* lastYankedText;
 @property NSLayoutConstraint* cmdLineBottomAnchor;
-@property TEXT_TYPE lastYankedType;
+@property XVIM_TEXT_TYPE lastYankedType;
 @end
 
 #define LOG_STATE()
@@ -96,7 +96,7 @@
 {
     self.originalCursorStyle = self.cursorStyle;
     self.selectionMode = XVIM_VISUAL_NONE;
-    self.cursorMode = CURSOR_MODE_COMMAND;
+    self.cursorMode = XVIM_CURSOR_MODE_COMMAND;
     [self showCommandLine];
     [self xvim_syncStateFromView];
 }
@@ -384,14 +384,14 @@
     }
 }
 
-- (CURSOR_MODE)cursorMode
+- (XVIM_CURSOR_MODE)cursorMode
 {
-    return self.cursorStyle == CursorStyleVerticalBar ? CURSOR_MODE_INSERT : CURSOR_MODE_COMMAND;
+    return self.cursorStyle == CursorStyleVerticalBar ? XVIM_CURSOR_MODE_INSERT : XVIM_CURSOR_MODE_COMMAND;
 }
 
-- (void)setCursorMode:(CURSOR_MODE)cursorMode
+- (void)setCursorMode:(XVIM_CURSOR_MODE)cursorMode
 {
-    self.cursorStyle = (cursorMode == CURSOR_MODE_INSERT) ? CursorStyleVerticalBar : CursorStyleBlock;
+    self.cursorStyle = (cursorMode == XVIM_CURSOR_MODE_INSERT) ? CursorStyleVerticalBar : CursorStyleBlock;
 }
 
 - (NSInteger)currentLineNumber

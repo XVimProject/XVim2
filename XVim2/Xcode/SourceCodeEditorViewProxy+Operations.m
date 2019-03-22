@@ -22,7 +22,7 @@
 @property NSUInteger preservedColumn;
 @property BOOL selectionToEOL;
 @property NSString* lastYankedText;
-@property TEXT_TYPE lastYankedType;
+@property XVIM_TEXT_TYPE lastYankedType;
 - (XVimRange)_xvim_selectedLines;
 - (void)xvim_moveCursor:(NSUInteger)pos preserveColumn:(BOOL)preserve;
 - (void)xvim_syncStateWithScroll:(BOOL)scroll;
@@ -285,13 +285,13 @@
 
 - (void)xvim_insertNewlineAboveAndInsertWithIndent
 {
-    self.cursorMode = CURSOR_MODE_INSERT;
+    self.cursorMode = XVIM_CURSOR_MODE_INSERT;
     [self xvim_insertNewlineAboveCurrentLineWithIndent];
 }
 
 - (void)xvim_insertNewlineBelowAndInsertWithIndent
 {
-    self.cursorMode = CURSOR_MODE_INSERT;
+    self.cursorMode = XVIM_CURSOR_MODE_INSERT;
     [self xvim_insertNewlineBelowCurrentLineWithIndent];
 }
 
@@ -339,11 +339,11 @@
     // We have to set cursor mode insert before calling delete
     // because delete adjust cursor position when the cursor is end of line. (e.g. C command).
     // This behaves that insertion position after delete is one character before the last char of the line.
-    self.cursorMode = CURSOR_MODE_INSERT;
+    self.cursorMode = XVIM_CURSOR_MODE_INSERT;
     if (![self xvim_delete:motion andYank:YES]) {
         // And if the delele failed we set the cursor mode back to command.
         // The cursor mode should be kept in Evaluators so we should make some delegation to it.
-        self.cursorMode = CURSOR_MODE_COMMAND;
+        self.cursorMode = XVIM_CURSOR_MODE_COMMAND;
         return NO;
     }
     if (motion.info.deleteLastLine) {

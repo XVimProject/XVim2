@@ -188,12 +188,12 @@ static XVimEvaluator* _popEvaluator = nil;
 
 - (void)setNumericArg:(NSUInteger)numericArg { _numericArg = numericArg; }
 
-- (void)textView:(id)view didYank:(NSString*)yankedText withType:(TEXT_TYPE)type
+- (void)textView:(id)view didYank:(NSString*)yankedText withType:(XVIM_TEXT_TYPE)type
 {
     [XVIM.registerManager yank:yankedText withType:type onRegister:self.yankRegister];
 }
 
-- (void)textView:(id)view didDelete:(NSString*)deletedText withType:(TEXT_TYPE)type
+- (void)textView:(id)view didDelete:(NSString*)deletedText withType:(XVIM_TEXT_TYPE)type
 {
     [XVIM.registerManager delete:deletedText withType:type onRegister:self.yankRegister];
 }

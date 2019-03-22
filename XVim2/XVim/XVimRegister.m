@@ -23,7 +23,7 @@
 {
     if (self = [super init]) {
         _string = [[XVimMutableString alloc] init];
-        _type = TEXT_TYPE_CHARACTERS;
+        _type = XVIM_TEXT_TYPE_CHARACTERS;
     }
     return self;
 }
@@ -36,7 +36,7 @@
 - (void)clear
 {
     [self.string setString:@""];
-    self.type = TEXT_TYPE_CHARACTERS;
+    self.type = XVIM_TEXT_TYPE_CHARACTERS;
 }
 
 @end
@@ -179,7 +179,7 @@ static const NSString* s_enum_registers = @"\"0123456789abcdefghijklmnopqrstuvwx
 }
 
 // Private
-- (void)setXVimString:(XVimString*)string withType:(TEXT_TYPE)type forReg:(NSString*)reg
+- (void)setXVimString:(XVimString*)string withType:(XVIM_TEXT_TYPE)type forReg:(NSString*)reg
 {
     NSAssert(reg != nil && reg.length == 1, @"name must not nil and one character string");
     XVimRegister* r = [self registerByName:reg];
@@ -250,7 +250,7 @@ static const NSString* s_enum_registers = @"\"0123456789abcdefghijklmnopqrstuvwx
     return [self registerByName:name].string;
 }
 
-- (void)yank:(XVimString*)string withType:(TEXT_TYPE)type onRegister:(NSString*)name
+- (void)yank:(XVimString*)string withType:(XVIM_TEXT_TYPE)type onRegister:(NSString*)name
 {
     NSAssert(name == nil || name.length == 1, @"Must be nil or one characrer");
 
@@ -289,7 +289,7 @@ static const NSString* s_enum_registers = @"\"0123456789abcdefghijklmnopqrstuvwx
     }
 }
 
-- (void) delete:(XVimString*)string withType:(TEXT_TYPE)type onRegister:(NSString*)name
+- (void) delete:(XVimString*)string withType:(XVIM_TEXT_TYPE)type onRegister:(NSString*)name
 {
     // TODO: use "- when deleting does not include \n
     NSAssert([self isValidForYank:name], @"Must be valid register for yank/delete");
@@ -334,9 +334,9 @@ static const NSString* s_enum_registers = @"\"0123456789abcdefghijklmnopqrstuvwx
     [self.registers setObject:newReg forKey:@"\""];
 }
 
-- (void)textInserted:(XVimString*)string withType:(TEXT_TYPE)type {}
+- (void)textInserted:(XVimString*)string withType:(XVIM_TEXT_TYPE)type {}
 
-- (void)commandExecuted:(XVimString*)string withType:(TEXT_TYPE)type {}
+- (void)commandExecuted:(XVimString*)string withType:(XVIM_TEXT_TYPE)type {}
 
 - (void)registerExecuted:(NSString*)name { self.lastExecutedRegister = name; }
 

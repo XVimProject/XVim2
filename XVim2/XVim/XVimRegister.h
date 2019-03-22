@@ -15,7 +15,7 @@
 - (void)appendXVimString:(XVimString*)string;
 - (void)setXVimString:(XVimString*)string;
 - (void)clear;
-@property TEXT_TYPE type;
+@property XVIM_TEXT_TYPE type;
 @property (readonly) XVimMutableString* string;
 @end
 
@@ -41,10 +41,10 @@
  * So specifying @"\"" and nil are different for yank/delete method.
  **/
 - (XVimString*)xvimStringForRegister:(NSString*)name;
-- (void)yank:(XVimString*)string withType:(TEXT_TYPE)type onRegister:(NSString*)name;
-- (void)delete:(XVimString*)string withType:(TEXT_TYPE)type onRegister:(NSString*)name;
-- (void)textInserted:(XVimString*)string withType:(TEXT_TYPE)type;
-- (void)commandExecuted:(XVimString*)string withType:(TEXT_TYPE)type;
+- (void)yank:(XVimString*)string withType:(XVIM_TEXT_TYPE)type onRegister:(NSString*)name;
+- (void)delete:(XVimString*)string withType:(XVIM_TEXT_TYPE)type onRegister:(NSString*)name;
+- (void)textInserted:(XVimString*)string withType:(XVIM_TEXT_TYPE)type;
+- (void)commandExecuted:(XVimString*)string withType:(XVIM_TEXT_TYPE)type;
 - (void)registerExecuted:(NSString*)name;
 
 /**

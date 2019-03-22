@@ -30,7 +30,7 @@
 @property NSString* lastYankedText;
 @property NSInteger editTransactionDepth;
 @property NSInteger undoGroupingDepth;
-@property TEXT_TYPE lastYankedType;
+@property XVIM_TEXT_TYPE lastYankedType;
 - (void)_xvim_yankSelection:(XVimSelection)sel;
 - (void)_xvim_killSelection:(XVimSelection)sel;
 @end
@@ -225,7 +225,7 @@
         pos = self.string.length;
     }
 
-    if (self.cursorMode == CURSOR_MODE_COMMAND && !(self.selectionMode == XVIM_VISUAL_BLOCK)) {
+    if (self.cursorMode == XVIM_CURSOR_MODE_COMMAND && !(self.selectionMode == XVIM_VISUAL_BLOCK)) {
         _auto adjustedPos = [self.textStorage convertToValidCursorPositionForNormalMode:pos];
         self.insertionPoint = adjustedPos;
         if (pos != adjustedPos && self.selectedRange.length == 0) {
@@ -302,7 +302,7 @@
 {
     self.xvim_lockSyncStateFromView = YES;
     // Reset current selection
-    if (self.cursorMode == CURSOR_MODE_COMMAND) {
+    if (self.cursorMode == XVIM_CURSOR_MODE_COMMAND) {
         [self _adjustCursorPosition];
     }
 
@@ -811,7 +811,7 @@
             self.insertionPoint = [self xvim_endOfLine:pos];
             break;
         case XVIM_INSERT_APPEND:
-            NSAssert(self.cursorMode == CURSOR_MODE_COMMAND, @"self.cursorMode shoud be CURSOR_MODE_COMMAND");
+            NSAssert(self.cursorMode == XVIM_CURSOR_MODE_COMMAND, @"self.cursorMode shoud be CURSOR_MODE_COMMAND");
             if (![ts isEOF:pos] && ![ts isNewline:pos]) {
                 self.insertionPoint = pos + 1;
             }
@@ -823,7 +823,7 @@
             NSAssert(false, @"unreachable");
         }
     }
-    self.cursorMode = CURSOR_MODE_INSERT;
+    self.cursorMode = XVIM_CURSOR_MODE_INSERT;
     [self xvim_changeSelectionMode:XVIM_VISUAL_NONE];
 }
 
@@ -956,8 +956,8 @@
 
 - (void)xvim_escapeFromInsert
 {
-    if (self.cursorMode == CURSOR_MODE_INSERT) {
-        self.cursorMode = CURSOR_MODE_COMMAND;
+    if (self.cursorMode == XVIM_CURSOR_MODE_INSERT) {
+        self.cursorMode = XVIM_CURSOR_MODE_COMMAND;
         if (![self.textStorage isBOL:self.insertionPoint]) {
             [self xvim_moveCursor:self.insertionPoint - 1 preserveColumn:NO];
         }

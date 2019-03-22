@@ -19,7 +19,7 @@
 #endif
 #endif
 
-typedef NS_ENUM(NSInteger, CURSOR_MODE) { CURSOR_MODE_INSERT, CURSOR_MODE_COMMAND };
+typedef NS_ENUM(NSInteger, XVIM_CURSOR_MODE) { XVIM_CURSOR_MODE_INSERT, XVIM_CURSOR_MODE_COMMAND };
 
 typedef NS_ENUM(NSUInteger, XVimInsertionPoint) {
     XVIM_INSERT_DEFAULT,
@@ -118,10 +118,10 @@ NS_INLINE XVimRange XVimRangeSwap(XVimRange range) { return XVimMakeRange(range.
  */
 NS_INLINE NSRange XVimMakeNSRange(XVimRange range) { return NSMakeRange(range.begin, range.end - range.begin + 1); }
 
-typedef NS_ENUM(NSUInteger, TEXT_TYPE) {
-    TEXT_TYPE_CHARACTERS,
-    TEXT_TYPE_BLOCK,
-    TEXT_TYPE_LINES
+typedef NS_ENUM(NSUInteger, XVIM_TEXT_TYPE) {
+    XVIM_TEXT_TYPE_CHARACTERS,
+    XVIM_TEXT_TYPE_BLOCK,
+    XVIM_TEXT_TYPE_LINES
 };
 
 typedef NSMutableString XVimMutableString;

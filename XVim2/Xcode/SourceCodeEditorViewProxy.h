@@ -65,7 +65,7 @@ static inline XVimSourceEditorRange XvimMakeSourceEditorRange(XVimSourceEditorPo
 @property (readonly) NSUInteger selectionBegin;
 @property (readonly) XVimPosition selectionBeginPosition;
 @property (readonly) BOOL selectionToEOL;
-@property CURSOR_MODE cursorMode;
+@property XVIM_CURSOR_MODE cursorMode;
 @property (readonly, nullable) NSURL* documentURL;
 @property (nonatomic) BOOL needsUpdateFoundRanges;
 @property (readonly, nonnull) NSMutableArray* foundRanges;
