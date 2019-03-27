@@ -349,6 +349,14 @@
         }
 
         NSRange range = NSMakeRange(lpos, rpos - lpos + 1);
+        // Workaround Fix: Visual block mode plus d or x equals extra characters deleted https://github.com/XVimProject/XVim2/issues/216
+        // This seem a bug in sourceEditorView -insetText:replacementRange:;
+        // After first call (the sel.bottom line) of -insetText:replacementRange:,
+        // sourceEditorView always delete range.length*2 characters;
+        // Or need to reset some statuses inside sourceEditorView?
+        if (line != sel.bottom) {
+          range.length = 0;
+        }
         NSString* repl = @"";
 
         if (nspaces) {
