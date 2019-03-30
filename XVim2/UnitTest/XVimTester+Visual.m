@@ -142,14 +142,11 @@
         XVimMakeTestCase(text2, 0, 0, @"vj>.", rshift_result0, 8, 0), // #311
         XVimMakeTestCase(text2, 0, 0, @"vj>..u", rshift_result0, 8, 0),
         XVimMakeTestCase(text2, 0, 0, @"vj>jj.", rshift_result1, 36, 0),
-        XVimMakeTestCase(text2, 0, 0, @":set noexpandtab<CR>vj>.:set et<CR>", rshift_result0_1,
-                      2, 0),
-
+        XVimMakeTestCase(text2, 0, 0, @":set noexpandtab<CR>vj>.:set et<CR>", rshift_result0_1, 2, 0),
         XVimMakeTestCase(text2, 0, 0, @"<C-v>lljjd", C_v_d_result, 0, 0),
         XVimMakeTestCase(text1, 0, 0, @"vllcxxx<ESC>", vllccxxx_result, 2, 0),
         XVimMakeTestCase(text2, 0, 0, @"vlljgU", vgU_result, 0, 0), // vgU
-        XVimMakeTestCase(text2, 14, 0, @"vggU", vgU_result, 0,
-                      0), // vggU (same result with gU)
+        XVimMakeTestCase(text2, 14, 0, @"vggU", vgU_result, 0, 0), // vggU (same result with gU)
         XVimMakeTestCase(text2, 12, 0, @"vGU", vGU_result, 12, 0), // vGU
         XVimMakeTestCase(text2, 0, 0, @"vlljU", vgU_result, 0, 0), // vU (same result with gU)
         XVimMakeTestCase(text2, 12, 0, @"VggU", VgU_result, 0, 0), // VggU
@@ -158,33 +155,22 @@
         XVimMakeTestCase(text2, 12, 0, @"VGU", VGU_result, 12, 0), // VGU
         XVimMakeTestCase(text2, 0, 0, @"<C-v>lljgU", c_vgU_result, 0, 0), // <C-v>gU
         XVimMakeTestCase(text2, 0, 0, @"<C-v>lljU", c_vgU_result, 0, 0), // <C-v>U
-
-        XVimMakeTestCase(text2, 0, 0, @"vlljgUvlljgu", text2, 0,
-                      0), // make upper and reverse it to lower
-        XVimMakeTestCase(text2, 0, 0, @"vlljgUvllju", text2, 0,
-                      0), // make upper and reverse it to lower
+        XVimMakeTestCase(text2, 0, 0, @"vlljgUvlljgu", text2, 0, 0), // make upper and reverse it to lower
+        XVimMakeTestCase(text2, 0, 0, @"vlljgUvllju", text2, 0, 0), // make upper and reverse it to lower
         XVimMakeTestCase(text2, 0, 0, @"VlljgUVlljgu", text2, 0, 0),
         XVimMakeTestCase(text2, 0, 0, @"VlljgUVllju", text2, 0, 0),
         XVimMakeTestCase(text2, 0, 0, @"<C-v>lljgU<C-v>lljgu", text2, 0, 0),
         XVimMakeTestCase(text2, 0, 0, @"<C-v>lljgU<C-v>llju", text2, 0, 0),
 
         // Concanate
-        XVimMakeTestCase(text2, 0, 0, @"VjjjJ", J_result, 35,
-                      0), // The correct result location is not supported now
-
+        XVimMakeTestCase(text2, 0, 0, @"VjjjJ", J_result, 35, 0), // The correct result location is not supported now
 
         // Yank , Put
-        XVimMakeTestCase(text2, 0, 0, @"vllyjv6lp", p_result, 14,
-                      0), // yank and paste with visual
-        XVimMakeTestCase(text2, 0, 0, @"vllyjv6lP", p_result, 14,
-                      0), // yank and paste with visual
-        XVimMakeTestCase(text1, 0, 0, @"llvllYp", Y_result, 12,
-                      0), // yank and paste with visual
-
-        XVimMakeTestCase(text3, 0, 0, @"Vjyjp", Vyp_result, 16,
-                      0), // yank and paste with visual line
-        XVimMakeTestCase(text3, 0, 0, @"VjyjP", VyP_result, 8,
-                      0), // yank and paste with visual line
+        XVimMakeTestCase(text2, 0, 0, @"vllyjv6lp", p_result, 14, 0), // yank and paste with visual
+        XVimMakeTestCase(text2, 0, 0, @"vllyjv6lP", p_result, 14, 0), // yank and paste with visual
+        XVimMakeTestCase(text1, 0, 0, @"llvllYp", Y_result, 12, 0), // yank and paste with visual
+        XVimMakeTestCase(text3, 0, 0, @"Vjyjp", Vyp_result, 16, 0), // yank and paste with visual line
+        XVimMakeTestCase(text3, 0, 0, @"VjyjP", VyP_result, 8, 0), // yank and paste with visual line
 
         // Cusror position after put (Issue #506)
         XVimMakeTestCase(text1, 0, 0, @"vllypu", text1, 0, 0),
