@@ -4,12 +4,6 @@
 
 #import <Foundation/Foundation.h>
 
-typedef enum {
-    TaskitWaitFor_Exit = 1,
-    TaskitWaitFor_Output = 1 << 1,
-} TaskitWaitMaskComponent;
-typedef unsigned TaskitWaitMask;
-
 @interface ProcessRunner : NSObject
 {
     BOOL hasLaunched;

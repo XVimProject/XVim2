@@ -13,6 +13,7 @@
 
 static NSString* LOCAL_MARKS = @"abcdefghijklmnopqrstuvwxyz'^.<>";
 static NSString* FILE_MARKS = @"ABCDEFGHIJKLMNOPQRSTUVWXYZ";
+static const int kJumpListMax = 100;
 
 @implementation XVimMarks {
     NSMutableDictionary* _localMarksDictionary;
@@ -20,9 +21,6 @@ static NSString* FILE_MARKS = @"ABCDEFGHIJKLMNOPQRSTUVWXYZ";
     NSCharacterSet* _fileMarkSet;
     // NSCharacterSet* _numberedMarkSet; // Currently Not Supported
     NSMutableDictionary<NSString*, XVimMark*>* _fileMarks;
-    enum {
-        kJumpListMax = 100,
-    };
     NSMutableArray* _jumplist;
     NSUInteger _jumpMarkIndex;
 }

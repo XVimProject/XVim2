@@ -14,7 +14,11 @@
 @class XVimWindow;
 @class XVimMotion;
 
-typedef enum { XVimSearchCaseDefault, XVimSearchCaseSensitive, XVimSearchCaseInsensitive } XVimSearchCase;
+typedef NS_ENUM(NSInteger, XVimSearchCase) {
+    XVimSearchCaseDefault,
+    XVimSearchCaseSensitive,
+    XVimSearchCaseInsensitive
+};
 
 @interface XVimSearch : NSObject
 @property BOOL lastSearchBackword; // If the last search was '?' command this is true
