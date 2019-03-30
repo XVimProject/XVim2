@@ -67,8 +67,9 @@
 }
 
 - (BOOL)isTextObject { return TEXTOBJECT_WORD <= self.motion && self.motion <= TEXTOBJECT_UNDERSCORE; }
-
-- (NSString*)description { return self.debugDescription; }
-
 + (NSArray<NSString*>*)uncodablePropertyKeys { return @[ @"info" ]; }
+- (NSString *)debugDescription {
+	return [NSString stringWithFormat:@"motion: %d type: %d option: %d count: %d line: %d column: %d position %d info %@",
+			(int)_motion, (int)_type, (int)_option, (int)_count, (int)_line, (int)_column, (int)_position, _info];
+}
 @end
