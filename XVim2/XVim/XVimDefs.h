@@ -76,17 +76,17 @@ typedef NS_OPTIONS(NSUInteger, XVimSortOptions) {
     XVimSortOptionIgnoreCase = 1 << 3
 };
 
-typedef struct _XVimRange {
+typedef struct {
     NSUInteger begin; // begin may be greater than end
     NSUInteger end;
 } XVimRange;
 
-typedef struct _XVimPosition {
+typedef struct {
     NSUInteger line;
     NSUInteger column;
 } XVimPosition;
 
-typedef struct _XVimSelection {
+typedef struct {
     XVIM_VISUAL_CORNER corner;
     NSUInteger top;
     NSUInteger left;
