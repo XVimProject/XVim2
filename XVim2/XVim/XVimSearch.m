@@ -167,7 +167,7 @@
     NSRange found = { NSNotFound, 0 };
     XVimOptions* options = [[XVim instance] options];
 
-    _auto srcView = [window sourceView];
+    let srcView = [window sourceView];
     NSUInteger search_base = from;
 
     NSRegularExpressionOptions r_opts
@@ -220,7 +220,7 @@
 
     NSRange found = { NSNotFound, 0 };
     XVimOptions* options = [[XVim instance] options];
-    _auto srcView = [window sourceView];
+    let srcView = [window sourceView];
     NSUInteger search_base = from;
 
     NSRegularExpressionOptions r_opts = NSRegularExpressionAnchorsMatchLines;
@@ -290,7 +290,7 @@
                          inWindow:(XVimWindow*)window
 {
     NSRange found = { NSNotFound, 0 };
-    _auto view = [window sourceView];
+    let view = [window sourceView];
 
     NSRange begin = [view selectedRange];
     NSString* string = [view string];
@@ -372,7 +372,7 @@
 
     self.lastFoundRange = NSMakeRange(NSNotFound, 0);
 
-    _auto srcView = [window sourceView];
+    let srcView = [window sourceView];
 
     NSRegularExpressionOptions r_opts = NSRegularExpressionAnchorsMatchLines;
     if ([self isCaseInsensitive]) {
@@ -414,7 +414,7 @@
 
 - (NSRange)replaceForwardFrom:(NSUInteger)from to:(NSUInteger)to inWindow:(XVimWindow*)window
 {
-    _auto srcView = [window sourceView];
+    let srcView = [window sourceView];
 
     [self findForwardFrom:from to:to inWindow:window];
 
@@ -528,7 +528,7 @@
 
 - (void)replaceCurrentInWindow:(XVimWindow*)window findNext:(BOOL)findNext
 {
-    _auto srcView = [window sourceView];
+    let srcView = [window sourceView];
 
     [srcView insertText:self.lastReplacementString replacementRange:self.lastFoundRange];
     [srcView xvim_moveCursor:self.lastFoundRange.location + self.lastReplacementString.length preserveColumn:NO];
@@ -554,7 +554,7 @@
 
 - (void)replaceCurrentToEndInWindow:(XVimWindow*)window
 {
-    _auto srcView = [window sourceView];
+    let srcView = [window sourceView];
 
     do {
         [srcView insertText:self.lastReplacementString replacementRange:self.lastFoundRange];

@@ -9,8 +9,8 @@
 
 NSRange NSMakeNormalizedRangeFromRange(NSRange r, NSUInteger maxloc)
 {
-    _auto begin = r.location;
-    _auto end = r.location + r.length;
+    var begin = r.location;
+    var end = r.location + r.length;
     if (maxloc < begin){
         begin = maxloc;
     }
@@ -22,6 +22,6 @@ NSRange NSMakeNormalizedRangeFromRange(NSRange r, NSUInteger maxloc)
 
 NSRange NSMakeNormalizedRange(NSUInteger loc, NSUInteger len, NSUInteger maxloc)
 {
-    _auto r = NSMakeRange(loc, len);
+    let r = NSMakeRange(loc, len);
     return NSMakeNormalizedRangeFromRange(r, maxloc);
 }

@@ -56,7 +56,7 @@
 // You do not need to use this if this is not proper to express the motion.
 - (XVimEvaluator*)commonMotion:(SEL)motion Type:(MOTION_TYPE)type
 {
-    _auto view = [self sourceView];
+    let view = [self sourceView];
 #pragma clang diagnostic push
 #pragma clang diagnostic ignored "-Warc-performSelector-leaks"
     NSUInteger motionTo = (NSUInteger)
@@ -280,7 +280,7 @@ if( childEvaluator.keyStroke.toString.length != 1 ){
 - (XVimEvaluator*)nN_impl:(BOOL)opposite
 {
     XVim.instance.foundRangesHidden = NO;
-    _auto view = [self.window sourceView];
+    let view = [self.window sourceView];
     view.needsUpdateFoundRanges = YES;
 
     XVimMotion* m = [XVIM.searcher motionForRepeatSearch];
@@ -485,7 +485,7 @@ if( childEvaluator.keyStroke.toString.length != 1 ){
 - (XVimEvaluator*)UNDERSCORE
 {
     // TODO add this motion interface to NSTextView
-    _auto view = [self.window sourceView];
+    let view = [self.window sourceView];
     NSRange r = [view selectedRange];
     NSUInteger repeat = self.numericArg;
     NSUInteger linesUpCursorloc =

@@ -40,7 +40,7 @@
         [string getLineStart:&start end:&end contentsEnd:&contentsEnd forRange:NSMakeRange(end, 0)];
         lineNum++;
         if (lineNum == num) {
-            _auto nl = end - contentsEnd;
+            let nl = end - contentsEnd;
             if (newLineLength)
                 *newLineLength = nl;
             return NSMakeRange(start, contentsEnd - start);
@@ -382,7 +382,7 @@ static NSUInteger xvim_sb_count_columns(xvim_string_buffer_t* sb, NSUInteger tab
 - (BOOL)isLastLine:(NSUInteger)index
 {
     index = [self validIndex:index];
-    _auto numLines = [self xvim_numberOfLines];
+    let numLines = [self xvim_numberOfLines];
     return [self xvim_lineNumberAtIndex:index] == numLines
            || (numLines > 1 && [self xvim_lineNumberAtIndex:index] == [self xvim_numberOfLines] - 1);
 }

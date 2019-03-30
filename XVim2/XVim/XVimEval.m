@@ -36,7 +36,7 @@
 {
     self = [super init];
     if (self) {
-        _auto func = [[XVimEvalFunc alloc] initWithFuncName:@"line"  MethodName:@"line:inWindow:"];
+        let func = [[XVimEvalFunc alloc] initWithFuncName:@"line"  MethodName:@"line:inWindow:"];
         _evalFuncs = @[func];
     }
     return self;

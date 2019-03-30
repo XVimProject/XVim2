@@ -88,7 +88,7 @@
 
 - (NSString*)insertedText
 {
-    _auto view = [self sourceView];
+    let view = [self sourceView];
     NSUInteger startLoc = self.startRange.location;
     NSUInteger endLoc = [view selectedRange].location;
     NSRange textRange = NSMakeRange(NSNotFound, 0);
@@ -184,7 +184,7 @@
     }
 #endif
 
-    _auto sourceView = self.sourceView;
+    let sourceView = self.sourceView;
 
     [sourceView xvim_hideCompletions];
 

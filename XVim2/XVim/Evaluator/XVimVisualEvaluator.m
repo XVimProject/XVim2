@@ -347,7 +347,7 @@ static NSString* MODE_STRINGS[] = { @"", @"-- VISUAL --", @"-- VISUAL LINE --", 
 
 - (XVimEvaluator*)p
 {
-    _auto view = [self sourceView];
+    let view = [self sourceView];
     XVimRegister* reg = [XVIM.registerManager registerByName:self.yankRegister];
     [view xvim_put:reg.string withType:reg.type afterCursor:YES count:[self numericArg]];
     return nil;
@@ -406,7 +406,7 @@ static NSString* MODE_STRINGS[] = { @"", @"-- VISUAL --", @"-- VISUAL LINE --", 
 
 - (XVimEvaluator*)v
 {
-    _auto view = [self sourceView];
+    let view = [self sourceView];
     if (view.selectionMode == XVIM_VISUAL_CHARACTER) {
         return [self ESC];
     }
@@ -416,7 +416,7 @@ static NSString* MODE_STRINGS[] = { @"", @"-- VISUAL --", @"-- VISUAL LINE --", 
 
 - (XVimEvaluator*)V
 {
-    _auto view = [self sourceView];
+    let view = [self sourceView];
     if (view.selectionMode == XVIM_VISUAL_LINE) {
         return [self ESC];
     }
@@ -426,7 +426,7 @@ static NSString* MODE_STRINGS[] = { @"", @"-- VISUAL --", @"-- VISUAL LINE --", 
 
 - (XVimEvaluator*)C_v
 {
-    _auto view = [self sourceView];
+    let view = [self sourceView];
     if (view.selectionMode == XVIM_VISUAL_BLOCK) {
         return [self ESC];
     }

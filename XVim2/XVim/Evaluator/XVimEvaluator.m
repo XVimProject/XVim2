@@ -137,7 +137,7 @@ static XVimEvaluator* _popEvaluator = nil;
 {
     NSMutableArray<NSString*>* ps = [NSMutableArray new];
 
-    _auto evaluator = self.parent;
+    var evaluator = self.parent;
     while (evaluator != nil) {
         NSString* arg = evaluator.argumentString;
         if (arg)
@@ -208,7 +208,7 @@ static XVimEvaluator* _popEvaluator = nil;
                         return nil;
                     }
                     XVim.instance.foundRangesHidden = NO;
-                    _auto view = [self.window sourceView];
+                    let view = [self.window sourceView];
                     view.needsUpdateFoundRanges = YES;
 
                     BOOL forward2 = [command characterAtIndex:0] == '/';

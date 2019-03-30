@@ -94,14 +94,14 @@
 
 - (XVimEvaluator*)u
 {
-    _auto view = [self sourceView];
+    let view = [self sourceView];
     [view xvim_makeLowerCase:XVIM_MAKE_MOTION(MOTION_NONE, CHARWISE_EXCLUSIVE, MOPT_NONE, 1)];
     return [XVimEvaluator invalidEvaluator];
 }
 
 - (XVimEvaluator*)U
 {
-    _auto view = [self sourceView];
+    let view = [self sourceView];
     [view xvim_makeUpperCase:XVIM_MAKE_MOTION(MOTION_NONE, CHARWISE_EXCLUSIVE, MOPT_NONE, 1)];
     return [XVimEvaluator invalidEvaluator];
 }
@@ -120,7 +120,7 @@
 
 - (XVimEvaluator*)TILDE
 {
-    _auto view = [self sourceView];
+    let view = [self sourceView];
     [view xvim_swapCase:XVIM_MAKE_MOTION(MOTION_NONE, CHARWISE_EXCLUSIVE, MOPT_NONE, 1)];
     return [XVimEvaluator invalidEvaluator];
 }

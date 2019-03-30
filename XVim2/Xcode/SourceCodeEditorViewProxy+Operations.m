@@ -711,7 +711,7 @@
 
 - (void)xvim_indentCharacterRange:(NSRange)range
 {
-    _auto currentSelection = self.selectedRange;
+    let currentSelection = self.selectedRange;
     self.selectedRange = range;
     [self indentSelection:self];
     self.selectedRange = NSIntersectionRange(currentSelection, NSMakeRange(0, self.string.length - 1));

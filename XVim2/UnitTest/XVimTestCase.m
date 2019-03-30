@@ -44,8 +44,8 @@ static atomic_uint dispatchQueueCount = ATOMIC_VAR_INIT(0);
 -(dispatch_queue_t)testCompletionDispatchQueue
 {
     if (_testCompletionDispatchQueue == nil) {
-        _auto val = atomic_fetch_add(&dispatchQueueCount, 1);
-        _auto queue_name = [NSString stringWithFormat:@"XVimTestCompletionDispatchQueue%u", val];
+        let val = atomic_fetch_add(&dispatchQueueCount, 1);
+        let queue_name = [NSString stringWithFormat:@"XVimTestCompletionDispatchQueue%u", val];
         _testCompletionDispatchQueue = dispatch_queue_create(queue_name.UTF8String, NULL);
     }
     return _testCompletionDispatchQueue;

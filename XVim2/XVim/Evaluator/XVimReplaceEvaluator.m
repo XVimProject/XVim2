@@ -37,7 +37,7 @@
 - (void)repeatBlockText
 {
     NSString* text = [self insertedText];
-    _auto sourceView = [self sourceView];
+    let sourceView = [self sourceView];
 
     for (NSUInteger i = 0; i < [self numericArg] - 1; i++) {
         [sourceView insertText:text replacementRange:NSMakeRange(self.sourceView.insertionPoint, text.length)];

@@ -67,7 +67,7 @@
     // We do not fix the change here if next evaluator is not nil becaust it waits more input for fix the command.
     // This happens for a command like "cw..."
     if (nil == evaluator) {
-        _auto view = self.window.sourceView;
+        let view = self.window.sourceView;
         NSString* className = NSStringFromClass([self class]);
         if (![className isEqualToString:@"XVimYankEvaluator"]) {
             [[XVim instance] fixOperationCommands];

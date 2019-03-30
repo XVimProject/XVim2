@@ -145,7 +145,7 @@
 
 - (XVimEvaluator*)ESC
 {
-    _auto sourceView = [self sourceView];
+    let sourceView = [self sourceView];
     [sourceView xvim_scrollTo:[sourceView insertionPoint]];
     return nil;
 }

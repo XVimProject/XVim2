@@ -158,7 +158,7 @@
 
 - (XVimEvaluator*)C_r
 {
-    _auto view = [self sourceView];
+    let view = [self sourceView];
     for (NSUInteger i = 0; i < [self numericArg]; i++) {
         [view.undoManager redo];
     }
@@ -167,7 +167,7 @@
 
 - (XVimEvaluator*)u
 {
-    _auto view = [self sourceView];
+    let view = [self sourceView];
     for (NSUInteger i = 0; i < [self numericArg]; i++) {
         [view.undoManager undo];
     }
@@ -252,14 +252,14 @@
 
 - (XVimEvaluator*)o
 {
-    _auto view = [self sourceView];
+    let view = [self sourceView];
     [view xvim_insertNewlineBelowAndInsertWithIndent];
     return [[XVimInsertEvaluator alloc] initWithWindow:self.window];
 }
 
 - (XVimEvaluator*)O
 {
-    _auto view = [self sourceView];
+    let view = [self sourceView];
     [view xvim_insertNewlineAboveAndInsertWithIndent];
     return [[XVimInsertEvaluator alloc] initWithWindow:self.window];
 }
@@ -287,7 +287,7 @@
 
 - (XVimEvaluator*)p
 {
-    _auto view = [self sourceView];
+    let view = [self sourceView];
     XVimRegister* reg = [XVIM.registerManager registerByName:self.yankRegister];
     [view xvim_put:reg.string withType:reg.type afterCursor:YES count:[self numericArg]];
     [[XVim instance] fixOperationCommands];
@@ -296,7 +296,7 @@
 
 - (XVimEvaluator*)P
 {
-    _auto view = [self sourceView];
+    let view = [self sourceView];
     XVimRegister* reg = [[[XVim instance] registerManager] registerByName:self.yankRegister];
     [view xvim_put:reg.string withType:reg.type afterCursor:NO count:[self numericArg]];
     [[XVim instance] fixOperationCommands];
@@ -502,7 +502,7 @@
 
 - (XVimEvaluator*)C_a
 {
-    _auto view = [self sourceView];
+    let view = [self sourceView];
     if ([view xvim_incrementNumber:(int64_t)self.numericArg]) {
         [[XVim instance] fixOperationCommands];
     }
@@ -515,7 +515,7 @@
 
 - (XVimEvaluator*)C_x
 {
-    _auto view = [self sourceView];
+    let view = [self sourceView];
 
     if ([view xvim_incrementNumber:-(int64_t)self.numericArg]) {
         [[XVim instance] fixOperationCommands];

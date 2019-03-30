@@ -45,15 +45,15 @@
     if (line == self.lineCount) {
         return self.string.length - 1;
     }
-    _auto row = line - 1;
-    _auto cols = [self characterRangeForLineRange:NSMakeRange(row, 1)];
+    let row = line - 1;
+    let cols = [self characterRangeForLineRange:NSMakeRange(row, 1)];
     
     // If col is beyond end of content, return position of end of line
     if (col > cols.length) {
         col = cols.length;
     }
     
-    _auto idx = [self indexFromPosition:XvimMakeSourceEditorPosition(row, col)];
+    let idx = [self indexFromPosition:XvimMakeSourceEditorPosition(row, col)];
     return idx;
 }
 - (NSUInteger)xvim_indexOfLineNumber:(NSUInteger)line
@@ -80,7 +80,7 @@
 
 - (NSUInteger)xvim_lineNumberAtIndex:(NSUInteger)idx
 {
-    _auto l = [self lineRangeForCharacterRange:NSMakeRange(idx, 0)].location;
+    let l = [self lineRangeForCharacterRange:NSMakeRange(idx, 0)].location;
     return l != NSNotFound ? l + 1 : 1;
 }
 
@@ -89,10 +89,10 @@
     if (startIdx == self.string.length)
         return startIdx;
     
-    _auto firstLine = [self xvim_lineNumberAtIndex:startIdx];
+    let firstLine = [self xvim_lineNumberAtIndex:startIdx];
     NSUInteger row = firstLine - 1;
-    _auto charRange = [self characterRangeForLineRange:NSMakeRange(row, 1)];
-    _auto idx = charRange.location + charRange.length - 1;
+    let charRange = [self characterRangeForLineRange:NSMakeRange(row, 1)];
+    var idx = charRange.location + charRange.length - 1;
     idx += [self.sourceEditorDataSourceWrapper lineTerminatorLengthForLine:row];
     return idx;
 }
@@ -224,7 +224,7 @@
     }
 
     if (self.cursorMode == XVIM_CURSOR_MODE_COMMAND && !(self.selectionMode == XVIM_VISUAL_BLOCK)) {
-        _auto adjustedPos = [self.textStorage convertToValidCursorPositionForNormalMode:pos];
+        let adjustedPos = [self.textStorage convertToValidCursorPositionForNormalMode:pos];
         self.insertionPoint = adjustedPos;
         if (pos != adjustedPos && self.selectedRange.length == 0) {
             self.xvim_lockSyncStateFromView = YES;
@@ -863,8 +863,8 @@
 
 - (NSUInteger)xvim_lineNumberAtMiddle
 {
-    _auto topLine = [self xvim_lineNumberFromTop:1];
-    _auto bottomLine = [self xvim_lineNumberFromBottom:1];
+    let topLine = [self xvim_lineNumberFromTop:1];
+    let bottomLine = [self xvim_lineNumberFromBottom:1];
     return (topLine + bottomLine) / 2;
 }
 
@@ -912,7 +912,7 @@
 
     for (NSUInteger line = lines.begin; line <= lines.end; line++) {
         ts = self.textStorage;
-        _auto pos = [self xvim_indexOfLineNumber:line column:column];
+        var pos = [self xvim_indexOfLineNumber:line column:column];
         if (pos == NSNotFound) {
             continue;
         }

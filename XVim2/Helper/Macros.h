@@ -9,10 +9,13 @@
 #ifndef Macros_h
 #define Macros_h
 
-#define _auto __auto_type
+//#define let __auto_type
+#define let __auto_type const
+#define var __auto_type
+
 
 #define clamp(_in, _min, _max) do { (_in) = ((_in) < (_min) ? (_min) : ((_in) > (_max) ? (_max) : (_in))); } while(false)
-#define xvim_swap(v1, v2) do { _auto tmp = (v2); (v2) = (v1); (v1) = tmp; } while(false)
+#define xvim_swap(v1, v2) do { let tmp = (v2); (v2) = (v1); (v1) = tmp; } while(false)
 
 typedef void (^xvim_cleanup_block_t)(void);
 static inline void xvim_execute_cleanup_block(__strong xvim_cleanup_block_t* block) { (*block)(); }

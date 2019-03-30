@@ -143,7 +143,7 @@
         && (rng->pos2).col == 0)
         return YES;
 
-    _auto rr = [self characterRangeForLineRange:NSMakeRange((rng->pos1).row, 1)];
+    var rr = [self characterRangeForLineRange:NSMakeRange((rng->pos1).row, 1)];
     if (rr.location == NSNotFound)
         return NO;
     clamp((rng->pos1).col, 0, rr.length);
@@ -192,7 +192,7 @@
 
 - (void)setString:(NSString*)string
 {
-    _auto scanner = [NSScanner scannerWithString:string];
+    let scanner = [NSScanner scannerWithString:string];
     scanner.charactersToBeSkipped = [NSCharacterSet new];
 
     NSString* nextLine = nil;
@@ -314,38 +314,38 @@
         return;
 
     if (ranges.count == 1) {
-        _auto rng = ranges.firstObject.rangeValue;
+        let rng = ranges.firstObject.rangeValue;
 
         if (rng.length == 0) {
             self.sourceCodeEditorView.selectedTextRange = rng;
             return;
         }
 
-        _auto insertionPos = [self positionFromIndex:self.insertionPoint lineHint:0];
+        let insertionPos = [self positionFromIndex:self.insertionPoint lineHint:0];
         XVimSourceEditorRange insertionRange = {.pos1 = insertionPos, .pos2 = insertionPos };
         [self setSelectedRange:insertionRange modifiers:0];
-        _auto pos1 = [self positionFromIndex:rng.location lineHint:insertionPos.row];
-        _auto pos2 = [self positionFromIndex:rng.location + rng.length lineHint:pos1.row];
+        let pos1 = [self positionFromIndex:rng.location lineHint:insertionPos.row];
+        let pos2 = [self positionFromIndex:rng.location + rng.length lineHint:pos1.row];
         XVimSourceEditorRange selectionRange = {.pos1 = pos1, .pos2 = pos2 };
 		[self setSelectedRange:selectionRange modifiers:SelectionModifierExtension];
     }
     else {
-        _auto rangeItr = (affinity == NSSelectionAffinityUpstream) ? [ranges reverseObjectEnumerator] : ranges;
-        _auto insertionPos = [self positionFromIndex:self.insertionPoint lineHint:0];
-        _auto insertionLine = insertionPos.row;
-        _auto lastLine = insertionLine;
+        let rangeItr = (affinity == NSSelectionAffinityUpstream) ? [ranges reverseObjectEnumerator] : ranges;
+        let insertionPos = [self positionFromIndex:self.insertionPoint lineHint:0];
+        let insertionLine = insertionPos.row;
+        var lastLine = insertionLine;
         BOOL isFirst = YES;
 
         for (NSValue* val in rangeItr) {
-            _auto rng = val.rangeValue;
-            _auto pos1 = [self positionFromIndex:rng.location lineHint:lastLine];
-            _auto pos2 = [self positionFromIndex:rng.location + rng.length lineHint:pos1.row];
+            let rng = val.rangeValue;
+            let pos1 = [self positionFromIndex:rng.location lineHint:lastLine];
+            let pos2 = [self positionFromIndex:rng.location + rng.length lineHint:pos1.row];
             lastLine = pos2.row;
 
             XVimSourceEditorRange ser = {.pos1 = pos1, .pos2 = pos2 };
             BOOL isInsertionLine = (pos1.row == insertionLine);
 
-            _auto selectionModifiers = isInsertionLine ? SelectionModifierDiscontiguous
+            let selectionModifiers = isInsertionLine ? SelectionModifierDiscontiguous
                                                        : SelectionModifierDiscontiguous | SelectionModifierExtension;
             if (![self normalizeRange:&ser])
                 continue;
@@ -396,7 +396,7 @@
 
 - (NSInteger)currentLineNumber
 {
-    _auto ln = [self.sourceCodeEditorView lineRangeForCharacterRange:self.sourceCodeEditorView.selectedTextRange]
+    let ln = [self.sourceCodeEditorView lineRangeForCharacterRange:self.sourceCodeEditorView.selectedTextRange]
                            .location;
     return ln == NSNotFound ? 1 : (NSInteger)ln + 1;
 }
@@ -655,7 +655,7 @@ static CGFloat XvimCommandLineAnimationDuration = 0.1;
     if (self.isShowingCommandLine)
         return;
     
-    _auto scrollView = [self.sourceCodeEditorView scrollView];
+    let scrollView = [self.sourceCodeEditorView scrollView];
     if ([self.sourceCodeEditorView.class isEqual:NSClassFromString(IDEPegasusSourceCodeEditorViewClassName)]) {
         NSView* layoutView = [scrollView superview];
         [layoutView addSubview:self.commandLine];
@@ -671,7 +671,7 @@ static CGFloat XvimCommandLineAnimationDuration = 0.1;
         } else {
             commandline_height = 20;
         }
-        _auto height = [self.commandLine.heightAnchor constraintEqualToConstant:commandline_height];
+        let height = [self.commandLine.heightAnchor constraintEqualToConstant:commandline_height];
         height.priority = 250;
         height.active = YES;
 
@@ -694,7 +694,7 @@ static CGFloat XvimCommandLineAnimationDuration = 0.1;
     if (!self.isShowingCommandLine)
         return;
 
-    _auto scrollView = [self.sourceCodeEditorView scrollView];
+    let scrollView = [self.sourceCodeEditorView scrollView];
     if ([self.sourceCodeEditorView.class isEqual:NSClassFromString(IDEPegasusSourceCodeEditorViewClassName)]) {
         NSEdgeInsets insets = scrollView.additionalContentInsets;
         insets.bottom = 0;

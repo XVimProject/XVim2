@@ -358,7 +358,7 @@
                allowZero:(BOOL)allowZero
                 inWindow:(XVimWindow*)window
 {
-    _auto view = [window sourceView];
+    let view = [window sourceView];
     // DVTFoldingTextStorage* storage = [view textStorage];
     // DEBUG_LOG(@"Storage Class:%@", NSStringFromClass([storage class]));
     NSUInteger addr = NSNotFound;
@@ -528,7 +528,7 @@
     exarg.lineBegin = NSNotFound;
     exarg.lineEnd = NSNotFound;
 
-    _auto view = [window sourceView];
+    let view = [window sourceView];
     for (;;) {
         NSUInteger addr = [self getAddress:parsing cmdLeft:&parsing allowZero:NO inWindow:window];
         if (NSNotFound == addr) {
@@ -629,7 +629,7 @@
     // Actual parsing is done in following method.
     XVimExArg* exarg = [self parseCommand:cmd inWindow:window];
     if (exarg.cmd == nil) {
-        _auto srcView = [window sourceView];
+        let srcView = [window sourceView];
 
         // Jump to location
         NSUInteger pos = [srcView xvim_indexOfLineNumber:exarg.lineBegin column:0];
@@ -931,7 +931,7 @@ xvim_ignore_warning_undeclared_selector_push
 - (void)nohlsearch:(XVimExArg*)args inWindow:(XVimWindow*)window
 {
 #ifdef TODO
-    _auto view = [window sourceView];
+    let view = [window sourceView];
     XVim.instance.foundRangesHidden = YES;
     [view setNeedsUpdateFoundRanges:YES];
     [view xvim_clearHighlightText];
@@ -943,7 +943,7 @@ xvim_ignore_warning_undeclared_selector_push
 #ifdef TODO
     if (args.lineBegin == NSNotFound && args.lineEnd == NSNotFound)
         return;
-    _auto view = [window sourceView];
+    let view = [window sourceView];
     [view xvim_yank:XVIM_MAKE_MOTION(MOTION_LINE_FORWARD, LINEWISE, MOPT_NONE,
                                      args.lineEnd != NSNotFound ? args.lineEnd - args.lineBegin : 1)
                 withMotionPoint:[view xvim_indexOfLineNumber:args.lineBegin]];
@@ -954,7 +954,7 @@ xvim_ignore_warning_undeclared_selector_push
 {
     if (args.lineBegin == NSNotFound && args.lineEnd == NSNotFound)
         return;
-    _auto view = [window sourceView];
+    let view = [window sourceView];
     [view xvim_delete:XVIM_MAKE_MOTION(MOTION_LINE_FORWARD, LINEWISE, MOPT_NONE,
                                        args.lineEnd != NSNotFound ? args.lineEnd - args.lineBegin : 1)
                 withMotionPoint:[view xvim_indexOfLineNumber:args.lineBegin]
@@ -982,7 +982,7 @@ xvim_ignore_warning_undeclared_selector_push
         && (addr == args.lineBegin || (args.lineEnd != NSNotFound && addr > args.lineBegin && addr <= args.lineEnd))) {
         return;
     }
-    _auto view = [window sourceView];
+    let view = [window sourceView];
     // An address of 0 means paste BEFORE the first line
     [view xvim_copymove:XVIM_MAKE_MOTION(MOTION_LINE_FORWARD, LINEWISE, MOPT_NONE,
                                          args.lineEnd != NSNotFound ? args.lineEnd - args.lineBegin : 1)
@@ -1004,7 +1004,7 @@ xvim_ignore_warning_undeclared_selector_push
                        isEqualToString:args.arg]) {
         return;
     }
-    _auto view = [window sourceView];
+    let view = [window sourceView];
     XVimMotion* motion = XVIM_MAKE_MOTION(MOTION_LINE_FORWARD, LINEWISE, MOPT_NONE,
                                           args.lineEnd != NSNotFound ? args.lineEnd - args.lineBegin : 1);
     NSUInteger motionPoint = [view xvim_indexOfLineNumber:args.lineBegin];
@@ -1132,7 +1132,7 @@ xvim_ignore_warning_undeclared_selector_push
 - (void)set:(XVimExArg*)args inWindow:(XVimWindow*)window
 {
     NSString* setCommand = [args.arg stringByTrimmingCharactersInSet:[NSCharacterSet whitespaceCharacterSet]];
-    //_auto srcView = [window sourceView];
+    //let srcView = [window sourceView];
     XVimOptions* options = [XVIM options];
 
     if ([setCommand rangeOfString:@"="].location != NSNotFound) {
@@ -1167,7 +1167,7 @@ xvim_ignore_warning_undeclared_selector_push
 
 - (void)sort:(XVimExArg*)args inWindow:(XVimWindow*)window
 {
-    _auto view = [window sourceView];
+    let view = [window sourceView];
 
     NSString* cmdString = [[args cmd] stringByTrimmingCharactersInSet:[NSCharacterSet whitespaceCharacterSet]];
     NSString* argsString = [args arg];
@@ -1344,7 +1344,7 @@ xvim_ignore_warning_pop
     }
 
     // Below if-else achieves the same goal. I'm not sure the better one.
-    _auto ctrl = XVimLastActiveWorkspaceTabController();
+    let ctrl = XVimLastActiveWorkspaceTabController();
     if ([ctrl respondsToSelector:item.action]) {
         NSLog(@"IDEWorkspaceTabController perform action");
 #pragma clang diagnostic push
@@ -1360,7 +1360,7 @@ xvim_ignore_warning_pop
 
 - (void)xctabctrl:(XVimExArg*)args inWindow:(XVimWindow*)window
 {
-    _auto ctrl = XVimLastActiveWorkspaceTabController();
+    let ctrl = XVimLastActiveWorkspaceTabController();
     if ([ctrl respondsToSelector:NSSelectorFromString(args.arg)]) {
 #pragma clang diagnostic push
 #pragma clang diagnostic ignored "-Warc-performSelector-leaks"

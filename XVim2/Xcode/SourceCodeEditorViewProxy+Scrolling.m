@@ -64,7 +64,7 @@
     NSInteger scrollToLine = (numScrollLines < 0) ? (visibleLineRange.topLine + numScrollLines) : (visibleLineRange.bottomLine + numScrollLines);
     clamp(scrollToLine, 0, self.lineCount - 1);
 
-    _auto scrollToCharRange = [self characterRangeForLineRange:NSMakeRange(scrollToLine, 1)];
+    var scrollToCharRange = [self characterRangeForLineRange:NSMakeRange(scrollToLine, 1)];
     clamp(scrollToCharRange.location, 0, self.string.length);
     [self scrollRangeToVisible:scrollToCharRange];
 
@@ -89,9 +89,9 @@
     }
     clamp(cursorLine, 0, self.lineCount - 1);
 
-    _auto newCharRange = [self characterRangeForLineRange:NSMakeRange(cursorLine, 1)];
+    var newCharRange = [self characterRangeForLineRange:NSMakeRange(cursorLine, 1)];
     clamp(newCharRange.location, 0, self.string.length);
-    _auto cursorIndexAfterScroll =
+    let cursorIndexAfterScroll =
                 [self.textStorage xvim_firstNonblankInLineAtIndex:newCharRange.location allowEOL:YES];
 
     [self xvim_moveCursor:cursorIndexAfterScroll preserveColumn:NO];
@@ -143,7 +143,7 @@ typedef struct {
 - (void)xvim_scrollCenter:(NSUInteger)lineNumber firstNonblank:(BOOL)fnb
 { // zz / z.
     if (fnb) {
-        _auto cursorIndexAfterScroll =
+        let cursorIndexAfterScroll =
                     [self.textStorage xvim_firstNonblankInLineAtIndex:self.selectedRange.location allowEOL:YES];
         if (cursorIndexAfterScroll != self.selectedRange.location) {
             self.selectedRange = NSMakeRange(cursorIndexAfterScroll, 0);
