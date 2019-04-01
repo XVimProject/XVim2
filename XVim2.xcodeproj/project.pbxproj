@@ -25,7 +25,7 @@
 		A2A9F9382070A84600E7BB53 /* IDEWorkspaceTabController+XVim.m in Sources */ = {isa = PBXBuildFile; fileRef = A2A9F9322070A84600E7BB53 /* IDEWorkspaceTabController+XVim.m */; };
 		A2A9F9392070A84600E7BB53 /* SourceCodeEditorViewProxy+Scrolling.m in Sources */ = {isa = PBXBuildFile; fileRef = A2A9F9332070A84600E7BB53 /* SourceCodeEditorViewProxy+Scrolling.m */; };
 		A2A9F93A2070A84600E7BB53 /* SourceCodeEditorViewProxy+Yank.m in Sources */ = {isa = PBXBuildFile; fileRef = A2A9F9342070A84600E7BB53 /* SourceCodeEditorViewProxy+Yank.m */; };
-		A2A9F93E2070A85200E7BB53 /* XVimIDEPegasusSourceEditorView.m in Sources */ = {isa = PBXBuildFile; fileRef = A2A9F93C2070A85200E7BB53 /* XVimIDEPegasusSourceEditorView.m */; };
+		A2A9F93E2070A85200E7BB53 /* XVimIDESourceEditorView.m in Sources */ = {isa = PBXBuildFile; fileRef = A2A9F93C2070A85200E7BB53 /* XVimIDESourceEditorView.m */; };
 		A2B52D3F1F514CC600D83C0A /* Logger.m in Sources */ = {isa = PBXBuildFile; fileRef = A2B52D3B1F514CC600D83C0A /* Logger.m */; };
 		A2B537B11F51C94400D83C0A /* NSObject+Swizzle.m in Sources */ = {isa = PBXBuildFile; fileRef = A2B537B01F51C94400D83C0A /* NSObject+Swizzle.m */; };
 		A2B5D78D2243319A00BD289D /* XcodeHeader in Resources */ = {isa = PBXBuildFile; fileRef = A2B5D78C2243319A00BD289D /* XcodeHeader */; };
@@ -147,8 +147,8 @@
 		A2A9F9332070A84600E7BB53 /* SourceCodeEditorViewProxy+Scrolling.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = "SourceCodeEditorViewProxy+Scrolling.m"; path = "XVim2/Xcode/SourceCodeEditorViewProxy+Scrolling.m"; sourceTree = SOURCE_ROOT; };
 		A2A9F9342070A84600E7BB53 /* SourceCodeEditorViewProxy+Yank.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = "SourceCodeEditorViewProxy+Yank.m"; path = "XVim2/Xcode/SourceCodeEditorViewProxy+Yank.m"; sourceTree = SOURCE_ROOT; };
 		A2A9F93B2070A85200E7BB53 /* XVimXcode.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = XVimXcode.h; path = XVim2/Xcode/XVimXcode.h; sourceTree = SOURCE_ROOT; };
-		A2A9F93C2070A85200E7BB53 /* XVimIDEPegasusSourceEditorView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = XVimIDEPegasusSourceEditorView.m; path = XVim2/Xcode/XVimIDEPegasusSourceEditorView.m; sourceTree = SOURCE_ROOT; };
-		A2A9F93D2070A85200E7BB53 /* XVimIDEPegasusSourceEditorView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = XVimIDEPegasusSourceEditorView.h; path = XVim2/Xcode/XVimIDEPegasusSourceEditorView.h; sourceTree = SOURCE_ROOT; };
+		A2A9F93C2070A85200E7BB53 /* XVimIDESourceEditorView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = XVimIDESourceEditorView.m; path = XVim2/Xcode/XVimIDESourceEditorView.m; sourceTree = SOURCE_ROOT; };
+		A2A9F93D2070A85200E7BB53 /* XVimIDESourceEditorView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = XVimIDESourceEditorView.h; path = XVim2/Xcode/XVimIDESourceEditorView.h; sourceTree = SOURCE_ROOT; };
 		A2B52D3A1F514CC600D83C0A /* Logger.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Logger.h; sourceTree = "<group>"; };
 		A2B52D3B1F514CC600D83C0A /* Logger.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Logger.m; sourceTree = "<group>"; };
 		A2B52D3C1F514CC600D83C0A /* Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
@@ -390,8 +390,8 @@
 				A29BA5702243D6160032C3E2 /* SourceEditorDataSourceWrapper.swift */,
 				A2A298DA2070A962001B5F9E /* XcodeUtils.h */,
 				A2A298DB2070A962001B5F9E /* XcodeUtils.m */,
-				A2A9F93D2070A85200E7BB53 /* XVimIDEPegasusSourceEditorView.h */,
-				A2A9F93C2070A85200E7BB53 /* XVimIDEPegasusSourceEditorView.m */,
+				A2A9F93D2070A85200E7BB53 /* XVimIDESourceEditorView.h */,
+				A2A9F93C2070A85200E7BB53 /* XVimIDESourceEditorView.m */,
 				A2A9F93B2070A85200E7BB53 /* XVimXcode.h */,
 			);
 			name = Xcode;
@@ -752,7 +752,7 @@
 				EDF0106A1F6EEFFC00461B2C /* XVimKeyStroke.m in Sources */,
 				ED60EB871F82E4D4000CBF9C /* XVimTildeEvaluator.m in Sources */,
 				A2482F311F72435D00FEF4DE /* ProcessRunner.m in Sources */,
-				A2A9F93E2070A85200E7BB53 /* XVimIDEPegasusSourceEditorView.m in Sources */,
+				A2A9F93E2070A85200E7BB53 /* XVimIDESourceEditorView.m in Sources */,
 				EDF010681F6EEFFC00461B2C /* XVimEvaluator.m in Sources */,
 				EDB7F6031F6D8CE5007E0C41 /* rd_route.c in Sources */,
 				A2A9F9352070A84600E7BB53 /* SourceCodeEditorViewProxy.m in Sources */,

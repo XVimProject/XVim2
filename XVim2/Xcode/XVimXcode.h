@@ -9,7 +9,7 @@
 #ifndef XVimXcode_h
 #define XVimXcode_h
 
-static NSString * const IDEPegasusSourceCodeEditorViewClassName
+static NSString * const IDESourceEditorViewClassName
     = @"IDESourceEditor.IDESourceEditorView";
 
 static NSString * const SourceEditorViewClassName

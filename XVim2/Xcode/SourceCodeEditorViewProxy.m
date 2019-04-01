@@ -656,7 +656,7 @@ static CGFloat XvimCommandLineAnimationDuration = 0.1;
         return;
     
     let scrollView = [self.sourceCodeEditorView scrollView];
-    if ([self.sourceCodeEditorView.class isEqual:NSClassFromString(IDEPegasusSourceCodeEditorViewClassName)]) {
+    if ([self.sourceCodeEditorView.class isEqual:NSClassFromString(IDESourceEditorViewClassName)]) {
         NSView* layoutView = [scrollView superview];
         [layoutView addSubview:self.commandLine];
         _cmdLineBottomAnchor = [layoutView.bottomAnchor constraintEqualToAnchor:self.commandLine.bottomAnchor
@@ -695,7 +695,7 @@ static CGFloat XvimCommandLineAnimationDuration = 0.1;
         return;
 
     let scrollView = [self.sourceCodeEditorView scrollView];
-    if ([self.sourceCodeEditorView.class isEqual:NSClassFromString(IDEPegasusSourceCodeEditorViewClassName)]) {
+    if ([self.sourceCodeEditorView.class isEqual:NSClassFromString(IDESourceEditorViewClassName)]) {
         NSEdgeInsets insets = scrollView.additionalContentInsets;
         insets.bottom = 0;
 

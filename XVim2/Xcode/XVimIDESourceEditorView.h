@@ -1,5 +1,5 @@
 //
-//  XVimIDEPegasusSourceEditorView.h
+//  XVimIDESourceEditorView.h
 //  XVim2
 //
 //  Created by pebble8888 on 2018/03/31.
@@ -8,6 +8,6 @@
 
 #import <Foundation/Foundation.h>
 
-@interface XVimIDEPegasusSourceEditorView : NSObject
+@interface XVimIDESourceEditorView : NSObject
 + (void)xvim_hook;
 @end

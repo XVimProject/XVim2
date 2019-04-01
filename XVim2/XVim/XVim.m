@@ -36,7 +36,7 @@
 #import <SourceEditor/_TtC12SourceEditor23SourceEditorContentView.h>
 #import <IDESourceEditor/_TtC15IDESourceEditor19IDESourceEditorView.h>
 #import "XVimXcode.h"
-#import "XVimIDEPegasusSourceEditorView.h"
+#import "XVimIDESourceEditorView.h"
 
 @interface XVim () {
     XVimKeymap* _keymaps[XVIM_MODE_COUNT];
@@ -71,7 +71,7 @@
     // before swizzling. If not, we will wait, observing NSBundle's class load notifications,
     // until all of these classes have been loaded before swizzling.
     NSArray<NSString*>* swizzleClasses =
-                @[ IDEPegasusSourceCodeEditorViewClassName, SourceEditorViewClassName, @"IDEWorkspaceTabController" ];
+                @[ IDESourceEditorViewClassName, SourceEditorViewClassName, @"IDEWorkspaceTabController" ];
 
     NSMutableSet<NSString*>* requiredClassesWaitSet = [[NSMutableSet alloc] initWithArray:swizzleClasses];
     NSMutableSet<NSString*>* loadedClasses = [NSMutableSet new];
@@ -108,7 +108,7 @@
 
 + (void)hookClasses
 {
-    [XVimIDEPegasusSourceEditorView xvim_hook];
+    [XVimIDESourceEditorView xvim_hook];
     [IDEWorkspaceTabController_XVim xvim_hook];
 }
 

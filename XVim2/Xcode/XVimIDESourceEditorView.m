@@ -1,12 +1,12 @@
 //
-//  XVimIDEPegasusSourceEditorView.m
+//  XVimIDESourceEditorView.m
 //  XVim2
 //
 //  Created by pebble8888 on 2018/03/31.
 //  Copyright © 2018年 Shuichiro Suzuki. All rights reserved.
 //
 
-#import "XVimIDEPegasusSourceEditorView.h"
+#import "XVimIDESourceEditorView.h"
 
 #import <IDESourceEditor/_TtC15IDESourceEditor19IDESourceEditorView.h>
 #import "_TtC15IDESourceEditor19IDESourceEditorView+XVim.h"
@@ -34,27 +34,27 @@ CONST_STR(EDWindow);
 
 #define SELF ((_TtC15IDESourceEditor19IDESourceEditorView*)self)
 
-@implementation XVimIDEPegasusSourceEditorView
+@implementation XVimIDESourceEditorView
 
 + (void)xvim_hook
 {
-    [XVimIDEPegasusSourceEditorView
+    [XVimIDESourceEditorView
      xvim_swizzleInstanceMethodOfClassName: SourceEditorViewClassName
      selector:@selector(keyDown:)
      with:@selector(xvim_keyDown:)];
-    [XVimIDEPegasusSourceEditorView
-     xvim_swizzleInstanceMethodOfClassName: IDEPegasusSourceCodeEditorViewClassName
+    [XVimIDESourceEditorView
+     xvim_swizzleInstanceMethodOfClassName: IDESourceEditorViewClassName
      selector:@selector(viewWillMoveToWindow:)
      with:@selector(xvim_viewWillMoveToWindow:)];
-    [XVimIDEPegasusSourceEditorView
-     xvim_swizzleInstanceMethodOfClassName:IDEPegasusSourceCodeEditorViewClassName
+    [XVimIDESourceEditorView
+     xvim_swizzleInstanceMethodOfClassName:IDESourceEditorViewClassName
      selector:@selector(scrollRangeToVisible:)
      with:@selector(xvim_scrollRangeToVisible:)];
     
-    [XVimIDEPegasusSourceEditorView xvim_addInstanceMethod:@selector(xvim_window)
-         toClassName:IDEPegasusSourceCodeEditorViewClassName];
-    [XVimIDEPegasusSourceEditorView xvim_addInstanceMethod: @selector(xvim_setupOnFirstAppearance)
-         toClassName:IDEPegasusSourceCodeEditorViewClassName];
+    [XVimIDESourceEditorView xvim_addInstanceMethod:@selector(xvim_window)
+         toClassName:IDESourceEditorViewClassName];
+    [XVimIDESourceEditorView xvim_addInstanceMethod: @selector(xvim_setupOnFirstAppearance)
+         toClassName:IDESourceEditorViewClassName];
     
 }
 
@@ -95,7 +95,7 @@ CONST_STR(EDWindow);
 {
     XVimWindow* w = [self extraDataForName:EDWindow];
     if ((w == nil || (NSNull*)w == NSNull.null)
-            && [self.class isEqual:NSClassFromString(IDEPegasusSourceCodeEditorViewClassName)]) {
+            && [self.class isEqual:NSClassFromString(IDESourceEditorViewClassName)]) {
         let p = [[SourceCodeEditorViewProxy alloc] initWithSourceCodeEditorView:SELF];
         w = [[XVimWindow alloc] initWithEditorView:p];
         [self setExtraData:w forName:EDWindow];
