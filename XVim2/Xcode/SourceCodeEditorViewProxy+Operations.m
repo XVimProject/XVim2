@@ -15,7 +15,6 @@
 #import "XVimMotion.h"
 #import "XVimOptions.h"
 
-
 @interface SourceCodeEditorViewProxy ()
 @property NSUInteger selectionBegin;
 @property NSUInteger insertionPoint;
@@ -34,7 +33,6 @@
 - (void)xvim_registerPositionForUndo:(NSUInteger)pos;
 - (NSRange)xvim_currentNumber;
 @end
-
 
 @implementation SourceCodeEditorViewProxy (Operations)
 
@@ -210,9 +208,7 @@
     return YES;
 }
 
-
 #pragma mark - INSERT
-
 
 - (void)xvim_insertText:(NSString*)str line:(NSUInteger)line column:(NSUInteger)column
 {
@@ -295,7 +291,6 @@
     [self xvim_insertNewlineBelowCurrentLineWithIndent];
 }
 
-
 #pragma mark - REPLACE
 
 - (BOOL)xvim_replaceCharacters:(unichar)c count:(NSUInteger)count
@@ -359,7 +354,6 @@
     return YES;
 }
 
-
 #pragma mark - CASE
 
 - (void)xvim_swapCaseForRange:(NSRange)range
@@ -368,8 +362,6 @@
     xvim_on_exit { [self xvim_endEditTransaction]; };
 
     NSString* text = self.string;
-
-
     NSMutableString* substring = [[text substringWithRange:range] mutableCopy];
     for (NSUInteger i = 0; i < range.length; ++i) {
         NSRange currentRange = NSMakeRange(i, 1);
@@ -387,7 +379,6 @@
 
     [self insertText:substring replacementRange:range];
 }
-
 
 - (void)xvim_swapCase:(XVimMotion*)motion
 {
@@ -466,7 +457,6 @@
     [self xvim_changeSelectionMode:XVIM_VISUAL_NONE];
 }
 
-
 - (void)xvim_makeUpperCase:(XVimMotion*)motion
 {
     if (self.insertionPoint == 0 && [self.string length] == 0) {
@@ -497,7 +487,6 @@
     [self xvim_syncStateWithScroll:YES];
     [self xvim_changeSelectionMode:XVIM_VISUAL_NONE];
 }
-
 
 #pragma mark - JOIN
 
@@ -580,7 +569,6 @@
 
     [self xvim_changeSelectionMode:XVIM_VISUAL_NONE];
 }
-
 
 #pragma mark - SHIFT
 
@@ -678,7 +666,6 @@
     [self _xvim_shift:motion right:NO withMotionPoint:motionPoint count:count];
 }
 
-
 #pragma mark - FILTER
 
 - (void)xvim_filter:(XVimMotion*)motion
@@ -708,7 +695,6 @@
     [self xvim_changeSelectionMode:XVIM_VISUAL_NONE];
 }
 
-
 - (void)xvim_indentCharacterRange:(NSRange)range
 {
     let currentSelection = self.selectedRange;
@@ -716,7 +702,6 @@
     [self indentSelection:self];
     self.selectedRange = NSIntersectionRange(currentSelection, NSMakeRange(0, self.string.length - 1));
 }
-
 
 #pragma mark - Increment/Decrement
 
@@ -765,7 +750,6 @@
     [self xvim_syncStateWithScroll:YES];
     return YES;
 }
-
 
 #pragma mark - SORT
 
@@ -832,7 +816,6 @@
     [self xvim_syncStateWithScroll:YES];
 }
 
-
 #pragma mark - UTILITY
 
 // @param column   head column of selected area (zero origin)
@@ -872,7 +855,6 @@
     }
     [self insertText:@"" replacementRange:NSMakeRange(head_pos, pos - head_pos)];
 }
-
 
 - (NSRange)_xvim_getDeleteRange:(XVimMotion*)motion withRange:(XVimRange)to
 {
@@ -929,6 +911,5 @@
 
     return NSMakeRange(from, to - from + 1); // Inclusive range
 }
-
 
 @end

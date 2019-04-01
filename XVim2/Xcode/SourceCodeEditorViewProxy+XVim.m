@@ -491,7 +491,7 @@
 // Text Range Queries
 #pragma mark - TEXT RANGE QUERIES
 
-- (XVimRange)xvim_getMotionRange : (NSUInteger)current Motion : (XVimMotion*)motion
+- (XVimRange)xvim_getMotionRange:(NSUInteger)current Motion:(XVimMotion*)motion
 {
     NSRange range = NSMakeRange(NSNotFound, 0);
     NSUInteger begin = current;
