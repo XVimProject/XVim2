@@ -22,16 +22,6 @@
 #import "XVimZEvaluator.h"
 #import "XcodeUtils.h"
 
-////////////////////////////////
-// How to Implement Motion    //
-////////////////////////////////
-
-// On each key input calculate beginning and end of motion and call _motionFixedFrom:To:Type method (not
-// motionFixedFrom:To:Type). It automatically treat switching inclusive/exclusive motion by 'v'. How the motion is
-// treated depends on a subclass of the XVimMotionEvaluator. For example, XVimDeleteEvaluator will delete the letters
-// represented by motion.
-
-
 @interface XVimMotionEvaluator () {
     MOTION_TYPE _forcedMotionType;
     BOOL _toggleInclusiveExclusive;
@@ -80,9 +70,6 @@
     }
     return [self motionFixed:motion];
 }
-
-// Methods to override by subclass
-- (XVimEvaluator*)motionFixedFrom:(NSUInteger)from To:(NSUInteger)to Type:(MOTION_TYPE)type { return nil; }
 
 - (XVimEvaluator*)motionFixed:(XVimMotion*)motion { return nil; }
 
