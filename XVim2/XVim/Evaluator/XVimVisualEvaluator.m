@@ -658,7 +658,7 @@ return eval;
                                                              [self numericArg])];
 }
 
-- (XVimEvaluator*)motionFixed:(XVimMotion*)motion
+- (XVimEvaluator*)motionFixedCore:(XVimMotion*)motion
 {
     if (!XVim.instance.isRepeating) {
         [self.window preMotion:motion];

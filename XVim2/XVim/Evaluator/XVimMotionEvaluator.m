@@ -68,10 +68,10 @@
     else {
         // _forceMotionType == DEFAULT_MOTION_TYPE
     }
-    return [self motionFixed:motion];
+    return [self motionFixedCore:motion];
 }
 
-- (XVimEvaluator*)motionFixed:(XVimMotion*)motion { return nil; }
+- (XVimEvaluator*)motionFixedCore:(XVimMotion*)motion { return nil; }
 
 ////////////KeyDown Handlers///////////////
 // Please keep it in alphabetical order ///

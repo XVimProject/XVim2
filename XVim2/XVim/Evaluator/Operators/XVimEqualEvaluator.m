@@ -23,7 +23,7 @@
     return [self _motionFixed:m];
 }
 
-- (XVimEvaluator*)motionFixed:(XVimMotion*)motion
+- (XVimEvaluator*)motionFixedCore:(XVimMotion*)motion
 {
     [[self sourceView] xvim_filter:motion];
     return nil;

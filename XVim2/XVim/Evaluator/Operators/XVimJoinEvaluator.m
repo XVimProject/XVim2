@@ -22,7 +22,7 @@
     return self;
 }
 
-- (XVimEvaluator*)motionFixed:(XVimMotion*)motion
+- (XVimEvaluator*)motionFixedCore:(XVimMotion*)motion
 {
     if (motion.count > 1) {
         // J and 2J is the same

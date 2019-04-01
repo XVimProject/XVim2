@@ -27,7 +27,7 @@
 
 - (XVimEvaluator*)UNDERSCORE { return [self y]; }
 
-- (XVimEvaluator*)motionFixed:(XVimMotion*)motion
+- (XVimEvaluator*)motionFixedCore:(XVimMotion*)motion
 {
     [[self sourceView] xvim_yank:motion];
     return nil;

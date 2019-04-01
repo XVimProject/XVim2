@@ -681,7 +681,7 @@
 - (XVimEvaluator*)Pagedown { return [self C_f]; }
 
 
-- (XVimEvaluator*)motionFixed:(XVimMotion*)motion
+- (XVimEvaluator*)motionFixedCore:(XVimMotion*)motion
 {
     [self.window preMotion:motion];
     [[self sourceView] xvim_move:motion];

@@ -51,7 +51,7 @@
     return nil;
 }
 
-- (XVimEvaluator*)motionFixed:(XVimMotion*)motion
+- (XVimEvaluator*)motionFixedCore:(XVimMotion*)motion
 {
     if (_unshift) {
         [[self sourceView] xvim_shiftLeft:motion];

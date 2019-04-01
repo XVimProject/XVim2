@@ -70,7 +70,7 @@
     }
 }
 
-- (XVimEvaluator*)motionFixed:(XVimMotion*)motion
+- (XVimEvaluator*)motionFixedCore:(XVimMotion*)motion
 {
     if (_insertModeAtCompletion) {
         // Do not repeat the insert, that is how vim works so for
