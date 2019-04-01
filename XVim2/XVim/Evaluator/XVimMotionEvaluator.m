@@ -51,40 +51,6 @@
     return self;
 }
 
-
-// This is helper method commonly used by many key event handlers.
-// You do not need to use this if this is not proper to express the motion.
-- (XVimEvaluator*)commonMotion:(SEL)motion Type:(MOTION_TYPE)type
-{
-    let view = [self sourceView];
-#pragma clang diagnostic push
-#pragma clang diagnostic ignored "-Warc-performSelector-leaks"
-    NSUInteger motionTo = (NSUInteger)
-                [view performSelector:motion withObject:[NSNumber numberWithUnsignedInteger:[self numericArg]]];
-#pragma clang diagnostic pop
-    XVimMotion* m = XVIM_MAKE_MOTION(MOTION_POSITION, type, MOPT_NONE, [self numericArg]);
-    m.position = motionTo;
-    return [self _motionFixed:m];
-}
-
-/*
-- (XVimEvaluator*)_motionFixedFrom:(NSUInteger)from To:(NSUInteger)to Type:(MOTION_TYPE)type{
-    DEBUG_LOG(@"from:%d to:%d type:%d", from, to, type);
-    if( _forcedMotionType != CHARWISE_EXCLUSIVE){
-        if ( type == LINEWISE) {
-            type = CHARWISE_EXCLUSIVE;
-        } else if ( type == CHARWISE_EXCLUSIVE ){
-            type = CHARWISE_INCLUSIVE;
-        } else if(type == CHARWISE_INCLUSIVE) {
-            type = CHARWISE_EXCLUSIVE;
-        }
-    }
-
-    XVimEvaluator *ret = [self motionFixedFrom:from To:to Type:type];
-    return ret;
-}
- */
-
 - (XVimEvaluator*)_motionFixed:(XVimMotion*)motion
 {
     if (_forcedMotionType == CHARWISE_EXCLUSIVE) { // CHARWISE_EXCLUSIVE means 'v' is pressed and it means
@@ -189,14 +155,6 @@ if( childEvaluator.keyStroke.toString.length != 1 ){
     self.motion.type = CHARWISE_EXCLUSIVE;
     return [[XVimArgumentEvaluator alloc] initWithWindow:self.window];
 }
-
-/*
- // Since Ctrl-f is not "motion" but "scroll"
- // it is implemented in XVimNormalEvaluator and XVimVisualEvaluator respectively.
- - (XVimEvaluator*)C_f{
- return [self commonMotion:@selector(pageForward:) Type:LINEWISE];
- }
- */
 
 - (XVimEvaluator*)g
 {
