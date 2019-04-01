@@ -36,14 +36,6 @@
     XVimInsertionPoint _mode;
 }
 
-@synthesize startRange = _startRange;
-@synthesize cancelKeys = _cancelKeys;
-@synthesize movementKeys = _movementKeys;
-@synthesize lastInsertedText = _lastInsertedText;
-@synthesize movementKeyPressed = _movementKeyPressed;
-@synthesize enoughBufferForReplace = _enoughBufferForReplace;
-
-
 - (id)initWithWindow:(XVimWindow*)window { return [self initWithWindow:window mode:XVIM_INSERT_DEFAULT]; }
 
 - (id)initWithWindow:(XVimWindow*)window mode:(XVimInsertionPoint)mode
