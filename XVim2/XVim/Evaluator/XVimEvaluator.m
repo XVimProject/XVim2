@@ -17,9 +17,9 @@
 #import "XVimWindow.h"
 
 
-static XVimEvaluator* _invalidEvaluator = nil;
-static XVimEvaluator* _noOperationEvaluator = nil;
-static XVimEvaluator* _popEvaluator = nil;
+static XVimEvaluator* s_invalidEvaluator = nil;
+static XVimEvaluator* s_noOperationEvaluator = nil;
+static XVimEvaluator* s_popEvaluator = nil;
 
 @implementation XVimEvaluator
 
@@ -29,28 +29,27 @@ static XVimEvaluator* _popEvaluator = nil;
 + (void)initialize
 {
     if (self == [XVimEvaluator class]) {
-        _invalidEvaluator = [[XVimEvaluator alloc] init];
-        _noOperationEvaluator = [[XVimEvaluator alloc] init];
-        _popEvaluator = [[XVimEvaluator alloc] init];
+        s_invalidEvaluator = [[XVimEvaluator alloc] init];
+        s_noOperationEvaluator = [[XVimEvaluator alloc] init];
+        s_popEvaluator = [[XVimEvaluator alloc] init];
     }
 }
 
-+ (XVimEvaluator*)invalidEvaluator { return _invalidEvaluator; }
++ (XVimEvaluator*)invalidEvaluator { return s_invalidEvaluator; }
 
-+ (XVimEvaluator*)noOperationEvaluator { return _noOperationEvaluator; }
++ (XVimEvaluator*)noOperationEvaluator { return s_noOperationEvaluator; }
 
-+ (XVimEvaluator*)popEvaluator { return _popEvaluator; }
++ (XVimEvaluator*)popEvaluator { return s_popEvaluator; }
 
 - (id)init
 {
     self = [super init];
     if (self) {
-        //
     }
     return self;
 }
 
-- (id)initWithWindow:(XVimWindow*)window
+- (id)initWithWindow:(XVimWindow *)window
 {
     NSAssert(nil != window, @"window must not be nil");
     if (self = [super init]) {

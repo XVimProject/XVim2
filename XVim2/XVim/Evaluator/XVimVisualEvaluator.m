@@ -46,10 +46,10 @@ static NSString* MODE_STRINGS[] = { @"", @"-- VISUAL --", @"-- VISUAL LINE --", 
 @implementation XVimVisualEvaluator
 - (id)initWithLastVisualStateWithWindow:(XVimWindow*)window
 {
-    if (self = [self initWithWindow:window mode:[XVim instance].lastVisualMode]) {
-        self.initialFromPos = [XVim instance].lastVisualSelectionBegin;
-        self.initialToPos = [XVim instance].lastVisualPosition;
-        self.initialToEOL = [XVim instance].lastVisualSelectionToEOL;
+    if (self = [self initWithWindow:window mode:XVim.instance.lastVisualMode]) {
+        self.initialFromPos = XVim.instance.lastVisualSelectionBegin;
+        self.initialToPos = XVim.instance.lastVisualPosition;
+        self.initialToEOL = XVim.instance.lastVisualSelectionToEOL;
     }
     return self;
 }
@@ -62,14 +62,12 @@ static NSString* MODE_STRINGS[] = { @"", @"-- VISUAL --", @"-- VISUAL LINE --", 
         if ([window.sourceView selectedRanges].count == 1) {
             if ([window.sourceView selectedRange].length == 0) {
                 self.initialFromPos = XVimMakePosition(NSNotFound, NSNotFound);
-                ;
                 self.initialToPos = XVimMakePosition(NSNotFound, NSNotFound);
-                ;
             }
             else {
                 NSUInteger start = [window.sourceView selectedRange].location;
-                NSUInteger end =
-                            [window.sourceView selectedRange].location + [window.sourceView selectedRange].length - 1;
+                NSUInteger end = [window.sourceView selectedRange].location
+                               + [window.sourceView selectedRange].length - 1;
                 self.initialFromPos = XVimMakePosition([window.sourceView.textStorage xvim_lineNumberAtIndex:start],
                                                        [window.sourceView.textStorage xvim_columnOfIndex:start]);
                 self.initialToPos = XVimMakePosition([window.sourceView.textStorage xvim_lineNumberAtIndex:end],
@@ -80,8 +78,8 @@ static NSString* MODE_STRINGS[] = { @"", @"-- VISUAL --", @"-- VISUAL LINE --", 
             // Treat it as block selection
             _visual_mode = XVIM_VISUAL_BLOCK;
             NSUInteger start = [[[window.sourceView selectedRanges] objectAtIndex:0] rangeValue].location;
-            NSUInteger end = [[[window.sourceView selectedRanges] lastObject] rangeValue].location +
-                             [[[window.sourceView selectedRanges] lastObject] rangeValue].length - 1;
+            NSUInteger end = [[[window.sourceView selectedRanges] lastObject] rangeValue].location
+                           + [[[window.sourceView selectedRanges] lastObject] rangeValue].length - 1;
             self.initialFromPos = XVimMakePosition([window.sourceView.textStorage xvim_lineNumberAtIndex:start],
                                                    [window.sourceView.textStorage xvim_columnOfIndex:start]);
             self.initialToPos = XVimMakePosition([window.sourceView.textStorage xvim_lineNumberAtIndex:end],
@@ -90,7 +88,6 @@ static NSString* MODE_STRINGS[] = { @"", @"-- VISUAL --", @"-- VISUAL LINE --", 
     }
     return self;
 }
-
 
 - (NSString*)modeString { return MODE_STRINGS[_visual_mode]; }
 
@@ -169,14 +166,11 @@ static NSString* MODE_STRINGS[] = { @"", @"-- VISUAL --", @"-- VISUAL LINE --", 
     XVIM.lastVisualSelectionBegin = self.sourceView.selectionBeginPosition;
     XVIM.lastVisualSelectionToEOL = self.sourceView.selectionToEOL;
 
-    XVimEvaluator* nextEvaluator = [super eval:keyStroke];
-
-    if ([XVimEvaluator invalidEvaluator] == nextEvaluator) {
-        return self;
-    }
-    else {
+    let nextEvaluator = [super eval:keyStroke];
+    if (nextEvaluator != XVimEvaluator.invalidEvaluator) {
         return nextEvaluator;
     }
+    return self;
 }
 
 - (XVimEvaluator*)a
@@ -200,7 +194,6 @@ static NSString* MODE_STRINGS[] = { @"", @"-- VISUAL --", @"-- VISUAL LINE --", 
     [self.argumentString appendString:@"i"];
     return [[XVimTextObjectEvaluator alloc] initWithWindow:self.window inner:YES];
 }
-
 
 - (XVimEvaluator*)onComplete_ai:(XVimTextObjectEvaluator*)childEvaluator
 {
@@ -250,8 +243,7 @@ static NSString* MODE_STRINGS[] = { @"", @"-- VISUAL --", @"-- VISUAL LINE --", 
 - (XVimEvaluator*)d
 {
     XVimDeleteEvaluator* eval = [[XVimDeleteEvaluator alloc] initWithWindow:self.window];
-    return [eval executeOperationWithMotion:XVIM_MAKE_MOTION(MOTION_NONE, CHARWISE_INCLUSIVE, MOPT_NONE,
-                                                             0)];
+    return [eval executeOperationWithMotion:XVIM_MAKE_MOTION(MOTION_NONE, CHARWISE_INCLUSIVE, MOPT_NONE, 0)];
 }
 
 - (XVimEvaluator*)DEL { return [self d]; }

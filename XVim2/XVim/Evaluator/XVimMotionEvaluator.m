@@ -162,7 +162,6 @@ if( childEvaluator.keyStroke.toString.length != 1 ){
 }
 #endif
 
-
 - (XVimEvaluator*)G
 {
     XVimMotion* m = XVIM_MAKE_MOTION(MOTION_LINENUMBER, LINEWISE, MOPT_LEFT_RIGHT_NOWRAP, [self numericArg]);
@@ -195,7 +194,6 @@ if( childEvaluator.keyStroke.toString.length != 1 ){
     return [self _motionFixed:XVIM_MAKE_MOTION(MOTION_LINE_FORWARD, LINEWISE, MOPT_EXTEND_SELECTION, [self numericArg])];
 }
 
-
 - (XVimEvaluator*)k
 {
     return [self _motionFixed:XVIM_MAKE_MOTION(MOTION_LINE_BACKWARD, LINEWISE, MOPT_NONE, [self numericArg])];
@@ -220,7 +218,6 @@ if( childEvaluator.keyStroke.toString.length != 1 ){
 {
     return [self _motionFixed:XVIM_MAKE_MOTION(MOTION_MIDDLE, LINEWISE, MOPT_NONE, [self numericArg])];
 }
-
 
 - (XVimEvaluator*)nN_impl:(BOOL)opposite
 {
@@ -302,13 +299,11 @@ if( childEvaluator.keyStroke.toString.length != 1 ){
                                                [self numericArg])];
 }
 
-
 - (XVimEvaluator*)NUM0
 {
     return [self _motionFixed:XVIM_MAKE_MOTION(MOTION_BEGINNING_OF_LINE, CHARWISE_INCLUSIVE, MOPT_NONE,
                                                [self numericArg])];
 }
-
 
 // SEARCH
 #pragma mark - SEARCH
@@ -316,7 +311,6 @@ if( childEvaluator.keyStroke.toString.length != 1 ){
 - (XVimEvaluator*)ASTERISK { return [self searchCurrentWordForward:YES]; }
 
 - (XVimEvaluator*)NUMBER { return [self searchCurrentWordForward:NO]; }
-
 
 // MARKS
 #pragma mark - MARKS
@@ -391,7 +385,6 @@ if( childEvaluator.keyStroke.toString.length != 1 ){
     [self.argumentString appendString:@"z"];
     return [[XVimZEvaluator alloc] initWithWindow:self.window];
 }
-
 
 - (XVimEvaluator*)BACKQUOTE
 {
@@ -524,7 +517,7 @@ if( childEvaluator.keyStroke.toString.length != 1 ){
 - (XVimEvaluator*)COMMA
 {
     XVimMotion* m = [XVim instance].lastCharacterSearchMotion;
-    if (nil == m) {
+    if (m == nil) {
         return [XVimEvaluator invalidEvaluator];
     }
     MOTION new_motion = MOTION_PREV_CHARACTER;
