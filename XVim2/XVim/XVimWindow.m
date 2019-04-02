@@ -123,32 +123,19 @@
     if (enable != _enabled) {
         _enabled = enable;
         if (enable) {
-            [self _enable];
+            [NSNotificationCenter.defaultCenter addObserver:self.sourceView
+                                                   selector:@selector(selectionChanged:)
+                                                       name:@"SourceEditorSelectedSourceRangeChangedNotification"
+                                                     object:self.sourceView.view];
         }
         else {
-            [self _disable];
+            [NSNotificationCenter.defaultCenter removeObserver:self.sourceView
+                                                          name:@"SourceEditorSelectedSourceRangeChangedNotification"
+                                                        object:self.sourceView.view];
         }
+        self.sourceView.enabled = enable;
     }
 }
-
-- (void)_enable
-{
-    [NSNotificationCenter.defaultCenter addObserver:self.sourceView
-                                           selector:@selector(selectionChanged:)
-                                               name:@"SourceEditorSelectedSourceRangeChangedNotification"
-                                             object:self.sourceView.view];
-    self.sourceView.enabled = YES;
-    ;
-}
-
-- (void)_disable
-{
-    [NSNotificationCenter.defaultCenter removeObserver:self.sourceView
-                                                  name:@"SourceEditorSelectedSourceRangeChangedNotification"
-                                                object:self.sourceView.view];
-    self.sourceView.enabled = NO;
-}
-
 
 /**
  * handleKeyEvent:
@@ -297,7 +284,7 @@
 
     // Manipulate evaluator stack
     while (YES) {
-        if (nil == nextEvaluator || nextEvaluator == [XVimEvaluator popEvaluator]) {
+        if (nextEvaluator == nil || nextEvaluator == [XVimEvaluator popEvaluator]) {
 
             // current evaluator finished its task
             XVimEvaluator* completeEvaluator = [_currentEvaluatorStack
@@ -366,7 +353,6 @@
     BOOL needsVisual = (self.sourceView.selectedRange.length != 0);
 
     // if (!needsVisual && [self.currentEvaluator isKindOfClass:[XVimInsertEvaluator class]]) return;
-
 
     [self.currentEvaluator cancelHandler];
     [self resetEvaluatorStack:_currentEvaluatorStack activateNormalHandler:!needsVisual];
