@@ -29,7 +29,7 @@
     NSTextInputContext* _inputContext;
     id _enabledNotificationObserver;
 }
-@property (atomic) NSEvent* tmpBuffer;
+@property (atomic) NSEvent* event;
 @property id<SourceViewProtocol> lastTextView;
 
 - (void)resetEvaluatorStack:(NSMutableArray*)stack activateNormalHandler:(BOOL)activate;
@@ -37,7 +37,7 @@
 @end
 
 @implementation XVimWindow
-@synthesize tmpBuffer = _tmpBuffer;
+@synthesize event = _event;
 
 - (instancetype)initWithEditorView:
             (id<SourceViewProtocol, SourceViewXVimProtocol, SourceViewScrollingProtocol, SourceViewOperationsProtocol, NSTextInputClient>)
@@ -194,7 +194,7 @@
         // If it is obserbed we do not do anything anymore and handle insertText: or doCommandBySelector:
 
         // Keep the key input temporary buffer
-        self.tmpBuffer = event;
+        self.event = event;
 
         // The apple document says that we can not call 'activate' method directly
         // but if we do not call this the input is not handled by the input context we own.
@@ -278,9 +278,9 @@
     XVimEvaluator* currentEvaluator = [_currentEvaluatorStack lastObject];
     currentEvaluator.window = self;
 
-    if (self.tmpBuffer) {
-        keyStroke.event = self.tmpBuffer;
-        self.tmpBuffer = nil;
+    if (self.event) {
+        keyStroke.event = self.event;
+        self.event = nil;
     }
 
     // Evaluate
@@ -435,8 +435,8 @@
 - (void)doCommandBySelector:(SEL)aSelector
 {
     @try {
-        [self handleXVimString:[self.tmpBuffer toXVimString]];
-        self.tmpBuffer = nil;
+        [self handleXVimString:[self.event toXVimString]];
+        self.event = nil;
     }
     @catch (NSException* exception) {
         ERROR_LOG("Exception %s: %s", [exception name], [exception reason]);
