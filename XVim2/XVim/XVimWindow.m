@@ -32,7 +32,7 @@
 @property (atomic) NSEvent* tmpBuffer;
 @property id<SourceViewProtocol> lastTextView;
 
-- (void)_resetEvaluatorStack:(NSMutableArray*)stack activateNormalHandler:(BOOL)activate;
+- (void)resetEvaluatorStack:(NSMutableArray*)stack activateNormalHandler:(BOOL)activate;
 
 @end
 
@@ -50,7 +50,7 @@
         _defaultEvaluatorStack = [[NSMutableArray alloc] init];
         _currentEvaluatorStack = _defaultEvaluatorStack;
         _inputContext = [[NSTextInputContext alloc] initWithClient:self];
-        [self _resetEvaluatorStack:_defaultEvaluatorStack activateNormalHandler:YES];
+        [self resetEvaluatorStack:_defaultEvaluatorStack activateNormalHandler:YES];
     }
     return self;
 }
@@ -97,7 +97,7 @@
 
 - (XVimEvaluator*)currentEvaluator { return [_currentEvaluatorStack lastObject]; }
 
-- (void)_resetEvaluatorStack:(NSMutableArray*)stack activateNormalHandler:(BOOL)activate
+- (void)resetEvaluatorStack:(NSMutableArray*)stack activateNormalHandler:(BOOL)activate
 {
     // Initialize evlauator stack
     [stack removeAllObjects];
@@ -264,7 +264,7 @@
     _currentEvaluatorStack = (evaluatorStack ?: _defaultEvaluatorStack);
 
     if (_currentEvaluatorStack.count == 0) {
-        [self _resetEvaluatorStack:_currentEvaluatorStack activateNormalHandler:YES];
+        [self resetEvaluatorStack:_currentEvaluatorStack activateNormalHandler:YES];
     }
     [self dumpEvaluatorStack:_currentEvaluatorStack];
 
@@ -291,7 +291,7 @@
     @catch (NSException* ex) {
         ERROR_LOG(@"Exception caught while evaluating. Current evaluator = %@. Exception = %@", currentEvaluator, ex);
         [XVIM ringBell];
-        [self _resetEvaluatorStack:_currentEvaluatorStack activateNormalHandler:YES];
+        [self resetEvaluatorStack:_currentEvaluatorStack activateNormalHandler:YES];
         return;
     }
 
@@ -308,7 +308,7 @@
             if ([_currentEvaluatorStack count] == 0) {
                 // Current Evaluator is the root evaluator of the stack
                 [xvim cancelOperationCommands];
-                [self _resetEvaluatorStack:_currentEvaluatorStack activateNormalHandler:YES];
+                [self resetEvaluatorStack:_currentEvaluatorStack activateNormalHandler:YES];
                 break;
             }
             else {
@@ -330,7 +330,7 @@
         else if (nextEvaluator == [XVimEvaluator invalidEvaluator]) {
             [xvim cancelOperationCommands];
             [XVIM ringBell];
-            [self _resetEvaluatorStack:_currentEvaluatorStack activateNormalHandler:YES];
+            [self resetEvaluatorStack:_currentEvaluatorStack activateNormalHandler:YES];
             break;
         }
         else if (nextEvaluator == [XVimEvaluator noOperationEvaluator]) {
@@ -369,7 +369,7 @@
 
 
     [self.currentEvaluator cancelHandler];
-    [self _resetEvaluatorStack:_currentEvaluatorStack activateNormalHandler:!needsVisual];
+    [self resetEvaluatorStack:_currentEvaluatorStack activateNormalHandler:!needsVisual];
     [[XVim instance] cancelOperationCommands];
 
     if (needsVisual) {
