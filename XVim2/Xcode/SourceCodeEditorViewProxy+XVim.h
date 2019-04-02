@@ -20,7 +20,7 @@
 - (NSRange)xvim_indexRangeForLines:(NSRange)lineRange includeEOL:(BOOL)includeEOL;
 - (void)xvim_beginEditTransaction;
 - (void)xvim_endEditTransaction;
-- (void)xvim_blockInsertFixupWithText :(NSString*)text mode:(XVimInsertionPoint)mode
+- (void)xvim_blockInsertFixupWithText :(NSString*)text insertMode:(XVimInsertMode)insertMode
                                  count:(NSUInteger)count column:(NSUInteger)column lines:(XVimRange)lines;
 - (void)xvim_syncStateFromView;
 - (void)xvim_syncStateWithScroll:(BOOL)scroll;

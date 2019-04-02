@@ -24,7 +24,7 @@
 
 //
 @interface XVimEval : NSObject {
-    NSArray* _evalFuncs;
+    NSArray<XVimEvalFunc *>* _evalFuncs;
 }
 - (void)evaluateWhole:(XVimEvalArg*)args inWindow:(XVimWindow*)window;
 @end

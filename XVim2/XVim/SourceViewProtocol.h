@@ -81,9 +81,9 @@ typedef NS_ENUM(char, CursorStyle) {
 
 - (void)xvim_syncStateWithScroll:(BOOL)scroll;
 - (void)xvim_syncStateFromView;
-- (void)xvim_insert:(XVimInsertionPoint)mode blockColumn:(NSUInteger*)column blockLines:(XVimRange*)lines;
+- (void)xvim_insert:(XVimInsertMode)insertMode blockColumn:(NSUInteger*)column blockLines:(XVimRange*)lines;
 - (void)xvim_blockInsertFixupWithText:(NSString*)text
-                                     mode:(XVimInsertionPoint)mode
+                               insertMode:(XVimInsertMode)insertMode
                                     count:(NSUInteger)count
                                    column:(NSUInteger)column
                                     lines:(XVimRange)lines;

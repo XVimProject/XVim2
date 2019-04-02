@@ -33,16 +33,16 @@
     NSMutableArray* _insertedEvents;
     NSUInteger _blockEditColumn;
     XVimRange _blockLines;
-    XVimInsertionPoint _mode;
+    XVimInsertMode _insertMode;
 }
 
-- (id)initWithWindow:(XVimWindow*)window { return [self initWithWindow:window mode:XVIM_INSERT_DEFAULT]; }
+- (id)initWithWindow:(XVimWindow*)window { return [self initWithWindow:window insertMode:XVIM_INSERT_DEFAULT]; }
 
-- (id)initWithWindow:(XVimWindow*)window mode:(XVimInsertionPoint)mode
+- (id)initWithWindow:(XVimWindow*)window insertMode:(XVimInsertMode)insertMode
 {
     self = [super initWithWindow:window];
     if (self) {
-        _mode = mode;
+        _insertMode = insertMode;
         _blockEditColumn = NSNotFound;
         _blockLines = XVimMakeRange(NSNotFound, NSNotFound);
         _lastInsertedText = @"";
@@ -69,7 +69,7 @@
 - (void)becameHandler
 {
     [super becameHandler];
-    [self.sourceView xvim_insert:_mode blockColumn:&_blockEditColumn blockLines:&_blockLines];
+    [self.sourceView xvim_insert:_insertMode blockColumn:&_blockEditColumn blockLines:&_blockLines];
     self.startRange = [[self sourceView] selectedRange];
 }
 
@@ -145,7 +145,7 @@
     if (_blockEditColumn != NSNotFound) {
         XVimRange range = XVimMakeRange(_blockLines.begin + 1, _blockLines.end);
         [self.sourceView xvim_blockInsertFixupWithText:text
-                                                  mode:_mode
+                                            insertMode:_insertMode
                                                  count:self.numericArg
                                                 column:_blockEditColumn
                                                  lines:range];

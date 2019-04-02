@@ -60,7 +60,7 @@
 - (XVimEvaluator*)i
 {
     XVimMark* mark = [[XVim instance].marks markForName:@"^" forDocument:self.sourceView.documentURL.path];
-    XVimInsertionPoint mode = XVIM_INSERT_DEFAULT;
+    XVimInsertMode insertMode = XVIM_INSERT_DEFAULT;
 
     if (mark.line != NSNotFound) {
         NSUInteger newPos = [self.sourceView xvim_indexOfLineNumber:mark.line column:mark.column];
@@ -70,10 +70,10 @@
 
             [self.window preMotion:m];
             [self.sourceView xvim_move:m];
-            mode = XVIM_INSERT_APPEND;
+            insertMode = XVIM_INSERT_APPEND;
         }
     }
-    return [[XVimInsertEvaluator alloc] initWithWindow:self.window mode:mode];
+    return [[XVimInsertEvaluator alloc] initWithWindow:self.window insertMode:insertMode];
 }
 
 - (XVimEvaluator*)J

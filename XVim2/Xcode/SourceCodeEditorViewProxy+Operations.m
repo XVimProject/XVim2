@@ -632,7 +632,7 @@
                 s = [s stringByAppendingString:@"\t"];
             }
         }
-        [self xvim_blockInsertFixupWithText:s mode:XVIM_INSERT_SPACES count:1 column:column lines:lines];
+        [self xvim_blockInsertFixupWithText:s insertMode:XVIM_INSERT_SPACES count:1 column:column lines:lines];
     }
     else {
         for (NSUInteger line = lines.begin; line <= lines.end; line++) {

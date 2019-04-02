@@ -184,7 +184,7 @@ static NSString* MODE_STRINGS[] = { @"", @"-- VISUAL --", @"-- VISUAL LINE --", 
 - (XVimEvaluator*)A
 {
     [self beginUndoGrouping];
-    return [[XVimInsertEvaluator alloc] initWithWindow:self.window mode:XVIM_INSERT_APPEND];
+    return [[XVimInsertEvaluator alloc] initWithWindow:self.window insertMode:XVIM_INSERT_APPEND];
 }
 
 - (XVimEvaluator*)i
@@ -210,7 +210,7 @@ static NSString* MODE_STRINGS[] = { @"", @"-- VISUAL --", @"-- VISUAL LINE --", 
 {
     if (self.sourceView.selectionMode == XVIM_VISUAL_BLOCK) {
         [self beginUndoGrouping];
-        return [[XVimInsertEvaluator alloc] initWithWindow:self.window mode:XVIM_INSERT_BLOCK_KILL];
+        return [[XVimInsertEvaluator alloc] initWithWindow:self.window insertMode:XVIM_INSERT_BLOCK_KILL];
     }
     XVimDeleteEvaluator* eval = [[XVimDeleteEvaluator alloc] initWithWindow:self.window insertModeAtCompletion:YES];
     return [eval executeOperationWithMotion:XVIM_MAKE_MOTION(MOTION_NONE, CHARWISE_EXCLUSIVE, MOPT_NONE,
@@ -225,7 +225,7 @@ static NSString* MODE_STRINGS[] = { @"", @"-- VISUAL --", @"-- VISUAL LINE --", 
     }
     [self beginUndoGrouping];
     [self performSelector:@selector(DOLLAR)];
-    return [[XVimInsertEvaluator alloc] initWithWindow:self.window mode:XVIM_INSERT_BLOCK_KILL];
+    return [[XVimInsertEvaluator alloc] initWithWindow:self.window insertMode:XVIM_INSERT_BLOCK_KILL];
 }
 
 - (XVimEvaluator*)C_b
@@ -292,10 +292,10 @@ static NSString* MODE_STRINGS[] = { @"", @"-- VISUAL --", @"-- VISUAL LINE --", 
 - (XVimEvaluator*)I
 {
     if (self.sourceView.selectionMode != XVIM_VISUAL_BLOCK) {
-        return [[XVimInsertEvaluator alloc] initWithWindow:self.window mode:XVIM_INSERT_BEFORE_FIRST_NONBLANK];
+        return [[XVimInsertEvaluator alloc] initWithWindow:self.window insertMode:XVIM_INSERT_BEFORE_FIRST_NONBLANK];
     }
     [self beginUndoGrouping];
-    return [[XVimInsertEvaluator alloc] initWithWindow:self.window mode:XVIM_INSERT_DEFAULT];
+    return [[XVimInsertEvaluator alloc] initWithWindow:self.window insertMode:XVIM_INSERT_DEFAULT];
 }
 
 - (XVimEvaluator*)J

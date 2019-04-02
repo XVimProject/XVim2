@@ -10,6 +10,6 @@
 
 @interface XVimInsertEvaluator : XVimEvaluator
 
-- (id)initWithWindow:(XVimWindow*)window mode:(XVimInsertionPoint)mode;
+- (id)initWithWindow:(XVimWindow*)window insertMode:(XVimInsertMode)insertMode;
 
 @end

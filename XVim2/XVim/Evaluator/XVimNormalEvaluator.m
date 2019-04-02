@@ -77,9 +77,9 @@
 /////////////////////////////////////////////////////////////////////////////////////////
 
 
-- (XVimEvaluator*)a { return [[XVimInsertEvaluator alloc] initWithWindow:self.window mode:XVIM_INSERT_APPEND]; }
+- (XVimEvaluator*)a { return [[XVimInsertEvaluator alloc] initWithWindow:self.window insertMode:XVIM_INSERT_APPEND]; }
 
-- (XVimEvaluator*)A { return [[XVimInsertEvaluator alloc] initWithWindow:self.window mode:XVIM_INSERT_APPEND_EOL]; }
+- (XVimEvaluator*)A { return [[XVimInsertEvaluator alloc] initWithWindow:self.window insertMode:XVIM_INSERT_APPEND_EOL]; }
 
 
 // 'c' works like 'd' except that once it's done deleting
@@ -233,7 +233,7 @@
 
 - (XVimEvaluator*)I
 {
-    return [[XVimInsertEvaluator alloc] initWithWindow:self.window mode:XVIM_INSERT_BEFORE_FIRST_NONBLANK];
+    return [[XVimInsertEvaluator alloc] initWithWindow:self.window insertMode:XVIM_INSERT_BEFORE_FIRST_NONBLANK];
 }
 
 - (XVimEvaluator*)onComplete_g:(XVimGActionEvaluator*)childEvaluator
@@ -311,13 +311,13 @@
 - (XVimEvaluator*)r
 {
     [self.argumentString appendString:@"r"];
-    return [[XVimReplaceEvaluator alloc] initWithWindow:self.window oneCharMode:YES mode:XVIM_INSERT_DEFAULT];
+    return [[XVimReplaceEvaluator alloc] initWithWindow:self.window oneCharMode:YES insertMode:XVIM_INSERT_DEFAULT];
 }
 
 - (XVimEvaluator*)R
 {
     [self.argumentString appendString:@"R"];
-    return [[XVimReplaceEvaluator alloc] initWithWindow:self.window oneCharMode:NO mode:XVIM_INSERT_DEFAULT];
+    return [[XVimReplaceEvaluator alloc] initWithWindow:self.window oneCharMode:NO insertMode:XVIM_INSERT_DEFAULT];
 }
 
 

@@ -23,9 +23,9 @@
 
 @implementation XVimReplaceEvaluator
 
-- (id)initWithWindow:(XVimWindow*)window oneCharMode:(BOOL)oneCharMode mode:(XVimInsertionPoint)mode
+- (id)initWithWindow:(XVimWindow*)window oneCharMode:(BOOL)oneCharMode insertMode:(XVimInsertMode)insertMode
 {
-    self = [super initWithWindow:window mode:mode];
+    self = [super initWithWindow:window insertMode:insertMode];
     if (self) {
         _oneCharMode = oneCharMode;
     }

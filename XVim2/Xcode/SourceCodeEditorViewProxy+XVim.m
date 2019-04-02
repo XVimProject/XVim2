@@ -766,7 +766,7 @@
 
 // Perform actions before entering insertion mode. For example, for visual block mode:
 // kill the current selection, and yank it.
-- (void)xvim_insert:(XVimInsertionPoint)mode blockColumn:(NSUInteger*)column blockLines:(XVimRange*)lines
+- (void)xvim_insert:(XVimInsertMode)insertMode blockColumn:(NSUInteger*)column blockLines:(XVimRange*)lines
 {
     if (column)
         *column = NSNotFound;
@@ -778,7 +778,7 @@
 
         if (lines)
             *lines = XVimMakeRange(sel.top, sel.bottom);
-        switch (mode) {
+        switch (insertMode) {
         case XVIM_INSERT_BLOCK_KILL:
             [self _xvim_yankSelection:sel];
             [self _xvim_killSelection:sel];
@@ -801,10 +801,10 @@
             break;
         }
     }
-    else if (mode != XVIM_INSERT_DEFAULT) {
+    else if (insertMode != XVIM_INSERT_DEFAULT) {
         NSTextStorage* ts = self.textStorage;
         NSUInteger pos = self.insertionPoint;
-        switch (mode) {
+        switch (insertMode) {
         case XVIM_INSERT_APPEND_EOL:
             self.insertionPoint = [self xvim_endOfLine:pos];
             break;
@@ -882,7 +882,7 @@
 
 // Insert some text at the same column position, for a range of lines
 // Used by the XVim visual block mode, and shift functions
-- (void)xvim_blockInsertFixupWithText:(NSString*)text mode:(XVimInsertionPoint)mode
+- (void)xvim_blockInsertFixupWithText:(NSString*)text insertMode:(XVimInsertMode)insertMode
     count:(NSUInteger)count column:(NSUInteger)column lines:(XVimRange)lines
 {
     NSMutableString* buf = nil;
@@ -918,11 +918,11 @@
         }
 
         if (column != XVimSelectionEOL && [ts isEOL:pos]) {
-            if (mode == XVIM_INSERT_SPACES && column == 0) {
+            if (insertMode == XVIM_INSERT_SPACES && column == 0) {
                 continue;
             }
             if ([ts xvim_columnOfIndex:pos] < column) {
-                if (mode != XVIM_INSERT_APPEND) {
+                if (insertMode != XVIM_INSERT_APPEND) {
                     continue;
                 }
                 [self _xvim_insertSpaces:column - [ts xvim_columnOfIndex:pos] replacementRange:NSMakeRange(pos, 0)];

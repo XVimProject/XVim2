@@ -9,6 +9,6 @@
 
 @interface XVimReplaceEvaluator : XVimInsertEvaluator
 
-- (id)initWithWindow:(XVimWindow*)window oneCharMode:(BOOL)oneCharMode mode:(XVimInsertionPoint)mode;
+- (id)initWithWindow:(XVimWindow*)window oneCharMode:(BOOL)oneCharMode insertMode:(XVimInsertMode)insertMode;
 
 @end

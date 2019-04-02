@@ -21,7 +21,7 @@
 
 typedef NS_ENUM(NSInteger, XVIM_CURSOR_MODE) { XVIM_CURSOR_MODE_INSERT, XVIM_CURSOR_MODE_COMMAND };
 
-typedef NS_ENUM(NSUInteger, XVimInsertionPoint) {
+typedef NS_ENUM(NSUInteger, XVimInsertMode) {
     XVIM_INSERT_DEFAULT,
     XVIM_INSERT_SPACES,
     XVIM_INSERT_APPEND,
