@@ -96,11 +96,6 @@
 
 #define KS_MODIFIER 0xF8 // This value is not the same as Vim's one
 // Following values are differed from Vim's definition in keymap.h
-#define XVIM_MOD_SHIFT 0x02 //  1 << 1
-#define XVIM_MOD_CTRL 0x04 //  1 << 2
-#define XVIM_MOD_ALT 0x08 //  1 << 3
-#define XVIM_MOD_CMD 0x10 //  1 << 4
-#define XVIM_MOD_FUNC 0x80 //  1 << 7  // XVim Original
 
 #define XVIM_MODIFIER_MASK 0x9E // Mask for used bits. (Change if you add some MOD_MASK_XXX)
 #define XVIM_MODIFIER_MIN 0xF802
@@ -476,7 +471,7 @@ XVimString* XVimStringFromKeyNotation(NSString* notation)
     return str;
 }
 
-XVimString* XVimStringFromKeyStrokes(NSArray* strokes)
+XVimString* XVimStringFromKeyStrokes(NSArray<XVimKeyStroke*>* strokes)
 {
     NSMutableString* str = [[NSMutableString alloc] init];
     for (XVimKeyStroke* stroke in strokes) {
@@ -485,7 +480,7 @@ XVimString* XVimStringFromKeyStrokes(NSArray* strokes)
     return str;
 }
 
-NSArray* XVimKeyStrokesFromXVimString(XVimString* string)
+NSArray<XVimKeyStroke*>* XVimKeyStrokesFromXVimString(XVimString* string)
 {
     NSMutableArray* array = [[NSMutableArray alloc] init];
     for (NSUInteger i = 0; i < string.length; i++) {
@@ -543,7 +538,6 @@ NSString* XVimKeyNotationFromXVimString(XVimString* string)
     return [[XVimKeyStroke alloc] initWithCharacter:c modifier:(unsigned char)mod event:self];
 }
 
-
 - (XVimString*)toXVimString
 {
     NSAssert(self.type == NSEventTypeKeyDown, @"Event type must be NSKeyDown");
@@ -551,9 +545,7 @@ NSString* XVimKeyNotationFromXVimString(XVimString* string)
 }
 @end
 
-
 @implementation XVimKeyStroke
-
 + (void)initialize { init_maps(); }
 
 - (id)initWithCharacter:(unichar)c modifier:(unsigned char)mod event:(NSEvent*)e
@@ -679,7 +671,6 @@ NSString* XVimKeyNotationFromXVimString(XVimString* string)
     return code;
 }
 
-
 - (SEL)selector
 {
     // S- Shift
@@ -724,7 +715,6 @@ NSString* XVimKeyNotationFromXVimString(XVimString* string)
         }
         strcpy(buf + pos, keyname.UTF8String);
     }
-
     return sel_getUid(buf);
 }
 

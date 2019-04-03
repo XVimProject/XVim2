@@ -27,9 +27,9 @@ typedef uint32_t XVimKeyCode;
 
 // Helper Functions
 XVimString* XVimStringFromKeyNotation(NSString* notation);
-XVimString* XVimStringFromKeyStrokes(NSArray* strokes);
-NSArray* XVimKeyStrokesFromXVimString(XVimString* string);
-NSArray* XVimKeyStrokesFromKeyNotation(NSString* notation);
+XVimString* XVimStringFromKeyStrokes(NSArray<XVimKeyStroke*>* strokes);
+NSArray<XVimKeyStroke*>* XVimKeyStrokesFromXVimString(XVimString* string);
+NSArray<XVimKeyStroke*>* XVimKeyStrokesFromKeyNotation(NSString* notation);
 NSString* XVimKeyNotationFromXVimString(XVimString* string);
 
 @interface NSEvent (XVimKeyStroke)
