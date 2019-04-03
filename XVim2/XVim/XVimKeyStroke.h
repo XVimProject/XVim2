@@ -13,7 +13,7 @@
 
 #define KS_MODIFIER 0xF8 // This value is not the same as Vim's one
 // Following values are differed from Vim's definition in keymap.h
-typedef NS_OPTIONS(unsigned char, XVimModifier) {
+typedef NS_OPTIONS(NSUInteger, XVimModifier) {
     XVIM_MOD_SHIFT = 1 << 1,
     XVIM_MOD_CTRL = 1 << 2,
     XVIM_MOD_ALT = 1 << 3,

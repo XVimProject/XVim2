@@ -9,6 +9,7 @@
 #import "XVimStringBuffer.h"
 #import <wctype.h>
 #import <xlocale.h>
+#import <AppKit/AppKit.h>
 
 
 /*
@@ -585,7 +586,7 @@ NSString* XVimKeyNotationFromXVimString(XVimString* string)
 {
     unichar c = _character;
     NSString* characters = [NSString stringWithCharacters:&c length:1];
-    NSUInteger mflags = XVIMMOD2NSMOD(_modifier);
+    NSEventModifierFlags mflags = XVIMMOD2NSMOD(_modifier);
 
     return [NSEvent keyEventWithType:NSEventTypeKeyDown
                                    location:NSMakePoint(0, 0)
