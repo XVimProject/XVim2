@@ -325,12 +325,6 @@
     self.selectionBegin = self.insertionPoint;
 }
 
-
-- (void)dumpState
-{
-    // LOG_STATE();
-}
-
 // SELECTION
 #pragma mark - SELECTION
 
@@ -360,10 +354,9 @@
         }
     }
     [self setSelectedRange:range];
-    // LOG_STATE();
 }
 
-- (NSArray*)xvim_selectedRanges
+- (NSArray<NSValue *>*)xvim_selectedRanges
 {
     if (self.selectionMode != XVIM_VISUAL_BLOCK) {
         return [NSArray arrayWithObject:[NSValue valueWithRange:[self _xvim_selectedRange]]];

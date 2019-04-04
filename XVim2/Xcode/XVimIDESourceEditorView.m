@@ -8,7 +8,6 @@
 
 #import "XVimIDESourceEditorView.h"
 
-#import <IDESourceEditor/_TtC15IDESourceEditor19IDESourceEditorView.h>
 #import "_TtC15IDESourceEditor19IDESourceEditorView+XVim.h"
 #import <SourceEditor/_TtC12SourceEditor16SourceEditorView.h>
 #import "Logger.h"

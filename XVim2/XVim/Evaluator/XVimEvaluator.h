@@ -37,12 +37,6 @@ XVimMotionEvaluator
 #import "SourceViewProtocol.h"
 #import <Cocoa/Cocoa.h>
 
-@protocol SourceViewProtocol;
-@protocol SourceViewScrollingProtocol;
-@protocol SourceViewOperationsProtocol;
-@protocol SourceViewYankProtocol;
-@protocol SourceViewXVimProtocol;
-
 
 @class XVimCommandLineEvaluator;
 @class XVimMotionEvaluator;

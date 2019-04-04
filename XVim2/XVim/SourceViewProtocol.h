@@ -93,7 +93,7 @@ typedef NS_ENUM(char, CursorStyle) {
 - (void)xvim_move:(XVimMotion*)motion;
 - (void)xvim_moveToPosition:(XVimPosition)pos;
 - (NSUInteger)numberOfSelectedLines;
-- (NSArray*)xvim_selectedRanges;
+- (NSArray<NSValue *>*)xvim_selectedRanges;
 - (void)xvim_setSelectedRange:(NSRange)range;
 - (NSRange)xvim_currentWord:(MOTION_OPTION)opt;
 - (void)xvim_changeSelectionMode:(XVIM_VISUAL_MODE)mode;

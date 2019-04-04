@@ -57,13 +57,16 @@
         _option = option;
         _count = count;
         _regex = nil;
-
         _info = [[XVimMotionInfo alloc] init];
-
         _jumpToAnotherFile = NO;
         _keepJumpMarkIndex = NO;
     }
     return self;
+}
+
+- (id)initWithMotion:(MOTION)motion type:(MOTION_TYPE)type option:(MOTION_OPTION)option
+{
+    return [self initWithMotion:motion type:type option:option count:1];
 }
 
 - (BOOL)isTextObject { return TEXTOBJECT_WORD <= self.motion && self.motion <= TEXTOBJECT_UNDERSCORE; }

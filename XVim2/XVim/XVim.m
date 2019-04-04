@@ -33,7 +33,7 @@
 #import "XVimRegister.h"
 #import "XVimSearch.h"
 #import "XVimTester.h"
-#import <SourceEditor/_TtC12SourceEditor23SourceEditorContentView.h>
+//#import <SourceEditor/_TtC12SourceEditor23SourceEditorContentView.h>
 #import <IDESourceEditor/_TtC15IDESourceEditor19IDESourceEditorView.h>
 #import "XVimXcode.h"
 #import "XVimIDESourceEditorView.h"

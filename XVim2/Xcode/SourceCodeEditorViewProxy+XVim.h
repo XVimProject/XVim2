@@ -15,7 +15,7 @@
 - (NSUInteger)xvim_indexOfLineNumber:(NSUInteger)line column:(NSUInteger)col;
 - (NSUInteger)xvim_lineNumberAtIndex:(NSUInteger)idx;
 - (NSUInteger)xvim_endOfLine:(NSUInteger)startIdx;
-- (NSArray*)xvim_selectedRanges;
+- (NSArray<NSValue *>*)xvim_selectedRanges;
 - (NSRange)xvim_indexRangeForLines:(NSRange)lineRange;
 - (NSRange)xvim_indexRangeForLines:(NSRange)lineRange includeEOL:(BOOL)includeEOL;
 - (void)xvim_beginEditTransaction;

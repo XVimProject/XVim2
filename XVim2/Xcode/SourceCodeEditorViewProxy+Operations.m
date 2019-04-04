@@ -347,8 +347,6 @@
     else if (insertNewline) {
         [self xvim_insertNewlineAboveCurrentLineWithIndent];
     }
-    else {
-    }
     [self xvim_changeSelectionMode:XVIM_VISUAL_NONE];
     [self xvim_syncStateWithScroll:NO];
     return YES;
@@ -406,18 +404,17 @@
             [self xvim_moveCursor:r.end preserveColumn:NO];
         }
         else {
-            NSRange r;
             XVimRange to = [self xvim_getMotionRange:self.insertionPoint Motion:motion];
             if (to.end == NSNotFound) {
                 return;
             }
-            r = [self xvim_getOperationRangeFrom:to.begin To:to.end Type:motion.type];
+            NSRange r = [self xvim_getOperationRangeFrom:to.begin To:to.end Type:motion.type];
             [self xvim_swapCaseForRange:r];
             [self xvim_moveCursor:r.location preserveColumn:NO];
         }
     }
     else {
-        NSArray* ranges = [self xvim_selectedRanges];
+        let ranges = [self xvim_selectedRanges];
         for (NSValue* val in ranges) {
             [self xvim_swapCaseForRange:[val rangeValue]];
         }
@@ -446,7 +443,7 @@
         [self xvim_moveCursor:r.location preserveColumn:NO];
     }
     else {
-        NSArray* ranges = [self xvim_selectedRanges];
+        let ranges = [self xvim_selectedRanges];
         for (NSValue* val in ranges) {
             [self insertText:[[s substringWithRange:val.rangeValue] lowercaseString] replacementRange:val.rangeValue];
         }
@@ -465,19 +462,18 @@
 
     NSString* s = self.string;
     if (self.selectionMode == XVIM_VISUAL_NONE) {
-        NSRange r;
         XVimRange to = [self xvim_getMotionRange:self.insertionPoint Motion:motion];
         if (to.end == NSNotFound) {
             return;
         }
-        r = [self xvim_getOperationRangeFrom:to.begin
+        NSRange r = [self xvim_getOperationRangeFrom:to.begin
                                             To:to.end
                                           Type:motion.type]; // TODO: use to.begin instead of insertionPoint
         [self insertText:[[s substringWithRange:r] uppercaseString] replacementRange:r];
         [self xvim_moveCursor:r.location preserveColumn:NO];
     }
     else {
-        NSArray* ranges = [self xvim_selectedRanges];
+        let ranges = [self xvim_selectedRanges];
         for (NSValue* val in ranges) {
             [self insertText:[[s substringWithRange:val.rangeValue] uppercaseString] replacementRange:val.rangeValue];
         }

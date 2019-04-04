@@ -46,8 +46,6 @@
 @property XVIM_TEXT_TYPE lastYankedType;
 @end
 
-#define LOG_STATE()
-
 @implementation SourceCodeEditorViewProxy {
     NSMutableArray<NSValue*>* _foundRanges;
     XVimCommandLine* _commandLine;

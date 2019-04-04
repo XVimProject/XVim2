@@ -86,6 +86,7 @@ typedef NS_ENUM(NSInteger, MOTION) {
 @property BOOL keepJumpMarkIndex;
 
 - (id)initWithMotion:(MOTION)motion type:(MOTION_TYPE)type option:(MOTION_OPTION)option count:(NSUInteger)count;
+- (id)initWithMotion:(MOTION)motion type:(MOTION_TYPE)type option:(MOTION_OPTION)option;
 - (BOOL)isTextObject;
 - (BOOL)isJumpMotion;
 @end
