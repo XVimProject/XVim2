@@ -61,16 +61,16 @@
             return;
         }
         // We have to treat some special cases (same as delete)
-        if (motion.motion == MOTION_FORWARD && motion.info.reachedEndOfLine) {
+        if (motion.motion == MOTION_FORWARD && motion.motionInfo.reachedEndOfLine) {
             motion.type = CHARWISE_INCLUSIVE;
         }
         if (motion.motion == MOTION_WORD_FORWARD) {
-            if ((motion.info.isFirstWordInLine && motion.info.lastEndOfLine != NSNotFound)) {
+            if ((motion.motionInfo.isFirstWordInLine && motion.motionInfo.lastEndOfLine != NSNotFound)) {
                 // Special cases for word move over a line break.
-                to.end = motion.info.lastEndOfLine;
+                to.end = motion.motionInfo.lastEndOfLine;
                 motion.type = CHARWISE_INCLUSIVE;
             }
-            else if (motion.info.reachedEndOfLine) {
+            else if (motion.motionInfo.reachedEndOfLine) {
                 if (motion.type == CHARWISE_EXCLUSIVE) {
                     motion.type = CHARWISE_INCLUSIVE;
                 }

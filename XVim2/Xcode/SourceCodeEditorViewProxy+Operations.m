@@ -114,7 +114,7 @@
     [self xvim_beginEditTransaction];
     xvim_on_exit { [self xvim_endEditTransaction]; };
 
-    motion.info.deleteLastLine = NO;
+    motion.motionInfo.deleteLastLine = NO;
 	switch (self.selectionMode){
 		case XVIM_VISUAL_NONE:
     		{
@@ -125,7 +125,7 @@
                 // We have to treat some special cases
                 // When a cursor get end of line with "l" motion, make the motion type to inclusive.
                 // This make you to delete the last character. (if its exclusive last character never deleted with "dl")
-                if (motion.motion == MOTION_FORWARD && motion.info.reachedEndOfLine) {
+                if (motion.motion == MOTION_FORWARD && motion.motionInfo.reachedEndOfLine) {
                     if (motion.type == CHARWISE_EXCLUSIVE) {
                         motion.type = CHARWISE_INCLUSIVE;
                     }
@@ -134,12 +134,12 @@
                     }
                 }
                 if (motion.motion == MOTION_WORD_FORWARD) {
-                    if ((motion.info.isFirstWordInLine && motion.info.lastEndOfLine != NSNotFound)) {
+                    if ((motion.motionInfo.isFirstWordInLine && motion.motionInfo.lastEndOfLine != NSNotFound)) {
                         // Special cases for word move over a line break.
-                        motionRange.end = motion.info.lastEndOfLine;
+                        motionRange.end = motion.motionInfo.lastEndOfLine;
                         motion.type = CHARWISE_INCLUSIVE;
                     }
-                    else if (motion.info.reachedEndOfLine) {
+                    else if (motion.motionInfo.reachedEndOfLine) {
                         if (motion.type == CHARWISE_EXCLUSIVE) {
                             motion.type = CHARWISE_INCLUSIVE;
                         }
@@ -341,7 +341,7 @@
         self.cursorMode = XVIM_CURSOR_MODE_COMMAND;
         return NO;
     }
-    if (motion.info.deleteLastLine) {
+    if (motion.motionInfo.deleteLastLine) {
         [self xvim_insertNewlineAboveLine:[self.textStorage xvim_lineNumberAtIndex:self.insertionPoint]];
     }
     else if (insertNewline) {
@@ -391,7 +391,7 @@
             if (r.end == NSNotFound) {
                 return;
             }
-            if (m.info.reachedEndOfLine) {
+            if (m.motionInfo.reachedEndOfLine) {
                 [self xvim_swapCaseForRange:[self xvim_getOperationRangeFrom:r.begin
                                                                                 To:r.end
                                                                               Type:CHARWISE_INCLUSIVE]];
@@ -857,7 +857,7 @@
     NSRange r = [self xvim_getOperationRangeFrom:to.begin To:to.end Type:motion.type];
     if (motion.type == LINEWISE && [self.textStorage isLastLine:to.end]) {
         if (r.location != 0) {
-            motion.info.deleteLastLine = YES;
+            motion.motionInfo.deleteLastLine = YES;
             r.location--;
             r.length++;
         }

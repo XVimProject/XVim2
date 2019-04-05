@@ -81,7 +81,7 @@ typedef NS_ENUM(NSInteger, MOTION) {
 @property NSUInteger position;
 @property unichar character;
 @property NSString* regex;
-@property XVimMotionInfo* info;
+@property XVimMotionInfo* motionInfo;
 @property BOOL jumpToAnotherFile;
 @property BOOL keepJumpMarkIndex;
 
