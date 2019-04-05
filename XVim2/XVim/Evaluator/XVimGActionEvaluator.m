@@ -6,14 +6,12 @@
 //  Copyright (c) 2012 __MyCompanyName__. All rights reserved.
 //
 
-//#import "XVimJoinEvaluator.h"
 #import "XVimGActionEvaluator.h"
 #import "NSTextStorage+VimOperation.h"
 #import "SourceViewProtocol.h"
 #import "XVim.h"
 #import "XVimInsertEvaluator.h"
 #import "XVimJoinEvaluator.h"
-#import "XVimKeyStroke.h"
 #import "XVimLowercaseEvaluator.h"
 #import "XVimMark.h"
 #import "XVimMarks.h"

@@ -36,7 +36,7 @@
 
 - (instancetype)initWithEditorView:(id<SourceViewProtocol>)responder;
 - (void)setupAfterEditorViewSetup;
-- (void)handleKeyStroke:(XVimKeyStroke*)keyStroke onStack:(NSMutableArray*)stack;
+- (void)handleKeyStroke:(XVimKeyStroke*)keyStroke onStack:(NSMutableArray<XVimEvaluator*>*)stack;
 - (BOOL)handleKeyEvent:(NSEvent*)event;
 - (BOOL)shouldAutoCompleteAtLocation:(unsigned long long)location;
 - (void)errorMessage:(NSString*)message ringBell:(BOOL)ringBell;

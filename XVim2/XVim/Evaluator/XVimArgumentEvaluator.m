@@ -9,10 +9,8 @@
 #import "XVimArgumentEvaluator.h"
 #import "XVimKeyStroke.h"
 #import "XVimKeymapProvider.h"
-#import "XVimWindow.h"
 
 @implementation XVimArgumentEvaluator
-@synthesize keyStroke = _keyStroke;
 
 - (XVimEvaluator*)eval:(XVimKeyStroke*)keyStroke
 {

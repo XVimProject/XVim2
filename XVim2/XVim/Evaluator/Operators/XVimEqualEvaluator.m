@@ -7,11 +7,6 @@
 //
 
 #import "XVimEqualEvaluator.h"
-#import "Logger.h"
-#import "SourceViewProtocol.h"
-#import "XVim.h"
-#import "XVimMotionEvaluator.h"
-#import "XVimWindow.h"
 
 @implementation XVimEqualEvaluator
 

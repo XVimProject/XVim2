@@ -7,7 +7,6 @@
 //
 
 #import "XVimJoinEvaluator.h"
-#import "SourceViewProtocol.h"
 #import "XVimWindow.h"
 
 @implementation XVimJoinEvaluator {

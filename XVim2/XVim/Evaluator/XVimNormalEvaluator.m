@@ -626,7 +626,7 @@
 
     XVimString* repeatRegister = [[XVim instance] lastOperationCommands];
 
-    NSMutableArray* stack = [[NSMutableArray alloc] init];
+    NSMutableArray<XVimEvaluator*>* stack = [[NSMutableArray alloc] init];
 
     if (self.numericMode) {
         // Input numeric args if dot command has numeric arg

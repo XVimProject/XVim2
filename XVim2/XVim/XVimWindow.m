@@ -246,7 +246,7 @@
     [_keymapContext clear];
 }
 
-- (void)handleKeyStroke:(XVimKeyStroke*)keyStroke onStack:(NSMutableArray*)evaluatorStack
+- (void)handleKeyStroke:(XVimKeyStroke*)keyStroke onStack:(NSMutableArray<XVimEvaluator*>*)evaluatorStack
 {
     _currentEvaluatorStack = (evaluatorStack ?: _defaultEvaluatorStack);
 
