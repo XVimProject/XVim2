@@ -6,7 +6,6 @@
 //  Copyright (c) 2012 JugglerShu.Net. All rights reserved.
 //
 
-
 #import "XVimNormalEvaluator.h"
 #import "Logger.h"
 #import "NSString+VimHelper.h"
@@ -76,11 +75,9 @@
 // Keep command implementation alphabetical order please(Except specical characters).  //
 /////////////////////////////////////////////////////////////////////////////////////////
 
-
 - (XVimEvaluator*)a { return [[XVimInsertEvaluator alloc] initWithWindow:self.window insertMode:XVIM_INSERT_APPEND]; }
 
 - (XVimEvaluator*)A { return [[XVimInsertEvaluator alloc] initWithWindow:self.window insertMode:XVIM_INSERT_APPEND_EOL]; }
-
 
 // 'c' works like 'd' except that once it's done deleting
 // it should go you into insert mode
@@ -118,7 +115,6 @@
     return [eval performSelector:@selector(DOLLAR)];
 }
 
-
 - (XVimEvaluator*)s
 {
     // Same as cl
@@ -126,7 +122,6 @@
     eval.parent = self;
     return [eval performSelector:@selector(l)];
 }
-
 
 - (XVimEvaluator*)x
 {
@@ -152,7 +147,6 @@
     return [d performSelector:@selector(c)];
 }
 
-
 // UNDO/REDO
 #pragma mark - UNDO/REDO
 
@@ -173,7 +167,6 @@
     }
     return nil;
 }
-
 
 // SCROLL
 // These are not motions but scrolling. That's the reason the implementation is here.
@@ -213,7 +206,6 @@
     [[self sourceView] xvim_scrollLineBackward:[self numericArg]];
     return nil;
 }
-
 
 // MOTION
 #pragma mark - MOTION
@@ -263,7 +255,6 @@
     [view xvim_insertNewlineAboveAndInsertWithIndent];
     return [[XVimInsertEvaluator alloc] initWithWindow:self.window];
 }
-
 
 // YANK
 #pragma mark - YANK
@@ -485,7 +476,6 @@
     return eval;
 }
 
-
 // TAGS / HISTORY
 #pragma mark - TAGS / HISTORY
 
@@ -495,7 +485,6 @@
                 [NSApp sendAction:@selector(goBackInHistoryByCommand:) to:nil from:self];
     xvim_ignore_warning_pop return nil;
 }
-
 
 // INCREMENT / DECREMENT
 #pragma mark - INCREMENT / DECREMENT
@@ -512,7 +501,6 @@
     return nil;
 }
 
-
 - (XVimEvaluator*)C_x
 {
     let view = [self sourceView];
@@ -526,13 +514,8 @@
     return nil;
 }
 
-
 #if 0
-
-
 // Should be moved to XVimMotionEvaluator
-
-
 - (XVimEvaluator*)q{
     if( [XVim instance].isExecuting ){
         return nil;
@@ -555,8 +538,6 @@
 - (XVimEvaluator*)onComplete_Recording:childEvaluator{
     return nil;
 }
-
-
 
 - (XVimEvaluator*)AT{
     if( [XVim instance].isExecuting ){
@@ -585,15 +566,11 @@
     return [XVimEvaluator noOperationEvaluator];
 }
 
-
 - (XVimEvaluator*)HT{
     [[self sourceView] xvim_selectNextPlaceholder];
     return nil;
 }
-
-
 #endif
-
 
 // REGISTER
 #pragma mark - REGISTER
@@ -673,13 +650,11 @@
     return nil;
 }
 
-
 - (XVimEvaluator*)ForwardDelete { return [self x]; }
 
 - (XVimEvaluator*)Pageup { return [self C_b]; }
 
 - (XVimEvaluator*)Pagedown { return [self C_f]; }
-
 
 - (XVimEvaluator*)motionFixedCore:(XVimMotion*)motion
 {
