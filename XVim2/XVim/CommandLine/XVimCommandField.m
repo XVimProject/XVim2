@@ -15,7 +15,7 @@
 #import "XVimWindow.h"
 
 @interface XVimCommandField () {
-    XVimWindow* _delegate;
+    XVimWindow* _window;
 }
 @end
 
@@ -30,7 +30,6 @@
     }
     return self;
 }
-
 
 - (NSSize)intrinsicContentSize
 {
@@ -63,7 +62,7 @@
     return YES;
 }
 
-- (void)setDelegate:(XVimWindow*)delegate { _delegate = delegate; }
+- (void)setWindow:(XVimWindow*)window { _window = window; }
 
 // Drawing Caret
 - (void)_drawInsertionPointInRect:(NSRect)rect color:(NSColor*)color
@@ -102,7 +101,7 @@
     // With this solution Input Method (Japanese or Chinese) does work but
     // the list box for it drawn in text view not in command line field.
     // Should be fixed.
-    [_delegate handleKeyEvent:event];
+    [_window handleKeyEvent:event];
 }
 
 - (void)didChangeText

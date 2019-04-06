@@ -12,6 +12,6 @@
 @class XVimWindow;
 
 @interface XVimCommandField : NSTextView
-- (void)setDelegate:(XVimWindow*)delegate;
+- (void)setWindow:(XVimWindow*)window;
 - (void)handleKeyStroke:(XVimKeyStroke*)keyStroke inWindow:(XVimWindow*)window;
 @end

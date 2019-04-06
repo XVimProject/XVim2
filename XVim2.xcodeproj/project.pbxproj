@@ -662,7 +662,7 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
-			shellScript = "echo '#define GIT_REVISION @\"'`git rev-parse HEAD`'\"' > gitrevision.h";
+			shellScript = "echo '#define GIT_REVISION @\"'`git rev-parse HEAD`'\"' > gitrevision.h\n";
 		};
 /* End PBXShellScriptBuildPhase section */
 
