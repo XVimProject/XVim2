@@ -710,7 +710,7 @@ static CGFloat XvimCommandLineAnimationDuration = 0.1;
     }
 }
 
-- (NSMutableArray*)foundRanges
+- (NSMutableArray<NSValue*>*)foundRanges
 {
     if (_foundRanges == nil) {
         _foundRanges = [[NSMutableArray alloc] init];

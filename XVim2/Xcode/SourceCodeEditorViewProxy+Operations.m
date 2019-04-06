@@ -199,7 +199,7 @@
 			break;
     }
 
-    [self.xvimDelegate textView:self didDelete:self.lastYankedText withType:self.lastYankedType];
+    [self.xvimTextViewDelegate textView:self didDelete:self.lastYankedText withType:self.lastYankedType];
     [self xvim_changeSelectionMode:XVIM_VISUAL_NONE];
     if (newPos != NSNotFound) {
         [self xvim_moveCursor:newPos preserveColumn:NO];

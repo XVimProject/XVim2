@@ -95,7 +95,7 @@
         [self _xvim_yankSelection:sel];
     }
 
-    [self.xvimDelegate textView:self didYank:self.lastYankedText withType:self.lastYankedType];
+    [self.xvimTextViewDelegate textView:self didYank:self.lastYankedText withType:self.lastYankedType];
     if (newPos != NSNotFound) {
         [self xvim_moveCursor:newPos preserveColumn:NO];
     }

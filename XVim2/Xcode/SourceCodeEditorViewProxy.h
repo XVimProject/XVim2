@@ -68,9 +68,9 @@ static inline XVimSourceEditorRange XvimMakeSourceEditorRange(XVimSourceEditorPo
 @property XVIM_CURSOR_MODE cursorMode;
 @property (readonly, nullable) NSURL* documentURL;
 @property (nonatomic) BOOL needsUpdateFoundRanges;
-@property (readonly, nonnull) NSMutableArray* foundRanges;
+@property (readonly, nonnull) NSMutableArray<NSValue*>* foundRanges;
 @property (readonly) NSInteger currentLineNumber;
-@property (strong, nullable) id<XVimTextViewDelegateProtocol> xvimDelegate;
+@property (strong, nullable) id<XVimTextViewDelegateProtocol> xvimTextViewDelegate;
 @property (readonly, nullable) XVimCommandLine* commandLine;
 @property (readonly, nullable) NSWindow* window;
 @property (strong, nonnull) NSString* string;

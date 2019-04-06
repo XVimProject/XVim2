@@ -91,17 +91,17 @@ static XVimEvaluator* s_popEvaluator = nil;
 
 - (XVimEvaluator*)onChildComplete:(XVimEvaluator*)childEvaluator { return nil; }
 
-- (void)becameHandler { self.sourceView.xvimDelegate = self; }
+- (void)becameHandler { self.sourceView.xvimTextViewDelegate = self; }
 
 - (void)cancelHandler
 {
-    self.sourceView.xvimDelegate = nil;
+    self.sourceView.xvimTextViewDelegate = nil;
     [self endUndoGrouping];
 }
 
 - (void)didEndHandler
 {
-    self.sourceView.xvimDelegate = nil;
+    self.sourceView.xvimTextViewDelegate = nil;
     [self endUndoGrouping];
 }
 
