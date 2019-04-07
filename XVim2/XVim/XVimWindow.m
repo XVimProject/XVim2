@@ -40,7 +40,7 @@
 @synthesize event = _event;
 
 - (instancetype)initWithSourceView:
-            (id<SourceViewProtocol, SourceViewXVimProtocol, SourceViewScrollingProtocol, SourceViewOperationsProtocol, NSTextInputClient>)
+            (id<SourceViewProtocol, SourceViewControlProtocol, SourceViewScrollingProtocol, SourceViewOperationsProtocol, NSTextInputClient>)
                         sourceView
 {
     if (self = [super init]) {

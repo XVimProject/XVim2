@@ -69,7 +69,7 @@ typedef NS_ENUM(char, CursorStyle) {
 @end
 
 // XVim extensions
-@protocol SourceViewXVimProtocol <NSObject, XVimTextStoring>
+@protocol SourceViewControlProtocol <NSObject, XVimTextStoring>
 - (void)xvim_beginUndoGrouping;
 - (void)xvim_endUndoGrouping;
 

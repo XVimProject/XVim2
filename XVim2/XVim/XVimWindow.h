@@ -20,12 +20,12 @@
 @class XVimMark;
 @class XVimCommandLine;
 @protocol SourceViewProtocol;
-@protocol SourceViewXVimProtocol;
+@protocol SourceViewControlProtocol;
 @protocol SourceViewOperationsProtocol;
 @protocol SourceViewScrollingProtocol;
 
 @interface XVimWindow : NSObject <NSTextInputClient, NSTextFieldDelegate>
-@property (strong, readonly) id<SourceViewProtocol, SourceViewXVimProtocol, SourceViewScrollingProtocol, SourceViewOperationsProtocol, NSTextInputClient> sourceView; // This represents currently focused sourceView
+@property (strong, readonly) id<SourceViewProtocol, SourceViewControlProtocol, SourceViewScrollingProtocol, SourceViewOperationsProtocol, NSTextInputClient> sourceView; // This represents currently focused sourceView
 @property (weak, readonly) NSTextView* inputView;
 @property (weak, readonly) XVimEvaluator* currentEvaluator;
 @property (weak, readonly) CommandResponder* commandResponder;
