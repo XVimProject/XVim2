@@ -39,14 +39,14 @@
 @implementation XVimWindow
 @synthesize event = _event;
 
-- (instancetype)initWithEditorView:
+- (instancetype)initWithSourceView:
             (id<SourceViewProtocol, SourceViewXVimProtocol, SourceViewScrollingProtocol, SourceViewOperationsProtocol, NSTextInputClient>)
-                        editorArea
+                        sourceView
 {
     if (self = [super init]) {
         _staticString = @"";
         _keymapContext = [[XVimKeymapContext alloc] init];
-        _sourceView = editorArea;
+        _sourceView = sourceView;
         _defaultEvaluatorStack = [[NSMutableArray alloc] init];
         _currentEvaluatorStack = _defaultEvaluatorStack;
         _inputContext = [[NSTextInputContext alloc] initWithClient:self];

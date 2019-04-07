@@ -34,7 +34,7 @@
 @property (nonatomic) XVimMark* currentPositionMark;
 @property BOOL scrollHalt;
 
-- (instancetype)initWithEditorView:(id<SourceViewProtocol>)responder;
+- (instancetype)initWithSourceView:(id<SourceViewProtocol>)sourceView;
 - (void)setupAfterEditorViewSetup;
 - (void)handleKeyStroke:(XVimKeyStroke*)keyStroke onStack:(NSMutableArray<XVimEvaluator*>*)stack;
 - (BOOL)handleKeyEvent:(NSEvent*)event;

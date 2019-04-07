@@ -96,7 +96,7 @@ CONST_STR(EDWindow);
     if ((w == nil || (NSNull*)w == NSNull.null)
             && [self.class isEqual:NSClassFromString(IDESourceEditorViewClassName)]) {
         let p = [[SourceCodeEditorViewProxy alloc] initWithSourceCodeEditorView:SELF];
-        w = [[XVimWindow alloc] initWithEditorView:p];
+        w = [[XVimWindow alloc] initWithSourceView:p];
         [self setExtraData:w forName:EDWindow];
     }
     return w;
