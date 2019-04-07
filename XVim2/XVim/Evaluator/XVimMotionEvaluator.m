@@ -96,14 +96,14 @@
 
 - (XVimEvaluator*)e
 {
-    XVimMotion* motion = XVIM_MAKE_MOTION(MOTION_END_OF_WORD_FORWARD, CHARWISE_INCLUSIVE, MOPT_NONE,
+    let motion = XVIM_MAKE_MOTION(MOTION_END_OF_WORD_FORWARD, CHARWISE_INCLUSIVE, MOPT_NONE,
                                           [self numericArg]);
     return [self _motionFixed:motion];
 }
 
 - (XVimEvaluator*)E
 {
-    XVimMotion* motion
+    let motion
                 = XVIM_MAKE_MOTION(MOTION_END_OF_WORD_FORWARD, CHARWISE_INCLUSIVE, MOPT_BIGWORD, [self numericArg]);
     return [self _motionFixed:motion];
 }
@@ -325,19 +325,19 @@ if( childEvaluator.keyStroke.toString.length != 1 ){
     if (mark == nil)
         return [XVimEvaluator invalidEvaluator];
 
-    MOTION_TYPE motionType = fol ? LINEWISE : CHARWISE_EXCLUSIVE;
+    let motionType = fol ? LINEWISE : CHARWISE_EXCLUSIVE;
 
     if (mark.line == NSNotFound) {
         return [XVimEvaluator invalidEvaluator];
     }
 
-    BOOL jumpToAnotherFile = NO;
+    var jumpToAnotherFile = NO;
     if (mark.document && ![mark.document isEqualToString:self.sourceView.documentURL.path]) {
         jumpToAnotherFile = YES;
         XVimOpenDocumentAtPath(mark.document);
     }
 
-    NSUInteger to = [self.sourceView xvim_indexOfLineNumber:mark.line column:mark.column];
+    var to = [self.sourceView xvim_indexOfLineNumber:mark.line column:mark.column];
     if (NSNotFound == to) {
         return [XVimEvaluator invalidEvaluator];
     }
@@ -347,7 +347,7 @@ if( childEvaluator.keyStroke.toString.length != 1 ){
                                                                  allowEOL:YES]; // This never returns NSNotFound
     }
 
-    XVimMotion* m = XVIM_MAKE_MOTION(needUpdateMark ? MOTION_POSITION_JUMP : MOTION_POSITION, motionType,
+    let m = XVIM_MAKE_MOTION(needUpdateMark ? MOTION_POSITION_JUMP : MOTION_POSITION, motionType,
                                      MOPT_NONE, self.numericArg);
     m.position = to;
     if (needUpdateMark) {
@@ -375,8 +375,8 @@ if( childEvaluator.keyStroke.toString.length != 1 ){
     // FIXME:
     // This will work for Ctrl-c as register c but it should not
     // NSString* key = [childEvaluator.keyStroke toString];
-    NSString* key = [NSString stringWithFormat:@"%c", childEvaluator.keyStroke.character];
-    XVimMark* mark = [[XVim instance].marks markForName:key forDocument:[self.sourceView documentURL].path];
+    let key = [NSString stringWithFormat:@"%c", childEvaluator.keyStroke.character];
+    let mark = [[XVim instance].marks markForName:key forDocument:[self.sourceView documentURL].path];
     return [self jumpToMark:mark firstOfLine:YES KeepJumpMarkIndex:NO NeedUpdateMark:YES];
 }
 
@@ -398,8 +398,8 @@ if( childEvaluator.keyStroke.toString.length != 1 ){
     // FIXME:
     // This will work for Ctrl-c as register c but it should not
     // NSString* key = [childEvaluator.keyStroke toString];
-    NSString* key = [NSString stringWithFormat:@"%c", childEvaluator.keyStroke.character];
-    XVimMark* mark = [[XVim instance].marks markForName:key forDocument:[self.sourceView documentURL].path];
+    let key = [NSString stringWithFormat:@"%c", childEvaluator.keyStroke.character];
+    let mark = [[XVim instance].marks markForName:key forDocument:[self.sourceView documentURL].path];
     return [self jumpToMark:mark firstOfLine:NO KeepJumpMarkIndex:NO NeedUpdateMark:YES];
 }
 
@@ -424,18 +424,18 @@ if( childEvaluator.keyStroke.toString.length != 1 ){
 {
     // TODO add this motion interface to NSTextView
     let view = [self.window sourceView];
-    NSRange r = [view selectedRange];
-    NSUInteger repeat = self.numericArg;
-    NSUInteger linesUpCursorloc =
+    let r = [view selectedRange];
+    let repeat = self.numericArg;
+    let linesUpCursorloc =
                 [view.textStorage nextLine:r.location column:0 count:(repeat - 1) option:MOPT_NONE];
-    NSUInteger head = [view.textStorage xvim_firstNonblankInLineAtIndex:linesUpCursorloc allowEOL:NO];
+    var head = [view.textStorage xvim_firstNonblankInLineAtIndex:linesUpCursorloc allowEOL:NO];
     if (NSNotFound == head && linesUpCursorloc != NSNotFound) {
         head = linesUpCursorloc;
     }
     else if (NSNotFound == head) {
         head = r.location;
     }
-    XVimMotion* m = XVIM_MAKE_MOTION(MOTION_POSITION, CHARWISE_EXCLUSIVE, MOPT_NONE, 0);
+    let m = XVIM_MAKE_MOTION(MOTION_POSITION, CHARWISE_EXCLUSIVE, MOPT_NONE, 0);
     m.position = head;
     return [self _motionFixed:m];
 }
@@ -516,12 +516,12 @@ if( childEvaluator.keyStroke.toString.length != 1 ){
 
 - (XVimEvaluator*)COMMA
 {
-    XVimMotion* m = [XVim instance].lastCharacterSearchMotion;
+    let m = [XVim instance].lastCharacterSearchMotion;
     if (m == nil) {
         return [XVimEvaluator invalidEvaluator];
     }
     MOTION new_motion = MOTION_PREV_CHARACTER;
-    MOTION_OPTION new_option = m.option;
+    var new_option = m.option;
     switch (m.motion) {
     case MOTION_NEXT_CHARACTER:
         new_motion = MOTION_PREV_CHARACTER;
@@ -541,19 +541,19 @@ if( childEvaluator.keyStroke.toString.length != 1 ){
         NSAssert(NO, @"Should not reach here");
         break;
     }
-    XVimMotion* n = XVIM_MAKE_MOTION(new_motion, m.type, new_option, [self numericArg]);
+    let n = XVIM_MAKE_MOTION(new_motion, m.type, new_option, [self numericArg]);
     n.character = m.character;
     return [self _motionFixed:n];
 }
 
 - (XVimEvaluator*)SEMICOLON
 {
-    XVimMotion* m = [XVim instance].lastCharacterSearchMotion;
+    let m = [XVim instance].lastCharacterSearchMotion;
     if (nil == m) {
         return [XVimEvaluator invalidEvaluator];
     }
 
-    XVimMotion* n = XVIM_MAKE_MOTION(m.motion, m.type, m.option | MOPT_SKIP_ADJACENT_CHAR, [self numericArg]);
+    let n = XVIM_MAKE_MOTION(m.motion, m.type, m.option | MOPT_SKIP_ADJACENT_CHAR, [self numericArg]);
     n.character = m.character;
     return [self _motionFixed:n];
 }
@@ -612,18 +612,18 @@ if( childEvaluator.keyStroke.toString.length != 1 ){
 
 - (XVimEvaluator*)searchCurrentWordForward:(BOOL)forward
 {
-    XVimCommandLineEvaluator* eval = [self searchEvaluatorForward:forward];
-    NSRange r = [self.sourceView xvim_currentWord:MOPT_NONE];
+    let eval = [self searchEvaluatorForward:forward];
+    let r = [self.sourceView xvim_currentWord:MOPT_NONE];
     if (r.location == NSNotFound) {
         return nil;
     }
 
-    NSString* word = [self.sourceView.string substringWithRange:r];
-    NSString* searchWord = [NSRegularExpression escapedPatternForString:word];
+    let word = [self.sourceView.string substringWithRange:r];
+    var searchWord = [NSRegularExpression escapedPatternForString:word];
     searchWord = [NSString stringWithFormat:@"%@%@%@", @"\\b", searchWord, @"\\b"];
     [eval appendString:searchWord];
     [eval execute];
-    XVimMotion* motion = eval.evalutionResult;
+    let motion = eval.evalutionResult;
     if (!forward) {
         // NB when searching backward (`QUESTION`) while in the middle of the
         // searched word, the first match is the word at the cursor. Therefore,

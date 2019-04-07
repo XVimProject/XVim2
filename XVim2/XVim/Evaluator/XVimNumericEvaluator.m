@@ -14,13 +14,12 @@
 
 - (XVimEvaluator*)eval:(XVimKeyStroke*)keyStroke
 {
-
     if (keyStroke.isNumeric) {
         unichar buf[4] = { 'N', 'U', 'M', keyStroke.character };
         NSUInteger digit = buf[3] - '0';
 
         if (self.numericMode || digit) {
-            NSUInteger n = self.numericMode ? self.numericArg : 0;
+            let n = self.numericMode ? self.numericArg : 0;
 
             self.numericMode = YES;
             if (n <= NSUIntegerMax / 10) {

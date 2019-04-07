@@ -94,7 +94,7 @@
 - (XVimEvaluator*)C
 {
     // Same as c$
-    XVimDeleteEvaluator* d = [[XVimDeleteEvaluator alloc] initWithWindow:self.window insertModeAtCompletion:YES];
+    let d = [[XVimDeleteEvaluator alloc] initWithWindow:self.window insertModeAtCompletion:YES];
     d.parent = self;
     return [d performSelector:@selector(DOLLAR)];
 }
@@ -110,7 +110,7 @@
 - (XVimEvaluator*)D
 {
     // Same as d$
-    XVimDeleteEvaluator* eval = [[XVimDeleteEvaluator alloc] initWithWindow:self.window insertModeAtCompletion:NO];
+    let eval = [[XVimDeleteEvaluator alloc] initWithWindow:self.window insertModeAtCompletion:NO];
     eval.parent = self;
     return [eval performSelector:@selector(DOLLAR)];
 }
@@ -118,7 +118,7 @@
 - (XVimEvaluator*)s
 {
     // Same as cl
-    XVimDeleteEvaluator* eval = [[XVimDeleteEvaluator alloc] initWithWindow:self.window insertModeAtCompletion:YES];
+    let eval = [[XVimDeleteEvaluator alloc] initWithWindow:self.window insertModeAtCompletion:YES];
     eval.parent = self;
     return [eval performSelector:@selector(l)];
 }
@@ -126,7 +126,7 @@
 - (XVimEvaluator*)x
 {
     // Same as dl
-    XVimDeleteEvaluator* eval = [[XVimDeleteEvaluator alloc] initWithWindow:self.window insertModeAtCompletion:NO];
+    let eval = [[XVimDeleteEvaluator alloc] initWithWindow:self.window insertModeAtCompletion:NO];
     eval.parent = self;
     return [eval performSelector:@selector(l)];
 }
@@ -134,7 +134,7 @@
 // like 'x" but it goes backwards instead of forwards
 - (XVimEvaluator*)X
 {
-    XVimDeleteEvaluator* eval = [[XVimDeleteEvaluator alloc] initWithWindow:self.window insertModeAtCompletion:NO];
+    let eval = [[XVimDeleteEvaluator alloc] initWithWindow:self.window insertModeAtCompletion:NO];
     eval.parent = self;
     return [eval performSelector:@selector(h)];
 }
@@ -142,7 +142,7 @@
 // "S" is Synonym for "cc"
 - (XVimEvaluator*)S
 {
-    XVimDeleteEvaluator* d = [[XVimDeleteEvaluator alloc] initWithWindow:self.window insertModeAtCompletion:YES];
+    let d = [[XVimDeleteEvaluator alloc] initWithWindow:self.window insertModeAtCompletion:YES];
     d.parent = self;
     return [d performSelector:@selector(c)];
 }
@@ -231,7 +231,7 @@
 - (XVimEvaluator*)onComplete_g:(XVimGActionEvaluator*)childEvaluator
 {
     if (childEvaluator.key.selector == @selector(SEMICOLON)) {
-        XVimMark* mark = [[XVim instance].marks markForName:@"." forDocument:[self.sourceView documentURL].path];
+        let mark = [[XVim instance].marks markForName:@"." forDocument:[self.sourceView documentURL].path];
         return [self jumpToMark:mark firstOfLine:NO KeepJumpMarkIndex:NO NeedUpdateMark:YES];
     }
     else {
@@ -261,7 +261,7 @@
 
 - (XVimEvaluator*)Y
 {
-    XVimYankEvaluator* evaluator = [[XVimYankEvaluator alloc] initWithWindow:self.window];
+    let evaluator = [[XVimYankEvaluator alloc] initWithWindow:self.window];
     evaluator.numericArg = self.numericArg;
     [evaluator performSelector:@selector(y)];
     return nil;
@@ -279,7 +279,7 @@
 - (XVimEvaluator*)p
 {
     let view = [self sourceView];
-    XVimRegister* reg = [XVIM.registerManager registerByName:self.yankRegister];
+    let reg = [XVIM.registerManager registerByName:self.yankRegister];
     [view xvim_put:reg.string withType:reg.type afterCursor:YES count:[self numericArg]];
     [[XVim instance] fixOperationCommands];
     return nil;
@@ -288,7 +288,7 @@
 - (XVimEvaluator*)P
 {
     let view = [self sourceView];
-    XVimRegister* reg = [[[XVim instance] registerManager] registerByName:self.yankRegister];
+    let reg = [[[XVim instance] registerManager] registerByName:self.yankRegister];
     [view xvim_put:reg.string withType:reg.type afterCursor:NO count:[self numericArg]];
     [[XVim instance] fixOperationCommands];
     return nil;
@@ -318,7 +318,7 @@
 - (XVimEvaluator*)TILDE
 {
     [self.argumentString appendString:@"~"];
-    XVimTildeEvaluator* swap = [[XVimTildeEvaluator alloc] initWithWindow:self.window];
+    let swap = [[XVimTildeEvaluator alloc] initWithWindow:self.window];
     // TODO: support tildeop option
     return [swap fixWithNoMotion:self.numericArg];
 }
@@ -339,7 +339,7 @@
 
 - (XVimEvaluator*)J
 {
-    XVimJoinEvaluator* eval = [[XVimJoinEvaluator alloc] initWithWindow:self.window addSpace:YES];
+    let eval = [[XVimJoinEvaluator alloc] initWithWindow:self.window addSpace:YES];
     return [eval executeOperationWithMotion:XVIM_MAKE_MOTION(MOTION_NONE, CHARWISE_EXCLUSIVE, MOPT_NONE,
                                                              self.numericArg)];
 }
@@ -351,14 +351,14 @@
 - (XVimEvaluator*)GREATERTHAN
 {
     [self.argumentString appendString:@">"];
-    XVimShiftEvaluator* eval = [[XVimShiftEvaluator alloc] initWithWindow:self.window unshift:NO];
+    let eval = [[XVimShiftEvaluator alloc] initWithWindow:self.window unshift:NO];
     return eval;
 }
 
 - (XVimEvaluator*)LESSTHAN
 {
     [self.argumentString appendString:@"<"];
-    XVimShiftEvaluator* eval = [[XVimShiftEvaluator alloc] initWithWindow:self.window unshift:YES];
+    let eval = [[XVimShiftEvaluator alloc] initWithWindow:self.window unshift:YES];
     return eval;
 }
 
@@ -417,7 +417,7 @@
 - (XVimEvaluator*)C_o
 {
     BOOL needUpdateMark;
-    XVimMark* mark = [[XVim instance].marks decrementJumpMark:&needUpdateMark];
+    let mark = [[XVim instance].marks decrementJumpMark:&needUpdateMark];
     if (mark != nil) {
         [self jumpToMark:mark firstOfLine:NO KeepJumpMarkIndex:YES NeedUpdateMark:needUpdateMark];
     }
@@ -426,7 +426,7 @@
 
 - (XVimEvaluator*)C_i
 {
-    XVimMark* mark = [[XVim instance].marks incrementJumpMark];
+    let mark = [[XVim instance].marks incrementJumpMark];
     if (mark != nil) {
         [self jumpToMark:mark firstOfLine:NO KeepJumpMarkIndex:YES NeedUpdateMark:NO];
     }
@@ -439,7 +439,7 @@
 - (XVimEvaluator*)C_RSQUAREBRACKET
 {
     // Add current position/file to jump list
-    XVimMotion* motion = XVIM_MAKE_MOTION(MOTION_POSITION_JUMP, DEFAULT_MOTION_TYPE, MOPT_NONE, 0);
+    let motion = XVIM_MAKE_MOTION(MOTION_POSITION_JUMP, DEFAULT_MOTION_TYPE, MOPT_NONE, 0);
     motion.jumpToAnotherFile = YES;
     [self.window preMotion:motion];
 
@@ -457,11 +457,11 @@
                    firstLetter:@":"
                        history:[[XVim instance] exCommandHistory]
                     completion:^XVimEvaluator*(NSString* command, XVimMotion** result) {
-                        XVimExCommand* excmd = [[XVim instance] excmd];
-                        NSString* commandExecuted = [excmd executeCommand:command inWindow:self.window];
+                        let excmd = [[XVim instance] excmd];
+                        let commandExecuted = [excmd executeCommand:command inWindow:self.window];
 
                         if ([commandExecuted isEqualToString:@"substitute"]) {
-                            XVimSearch* searcher = [[XVim instance] searcher];
+                            let searcher = [[XVim instance] searcher];
                             if (searcher.confirmEach && searcher.lastFoundRange.location != NSNotFound) {
                                 [eval didEndHandler];
                                 return [[XVimReplacePromptEvaluator alloc]
@@ -601,9 +601,9 @@
     [self.sourceView xvim_beginEditTransaction];
     xvim_on_exit { [self.sourceView xvim_endEditTransaction]; };
 
-    XVimString* repeatRegister = [[XVim instance] lastOperationCommands];
+    let repeatRegister = [[XVim instance] lastOperationCommands];
 
-    NSMutableArray<XVimEvaluator*>* stack = [[NSMutableArray alloc] init];
+    var stack = [NSMutableArray<XVimEvaluator*> new];
 
     if (self.numericMode) {
         // Input numeric args if dot command has numeric arg
@@ -613,7 +613,7 @@
         }
     }
 
-    BOOL nonNumFound = NO;
+    var nonNumFound = NO;
     for (XVimKeyStroke* stroke in XVimKeyStrokesFromXVimString(repeatRegister)) {
         // TODO: This skips numeric args in repeat regisger if numericArg is specified.
         //       But if numericArg is not begining of the input (such as d3w) this never skips it.
@@ -633,12 +633,12 @@
 - (XVimEvaluator*)C_g
 {
     // process
-    XVimWindow* window = self.window;
-    NSRange range = [[window sourceView] selectedRange];
-    NSUInteger numberOfLines = [window.sourceView.textStorage xvim_numberOfLines];
-    long long lineNumber = [window.sourceView currentLineNumber];
-    NSUInteger columnNumber = [window.sourceView.textStorage xvim_columnOfIndex:range.location];
-    NSURL* documentURL = [[window sourceView] documentURL];
+    let window = self.window;
+    let range = [[window sourceView] selectedRange];
+    let numberOfLines = [window.sourceView.textStorage xvim_numberOfLines];
+    let lineNumber = [window.sourceView currentLineNumber];
+    let columnNumber = [window.sourceView.textStorage xvim_columnOfIndex:range.location];
+    let documentURL = [[window sourceView] documentURL];
     if ([documentURL isFileURL]) {
         NSString* filename = [documentURL path];
         NSString* text = [NSString

@@ -75,7 +75,7 @@ static XVimEvaluator* s_popEvaluator = nil;
     // Invokes each key event handler
     // <C-k> invokes "C_k:" selector
 
-    SEL handler = keyStroke.selector;
+    let handler = keyStroke.selector;
     if ([self respondsToSelector:handler]) {
         //DEBUG_LOG("Calling SELECTOR %@", NSStringFromSelector(handler));
 #pragma clang diagnostic push
@@ -134,11 +134,10 @@ static XVimEvaluator* s_popEvaluator = nil;
 
 - (NSArray<NSString*>*)args
 {
-    NSMutableArray<NSString*>* ps = [NSMutableArray new];
-
+    var ps = [NSMutableArray<NSString*> new];
     var evaluator = self.parent;
     while (evaluator != nil) {
-        NSString* arg = evaluator.argumentString;
+        let arg = evaluator.argumentString;
         if (arg)
             [ps insertObject:arg atIndex:0];
         evaluator = evaluator.parent;
@@ -210,17 +209,17 @@ static XVimEvaluator* s_popEvaluator = nil;
                     let view = [self.window sourceView];
                     view.needsUpdateFoundRanges = YES;
 
-                    BOOL forward2 = [command characterAtIndex:0] == '/';
+                    let forward2 = [command characterAtIndex:0] == '/';
                     if (command.length == 1) {
                         // Repeat search
-                        XVimMotion* m = [XVim.instance.searcher motionForRepeatSearch];
+                        let m = [XVim.instance.searcher motionForRepeatSearch];
                         m.motion = forward2 ? MOTION_SEARCH_FORWARD : MOTION_SEARCH_BACKWARD;
                         m.count = self.numericArg;
                         *result = m;
                     }
                     else {
                         XVim.instance.searcher.lastSearchString = [command substringFromIndex:1];
-                        XVimMotion* m = [XVim.instance.searcher motionForSearch:[command substringFromIndex:1]
+                        let m = [XVim.instance.searcher motionForSearch:[command substringFromIndex:1]
                                                                         forward:forward2];
                         m.count = self.numericArg;
                         *result = m;
@@ -232,9 +231,8 @@ static XVimEvaluator* s_popEvaluator = nil;
                         return;
                     }
 
-                    BOOL forward2 = [command characterAtIndex:0] == '/';
-                    XVimMotion* m =
-                                [XVim.instance.searcher motionForSearch:[command substringFromIndex:1] forward:forward2];
+                    let forward2 = [command characterAtIndex:0] == '/';
+                    let m = [XVim.instance.searcher motionForSearch:[command substringFromIndex:1] forward:forward2];
                     if ([command characterAtIndex:0] == '/') {
                         [self.sourceView xvim_highlightNextSearchCandidateForward:m.regex
                                                                             count:self.numericArg

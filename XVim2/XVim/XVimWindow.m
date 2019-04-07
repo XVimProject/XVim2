@@ -21,8 +21,8 @@
 
 
 @interface XVimWindow () {
-    NSMutableArray* _defaultEvaluatorStack;
-    NSMutableArray* _currentEvaluatorStack;
+    NSMutableArray<XVimEvaluator*>* _defaultEvaluatorStack;
+    NSMutableArray<XVimEvaluator*>* _currentEvaluatorStack;
     XVimKeymapContext* _keymapContext;
     BOOL _handlingMouseEvent;
     NSString* _staticString;
@@ -101,7 +101,7 @@
 {
     // Initialize evlauator stack
     [stack removeAllObjects];
-    XVimEvaluator* firstEvaluator = [[XVimNormalEvaluator alloc] initWithWindow:self];
+    let firstEvaluator = [[XVimNormalEvaluator alloc] initWithWindow:self];
     [stack addObject:firstEvaluator];
     if (activate) {
         [firstEvaluator becameHandler];
@@ -112,7 +112,7 @@
 {
     // Take strong reference to self, because the last remaining strong reference may be
     // in one of the evaluators we are about to dealloc with 'removeAllObjects'
-    XVimWindow* this = self;
+    let this = self;
     [this.currentEvaluator cancelHandler];
     [_currentEvaluatorStack removeAllObjects];
     [this syncEvaluatorStack];
@@ -202,8 +202,8 @@
 
 - (BOOL)handleOneXVimString:(XVimString*)oneChar
 {
-    XVimKeymap* keymap = [self.currentEvaluator selectKeymapWithProvider:[XVim instance]];
-    XVimString* mapped = [keymap mapKeys:oneChar withContext:_keymapContext forceFix:NO];
+    let keymap = [self.currentEvaluator selectKeymapWithProvider:[XVim instance]];
+    let mapped = [keymap mapKeys:oneChar withContext:_keymapContext forceFix:NO];
 
     [NSObject cancelPreviousPerformRequestsWithTarget:self selector:@selector(handleTimeout) object:nil];
     if (mapped) {
@@ -229,7 +229,7 @@
 
 - (BOOL)handleXVimString:(XVimString*)strokes
 {
-    BOOL last = NO;
+    var last = NO;
     for (XVimKeyStroke* stroke in XVimKeyStrokesFromXVimString(strokes)) {
         last = [self handleOneXVimString:[stroke xvimString]];
     }
@@ -238,8 +238,8 @@
 
 - (void)handleTimeout
 {
-    XVimKeymap* keymap = [self.currentEvaluator selectKeymapWithProvider:[XVim instance]];
-    XVimString* mapped = [keymap mapKeys:@"" withContext:_keymapContext forceFix:YES];
+    let keymap = [self.currentEvaluator selectKeymapWithProvider:[XVim instance]];
+    let mapped = [keymap mapKeys:@"" withContext:_keymapContext forceFix:YES];
     for (XVimKeyStroke* keyStroke in XVimKeyStrokesFromXVimString(mapped)) {
         [self handleKeyStroke:keyStroke onStack:_currentEvaluatorStack];
     }
@@ -258,11 +258,11 @@
     [self clearErrorMessage];
 
     // Record the event
-    XVim* xvim = [XVim instance];
+    let xvim = [XVim instance];
     [xvim appendOperationKeyStroke:[keyStroke xvimString]];
 
     // Evaluate key stroke
-    XVimEvaluator* currentEvaluator = [_currentEvaluatorStack lastObject];
+    var currentEvaluator = [_currentEvaluatorStack lastObject];
     currentEvaluator.window = self;
 
     if (self.event) {
@@ -287,8 +287,7 @@
         if (nextEvaluator == nil || nextEvaluator == [XVimEvaluator popEvaluator]) {
 
             // current evaluator finished its task
-            XVimEvaluator* completeEvaluator = [_currentEvaluatorStack
-                        lastObject]; // We have to retain here not to be dealloced in didEndHandler method.
+            let completeEvaluator = [_currentEvaluatorStack lastObject]; // We have to retain here not to be dealloced in didEndHandler method.
             [_currentEvaluatorStack removeLastObject]; // remove current evaluator from the stack
             [completeEvaluator didEndHandler];
 
@@ -306,7 +305,7 @@
                 if (nextEvaluator) {
                     break;
                 }
-                SEL onCompleteHandler = currentEvaluator.onChildCompleteHandler;
+                let onCompleteHandler = currentEvaluator.onChildCompleteHandler;
 #pragma clang diagnostic push
 #pragma clang diagnostic ignored "-Warc-performSelector-leaks"
                 nextEvaluator = [currentEvaluator performSelector:onCompleteHandler withObject:completeEvaluator];
@@ -350,7 +349,7 @@
 
 - (void)syncEvaluatorStack
 {
-    BOOL needsVisual = (self.sourceView.selectedRange.length != 0);
+    let needsVisual = (self.sourceView.selectedRange.length != 0);
 
     // if (!needsVisual && [self.currentEvaluator isKindOfClass:[XVimInsertEvaluator class]]) return;
 
@@ -392,15 +391,15 @@
 - (void)beginCommandEntry
 {
     self.commandLine.modeHidden = YES;
-    XVimCommandField* commandField = self.commandLine.commandField;
-    [commandField setDelegate:self];
+    let commandField = self.commandLine.commandField;
+    [commandField setWindow:self];
     [self.sourceView.window makeFirstResponder:commandField];
 }
 
 - (void)endCommandEntry
 {
-    XVimCommandField* commandField = self.commandLine.commandField;
-    [commandField setDelegate:nil];
+    let commandField = self.commandLine.commandField;
+    [commandField setWindow:nil];
     [commandField setHidden:YES];
     self.commandLine.modeHidden = NO;
     [self setForcusBackToSourceView];
@@ -473,8 +472,8 @@
 
 - (XVimMark*)currentPositionMark
 {
-    XVimMark* mark = [[XVimMark alloc] init];
-    NSRange r = [self.sourceView selectedRange];
+    let mark = [[XVimMark alloc] init];
+    let r = [self.sourceView selectedRange];
     mark.document = [[self.sourceView documentURL] path];
     if (nil == mark.document) {
         return nil;
@@ -489,7 +488,7 @@
     if (![motion isJumpMotion])
         return;
 
-    XVimMark* mark = [self currentPositionMark];
+    let mark = [self currentPositionMark];
     if (mark == nil)
         return;
 
