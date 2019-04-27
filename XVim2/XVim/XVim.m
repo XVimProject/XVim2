@@ -36,6 +36,7 @@
 #import <IDESourceEditor/_TtC15IDESourceEditor19IDESourceEditorView.h>
 #import "XVimXcode.h"
 #import "XVimIDESourceEditorView.h"
+#import "XVimSourceEditorSelectionDisplay.h"
 
 @interface XVim () {
     XVimKeymap* _keymaps[XVIM_MODE_COUNT];
@@ -109,6 +110,7 @@
 {
     [XVimIDESourceEditorView xvim_hook];
     [IDEWorkspaceTabController_XVim xvim_hook];
+    [XVimSourceEditorSelectionDisplay xvim_hook];
 }
 
 + (XVim*)instance

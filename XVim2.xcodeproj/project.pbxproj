@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		5DAD8A00227455F000D01D9F /* XVimSourceEditorSelectionDisplay.m in Sources */ = {isa = PBXBuildFile; fileRef = 5DAD89FF227455F000D01D9F /* XVimSourceEditorSelectionDisplay.m */; };
 		A20FB79E21BB7FF2001FDC62 /* about.xib in Resources */ = {isa = PBXBuildFile; fileRef = A20FB79A21BB7FF2001FDC62 /* about.xib */; };
 		A20FB79F21BB7FF2001FDC62 /* XVimAboutDialog.m in Sources */ = {isa = PBXBuildFile; fileRef = A20FB79D21BB7FF2001FDC62 /* XVimAboutDialog.m */; };
 		A2482F311F72435D00FEF4DE /* ProcessRunner.m in Sources */ = {isa = PBXBuildFile; fileRef = A2482F2E1F72435D00FEF4DE /* ProcessRunner.m */; };
@@ -112,6 +113,9 @@
 /* End PBXCopyFilesBuildPhase section */
 
 /* Begin PBXFileReference section */
+		5D1DDA6E227444B600CB3B74 /* _TtC12SourceEditor28SourceEditorSelectionDisplay.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = _TtC12SourceEditor28SourceEditorSelectionDisplay.h; path = XVim2/Xcode/_TtC12SourceEditor28SourceEditorSelectionDisplay.h; sourceTree = SOURCE_ROOT; };
+		5D322FF1227467D400D22078 /* XVimSourceEditorSelectionDisplay.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = XVimSourceEditorSelectionDisplay.h; path = XVim2/Xcode/XVimSourceEditorSelectionDisplay.h; sourceTree = SOURCE_ROOT; };
+		5DAD89FF227455F000D01D9F /* XVimSourceEditorSelectionDisplay.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; name = XVimSourceEditorSelectionDisplay.m; path = XVim2/Xcode/XVimSourceEditorSelectionDisplay.m; sourceTree = SOURCE_ROOT; };
 		A20FB79A21BB7FF2001FDC62 /* about.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = about.xib; sourceTree = "<group>"; };
 		A20FB79B21BB7FF2001FDC62 /* XVimAboutDialog.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = XVimAboutDialog.h; sourceTree = "<group>"; };
 		A20FB79C21BB7FF2001FDC62 /* SourceViewProtocol.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SourceViewProtocol.h; sourceTree = "<group>"; };
@@ -372,6 +376,7 @@
 			isa = PBXGroup;
 			children = (
 				A2A9F92D2070A84600E7BB53 /* _TtC12SourceEditor16SourceEditorView+XVim.h */,
+				5D1DDA6E227444B600CB3B74 /* _TtC12SourceEditor28SourceEditorSelectionDisplay.h */,
 				A2A9F92E2070A84600E7BB53 /* _TtC15IDESourceEditor19IDESourceEditorView+XVim.h */,
 				A2A9F9272070A84600E7BB53 /* IDEWorkspaceTabController+XVim.h */,
 				A2A9F9322070A84600E7BB53 /* IDEWorkspaceTabController+XVim.m */,
@@ -392,6 +397,8 @@
 				A2A298DB2070A962001B5F9E /* XcodeUtils.m */,
 				A2A9F93D2070A85200E7BB53 /* XVimIDESourceEditorView.h */,
 				A2A9F93C2070A85200E7BB53 /* XVimIDESourceEditorView.m */,
+				5D322FF1227467D400D22078 /* XVimSourceEditorSelectionDisplay.h */,
+				5DAD89FF227455F000D01D9F /* XVimSourceEditorSelectionDisplay.m */,
 				A2A9F93B2070A85200E7BB53 /* XVimXcode.h */,
 			);
 			name = Xcode;
@@ -724,6 +731,7 @@
 				A2B537B11F51C94400D83C0A /* NSObject+Swizzle.m in Sources */,
 				EDF0106E1F6EEFFC00461B2C /* XVimWindow.m in Sources */,
 				EDD27BAE1F9B5EB30006471C /* XVimTester+Jump.m in Sources */,
+				5DAD8A00227455F000D01D9F /* XVimSourceEditorSelectionDisplay.m in Sources */,
 				EDF0106B1F6EEFFC00461B2C /* XVimMotion.m in Sources */,
 				ED548FDF1F8280B700A8069D /* XVimRegister.m in Sources */,
 				EDD27BA61F9B5EB30006471C /* XVimTester+Issues.m in Sources */,
