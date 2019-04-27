@@ -15,4 +15,7 @@ static NSString * const IDESourceEditorViewClassName
 static NSString * const SourceEditorViewClassName
     = @"SourceEditor.SourceEditorView";
 
+static NSString * const SourceEditorSelectionDisplayClassName
+    = @"SourceEditor.SourceEditorSelectionDisplay";
+
 #endif /* XVimXcode_h */
