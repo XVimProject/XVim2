@@ -496,21 +496,21 @@ NSArray<XVimKeyStroke*>* XVimKeyStrokesFromXVimString(XVimString* string)
             c1 = 0;
         }
 
-        XVimKeyStroke* stroke = [[XVimKeyStroke alloc] initWithCharacter:c2 modifier:c1 event:nil];
+        let stroke = [[XVimKeyStroke alloc] initWithCharacter:c2 modifier:c1 event:nil];
         [array addObject:stroke];
     }
     return array;
 }
 
-NSArray* XVimKeyStrokesFromKeyNotation(NSString* notation)
+NSArray<XVimKeyStroke *>* XVimKeyStrokesFromKeyNotation(NSString* notation)
 {
     return XVimKeyStrokesFromXVimString(XVimStringFromKeyNotation(notation));
 }
 
 NSString* XVimKeyNotationFromXVimString(XVimString* string)
 {
-    NSArray* array = XVimKeyStrokesFromXVimString(string);
-    NSMutableString* str = [[NSMutableString alloc] init];
+    let array = XVimKeyStrokesFromXVimString(string);
+    var str = [[NSMutableString alloc] init];
     for (XVimKeyStroke* stroke in array) {
         [str appendString:[stroke keyNotation]];
     }

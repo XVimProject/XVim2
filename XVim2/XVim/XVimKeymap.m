@@ -86,8 +86,8 @@
 - (void)map:(XVimString*)keyStrokes to:(XVimString*)targetKeyStrokes withRemap:(BOOL)remap
 {
     // Create key map trie
-    XVimKeymapNode* current = self.root;
-    NSArray* strokes = XVimKeyStrokesFromXVimString(keyStrokes);
+    var current = self.root;
+    let strokes = XVimKeyStrokesFromXVimString(keyStrokes);
     for (XVimKeyStroke* stroke in strokes) {
         XVimKeymapNode* nextNode = [current.dict objectForKey:stroke];
         if (!nextNode) {
@@ -148,18 +148,18 @@
  **/
 - (XVimString*)mapKeys:(XVimString*)keys withContext:(XVimKeymapContext*)context forceFix:(BOOL)fix
 {
-    NSArray* strokes = XVimKeyStrokesFromXVimString(keys);
+    var strokes = XVimKeyStrokesFromXVimString(keys);
     if (context.node == nil) {
         context.node = self.root;
     }
 
     // Walk through mapping node
-    XVimKeymapNode* node = context.node; // current node
+    var node = context.node; // current node
     XVimKeymapNode* nextNode = nil; // next node to walk to
     XVimString* unProcessedString
                 = @""; // if a node does not have any path to walk rest of input keys are stored to this variable.
     for (NSUInteger i = 0; i < strokes.count; i++) {
-        XVimKeyStroke* stroke = [strokes objectAtIndex:i];
+        var stroke = [strokes objectAtIndex:i];
         nextNode = [node.dict objectForKey:stroke];
         if (nil != nextNode) {
             // If there is a node to follow
@@ -203,9 +203,9 @@
             if (context.lastMappedNode.remap && infinit_loop_guard != 0
                 && ![context.lastMappedNode.target hasPrefix:context.inputKeys]) {
                 // Key remapping
-                XVimKeymapContext* context2 = [[XVimKeymapContext alloc] init];
+                var context2 = [[XVimKeymapContext alloc] init];
                 infinit_loop_guard--;
-                NSString* map = [self mapKeys:newStr withContext:context2 forceFix:fix];
+                var map = [self mapKeys:newStr withContext:context2 forceFix:fix];
                 infinit_loop_guard++;
                 return map;
             }
@@ -228,7 +228,7 @@
 - (XVimString*)nopFilter:(XVimString*)aStr
 {
     if (aStr.length > 0) {
-        NSString* notation = XVimKeyNotationFromXVimString(aStr);
+        let notation = XVimKeyNotationFromXVimString(aStr);
         if ([[notation lowercaseString] hasPrefix:@"<nop>"]) {
             return @"";
         }
@@ -241,7 +241,7 @@
                        withBlock:(void (^)(NSString*, NSString*))block
 {
     if (node.target != nil) {
-        NSString* toKey = [XVimString
+        let toKey = [XVimString
                     stringWithFormat:@"%@%@", node.remap ? @"" : @"* ", XVimKeyNotationFromXVimString(node.target)];
         block(keys, toKey);
     }

@@ -147,8 +147,8 @@
         return NO;
     }
 
-    XVimOptions* options = [[XVim instance] options];
-    BOOL ignorecase = options.ignorecase;
+    var options = [[XVim instance] options];
+    var ignorecase = options.ignorecase;
     if (ignorecase && options.smartcase) {
         ignorecase = [self.lastSearchCmd isEqualToString:[self.lastSearchCmd lowercaseString]];
     }
@@ -165,7 +165,7 @@
 
 
     NSRange found = { NSNotFound, 0 };
-    XVimOptions* options = [[XVim instance] options];
+    var options = [[XVim instance] options];
 
     let srcView = [window sourceView];
     NSUInteger search_base = from;
@@ -177,8 +177,7 @@
     }
 
     NSError* error = NULL;
-    NSRegularExpression* regex =
-                [NSRegularExpression regularExpressionWithPattern:self.lastSearchCmd options:r_opts error:&error];
+    var regex = [NSRegularExpression regularExpressionWithPattern:self.lastSearchCmd options:r_opts error:&error];
 
     if (error != nil) {
         [window errorMessage:[NSString stringWithFormat:@"Cannot compile regular expression '%@'",
@@ -219,7 +218,7 @@
     // optimization is warranted until slowness is experienced at the user level.
 
     NSRange found = { NSNotFound, 0 };
-    XVimOptions* options = [[XVim instance] options];
+    var options = [[XVim instance] options];
     let srcView = [window sourceView];
     NSUInteger search_base = from;
 
@@ -229,8 +228,7 @@
     }
 
     NSError* error = NULL;
-    NSRegularExpression* regex =
-                [NSRegularExpression regularExpressionWithPattern:self.lastSearchCmd options:r_opts error:&error];
+    var regex = [NSRegularExpression regularExpressionWithPattern:self.lastSearchCmd options:r_opts error:&error];
 
     if (error != nil) {
         [window errorMessage:[NSString stringWithFormat:@"Cannot compile regular expression '%@'",
@@ -239,8 +237,7 @@
         return NSMakeRange(NSNotFound, 0);
     }
 
-    NSArray* matches =
-                [regex matchesInString:[srcView string] options:0 range:NSMakeRange(0, [[srcView string] length])];
+    var matches = [regex matchesInString:[srcView string] options:0 range:NSMakeRange(0, [[srcView string] length])];
 
     // search above base
     if (search_base > 0) {
@@ -324,7 +321,7 @@
         return NSMakeRange(NSNotFound, 0);
     }
 
-    XVimMotionInfo* info = [[XVimMotionInfo alloc] init];
+    var info = [[XVimMotionInfo alloc] init];
     NSUInteger wordStart = searchStart;
     if (wordStart > 0) {
         unichar curChar = [string characterAtIndex:wordStart];
@@ -335,15 +332,15 @@
         }
     }
 
-    NSUInteger wordEnd = [view.textStorage wordsForward:wordStart count:1 option:MOPT_LEFT_RIGHT_NOWRAP info:info];
+    var wordEnd = [view.textStorage wordsForward:wordStart count:1 option:MOPT_LEFT_RIGHT_NOWRAP info:info];
     if (info.lastEndOfWord != NSNotFound) {
         wordEnd = info.lastEndOfWord;
     }
 
     // Search for the word
-    NSRange wordRange = NSMakeRange(wordStart, wordEnd - wordStart + 1);
-    NSString* searchWord = [[view string] substringWithRange:wordRange];
-    NSString* escapedSearchWord = [NSRegularExpression escapedPatternForString:searchWord];
+    var wordRange = NSMakeRange(wordStart, wordEnd - wordStart + 1);
+    var searchWord = [[view string] substringWithRange:wordRange];
+    var escapedSearchWord = [NSRegularExpression escapedPatternForString:searchWord];
 
     if (wholeWord) {
         escapedSearchWord = [@"\\<" stringByAppendingString:[escapedSearchWord stringByAppendingString:@"\\>"]];

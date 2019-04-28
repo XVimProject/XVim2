@@ -47,10 +47,10 @@
     // parse
     // 1) support only string
     // 2) support only string concatenation
-    NSString* instr = args.invar;
-    NSMutableString* evaled = [NSMutableString stringWithFormat:@""];
+    var instr = args.invar;
+    var evaled = [NSMutableString stringWithFormat:@""];
     NSUInteger index = 0;
-    BOOL concat = FALSE;
+    var concat = FALSE;
     while (index < instr.length) {
         unichar uc = [instr characterAtIndex:index];
         if (uc == '"') {
@@ -77,7 +77,7 @@
         }
         else {
             // begin function
-            NSMutableString* cmd = [NSMutableString stringWithFormat:@""];
+            var cmd = [NSMutableString stringWithFormat:@""];
             while (index < instr.length) {
                 unichar uc2 = [instr characterAtIndex:index];
                 if (uc2 == ')') {
@@ -88,10 +88,10 @@
                 [cmd appendFormat:@"%C", uc2];
                 ++index;
             }
-            XVimEvalArg* evalarg = [[XVimEvalArg alloc] init];
+            var evalarg = [[XVimEvalArg alloc] init];
             evalarg.invar = cmd;
             [self evaluateFunc:evalarg inWindow:window];
-            NSString* ret = evalarg.rvar;
+            var ret = evalarg.rvar;
             if (concat) {
                 if (ret != nil) {
                     [evaled appendString:ret];
