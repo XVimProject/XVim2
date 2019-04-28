@@ -68,9 +68,9 @@
 - (void)_drawInsertionPointInRect:(NSRect)rect color:(NSColor*)color
 {
     color = [color colorWithAlphaComponent:0.5];
-    NSPoint aPoint = NSMakePoint(rect.origin.x, rect.origin.y + rect.size.height / 2);
-    NSUInteger glyphIndex = [[self layoutManager] glyphIndexForPoint:aPoint inTextContainer:[self textContainer]];
-    NSRect glyphRect = [[self layoutManager] boundingRectForGlyphRange:NSMakeRange(glyphIndex, 1)
+    let aPoint = NSMakePoint(rect.origin.x, rect.origin.y + rect.size.height / 2);
+    let glyphIndex = [[self layoutManager] glyphIndexForPoint:aPoint inTextContainer:[self textContainer]];
+    let glyphRect = [[self layoutManager] boundingRectForGlyphRange:NSMakeRange(glyphIndex, 1)
                                                        inTextContainer:[self textContainer]];
 
     rect.size.width = rect.size.height / 2;
@@ -116,7 +116,7 @@
         [self insertText:keyStroke.xvimString replacementRange:self.selectedRange];
         return;
     }
-    NSEvent* event = [keyStroke toEventwithWindowNumber:0 context:nil];
+    let event = [keyStroke toEventwithWindowNumber:0 context:nil];
     [super keyDown:event];
 }
 

@@ -194,7 +194,7 @@
 
     NSString* nextLine = nil;
 
-    NSRange nextRng = NSMakeRange(0, self.string.length);
+    var nextRng = NSMakeRange(0, self.string.length);
 
     self.xvim_lockSyncStateFromView = YES;
     xvim_on_exit {
@@ -340,7 +340,7 @@
             lastLine = pos2.row;
 
             XVimSourceEditorRange ser = {.pos1 = pos1, .pos2 = pos2 };
-            BOOL isInsertionLine = (pos1.row == insertionLine);
+            let isInsertionLine = (pos1.row == insertionLine);
 
             let selectionModifiers = isInsertionLine ? SelectionModifierDiscontiguous
                                                        : SelectionModifierDiscontiguous | SelectionModifierExtension;
@@ -418,22 +418,12 @@
 
 - (NSURL*)documentURL
 {
-    // XCODE93
-#if 0
-    if ([self.sourceCodeEditorView.hostingEditor isKindOfClass:NSClassFromString(@"IDEEditor")]) {
-        return [(IDEEditorDocument*)((IDEEditor*)self.sourceCodeEditorView.hostingEditor).document fileURL];
-    }
-    else {
-        return nil;
-    }
-#else
     IDEEditorArea* area = XVimLastActiveEditorArea();
     if (area != nil){
         if (area.primaryEditorDocument != nil){
             return area.primaryEditorDocument.readOnlyItemURL;
         }
     }
-#endif
     return nil;
 }
 

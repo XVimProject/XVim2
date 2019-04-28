@@ -17,10 +17,6 @@
 #import "XVimTextObjectEvaluator.h"
 #import "XVimWindow.h"
 
-@interface XVimOperatorEvaluator () {
-}
-@end
-
 // TODO: Maybe need to override b,B,w,W operation (See older implementation)
 
 @implementation XVimOperatorEvaluator

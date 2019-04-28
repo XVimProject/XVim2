@@ -81,9 +81,9 @@
 - (NSString*)insertedText
 {
     let view = [self sourceView];
-    NSUInteger startLoc = self.startRange.location;
-    NSUInteger endLoc = [view selectedRange].location;
-    NSRange textRange = NSMakeRange(NSNotFound, 0);
+    var startLoc = self.startRange.location;
+    var endLoc = [view selectedRange].location;
+    var textRange = NSMakeRange(NSNotFound, 0);
 
     if ([[view string] length] == 0) {
         return @"";
@@ -103,8 +103,7 @@
     else {
         textRange = NSMakeRange(endLoc, startLoc - endLoc);
     }
-    NSString* text = [[view string] substringWithRange:textRange];
-    return text;
+    return [[view string] substringWithRange:textRange];
 }
 
 /*
@@ -137,13 +136,13 @@
 // starting at the same column
 - (void)repeatBlockText
 {
-    NSString* text = [self insertedText];
+    let text = [self insertedText];
     for (NSUInteger i = 0; i < [self numericArg] - 1; i++) {
         [self.sourceView insertText:text];
     }
 
     if (_blockEditColumn != NSNotFound) {
-        XVimRange range = XVimMakeRange(_blockLines.begin + 1, _blockLines.end);
+        let range = XVimMakeRange(_blockLines.begin + 1, _blockLines.end);
         [self.sourceView xvim_blockInsertFixupWithText:text
                                             insertMode:_insertMode
                                                  count:self.numericArg
@@ -161,7 +160,7 @@
     }
 
     // Store off any needed text
-    XVim* xvim = [XVim instance];
+    let xvim = [XVim instance];
 
     xvim.lastVisualMode = self.sourceView.selectionMode;
     [xvim fixOperationCommands];
@@ -181,7 +180,7 @@
     [sourceView xvim_hideCompletions];
 
     // Position for "^" is before escaped from insert mode
-    NSUInteger pos = sourceView.insertionPoint;
+    var pos = sourceView.insertionPoint;
     XVimMark* mark
 	= [XVimMark markWithLine:[self.sourceView.textStorage xvim_lineNumberAtIndex:pos]
 					  column: [self.sourceView.textStorage xvim_columnOfIndex:pos] document: self.sourceView.documentURL.path];
@@ -230,7 +229,7 @@
     }
 
     if (nextEvaluator == self && nil == keySelector) {
-        NSEvent* event = [keyStroke toEventwithWindowNumber:0 context:nil];
+        let event = [keyStroke toEventwithWindowNumber:0 context:nil];
         if ([self windowShouldReceive:keySelector]) {
             // Here we pass the key input to original text view.
             // The input coming to this method is already handled by "Input Method"
@@ -290,8 +289,8 @@
 
 - (void)C_yC_eHelper:(BOOL)handlingC_y
 {
-    NSUInteger currentCursorIndex = [self.sourceView selectedRange].location;
-    NSUInteger currentColumnIndex = [self.sourceView.textStorage xvim_columnOfIndex:currentCursorIndex];
+    let currentCursorIndex = [self.sourceView selectedRange].location;
+    let currentColumnIndex = [self.sourceView.textStorage xvim_columnOfIndex:currentCursorIndex];
     NSUInteger newCharIndex;
     if (handlingC_y) {
         newCharIndex = [self.sourceView.textStorage prevLine:currentCursorIndex
@@ -305,14 +304,13 @@
                                                        count:[self numericArg]
                                                       option:MOPT_NONE];
     }
-    NSUInteger newColumnIndex = [self.sourceView.textStorage xvim_columnOfIndex:newCharIndex];
+    let newColumnIndex = [self.sourceView.textStorage xvim_columnOfIndex:newCharIndex];
     NSLog(@"Old column: %ld\tNew column: %ld", currentColumnIndex, newColumnIndex);
     if (currentColumnIndex == newColumnIndex) {
         unichar u = [[[self sourceView] string] characterAtIndex:newCharIndex];
-        NSString* charToInsert = [NSString stringWithFormat:@"%c", u];
+        let charToInsert = [NSString stringWithFormat:@"%c", u];
         [[self sourceView] insertText:charToInsert];
     }
 }
-
 
 @end

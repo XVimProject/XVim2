@@ -65,14 +65,14 @@
 
 - (XVimEvaluator*)searchCurrentWord:(BOOL)forward
 {
-    XVimCommandLineEvaluator* eval = [self searchEvaluatorForward:forward];
-    NSRange r = [self.sourceView xvim_currentWord:MOPT_NONE];
+    let eval = [self searchEvaluatorForward:forward];
+    let r = [self.sourceView xvim_currentWord:MOPT_NONE];
     if (r.location == NSNotFound) {
         return nil;
     }
 
-    NSString* word = [self.sourceView.string substringWithRange:r];
-    NSString* searchWord = [NSRegularExpression escapedPatternForString:word];
+    let word = [self.sourceView.string substringWithRange:r];
+    let searchWord = [NSRegularExpression escapedPatternForString:word];
     [eval appendString:searchWord];
     [eval execute];
     self.motion = eval.evalutionResult;

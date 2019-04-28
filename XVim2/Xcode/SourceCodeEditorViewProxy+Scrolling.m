@@ -27,7 +27,7 @@
 - (void)xvim_scrollCommon_moveCursorPos:(NSUInteger)lineNumber firstNonblank:(BOOL)fnb
 {
     if (lineNumber != 0) {
-        NSUInteger pos = [self xvim_indexOfLineNumber:lineNumber];
+        var pos = [self xvim_indexOfLineNumber:lineNumber];
         if (NSNotFound == pos) {
             pos = self.textStorage.length;
         }
@@ -35,7 +35,7 @@
         [self xvim_syncStateWithScroll:YES];
     }
     if (fnb) {
-        NSUInteger pos = [self.textStorage xvim_firstNonblankInLineAtIndex:self.insertionPoint allowEOL:YES];
+        let pos = [self.textStorage xvim_firstNonblankInLineAtIndex:self.insertionPoint allowEOL:YES];
         [self xvim_moveCursor:pos preserveColumn:NO];
         [self xvim_syncStateWithScroll:YES];
     }
@@ -43,7 +43,7 @@
 
 - (void)xvim_scroll:(XVIM_SCROLL_TYPE)type direction:(XVIM_SCROLL_DIRECTION)direction count:(NSUInteger)count
 {
-    NSInteger cursorLine = self.insertionLine - 1;
+    var cursorLine = self.insertionLine - 1;
 
     // Scroll to the new location
     NSInteger numScrollLines;
@@ -59,9 +59,9 @@
             break;
     }
 
-    LineRange visibleLineRange = [self xvim_visibleLineRange];
+    let visibleLineRange = [self xvim_visibleLineRange];
 
-    NSInteger scrollToLine = (numScrollLines < 0) ? (visibleLineRange.topLine + numScrollLines) : (visibleLineRange.bottomLine + numScrollLines);
+    var scrollToLine = (numScrollLines < 0) ? (visibleLineRange.topLine + numScrollLines) : (visibleLineRange.bottomLine + numScrollLines);
     clamp(scrollToLine, 0, self.lineCount - 1);
 
     var scrollToCharRange = [self characterRangeForLineRange:NSMakeRange(scrollToLine, 1)];
@@ -106,7 +106,7 @@ typedef struct {
 // zero index
 - (LineRange)xvim_visibleLineRange
 {
-    NSPoint bottomPoint = NSMakePoint(0.0, self.contentSize.height);
+    let bottomPoint = NSMakePoint(0.0, self.contentSize.height);
     
     NSInteger topLine =
     [self lineRangeForCharacterRange:NSMakeRange([self characterIndexForInsertionAtPoint:NSZeroPoint], 0)]
@@ -125,7 +125,7 @@ typedef struct {
 }
 
 - (NSInteger)linesPerPage {
-    LineRange linerange = [self xvim_visibleLineRange];
+    let linerange = [self xvim_visibleLineRange];
     return linerange.bottomLine - linerange.topLine;
 }
 

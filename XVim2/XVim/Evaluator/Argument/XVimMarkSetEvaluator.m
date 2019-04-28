@@ -27,7 +27,7 @@
         return [XVimEvaluator invalidEvaluator];
     }
 
-    XVimMark* mark = [self.window currentPositionMark];
+    let mark = [self.window currentPositionMark];
     if (nil != mark) {
         [XVIM.marks setMark:mark forName:keyStroke.xvimString];
     }

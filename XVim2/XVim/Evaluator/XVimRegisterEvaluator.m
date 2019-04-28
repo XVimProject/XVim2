@@ -14,10 +14,6 @@
 #import "XVimRegister.h"
 #import "XVimWindow.h"
 
-@interface XVimRegisterEvaluator () {
-}
-@end
-
 @implementation XVimRegisterEvaluator
 
 - (XVimKeymap*)selectKeymapWithProvider:(id<XVimKeymapProvider>)keymapProvider

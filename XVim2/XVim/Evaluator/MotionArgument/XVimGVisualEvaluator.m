@@ -25,7 +25,7 @@
 
 - (XVimEvaluator*)e
 {
-    XVimMotion* motion = XVIM_MAKE_MOTION(MOTION_END_OF_WORD_BACKWARD, CHARWISE_EXCLUSIVE, MOPT_NONE,
+    let motion = XVIM_MAKE_MOTION(MOTION_END_OF_WORD_BACKWARD, CHARWISE_EXCLUSIVE, MOPT_NONE,
                                           self.numericArg);
     [[self sourceView] xvim_move:motion];
     [self.parent resetNumericArg];
@@ -34,8 +34,7 @@
 
 - (XVimEvaluator*)E
 {
-    XVimMotion* motion
-                = XVIM_MAKE_MOTION(MOTION_END_OF_WORD_BACKWARD, CHARWISE_EXCLUSIVE, MOPT_BIGWORD, self.numericArg);
+    let motion = XVIM_MAKE_MOTION(MOTION_END_OF_WORD_BACKWARD, CHARWISE_EXCLUSIVE, MOPT_BIGWORD, self.numericArg);
     [[self sourceView] xvim_move:motion];
     [self.parent resetNumericArg];
     return [XVimEvaluator popEvaluator];
@@ -57,7 +56,7 @@
 
 - (XVimEvaluator*)g
 {
-    XVimMotion* motion = XVIM_MAKE_MOTION(MOTION_LINENUMBER, CHARWISE_EXCLUSIVE, MOPT_NONE, 1);
+    let motion = XVIM_MAKE_MOTION(MOTION_LINENUMBER, CHARWISE_EXCLUSIVE, MOPT_NONE, 1);
     motion.line = self.numericArg;
     [[self sourceView] xvim_move:motion];
     return [XVimEvaluator popEvaluator];
@@ -65,7 +64,7 @@
 
 - (XVimEvaluator*)j
 {
-    XVimMotion* motion = XVIM_MAKE_MOTION(MOTION_LINE_FORWARD, CHARWISE_EXCLUSIVE, MOPT_DISPLAY_LINE, self.numericArg);
+    let motion = XVIM_MAKE_MOTION(MOTION_LINE_FORWARD, CHARWISE_EXCLUSIVE, MOPT_DISPLAY_LINE, self.numericArg);
     [[self sourceView] xvim_move:motion];
     [self.parent resetNumericArg];
     return [XVimEvaluator popEvaluator];
@@ -73,7 +72,7 @@
 
 - (XVimEvaluator*)k
 {
-    XVimMotion* motion = XVIM_MAKE_MOTION(MOTION_LINE_BACKWARD, CHARWISE_EXCLUSIVE, MOPT_DISPLAY_LINE, self.numericArg);
+    let motion = XVIM_MAKE_MOTION(MOTION_LINE_BACKWARD, CHARWISE_EXCLUSIVE, MOPT_DISPLAY_LINE, self.numericArg);
     [[self sourceView] xvim_move:motion];
     [self.parent resetNumericArg];
     return [XVimEvaluator popEvaluator];
@@ -81,7 +80,7 @@
 
 - (XVimEvaluator*)J
 {
-    XVimJoinEvaluator* eval = [[XVimJoinEvaluator alloc] initWithWindow:self.window addSpace:NO];
+    let eval = [[XVimJoinEvaluator alloc] initWithWindow:self.window addSpace:NO];
     return [eval executeOperationWithMotion:XVIM_MAKE_MOTION(MOTION_NONE, CHARWISE_EXCLUSIVE, MOPT_NONE,
                                                              self.numericArg)];
 }

@@ -9,7 +9,6 @@
 #import "XVimWindowEvaluator.h"
 #import "Logger.h"
 #import "XVimWindow.h"
-//#import "IDEKit.h"
 #import "Geometry.h"
 #import "IDEWorkspaceTabController+XVim.h"
 #import "XcodeUtils.h"
@@ -38,7 +37,6 @@
  */
 - (XVimEvaluator*)eval:(XVimKeyStroke*)keyStroke
 {
-
     SEL handler = keyStroke.selector;
     if ([self respondsToSelector:handler]) {
 #pragma clang diagnostic push
