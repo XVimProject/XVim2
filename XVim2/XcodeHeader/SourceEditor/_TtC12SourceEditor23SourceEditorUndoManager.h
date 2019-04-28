@@ -35,13 +35,13 @@
 @property(nonatomic, readonly) BOOL undoActionIsDiscardable;
 - (void)setActionIsDiscardable:(BOOL)arg1;
 - (void)setActionName:(id)arg1;
-@property(nonatomic, readonly) NSString *redoActionName;
-@property(nonatomic, readonly) NSString *undoActionName;
+@property(nonatomic, readonly, copy) NSString *redoActionName;
+@property(nonatomic, readonly, copy) NSString *undoActionName;
 - (void)removeAllActionsWithTarget:(id)arg1;
 - (void)removeAllActions;
 - (BOOL)isRedoing;
 - (BOOL)isUndoing;
-@property(nonatomic) long long groupingLevel;
+@property(nonatomic) NSInteger groupingLevel;
 - (void)endUndoGrouping;
 - (void)beginUndoGrouping;
 - (void)redo;
@@ -53,8 +53,8 @@
 - (void)registerUndoWithTarget:(id)arg1 selector:(SEL)arg2 object:(id)arg3;
 
 // Remaining properties
-@property(nonatomic, readonly) BOOL redoing;
-@property(nonatomic, readonly) BOOL undoing;
+@property(nonatomic, readonly, getter=isRedoing) BOOL redoing;
+@property(nonatomic, readonly, getter=isUndoing) BOOL undoing;
 
 @end
 
