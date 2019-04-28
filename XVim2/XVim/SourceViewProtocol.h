@@ -47,7 +47,7 @@ typedef NS_ENUM(char, CursorStyle) {
 @property (readonly) NSString* string;
 @property (readonly) XVIM_VISUAL_MODE selectionMode;
 @property (readonly) _TtC12SourceEditor23SourceEditorUndoManager* undoManager;
-@property (strong) id<XVimTextViewDelegateProtocol> xvimTextViewDelegate;
+@property id<XVimTextViewDelegateProtocol> xvimTextViewDelegate;
 @property XVIM_CURSOR_MODE cursorMode;
 @property (readonly) NSUInteger insertionPoint;
 @property (readonly) NSInteger currentLineNumber;

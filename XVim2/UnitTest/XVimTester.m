@@ -76,8 +76,8 @@
     NSNumber* totalTests;
     NSNumber* passingTests;
 }
-@property (strong) NSMutableArray* testCases;
-@property (strong) NSArray* currentTestsCases;
+@property NSMutableArray* testCases;
+@property NSArray* currentTestsCases;
 @property (weak) NSWindow* testWindow;
 @property NSUInteger currentTestCaseIndex;
 @end

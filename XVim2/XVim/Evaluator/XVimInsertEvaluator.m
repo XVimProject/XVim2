@@ -21,9 +21,9 @@
 @interface XVimInsertEvaluator ()
 @property (nonatomic) NSRange startRange;
 @property (nonatomic) BOOL movementKeyPressed;
-@property (nonatomic, strong) NSString* lastInsertedText;
-@property (nonatomic, readonly, strong) NSArray* cancelKeys;
-@property (nonatomic, readonly, strong) NSArray* movementKeys;
+@property (nonatomic) NSString* lastInsertedText;
+@property (nonatomic, readonly) NSArray* cancelKeys;
+@property (nonatomic, readonly) NSArray* movementKeys;
 @property (nonatomic) BOOL enoughBufferForReplace;
 @property (nonatomic) BOOL beganUndoGroup;
 @end

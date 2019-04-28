@@ -29,14 +29,14 @@
                                      line:__LINE__]
 
 @interface XVimTestCase : NSObject
-@property (strong) NSString* initialText;
+@property NSString* initialText;
 @property NSRange initialRange;
-@property (strong) NSString* input;
-@property (strong) NSString* expectedText;
+@property NSString* input;
+@property NSString* expectedText;
 @property (copy) NSString* actualText;
 @property NSRange expectedRange;
-@property (strong) NSString* desc; // description is declared in NSObject and readonly.
-@property (strong) NSString* message;
+@property NSString* desc; // description is declared in NSObject and readonly.
+@property NSString* message;
 @property BOOL success;
 @property BOOL exception;
 @property BOOL finished;

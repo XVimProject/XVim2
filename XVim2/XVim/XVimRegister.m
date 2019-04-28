@@ -14,7 +14,7 @@
 #import "XVimOptions.h"
 
 @interface XVimRegister ()
-@property (strong, nonatomic) XVimMutableString* string;
+@property (nonatomic) XVimMutableString* string;
 @end
 
 @implementation XVimRegister
@@ -96,9 +96,9 @@
  **/
 
 @interface XVimRegisterManager ()
-@property (strong, nonatomic) NSMutableDictionary* registers;
-@property (strong, nonatomic) XVimRegister* recordingRegister;
-@property (strong, nonatomic) NSString* recordingRegisterName;
+@property (nonatomic) NSMutableDictionary* registers;
+@property (nonatomic) XVimRegister* recordingRegister;
+@property (nonatomic) NSString* recordingRegisterName;
 @end
 
 

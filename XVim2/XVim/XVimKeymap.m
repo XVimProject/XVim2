@@ -14,9 +14,9 @@
 // This class represents a node in key map trie.
 
 @interface XVimKeymapNode : NSObject
-@property (nonatomic, strong) NSMutableDictionary* dict;
+@property (nonatomic) NSMutableDictionary* dict;
 @property BOOL remap;
-@property (nonatomic, strong) XVimString* target;
+@property (nonatomic) XVimString* target;
 - (BOOL)hasChild;
 @end
 
@@ -70,7 +70,7 @@
 
 
 @interface XVimKeymap ()
-@property (strong) XVimKeymapNode* root;
+@property XVimKeymapNode* root;
 @end
 
 @implementation XVimKeymap

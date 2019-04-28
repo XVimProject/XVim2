@@ -4,7 +4,6 @@
 //
 //  Created by Muronaka Hiroaki on 2015/08/30.
 //
-//
 
 #import "NSColor+Extra.h"
 #import <Foundation/Foundation.h>
