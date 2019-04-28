@@ -24,12 +24,26 @@
     if (self = [super init]) {
         // Abbreviation mapping
         _option_maps = [[NSDictionary alloc]
-                    initWithObjectsAndKeys:@"ignorecase", @"ic", @"wrapscan", @"ws", @"errorbells", @"eb", @"incsearch",
-                                           @"is", @"gdefault", @"gd", @"smartcase", @"scs", @"clipboard", @"cb",
-                                           @"timeoutlen", @"tm", @"laststatus", @"ls", @"hlsearch", @"hls", @"number",
-                                           @"nu", @"vimregex", @"vr", @"relativenumber", @"rn", @"alwaysuseinputsource",
-                                           @"auis", @"blinkcursor", @"bc", @"startofline", @"sol", @"expandtab", @"et",
-                                           @"highlight", @"hi", nil];
+                    initWithObjectsAndKeys:
+                    @"alwaysuseinputsource", @"auis",
+                    @"blinkcursor", @"bc",
+                    @"clipboard", @"cb",
+                    @"errorbells", @"eb",
+                    @"expandtab", @"et",
+                    @"gdefault", @"gd",
+                    @"highlight", @"hi",
+                    @"hlsearch", @"hls",
+                    @"ignorecase", @"ic",
+                    @"incsearch", @"is",
+                    @"laststatus", @"ls",
+                    @"number", @"nu",
+                    @"relativenumber", @"rn",
+                    @"smartcase", @"scs",
+                    @"startofline", @"sol",
+                    @"timeoutlen", @"tm",
+                    @"vimregex", @"vr",
+                    @"wrapscan", @"ws",
+                    nil];
 
         // Default values
         _ignorecase = NO;
@@ -41,7 +55,7 @@
         _clipboard = @"";
         _guioptions = @"rb";
         _timeoutlen = @"1000";
-        _laststatus = 2;
+        _laststatus = @"2";
         _hlsearch = NO;
         _number = NO;
         _vimregex = NO;
@@ -75,20 +89,33 @@
     }
 }
 
-- (void)setOption:(NSString*)name value:(id)value
+- (NSString *)normalizePropName:(NSString *)name
 {
+    NSString* propName = name;
+    if ([_option_maps objectForKey:name]) {
+        // If the name is abbriviation use full name
+        propName = [_option_maps objectForKey:name];
+    }
+    return propName;
+}
+
+- (void)setOption:(NSString *)name value:(id)value
+{
+    NSString* propName = [self normalizePropName:name];
+    if ([self respondsToSelector:NSSelectorFromString(propName)]) {
+        [self setValue:value forKey:propName];
+    }
+}
+
+- (void)setOptionBool:(NSString*)name value:(BOOL)value
+{
+    NSString* propName = [self normalizePropName:name];
     BOOL toggle = NO;
     NSRange range = [name rangeOfString:@"!"];
     if (range.location == name.length - 1 && name.length > 1) {
         toggle = YES;
         name = [name substringToIndex:name.length - 1];
     }
-    NSString* propName = name;
-    if ([_option_maps objectForKey:name]) {
-        // If the name is abbriviation use full name
-        propName = [_option_maps objectForKey:name];
-    }
-
     if ([self respondsToSelector:NSSelectorFromString(propName)]) {
         if (toggle) {
             id oldValue = [self valueForKey:propName];
@@ -98,7 +125,7 @@
                 return;
             }
         }
-        [self setValue:value forKey:propName];
+        [self setValue:[NSNumber numberWithBool:value] forKey:propName];
     }
 }
 

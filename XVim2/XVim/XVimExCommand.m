@@ -1132,7 +1132,6 @@ xvim_ignore_warning_undeclared_selector_push
 - (void)set:(XVimExArg*)args inWindow:(XVimWindow*)window
 {
     NSString* setCommand = [args.arg stringByTrimmingCharactersInSet:[NSCharacterSet whitespaceCharacterSet]];
-    //let srcView = [window sourceView];
     XVimOptions* options = [XVIM options];
 
     if ([setCommand rangeOfString:@"="].location != NSNotFound) {
@@ -1147,11 +1146,11 @@ xvim_ignore_warning_undeclared_selector_push
     else if ([setCommand hasPrefix:@"no"]) {
         // "set noXXX" form
         NSString* prop = [setCommand substringFromIndex:2];
-        [options setOption:prop value:[NSNumber numberWithBool:NO]];
+        [options setOptionBool:prop value:NO];
     }
     else {
         // "set XXX" form
-        [options setOption:setCommand value:[NSNumber numberWithBool:YES]];
+        [options setOptionBool:setCommand value:YES];
     }
 
     if ([setCommand isEqualToString:@"wrap"]) {

@@ -664,7 +664,7 @@ static CGFloat XvimCommandLineAnimationDuration = 0.1;
         [layoutView.leftAnchor constraintEqualToAnchor:self.commandLine.leftAnchor].active = YES;
         [layoutView.rightAnchor constraintEqualToAnchor:self.commandLine.rightAnchor].active = YES;
         CGFloat commandline_height;
-        if (XVim.instance.options.laststatus == 0){
+        if ([XVim.instance.options.laststatus isEqualToString:@"0"]){
             commandline_height = 0;
         } else {
             commandline_height = 20;

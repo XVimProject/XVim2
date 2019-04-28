@@ -21,7 +21,7 @@
 @property (copy) NSString* clipboard;
 @property (copy) NSString* guioptions;
 @property (copy) NSString* timeoutlen;
-@property int laststatus;
+@property NSString* laststatus;
 @property BOOL vimregex; // XVim Original
 @property BOOL relativenumber;
 @property BOOL alwaysuseinputsource; // XVim original
@@ -31,5 +31,6 @@
 @property (nonatomic) NSDictionary* highlight;
 - (id)getOption:(NSString*)name;
 - (void)setOption:(NSString*)name value:(id)value;
+- (void)setOptionBool:(NSString*)name value:(BOOL)value;
 - (BOOL)clipboardHasUnnamed;
 @end
