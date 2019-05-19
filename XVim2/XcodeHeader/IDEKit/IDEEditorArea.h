@@ -79,7 +79,7 @@
 - (void)commitStateToDictionary:(id)arg1;
 - (void)revertStateWithDictionary:(id)arg1;
 - (void)revertState;
-@property(nonatomic, retain) DVTStateToken *stateToken; // @dynamic stateToken;
+@property(retain) DVTStateToken *stateToken; // @dynamic stateToken;
 - (void)_updateStateSavingRegistrations;
 - (void)splitView:(id)arg1 resizeSubviewsWithOldSize:(struct CGSize)arg2;
 - (void)_resizeSubviewsForHeightIncrease:(double)arg1;
@@ -164,7 +164,7 @@
 // Remaining properties
 @property(readonly, copy) NSString *debugDescription;
 @property(readonly, copy) NSString *description;
-@property(readonly) NSUInteger hash;
+@property(readonly) unsigned long long hash;
 @property(readonly) Class superclass;
 @property(readonly) NSTouchBar *touchBar;
 

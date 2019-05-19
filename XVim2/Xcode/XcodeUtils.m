@@ -27,9 +27,8 @@ IDEEditorArea* XVimLastActiveEditorArea() { return [XVimLastActiveWindowControll
 
 _TtC15IDESourceEditor19IDESourceEditorView* XVimLastActiveEditorView()
 {
-    let editorContext = [XVimLastActiveEditorArea() lastActiveEditorContext];
-    NSViewController* viewController = [editorContext supplementalMainViewController];
-    return (id)[[[[[viewController view] subviews] objectAtIndex:0] subviews] objectAtIndex:0];
+    return (id)[[[[[[[XVimLastActiveEditorArea() lastActiveEditorContext] supplementalMainViewController] view]
+                subviews] objectAtIndex:0] subviews] objectAtIndex:0];
 }
 
 

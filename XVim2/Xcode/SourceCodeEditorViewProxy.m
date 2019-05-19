@@ -16,6 +16,7 @@
 #import "XVimOptions.h"
 #import "XVimWindow.h"
 #import "rd_route.h"
+#import <IDEKit/IDEEditorArea.h>
 #import "XcodeUtils.h"
 #import <SourceEditor/SourceEditorScrollView.h>
 #import "SourceCodeEditorViewProxy+XVim.h"

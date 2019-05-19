@@ -57,7 +57,7 @@
 + (long long)topUndoGroupingLevel;
 //- (void).cxx_destruct;
 - (id)printOperationWithSettings:(id)arg1 error:(id *)arg2;
-@property(atomic, copy) NSPrintInfo *printInfo;
+@property(nonatomic, retain) NSPrintInfo *printInfo;
 - (id)emptyPrivateCopy;
 - (id)privateCopy;
 - (id)diffDataSource;
@@ -75,13 +75,13 @@
 @property(nonatomic, readonly) BOOL canSave;
 - (BOOL)readFromData:(id)arg1 ofType:(id)arg2 error:(id *)arg3;
 - (BOOL)readFromURL:(id)arg1 ofType:(id)arg2 error:(id *)arg3;
-@property(atomic, copy) NSURL *fileURL;
+@property(nonatomic, copy) NSURL *fileURL;
 @property(nonatomic, retain) DVTSourceCodeLanguage *language; // @synthesize language;
 @property(nonatomic) double lastEditTimestamp; // @synthesize lastEditTimestamp;
 @property(nonatomic, readonly) _TtC18SourceModelSupport26SourceModelLanguageService *sourceModelLanguageService;
 - (id)editedContents;
 - (id)sourceModel;
-@property(nonatomic, retain) NSDictionary *variantForResolvingMediaResources; // @synthesize variantForResolvingMediaResources;
+@property(nonatomic, copy) NSDictionary *variantForResolvingMediaResources; // @synthesize variantForResolvingMediaResources;
 @property(nonatomic, retain) IDEMediaResourceVariantContext *variantContextForMediaLibrary; // @synthesize variantContextForMediaLibrary;
 - (void)unregisterDocumentEditor:(id)arg1;
 - (void)registerDocumentEditor:(id)arg1;
@@ -154,7 +154,7 @@
 // Remaining properties
 @property(readonly, copy) NSString *debugDescription;
 @property(readonly, copy) NSString *description;
-@property(readonly) NSUInteger hash;
+@property(readonly) unsigned long long hash;
 @property(readonly) Class superclass;
 
 @end

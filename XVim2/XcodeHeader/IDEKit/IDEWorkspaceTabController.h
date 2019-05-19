@@ -106,7 +106,7 @@
 @property(nonatomic) BOOL isAnimatingInspectorArea; // @synthesize isAnimatingInspectorArea=_isAnimatingInspectorArea;
 @property(nonatomic) BOOL userWantsNavigatorVisible; // @synthesize userWantsNavigatorVisible=_userWantsNavigatorVisible;
 @property(nonatomic) BOOL userWantsInspectorAreaVisible; // @synthesize userWantsInspectorAreaVisible=_userWantsInspectorAreaVisible;
-@property(nonatomic, retain) IDEWorkspaceDocument *workspaceDocument; // @synthesize workspaceDocument=_workspaceDocument;
+@property(retain) IDEWorkspaceDocument *workspaceDocument; // @synthesize workspaceDocument=_workspaceDocument;
 @property(retain) DVTReplacementView *navigatorReplacementView; // @synthesize navigatorReplacementView=_navReplacementView;
 //- (void).cxx_destruct;
 - (void)discardEditing;
@@ -380,7 +380,7 @@
 @property(readonly) BOOL canRevertWithEmptyStateDictionary;
 @property(readonly, copy) NSString *debugDescription;
 @property(readonly, copy) NSString *description;
-@property(readonly) NSUInteger hash;
+@property(readonly) unsigned long long hash;
 @property(readonly) Class superclass;
 
 @end

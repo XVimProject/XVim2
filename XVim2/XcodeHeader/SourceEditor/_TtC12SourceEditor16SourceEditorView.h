@@ -83,7 +83,7 @@
 
 + (id)defaultMenu;
 //- (void).cxx_destruct;
-@property(nonatomic, readonly, copy) NSString *description;
+@property(nonatomic, readonly) NSString *description;
 - (void)viewDidEndLiveResize;
 - (void)viewWillStartLiveResize;
 - (void)performTextFinderAction:(id)arg1;
@@ -188,7 +188,7 @@
 - (void)copy:(id)arg1;
 
 // Remaining properties
-@property(nonatomic, readonly, getter=isFlipped) BOOL flipped;
+@property(nonatomic, readonly) BOOL flipped;
 
 @end
 

@@ -39,7 +39,7 @@
 - (long long)compare:(id)arg1;
 @property(readonly, copy) NSString *description;
 - (BOOL)isEqualDisregardingTimestamp:(id)arg1;
-@property(readonly) NSUInteger hash;
+@property(readonly) unsigned long long hash;
 - (BOOL)isEqual:(id)arg1;
 - (id)copyWithURL:(id)arg1;
 - (id)copyWithZone:(struct _NSZone *)arg1;
