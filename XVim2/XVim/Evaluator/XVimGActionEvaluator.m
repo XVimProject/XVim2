@@ -57,13 +57,13 @@
 
 - (XVimEvaluator*)i
 {
-    let mark = [[XVim instance].marks markForName:@"^" forDocument:self.sourceView.documentURL.path];
-    var insertMode = XVIM_INSERT_DEFAULT;
+    XVimMark* mark = [[XVim instance].marks markForName:@"^" forDocument:self.sourceView.documentURL.path];
+    XVimInsertMode insertMode = XVIM_INSERT_DEFAULT;
 
     if (mark.line != NSNotFound) {
-        let newPos = [self.sourceView xvim_indexOfLineNumber:mark.line column:mark.column];
+        NSUInteger newPos = [self.sourceView xvim_indexOfLineNumber:mark.line column:mark.column];
         if (NSNotFound != newPos) {
-            let m = XVIM_MAKE_MOTION(MOTION_POSITION, CHARWISE_EXCLUSIVE, MOPT_NONE, 0);
+            XVimMotion* m = XVIM_MAKE_MOTION(MOTION_POSITION, CHARWISE_EXCLUSIVE, MOPT_NONE, 0);
             m.position = newPos;
 
             [self.window preMotion:m];
@@ -76,7 +76,7 @@
 
 - (XVimEvaluator*)J
 {
-    let eval = [[XVimJoinEvaluator alloc] initWithWindow:self.window addSpace:NO];
+    XVimJoinEvaluator* eval = [[XVimJoinEvaluator alloc] initWithWindow:self.window addSpace:NO];
     return [eval executeOperationWithMotion:XVIM_MAKE_MOTION(MOTION_NONE, CHARWISE_EXCLUSIVE, MOPT_NONE,
                                                              self.numericArg)];
 }

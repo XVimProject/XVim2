@@ -85,8 +85,8 @@
 
 - (XVimEvaluator*)execute
 {
-    let commandField = self.window.commandLine.commandField;
-    let command = [[commandField string]
+    XVimCommandField* commandField = self.window.commandLine.commandField;
+    NSString* command = [[commandField string]
                 stringByTrimmingCharactersInSet:[NSCharacterSet whitespaceAndNewlineCharacterSet]];
     [_history addEntry:command];
     //DEBUG_LOG(@"Command:%@", command);
@@ -98,10 +98,10 @@
 
 - (XVimEvaluator*)eval:(XVimKeyStroke*)keyStroke
 {
-    var next = self;
+    XVimEvaluator* next = self;
 
-    let commandField = self.window.commandLine.commandField;
-    let sel = keyStroke.selector;
+    XVimCommandField* commandField = self.window.commandLine.commandField;
+    SEL sel = keyStroke.selector;
     if ([self respondsToSelector:sel]) {
 #pragma clang diagnostic push
 #pragma clang diagnostic ignored "-Warc-performSelector-leaks"
@@ -112,7 +112,7 @@
         [commandField handleKeyStroke:keyStroke inWindow:self.window];
 
         // If the user deletes the : (or /?) character, bail
-        let text = [commandField string];
+        NSString* text = [commandField string];
         if ([text length] == 0) {
             next = nil;
         }
@@ -156,8 +156,8 @@
 
 - (XVimEvaluator*)Up
 {
-    let commandField = self.window.commandLine.commandField;
-    let xvim = [XVim instance];
+    XVimCommandField* commandField = self.window.commandLine.commandField;
+    XVim* xvim = [XVim instance];
 
     if (_historyNo == 0) {
         _currentCmd = [[commandField string] copy];
@@ -180,8 +180,8 @@
 
 - (XVimEvaluator*)Down
 {
-    let commandField = self.window.commandLine.commandField;
-    let xvim = [XVim instance];
+    XVimCommandField* commandField = self.window.commandLine.commandField;
+    XVim* xvim = [XVim instance];
 
     if (_historyNo == 0) {
         // Nothing

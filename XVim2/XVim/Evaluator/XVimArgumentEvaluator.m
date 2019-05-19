@@ -20,6 +20,7 @@
 
 - (XVimEvaluator*)onArgumentProvided:(XVimKeyStroke*)key { return nil; }
 
+
 - (XVimKeymap*)selectKeymapWithProvider:(id<XVimKeymapProvider>)keymapProvider
 {
     return [keymapProvider keymapForMode:XVIM_MODE_NONE];

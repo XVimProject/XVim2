@@ -32,12 +32,12 @@
 #pragma mark -
 - (NSDictionary*)queryString
 {
-    let queryStringDictionary = [NSMutableDictionary dictionary];
-    let urlComponents = [self.absoluteString componentsSeparatedByString:@"&"];
+    NSMutableDictionary* queryStringDictionary = [NSMutableDictionary dictionary];
+    NSArray* urlComponents = [self.absoluteString componentsSeparatedByString:@"&"];
     for (NSString* keyValuePair in urlComponents) {
-        let pairComponents = [keyValuePair componentsSeparatedByString:@"="];
-        let key = [[pairComponents firstObject] stringByRemovingPercentEncoding];
-        let value = [[pairComponents lastObject] stringByRemovingPercentEncoding];
+        NSArray* pairComponents = [keyValuePair componentsSeparatedByString:@"="];
+        NSString* key = [[pairComponents firstObject] stringByRemovingPercentEncoding];
+        NSString* value = [[pairComponents lastObject] stringByRemovingPercentEncoding];
         [queryStringDictionary setObject:value forKey:key];
     }
     return queryStringDictionary;
@@ -46,7 +46,7 @@
 - (NSString*)xvim_header_file
 {
     // Xcode7
-    var str = self.xcode_source_file;
+    NSString* str = self.xcode_source_file;
     if (str == nil) {
         // Xcode6
         str = self.xcode_source_header;
@@ -56,20 +56,21 @@
 
 - (NSString*)xvim_swiftCacheFilePath
 {
-    let fm = [NSFileManager defaultManager];
-    let xvim_folder = [NSHomeDirectory() stringByAppendingPathComponent:@".xvim"];
-    let xvim_caches_folder = [xvim_folder stringByAppendingPathComponent:@"caches"];
+    NSFileManager* fm = [NSFileManager defaultManager];
+    NSString* xvim_folder = [NSHomeDirectory() stringByAppendingPathComponent:@".xvim"];
+    NSString* xvim_caches_folder = [xvim_folder stringByAppendingPathComponent:@"caches"];
     if (![fm fileExistsAtPath:xvim_caches_folder]) {
         [fm createDirectoryAtPath:xvim_caches_folder withIntermediateDirectories:YES attributes:nil error:nil];
     }
-    var header_path = [self xvim_header_file];
+    NSString* header_path = [self xvim_header_file];
     if (header_path == nil) {
         // Because swift core module has no header path,
         // We give dummy file name here.
         header_path = @"core.swift";
     }
-    let name = header_path.lastPathComponent.stringByDeletingPathExtension;
-    let swiftpath = [xvim_caches_folder stringByAppendingPathComponent:[name stringByAppendingPathExtension:@"swift"]];
+    NSString* name = header_path.lastPathComponent.stringByDeletingPathExtension;
+    NSString* swiftpath =
+                [xvim_caches_folder stringByAppendingPathComponent:[name stringByAppendingPathExtension:@"swift"]];
     return swiftpath;
 }
 

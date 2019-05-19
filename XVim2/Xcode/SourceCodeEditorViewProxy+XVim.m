@@ -63,10 +63,10 @@
 
 -(NSRange)xvim_indexRangeForLines:(NSRange)lineRange includeEOL:(BOOL)includeEOL
 {
-    let firstRow = lineRange.location - 1;
-    let numRows = lineRange.length;
+    NSUInteger firstRow = lineRange.location - 1;
+    NSUInteger numRows = lineRange.length;
     
-    var charRange = [self.sourceCodeEditorView characterRangeForLineRange:NSMakeRange(firstRow, numRows)];
+    NSRange charRange = [self.sourceCodeEditorView characterRangeForLineRange:NSMakeRange(firstRow, numRows)];
     if (includeEOL) {
         charRange.length += [self.sourceEditorDataSourceWrapper lineTerminatorLengthForLine:(firstRow + numRows - 1)];
     }

@@ -1005,10 +1005,10 @@ xvim_ignore_warning_undeclared_selector_push
         return;
     }
     let view = [window sourceView];
-    let motion = XVIM_MAKE_MOTION(MOTION_LINE_FORWARD, LINEWISE, MOPT_NONE,
+    XVimMotion* motion = XVIM_MAKE_MOTION(MOTION_LINE_FORWARD, LINEWISE, MOPT_NONE,
                                           args.lineEnd != NSNotFound ? args.lineEnd - args.lineBegin : 1);
-    let motionPoint = [view xvim_indexOfLineNumber:args.lineBegin];
-    let count = 1 + (args.arg != nil ? args.arg.length : 0);
+    NSUInteger motionPoint = [view xvim_indexOfLineNumber:args.lineBegin];
+    NSUInteger count = 1 + (args.arg != nil ? args.arg.length : 0);
     if ([args.cmd characterAtIndex:0] == '>') {
         [view xvim_shiftRight:motion withMotionPoint:motionPoint count:count];
     }
@@ -1131,21 +1131,21 @@ xvim_ignore_warning_undeclared_selector_push
 
 - (void)set:(XVimExArg*)args inWindow:(XVimWindow*)window
 {
-    let setCommand = [args.arg stringByTrimmingCharactersInSet:[NSCharacterSet whitespaceCharacterSet]];
-    let options = [XVIM options];
+    NSString* setCommand = [args.arg stringByTrimmingCharactersInSet:[NSCharacterSet whitespaceCharacterSet]];
+    XVimOptions* options = [XVIM options];
 
     if ([setCommand rangeOfString:@"="].location != NSNotFound) {
         // "set XXX=YYY" form
-        let idx = [setCommand rangeOfString:@"="].location;
-        let name = [[setCommand substringToIndex:idx]
+        NSUInteger idx = [setCommand rangeOfString:@"="].location;
+        NSString* name = [[setCommand substringToIndex:idx]
                     stringByTrimmingCharactersInSet:[NSCharacterSet whitespaceCharacterSet]];
-        let value = [[setCommand substringFromIndex:idx + 1]
+        NSString* value = [[setCommand substringFromIndex:idx + 1]
                     stringByTrimmingCharactersInSet:[NSCharacterSet whitespaceCharacterSet]];
         [options setOption:name value:value];
     }
     else if ([setCommand hasPrefix:@"no"]) {
         // "set noXXX" form
-        let prop = [setCommand substringFromIndex:2];
+        NSString* prop = [setCommand substringFromIndex:2];
         [options setOptionBool:prop value:NO];
     }
     else {
@@ -1168,8 +1168,8 @@ xvim_ignore_warning_undeclared_selector_push
 {
     let view = [window sourceView];
 
-    let cmdString = [[args cmd] stringByTrimmingCharactersInSet:[NSCharacterSet whitespaceCharacterSet]];
-    let argsString = [args arg];
+    NSString* cmdString = [[args cmd] stringByTrimmingCharactersInSet:[NSCharacterSet whitespaceCharacterSet]];
+    NSString* argsString = [args arg];
     XVimSortOptions options = 0;
 
     if ([cmdString characterAtIndex:[cmdString length] - 1] == '!') {
@@ -1204,7 +1204,7 @@ xvim_ignore_warning_undeclared_selector_push
 
 - (void)sub:(XVimExArg*)args inWindow:(XVimWindow*)window
 {
-    let searcher = [XVIM searcher];
+    XVimSearch* searcher = [XVIM searcher];
     [searcher substitute:args.arg from:args.lineBegin to:args.lineEnd inWindow:window];
 }
 
@@ -1398,13 +1398,13 @@ xvim_ignore_warning_pop
         [window.sourceView setSelectedRange:NSMakeRange(inputStartLocation, inputEndLocation - inputStartLocation)];
     }
 
-    let documentURL = [window.sourceView documentURL];
-    var runDir = @"/";
+    NSURL* documentURL = [window.sourceView documentURL];
+    NSString* runDir = @"/";
 
     if ([documentURL isFileURL]) {
-        let documentPath = [documentURL path];
+        NSString* documentPath = [documentURL path];
         runDir = [[documentURL URLByDeletingLastPathComponent] path];
-        let contextForExCmd =
+        NSDictionary* contextForExCmd =
                     [NSDictionary dictionaryWithObjectsAndKeys:[self _altFilename:documentPath], @"#",
                                                                documentPath ? documentPath : @"", @"%", nil];
         [self _expandSpecialExTokens:args contextDict:contextForExCmd];
@@ -1412,19 +1412,19 @@ xvim_ignore_warning_pop
     else if ([documentURL isXcodeModuleSchemeURL]) {
         // Xcode convert Objective-C Framework header to swift format except
         // the swift module file that includes Array and etc.
-        let contextForExCmd = [NSMutableDictionary dictionary];
+        NSMutableDictionary* contextForExCmd = [NSMutableDictionary dictionary];
         // We use converted text as is.
         // The converted swift file name is set to current file name symbol '%'.
-        let fm = [NSFileManager defaultManager];
-        let swiftpath = [documentURL xvim_swiftCacheFilePath];
-        let str = window.sourceView.string;
+        NSFileManager* fm = [NSFileManager defaultManager];
+        NSString* swiftpath = [documentURL xvim_swiftCacheFilePath];
+        NSString* str = window.sourceView.string;
         if (str.length > 0) {
             NSData* data = [NSData dataWithBytes:(void*)str.UTF8String length:str.length];
             [fm createFileAtPath:swiftpath contents:data attributes:nil];
             contextForExCmd[@"%"] = swiftpath ? swiftpath : @"";
         }
         // The Objective-C Framework header file is set to alternate file name symbol '#'.
-        let objc_header = documentURL.xvim_header_file;
+        NSString* objc_header = documentURL.xvim_header_file;
         if (objc_header.length > 0) {
             contextForExCmd[@"#"] = objc_header ? objc_header : @"";
         }
@@ -1469,7 +1469,7 @@ xvim_ignore_warning_pop
     if (!filename) {
         return @"";
     }
-    let extension = [filename pathExtension];
+    NSString* extension = [filename pathExtension];
     if (!extension || [extension length] == 0) {
         return @"";
     }
@@ -1491,11 +1491,11 @@ xvim_ignore_warning_pop
         return;
     }
     NSError* error = nil;
-    let regex = [NSRegularExpression regularExpressionWithPattern:@"(%|#)(:p|:~|:h|:r|:t|:e|:\\.)*"
+    NSRegularExpression* regex = [NSRegularExpression regularExpressionWithPattern:@"(%|#)(:p|:~|:h|:r|:t|:e|:\\.)*"
                                                                            options:0
                                                                              error:&error];
-    let resultStr = [NSMutableString string];
-    __block var remainderRange = NSMakeRange(0, [arg.arg length]);
+    NSMutableString* resultStr = [NSMutableString string];
+    __block NSRange remainderRange = NSMakeRange(0, [arg.arg length]);
     [regex enumerateMatchesInString:arg.arg
                                  options:NSMatchingReportCompletion
                                    range:remainderRange
@@ -1505,8 +1505,8 @@ xvim_ignore_warning_pop
                                   }
                                   else {
                                       // % or #
-                                      var lastMatchedRange = [result rangeAtIndex:1];
-                                      let matchedToken = [arg.arg substringWithRange:lastMatchedRange];
+                                      NSRange lastMatchedRange = [result rangeAtIndex:1];
+                                      NSString* matchedToken = [arg.arg substringWithRange:lastMatchedRange];
                                       NSString* substituteValue = [ctx objectForKey:matchedToken];
                                       if (!substituteValue) {
                                           substituteValue = matchedToken;
@@ -1514,17 +1514,17 @@ xvim_ignore_warning_pop
                                       NSUInteger matchIdx = 2;
                                       // DEBUG_LOG(@"Number of matched ranges = %d", [result numberOfRanges] );
                                       while (matchIdx < [result numberOfRanges]) {
-                                          let nextMatchedRange = [result rangeAtIndex:matchIdx];
+                                          NSRange nextMatchedRange = [result rangeAtIndex:matchIdx];
                                           if (nextMatchedRange.location != NSNotFound) {
-                                              let matchedPos
+                                              NSUInteger matchedPos
                                                           = lastMatchedRange.location + lastMatchedRange.length;
                                               // This is the REAL matched range...to my eyes, NSRegularExpression has a
                                               // bug
-                                              let matchedRange = NSMakeRange(matchedPos,
+                                              NSRange matchedRange = NSMakeRange(matchedPos,
                                                                                  nextMatchedRange.location
                                                                                              + nextMatchedRange.length
                                                                                              - matchedPos);
-                                              let matchedToken2 = [arg.arg substringWithRange:matchedRange];
+                                              NSString* matchedToken2 = [arg.arg substringWithRange:matchedRange];
                                               // DEBUG_LOG(@"Modifiers at range %@ = %@",
                                               // NSStringFromRange(matchedRange), matchedToken );
                                               for (NSUInteger modIdx = 1; modIdx < [matchedToken2 length];
@@ -1555,9 +1555,9 @@ xvim_ignore_warning_pop
                                           }
                                           matchIdx++;
                                       }
-                                      let matchStart = [result range].location;
-                                      let matchLen = [result range].length;
-                                      let firstHalfRange = NSMakeRange(remainderRange.location,
+                                      NSUInteger matchStart = [result range].location;
+                                      NSUInteger matchLen = [result range].length;
+                                      NSRange firstHalfRange = NSMakeRange(remainderRange.location,
                                                                            matchStart - remainderRange.location);
                                       [resultStr appendFormat:@"%@%@", [arg.arg substringWithRange:firstHalfRange],
                                                               substituteValue];
@@ -1573,15 +1573,15 @@ xvim_ignore_warning_pop
 - (void)execute:(XVimExArg*)args inWindow:(XVimWindow*)window
 {
     // DEBUG_LOG( @"arg[%@] cmd[%@]", args.arg, args.cmd );
-    let eval = [[XVimEval alloc] init];
-    let evalarg = [[XVimEvalArg alloc] init];
+    XVimEval* eval = [[XVimEval alloc] init];
+    XVimEvalArg* evalarg = [[XVimEvalArg alloc] init];
     evalarg.invar = args.arg;
     [eval evaluateWhole:evalarg inWindow:window];
 
-    let cmd = evalarg.rvar;
+    NSString* cmd = evalarg.rvar;
     if (cmd.length > 2) {
         if ([cmd characterAtIndex:0] == '"' && [cmd characterAtIndex:cmd.length - 1] == '"') {
-            let nextcmd =
+            NSString* nextcmd =
                         [NSString stringWithFormat:@":%@", [cmd substringWithRange:NSMakeRange(1, cmd.length - 2)]];
             [self executeCommand:nextcmd inWindow:window];
         }
@@ -1596,20 +1596,23 @@ xvim_ignore_warning_pop
 
 - (void)jumps:(XVimExArg*)args inWindow:(XVimWindow*)window
 {
-    let str = [XVIM.marks dumpJumpList];
-    [XVIM writeToConsole:str];
+    XVim* xvim = XVIM;
+    NSString* str = [xvim.marks dumpJumpList];
+    [xvim writeToConsole:str];
 }
 
 - (void)macvim:(XVimExArg*)args inWindow:(XVimWindow*)window
 {
-	let documentURL = window.sourceView.documentURL;
-	let filepath = documentURL.path;
+	NSURL* documentURL = window.sourceView.documentURL;
+	NSString* filepath = documentURL.path;
 	if (filepath != nil){
-		let pos = window.sourceView.insertionPoint;
-		let linenumber = [StringUtil lineWithPath:filepath pos:pos];
+		NSUInteger pos = window.sourceView.insertionPoint;
+		NSUInteger linenumber = [StringUtil lineWithPath:filepath pos:pos];
 		// use `brew install macvim`
-		let str = [NSString stringWithFormat:@"/usr/local/bin/mvim +%ld %@", linenumber, filepath];
+		NSString* str = [NSString stringWithFormat:@"/usr/local/bin/mvim +%ld %@", linenumber, filepath];
 		[XVimTaskRunner runScript:str];
+		
+		DEBUG_LOG("macvim")
 	}
 }
 

@@ -58,8 +58,8 @@
 
 + (void)load
 {
-    let app = [NSBundle mainBundle];
-    let identifier = [app bundleIdentifier];
+    NSBundle* app = [NSBundle mainBundle];
+    NSString* identifier = [app bundleIdentifier];
 
     // Load only into Xcode
     if (![identifier isEqualToString:@"com.apple.dt.Xcode"]) {
@@ -192,7 +192,7 @@
 
 - (void)parseRcFile
 {
-    let rc = [XVim xvimrc];
+    NSString* rc = [XVim xvimrc];
     for (NSString* string in [rc componentsSeparatedByString:@"\n"]) {
         [self.excmd executeCommand:[@":" stringByAppendingString:string] inWindow:nil];
     }

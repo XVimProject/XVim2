@@ -9,7 +9,7 @@
 #import "XVimHistoryHandler.h"
 
 @interface XVimHistoryHandler () {
-    NSMutableArray<NSString*>* _history;
+    NSMutableArray* _history;
 }
 @end
 

@@ -31,7 +31,7 @@
 
 - (XVimMotion*)motion
 {
-    var opt = _inner ? MOPT_TEXTOBJECT_INNER : MOPT_NONE;
+    MOTION_OPTION opt = _inner ? MOPT_TEXTOBJECT_INNER : MOPT_NONE;
     opt |= _bigword ? MOPT_BIGWORD : MOPT_NONE;
     return XVIM_MAKE_MOTION(_textobject, CHARWISE_INCLUSIVE, opt, [self numericArg]);
 }

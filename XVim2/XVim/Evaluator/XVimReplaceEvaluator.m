@@ -9,12 +9,16 @@
 #import "XVimWindow.h"
 
 @interface XVimInsertEvaluator ()
+
 - (NSString*)insertedText;
 - (BOOL)windowShouldReceive:(SEL)keySelector;
+
 @end
 
 @interface XVimReplaceEvaluator ()
+
 @property (nonatomic, assign) BOOL oneCharMode;
+
 @end
 
 @implementation XVimReplaceEvaluator
@@ -32,7 +36,7 @@
 
 - (void)repeatBlockText
 {
-    let text = [self insertedText];
+    NSString* text = [self insertedText];
     let sourceView = [self sourceView];
 
     for (NSUInteger i = 0; i < [self numericArg] - 1; i++) {

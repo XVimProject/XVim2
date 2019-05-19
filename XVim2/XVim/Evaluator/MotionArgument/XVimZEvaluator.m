@@ -70,13 +70,13 @@
 
 - (XVimEvaluator*)t
 {
-    [self.sourceView xvim_scrollTop:([self numericMode] ? [self numericArg] : 0) firstNonblank:NO];
+    [self.sourceView xvim_scrollTop:([self numericMode] ? [self numericArg] : 0)firstNonblank:NO];
     return nil;
 }
 
 - (XVimEvaluator*)z
 {
-    [self.sourceView xvim_scrollCenter:([self numericMode] ? [self numericArg] : 0) firstNonblank:NO];
+    [self.sourceView xvim_scrollCenter:([self numericMode] ? [self numericArg] : 0)firstNonblank:NO];
     return nil;
 }
 
@@ -88,13 +88,13 @@
 
 - (XVimEvaluator*)DOT
 {
-    [self.sourceView xvim_scrollCenter:([self numericMode] ? [self numericArg] : 0) firstNonblank:YES];
+    [self.sourceView xvim_scrollCenter:([self numericMode] ? [self numericArg] : 0)firstNonblank:YES];
     return nil;
 }
 
 - (XVimEvaluator*)CR
 {
-    [self.sourceView xvim_scrollTop:([self numericMode] ? [self numericArg] : 0) firstNonblank:YES];
+    [self.sourceView xvim_scrollTop:([self numericMode] ? [self numericArg] : 0)firstNonblank:YES];
     return nil;
 }
 

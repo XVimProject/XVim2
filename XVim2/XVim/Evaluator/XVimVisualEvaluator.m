@@ -65,8 +65,8 @@ static NSString* MODE_STRINGS[] = { @"", @"-- VISUAL --", @"-- VISUAL LINE --", 
                 self.initialToPos = XVimMakePosition(NSNotFound, NSNotFound);
             }
             else {
-                let start = [window.sourceView selectedRange].location;
-                let end = [window.sourceView selectedRange].location
+                NSUInteger start = [window.sourceView selectedRange].location;
+                NSUInteger end = [window.sourceView selectedRange].location
                                + [window.sourceView selectedRange].length - 1;
                 self.initialFromPos = XVimMakePosition([window.sourceView.textStorage xvim_lineNumberAtIndex:start],
                                                        [window.sourceView.textStorage xvim_columnOfIndex:start]);
@@ -77,8 +77,8 @@ static NSString* MODE_STRINGS[] = { @"", @"-- VISUAL --", @"-- VISUAL LINE --", 
         else {
             // Treat it as block selection
             _visual_mode = XVIM_VISUAL_BLOCK;
-            let start = [[[window.sourceView selectedRanges] objectAtIndex:0] rangeValue].location;
-            let end = [[[window.sourceView selectedRanges] lastObject] rangeValue].location
+            NSUInteger start = [[[window.sourceView selectedRanges] objectAtIndex:0] rangeValue].location;
+            NSUInteger end = [[[window.sourceView selectedRanges] lastObject] rangeValue].location
                            + [[[window.sourceView selectedRanges] lastObject] rangeValue].length - 1;
             self.initialFromPos = XVimMakePosition([window.sourceView.textStorage xvim_lineNumberAtIndex:start],
                                                    [window.sourceView.textStorage xvim_columnOfIndex:start]);
@@ -197,7 +197,7 @@ static NSString* MODE_STRINGS[] = { @"", @"-- VISUAL --", @"-- VISUAL LINE --", 
 
 - (XVimEvaluator*)onComplete_ai:(XVimTextObjectEvaluator*)childEvaluator
 {
-    let m = childEvaluator.motion;
+    XVimMotion* m = childEvaluator.motion;
 
     self.onChildCompleteHandler = nil;
     if (m.motion != MOTION_NONE) {
@@ -502,7 +502,7 @@ contextWithArgument:@"\""] parent:self completion:^ XVimEvaluator* (NSString* rn
 
 - (XVimEvaluator*)EQUAL
 {
-    let eval = [[XVimEqualEvaluator alloc] initWithWindow:self.window];
+    XVimEqualEvaluator* eval = [[XVimEqualEvaluator alloc] initWithWindow:self.window];
     return [eval executeOperationWithMotion:XVIM_MAKE_MOTION(MOTION_NONE, CHARWISE_EXCLUSIVE, MOPT_NONE,
                                                              [self numericArg])];
     return nil;
@@ -526,7 +526,7 @@ contextWithArgument:@"\""] parent:self completion:^ XVimEvaluator* (NSString* rn
 
 - (XVimEvaluator*)COLON
 {
-    __block XVimCommandLineEvaluator* eval = [[XVimCommandLineEvaluator alloc]
+    __block XVimEvaluator* eval = [[XVimCommandLineEvaluator alloc]
                 initWithWindow:self.window
                    firstLetter:@":'<,'>"
                        history:[[XVim instance] exCommandHistory]
@@ -645,7 +645,7 @@ return eval;
 
 - (XVimEvaluator*)TILDE
 {
-    let eval = [[XVimTildeEvaluator alloc] initWithWindow:self.window];
+    XVimTildeEvaluator* eval = [[XVimTildeEvaluator alloc] initWithWindow:self.window];
     return [eval executeOperationWithMotion:XVIM_MAKE_MOTION(MOTION_NONE, CHARWISE_EXCLUSIVE, MOPT_NONE,
                                                              [self numericArg])];
 }

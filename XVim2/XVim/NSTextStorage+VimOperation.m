@@ -706,7 +706,7 @@ static NSUInteger xvim_sb_count_columns(xvim_string_buffer_t* sb, NSUInteger tab
     NSUInteger twonewline_count = 0;
     NSUInteger word_count = 0;
     for (pos = index + 1; pos <= [[self xvim_string] length]; ++pos) {
-        let rph = [self rangePlaceHolder:pos option:opt];
+        NSRange rph = [self rangePlaceHolder:pos option:opt];
         if ([self isEOF:pos]) {
             if ([self isNonblank:pos - 1]) {
                 info.lastEndOfLine = pos - 1;
@@ -826,7 +826,7 @@ static NSUInteger xvim_sb_count_columns(xvim_string_buffer_t* sb, NSUInteger tab
         if (pos == 0) {
             break;
         }
-        let rph = [self rangePlaceHolder:pos option:opt];
+        NSRange rph = [self rangePlaceHolder:pos option:opt];
         // new word starts between followings.( keyword is determined by 'iskeyword' in Vim )
         //    - Whitespace(including newline) and Non-Blank
         //    - keyword and non-keyword(without whitespace)  (only when !BIGWORD)
@@ -878,12 +878,12 @@ static NSUInteger xvim_sb_count_columns(xvim_string_buffer_t* sb, NSUInteger tab
     }
     NSUInteger pos = index;
     NSUInteger word_count = 0;
-    let string = [self xvim_string];
+    NSString* string = [self xvim_string];
     for (;; ++pos) {
         if ([self isLastCharacter:pos]) {
             break;
         }
-        let rph = [self rangePlaceHolder:pos option:opt];
+        NSRange rph = [self rangePlaceHolder:pos option:opt];
         if (rph.location != NSNotFound) {
             // placeholder
             if ((opt & MOPT_CHANGE_WORD) || pos != index) {
@@ -935,12 +935,12 @@ static NSUInteger xvim_sb_count_columns(xvim_string_buffer_t* sb, NSUInteger tab
     }
     NSUInteger pos = index;
     NSUInteger word_count = 0;
-    let string = [self xvim_string];
+    NSString* string = [self xvim_string];
     for (;; --pos) {
         if (pos == 0) {
             break;
         }
-        let rph = [self rangePlaceHolder:pos option:opt];
+        NSRange rph = [self rangePlaceHolder:pos option:opt];
         if (rph.location != NSNotFound) {
             // placeholder
             if ((opt & MOPT_CHANGE_WORD) || pos != index) {
@@ -1313,14 +1313,14 @@ static NSUInteger xvim_sb_count_columns(xvim_string_buffer_t* sb, NSUInteger tab
     index = [self validIndex:index];
     NSAssert(pattern != nil, @"pattern must not be nil");
 
-    var ret = NSMakeRange(NSNotFound, 0);
+    NSRange ret = NSMakeRange(NSNotFound, 0);
 
     NSRegularExpressionOptions options = NSRegularExpressionAnchorsMatchLines;
     if (opt & MOPT_SEARCH_CASEINSENSITIVE) {
         options |= NSRegularExpressionCaseInsensitive;
     }
     NSError* err = nil;
-    let regex = [NSRegularExpression regularExpressionWithPattern:pattern options:options error:&err];
+    NSRegularExpression* regex = [NSRegularExpression regularExpressionWithPattern:pattern options:options error:&err];
     if (err != nil) {
         return ret;
     }
@@ -1363,14 +1363,14 @@ static NSUInteger xvim_sb_count_columns(xvim_string_buffer_t* sb, NSUInteger tab
     index = [self validIndex:index];
     NSAssert(pattern != nil, @"pattern must not be nil");
 
-    var ret = NSMakeRange(NSNotFound, 0);
+    NSRange ret = NSMakeRange(NSNotFound, 0);
 
-    var options = NSRegularExpressionAnchorsMatchLines;
+    NSRegularExpressionOptions options = NSRegularExpressionAnchorsMatchLines;
     if (opt & MOPT_SEARCH_CASEINSENSITIVE) {
         options |= NSRegularExpressionCaseInsensitive;
     }
     NSError* err = nil;
-    let regex = [NSRegularExpression regularExpressionWithPattern:pattern options:options error:&err];
+    NSRegularExpression* regex = [NSRegularExpression regularExpressionWithPattern:pattern options:options error:&err];
     if (err != nil) {
         return ret;
     }

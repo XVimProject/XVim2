@@ -41,22 +41,22 @@
     [self xvim_registerInsertionPointForUndo];
     
     // Handle the copy
-    let to = [self xvim_getMotionRange:motionPoint Motion:motion];
+    XVimRange to = [self xvim_getMotionRange:motionPoint Motion:motion];
     if( NSNotFound == to.end ){
         return;
     }
-    var motionPointLine = [self xvim_lineNumberAtIndex:motionPoint];
-    let r = [self _xvim_getYankRange:motion withRange:to];
-    var s = [self.string substringWithRange:r];
+    NSUInteger motionPointLine = [self xvim_lineNumberAtIndex:motionPoint];
+    NSRange r = [self _xvim_getYankRange:motion withRange:to];
+    NSString* s = [self.string substringWithRange:r];
     
     // Handle the paste
-    var targetPos = insertionPoint;
-    let targetLine = [self xvim_lineNumberAtIndex:insertionPoint];
+    NSUInteger targetPos = insertionPoint;
+    NSUInteger targetLine = [self xvim_lineNumberAtIndex:insertionPoint];
     NSUInteger cursorOffset = 1;
     // If we are pasting after any line but a blank last one, add a new line to paste into.
     // then, the cursor will moved to this new line automatically, and we change targetPos to that
-    let eof = [self.textStorage isEOF:targetPos];
-    let blank = [self.textStorage isBlankline:targetPos];
+    BOOL eof = [self.textStorage isEOF:targetPos];
+    BOOL blank = [self.textStorage isBlankline:targetPos];
     if(after && !(eof && blank)){
         [self xvim_insertNewlineBelowLine:targetLine];
         targetPos = self.insertionPoint;
@@ -66,20 +66,20 @@
     [self insertText:s replacementRange:NSMakeRange(targetPos,0)];
     
     // Move the cursor to last line of what we pasted.
-    var cursorPos = [self.textStorage xvim_firstNonblankInLineAtIndex:(targetPos+s.length-cursorOffset) allowEOL:YES];
+    NSUInteger cursorPos = [self.textStorage xvim_firstNonblankInLineAtIndex:(targetPos+s.length-cursorOffset) allowEOL:YES];
     [self xvim_moveCursor: cursorPos preserveColumn:NO];
     
     // Delete the copied text if required
     if(!onlyCopy){
-        var cursorLine = self.insertionLine;
-        let lineAdjustment = (cursorLine-targetLine)+(after ? 0 : 1);
+        NSUInteger cursorLine = self.insertionLine;
+        NSUInteger lineAdjustment = (cursorLine-targetLine)+(after ? 0 : 1);
         
         // Adjust the starting line of the text to delete, if required
         if(motionPointLine>targetLine){
             motionPointLine += lineAdjustment;
         }
         // Delete the copied text
-        let to2 = [self xvim_getMotionRange:[self.textStorage xvim_indexOfLineNumber:motionPointLine] Motion:motion];
+        XVimRange to2 = [self xvim_getMotionRange:[self.textStorage xvim_indexOfLineNumber:motionPointLine] Motion:motion];
         [self insertText:@"" replacementRange:[self _xvim_getDeleteRange:motion withRange:to2]];
         
         // Adjust the line of the last line of what we pasted, if required
@@ -148,7 +148,7 @@
                         }
                     }
                 }
-                let r = [self _xvim_getDeleteRange:motion withRange:motionRange];
+                NSRange r = [self _xvim_getDeleteRange:motion withRange:motionRange];
                 if (yank) {
                     [self _xvim_yankRange:r withType:motion.type];
                 }
@@ -166,7 +166,7 @@
 			break;
 		case XVIM_VISUAL_BLOCK:
     		{
-    			let sel = [self _xvim_selectedBlock];
+    			XVimSelection sel = [self _xvim_selectedBlock];
     			if (yank) {
     				[self _xvim_yankSelection:sel];
     			}
@@ -177,8 +177,8 @@
 		case XVIM_VISUAL_CHARACTER:
 		case XVIM_VISUAL_LINE:
     		{
-                let toFirstNonBlank = (self.selectionMode == XVIM_VISUAL_LINE);
-                let range = [self _xvim_selectedRange];
+                BOOL toFirstNonBlank = (self.selectionMode == XVIM_VISUAL_LINE);
+                NSRange range = [self _xvim_selectedRange];
 
                 // Currently not supportin deleting EOF with selection mode.
                 // This is because of the fact that NSTextView does not allow select EOF

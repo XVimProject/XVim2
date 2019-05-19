@@ -42,7 +42,7 @@
 
 - (XVimEvaluator*)l
 {
-    let searcher = [XVIM searcher];
+    XVimSearch* searcher = [XVIM searcher];
 
     [searcher replaceCurrentInWindow:self.window findNext:NO];
     return nil;
@@ -50,7 +50,7 @@
 
 - (XVimEvaluator*)n
 {
-    let searcher = [XVIM searcher];
+    XVimSearch* searcher = [XVIM searcher];
 
     [searcher skipCurrentInWindow:self.window];
     if (searcher.lastFoundRange.location == NSNotFound) {
@@ -63,7 +63,7 @@
 
 - (XVimEvaluator*)y
 {
-    let searcher = [XVIM searcher];
+    XVimSearch* searcher = [XVIM searcher];
 
     [searcher replaceCurrentInWindow:self.window findNext:YES];
 

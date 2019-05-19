@@ -76,7 +76,7 @@
 
 - (id)getOption:(NSString*)name
 {
-    var propName = name;
+    NSString* propName = name;
     if ([_option_maps objectForKey:name]) {
         // If the name is abbriviation use full name
         propName = [_option_maps objectForKey:name];
@@ -101,7 +101,7 @@
 
 - (void)setOption:(NSString *)name value:(id)value
 {
-    let propName = [self normalizePropName:name];
+    NSString* propName = [self normalizePropName:name];
     if ([self respondsToSelector:NSSelectorFromString(propName)]) {
         [self setValue:value forKey:propName];
     }
@@ -109,9 +109,9 @@
 
 - (void)setOptionBool:(NSString*)name value:(BOOL)value
 {
-    let propName = [self normalizePropName:name];
-    var toggle = NO;
-    let range = [name rangeOfString:@"!"];
+    NSString* propName = [self normalizePropName:name];
+    BOOL toggle = NO;
+    NSRange range = [name rangeOfString:@"!"];
     if (range.location == name.length - 1 && name.length > 1) {
         toggle = YES;
         name = [name substringToIndex:name.length - 1];

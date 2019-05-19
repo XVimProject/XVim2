@@ -55,15 +55,15 @@
 
 - (IBAction)onReportBug:(id)sender
 {
-    let body = [NSString stringWithFormat:@"[Write issue description here]\n\n"
+    NSString* body = [NSString stringWithFormat:@"[Write issue description here]\n\n"
                                                 @"```\n"
                                                 @"-------- Debug Info -------\n"
                                                 @"%@"
                                                 @"```\n",
                                                 self.infoTextView.string];
-    let urlencoded =
+    NSString* urlencoded =
                 [body stringByAddingPercentEncodingWithAllowedCharacters:[NSCharacterSet URLQueryAllowedCharacterSet]];
-    let url = [NSString stringWithFormat:@"https://github.com/XVimProject/XVim2/issues/new?body=%@", urlencoded];
+    NSString* url = [NSString stringWithFormat:@"https://github.com/XVimProject/XVim2/issues/new?body=%@", urlencoded];
     [[NSWorkspace sharedWorkspace] openURL:[NSURL URLWithString:url]];
 }
 
