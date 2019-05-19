@@ -32,8 +32,8 @@
 {
     NSAssert(num > 0, @"line number starts at 1");
 
-    let string = self.xvim_string;
-    let length = self.length;
+    NSString* string = self.xvim_string;
+    NSUInteger length = self.length;
     NSUInteger lineNum = 0, start = 0, end = 0, contentsEnd;
 
     do {
@@ -71,7 +71,7 @@
 
 - (NSRange)xvim_indexRangeForLineAtIndex:(NSUInteger)index newLineLength:(NSUInteger*)newLineLength
 {
-    let string = self.xvim_string;
+    NSString* string = self.xvim_string;
     NSUInteger end, contentEnd;
 
     index = [self validIndex:index];
@@ -86,7 +86,7 @@
 // FIXME: this code is actually never called in XVim for XCode, it probably has bugs, it's not tested
 - (NSRange)xvim_indexRangeForLines:(NSRange)range
 {
-    let string = self.xvim_string;
+    NSString* string = self.xvim_string;
     NSUInteger length = self.length, start = 0;
     NSUInteger lineNum = 0, end = 0, contentsEnd = 0;
 
@@ -128,7 +128,7 @@
 
 - (NSUInteger)xvim_lineNumberAtIndex:(NSUInteger)index
 {
-    let string = self.xvim_string;
+    NSString* string = self.xvim_string;
     NSUInteger num = 0, pos = 0, contents_end = 0;
 
     index = [self validIndex:index];
@@ -169,7 +169,7 @@ static NSUInteger xvim_sb_count_columns(xvim_string_buffer_t* sb, NSUInteger tab
 
 - (NSUInteger)xvim_columnOfIndex:(NSUInteger)index
 {
-    var range = [self xvim_indexRangeForLineAtIndex:index newLineLength:NULL];
+    NSRange range = [self xvim_indexRangeForLineAtIndex:index newLineLength:NULL];
     xvim_string_buffer_t sb;
 
     if (index < NSMaxRange(range)) {
@@ -185,7 +185,7 @@ static NSUInteger xvim_sb_count_columns(xvim_string_buffer_t* sb, NSUInteger tab
 
 - (NSUInteger)xvim_numberOfColumnsInLineAtIndex:(NSUInteger)index
 {
-    let range = [self xvim_indexRangeForLineAtIndex:index newLineLength:NULL];
+    NSRange range = [self xvim_indexRangeForLineAtIndex:index newLineLength:NULL];
     xvim_string_buffer_t sb;
 
     xvim_sb_init(&sb, self.xvim_string, range.location, range);
@@ -194,14 +194,14 @@ static NSUInteger xvim_sb_count_columns(xvim_string_buffer_t* sb, NSUInteger tab
 
 - (NSUInteger)xvim_indexOfLineNumber:(NSUInteger)num column:(NSUInteger)column
 {
-    let index = [self xvim_indexOfLineNumber:num];
+    NSUInteger index = [self xvim_indexOfLineNumber:num];
 
     if (column == 0 || index == NSNotFound) {
         return index;
     }
 
-    let range = [self xvim_indexRangeForLineAtIndex:index newLineLength:NULL];
-    let tabWidth = self.xvim_tabWidth;
+    NSRange range = [self xvim_indexRangeForLineAtIndex:index newLineLength:NULL];
+    NSUInteger tabWidth = self.xvim_tabWidth;
     NSUInteger col = 0;
     xvim_string_buffer_t sb;
 
@@ -228,7 +228,7 @@ static NSUInteger xvim_sb_count_columns(xvim_string_buffer_t* sb, NSUInteger tab
 
 - (NSUInteger)xvim_startOfLine:(NSUInteger)index
 {
-    let string = self.xvim_string;
+    NSString* string = self.xvim_string;
 
     index = [self validIndex:index];
     [string getLineStart:&index end:NULL contentsEnd:NULL forRange:NSMakeRange(index, 0)];
@@ -237,7 +237,7 @@ static NSUInteger xvim_sb_count_columns(xvim_string_buffer_t* sb, NSUInteger tab
 
 - (NSUInteger)xvim_firstOfLine:(NSUInteger)index
 {
-    let pos = [self xvim_startOfLine:index];
+    NSUInteger pos = [self xvim_startOfLine:index];
     if (self.length == 0) {
         return NSNotFound;
     }
@@ -250,7 +250,7 @@ static NSUInteger xvim_sb_count_columns(xvim_string_buffer_t* sb, NSUInteger tab
 
 - (NSUInteger)xvim_endOfLine:(NSUInteger)index
 {
-    let string = self.xvim_string;
+    NSString* string = self.xvim_string;
 
     index = [self validIndex:index];
     [string getLineStart:NULL end:NULL contentsEnd:&index forRange:NSMakeRange(index, 0)];
@@ -269,8 +269,8 @@ static NSUInteger xvim_sb_count_columns(xvim_string_buffer_t* sb, NSUInteger tab
 
 - (NSUInteger)xvim_nextNonblankInLineAtIndex:(NSUInteger)index allowEOL:(BOOL)allowEOL
 {
-    let s = self.xvim_string;
-    let length = s.length;
+    NSString* s = self.xvim_string;
+    NSUInteger length = s.length;
     xvim_string_buffer_t sb;
     unichar c;
 
@@ -295,7 +295,9 @@ static NSUInteger xvim_sb_count_columns(xvim_string_buffer_t* sb, NSUInteger tab
 - (NSUInteger)xvim_nextDigitInLine:(NSUInteger)index
 {
     xvim_string_buffer_t sb;
-    let range = [self xvim_indexRangeForLineAtIndex:index newLineLength:NULL];
+    NSRange range;
+
+    range = [self xvim_indexRangeForLineAtIndex:index newLineLength:NULL];
     xvim_sb_init(&sb, self.xvim_string, index, range);
     if (xvim_sb_find_forward(&sb, [NSCharacterSet decimalDigitCharacterSet])) {
         return xvim_sb_index(&sb);
@@ -430,7 +432,7 @@ static NSUInteger xvim_sb_count_columns(xvim_string_buffer_t* sb, NSUInteger tab
  **/
 - (NSUInteger)positionOfMatchedPair:(NSUInteger)pos
 {
-    let s = self.xvim_string;
+    NSString* s = self.xvim_string;
 
     // find matching bracketing character and go to it
     // as long as the nesting level matches up
@@ -449,7 +451,7 @@ static NSUInteger xvim_sb_count_columns(xvim_string_buffer_t* sb, NSUInteger tab
         start_with_c = xvim_sb_peek(&sb);
         xvim_sb_init(&sb, s, xvim_sb_index(&sb), NSMakeRange(0, s.length));
 
-        let pos2 = (NSUInteger)(strchr(pairs, start_with_c) - pairs);
+        NSUInteger pos2 = (NSUInteger)(strchr(pairs, start_with_c) - pairs);
 
         look_for_c = (unichar)pairs[pos2 ^ 1];
         search_forward = !(pos2 & 1);
@@ -504,7 +506,7 @@ static NSUInteger xvim_sb_count_columns(xvim_string_buffer_t* sb, NSUInteger tab
             pos -= len;
         }
         else {
-            var rph = [self rangePlaceHolder:pos option:opt];
+            NSRange rph = [self rangePlaceHolder:pos option:opt];
             if (rph.location != NSNotFound) {
                 pos = rph.location;
             }
@@ -534,7 +536,7 @@ static NSUInteger xvim_sb_count_columns(xvim_string_buffer_t* sb, NSUInteger tab
     if (index == [[self xvim_string] length])
         return [[self xvim_string] length];
 
-    var pos = index;
+    NSUInteger pos = index;
     // If the currenct cursor position is on a newline (blank line) and not wrappable never move the cursor
     if ((opt & MOPT_LEFT_RIGHT_NOWRAP) && [self isBlankline:pos]) {
         return pos;
@@ -548,7 +550,7 @@ static NSUInteger xvim_sb_count_columns(xvim_string_buffer_t* sb, NSUInteger tab
         }
 
         int len;
-        let rph = [self rangePlaceHolder:pos option:opt];
+        NSRange rph = [self rangePlaceHolder:pos option:opt];
         if (rph.location != NSNotFound) {
             pos = NSMaxRange(rph);
             len = 1;
@@ -587,16 +589,16 @@ static NSUInteger xvim_sb_count_columns(xvim_string_buffer_t* sb, NSUInteger tab
 
 - (NSRange)rangePlaceholder:(NSUInteger)index
 {
-    let str = [self xvim_string];
-    var range = NSMakeRange(NSNotFound, 0);
-    let begin = [self firstOfLine:index];
+    NSString* str = [self xvim_string];
+    NSRange range = NSMakeRange(NSNotFound, 0);
+    NSUInteger begin = [self firstOfLine:index];
     for (NSUInteger pos = begin; pos + 1 < [[self xvim_string] length]; ++pos) {
         if ([self isEOF:pos])
             break;
         if ([self isNewline:pos + 1])
             break;
-        let uc1 = [str characterAtIndex:pos];
-        let uc2 = [str characterAtIndex:pos + 1];
+        unichar uc1 = [str characterAtIndex:pos];
+        unichar uc2 = [str characterAtIndex:pos + 1];
         if (uc1 == '<' && uc2 == '#') {
             if (index < pos) {
                 range = NSMakeRange(NSNotFound, 0);
@@ -625,7 +627,7 @@ static NSUInteger xvim_sb_count_columns(xvim_string_buffer_t* sb, NSUInteger tab
 - (NSUInteger)firstOfLine:(NSUInteger)index
 {
 
-    let range = [self xvim_indexRangeForLineAtIndex:index newLineLength:NULL];
+    NSRange range = [self xvim_indexRangeForLineAtIndex:index newLineLength:NULL];
     return range.location;
 }
 
@@ -635,7 +637,7 @@ static NSUInteger xvim_sb_count_columns(xvim_string_buffer_t* sb, NSUInteger tab
 {
     index = [self validIndex:index];
 
-    var lno = [self xvim_lineNumberAtIndex:index];
+    NSUInteger lno = [self xvim_lineNumberAtIndex:index];
 
     lno = lno > count ? lno - count : 1;
     return [self xvim_indexOfLineNumber:lno column:column];
@@ -645,8 +647,8 @@ static NSUInteger xvim_sb_count_columns(xvim_string_buffer_t* sb, NSUInteger tab
 {
     index = [self validIndex:index];
 
-    var lno = [self xvim_lineNumberAtIndex:index] + count;
-    let lines = self.xvim_numberOfLines;
+    NSUInteger lno = [self xvim_lineNumberAtIndex:index] + count;
+    NSUInteger lines = self.xvim_numberOfLines;
 
     if (lno > lines) {
         lno = lines;
@@ -691,18 +693,18 @@ static NSUInteger xvim_sb_count_columns(xvim_string_buffer_t* sb, NSUInteger tab
     index = [self validIndex:index];
     NSAssert(nil != info, @"Specify info");
 
-    var pos = index;
+    NSUInteger pos = index;
     info.lastEndOfLine = NSNotFound;
 
     if ([self isEOF:index]) {
         return index;
     }
 
-    var wordInLineFound = NO;
-    var curTwoNewLine = NSNotFound;
-    var lastTwoNewLine = NSNotFound;
-    var twonewline_count = 0;
-    var word_count = 0;
+    BOOL wordInLineFound = NO;
+    NSUInteger curTwoNewLine = NSNotFound;
+    NSUInteger lastTwoNewLine = NSNotFound;
+    NSUInteger twonewline_count = 0;
+    NSUInteger word_count = 0;
     for (pos = index + 1; pos <= [[self xvim_string] length]; ++pos) {
         let rph = [self rangePlaceHolder:pos option:opt];
         if ([self isEOF:pos]) {
@@ -931,8 +933,8 @@ static NSUInteger xvim_sb_count_columns(xvim_string_buffer_t* sb, NSUInteger tab
     if ([self isEOF:index] || [self isLastCharacter:index]) {
         return index;
     }
-    var pos = index;
-    var word_count = 0;
+    NSUInteger pos = index;
+    NSUInteger word_count = 0;
     let string = [self xvim_string];
     for (;; --pos) {
         if (pos == 0) {
@@ -995,19 +997,19 @@ static NSUInteger xvim_sb_count_columns(xvim_string_buffer_t* sb, NSUInteger tab
 // TODO: Treat paragraph and section boundary as sections baundary as well
 - (NSUInteger)sentencesForward:(NSUInteger)index count:(NSUInteger)count option:(MOTION_OPTION)opt
 { //(
-    var pos = index + 1;
-    var sentence_head = NSNotFound;
-    let s = [self xvim_string];
-    var sentence_found = 0;
+    NSUInteger pos = index + 1;
+    NSUInteger sentence_head = NSNotFound;
+    NSString* s = [self xvim_string];
+    NSUInteger sentence_found = 0;
     if (pos >= s.length - 1) {
         return NSNotFound;
     }
     // Search "." or "!" or "?" forward and check if it is followed by spaces(and closing characters)
     for (; pos < s.length && NSNotFound == sentence_head; pos++) {
-        let c = [s characterAtIndex:pos];
+        unichar c = [s characterAtIndex:pos];
         if (c == '.' || c == '!' || c == '?') {
             // Check if this is end of a sentence.
-            var k = pos + 1;
+            NSUInteger k = pos + 1;
             unichar c2 = '\0';
             // Skip )]"'
             for (; k < s.length; k++) {
@@ -1052,11 +1054,11 @@ static NSUInteger xvim_sb_count_columns(xvim_string_buffer_t* sb, NSUInteger tab
         return NSNotFound;
     }
 
-    var pos = index - 1;
-    var lastSearchBase = index;
-    var sentence_head = NSNotFound;
-    let s = [self xvim_string];
-    var sentence_found = 0;
+    NSUInteger pos = index - 1;
+    NSUInteger lastSearchBase = index;
+    NSUInteger sentence_head = NSNotFound;
+    NSString* s = [self xvim_string];
+    NSUInteger sentence_found = 0;
     // Search "." or "!" or "?" backwards and check if it is followed by spaces(and closing characters)
     for (; NSNotFound == sentence_head; pos--) {
         if (pos == 0) {
@@ -1067,10 +1069,10 @@ static NSUInteger xvim_sb_count_columns(xvim_string_buffer_t* sb, NSUInteger tab
             }
             break;
         }
-        let c = [s characterAtIndex:pos];
+        unichar c = [s characterAtIndex:pos];
         if (c == '.' || c == '!' || c == '?') {
             // Check if this is end of a sentence.
-            var k = pos + 1;
+            NSUInteger k = pos + 1;
             unichar c2 = '\0';
             // Skip )]"'
             for (; k < lastSearchBase; k++) {
@@ -1123,16 +1125,16 @@ static NSUInteger xvim_sb_count_columns(xvim_string_buffer_t* sb, NSUInteger tab
 
 - (NSUInteger)paragraphsForward:(NSUInteger)index count:(NSUInteger)count option:(MOTION_OPTION)opt
 { //(
-    var pos = index;
-    let s = [self xvim_string];
+    NSUInteger pos = index;
+    NSString* s = [self xvim_string];
     if (0 == pos) {
         pos = 1;
     }
-    var prevpos = pos - 1;
+    NSUInteger prevpos = pos - 1;
 
-    var paragraph_head = NSNotFound;
-    var paragraph_found = 0;
-    var newlines_skipped = NO;
+    NSUInteger paragraph_head = NSNotFound;
+    NSUInteger paragraph_found = 0;
+    BOOL newlines_skipped = NO;
     for (; pos < s.length && NSNotFound == paragraph_head; pos++, prevpos++) {
         unichar c = [s characterAtIndex:pos];
         unichar prevc = [s characterAtIndex:prevpos];
@@ -1180,18 +1182,18 @@ static NSUInteger xvim_sb_count_columns(xvim_string_buffer_t* sb, NSUInteger tab
 
 - (NSUInteger)paragraphsBackward:(NSUInteger)index count:(NSUInteger)count option:(MOTION_OPTION)opt
 { //(
-    var pos = index;
-    let s = [self xvim_string];
+    NSUInteger pos = index;
+    NSString* s = [self xvim_string];
     if (pos == 0) {
         return NSNotFound;
     }
     if (pos == s.length) {
         pos = pos - 1;
     }
-    var prevpos = pos - 1;
-    var paragraph_head = NSNotFound;
-    var paragraph_found = 0;
-    var newlines_skipped = NO;
+    NSUInteger prevpos = pos - 1;
+    NSUInteger paragraph_head = NSNotFound;
+    NSUInteger paragraph_found = 0;
+    BOOL newlines_skipped = NO;
     for (; pos > 0 && NSNotFound == paragraph_head; pos--, prevpos--) {
         unichar c = [s characterAtIndex:pos];
         unichar prevc = [s characterAtIndex:prevpos];
@@ -1245,14 +1247,14 @@ static NSUInteger xvim_sb_count_columns(xvim_string_buffer_t* sb, NSUInteger tab
         return NSNotFound;
     }
 
-    var p = index + 1; // Search from next character
+    NSUInteger p = index + 1; // Search from next character
     if ((opt & MOPT_SKIP_ADJACENT_CHAR) && 1 == count && ![self isEOF:p] &&
         [[self xvim_string] characterAtIndex:p] == character) {
         // Need to skip the character when it is found adjacent position.
         p++;
     }
 
-    let end = [self xvim_endOfLine:p];
+    NSUInteger end = [self xvim_endOfLine:p];
     if (NSNotFound == end) {
         return NSNotFound;
     }
@@ -1279,13 +1281,13 @@ static NSUInteger xvim_sb_count_columns(xvim_string_buffer_t* sb, NSUInteger tab
         return NSNotFound;
     }
 
-    var p = index - 1; // Search from next character
+    NSUInteger p = index - 1; // Search from next character
     if ((opt & MOPT_SKIP_ADJACENT_CHAR) && 1 == count && 0 != p &&
         [[self xvim_string] characterAtIndex:p] == character) {
         // Need to skip the character when it is found adjacent position.
         p--;
     }
-    let head = [self xvim_firstOfLine:p];
+    NSUInteger head = [self xvim_firstOfLine:p];
     if (NSNotFound == head) {
         return NSNotFound;
     }
@@ -1313,7 +1315,7 @@ static NSUInteger xvim_sb_count_columns(xvim_string_buffer_t* sb, NSUInteger tab
 
     var ret = NSMakeRange(NSNotFound, 0);
 
-    var options = NSRegularExpressionAnchorsMatchLines;
+    NSRegularExpressionOptions options = NSRegularExpressionAnchorsMatchLines;
     if (opt & MOPT_SEARCH_CASEINSENSITIVE) {
         options |= NSRegularExpressionCaseInsensitive;
     }
@@ -1323,7 +1325,7 @@ static NSUInteger xvim_sb_count_columns(xvim_string_buffer_t* sb, NSUInteger tab
         return ret;
     }
     // Search whole text
-    let matches = [regex matchesInString:self.string options:0 range:NSMakeRange(0, self.length)];
+    NSArray* matches = [regex matchesInString:self.string options:0 range:NSMakeRange(0, self.length)];
 
     // First we look for the position in range of [index+1, EOF]
     for (NSTextCheckingResult* result in matches) {
@@ -1373,7 +1375,7 @@ static NSUInteger xvim_sb_count_columns(xvim_string_buffer_t* sb, NSUInteger tab
         return ret;
     }
     // Search whole text
-    let matches = [regex matchesInString:self.string options:0 range:NSMakeRange(0, self.length)];
+    NSArray* matches = [regex matchesInString:self.string options:0 range:NSMakeRange(0, self.length)];
 
     // First we look for the position in range of [BOF, index-1] in backwards
     for (NSTextCheckingResult* result in [matches reverseObjectEnumerator]) {
@@ -1433,7 +1435,7 @@ unichar characterAtIndex(NSStringHelper*, NSInteger index);
 {
     NSCharacterSet* wordSet = nil;
     if (isBigWord) {
-        let charSet = [[NSCharacterSet whitespaceAndNewlineCharacterSet] invertedSet];
+        NSCharacterSet* charSet = [[NSCharacterSet whitespaceAndNewlineCharacterSet] invertedSet];
         wordSet = charSet;
     }
     else {
@@ -1446,9 +1448,9 @@ unichar characterAtIndex(NSStringHelper*, NSInteger index);
 
 - (NSRange)currentWord:(NSUInteger)index count:(NSUInteger)count option:(MOTION_OPTION)opt
 {
-    let wsSet = [NSCharacterSet whitespaceCharacterSet];
-    let wordSet = [[self class] wordCharSet:(opt & MOPT_BIGWORD)];
-    let string = [self xvim_string];
+    NSCharacterSet* wsSet = [NSCharacterSet whitespaceCharacterSet];
+    NSCharacterSet* wordSet = [[self class] wordCharSet:(opt & MOPT_BIGWORD)];
+    NSString* string = [self xvim_string];
 
     // We search by starting from index = insertionPoint + 1. If the character at the insertion
     // point is a valid word character, we need to reset index back by 1. Otherwise we end up with
@@ -1457,11 +1459,11 @@ unichar characterAtIndex(NSStringHelper*, NSInteger index);
         --index;
     }
 
-    let length = self.length;
+    NSUInteger length = self.length;
     if (length == 0 || index > length - 1) {
         return NSMakeRange(NSNotFound, 0);
     }
-    let maxIndex = self.length - 1;
+    NSUInteger maxIndex = self.length - 1;
 
     NSInteger rangeStart = index;
     NSInteger rangeEnd = index;
@@ -1477,9 +1479,9 @@ unichar characterAtIndex(NSStringHelper*, NSInteger index);
             break;
         }
 
-        let initialChar = [string characterAtIndex:index];
-        let initialCharIsWs = [wsSet characterIsMember:initialChar];
-        var searchSet = get_search_set(initialChar, wsSet, wordSet);
+        unichar initialChar = [string characterAtIndex:index];
+        BOOL initialCharIsWs = [wsSet characterIsMember:initialChar];
+        NSCharacterSet* searchSet = get_search_set(initialChar, wsSet, wordSet);
 
         NSInteger begin = index;
         NSInteger end = MIN(index + 1, maxIndex);
@@ -1492,10 +1494,10 @@ unichar characterAtIndex(NSStringHelper*, NSInteger index);
 
         // For inclusive mode, try to eat some more
         if (!(opt & MOPT_TEXTOBJECT_INNER)) {
-            var newEnd = end;
+            NSInteger newEnd = end;
             if (end >= 0 && (NSUInteger)end < maxIndex) {
                 if (initialCharIsWs) {
-                    let c = [string characterAtIndex:end];
+                    unichar c = [string characterAtIndex:end];
                     searchSet = get_search_set(c, wsSet, wordSet);
                     newEnd = seek_forwards(string, end, searchSet);
                 }
@@ -1505,7 +1507,7 @@ unichar characterAtIndex(NSStringHelper*, NSInteger index);
             }
 
             // If we couldn't eat anything from the end, try to eat start
-            var newBegin = begin;
+            NSInteger newBegin = begin;
             if (newEnd == end) {
                 if (!initialCharIsWs) {
                     newBegin = seek_backwards(string, begin, wsSet);
@@ -1552,7 +1554,7 @@ NSInteger fetchSubStringFrom(NSStringHelper* h, NSInteger index);
 NSInteger fetchSubStringFrom(NSStringHelper* h, NSInteger index)
 {
     assert(index >= 0);
-    let copyBegin = index;
+    NSInteger copyBegin = index;
     NSInteger size = ((NSUInteger)index + ITERATE_STRING_BUFFER_SIZE) > h->strLen ? h->strLen - index
                                                                                   : ITERATE_STRING_BUFFER_SIZE;
     [h->string getCharacters:h->buffer range:NSMakeRange(copyBegin, size)];
@@ -1583,11 +1585,11 @@ unichar characterAtIndex(NSStringHelper* h, NSInteger index)
 
 NSInteger xv_caret(NSString* string, NSInteger index)
 {
-    var resultIndex = index;
-    var seekingIndex = index;
+    NSInteger resultIndex = index;
+    NSInteger seekingIndex = index;
 
     while (seekingIndex > 0) {
-        let ch = [string characterAtIndex:seekingIndex - 1];
+        unichar ch = [string characterAtIndex:seekingIndex - 1];
         if (isNewline(ch)) {
             break;
         }
@@ -1635,13 +1637,13 @@ int findmatchlimit(NSString* string, NSInteger pos, unichar initc, BOOL cpo_matc
 {
     // ----------
     unichar findc = 0; // The char to find.
-    var backwards = NO;
+    BOOL backwards = NO;
 
     int count = 0; // Cumulative number of braces.
     int do_quotes = -1; // Check for quotes in current line.
     int at_start = -1; // do_quotes value at start position.
     int start_in_quotes = MAYBE; // Start position is in quotes
-    var inquote = NO; // YES when inside quotes
+    BOOL inquote = NO; // YES when inside quotes
     int match_escaped = 0; // Search for escaped match.
 
     // NSInteger pos             = cursor; // Current search position
@@ -1955,7 +1957,7 @@ NSRange xv_current_block(NSString* string, NSUInteger index, NSUInteger count, B
 static NSInteger seek_backwards(NSString* string, NSInteger begin, NSCharacterSet* charSet)
 {
     while (begin > 0) {
-        let ch = [string characterAtIndex:begin - 1];
+        unichar ch = [string characterAtIndex:begin - 1];
         if (![charSet characterIsMember:ch]) {
             break;
         }
@@ -1968,7 +1970,7 @@ static NSInteger seek_backwards(NSString* string, NSInteger begin, NSCharacterSe
 static NSInteger seek_forwards(NSString* string, NSInteger end, NSCharacterSet* charSet)
 {
     while (end >= 0 && (NSUInteger)end < [string length]) {
-        let ch = [string characterAtIndex:end];
+        unichar ch = [string characterAtIndex:end];
         if (![charSet characterIsMember:ch]) {
             break;
         }
@@ -1999,10 +2001,10 @@ static NSCharacterSet* get_search_set(unichar initialChar, NSCharacterSet* wsSet
 NSInteger find_next_quote(NSString* string, NSInteger start, NSInteger max, unichar quote, BOOL ignoreEscape);
 NSInteger find_next_quote(NSString* string, NSInteger start, NSInteger max, unichar quote, BOOL ignoreEscape)
 {
-    var ignoreNextChar = NO;
+    BOOL ignoreNextChar = NO;
 
     while (start < max) {
-        let ch = [string characterAtIndex:start];
+        unichar ch = [string characterAtIndex:start];
         if (isNewline(ch)) {
             break;
         }
@@ -2208,21 +2210,21 @@ NSInteger xv_findChar(NSString* string, NSInteger index, int repeatCount, char c
 
 - (NSRange)rangeOfCamelcaseSurrundingCharacterWithFromIndex:(NSInteger)index
 {
-    let string = [self xvim_string];
+    NSString* string = [self xvim_string];
 
     if ((NSUInteger)index >= self.length) {
         return NSMakeRange(NSNotFound, 0);
     }
 
-    let upperCharSet = [NSCharacterSet uppercaseLetterCharacterSet];
-    let lowerCharSet = [NSCharacterSet lowercaseLetterCharacterSet];
-    let numberCharSet = [NSCharacterSet decimalDigitCharacterSet];
+    NSCharacterSet* upperCharSet = [NSCharacterSet uppercaseLetterCharacterSet];
+    NSCharacterSet* lowerCharSet = [NSCharacterSet lowercaseLetterCharacterSet];
+    NSCharacterSet* numberCharSet = [NSCharacterSet decimalDigitCharacterSet];
 
 
     NSInteger beginPos = index;
     NSInteger endPos = index;
 
-    let currentCh = [string characterAtIndex:(NSUInteger)index];
+    unichar currentCh = [string characterAtIndex:(NSUInteger)index];
 
     if ([upperCharSet characterIsMember:currentCh]) {
         unichar nextCh = [self safetyCharacterAtIndex:(NSUInteger)index + 1 fromString:string];
@@ -2276,9 +2278,9 @@ NSInteger xv_findChar(NSString* string, NSInteger index, int repeatCount, char c
         [tempCharSet formUnionWithCharacterSet:upperCharSet];
         [tempCharSet formUnionWithCharacterSet:lowerCharSet];
         [tempCharSet formUnionWithCharacterSet:numberCharSet];
-        let allSymbolCharSet = [tempCharSet invertedSet];
+        NSCharacterSet* allSymbolCharSet = [tempCharSet invertedSet];
 
-        let otherCharSets = @[ numberCharSet, allSymbolCharSet ];
+        NSArray* otherCharSets = @[ numberCharSet, allSymbolCharSet ];
         __block NSRange result = NSMakeRange(NSNotFound, 0);
         [otherCharSets enumerateObjectsUsingBlock:^(id obj, NSUInteger idx, BOOL* stop) {
 
@@ -2298,7 +2300,7 @@ NSInteger xv_findChar(NSString* string, NSInteger index, int repeatCount, char c
     if (beginPos == index && endPos == index) {
         return NSMakeRange(NSNotFound, 0);
     }
-    let result = NSMakeRange((NSUInteger)beginPos, (NSUInteger)(endPos - beginPos));
+    NSRange result = NSMakeRange((NSUInteger)beginPos, (NSUInteger)(endPos - beginPos));
     return result;
 }
 
@@ -2314,14 +2316,15 @@ NSInteger xv_findChar(NSString* string, NSInteger index, int repeatCount, char c
 
 - (NSRange)rangeOfBlcoks:(NSRange (^)(NSInteger index))block beginPos:(NSInteger)beginPos count:(NSUInteger)count
 {
-    var range = NSMakeRange(NSNotFound, 0);
+
+    NSRange range = NSMakeRange(NSNotFound, 0);
     NSInteger currentIndex = beginPos;
 
     while (count > 0) {
         if (range.location != NSNotFound) {
             currentIndex = (NSInteger)range.location + (NSInteger)range.length;
         }
-        let tempRange = block(currentIndex);
+        NSRange tempRange = block(currentIndex);
         if (tempRange.location == NSNotFound) {
             break;
         }
@@ -2341,13 +2344,13 @@ NSInteger xv_findChar(NSString* string, NSInteger index, int repeatCount, char c
 
 - (NSRange)rangeOfIncludesSurrundingCharacter:(unichar)character fromIndex:(NSUInteger)index
 {
-    let underScoreCharSet = [NSCharacterSet characterSetWithCharactersInString:@"_"];
+    NSCharacterSet* underScoreCharSet = [NSCharacterSet characterSetWithCharactersInString:@"_"];
 
     NSMutableCharacterSet* tempCharSet = [NSMutableCharacterSet new];
     [tempCharSet formUnionWithCharacterSet:[NSCharacterSet uppercaseLetterCharacterSet]];
     [tempCharSet formUnionWithCharacterSet:[NSCharacterSet lowercaseLetterCharacterSet]];
     [tempCharSet formUnionWithCharacterSet:[NSCharacterSet decimalDigitCharacterSet]];
-    let delimiters = [tempCharSet invertedSet];
+    NSCharacterSet* delimiters = [tempCharSet invertedSet];
 
     NSUInteger beginIndex = [self findBackwardsCharacterSet:underScoreCharSet beginPos:index delimiters:delimiters];
     if (beginIndex == NSNotFound) {
@@ -2381,7 +2384,7 @@ NSInteger xv_findChar(NSString* string, NSInteger index, int repeatCount, char c
                              beginPos:(NSUInteger)beginPos
                            delimiters:(NSCharacterSet*)delimiters
 {
-    let string = [self xvim_string];
+    NSString* string = [self xvim_string];
 
     NSUInteger index = beginPos;
     NSUInteger result = NSNotFound;
@@ -2404,7 +2407,7 @@ NSInteger xv_findChar(NSString* string, NSInteger index, int repeatCount, char c
                                beginPos:(NSUInteger)beginPos
                              delimiters:(NSCharacterSet*)delimiters
 {
-    let string = [self xvim_string];
+    NSString* string = [self xvim_string];
 
     NSUInteger index = MIN(beginPos, string.length - 1);
     NSUInteger result = NSNotFound;
@@ -2425,15 +2428,15 @@ NSInteger xv_findChar(NSString* string, NSInteger index, int repeatCount, char c
 
 - (BOOL)isHighSurrogate:(NSUInteger)index
 {
-    let string = [self xvim_string];
-    let uc = [self safetyCharacterAtIndex:index fromString:string];
+    NSString* string = [self xvim_string];
+    const unichar uc = [self safetyCharacterAtIndex:index fromString:string];
     return (0xd800 <= uc && uc <= 0xdbff);
 }
 
 - (BOOL)isLowSurrogate:(NSUInteger)index
 {
-    let string = [self xvim_string];
-    let uc = [self safetyCharacterAtIndex:index fromString:string];
+    NSString* string = [self xvim_string];
+    const unichar uc = [self safetyCharacterAtIndex:index fromString:string];
     return (0xdc00 <= uc && uc <= 0xdfff);
 }
 
