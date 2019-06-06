@@ -12,7 +12,8 @@
 #import "Logger.h"
 #import "NSAttributedString+Geometrics.h"
 #import "XVimWindow.h"
-#import <DVTKit/DVTFontAndColorTheme.h>
+// TODO:Xcode11
+//#import <DVTKit/DVTFontAndColorTheme.h>
 #import <objc/runtime.h>
 
 @interface XVimCommandLine () {
@@ -24,7 +25,8 @@
     // TODO: XVimQuickFixView* _quickFixScrollView;
     id _quickFixObservation;
     NSTimer* _errorTimer;
-    DVTFontAndColorTheme* _theme;
+    // Xcode11
+    // DVTFontAndColorTheme* _theme;
 }
 @end
 
@@ -36,17 +38,21 @@ static const BOOL UseLayers = NO;
 {
     self = [super init];
     if (self) {
-        _theme = [NSClassFromString(@"DVTFontAndColorTheme") performSelector:@selector(currentTheme)];
+        // Xcode11
+        //_theme = [NSClassFromString(@"DVTFontAndColorTheme") performSelector:@selector(currentTheme)];
         NSEdgeInsets insets = NSEdgeInsetsMake(3.0, 3.0, 3.0, 3.0);
 
         self.translatesAutoresizingMaskIntoConstraints = NO;
         self.wantsLayer = UseLayers;
         self.blendingMode = NSVisualEffectBlendingModeWithinWindow;
+        // Xcode11
+        /*
         if (_theme.hasLightBackground){
             self.appearance = [NSAppearance appearanceNamed:NSAppearanceNameVibrantLight];
         } else {
             self.appearance = [NSAppearance appearanceNamed:NSAppearanceNameVibrantDark];
         }
+         */
 
         // Static Message ( This is behind the command view if the command is active)
         _static = [NSTextField labelWithString:@""];
@@ -165,6 +171,8 @@ static const BOOL UseLayers = NO;
     return self;
 }
 
+// Xcode11
+/*
 - (void)drawRect:(NSRect)dirtyRect
 {
     DVTFontAndColorTheme* theme = [NSClassFromString(@"DVTFontAndColorTheme") performSelector:@selector(currentTheme)];
@@ -173,6 +181,7 @@ static const BOOL UseLayers = NO;
     NSRectFill(dirtyRect);
     [super drawRect:dirtyRect];
 }
+ */
 
 - (void)dealloc
 {
@@ -207,12 +216,15 @@ static const BOOL UseLayers = NO;
  */
 - (void)errorMessage:(NSString*)string Timer:(BOOL)aTimer RedColorSetting:(BOOL)aRedColorSetting
 {
-    DVTFontAndColorTheme* theme = [NSClassFromString(@"DVTFontAndColorTheme") performSelector:@selector(currentTheme)];
+    // Xcode11
+    //DVTFontAndColorTheme* theme = [NSClassFromString(@"DVTFontAndColorTheme") performSelector:@selector(currentTheme)];
     if (aRedColorSetting) {
         _error.backgroundColor = [NSColor redColor];
     }
     else {
-        _error.backgroundColor = [theme sourceTextBackgroundColor];
+        // Xcode11
+        //_error.backgroundColor = [theme sourceTextBackgroundColor];
+        _error.backgroundColor = [NSColor redColor];
     }
     NSString* msg = string;
     if ([msg length] != 0) {

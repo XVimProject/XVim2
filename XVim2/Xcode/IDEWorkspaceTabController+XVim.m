@@ -133,7 +133,8 @@ static inline BOOL xvim_horizontallyStackingModeForMode(GeniusLayoutMode mode)
     GeniusLayoutMode layout = [self xvim_currentLayout];
     [self xvim_addEditor];
     if (layout == NOT_GENIUS) {
-        [SELF changeToAssistantLayout_RH:self];
+        // Xcode11
+        //[SELF changeToAssistantLayout_RH:self];
     }
     else {
         SELF.assistantEditorsLayout = xvim_horizontallyStackingModeForMode(layout);
@@ -145,7 +146,8 @@ static inline BOOL xvim_horizontallyStackingModeForMode(GeniusLayoutMode mode)
     GeniusLayoutMode layout = [self xvim_currentLayout];
     [self xvim_addEditor];
     if (layout == NOT_GENIUS) {
-        [SELF changeToAssistantLayout_BV:self];
+        // Xcode11
+        //[SELF changeToAssistantLayout_BV:self];
     }
     else {
         SELF.assistantEditorsLayout = xvim_verticallyStackingModeForMode(layout);
@@ -197,7 +199,8 @@ static inline BOOL xvim_horizontallyStackingModeForMode(GeniusLayoutMode mode)
         [workspaceTabController changeToGeniusEditor:SELF];
     }
     else {
-        [workspaceTabController addAssistantEditor:SELF];
+        // Xcode11
+        //[workspaceTabController addAssistantEditor:SELF];
     }
 }
 
@@ -433,7 +436,7 @@ static inline BOOL xvim_horizontallyStackingModeForMode(GeniusLayoutMode mode)
             [SELF changeToStandardEditor:SELF];
         }
         else {
-            [SELF removeAssistantEditor:SELF];
+            //[SELF removeAssistantEditor:SELF];
         }
         break;
     case VERSION:

@@ -12,13 +12,17 @@
 // class-dump -H /Applications/Xcode.app/Contents/Plugins/IDESourceEditor.framework/IDESourceEditor
 // cd XcodeHeader/SourceEditor
 // class-dump -H /Applications/Xcode.app/Contents/SharedFrameworks/SourceEditor.framework/SourceEditor
-//
 // cd XcodeHeader/DVTFoundation
 // class-dump -H /Applications/Xcode.app/Contents/SharedFrameworks/DVTFoundation.framework/DVTFoundation
 // cd XcodeHeader/DVTKit
 // class-dump -H /Applications/Xcode.app/Contents/SharedFrameworks/DVTKit.framework/DVTKit
 // cd XcodeHeader/IDEKit
 // class-dump -H /Applications/Xcode.app/Contents/Frameworks/IDEKit.framework/IDEKit
+// cd XcodeHeader/DVTViewControllerKit
+// class-dump -H /Applications/Xcode.app/Contents/SharedFrameworks/DVTViewControllerKit.framework/DVTViewControllerKit
+// cd XcodeHeader/DVTCocoaAdditionsKit
+// class-dump -H /Applications/Xcode.app/Contents/SharedFrameworks/DVTCocoaAdditionsKit.framework/DVTCocoaAdditionsKit
+//
 //
 // demangle prefix
 // Swift 4 "_T0"
@@ -27,7 +31,8 @@
 
 import Cocoa
 
-// nm /Applications/Xcode.app/Contents/SharedFrameworks/SourceEditor.framework/SourceEditor > a.txt
+// nm /Applications/Xcode.app/Contents/SharedFrameworks/SourceEditor.framework/SourceEditor > SourceEditor.txt
+// nm /Applications/Xcode.app/Contents/PlugIns/IDESourceEditor.framework/IDESourceEditor > IDESourceEditor.txt
 //
 // xcode10.2
 // swift demangle '_$s12SourceEditor0aB4ViewC16addSelectedRange_9modifiers15scrollPlacement12alwaysScrollyAA0abF0V_AA0aB18SelectionModifiersVAA0kI0OSgSbtF'
@@ -73,7 +78,7 @@ fileprivate struct _SourceCodeEditorViewWrapper {
 }
 
 class SourceCodeEditorViewWrapper: NSObject {
-    /* xcode10.2 */
+    /* xcode11.1 */
     private let fpSetCursorStyle                = function_ptr_from_name("_$s12SourceEditor0aB4ViewC11cursorStyleAA0ab6CursorE0Ovs", nil)
     private let fpGetCursorStyle                = function_ptr_from_name("_$s12SourceEditor0aB4ViewC11cursorStyleAA0ab6CursorE0Ovg", nil)
     private let fpGetDataSource                 = function_ptr_from_name("_$s12SourceEditor0aB4ViewC04dataA0AA0ab4DataA0Cvg", nil)

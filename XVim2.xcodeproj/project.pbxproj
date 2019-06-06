@@ -320,7 +320,6 @@
 			children = (
 				A2B52D381F514CC600D83C0A /* XVim2 */,
 				A26E5C741F5145AB000BCC66 /* Products */,
-				A2B537A81F51C89A00D83C0A /* Frameworks */,
 			);
 			sourceTree = "<group>";
 		};
@@ -448,13 +447,6 @@
 				A27A7AEA2077BD68006A0E4F /* XVimRangeUtil.m */,
 			);
 			path = Helper;
-			sourceTree = "<group>";
-		};
-		A2B537A81F51C89A00D83C0A /* Frameworks */ = {
-			isa = PBXGroup;
-			children = (
-			);
-			name = Frameworks;
 			sourceTree = "<group>";
 		};
 		ED0DED5C1F8C2C9F00886F6B /* MotionArgument */ = {
@@ -821,7 +813,7 @@
 				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
 				GCC_WARN_UNUSED_FUNCTION = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
-				MACOSX_DEPLOYMENT_TARGET = 10.13;
+				MACOSX_DEPLOYMENT_TARGET = 10.14;
 				MTL_ENABLE_DEBUG_INFO = YES;
 				ONLY_ACTIVE_ARCH = YES;
 				SDKROOT = macosx;
@@ -874,7 +866,7 @@
 				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
 				GCC_WARN_UNUSED_FUNCTION = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
-				MACOSX_DEPLOYMENT_TARGET = 10.13;
+				MACOSX_DEPLOYMENT_TARGET = 10.14;
 				MTL_ENABLE_DEBUG_INFO = NO;
 				SDKROOT = macosx;
 				SWIFT_COMPILATION_MODE = wholemodule;
@@ -902,7 +894,7 @@
 					"$(inherited)",
 					"$(PROJECT_DIR)",
 				);
-				MACOSX_DEPLOYMENT_TARGET = 10.13;
+				MACOSX_DEPLOYMENT_TARGET = 10.14;
 				OTHER_LDFLAGS = "-Wl,-no_compact_unwind";
 				PRODUCT_BUNDLE_IDENTIFIER = net.JugglerShu.XVim2;
 				PRODUCT_NAME = "$(TARGET_NAME)";
@@ -934,7 +926,7 @@
 					"$(inherited)",
 					"$(PROJECT_DIR)",
 				);
-				MACOSX_DEPLOYMENT_TARGET = 10.13;
+				MACOSX_DEPLOYMENT_TARGET = 10.14;
 				OTHER_LDFLAGS = "-Wl,-no_compact_unwind";
 				PRODUCT_BUNDLE_IDENTIFIER = net.JugglerShu.XVim2;
 				PRODUCT_NAME = "$(TARGET_NAME)";
