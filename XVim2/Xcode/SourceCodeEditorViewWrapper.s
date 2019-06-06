@@ -54,7 +54,7 @@ _seds_wrapper_call9:
 # Save registers on stack
 
     leaq    -240(%rsp), %rsp
-    andq    $0FFFFFFFFFFFFFFF0H, %rsp
+    //andq    0xFFFFFFFFFFFFFFF0, %rsp
 
     // Callee-saved
     movq    %rbx, (%rsp)
