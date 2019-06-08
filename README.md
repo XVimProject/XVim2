@@ -104,7 +104,8 @@ Delete the following directory:
 ## Bountysource
   XVim supports Bountysource. If you want to solve your issue sooner make bounty on your issue is one option. A contributer should work on it preferentially (not guaranteed though). To make bounty visit following link and go to "Issue" tab. Select your issue and make bounty on it. 
   
-  https://www.bountysource.com/teams/xvim
+  https://www.bountysource.com/teams/xvimproject (XVim2)
+  https://www.bountysource.com/teams/xvim (XVim)
 
 ## Donations
   If you think the plugin is useful, please donate.
