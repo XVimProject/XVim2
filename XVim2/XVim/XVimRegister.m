@@ -289,7 +289,7 @@ static const NSString* s_enum_registers = @"\"0123456789abcdefghijklmnopqrstuvwx
     }
 }
 
-- (void) delete:(XVimString*)string withType:(XVIM_TEXT_TYPE)type onRegister:(NSString*)name
+- (void) delete:(XVimString*)string withType:(XVIM_TEXT_TYPE)type onRegister:(NSString*)name shouldReplaceRegister:(BOOL)isReplacingRegister
 {
     // TODO: use "- when deleting does not include \n
     NSAssert([self isValidForYank:name], @"Must be valid register for yank/delete");
@@ -314,7 +314,11 @@ static const NSString* s_enum_registers = @"\"0123456789abcdefghijklmnopqrstuvwx
             [self appendXVimString:string forReg:name];
         }
         else {
-            [self setXVimString:string withType:type forReg:name];
+            if (isReplacingRegister) {
+                [self setXVimString:string withType:type forReg:name];
+            } else {
+                [self setXVimString:string withType:type forReg:@"0"];
+            }
         }
     }
 
