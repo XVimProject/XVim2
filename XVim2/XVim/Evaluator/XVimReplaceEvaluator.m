@@ -36,7 +36,7 @@
 
 - (void)repeatBlockText
 {
-    NSString* text = [self insertedText];
+    let text = [self insertedText];
     let sourceView = [self sourceView];
 
     for (NSUInteger i = 0; i < [self numericArg] - 1; i++) {
@@ -88,7 +88,7 @@
                 }
             }
             else {
-                NSEvent* event = [keyStroke toEventwithWindowNumber:0 context:nil];
+                let event = [keyStroke toEventwithWindowNumber:0 context:nil];
                 [self.sourceView interpretKeyEvents:[NSArray arrayWithObject:event]];
             }
         }

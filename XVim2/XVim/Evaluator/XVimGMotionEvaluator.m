@@ -65,8 +65,8 @@
 
 - (XVimEvaluator*)searchCurrentWord:(BOOL)forward
 {
-    XVimCommandLineEvaluator* eval = [self searchEvaluatorForward:forward];
-    NSRange r = [self.sourceView xvim_currentWord:MOPT_NONE];
+    let eval = [self searchEvaluatorForward:forward];
+    let r = [self.sourceView xvim_currentWord:MOPT_NONE];
     if (r.location == NSNotFound) {
         return nil;
     }

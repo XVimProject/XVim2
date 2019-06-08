@@ -116,7 +116,7 @@
         [self insertText:keyStroke.xvimString replacementRange:self.selectedRange];
         return;
     }
-    NSEvent* event = [keyStroke toEventwithWindowNumber:0 context:nil];
+    let event = [keyStroke toEventwithWindowNumber:0 context:nil];
     [super keyDown:event];
 }
 

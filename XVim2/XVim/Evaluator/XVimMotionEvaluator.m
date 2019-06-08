@@ -164,7 +164,7 @@ if( childEvaluator.keyStroke.toString.length != 1 ){
 
 - (XVimEvaluator*)G
 {
-    XVimMotion* m = XVIM_MAKE_MOTION(MOTION_LINENUMBER, LINEWISE, MOPT_LEFT_RIGHT_NOWRAP, [self numericArg]);
+    var m = XVIM_MAKE_MOTION(MOTION_LINENUMBER, LINEWISE, MOPT_LEFT_RIGHT_NOWRAP, [self numericArg]);
     if ([self numericMode]) {
         m.line = [self numericArg];
     }

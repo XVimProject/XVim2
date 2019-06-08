@@ -583,7 +583,7 @@
 
 - (XVimEvaluator*)onComplete_DQUOTE:(XVimRegisterEvaluator*)childEvaluator
 {
-    XVimRegisterManager* m = [[XVim instance] registerManager];
+    let m = [[XVim instance] registerManager];
     if ([m isValidRegister:childEvaluator.reg]) {
         self.yankRegister = childEvaluator.reg;
         [self.argumentString appendString:childEvaluator.reg];

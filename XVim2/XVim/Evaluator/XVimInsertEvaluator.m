@@ -83,7 +83,7 @@
     let view = [self sourceView];
     NSUInteger startLoc = self.startRange.location;
     NSUInteger endLoc = [view selectedRange].location;
-    NSRange textRange = NSMakeRange(NSNotFound, 0);
+    var textRange = NSMakeRange(NSNotFound, 0);
 
     if ([[view string] length] == 0) {
         return @"";
@@ -182,8 +182,7 @@
 
     // Position for "^" is before escaped from insert mode
     NSUInteger pos = sourceView.insertionPoint;
-    XVimMark* mark
-	= [XVimMark markWithLine:[self.sourceView.textStorage xvim_lineNumberAtIndex:pos]
+    var mark = [XVimMark markWithLine:[self.sourceView.textStorage xvim_lineNumberAtIndex:pos]
 					  column: [self.sourceView.textStorage xvim_columnOfIndex:pos] document: self.sourceView.documentURL.path];
     if (nil != mark.document) {
         [xvim.marks setMark:mark forName:@"^"];
@@ -276,7 +275,7 @@
 
 - (XVimEvaluator*)C_w
 {
-    XVimMotion* m = XVIM_MAKE_MOTION(MOTION_WORD_BACKWARD, CHARWISE_EXCLUSIVE, MOPT_NONE, 1);
+    let m = XVIM_MAKE_MOTION(MOTION_WORD_BACKWARD, CHARWISE_EXCLUSIVE, MOPT_NONE, 1);
     [[self sourceView] xvim_delete:m andYank:NO];
     return self;
 }

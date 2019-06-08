@@ -79,13 +79,13 @@
 
 - (void)appendString:(NSString*)str
 {
-    XVimCommandField* commandField = self.window.commandLine.commandField;
+    let commandField = self.window.commandLine.commandField;
     [commandField setString:[commandField.string stringByAppendingString:str]];
 }
 
 - (XVimEvaluator*)execute
 {
-    XVimCommandField* commandField = self.window.commandLine.commandField;
+    let commandField = self.window.commandLine.commandField;
     NSString* command = [[commandField string]
                 stringByTrimmingCharactersInSet:[NSCharacterSet whitespaceAndNewlineCharacterSet]];
     [_history addEntry:command];
@@ -156,8 +156,8 @@
 
 - (XVimEvaluator*)Up
 {
-    XVimCommandField* commandField = self.window.commandLine.commandField;
-    XVim* xvim = [XVim instance];
+    let commandField = self.window.commandLine.commandField;
+    let xvim = [XVim instance];
 
     if (_historyNo == 0) {
         _currentCmd = [[commandField string] copy];
@@ -180,8 +180,8 @@
 
 - (XVimEvaluator*)Down
 {
-    XVimCommandField* commandField = self.window.commandLine.commandField;
-    XVim* xvim = [XVim instance];
+    let commandField = self.window.commandLine.commandField;
+    let xvim = [XVim instance];
 
     if (_historyNo == 0) {
         // Nothing

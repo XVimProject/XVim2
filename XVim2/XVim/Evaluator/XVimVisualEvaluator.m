@@ -645,7 +645,7 @@ return eval;
 
 - (XVimEvaluator*)TILDE
 {
-    XVimTildeEvaluator* eval = [[XVimTildeEvaluator alloc] initWithWindow:self.window];
+    let eval = [[XVimTildeEvaluator alloc] initWithWindow:self.window];
     return [eval executeOperationWithMotion:XVIM_MAKE_MOTION(MOTION_NONE, CHARWISE_EXCLUSIVE, MOPT_NONE,
                                                              [self numericArg])];
 }
