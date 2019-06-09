@@ -42,7 +42,7 @@
  **/
 - (XVimString*)xvimStringForRegister:(NSString*)name;
 - (void)yank:(XVimString*)string withType:(XVIM_TEXT_TYPE)type onRegister:(NSString*)name;
-- (void)delete:(XVimString*)string withType:(XVIM_TEXT_TYPE)type onRegister:(NSString*)name;
+- (void)delete:(XVimString*)string withType:(XVIM_TEXT_TYPE)type onRegister:(NSString*)name shouldReplaceRegister:(BOOL)isReplacing;
 - (void)textInserted:(XVimString*)string withType:(XVIM_TEXT_TYPE)type;
 - (void)commandExecuted:(XVimString*)string withType:(XVIM_TEXT_TYPE)type;
 - (void)registerExecuted:(NSString*)name;

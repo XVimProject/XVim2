@@ -110,6 +110,7 @@
         return NO;
     }
     NSUInteger newPos = NSNotFound;
+    BOOL isYankingFromVisual = false;
 
     [self xvim_beginEditTransaction];
     xvim_on_exit { [self xvim_endEditTransaction]; };
@@ -168,6 +169,7 @@
     		{
     			XVimSelection sel = [self _xvim_selectedBlock];
     			if (yank) {
+                    isYankingFromVisual = true;
     				[self _xvim_yankSelection:sel];
     			}
     			[self _xvim_killSelection:sel];
@@ -184,6 +186,7 @@
                 // This is because of the fact that NSTextView does not allow select EOF
 
                 if (yank) {
+                    isYankingFromVisual = true;
                     [self _xvim_yankRange:range withType:DEFAULT_MOTION_TYPE];
                 }
                 [self insertText:@"" replacementRange:range];
@@ -199,7 +202,7 @@
 			break;
     }
 
-    [self.xvimTextViewDelegate textView:self didDelete:self.lastYankedText withType:self.lastYankedType];
+    [self.xvimTextViewDelegate textView:self didDelete:self.lastYankedText withType:self.lastYankedType shouldReplaceRegister:!isYankingFromVisual];
     [self xvim_changeSelectionMode:XVIM_VISUAL_NONE];
     if (newPos != NSNotFound) {
         [self xvim_moveCursor:newPos preserveColumn:NO];

@@ -36,6 +36,11 @@
                                    @"ddd e-e fff\n"
                                    @"ggg hhh i_i\n"
                                    @"    jjj kkk";
+    
+    static NSString* register_visual_paste_result = @"aa bbb ccc\n"
+                                                    @"ddd e-e fff\n"
+                                                    @"ggg hhh i_i\n"
+                                                    @"    jjj kkk";
 
     return @[
         // Operation using registers
@@ -65,6 +70,9 @@
 
         // Repeat by @@
         XVimMakeTestCase(@"aaa bbb ccc", 0, 0, @"qallq@a2@@", @"aaa bbb ccc", 8, 0),
+        
+        //pasting from register in visual mode does not modify the pasting register
+        XVimMakeTestCase(text, 0, 0, @"\"adwvw\"aP\"aP", register_visual_paste_result, 0, 0),
     ];
 }
 

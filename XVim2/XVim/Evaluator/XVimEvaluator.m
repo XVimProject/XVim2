@@ -191,9 +191,9 @@ static XVimEvaluator* s_popEvaluator = nil;
     [XVIM.registerManager yank:yankedText withType:type onRegister:self.yankRegister];
 }
 
-- (void)textView:(id)view didDelete:(NSString*)deletedText withType:(XVIM_TEXT_TYPE)type
+- (void)textView:(id)view didDelete:(NSString*)deletedText withType:(XVIM_TEXT_TYPE)type shouldReplaceRegister:(BOOL)isReplacing
 {
-    [XVIM.registerManager delete:deletedText withType:type onRegister:self.yankRegister];
+    [XVIM.registerManager delete:deletedText withType:type onRegister:self.yankRegister shouldReplaceRegister:isReplacing];
 }
 
 - (XVimCommandLineEvaluator*)searchEvaluatorForward:(BOOL)forward
