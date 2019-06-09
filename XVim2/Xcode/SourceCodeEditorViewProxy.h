@@ -20,21 +20,26 @@
 // swift demangle '_$s12SourceEditor0aB18SelectionModifiersV8rawValueACSi_tcfC'
 // _$s12SourceEditor0aB18SelectionModifiersV8rawValueACSi_tcfC ---> SourceEditor.SourceEditorSelectionModifiers.init(rawValue: Swift.Int) -> SourceEditor.SourceEditorSelectionModifiers
 
+// swift demangle '_$s12SourceEditor0aB8PositionV4line3colACSi_SitcfC'
+// _$s12SourceEditor0aB8PositionV4line3colACSi_SitcfC ---> SourceEditor.SourceEditorPosition.init(line: Swift.Int, col: Swift.Int) -> SourceEditor.SourceEditorPosition
+
+// Swift.Range<SourceEditor.SourceEditorPosition>
+
 // Raw values for SourceEditor.SourceEditorSelectionModifiers
-typedef NS_OPTIONS(unsigned, XVimSelectionModifiers) {
+typedef NS_OPTIONS(NSInteger, XVimSelectionModifiers) {
     SelectionModifierExtension = 1,
     SelectionModifierColumnar = 1 << 1,
     SelectionModifierDiscontiguous = 1 << 2
 };
 
 typedef struct {
-    NSUInteger row;
-    NSUInteger col;
+    NSInteger line;
+    NSInteger col;
 } XVimSourceEditorPosition;
 
-static inline XVimSourceEditorPosition XvimMakeSourceEditorPosition(NSUInteger row, NSUInteger col)
+static inline XVimSourceEditorPosition XvimMakeSourceEditorPosition(NSInteger line, NSInteger col)
 {
-    XVimSourceEditorPosition pos = {.row = row, .col = col };
+    XVimSourceEditorPosition pos = {.line = line, .col = col };
     return pos;
 }
 typedef struct {
@@ -45,8 +50,8 @@ typedef struct {
 
 static inline NSString* _Nonnull XVimSourceEditorRangeToString(XVimSourceEditorRange rng)
 {
-    return [NSString stringWithFormat:@"{ {row: %lu, col: %lu}, {row: %lu, col: %lu} }", rng.pos1.row, rng.pos1.col,
-                                      rng.pos2.row, rng.pos2.col];
+    return [NSString stringWithFormat:@"{ {line: %lu, col: %lu}, {line: %lu, col: %lu} }", rng.pos1.line, rng.pos1.col,
+                                      rng.pos2.line, rng.pos2.col];
 }
 
 static inline XVimSourceEditorRange XvimMakeSourceEditorRange(XVimSourceEditorPosition pos1,

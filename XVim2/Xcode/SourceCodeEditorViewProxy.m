@@ -129,24 +129,24 @@
 
 - (BOOL)normalizeRange:(XVimSourceEditorRange*)rng
 {
-    if ((rng->pos1).row > (rng->pos2).row)
-        xvim_swap((rng->pos1).row, (rng->pos2).row);
+    if ((rng->pos1).line > (rng->pos2).line)
+        xvim_swap((rng->pos1).line, (rng->pos2).line);
     if ((rng->pos1).col > (rng->pos2).col)
         xvim_swap((rng->pos1).col, (rng->pos2).col);
-    clamp((rng->pos1).row, 0, self.lineCount - 1);
-    clamp((rng->pos2).row, 0, self.lineCount - 1);
+    clamp((rng->pos1).line, 0, self.lineCount - 1);
+    clamp((rng->pos2).line, 0, self.lineCount - 1);
 
     // Special handling for cursor on first col of last row
-    if ((rng->pos1).row == self.lineCount - 1 && (rng->pos2).row == self.lineCount - 1 && (rng->pos1).col == 0
+    if ((rng->pos1).line == self.lineCount - 1 && (rng->pos2).line == self.lineCount - 1 && (rng->pos1).col == 0
         && (rng->pos2).col == 0)
         return YES;
 
-    var rr = [self characterRangeForLineRange:NSMakeRange((rng->pos1).row, 1)];
+    var rr = [self characterRangeForLineRange:NSMakeRange((rng->pos1).line, 1)];
     if (rr.location == NSNotFound)
         return NO;
     clamp((rng->pos1).col, 0, rr.length);
-    if ((rng->pos2).row != (rng->pos1).row) {
-        rr = [self characterRangeForLineRange:NSMakeRange((rng->pos2).row, 1)];
+    if ((rng->pos2).line != (rng->pos1).line) {
+        rr = [self characterRangeForLineRange:NSMakeRange((rng->pos2).line, 1)];
         if (rr.location == NSNotFound)
             return NO;
     }
@@ -322,26 +322,26 @@
         let insertionPos = [self positionFromIndex:self.insertionPoint lineHint:0];
         XVimSourceEditorRange insertionRange = {.pos1 = insertionPos, .pos2 = insertionPos };
         [self setSelectedRange:insertionRange modifiers:0];
-        let pos1 = [self positionFromIndex:rng.location lineHint:insertionPos.row];
-        let pos2 = [self positionFromIndex:rng.location + rng.length lineHint:pos1.row];
+        let pos1 = [self positionFromIndex:rng.location lineHint:insertionPos.line];
+        let pos2 = [self positionFromIndex:rng.location + rng.length lineHint:pos1.line];
         XVimSourceEditorRange selectionRange = {.pos1 = pos1, .pos2 = pos2 };
 		[self setSelectedRange:selectionRange modifiers:SelectionModifierExtension];
     }
     else {
         let rangeItr = (affinity == NSSelectionAffinityUpstream) ? [ranges reverseObjectEnumerator] : ranges;
         let insertionPos = [self positionFromIndex:self.insertionPoint lineHint:0];
-        let insertionLine = insertionPos.row;
+        let insertionLine = insertionPos.line;
         var lastLine = insertionLine;
         BOOL isFirst = YES;
 
         for (NSValue* val in rangeItr) {
             let rng = val.rangeValue;
             let pos1 = [self positionFromIndex:rng.location lineHint:lastLine];
-            let pos2 = [self positionFromIndex:rng.location + rng.length lineHint:pos1.row];
-            lastLine = pos2.row;
+            let pos2 = [self positionFromIndex:rng.location + rng.length lineHint:pos1.line];
+            lastLine = pos2.line;
 
             XVimSourceEditorRange ser = {.pos1 = pos1, .pos2 = pos2 };
-            BOOL isInsertionLine = (pos1.row == insertionLine);
+            BOOL isInsertionLine = (pos1.line == insertionLine);
 
             let selectionModifiers = isInsertionLine ? SelectionModifierDiscontiguous
                                                        : SelectionModifierDiscontiguous | SelectionModifierExtension;
