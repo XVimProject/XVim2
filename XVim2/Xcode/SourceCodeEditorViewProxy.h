@@ -11,6 +11,15 @@
 
 @class _TtC15IDESourceEditor19IDESourceEditorView;
 
+// swift demangle '_$s12SourceEditor0aB18SelectionModifiersV13discontiguousACvpZ'
+// _$s12SourceEditor0aB18SelectionModifiersV13discontiguousACvpZ ---> static SourceEditor.SourceEditorSelectionModifiers.discontiguous : SourceEditor.SourceEditorSelectionModifiers
+// swift demangle '_$s12SourceEditor0aB18SelectionModifiersV8columnarACvpZ'
+// _$s12SourceEditor0aB18SelectionModifiersV8columnarACvpZ ---> static SourceEditor.SourceEditorSelectionModifiers.columnar : SourceEditor.SourceEditorSelectionModifiers
+// swift demangle '_$s12SourceEditor0aB18SelectionModifiersV9extensionACvpZ'
+// _$s12SourceEditor0aB18SelectionModifiersV9extensionACvpZ ---> static SourceEditor.SourceEditorSelectionModifiers.extension : SourceEditor.SourceEditorSelectionModifiers
+// swift demangle '_$s12SourceEditor0aB18SelectionModifiersV8rawValueACSi_tcfC'
+// _$s12SourceEditor0aB18SelectionModifiersV8rawValueACSi_tcfC ---> SourceEditor.SourceEditorSelectionModifiers.init(rawValue: Swift.Int) -> SourceEditor.SourceEditorSelectionModifiers
+
 // Raw values for SourceEditor.SourceEditorSelectionModifiers
 typedef NS_OPTIONS(unsigned, XVimSelectionModifiers) {
     SelectionModifierExtension = 1,
