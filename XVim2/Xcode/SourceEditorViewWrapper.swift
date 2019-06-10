@@ -53,10 +53,10 @@ fileprivate struct SourceEditorViewInvoker {
     let contextPtr = UnsafeMutablePointer<UnsafeMutableRawPointer>.allocate(capacity: 8)
     init?(_ view: AnyObject?, _ functionPtr: UnsafeMutableRawPointer?) {
         
-        guard let sourceEditorView = view,
+        guard let view = view,
             let functionPtr = functionPtr else { return nil }
         
-        contextPtr[0] = Unmanaged.passRetained(sourceEditorView).toOpaque()
+        contextPtr[0] = Unmanaged.passRetained(view).toOpaque()
         contextPtr[1] = functionPtr
     }
     
@@ -91,49 +91,49 @@ class SourceEditorViewWrapper: NSObject {
     private let fpGetDataSource                 = function_ptr_from_name("_$s12SourceEditor0aB4ViewC04dataA0AA0ab4DataA0Cvg", nil)
     private let fpSetSelectedRangeWithModifiers = function_ptr_from_name("_$s12SourceEditor0aB4ViewC16setSelectedRange_9modifiersyAA0abF0V_AA0aB18SelectionModifiersVtF", nil)
     private let fpAddSelectedRangeWithModifiers = function_ptr_from_name("_$s12SourceEditor0aB4ViewC16addSelectedRange_9modifiers15scrollPlacement12alwaysScrollyAA0abF0V_AA0aB18SelectionModifiersVAA0kI0OSgSbtF", nil)
-    private weak var editorViewProxy: SourceEditorViewProxy?
+    private weak var sourceEditorViewProxy: SourceEditorViewProxy?
     
     @objc
     lazy public var dataSourceWrapper = {
-        return SourceEditorDataSourceWrapper(withSourceEditorViewWrapper: self)
+        return SourceEditorDataSourceWrapper(sourceEditorViewWrapper: self)
     }()
     
     @objc
-    public init(withProxy proxy: SourceEditorViewProxy) {
-        editorViewProxy = proxy
+    public init(sourceEditorViewProxy: SourceEditorViewProxy) {
+        self.sourceEditorViewProxy = sourceEditorViewProxy
     }
     
-    private var editorView: AnyObject? {
-        return editorViewProxy?.view
+    private var view: AnyObject? {
+        return sourceEditorViewProxy?.view
     }
     
     @objc
     var cursorStyle: CursorStyle {
         get {
-            if let invoker = SourceEditorViewInvoker(editorView, fpGetCursorStyle) {
+            if let invoker = SourceEditorViewInvoker(view, fpGetCursorStyle) {
                 return invoker.getCursorStyle()
             }
             return CursorStyle.block
         }
         set {
-            SourceEditorViewInvoker(editorView, fpSetCursorStyle)?.setCursorStyle(newValue)
+            SourceEditorViewInvoker(view, fpSetCursorStyle)?.setCursorStyle(newValue)
         }
     }
     
     @objc
     var dataSource: AnyObject? {
-        return SourceEditorViewInvoker(editorView, fpGetDataSource)?.getDataSource()
+        return SourceEditorViewInvoker(view, fpGetDataSource)?.getDataSource()
     }
     
     @objc
     public func addSelectedRange(_ range: XVimSourceEditorRange, modifiers: XVimSelectionModifiers) -> Void {
-        SourceEditorViewInvoker(editorView, fpAddSelectedRangeWithModifiers)?
+        SourceEditorViewInvoker(view, fpAddSelectedRangeWithModifiers)?
             .addSelectedRange(range, modifiers: modifiers)
     }
     
     @objc
     public func setSelectedRange(_ range: XVimSourceEditorRange, modifiers: XVimSelectionModifiers) -> Void {
-        SourceEditorViewInvoker(editorView, fpSetSelectedRangeWithModifiers)?
+        SourceEditorViewInvoker(view, fpSetSelectedRangeWithModifiers)?
             .setSelectedRange(range, modifiers: modifiers)
     }
 }

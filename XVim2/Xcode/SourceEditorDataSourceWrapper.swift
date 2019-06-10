@@ -95,8 +95,8 @@ class SourceEditorDataSourceWrapper: NSObject {
     }
     
     @objc
-    public init(withSourceEditorViewWrapper wrapper: SourceEditorViewWrapper) {
-        sourceEditorViewWrapper = wrapper
+    public init(sourceEditorViewWrapper: SourceEditorViewWrapper) {
+        self.sourceEditorViewWrapper = sourceEditorViewWrapper
     }
     
     @objc

@@ -68,7 +68,7 @@
     if (self) {
         _enabled = NO;
         self.sourceEditorView = sourceEditorView;
-        self.sourceEditorViewWrapper = [[SourceEditorViewWrapper alloc] initWithProxy:self];
+        self.sourceEditorViewWrapper = [[SourceEditorViewWrapper alloc] initWithSourceEditorViewProxy:self];
     }
     return self;
 }
