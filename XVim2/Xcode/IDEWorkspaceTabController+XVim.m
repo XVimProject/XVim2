@@ -10,7 +10,7 @@
 #import "IDEWorkspaceTabController+XVim.h"
 #import "Logger.h"
 #import "NSObject+Swizzle.h"
-#import "SourceCodeEditorViewProxy.h"
+#import "SourceEditorViewProxy.h"
 #import "XVimWindow.h"
 #import "XcodeUtils.h"
 #import <IDEKit/IDEComparisonEditorSubmode.h>

@@ -8,11 +8,11 @@
 
 #import "NSTextStorage+VimOperation.h"
 #import "SourceViewProtocol.h"
-#import "SourceCodeEditorViewProxy+Scrolling.h"
-#import "SourceCodeEditorViewProxy+XVim.h"
-#import "SourceCodeEditorViewProxy+Yank.h"
+#import "SourceEditorViewProxy+Scrolling.h"
+#import "SourceEditorViewProxy+XVim.h"
+#import "SourceEditorViewProxy+Yank.h"
 
-@interface SourceCodeEditorViewProxy ()
+@interface SourceEditorViewProxy ()
 @property NSUInteger selectionBegin;
 @property NSUInteger insertionPoint;
 @property NSUInteger preservedColumn;
@@ -21,7 +21,7 @@
 - (void)xvim_syncStateWithScroll:(BOOL)scroll;
 @end
 
-@implementation SourceCodeEditorViewProxy (Scrolling)
+@implementation SourceEditorViewProxy (Scrolling)
 
 // This is used by scrollBottom,Top,Center as a common method
 - (void)xvim_scrollCommon_moveCursorPos:(NSUInteger)lineNumber firstNonblank:(BOOL)fnb

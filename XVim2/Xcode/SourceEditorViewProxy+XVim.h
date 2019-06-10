@@ -6,11 +6,11 @@
 //  Copyright © 2017 Shuichiro Suzuki. All rights reserved.
 //
 
-#import "SourceCodeEditorViewProxy.h"
+#import "SourceEditorViewProxy.h"
 #import "XVimMotionOption.h"
 #import <Foundation/Foundation.h>
 
-@interface SourceCodeEditorViewProxy (XVim)
+@interface SourceEditorViewProxy (XVim)
 - (NSUInteger)xvim_indexOfLineNumber:(NSUInteger)line;
 - (NSUInteger)xvim_indexOfLineNumber:(NSUInteger)line column:(NSUInteger)col;
 - (NSUInteger)xvim_lineNumberAtIndex:(NSUInteger)idx;

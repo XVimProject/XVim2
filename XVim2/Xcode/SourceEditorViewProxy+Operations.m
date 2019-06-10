@@ -1,5 +1,5 @@
 //
-//  SourceCodeEditorViewProxy+Operations.m
+//  SourceEditorViewProxy+Operations.m
 //  XVim2
 //
 //  Created by Ant on 02/10/2017.
@@ -8,14 +8,14 @@
 
 #import "NSString+VimHelper.h"
 #import "NSTextStorage+VimOperation.h"
-#import "SourceCodeEditorViewProxy+Operations.h"
-#import "SourceCodeEditorViewProxy+Yank.h"
-#import "SourceCodeEditorViewProxy+XVim.h"
+#import "SourceEditorViewProxy+Operations.h"
+#import "SourceEditorViewProxy+Yank.h"
+#import "SourceEditorViewProxy+XVim.h"
 #import "XVim.h"
 #import "XVimMotion.h"
 #import "XVimOptions.h"
 
-@interface SourceCodeEditorViewProxy ()
+@interface SourceEditorViewProxy ()
 @property NSUInteger selectionBegin;
 @property NSUInteger insertionPoint;
 @property NSUInteger preservedColumn;
@@ -34,7 +34,7 @@
 - (NSRange)xvim_currentNumber;
 @end
 
-@implementation SourceCodeEditorViewProxy (Operations)
+@implementation SourceEditorViewProxy (Operations)
 
 #pragma mark - COPYMOVE
 - (void)xvim_copymove:(XVimMotion*)motion withMotionPoint:(NSUInteger)motionPoint withInsertionPoint:(NSUInteger)insertionPoint after:(BOOL)after onlyCopy:(BOOL)onlyCopy{

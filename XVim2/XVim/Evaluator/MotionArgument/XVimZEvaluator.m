@@ -8,7 +8,7 @@
 
 #import "XVimZEvaluator.h"
 #import "Logger.h"
-#import "SourceCodeEditorViewProxy.h"
+#import "SourceEditorViewProxy.h"
 #import "XVimMotionEvaluator.h"
 
 @implementation XVimZEvaluator

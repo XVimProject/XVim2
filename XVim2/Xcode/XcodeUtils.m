@@ -32,7 +32,7 @@ _TtC15IDESourceEditor19IDESourceEditorView* XVimLastActiveEditorView()
 }
 
 
-SourceCodeEditorViewProxy* XVimLastActiveSourceView()
+SourceEditorViewProxy* XVimLastActiveSourceView()
 {
     return (id)[[XVimLastActiveEditorView() xvim_window] sourceView];
 }

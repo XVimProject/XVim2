@@ -13,7 +13,7 @@
 #import "Logger.h"
 #import "NSObject+ExtraData.h"
 #import "NSObject+Swizzle.h"
-#import "SourceCodeEditorViewProxy.h"
+#import "SourceEditorViewProxy.h"
 #import "XVimKeyStroke.h"
 #import "XVimWindow.h"
 #import <QuartzCore/QuartzCore.h>
@@ -95,7 +95,7 @@ CONST_STR(EDWindow);
     XVimWindow* w = [self extraDataForName:EDWindow];
     if ((w == nil || (NSNull*)w == NSNull.null)
             && [self.class isEqual:NSClassFromString(IDESourceEditorViewClassName)]) {
-        let p = [[SourceCodeEditorViewProxy alloc] initWithSourceCodeEditorView:SELF];
+        let p = [[SourceEditorViewProxy alloc] initWithSourceEditorView:SELF];
         w = [[XVimWindow alloc] initWithSourceView:p];
         [self setExtraData:w forName:EDWindow];
     }

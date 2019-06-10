@@ -8,12 +8,12 @@
 
 #import "NSString+VimHelper.h"
 #import "NSTextStorage+VimOperation.h"
-#import "SourceCodeEditorViewProxy+Yank.h"
-#import "SourceCodeEditorViewProxy+XVim.h"
-#import "SourceCodeEditorViewProxy+Operations.h"
+#import "SourceEditorViewProxy+Yank.h"
+#import "SourceEditorViewProxy+XVim.h"
+#import "SourceEditorViewProxy+Operations.h"
 #import "XVimMotion.h"
 
-@interface SourceCodeEditorViewProxy ()
+@interface SourceEditorViewProxy ()
 @property NSUInteger selectionBegin;
 @property NSUInteger insertionPoint;
 @property NSUInteger preservedColumn;
@@ -31,7 +31,7 @@
 - (void)_xvim_insertSpaces:(NSUInteger)count replacementRange:(NSRange)replacementRange;
 @end
 
-@implementation SourceCodeEditorViewProxy (Yank)
+@implementation SourceEditorViewProxy (Yank)
 
 - (NSRange)_xvim_getYankRange:(XVimMotion*)motion withRange:(XVimRange)to
 {

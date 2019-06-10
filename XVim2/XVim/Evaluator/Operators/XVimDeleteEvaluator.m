@@ -10,7 +10,7 @@
 #import "XVimInsertEvaluator.h"
 #import "XVimWindow.h"
 #import "Logger.h"
-#import "SourceCodeEditorViewProxy.h"
+#import "SourceEditorViewProxy.h"
 #import "XVim.h"
 #import "XVimTextObjectEvaluator.h"
 

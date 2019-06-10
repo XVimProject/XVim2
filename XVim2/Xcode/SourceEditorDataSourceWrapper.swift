@@ -88,15 +88,15 @@ class SourceEditorDataSourceWrapper: NSObject {
     private let fpLineTerminatorLength
         = function_ptr_from_name("_$s12SourceEditor0ab4DataA0C27lineTerminatorLengthForLineyS2iF", nil)
 
-    private weak var sourceCodeEditorViewWrapper: SourceCodeEditorViewWrapper?
+    private weak var sourceEditorViewWrapper: SourceEditorViewWrapper?
 	
     private var dataSource: AnyObject? {
-        return sourceCodeEditorViewWrapper?.dataSource
+        return sourceEditorViewWrapper?.dataSource
     }
     
     @objc
-    public init(withSourceCodeEditorViewWrapper wrapper: SourceCodeEditorViewWrapper) {
-        sourceCodeEditorViewWrapper = wrapper
+    public init(withSourceEditorViewWrapper wrapper: SourceEditorViewWrapper) {
+        sourceEditorViewWrapper = wrapper
     }
     
     @objc

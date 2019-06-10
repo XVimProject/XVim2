@@ -9,7 +9,7 @@
 #ifndef XVim2_Bridging_Header_h
 #define XVim2_Bridging_Header_h
 
-#import "XVim2/Xcode/SourceCodeEditorViewProxy.h"
+#import "XVim2/Xcode/SourceEditorViewProxy.h"
 #import "XVim2/Helper/rd_route.h"
 #import "XVim2/Helper/Logger.h"
 

@@ -8,7 +8,7 @@
 
 #import "XVimTester.h"
 #import "Logger.h"
-#import "SourceCodeEditorViewProxy.h"
+#import "SourceEditorViewProxy.h"
 #import "XVimKeyStroke.h"
 #import "XVimTestCase.h"
 #import "XcodeUtils.h"

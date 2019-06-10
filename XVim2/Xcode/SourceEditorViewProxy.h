@@ -67,9 +67,9 @@ static inline XVimSourceEditorRange XvimMakeSourceEditorRange(XVimSourceEditorPo
 // SourceEditorSelection is an internal class
 
 @protocol XVimTextViewDelegateProtocol;
-@class SourceCodeEditorViewWrapper, SourceEditorDataSourceWrapper;
+@class SourceEditorViewWrapper, SourceEditorDataSourceWrapper;
 
-@interface SourceCodeEditorViewProxy : NSObject <SourceViewProtocol>
+@interface SourceEditorViewProxy : NSObject <SourceViewProtocol>
 @property (readonly) XVIM_VISUAL_MODE selectionMode;
 @property (readonly) NSUInteger insertionPoint;
 @property (readonly) XVimPosition insertionPosition;
@@ -89,9 +89,9 @@ static inline XVimSourceEditorRange XvimMakeSourceEditorRange(XVimSourceEditorPo
 @property (readonly, nullable) NSWindow* window;
 @property (strong, nonnull) NSString* string;
 @property BOOL xvim_lockSyncStateFromView;
-@property (strong, nullable) SourceCodeEditorViewWrapper* sourceCodeEditorViewWrapper;
+@property (strong, nullable) SourceEditorViewWrapper* sourceEditorViewWrapper;
 @property (readonly, nonatomic, nullable) SourceEditorDataSourceWrapper* sourceEditorDataSourceWrapper;
-- (nullable instancetype)initWithSourceCodeEditorView:(nonnull _TtC15IDESourceEditor19IDESourceEditorView *)sourceEditorView;
+- (nullable instancetype)initWithSourceEditorView:(nonnull _TtC15IDESourceEditor19IDESourceEditorView *)sourceEditorView;
 
 // Data source
 @property (readonly, nonatomic, nullable) id dataSource;

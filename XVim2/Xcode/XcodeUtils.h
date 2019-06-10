@@ -23,7 +23,7 @@
 @class IDEEditorArea;
 @class IDENavigableItem;
 @class IDEEditorOpenSpecifier;
-@class SourceCodeEditorViewProxy;
+@class SourceEditorViewProxy;
 
 IDEWorkspaceWindowController* XVimLastActiveWindowController(void);
 IDEWorkspaceTabController_XVim* XVimLastActiveWorkspaceTabController(void);
@@ -31,7 +31,7 @@ IDEEditorArea* XVimLastActiveEditorArea(void);
 BOOL XVimOpenDocumentAtPath(NSString* path);
 IDEEditorOpenSpecifier* XVimOpenSpecifier(IDENavigableItem* item, id locationToSelect);
 _TtC15IDESourceEditor19IDESourceEditorView* XVimLastActiveEditorView(void);
-SourceCodeEditorViewProxy* XVimLastActiveSourceView(void);
+SourceEditorViewProxy* XVimLastActiveSourceView(void);
 
 static inline Class IDEEditorOpenSpecifierClass() { return NSClassFromString(@"IDEEditorOpenSpecifier"); }
 static inline Class DVTDocumentLocationClass() { return NSClassFromString(@"DVTDocumentLocation"); }

@@ -10,9 +10,9 @@
 #import <IDEKit/IDEEditorDocument.h>
 #import "NSString+VimHelper.h"
 #import "NSTextStorage+VimOperation.h"
-#import "SourceCodeEditorViewProxy+XVim.h"
-#import "SourceCodeEditorViewProxy.h"
-#import "SourceCodeEditorViewProxy+Scrolling.h"
+#import "SourceEditorViewProxy+XVim.h"
+#import "SourceEditorViewProxy.h"
+#import "SourceEditorViewProxy+Scrolling.h"
 #import "XVim.h"
 #import "XVim2-Swift.h"
 #import "XVimMotion.h"
@@ -20,8 +20,8 @@
 #import "XVimXcode.h"
 #import <IDESourceEditor/_TtC15IDESourceEditor19IDESourceEditorView.h>
 
-@interface SourceCodeEditorViewProxy ()
-@property (weak) _TtC15IDESourceEditor19IDESourceEditorView* sourceCodeEditorView;
+@interface SourceEditorViewProxy ()
+@property (weak) _TtC15IDESourceEditor19IDESourceEditorView* sourceEditorView;
 @property NSUInteger selectionBegin;
 @property XVIM_VISUAL_MODE selectionMode;
 @property NSUInteger insertionPoint;
@@ -36,7 +36,7 @@
 @end
 
 
-@implementation SourceCodeEditorViewProxy (XVim)
+@implementation SourceEditorViewProxy (XVim)
 
 - (NSUInteger)xvim_indexOfLineNumber:(NSUInteger)line column:(NSUInteger)col
 {
@@ -66,7 +66,7 @@
     NSUInteger firstRow = lineRange.location - 1;
     NSUInteger numRows = lineRange.length;
     
-    NSRange charRange = [self.sourceCodeEditorView characterRangeForLineRange:NSMakeRange(firstRow, numRows)];
+    NSRange charRange = [self.sourceEditorView characterRangeForLineRange:NSMakeRange(firstRow, numRows)];
     if (includeEOL) {
         charRange.length += [self.sourceEditorDataSourceWrapper lineTerminatorLengthForLine:(firstRow + numRows - 1)];
     }
@@ -961,25 +961,25 @@
 - (NSUInteger)xvim_displayNextLine:(NSUInteger)index column:(NSUInteger)column count:(NSUInteger)count option:(MOTION_OPTION)opt
 {
     for (NSUInteger i = 0; i < count; i++) {
-        [self.sourceCodeEditorView moveDown:self];
+        [self.sourceEditorView moveDown:self];
     }
     // TODO
-    return [self.sourceCodeEditorView
-                       characterRangeForLineRange:NSMakeRange(self.sourceCodeEditorView
+    return [self.sourceEditorView
+                       characterRangeForLineRange:NSMakeRange(self.sourceEditorView
                                                                           .accessibilityInsertionPointLineNumber,
                                                               1)]
                        .location
-           + self.sourceCodeEditorView.accessibilityColumnIndexRange.location;
+           + self.sourceEditorView.accessibilityColumnIndexRange.location;
 }
 
 - (NSUInteger)xvim_displayPrevLine:(NSUInteger)index column:(NSUInteger)column count:(NSUInteger)count option:(MOTION_OPTION)opt
 {
     for (NSUInteger i = 0; i < count; i++) {
-        [self.sourceCodeEditorView moveUp:self];
+        [self.sourceEditorView moveUp:self];
     }
-    NSRange range = self.sourceCodeEditorView.accessibilityColumnIndexRange;
-    return [self.sourceCodeEditorView
-                       characterRangeForLineRange:NSMakeRange(self.sourceCodeEditorView
+    NSRange range = self.sourceEditorView.accessibilityColumnIndexRange;
+    return [self.sourceEditorView
+                       characterRangeForLineRange:NSMakeRange(self.sourceEditorView
                                                                           .accessibilityInsertionPointLineNumber,
                                                               1)]
                        .location
@@ -992,9 +992,9 @@
 {
     // XCODE93
     /*
-    __weak SourceCodeEditorViewProxy* weakSelf = self;
+    __weak SourceEditorViewProxy* weakSelf = self;
     [self.undoManager registerUndoWithTarget:self handler:^(id _Nonnull target){
-        SourceCodeEditorViewProxy* SELF = weakSelf;
+        SourceEditorViewProxy* SELF = weakSelf;
         if (!SELF)
             return;
         XVimMotion* m = XVIM_MAKE_MOTION(MOTION_POSITION, DEFAULT_MOTION_TYPE,
