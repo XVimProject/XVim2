@@ -32,10 +32,6 @@
                              @"    jj] kkk"; // 36 40 44
 
     static NSString* text5 = @"aaa:<#bbb ccc ddd#> eee"; // 0 3 4 20
-    
-    static NSString* text6 = @"aaa bbb aaa ccc aaa ddd";
-    
-    static NSString* text7 = @"aaa bbb aaa ccc  ddd";
 
     return @[
         // b, B
@@ -68,10 +64,6 @@
         XVimMakeTestCase(text2, 4, 0, @"G", text2, 40, 0),
         XVimMakeTestCase(text2, 44, 0, @"3G", text2, 24, 0),
         XVimMakeTestCase(text2, 8, 0, @"9G", text2, 40, 0),
-        
-        // gn, gN
-        XVimMakeTestCase(text6, 0, 0, @"/aaa<CR>dgn", text7, 16, 0),
-        XVimMakeTestCase(text6, 0, 0, @"/aaa<CR>n<CR>n<CR>dgN", text7, 16, 0),
 
         // ge, gE
         XVimMakeTestCase(text2, 9, 0, @"gE", text2, 6, 0),

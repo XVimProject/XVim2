@@ -15,10 +15,10 @@
 #import "XVimMotionEvaluator.h"
 #import "XVimMotionOption.h"
 #import "XVimWindow.h"
-#import "XVimSearch.h"
 
 #ifdef TODO
 #import "XVimCommandLineEvaluator.h"
+#import "XVimSearch.h"
 #endif
 
 @implementation XVimGMotionEvaluator
@@ -60,20 +60,6 @@
 - (XVimEvaluator*)k
 {
     self.motion = XVIM_MAKE_MOTION(MOTION_LINE_BACKWARD, CHARWISE_EXCLUSIVE, MOPT_DISPLAY_LINE, self.numericArg);
-    return nil;
-}
-
-- (XVimEvaluator*)n{
-    self.motion = [XVim.instance.searcher motionForRepeatSearch];
-    self.motion.motion = MOTION_SEARCH_MATCHED_FORWARD;
-
-    return nil;
-}
-
-- (XVimEvaluator*)N{
-    self.motion = [XVim.instance.searcher motionForRepeatSearch];
-    self.motion.motion = MOTION_SEARCH_MATCHED_BACKWARD;
-
     return nil;
 }
 
