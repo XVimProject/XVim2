@@ -37,11 +37,8 @@
 #import "XVimWindow.h"
 #import "XVimWindowEvaluator.h"
 #import "XVimYankEvaluator.h"
-
-#if 0
 #import "XVimKeyStroke.h"
 #import "XVimRecordingEvaluator.h"
-#endif
 
 @interface XVimNormalEvaluator () {
 }
@@ -514,7 +511,6 @@
     return nil;
 }
 
-#if 0
 // Should be moved to XVimMotionEvaluator
 - (XVimEvaluator*)q{
     if( [XVim instance].isExecuting ){
@@ -566,6 +562,7 @@
     return [XVimEvaluator noOperationEvaluator];
 }
 
+#if 0
 - (XVimEvaluator*)HT{
     [[self sourceView] xvim_selectNextPlaceholder];
     return nil;
