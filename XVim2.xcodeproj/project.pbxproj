@@ -7,7 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
-		3B53601A211495F4008BFF2B /* XVimRecordingEvaluator.m in Sources */ = {isa = PBXBuildFile; fileRef = 3B536018211495F4008BFF2B /* XVimRecordingEvaluator.m */; };
+		5DAD8A00227455F000D01D9F /* XVimSourceEditorSelectionDisplay.m in Sources */ = {isa = PBXBuildFile; fileRef = 5DAD89FF227455F000D01D9F /* XVimSourceEditorSelectionDisplay.m */; };
 		A20FB79E21BB7FF2001FDC62 /* about.xib in Resources */ = {isa = PBXBuildFile; fileRef = A20FB79A21BB7FF2001FDC62 /* about.xib */; };
 		A20FB79F21BB7FF2001FDC62 /* XVimAboutDialog.m in Sources */ = {isa = PBXBuildFile; fileRef = A20FB79D21BB7FF2001FDC62 /* XVimAboutDialog.m */; };
 		A2482F311F72435D00FEF4DE /* ProcessRunner.m in Sources */ = {isa = PBXBuildFile; fileRef = A2482F2E1F72435D00FEF4DE /* ProcessRunner.m */; };
@@ -16,7 +16,6 @@
 		A26E5C801F514686000BCC66 /* XVim2.xcplugin in CopyFiles */ = {isa = PBXBuildFile; fileRef = A26E5C731F5145AB000BCC66 /* XVim2.xcplugin */; };
 		A27A7AEB2077BD68006A0E4F /* XVimRangeUtil.m in Sources */ = {isa = PBXBuildFile; fileRef = A27A7AEA2077BD68006A0E4F /* XVimRangeUtil.m */; };
 		A287A8C71F55D637009378BC /* NSObject+ExtraData.m in Sources */ = {isa = PBXBuildFile; fileRef = A287A8C61F55D636009378BC /* NSObject+ExtraData.m */; };
-		A2933D0622AFB7AE0095378C /* XVimSourceEditorSelectionDisplay.m in Sources */ = {isa = PBXBuildFile; fileRef = 5DAD89FF227455F000D01D9F /* XVimSourceEditorSelectionDisplay.m */; };
 		A29BA5722243D6160032C3E2 /* SourceEditorViewWrapper.s in Sources */ = {isa = PBXBuildFile; fileRef = A29BA56F2243D6160032C3E2 /* SourceEditorViewWrapper.s */; };
 		A29BA5732243D6160032C3E2 /* SourceEditorDataSourceWrapper.swift in Sources */ = {isa = PBXBuildFile; fileRef = A29BA5702243D6160032C3E2 /* SourceEditorDataSourceWrapper.swift */; };
 		A29BA5742243D6160032C3E2 /* SourceEditorViewWrapper.swift in Sources */ = {isa = PBXBuildFile; fileRef = A29BA5712243D6160032C3E2 /* SourceEditorViewWrapper.swift */; };
@@ -114,8 +113,6 @@
 /* End PBXCopyFilesBuildPhase section */
 
 /* Begin PBXFileReference section */
-		3B536018211495F4008BFF2B /* XVimRecordingEvaluator.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = XVimRecordingEvaluator.m; sourceTree = "<group>"; };
-		3B536019211495F4008BFF2B /* XVimRecordingEvaluator.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = XVimRecordingEvaluator.h; sourceTree = "<group>"; };
 		5D1DDA6E227444B600CB3B74 /* _TtC12SourceEditor28SourceEditorSelectionDisplay.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = _TtC12SourceEditor28SourceEditorSelectionDisplay.h; path = XVim2/Xcode/_TtC12SourceEditor28SourceEditorSelectionDisplay.h; sourceTree = SOURCE_ROOT; };
 		5D322FF1227467D400D22078 /* XVimSourceEditorSelectionDisplay.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = XVimSourceEditorSelectionDisplay.h; path = XVim2/Xcode/XVimSourceEditorSelectionDisplay.h; sourceTree = SOURCE_ROOT; };
 		5DAD89FF227455F000D01D9F /* XVimSourceEditorSelectionDisplay.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; name = XVimSourceEditorSelectionDisplay.m; path = XVim2/Xcode/XVimSourceEditorSelectionDisplay.m; sourceTree = SOURCE_ROOT; };
@@ -358,8 +355,6 @@
 				ED9CF2D61F6EFA2A00908DFB /* XVimNormalEvaluator.m */,
 				EDF0105F1F6EEF1000461B2C /* XVimNumericEvaluator.h */,
 				EDF0105A1F6EEF1000461B2C /* XVimNumericEvaluator.m */,
-				3B536019211495F4008BFF2B /* XVimRecordingEvaluator.h */,
-				3B536018211495F4008BFF2B /* XVimRecordingEvaluator.m */,
 				ED548FDB1F8280B600A8069D /* XVimRegisterEvaluator.h */,
 				ED548FDE1F8280B700A8069D /* XVimRegisterEvaluator.m */,
 				ED548FE51F82A9C900A8069D /* XVimReplaceEvaluator.h */,
@@ -728,6 +723,7 @@
 				A2B537B11F51C94400D83C0A /* NSObject+Swizzle.m in Sources */,
 				EDF0106E1F6EEFFC00461B2C /* XVimWindow.m in Sources */,
 				EDD27BAE1F9B5EB30006471C /* XVimTester+Jump.m in Sources */,
+				5DAD8A00227455F000D01D9F /* XVimSourceEditorSelectionDisplay.m in Sources */,
 				EDF0106B1F6EEFFC00461B2C /* XVimMotion.m in Sources */,
 				ED548FDF1F8280B700A8069D /* XVimRegister.m in Sources */,
 				EDD27BA61F9B5EB30006471C /* XVimTester+Issues.m in Sources */,
@@ -752,11 +748,9 @@
 				ED4382B11F85340200975127 /* XVimVisualEvaluator.m in Sources */,
 				A29BA5742243D6160032C3E2 /* SourceEditorViewWrapper.swift in Sources */,
 				EDF0106D1F6EEFFC00461B2C /* XVimNumericEvaluator.m in Sources */,
-				3B53601A211495F4008BFF2B /* XVimRecordingEvaluator.m in Sources */,
 				ED0DED851F8C47F300886F6B /* XVimReplacePromptEvaluator.m in Sources */,
 				EDF0106A1F6EEFFC00461B2C /* XVimKeyStroke.m in Sources */,
 				ED60EB871F82E4D4000CBF9C /* XVimTildeEvaluator.m in Sources */,
-				A2933D0622AFB7AE0095378C /* XVimSourceEditorSelectionDisplay.m in Sources */,
 				A2482F311F72435D00FEF4DE /* ProcessRunner.m in Sources */,
 				A2A9F93E2070A85200E7BB53 /* XVimIDESourceEditorView.m in Sources */,
 				EDF010681F6EEFFC00461B2C /* XVimEvaluator.m in Sources */,
