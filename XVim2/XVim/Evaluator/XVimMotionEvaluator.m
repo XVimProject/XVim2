@@ -21,6 +21,7 @@
 #import "XVimWindow.h"
 #import "XVimZEvaluator.h"
 #import "XcodeUtils.h"
+#import "XVimGMotionEvaluator.h"
 
 @interface XVimMotionEvaluator () {
     MOTION_TYPE _forcedMotionType;
@@ -146,12 +147,10 @@ if( childEvaluator.keyStroke.toString.length != 1 ){
 - (XVimEvaluator*)g
 {
     [self.argumentString appendString:@"g"];
-    // self.onChildCompleteHandler = @selector(onComplete_g:);
-    // return [[XVimGMotionEvaluator alloc] initWithWindow:self.window];
-    return nil;
+     self.onChildCompleteHandler = @selector(onComplete_g:);
+     return [[XVimGMotionEvaluator alloc] initWithWindow:self.window];
 }
 
-#if 0
 - (XVimEvaluator*)onComplete_g:(XVimGMotionEvaluator*)childEvaluator{
     if( childEvaluator.key.selector == @selector(SEMICOLON) ){
         XVimMark* mark = [[XVim instance].marks markForName:@"." forDocument:[self.sourceView documentURL].path];
@@ -160,7 +159,6 @@ if( childEvaluator.keyStroke.toString.length != 1 ){
         return [self _motionFixed:childEvaluator.motion];
     }
 }
-#endif
 
 - (XVimEvaluator*)G
 {

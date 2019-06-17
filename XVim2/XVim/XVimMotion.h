@@ -53,6 +53,8 @@ typedef NS_ENUM(NSInteger, MOTION) {
     MOTION_BOTTOM, // L            jump
     MOTION_SEARCH_FORWARD, // /            jump
     MOTION_SEARCH_BACKWARD, // ?            jump
+    MOTION_SEARCH_MATCHED_FORWARD,
+    MOTION_SEARCH_MATCHED_BACKWARD,
     TEXTOBJECT_WORD,
     // TEXTOBJECT_BIGWORD,           // Use motion option
     TEXTOBJECT_SENTENCE,
