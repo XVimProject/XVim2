@@ -426,17 +426,18 @@ static inline BOOL xvim_horizontallyStackingModeForMode(GeniusLayoutMode mode)
 - (void)xvim_removeAssistantEditor
 {
     IDEEditorArea* editorArea = SELF.editorArea;
-    IDEEditorGeniusMode* geniusMode;
     switch ([editorArea editorMode]) {
     case STANDARD:
         break;
     case GENIUS:
-        geniusMode = (IDEEditorGeniusMode*)[editorArea editorModeViewController];
-        if ([geniusMode canRemoveAssistantEditor] == NO) {
-            [SELF changeToStandardEditor:SELF];
-        }
-        else {
-            //[SELF removeAssistantEditor:SELF];
+        {
+            IDEEditorGeniusMode* geniusMode = (IDEEditorGeniusMode*)[editorArea editorModeViewController];
+            if ([geniusMode canRemoveAssistantEditor] == NO) {
+                [SELF changeToStandardEditor:SELF];
+            }
+            else {
+                //[SELF removeAssistantEditor:SELF];
+            }
         }
         break;
     case VERSION:

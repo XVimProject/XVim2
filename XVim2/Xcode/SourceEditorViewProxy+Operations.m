@@ -707,9 +707,7 @@
 - (BOOL)xvim_incrementNumber:(int64_t)offset
 {
     NSUInteger ip = self.insertionPoint;
-    NSRange range;
-
-    range = [self xvim_currentNumber];
+    NSRange range = [self xvim_currentNumber];
     if (range.location == NSNotFound) {
         NSUInteger pos = [self.textStorage xvim_nextDigitInLine:ip];
         if (pos == NSNotFound) {
@@ -760,7 +758,7 @@
     if (line2 < line1)
         xvim_swap(line1, line2);
 
-    NSRange characterRange = [self xvim_indexRangeForLines:NSMakeRange(line1, line2 - line1 + 1)];
+    let characterRange = [self xvim_indexRangeForLines:NSMakeRange(line1, line2 - line1 + 1)];
     NSString* str = [self.string substringWithRange:characterRange];
 
     NSMutableArray<NSString*>* lines =
@@ -786,7 +784,7 @@
     }];
 
     if (options & XVimSortOptionRemoveDuplicateLines) {
-        NSMutableIndexSet* removeIndices = [NSMutableIndexSet indexSet];
+        let removeIndices = [NSMutableIndexSet indexSet];
         // At this point the lines are already sorted
         [lines enumerateObjectsUsingBlock:^(NSString* str2, NSUInteger idx, BOOL* stop) {
             if (idx < [lines count] - 1) {
@@ -799,7 +797,7 @@
         [lines removeObjectsAtIndexes:removeIndices];
     }
 
-    NSUInteger insertionAfterOperation = characterRange.location;
+    let insertionAfterOperation = characterRange.location;
     NSString* sortedLinesString = [[lines componentsJoinedByString:@"\n"] stringByAppendingString:@"\n"];
 
     {
@@ -857,7 +855,7 @@
 
 - (NSRange)_xvim_getDeleteRange:(XVimMotion*)motion withRange:(XVimRange)to
 {
-    NSRange r = [self xvim_getOperationRangeFrom:to.begin To:to.end Type:motion.type];
+    var r = [self xvim_getOperationRangeFrom:to.begin To:to.end Type:motion.type];
     if (motion.type == LINEWISE && [self.textStorage isLastLine:to.end]) {
         if (r.location != 0) {
             motion.motionInfo.deleteLastLine = YES;

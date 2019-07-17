@@ -35,9 +35,9 @@
 
 - (NSRange)_xvim_getYankRange:(XVimMotion*)motion withRange:(XVimRange)to
 {
-    NSRange r = [self xvim_getOperationRangeFrom:to.begin To:to.end Type:motion.type];
-    BOOL eof = [self.textStorage isEOF:to.end];
-    BOOL blank = [self.textStorage isBlankline:to.end];
+    var r = [self xvim_getOperationRangeFrom:to.begin To:to.end Type:motion.type];
+    let eof = [self.textStorage isEOF:to.end];
+    let blank = [self.textStorage isBlankline:to.end];
     if (motion.type == LINEWISE && blank && eof) {
         if (r.location != 0) {
             r.location--;
@@ -56,7 +56,7 @@
     NSUInteger newPos = NSNotFound;
 
     if (self.selectionMode == XVIM_VISUAL_NONE) {
-        XVimRange to = [self xvim_getMotionRange:motionPoint Motion:motion];
+        var to = [self xvim_getMotionRange:motionPoint Motion:motion];
         if (NSNotFound == to.end) {
             return;
         }
@@ -79,17 +79,17 @@
                 }
             }
         }
-        NSRange r = [self _xvim_getYankRange:motion withRange:to];
+        let r = [self _xvim_getYankRange:motion withRange:to];
         [self _xvim_yankRange:r withType:motion.type];
     }
     else if (self.selectionMode != XVIM_VISUAL_BLOCK) {
-        NSRange range = [self _xvim_selectedRange];
+        let range = [self _xvim_selectedRange];
 
         newPos = range.location;
         [self _xvim_yankRange:range withType:DEFAULT_MOTION_TYPE];
     }
     else {
-        XVimSelection sel = [self _xvim_selectedBlock];
+        let sel = [self _xvim_selectedBlock];
 
         newPos = [self xvim_indexOfLineNumber:sel.top column:sel.left];
         [self _xvim_yankSelection:sel];
@@ -116,8 +116,8 @@
         after = NO;
     }
 
-    NSUInteger insertionPointAfterPut = self.insertionPoint;
-    NSUInteger targetPos = self.insertionPoint;
+    var insertionPointAfterPut = self.insertionPoint;
+    var targetPos = self.insertionPoint;
 	switch (type){
 		case XVIM_TEXT_TYPE_CHARACTERS:
             // Forward insertion point +1 if after flag if on
@@ -159,14 +159,14 @@
                 self.insertionPoint++;
             }
             insertionPointAfterPut = self.insertionPoint;
-            NSUInteger insertPos = self.insertionPoint;
-            NSUInteger column = [self.textStorage xvim_columnOfIndex:insertPos];
-            NSUInteger startLine = [self.textStorage xvim_lineNumberAtIndex:insertPos];
-            NSArray* lines = [text componentsSeparatedByString:@"\n"];
+            let insertPos = self.insertionPoint;
+            let column = [self.textStorage xvim_columnOfIndex:insertPos];
+            let startLine = [self.textStorage xvim_lineNumberAtIndex:insertPos];
+            NSArray<NSString*>* lines = [text componentsSeparatedByString:@"\n"];
             for (NSUInteger i = 0; i < lines.count; i++) {
                 NSString* line = [lines objectAtIndex:i];
                 NSUInteger targetLine = startLine + i;
-                NSUInteger head = [self xvim_indexOfLineNumber:targetLine];
+                var head = [self xvim_indexOfLineNumber:targetLine];
                 if (NSNotFound == head) {
                     NSAssert(targetLine != 0, @"This should not be happen");
                     [self xvim_insertNewlineBelowLine:targetLine - 1];
@@ -175,11 +175,11 @@
                 NSAssert(NSNotFound != head, @"Head of the target line must be found at this point");
 
                 // Find next insertion point
-                NSUInteger max = [self.textStorage xvim_numberOfColumnsInLineAtIndex:head];
+                let max = [self.textStorage xvim_numberOfColumnsInLineAtIndex:head];
                 NSAssert(max != NSNotFound, @"Should not be NSNotFound");
                 if (column > max) {
                     // If the line does not have enough column pad it with spaces
-                    NSUInteger end = [self xvim_endOfLine:head];
+                    let end = [self xvim_endOfLine:head];
 
                     [self _xvim_insertSpaces:column - max replacementRange:NSMakeRange(end, 0)];
                 }
@@ -241,16 +241,16 @@
 
 - (void)_xvim_yankSelection:(XVimSelection)sel
 {
-    NSTextStorage* ts = self.textStorage;
-    NSString* s = self.string;
-    NSUInteger tabWidth = ts.xvim_tabWidth;
+    let ts = self.textStorage;
+    let s = self.string;
+    let tabWidth = ts.xvim_tabWidth;
 
-    NSMutableString* ybuf = [[NSMutableString alloc] init];
+    var ybuf = [[NSMutableString alloc] init];
     self.lastYankedType = XVIM_TEXT_TYPE_BLOCK;
 
     for (NSUInteger line = sel.top; line <= sel.bottom; line++) {
-        NSUInteger lpos = [self xvim_indexOfLineNumber:line column:sel.left];
-        NSUInteger rpos = [self xvim_indexOfLineNumber:line column:sel.right];
+        var lpos = [self xvim_indexOfLineNumber:line column:sel.left];
+        var rpos = [self xvim_indexOfLineNumber:line column:sel.right];
 
         /* if lpos points in the middle of a tab, split it and advance lpos */
         if (![ts isEOF:lpos] && [s characterAtIndex:lpos] == '\t') {
@@ -273,7 +273,7 @@
                 [ybuf appendString:[s substringWithRange:NSMakeRange(lpos, rpos - lpos)]];
             }
             else {
-                NSRange r = NSMakeRange(lpos, rpos - lpos + 1);
+                var r = NSMakeRange(lpos, rpos - lpos + 1);
                 NSUInteger rcol = 0;
                 BOOL mustPad = NO;
 
@@ -319,9 +319,9 @@
     NSUInteger tabWidth = self.textStorage.xvim_tabWidth;
 
     for (NSUInteger line = sel.bottom; line >= sel.top; line--) {
-        NSTextStorage* ts = self.textStorage;
-        NSUInteger lpos = [self xvim_indexOfLineNumber:line column:sel.left];
-        NSUInteger rpos = [self xvim_indexOfLineNumber:line column:sel.right];
+        var ts = self.textStorage;
+        var lpos = [self xvim_indexOfLineNumber:line column:sel.left];
+        var rpos = [self xvim_indexOfLineNumber:line column:sel.right];
         NSUInteger nspaces = 0;
 
         if ([ts isEOF:lpos]) {
@@ -348,7 +348,7 @@
             }
         }
 
-        NSRange range = NSMakeRange(lpos, rpos - lpos + 1);
+        var range = NSMakeRange(lpos, rpos - lpos + 1);
         // Workaround Fix: Visual block mode plus d or x equals extra characters deleted https://github.com/XVimProject/XVim2/issues/216
         // This seem a bug in sourceEditorView -insertText:replacementRange:;
         // After first call (the sel.bottom line) of -insertText:replacementRange:,
