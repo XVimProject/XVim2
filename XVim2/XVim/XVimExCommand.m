@@ -1604,16 +1604,32 @@ xvim_ignore_warning_pop
 - (void)macvim:(XVimExArg*)args inWindow:(XVimWindow*)window
 {
 	NSURL* documentURL = window.sourceView.documentURL;
-	NSString* filepath = documentURL.path;
-	if (filepath != nil){
-		NSUInteger pos = window.sourceView.insertionPoint;
-		NSUInteger linenumber = [StringUtil lineWithPath:filepath pos:pos];
-		// use `brew install macvim`
-		NSString* str = [NSString stringWithFormat:@"/usr/local/bin/mvim +%ld %@", linenumber, filepath];
-		[XVimTaskRunner runScript:str];
-		
-		DEBUG_LOG("macvim")
-	}
+    NSString* filepath;
+    if ([documentURL isFileURL]) {
+        filepath = documentURL.path;
+    } else if ([documentURL isXcodeModuleSchemeURL]) {
+        // Xcode convert Objective-C Framework header to swift format except
+        // the swift module file that includes Array and etc.
+        // We use converted text as is.
+        NSFileManager* fm = [NSFileManager defaultManager];
+        NSString* swiftpath = [documentURL xvim_swiftCacheFilePath];
+        NSString* str = window.sourceView.string;
+        if (str.length > 0) {
+            NSData* data = [NSData dataWithBytes:(void*)str.UTF8String length:str.length];
+            [fm createFileAtPath:swiftpath contents:data attributes:nil];
+            filepath = swiftpath;
+        }
+    }
+
+    if (filepath != nil) {
+        if (filepath != nil && filepath.length > 0){
+            NSUInteger pos = window.sourceView.insertionPoint;
+            NSUInteger linenumber = [StringUtil lineWithPath:filepath pos:pos];
+            // use `brew install macvim`
+            NSString* str = [NSString stringWithFormat:@"/usr/local/bin/mvim +%ld %@", linenumber, filepath];
+            [XVimTaskRunner runScript:str];
+        }
+    }
 }
 
 @end
