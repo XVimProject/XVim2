@@ -63,11 +63,11 @@
 
 - (void)setXVimString:(XVimString*)string
 {
-    [[NSPasteboard generalPasteboard] declareTypes:[NSArray arrayWithObject:NSStringPboardType] owner:nil];
-    [[NSPasteboard generalPasteboard] setString:string forType:NSStringPboardType];
+    [[NSPasteboard generalPasteboard] declareTypes:[NSArray arrayWithObject:NSPasteboardTypeString] owner:nil];
+    [[NSPasteboard generalPasteboard] setString:string forType:NSPasteboardTypeString];
 }
 
-- (XVimString*)string { return [[NSPasteboard generalPasteboard] stringForType:NSStringPboardType]; }
+- (XVimString*)string { return [[NSPasteboard generalPasteboard] stringForType:NSPasteboardTypeString]; }
 
 @end
 

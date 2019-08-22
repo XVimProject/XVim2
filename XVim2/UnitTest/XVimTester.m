@@ -252,7 +252,7 @@
     // setup the results toggle button
     NSButton* toggleResultsButton = [[NSButton alloc] initWithFrame:NSMakeRect(0, 0, 200, 30)];
     [toggleResultsButton setTitle:@"Toggle Results"];
-    [toggleResultsButton setBezelStyle:NSRoundedBezelStyle];
+    [toggleResultsButton setBezelStyle:NSBezelStyleRounded];
     [toggleResultsButton setTarget:self];
     [toggleResultsButton setAction:@selector(toggleResults:)];
 

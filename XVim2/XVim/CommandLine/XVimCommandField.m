@@ -37,7 +37,7 @@
     NSLayoutManager* layoutManager = [self layoutManager];
     [layoutManager ensureLayoutForTextContainer:textContainer];
     NSSize layoutSize = [layoutManager usedRectForTextContainer:textContainer].size;
-    return NSMakeSize(NSViewNoInstrinsicMetric, layoutSize.height + self.textContainerInset.height);
+    return NSMakeSize(NSViewNoIntrinsicMetric, layoutSize.height + self.textContainerInset.height);
 }
 
 - (BOOL)becomeFirstResponder

@@ -646,7 +646,7 @@
     if ([documentURL isFileURL]) {
         NSString* filename = [documentURL path];
         NSString* text = [NSString
-                    stringWithFormat:@"%@   line %lld of %ld --%d%%-- col %ld", filename, lineNumber, numberOfLines,
+                    stringWithFormat:@"%@   line %ld of %ld --%d%%-- col %ld", filename, lineNumber, numberOfLines,
                                      (int)((float)lineNumber * 100.0 / (float)numberOfLines), columnNumber + 1];
 
         [window statusMessage:text];

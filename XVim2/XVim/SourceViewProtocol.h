@@ -24,7 +24,7 @@ typedef NS_ENUM(char, CursorStyle) {
 
 @protocol XVimTextViewDelegateProtocol
 - (void)textView:(id)view didYank:(NSString*)yankedText withType:(XVIM_TEXT_TYPE)type;
-- (void)textView:(id)view didDelete:(NSString*)deletedText withType:(XVIM_TEXT_TYPE)type shouldReplaceRegister:(bool)isReplacing;
+- (void)textView:(id)view didDelete:(NSString*)deletedText withType:(XVIM_TEXT_TYPE)type shouldReplaceRegister:(BOOL)isReplacing;
 @end
 
 @protocol SourceViewProtocol <NSObject>

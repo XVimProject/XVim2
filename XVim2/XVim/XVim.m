@@ -309,7 +309,7 @@
         NSMenuItem* subitem = [[NSMenuItem alloc] init];
         subitem.title = @"Enable";
         [subitem setEnabled:YES];
-        [subitem setState:NSOnState];
+        [subitem setState:NSControlStateValueOn];
         subitem.target = [XVim instance];
         subitem.action = @selector(toggleXVim:);
         subitem.representedObject = XVIM_MENU_TOGGLE_IDENTIFIER;
@@ -366,13 +366,13 @@
 - (void)enableXVim
 {
     self.enabled = YES;
-    self.enabledMenuItem.state = NSOnState;
+    self.enabledMenuItem.state = NSControlStateValueOn;
     [self postEnabledChanged];
 }
 - (void)disableXVim
 {
     self.enabled = NO;
-    self.enabledMenuItem.state = NSOffState;
+    self.enabledMenuItem.state = NSControlStateValueOff;
     [self postEnabledChanged];
 }
 
