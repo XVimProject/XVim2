@@ -42,7 +42,7 @@
     return self;
 }
 
-- (void)evaluateWhole:(XVimEvalArg*)args inWindow:(XVimWindow*)window
+- (void)evaluateWhole:(nonnull XVimEvalArg*)args inWindow:(nonnull XVimWindow*)window
 {
     // parse
     // 1) support only string

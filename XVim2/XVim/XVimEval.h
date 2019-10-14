@@ -12,19 +12,19 @@
 
 // @ref eval.c in original vim
 @interface XVimEvalArg : NSObject
-@property NSString* invar; // [in] in variable
-@property NSString* rvar; // [out] return variable
+@property (nonnull) NSString* invar; // [in] in variable
+@property (nullable) NSString* rvar; // [out] return variable
 @end
 
 //
 @interface XVimEvalFunc : NSObject
-@property NSString* funcName;
-@property NSString* methodName;
+@property (nonnull) NSString* funcName;
+@property (nonnull) NSString* methodName;
 @end
 
 //
 @interface XVimEval : NSObject {
     NSArray<XVimEvalFunc *>* _evalFuncs;
 }
-- (void)evaluateWhole:(XVimEvalArg*)args inWindow:(XVimWindow*)window;
+- (void)evaluateWhole:(nonnull XVimEvalArg*)args inWindow:(nonnull XVimWindow*)window;
 @end

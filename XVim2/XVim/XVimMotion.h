@@ -18,7 +18,7 @@
 @property (nonatomic) NSUInteger lastEndOfWord;
 @end
 
-#define XVIM_MAKE_MOTION(MOTION, TYPE, OPTION, COUNT)                                                                  \
+#define XVIM_MAKE_MOTION(MOTION, TYPE, OPTION, COUNT) \
     [[XVimMotion alloc] initWithMotion:MOTION type:TYPE option:OPTION count:COUNT]
 
 typedef NS_ENUM(NSInteger, MOTION) {
@@ -82,13 +82,13 @@ typedef NS_ENUM(NSInteger, MOTION) {
 @property NSUInteger column;
 @property NSUInteger position;
 @property unichar character;
-@property NSString* regex;
-@property XVimMotionInfo* motionInfo;
+@property (nullable) NSString* regex;
+@property (nullable) XVimMotionInfo* motionInfo;
 @property BOOL jumpToAnotherFile;
 @property BOOL keepJumpMarkIndex;
 
-- (id)initWithMotion:(MOTION)motion type:(MOTION_TYPE)type option:(MOTION_OPTION)option count:(NSUInteger)count;
-- (id)initWithMotion:(MOTION)motion type:(MOTION_TYPE)type option:(MOTION_OPTION)option;
+- (nonnull id)initWithMotion:(MOTION)motion type:(MOTION_TYPE)type option:(MOTION_OPTION)option count:(NSUInteger)count;
+- (nonnull id)initWithMotion:(MOTION)motion type:(MOTION_TYPE)type option:(MOTION_OPTION)option;
 - (BOOL)isTextObject;
 - (BOOL)isJumpMotion;
 @end
