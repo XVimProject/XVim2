@@ -27,7 +27,7 @@
 #import "XcodeUtils.h"
 #import "NSTextStorage+VimOperation.h"
 #import "NSURL+XVimXcodeModule.h"
-#import "StringUtil.h"
+#import "NSString+Util.h"
 #import "XVimTaskRunner.h"
 
 @implementation XVimExArg
@@ -1624,7 +1624,7 @@ xvim_ignore_warning_pop
     if (filepath != nil) {
         if (filepath != nil && filepath.length > 0){
             NSUInteger pos = window.sourceView.insertionPoint;
-            NSUInteger linenumber = [StringUtil lineWithPath:filepath pos:pos];
+            NSUInteger linenumber = [NSString lineWithPath:filepath pos:pos];
             // use `brew install macvim`
             NSString* str = [NSString stringWithFormat:@"/usr/local/bin/mvim +%ld %@", linenumber, filepath];
             [XVimTaskRunner runScript:str];

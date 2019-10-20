@@ -1,5 +1,5 @@
 //
-//  StringUtil.h
+//  NSString+Util.h
 //  XVim2
 //
 //  Created by pebble8888 on 2017/09/20.
@@ -8,6 +8,6 @@
 
 #import <Foundation/Foundation.h>
 
-@interface StringUtil : NSObject
+@interface NSString (Util)
 + (NSUInteger)lineWithPath:(NSString*)path pos:(NSUInteger)pos;
 @end

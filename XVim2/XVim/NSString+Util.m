@@ -6,9 +6,9 @@
 //  Copyright © 2017年 Shuichiro Suzuki. All rights reserved.
 //
 
-#import "StringUtil.h"
+#import "NSString+Util.h"
 
-@implementation StringUtil
+@implementation NSString (Util)
 + (NSUInteger)lineWithPath:(NSString*)path pos:(NSUInteger)pos
 {
     NSError* error;
