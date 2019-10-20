@@ -464,10 +464,10 @@
     }
 
     if (l1 <= l2) {
-        result.corner |= _XVIM_VISUAL_BOTTOM;
+        result.corner |= XVIM_VISUAL_BOTTOM;
     }
     if (c11 <= c22) {
-        result.corner |= _XVIM_VISUAL_RIGHT;
+        result.corner |= XVIM_VISUAL_RIGHT;
     }
     result.top = MIN(l1, l2);
     result.bottom = MAX(l1, l2);
