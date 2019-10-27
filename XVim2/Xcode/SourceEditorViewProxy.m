@@ -43,7 +43,7 @@
 @property NSInteger undoGroupingDepth;
 @property NSString* lastYankedText;
 @property NSLayoutConstraint* cmdLineBottomAnchor;
-@property XVIM_TEXT_TYPE lastYankedType;
+@property XVimTextType lastYankedType;
 @end
 
 @implementation SourceEditorViewProxy {

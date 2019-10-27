@@ -21,7 +21,7 @@
 @property NSUInteger preservedColumn;
 @property BOOL selectionToEOL;
 @property NSString* lastYankedText;
-@property XVIM_TEXT_TYPE lastYankedType;
+@property XVimTextType lastYankedType;
 - (XVimRange)_xvim_selectedLines;
 - (void)xvim_moveCursor:(NSUInteger)pos preserveColumn:(BOOL)preserve;
 - (void)xvim_syncStateWithScroll:(BOOL)scroll;
@@ -202,7 +202,10 @@
 			break;
     }
 
-    [self.xvimTextViewDelegate textView:self didDelete:self.lastYankedText withType:self.lastYankedType shouldReplaceRegister:!isYankingFromVisual];
+    [self.xvimTextViewDelegate textView:self
+                              didDelete:self.lastYankedText
+                                   type:self.lastYankedType
+                  shouldReplaceRegister:!isYankingFromVisual];
     [self xvim_changeSelectionMode:XVIM_VISUAL_NONE];
     if (newPos != NSNotFound) {
         [self xvim_moveCursor:newPos preserveColumn:NO];

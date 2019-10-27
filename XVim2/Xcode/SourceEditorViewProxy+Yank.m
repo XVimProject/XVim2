@@ -19,7 +19,7 @@
 @property NSUInteger preservedColumn;
 @property BOOL selectionToEOL;
 @property NSString* lastYankedText;
-@property XVIM_TEXT_TYPE lastYankedType;
+@property XVimTextType lastYankedType;
 - (void)xvim_moveCursor:(NSUInteger)pos preserveColumn:(BOOL)preserve;
 - (void)xvim_syncStateWithScroll:(BOOL)scroll;
 - (XVimRange)xvim_getMotionRange:(NSUInteger)current Motion:(XVimMotion*)motion;
@@ -95,7 +95,7 @@
         [self _xvim_yankSelection:sel];
     }
 
-    [self.xvimTextViewDelegate textView:self didYank:self.lastYankedText withType:self.lastYankedType];
+    [self.xvimTextViewDelegate textView:self didYank:self.lastYankedText type:self.lastYankedType];
     if (newPos != NSNotFound) {
         [self xvim_moveCursor:newPos preserveColumn:NO];
     }
@@ -103,7 +103,7 @@
 }
 
 
-- (void)xvim_put:(NSString*)text withType:(XVIM_TEXT_TYPE)type afterCursor:(bool)after count:(NSUInteger)count
+- (void)xvim_put:(NSString*)text textType:(XVimTextType)textType afterCursor:(BOOL)after count:(NSUInteger)count
 {
     [self xvim_beginEditTransaction];
     xvim_on_exit { [self xvim_endEditTransaction]; };
@@ -118,8 +118,8 @@
 
     var insertionPointAfterPut = self.insertionPoint;
     var targetPos = self.insertionPoint;
-	switch (type){
-		case XVIM_TEXT_TYPE_CHARACTERS:
+	switch (textType){
+		case XVimTextTypeCharacters:
             // Forward insertion point +1 if after flag if on
             if (0 != text.length) {
                 if (![self.textStorage isNewline:self.insertionPoint] && after) {
@@ -132,7 +132,7 @@
                 insertionPointAfterPut += text.length * count - 1;
             }
     		break;
-		case XVIM_TEXT_TYPE_LINES:
+		case XVimTextTypeLines:
             if (after) {
                 [self xvim_insertNewlineBelowCurrentLine];
                 targetPos = self.insertionPoint;
@@ -152,7 +152,7 @@
                 }
             }
 			break;
-		case XVIM_TEXT_TYPE_BLOCK:
+		case XVimTextTypeBlock:
             // Forward insertion point +1 if after flag if on
             if (![self.textStorage isNewline:self.insertionPoint] && ![self.textStorage isEOF:self.insertionPoint]
                 && after) {
@@ -200,20 +200,20 @@
 {
     if (self.selectionMode == XVIM_VISUAL_NONE) {
         if (type == CHARWISE_EXCLUSIVE || type == CHARWISE_INCLUSIVE) {
-            self.lastYankedType = XVIM_TEXT_TYPE_CHARACTERS;
+            self.lastYankedType = XVimTextTypeCharacters;
         }
         else if (type == LINEWISE) {
-            self.lastYankedType = XVIM_TEXT_TYPE_LINES;
+            self.lastYankedType = XVimTextTypeLines;
         }
     }
     else if (self.selectionMode == XVIM_VISUAL_CHARACTER) {
-        self.lastYankedType = XVIM_TEXT_TYPE_CHARACTERS;
+        self.lastYankedType = XVimTextTypeCharacters;
     }
     else if (self.selectionMode == XVIM_VISUAL_LINE) {
-        self.lastYankedType = XVIM_TEXT_TYPE_LINES;
+        self.lastYankedType = XVimTextTypeLines;
     }
     else if (self.selectionMode == XVIM_VISUAL_BLOCK) {
-        self.lastYankedType = XVIM_TEXT_TYPE_BLOCK;
+        self.lastYankedType = XVimTextTypeBlock;
     }
 }
 
@@ -221,7 +221,7 @@
 {
     [self __xvim_startYankWithType:type];
 
-    BOOL needsNL = self.lastYankedType == XVIM_TEXT_TYPE_LINES;
+    BOOL needsNL = self.lastYankedType == XVimTextTypeLines;
     NSString* s;
     if (range.length) {
         s = [self.string substringWithRange:range];
@@ -246,7 +246,7 @@
     let tabWidth = ts.xvim_tabWidth;
 
     var ybuf = [[NSMutableString alloc] init];
-    self.lastYankedType = XVIM_TEXT_TYPE_BLOCK;
+    self.lastYankedType = XVimTextTypeBlock;
 
     for (NSUInteger line = sel.top; line <= sel.bottom; line++) {
         var lpos = [self xvim_indexOfLineNumber:line column:sel.left];

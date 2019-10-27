@@ -351,7 +351,7 @@ static NSString* MODE_STRINGS[] = { @"", @"-- VISUAL --", @"-- VISUAL LINE --", 
 {
     let view = [self sourceView];
     XVimRegister* reg = [XVIM.registerManager registerByName:self.yankRegister];
-    [view xvim_put:reg.string withType:reg.type afterCursor:YES count:[self numericArg]];
+    [view xvim_put:reg.string type:reg.type afterCursor:YES count:[self numericArg]];
     return nil;
 }
 

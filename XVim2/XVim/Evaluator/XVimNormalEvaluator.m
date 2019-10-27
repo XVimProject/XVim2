@@ -277,7 +277,7 @@
 {
     let view = [self sourceView];
     let reg = [XVIM.registerManager registerByName:self.yankRegister];
-    [view xvim_put:reg.string withType:reg.type afterCursor:YES count:[self numericArg]];
+    [view xvim_put:reg.string type:reg.type afterCursor:YES count:[self numericArg]];
     [[XVim instance] fixOperationCommands];
     return nil;
 }
@@ -286,7 +286,7 @@
 {
     let view = [self sourceView];
     let reg = [[[XVim instance] registerManager] registerByName:self.yankRegister];
-    [view xvim_put:reg.string withType:reg.type afterCursor:NO count:[self numericArg]];
+    [view xvim_put:reg.string type:reg.type afterCursor:NO count:[self numericArg]];
     [[XVim instance] fixOperationCommands];
     return nil;
 }

@@ -186,14 +186,14 @@ static XVimEvaluator* s_popEvaluator = nil;
 
 - (void)setNumericArg:(NSUInteger)numericArg { _numericArg = numericArg; }
 
-- (void)textView:(id)view didYank:(NSString*)yankedText withType:(XVIM_TEXT_TYPE)type
+- (void)textView:(id)view didYank:(NSString*)yankedText type:(XVimTextType)textType
 {
-    [XVIM.registerManager yank:yankedText withType:type onRegister:self.yankRegister];
+    [XVIM.registerManager yank:yankedText type:textType onRegister:self.yankRegister];
 }
 
-- (void)textView:(id)view didDelete:(NSString*)deletedText withType:(XVIM_TEXT_TYPE)type shouldReplaceRegister:(BOOL)isReplacing
+- (void)textView:(id)view didDelete:(NSString*)deletedText type:(XVimTextType)type shouldReplaceRegister:(BOOL)isReplacing
 {
-    [XVIM.registerManager delete:deletedText withType:type onRegister:self.yankRegister shouldReplaceRegister:isReplacing];
+    [XVIM.registerManager delete:deletedText type:type onRegister:self.yankRegister shouldReplaceRegister:isReplacing];
 }
 
 - (XVimCommandLineEvaluator*)searchEvaluatorForward:(BOOL)forward

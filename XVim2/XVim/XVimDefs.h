@@ -120,10 +120,10 @@ NS_INLINE XVimRange XVimRangeSwap(XVimRange range) { return XVimMakeRange(range.
  */
 NS_INLINE NSRange XVimMakeNSRange(XVimRange range) { return NSMakeRange(range.begin, range.end - range.begin + 1); }
 
-typedef NS_ENUM(NSUInteger, XVIM_TEXT_TYPE) {
-    XVIM_TEXT_TYPE_CHARACTERS,
-    XVIM_TEXT_TYPE_BLOCK,
-    XVIM_TEXT_TYPE_LINES
+typedef NS_ENUM(NSUInteger, XVimTextType) {
+    XVimTextTypeCharacters,
+    XVimTextTypeBlock,
+    XVimTextTypeLines,
 };
 
 typedef NSMutableString XVimMutableString;

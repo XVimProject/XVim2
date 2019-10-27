@@ -30,7 +30,7 @@
 @property NSString* lastYankedText;
 @property NSInteger editTransactionDepth;
 @property NSInteger undoGroupingDepth;
-@property XVIM_TEXT_TYPE lastYankedType;
+@property XVimTextType lastYankedType;
 - (void)_xvim_yankSelection:(XVimSelection)sel;
 - (void)_xvim_killSelection:(XVimSelection)sel;
 @end

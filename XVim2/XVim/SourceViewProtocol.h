@@ -23,8 +23,8 @@ typedef NS_ENUM(char, CursorStyle) {
 @class XVimCommandLine;
 
 @protocol XVimTextViewDelegateProtocol
-- (void)textView:(id)view didYank:(NSString*)yankedText withType:(XVIM_TEXT_TYPE)type;
-- (void)textView:(id)view didDelete:(NSString*)deletedText withType:(XVIM_TEXT_TYPE)type shouldReplaceRegister:(BOOL)isReplacing;
+- (void)textView:(id)view didYank:(NSString*)yankedText type:(XVimTextType)type;
+- (void)textView:(id)view didDelete:(NSString*)deletedText type:(XVimTextType)type shouldReplaceRegister:(BOOL)isReplacing;
 @end
 
 @protocol SourceViewProtocol <NSObject>
@@ -166,7 +166,7 @@ typedef NS_ENUM(char, CursorStyle) {
 @protocol SourceViewYankProtocol <NSObject>
 - (void)xvim_yank:(XVimMotion*)motion;
 - (void)xvim_yank:(XVimMotion*)motion withMotionPoint:(NSUInteger)motionPoint;
-- (void)xvim_put:(NSString*)text withType:(XVIM_TEXT_TYPE)type afterCursor:(bool)after count:(NSUInteger)count;
+- (void)xvim_put:(NSString*)text type:(XVimTextType)type afterCursor:(BOOL)after count:(NSUInteger)count;
 @end
 
 #endif /* SourceViewProtocol_h */

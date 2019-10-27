@@ -23,7 +23,7 @@
 {
     if (self = [super init]) {
         _string = [[XVimMutableString alloc] init];
-        _type = XVIM_TEXT_TYPE_CHARACTERS;
+        _type = XVimTextTypeCharacters;
     }
     return self;
 }
@@ -36,7 +36,7 @@
 - (void)clear
 {
     [self.string setString:@""];
-    self.type = XVIM_TEXT_TYPE_CHARACTERS;
+    self.type = XVimTextTypeCharacters;
 }
 
 @end
@@ -179,7 +179,7 @@ static const NSString* s_enum_registers = @"\"0123456789abcdefghijklmnopqrstuvwx
 }
 
 // Private
-- (void)setXVimString:(XVimString*)string withType:(XVIM_TEXT_TYPE)type forReg:(NSString*)reg
+- (void)setXVimString:(XVimString*)string type:(XVimTextType)type forReg:(NSString*)reg
 {
     NSAssert(reg != nil && reg.length == 1, @"name must not nil and one character string");
     XVimRegister* r = [self registerByName:reg];
@@ -250,27 +250,27 @@ static const NSString* s_enum_registers = @"\"0123456789abcdefghijklmnopqrstuvwx
     return [self registerByName:name].string;
 }
 
-- (void)yank:(XVimString*)string withType:(XVIM_TEXT_TYPE)type onRegister:(NSString*)name
+- (void)yank:(XVimString*)string type:(XVimTextType)type onRegister:(NSString*)name
 {
     NSAssert(name == nil || name.length == 1, @"Must be nil or one characrer");
 
     if (nil == name) {
         // When no register is specified
         // update "0
-        [self setXVimString:string withType:type forReg:@"0"];
+        [self setXVimString:string type:type forReg:@"0"];
 
         // "" register should point to "0
         [self.registers setObject:[self registerByName:@"0"] forKey:@"\""];
 
         if (XVIM.options.clipboardHasUnnamed) {
             // Update clipboard register too
-            [self setXVimString:string withType:type forReg:@"*"];
+            [self setXVimString:string type:type forReg:@"*"];
         }
     }
     else if ([name isEqualToString:@"\""]) {
         // When "" register is specified
         // Use "0
-        [self setXVimString:string withType:type forReg:@"0"];
+        [self setXVimString:string type:type forReg:@"0"];
 
         // "" register should point to "0
         [self.registers setObject:[self registerByName:@"0"] forKey:@"\""];
@@ -282,14 +282,14 @@ static const NSString* s_enum_registers = @"\"0123456789abcdefghijklmnopqrstuvwx
             [self appendXVimString:string forReg:name];
         }
         else {
-            [self setXVimString:string withType:type forReg:name];
+            [self setXVimString:string type:type forReg:name];
         }
         // "" register should point to the updated register
         [self.registers setObject:[self registerByName:name] forKey:@"\""];
     }
 }
 
-- (void) delete:(XVimString*)string withType:(XVIM_TEXT_TYPE)type onRegister:(NSString*)name shouldReplaceRegister:(BOOL)isReplacing
+- (void) delete:(XVimString*)string type:(XVimTextType)type onRegister:(NSString*)name shouldReplaceRegister:(BOOL)isReplacing
 {
     // TODO: use "- when deleting does not include \n
     NSAssert([self isValidForYank:name], @"Must be valid register for yank/delete");
@@ -302,12 +302,12 @@ static const NSString* s_enum_registers = @"\"0123456789abcdefghijklmnopqrstuvwx
     if (nil == name) {
         if (XVIM.options.clipboardHasUnnamed) {
             // Update clipboard register too
-            [self setXVimString:string withType:type forReg:@"*"];
+            [self setXVimString:string type:type forReg:@"*"];
         }
     }
     else if ([name isEqualToString:@"\""]) {
         // Update register "0
-        [self setXVimString:string withType:type forReg:@"0"];
+        [self setXVimString:string type:type forReg:@"0"];
     }
     else {
         if ([self isApendingRegister:name]) {
@@ -315,9 +315,9 @@ static const NSString* s_enum_registers = @"\"0123456789abcdefghijklmnopqrstuvwx
         }
         else {
             if (isReplacing) {
-                [self setXVimString:string withType:type forReg:name];
+                [self setXVimString:string type:type forReg:name];
             } else {
-                [self setXVimString:string withType:type forReg:@"0"];
+                [self setXVimString:string type:type forReg:@"0"];
             }
         }
     }
@@ -332,15 +332,15 @@ static const NSString* s_enum_registers = @"\"0123456789abcdefghijklmnopqrstuvwx
     // We can not change "1 register content because it is refered by "2 now because of the rotation
     XVimRegister* newReg = [[XVimRegister alloc] init];
     [self.registers setObject:newReg forKey:@"1"];
-    [self setXVimString:string withType:type forReg:@"1"];
+    [self setXVimString:string type:type forReg:@"1"];
 
     // Update unnamed register
     [self.registers setObject:newReg forKey:@"\""];
 }
 
-- (void)textInserted:(XVimString*)string withType:(XVIM_TEXT_TYPE)type {}
+- (void)textInserted:(XVimString*)string type:(XVimTextType)type {}
 
-- (void)commandExecuted:(XVimString*)string withType:(XVIM_TEXT_TYPE)type {}
+- (void)commandExecuted:(XVimString*)string type:(XVimTextType)type {}
 
 - (void)registerExecuted:(NSString*)name { self.lastExecutedRegister = name; }
 
