@@ -103,7 +103,7 @@
 }
 
 
-- (void)xvim_put:(NSString*)text textType:(XVimTextType)textType afterCursor:(BOOL)after count:(NSUInteger)count
+- (void)xvim_put:(NSString*)text type:(XVimTextType)textType afterCursor:(BOOL)after count:(NSUInteger)count
 {
     [self xvim_beginEditTransaction];
     xvim_on_exit { [self xvim_endEditTransaction]; };
