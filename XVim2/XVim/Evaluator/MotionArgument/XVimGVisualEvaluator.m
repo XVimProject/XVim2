@@ -25,8 +25,7 @@
 
 - (XVimEvaluator*)e
 {
-    let motion = XVIM_MAKE_MOTION(MOTION_END_OF_WORD_BACKWARD, CHARWISE_EXCLUSIVE, MOPT_NONE,
-                                          self.numericArg);
+    let motion = [XVimMotion motion:MOTION_END_OF_WORD_BACKWARD type:CHARWISE_EXCLUSIVE count:self.numericArg];
     [[self sourceView] xvim_move:motion];
     [self.parent resetNumericArg];
     return [XVimEvaluator popEvaluator];
@@ -34,7 +33,7 @@
 
 - (XVimEvaluator*)E
 {
-    let motion = XVIM_MAKE_MOTION(MOTION_END_OF_WORD_BACKWARD, CHARWISE_EXCLUSIVE, MOPT_BIGWORD, self.numericArg);
+    let motion = [XVimMotion motion:MOTION_END_OF_WORD_BACKWARD type:CHARWISE_EXCLUSIVE option:MOPT_BIGWORD count: self.numericArg];
     [[self sourceView] xvim_move:motion];
     [self.parent resetNumericArg];
     return [XVimEvaluator popEvaluator];
@@ -56,7 +55,7 @@
 
 - (XVimEvaluator*)g
 {
-    let motion = XVIM_MAKE_MOTION(MOTION_LINENUMBER, CHARWISE_EXCLUSIVE, MOPT_NONE, 1);
+    let motion = [XVimMotion motion:MOTION_LINENUMBER type:CHARWISE_EXCLUSIVE count:1];
     motion.line = self.numericArg;
     [[self sourceView] xvim_move:motion];
     return [XVimEvaluator popEvaluator];
@@ -64,7 +63,7 @@
 
 - (XVimEvaluator*)j
 {
-    let motion = XVIM_MAKE_MOTION(MOTION_LINE_FORWARD, CHARWISE_EXCLUSIVE, MOPT_DISPLAY_LINE, self.numericArg);
+    let motion = [XVimMotion motion:MOTION_LINE_FORWARD type:CHARWISE_EXCLUSIVE option:MOPT_DISPLAY_LINE count:self.numericArg];
     [[self sourceView] xvim_move:motion];
     [self.parent resetNumericArg];
     return [XVimEvaluator popEvaluator];
@@ -72,7 +71,7 @@
 
 - (XVimEvaluator*)k
 {
-    let motion = XVIM_MAKE_MOTION(MOTION_LINE_BACKWARD, CHARWISE_EXCLUSIVE, MOPT_DISPLAY_LINE, self.numericArg);
+    let motion = [XVimMotion motion:MOTION_LINE_BACKWARD type:CHARWISE_EXCLUSIVE option:MOPT_DISPLAY_LINE count: self.numericArg];
     [[self sourceView] xvim_move:motion];
     [self.parent resetNumericArg];
     return [XVimEvaluator popEvaluator];
@@ -81,8 +80,8 @@
 - (XVimEvaluator*)J
 {
     let eval = [[XVimJoinEvaluator alloc] initWithWindow:self.window addSpace:NO];
-    return [eval executeOperationWithMotion:XVIM_MAKE_MOTION(MOTION_NONE, CHARWISE_EXCLUSIVE, MOPT_NONE,
-                                                             self.numericArg)];
+    return [eval executeOperationWithMotion:[XVimMotion motion:MOTION_NONE type:CHARWISE_EXCLUSIVE count:
+                                                             self.numericArg]];
 }
 
 - (XVimEvaluator*)q
@@ -94,14 +93,14 @@
 - (XVimEvaluator*)u
 {
     let view = [self sourceView];
-    [view xvim_makeLowerCase:XVIM_MAKE_MOTION(MOTION_NONE, CHARWISE_EXCLUSIVE, MOPT_NONE, 1)];
+    [view xvim_makeLowerCase:[XVimMotion motion:MOTION_NONE type:CHARWISE_EXCLUSIVE count:1]];
     return [XVimEvaluator invalidEvaluator];
 }
 
 - (XVimEvaluator*)U
 {
     let view = [self sourceView];
-    [view xvim_makeUpperCase:XVIM_MAKE_MOTION(MOTION_NONE, CHARWISE_EXCLUSIVE, MOPT_NONE, 1)];
+    [view xvim_makeUpperCase:[XVimMotion motion:MOTION_NONE type:CHARWISE_EXCLUSIVE count:1]];
     return [XVimEvaluator invalidEvaluator];
 }
 
@@ -120,7 +119,7 @@
 - (XVimEvaluator*)TILDE
 {
     let view = [self sourceView];
-    [view xvim_swapCase:XVIM_MAKE_MOTION(MOTION_NONE, CHARWISE_EXCLUSIVE, MOPT_NONE, 1)];
+    [view xvim_swapCase:[XVimMotion motion:MOTION_NONE type:CHARWISE_EXCLUSIVE count:1]];
     return [XVimEvaluator invalidEvaluator];
 }
 

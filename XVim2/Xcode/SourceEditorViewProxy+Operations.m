@@ -392,7 +392,7 @@
 
     if (self.selectionMode == XVIM_VISUAL_NONE) {
         if (motion.motion == MOTION_NONE) {
-            XVimMotion* m = XVIM_MAKE_MOTION(MOTION_FORWARD, CHARWISE_EXCLUSIVE, MOPT_LEFT_RIGHT_NOWRAP, motion.count);
+            XVimMotion* m = [XVimMotion motion:MOTION_FORWARD type:CHARWISE_EXCLUSIVE option:MOPT_LEFT_RIGHT_NOWRAP count:motion.count];
             XVimRange r = [self xvim_getMotionRange:self.insertionPoint Motion:m];
             if (r.end == NSNotFound) {
                 return;

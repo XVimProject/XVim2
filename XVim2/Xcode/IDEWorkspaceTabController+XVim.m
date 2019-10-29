@@ -287,7 +287,7 @@ static inline BOOL xvim_horizontallyStackingModeForMode(GeniusLayoutMode mode)
         // XCODE93
         //[submode.primaryEditor takeFocus];
         // set current line number
-        // XVimMotion* motion = XVIM_MAKE_MOTION(MOTION_LINENUMBER, LINEWISE, LEFT_RIGHT_NOWRAP, 1);
+        // XVimMotion* motion = [XVimMotion motion:MOTION_LINENUMBER type:LINEWISE option:LEFT_RIGHT_NOWRAP count:1];
         // motion.line = line_number;
         //[editorArea.xvim_window.sourceView xvim_move:motion];
 
@@ -334,7 +334,7 @@ static inline BOOL xvim_horizontallyStackingModeForMode(GeniusLayoutMode mode)
         // XCODE93
         //[submode.secondaryEditor takeFocus];
         // set current line number
-        // XVimMotion* motion = XVIM_MAKE_MOTION(MOTION_LINENUMBER, LINEWISE, LEFT_RIGHT_NOWRAP, 1);
+        // XVimMotion* motion = [XVimMotion motion:MOTION_LINENUMBER type:LINEWISE option:LEFT_RIGHT_NOWRAP count:1];
         // motion.line = line_number;
         //[editorArea.xvim_window.sourceView xvim_move:motion];
 

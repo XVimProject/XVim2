@@ -275,7 +275,7 @@
 
 - (XVimEvaluator*)C_w
 {
-    let m = XVIM_MAKE_MOTION(MOTION_WORD_BACKWARD, CHARWISE_EXCLUSIVE, MOPT_NONE, 1);
+    let m = [XVimMotion motion:MOTION_WORD_BACKWARD type:CHARWISE_EXCLUSIVE count:1];
     [[self sourceView] xvim_delete:m andYank:NO];
     return self;
 }

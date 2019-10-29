@@ -49,7 +49,7 @@
     return NO;
 }
 
-- (id)initWithMotion:(MOTION)motion type:(MOTION_TYPE)type option:(MOTION_OPTION)option count:(NSUInteger)count
+- (nonnull XVimMotion*)initWithMotion:(MOTION)motion type:(MOTION_TYPE)type option:(MOTION_OPTION)option count:(NSUInteger)count
 {
     if (self = [super init]) {
         _motion = motion;
@@ -64,9 +64,29 @@
     return self;
 }
 
-- (id)initWithMotion:(MOTION)motion type:(MOTION_TYPE)type option:(MOTION_OPTION)option
+- (nonnull XVimMotion*)initWithMotion:(MOTION)motion type:(MOTION_TYPE)type option:(MOTION_OPTION)option
 {
     return [self initWithMotion:motion type:type option:option count:1];
+}
+
+- (nonnull XVimMotion*)initWithMotion:(MOTION)motion type:(MOTION_TYPE)type count:(NSUInteger)count
+{
+    return [self initWithMotion:motion type:type option:MOPT_NONE count:count];
+}
+
++ (nonnull XVimMotion*)motion:(MOTION)motion type:(MOTION_TYPE)type option:(MOTION_OPTION)option count:(NSUInteger)count
+{
+    return [[XVimMotion alloc] initWithMotion:motion type:type option:option count:count];
+}
+
++ (nonnull XVimMotion*)motion:(MOTION)motion type:(MOTION_TYPE)type option:(MOTION_OPTION)option
+{
+    return [[XVimMotion alloc] initWithMotion:motion type:type option:option];
+}
+
++ (nonnull XVimMotion*)motion:(MOTION)motion type:(MOTION_TYPE)type count:(NSUInteger)count
+{
+    return [[XVimMotion alloc] initWithMotion:motion type:type count:count];
 }
 
 - (BOOL)isTextObject { return TEXTOBJECT_WORD <= self.motion && self.motion <= TEXTOBJECT_UNDERSCORE; }

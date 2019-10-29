@@ -1008,8 +1008,8 @@
         SourceEditorViewProxy* SELF = weakSelf;
         if (!SELF)
             return;
-        XVimMotion* m = XVIM_MAKE_MOTION(MOTION_POSITION, DEFAULT_MOTION_TYPE,
-                                         MOPT_NONE, 1);
+        XVimMotion* m = [XVimMotion motion:MOTION_POSITION type:DEFAULT_MOTION_TYPE
+                                         count:1];
         m.position = pos;
         [SELF xvim_move:m];
     }];

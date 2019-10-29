@@ -32,34 +32,33 @@
 - (XVimEvaluator*)e
 {
     // Select previous word end
-    self.motion = XVIM_MAKE_MOTION(MOTION_END_OF_WORD_BACKWARD, CHARWISE_INCLUSIVE, MOPT_NONE,
-                                   [self numericArg]);
+    self.motion = [XVimMotion motion:MOTION_END_OF_WORD_BACKWARD type:CHARWISE_INCLUSIVE count:[self numericArg]];
     return nil;
 }
 
 - (XVimEvaluator*)E
 {
     // Select previous WORD end
-    self.motion = XVIM_MAKE_MOTION(MOTION_END_OF_WORD_BACKWARD, CHARWISE_INCLUSIVE, MOPT_BIGWORD, [self numericArg]);
+    self.motion = [XVimMotion motion:MOTION_END_OF_WORD_BACKWARD type:CHARWISE_INCLUSIVE option:MOPT_BIGWORD count:[self numericArg]];
     return nil;
 }
 
 - (XVimEvaluator*)g
 {
-    self.motion = XVIM_MAKE_MOTION(MOTION_LINENUMBER, LINEWISE, MOPT_NONE, 1);
+    self.motion = [XVimMotion motion:MOTION_LINENUMBER type:LINEWISE count:1];
     self.motion.line = self.numericArg;
     return nil;
 }
 
 - (XVimEvaluator*)j
 {
-    self.motion = XVIM_MAKE_MOTION(MOTION_LINE_FORWARD, CHARWISE_EXCLUSIVE, MOPT_DISPLAY_LINE, self.numericArg);
+    self.motion = [XVimMotion motion:MOTION_LINE_FORWARD type:CHARWISE_EXCLUSIVE option:MOPT_DISPLAY_LINE count: self.numericArg];
     return nil;
 }
 
 - (XVimEvaluator*)k
 {
-    self.motion = XVIM_MAKE_MOTION(MOTION_LINE_BACKWARD, CHARWISE_EXCLUSIVE, MOPT_DISPLAY_LINE, self.numericArg);
+    self.motion = [XVimMotion motion:MOTION_LINE_BACKWARD type:CHARWISE_EXCLUSIVE option:MOPT_DISPLAY_LINE count: self.numericArg];
     return nil;
 }
 

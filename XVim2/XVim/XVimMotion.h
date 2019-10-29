@@ -18,9 +18,6 @@
 @property (nonatomic) NSUInteger lastEndOfWord;
 @end
 
-#define XVIM_MAKE_MOTION(MOTION, TYPE, OPTION, COUNT) \
-    [[XVimMotion alloc] initWithMotion:MOTION type:TYPE option:OPTION count:COUNT]
-
 typedef NS_ENUM(NSInteger, MOTION) {
     MOTION_NONE,
     MOTION_FORWARD, // l
@@ -87,8 +84,12 @@ typedef NS_ENUM(NSInteger, MOTION) {
 @property BOOL jumpToAnotherFile;
 @property BOOL keepJumpMarkIndex;
 
-- (nonnull id)initWithMotion:(MOTION)motion type:(MOTION_TYPE)type option:(MOTION_OPTION)option count:(NSUInteger)count;
-- (nonnull id)initWithMotion:(MOTION)motion type:(MOTION_TYPE)type option:(MOTION_OPTION)option;
+- (nonnull XVimMotion*)initWithMotion:(MOTION)motion type:(MOTION_TYPE)type option:(MOTION_OPTION)option count:(NSUInteger)count;
+- (nonnull XVimMotion*)initWithMotion:(MOTION)motion type:(MOTION_TYPE)type option:(MOTION_OPTION)option;
+- (nonnull XVimMotion*)initWithMotion:(MOTION)motion type:(MOTION_TYPE)type count:(NSUInteger)count;
++ (nonnull XVimMotion*)motion:(MOTION)motion type:(MOTION_TYPE)type option:(MOTION_OPTION)option count:(NSUInteger)count;
++ (nonnull XVimMotion*)motion:(MOTION)motion type:(MOTION_TYPE)type option:(MOTION_OPTION)option;
++ (nonnull XVimMotion*)motion:(MOTION)motion type:(MOTION_TYPE)type count:(NSUInteger)count;
 - (BOOL)isTextObject;
 - (BOOL)isJumpMotion;
 @end
