@@ -50,7 +50,7 @@
     m.regex = string;
 
     // Find if it is case sensitive from 2 options(ignorecase/smartcase)
-    BOOL ignorecase = XVim.instance.options.ignorecase;
+    var ignorecase = XVim.instance.options.ignorecase;
     if (ignorecase && XVim.instance.options.smartcase) {
         if (![m.regex isEqualToString:[m.regex lowercaseString]]) {
             ignorecase = NO;
@@ -170,8 +170,7 @@
     let srcView = [window sourceView];
     NSUInteger search_base = from;
 
-    NSRegularExpressionOptions r_opts
-                = NSRegularExpressionAnchorsMatchLines | NSRegularExpressionUseUnicodeWordBoundaries;
+    var r_opts = NSRegularExpressionAnchorsMatchLines | NSRegularExpressionUseUnicodeWordBoundaries;
     if ([self isCaseInsensitive]) {
         r_opts |= NSRegularExpressionCaseInsensitive;
     }
@@ -222,7 +221,7 @@
     let srcView = [window sourceView];
     NSUInteger search_base = from;
 
-    NSRegularExpressionOptions r_opts = NSRegularExpressionAnchorsMatchLines;
+    var r_opts = NSRegularExpressionAnchorsMatchLines;
     if ([self isCaseInsensitive]) {
         r_opts |= NSRegularExpressionCaseInsensitive;
     }
@@ -289,8 +288,8 @@
     NSRange found = { NSNotFound, 0 };
     let view = [window sourceView];
 
-    NSRange begin = [view selectedRange];
-    NSString* string = [view string];
+    let begin = [view selectedRange];
+    let string = [view string];
     NSUInteger searchStart = NSNotFound;
     NSUInteger firstNonblank = NSNotFound;
 
@@ -346,7 +345,7 @@
         escapedSearchWord = [@"\\<" stringByAppendingString:[escapedSearchWord stringByAppendingString:@"\\>"]];
     }
 
-    NSString* searchString = [(forward ? @"/" : @"?") stringByAppendingString:escapedSearchWord];
+    let searchString = [(forward ? @"/" : @"?") stringByAppendingString:escapedSearchWord];
     if (forward) {
         found = [self executeSearch:searchString
                             display:searchWord
@@ -378,8 +377,8 @@
 
     NSError* error = NULL;
     // Taking pattern from search command. If not available, take the pattern from the last search string.
-    NSString* pattern = self.lastSearchCmd.length ? self.lastSearchCmd : self.lastSearchString;
-    NSRegularExpression* regex = [NSRegularExpression regularExpressionWithPattern:pattern options:r_opts error:&error];
+    let pattern = self.lastSearchCmd.length ? self.lastSearchCmd : self.lastSearchString;
+    let regex = [NSRegularExpression regularExpressionWithPattern:pattern options:r_opts error:&error];
 
     if (error != nil) {
         [window errorMessage:[NSString stringWithFormat:@"Cannot compile regular expression '%@'",
@@ -391,7 +390,7 @@
 
     // search text beyond the search_base
     // Since self.lastSearchCmd may include ^ or $, NSMatchingWithoutAnchoringBounds option needs to set.
-    NSString* str = [srcView string];
+    let str = [srcView string];
     if (str == nil){ return; }
     self.lastFoundRange = [regex rangeOfFirstMatchInString:str
                                                    options:NSMatchingWithoutAnchoringBounds
@@ -428,14 +427,14 @@
 
 - (void)substitute:(NSString*)ex_command from:(NSUInteger)from to:(NSUInteger)to inWindow:(XVimWindow*)window
 {
-    XVimOptions* options = [[XVim instance] options];
+    let options = [[XVim instance] options];
     // Split the string into the various components
-    NSString* replaced = @"";
-    NSString* replacement = @"";
+    var replaced = @"";
+    var replacement = @"";
     unichar previous = 0;
     int component = 0;
-    BOOL global = options.gdefault;
-    BOOL confirmation = NO;
+    var global = options.gdefault;
+    var confirmation = NO;
     if ([ex_command length] >= 3) {
         unichar delimiter = [ex_command characterAtIndex:0];
         for (NSUInteger i = 1; i < [ex_command length]; ++i) {

@@ -58,8 +58,7 @@
 
 + (void)load
 {
-    NSBundle* app = [NSBundle mainBundle];
-    NSString* identifier = [app bundleIdentifier];
+    let identifier = NSBundle.mainBundle.bundleIdentifier;
 
     // Load only into Xcode
     if (![identifier isEqualToString:@"com.apple.dt.Xcode"]) {

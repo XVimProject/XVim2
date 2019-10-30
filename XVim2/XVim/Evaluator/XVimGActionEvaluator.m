@@ -57,8 +57,8 @@
 
 - (XVimEvaluator*)i
 {
-    XVimMark* mark = [[XVim instance].marks markForName:@"^" forDocument:self.sourceView.documentURL.path];
-    XVimInsertMode insertMode = XVIM_INSERT_DEFAULT;
+    let mark = [[XVim instance].marks markForName:@"^" forDocument:self.sourceView.documentURL.path];
+    var insertMode = XVIM_INSERT_DEFAULT;
 
     if (mark.line != NSNotFound) {
         NSUInteger newPos = [self.sourceView xvim_indexOfLineNumber:mark.line column:mark.column];

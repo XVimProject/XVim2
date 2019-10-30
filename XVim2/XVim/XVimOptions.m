@@ -76,7 +76,7 @@
 
 - (id)getOption:(NSString*)name
 {
-    NSString* propName = name;
+    var propName = name;
     if ([_option_maps objectForKey:name]) {
         // If the name is abbriviation use full name
         propName = [_option_maps objectForKey:name];
@@ -91,7 +91,7 @@
 
 - (NSString *)normalizePropName:(NSString *)name
 {
-    NSString* propName = name;
+    var propName = name;
     if ([_option_maps objectForKey:name]) {
         // If the name is abbriviation use full name
         propName = [_option_maps objectForKey:name];

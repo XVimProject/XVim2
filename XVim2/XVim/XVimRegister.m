@@ -182,7 +182,7 @@ static const NSString* s_enum_registers = @"\"0123456789abcdefghijklmnopqrstuvwx
 - (void)setXVimString:(XVimString*)string type:(XVimTextType)type forReg:(NSString*)reg
 {
     NSAssert(reg != nil && reg.length == 1, @"name must not nil and one character string");
-    XVimRegister* r = [self registerByName:reg];
+    let r = [self registerByName:reg];
     [r setXVimString:string];
     r.type = type;
 }
@@ -191,7 +191,7 @@ static const NSString* s_enum_registers = @"\"0123456789abcdefghijklmnopqrstuvwx
 - (void)appendXVimString:(XVimString*)string forReg:(NSString*)reg
 {
     NSAssert(reg != nil && reg.length == 1, @"name must not nil and one character string");
-    XVimRegister* r = [self registerByName:reg];
+    let r = [self registerByName:reg];
     [r appendXVimString:string];
 }
 
@@ -325,12 +325,12 @@ static const NSString* s_enum_registers = @"\"0123456789abcdefghijklmnopqrstuvwx
     // Numbered registers are always updated whatever the register is. (This may be wrong though)
     // Rotate number1 - 9 (Note that not changing registers content but changing references)
     for (unichar n = '8'; n >= '1'; n--) {
-        XVimRegister* r = [self registerByName:[NSString stringWithCharacters:&n length:1]];
+        let r = [self registerByName:[NSString stringWithCharacters:&n length:1]];
         unichar nextReg = n + 1;
         [self.registers setObject:r forKey:[NSString stringWithCharacters:&nextReg length:1]];
     }
     // We can not change "1 register content because it is refered by "2 now because of the rotation
-    XVimRegister* newReg = [[XVimRegister alloc] init];
+    let newReg = [[XVimRegister alloc] init];
     [self.registers setObject:newReg forKey:@"1"];
     [self setXVimString:string type:type forReg:@"1"];
 
