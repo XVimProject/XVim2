@@ -154,4 +154,22 @@
 
 - (BOOL)clipboardHasUnnamed { return [self.clipboard rangeOfString:@"unnamed"].location != NSNotFound; }
 
+- (long long)indentWidth {
+    @try {
+        return [[NSClassFromString(@"DVTTextPreferences") preferences] indentWidth];
+    }
+    @catch (NSException *e){
+        return 4;
+    }
+}
+
+- (long long)tabWidth {
+    @try {
+        return [[NSClassFromString(@"DVTTextPreferences") preferences] tabWidth];
+    }
+    @catch (NSException* e){
+        return 4;
+    }
+}
+
 @end

@@ -10,6 +10,8 @@
 #import "NSString+VimHelper.h"
 #import "NSTextStorage+VimOperation.h"
 #import "XVimStringBuffer.h"
+#import "XVim.h"
+#import "XVimOptions.h"
 
 @implementation NSTextStorage (VimOperation)
 
@@ -20,9 +22,8 @@
 
 #pragma mark Settings
 
-// TODO: These values should be taken from IDEFileTextSetting.
-- (NSUInteger)xvim_indentWidth { return 4; }
-- (NSUInteger)xvim_tabWidth { return 4; }
+- (NSUInteger)xvim_indentWidth { return XVim.instance.options.indentWidth; }
+- (NSUInteger)xvim_tabWidth { return XVim.instance.options.tabWidth; }
 
 #pragma mark Converting between Indexes and Line Numbers
 

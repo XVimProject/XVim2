@@ -29,6 +29,8 @@
 @property BOOL startofline;
 @property BOOL expandtab;
 @property (nonatomic) NSDictionary* highlight;
+@property (nonatomic, readonly) long long indentWidth;
+@property (nonatomic, readonly) long long tabWidth;
 - (id)getOption:(NSString*)name;
 - (void)setOption:(NSString*)name value:(id)value;
 - (void)setOptionBool:(NSString*)name value:(BOOL)value;
