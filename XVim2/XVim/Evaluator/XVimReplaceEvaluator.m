@@ -36,10 +36,10 @@
 
 - (void)repeatBlockText
 {
-    let text = [self insertedText];
-    let sourceView = [self sourceView];
+    let text = self.insertedText;
+    let sourceView = self.sourceView;
 
-    for (NSUInteger i = 0; i < [self numericArg] - 1; i++) {
+    for (NSUInteger i = 0; i < self.numericArg - 1; i++) {
         [sourceView insertText:text replacementRange:NSMakeRange(self.sourceView.insertionPoint, text.length)];
     }
 }
@@ -78,10 +78,10 @@
             // and the input maight be non ascii like 'あ'
             if (self.oneCharMode || keyStroke.isPrintable) {
                 if (!keyStroke.isPrintable && !keyStroke.isWhitespace) {
-                    nextEvaluator = [XVimEvaluator invalidEvaluator];
+                    nextEvaluator = XVimEvaluator.invalidEvaluator;
                 }
                 else if (![self.sourceView xvim_replaceCharacters:keyStroke.character count:1]) {
-                    nextEvaluator = [XVimEvaluator invalidEvaluator];
+                    nextEvaluator = XVimEvaluator.invalidEvaluator;
                 }
                 else if (self.oneCharMode) {
                     nextEvaluator = nil;
@@ -89,7 +89,7 @@
             }
             else {
                 let event = [keyStroke toEventwithWindowNumber:0 context:nil];
-                [self.sourceView interpretKeyEvents:[NSArray arrayWithObject:event]];
+                [self.sourceView interpretKeyEvents:@[event]];
             }
         }
     }

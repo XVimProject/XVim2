@@ -32,14 +32,14 @@
 - (XVimEvaluator*)e
 {
     // Select previous word end
-    self.motion = [XVimMotion motion:MOTION_END_OF_WORD_BACKWARD type:CHARWISE_INCLUSIVE count:[self numericArg]];
+    self.motion = [XVimMotion motion:MOTION_END_OF_WORD_BACKWARD type:CHARWISE_INCLUSIVE count:self.numericArg];
     return nil;
 }
 
 - (XVimEvaluator*)E
 {
     // Select previous WORD end
-    self.motion = [XVimMotion motion:MOTION_END_OF_WORD_BACKWARD type:CHARWISE_INCLUSIVE option:MOPT_BIGWORD count:[self numericArg]];
+    self.motion = [XVimMotion motion:MOTION_END_OF_WORD_BACKWARD type:CHARWISE_INCLUSIVE option:MOPT_BIGWORD count:self.numericArg];
     return nil;
 }
 
@@ -63,14 +63,14 @@
 }
 
 - (XVimEvaluator*)n{
-    self.motion = [XVim.instance.searcher motionForRepeatSearch];
+    self.motion = XVim.instance.searcher.motionForRepeatSearch;
     self.motion.motion = MOTION_SEARCH_MATCHED_FORWARD;
 
     return nil;
 }
 
 - (XVimEvaluator*)N{
-    self.motion = [XVim.instance.searcher motionForRepeatSearch];
+    self.motion = XVim.instance.searcher.motionForRepeatSearch;
     self.motion.motion = MOTION_SEARCH_MATCHED_BACKWARD;
 
     return nil;

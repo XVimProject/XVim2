@@ -14,16 +14,16 @@
 
 - (XVimEvaluator*)u
 {
-    if ([self numericArg] < 1)
+    if (self.numericArg < 1)
         return nil;
 
-    let m = [XVimMotion motion:MOTION_LINE_FORWARD type:LINEWISE count:[self numericArg] - 1];
+    let m = [XVimMotion motion:MOTION_LINE_FORWARD type:LINEWISE count:self.numericArg - 1];
     return [self _motionFixed:m];
 }
 
 - (XVimEvaluator*)motionFixedCore:(XVimMotion*)motion
 {
-    [[self sourceView] xvim_makeLowerCase:motion];
+    [self.sourceView xvim_makeLowerCase:motion];
     return nil;
 }
 

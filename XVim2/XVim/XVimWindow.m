@@ -72,8 +72,8 @@
                             BOOL enabled = [note.userInfo[XVimNotificationEnabledFlag] boolValue];
                             strongSelf.enabled = enabled;
                         }];
-    self.enabled = XVIM.enabled;
-    [XVIM registerWindow:self];
+    self.enabled = XVim.instance.enabled;
+    [XVim.instance registerWindow:self];
 }
 
 - (void)dealloc
@@ -163,7 +163,7 @@
  **/
 - (BOOL)handleKeyEvent:(NSEvent*)event
 {
-    if (!XVIM.isEnabled)
+    if (!XVim.instance.isEnabled)
         return NO;
 
     // useinputsourcealways option forces to use input source to input on any mode.
@@ -175,7 +175,7 @@
     // On the other hand, Franch language uses input source to send character like "}". So they need the help of input
     // source to send command to Vim.
 
-    if (XVIM.options.alwaysuseinputsource || self.currentEvaluator.mode == XVIM_MODE_INSERT
+    if (XVim.instance.options.alwaysuseinputsource || self.currentEvaluator.mode == XVIM_MODE_INSERT
         || self.currentEvaluator.mode == XVIM_MODE_CMDLINE) {
         // We must pass the event to the current input method
         // If it is obserbed we do not do anything anymore and handle insertText: or doCommandBySelector:
@@ -215,7 +215,7 @@
         }
     }
     else {
-        NSTimeInterval delay = [XVIM.options.timeoutlen integerValue] / 1000.0;
+        NSTimeInterval delay = [XVim.instance.options.timeoutlen integerValue] / 1000.0;
         if (delay > 0) {
             [self performSelector:@selector(handleTimeout) withObject:nil afterDelay:delay];
         }
@@ -277,7 +277,7 @@
     }
     @catch (NSException* ex) {
         ERROR_LOG(@"Exception caught while evaluating. Current evaluator = %@. Exception = %@", currentEvaluator, ex);
-        [XVIM ringBell];
+        [XVim.instance ringBell];
         [self resetEvaluatorStack:_currentEvaluatorStack activateNormalHandler:YES];
         return;
     }
@@ -315,7 +315,7 @@
         }
         else if (nextEvaluator == [XVimEvaluator invalidEvaluator]) {
             [xvim cancelOperationCommands];
-            [XVIM ringBell];
+            [XVim.instance ringBell];
             [self resetEvaluatorStack:_currentEvaluatorStack activateNormalHandler:YES];
             break;
         }
@@ -378,7 +378,7 @@
 {
     [self.commandLine errorMessage:message Timer:YES RedColorSetting:YES];
     if (ringBell) {
-        [XVIM ringBell];
+        [XVim.instance ringBell];
     }
 }
 
@@ -497,10 +497,10 @@
     }
     else {
         // update single quote mark
-        [XVIM.marks setMark:mark forName:@"'"];
+        [XVim.instance.marks setMark:mark forName:@"'"];
     }
 
-    [XVIM.marks addToJumpListWithMark:mark KeepJumpMarkIndex:motion.keepJumpMarkIndex];
+    [XVim.instance.marks addToJumpListWithMark:mark KeepJumpMarkIndex:motion.keepJumpMarkIndex];
 }
 
 @end

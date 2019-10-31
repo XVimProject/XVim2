@@ -171,10 +171,10 @@ static NSString* MODE_STRINGS[] = { @"", @"-- VISUAL --", @"-- VISUAL LINE --", 
 
 - (XVimEvaluator*)eval:(XVimKeyStroke*)keyStroke
 {
-    XVIM.lastVisualMode = self.sourceView.selectionMode;
-    XVIM.lastVisualPosition = self.sourceView.insertionPosition;
-    XVIM.lastVisualSelectionBegin = self.sourceView.selectionBeginPosition;
-    XVIM.lastVisualSelectionToEOL = self.sourceView.selectionToEOL;
+    XVim.instance.lastVisualMode = self.sourceView.selectionMode;
+    XVim.instance.lastVisualPosition = self.sourceView.insertionPosition;
+    XVim.instance.lastVisualSelectionBegin = self.sourceView.selectionBeginPosition;
+    XVim.instance.lastVisualSelectionToEOL = self.sourceView.selectionToEOL;
 
     let nextEvaluator = [super eval:keyStroke];
     if (nextEvaluator != XVimEvaluator.invalidEvaluator) {
@@ -348,7 +348,7 @@ static NSString* MODE_STRINGS[] = { @"", @"-- VISUAL --", @"-- VISUAL LINE --", 
 - (XVimEvaluator*)p
 {
     let view = [self sourceView];
-    XVimRegister* reg = [XVIM.registerManager registerByName:self.yankRegister];
+    XVimRegister* reg = [XVim.instance.registerManager registerByName:self.yankRegister];
     [view xvim_put:reg.string type:reg.type afterCursor:YES count:[self numericArg]];
     return nil;
 }
@@ -473,7 +473,7 @@ static NSString* MODE_STRINGS[] = { @"", @"-- VISUAL --", @"-- VISUAL LINE --", 
 - (XVimEvaluator*)onComplete_DQUOTE:(XVimRegisterEvaluator*)childEvaluator
 {
     NSString* xregister = childEvaluator.reg;
-    if ([XVIM.registerManager isValidForYank:xregister]) {
+    if ([XVim.instance.registerManager isValidForYank:xregister]) {
         self.yankRegister = xregister;
         [self.argumentString appendString:xregister];
         self.onChildCompleteHandler = @selector(onChildComplete:);

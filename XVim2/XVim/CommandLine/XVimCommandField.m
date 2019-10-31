@@ -84,7 +84,7 @@
 
 - (void)drawInsertionPointInRect:(NSRect)rect color:(NSColor*)color turnedOn:(BOOL)flag
 {
-    if (XVIM.options.blinkcursor) {
+    if (XVim.instance.options.blinkcursor) {
         if (!flag) {
             // Clear caret
             [self drawRect:[self visibleRect]];

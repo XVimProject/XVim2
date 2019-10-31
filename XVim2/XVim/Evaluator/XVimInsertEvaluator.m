@@ -70,7 +70,7 @@
 {
     [super becameHandler];
     [self.sourceView xvim_insert:_insertMode blockColumn:&_blockEditColumn blockLines:&_blockLines];
-    self.startRange = [[self sourceView] selectedRange];
+    self.startRange = self.sourceView.selectedRange;
 }
 
 - (XVimKeymap*)selectKeymapWithProvider:(id<XVimKeymapProvider>)keymapProvider
@@ -82,15 +82,15 @@
 {
     let view = [self sourceView];
     NSUInteger startLoc = self.startRange.location;
-    NSUInteger endLoc = [view selectedRange].location;
+    NSUInteger endLoc = view.selectedRange.location;
     var textRange = NSMakeRange(NSNotFound, 0);
 
-    if ([[view string] length] == 0) {
+    if (view.string.length == 0) {
         return @"";
     }
     // If some text are deleted while editing startLoc could be out of range of the view's string.
-    if ((startLoc >= [[view string] length])) {
-        startLoc = [[view string] length] - 1;
+    if (startLoc >= view.string.length) {
+        startLoc = view.string.length - 1;
     }
 
     // Is this really what we want to do?
@@ -103,7 +103,7 @@
     else {
         textRange = NSMakeRange(endLoc, startLoc - endLoc);
     }
-    NSString* text = [[view string] substringWithRange:textRange];
+    NSString* text = [view.string substringWithRange:textRange];
     return text;
 }
 
@@ -125,20 +125,20 @@
         self.movementKeyPressed = YES;
 
         // Store off any needed text
-        self.lastInsertedText = [self insertedText];
+        self.lastInsertedText = self.insertedText;
         //[self recordTextIntoRegister:[XVim instance].recordingRegister];
     }
 
     // Store off the new start range
-    self.startRange = [[self sourceView] selectedRange];
+    self.startRange = self.sourceView.selectedRange;
 }
 
 // Used by visual block mode c, i, a to insert the last typed text in a range of rows,
 // starting at the same column
 - (void)repeatBlockText
 {
-    NSString* text = [self insertedText];
-    for (NSUInteger i = 0; i < [self numericArg] - 1; i++) {
+    NSString* text = self.insertedText;
+    for (NSUInteger i = 0; i < self.numericArg - 1; i++) {
         [self.sourceView insertText:text];
     }
 
@@ -161,7 +161,7 @@
     }
 
     // Store off any needed text
-    XVim* xvim = [XVim instance];
+    XVim* xvim = XVim.instance;
 
     xvim.lastVisualMode = self.sourceView.selectionMode;
     [xvim fixOperationCommands];
@@ -238,7 +238,7 @@
                 [self.sourceView insertText:keyStroke.xvimString];
             }
             else {
-                [self.sourceView interpretKeyEvents:[NSArray arrayWithObject:event]];
+                [self.sourceView interpretKeyEvents:@[event]];
             }
             // NSEvent* event = [keyStroke event];
             //[self.sourceView keyDown:event];
@@ -276,7 +276,7 @@
 - (XVimEvaluator*)C_w
 {
     let m = [XVimMotion motion:MOTION_WORD_BACKWARD type:CHARWISE_EXCLUSIVE count:1];
-    [[self sourceView] xvim_delete:m andYank:NO];
+    [self.sourceView xvim_delete:m andYank:NO];
     return self;
 }
 
@@ -289,27 +289,27 @@
 
 - (void)C_yC_eHelper:(BOOL)handlingC_y
 {
-    NSUInteger currentCursorIndex = [self.sourceView selectedRange].location;
-    NSUInteger currentColumnIndex = [self.sourceView.textStorage xvim_columnOfIndex:currentCursorIndex];
+    let currentCursorIndex = self.sourceView.selectedRange.location;
+    let currentColumnIndex = [self.sourceView.textStorage xvim_columnOfIndex:currentCursorIndex];
     NSUInteger newCharIndex;
     if (handlingC_y) {
         newCharIndex = [self.sourceView.textStorage prevLine:currentCursorIndex
                                                       column:currentColumnIndex
-                                                       count:[self numericArg]
+                                                       count:self.numericArg
                                                       option:MOPT_NONE];
     }
     else {
         newCharIndex = [self.sourceView.textStorage nextLine:currentCursorIndex
                                                       column:currentColumnIndex
-                                                       count:[self numericArg]
+                                                       count:self.numericArg
                                                       option:MOPT_NONE];
     }
-    NSUInteger newColumnIndex = [self.sourceView.textStorage xvim_columnOfIndex:newCharIndex];
+    let newColumnIndex = [self.sourceView.textStorage xvim_columnOfIndex:newCharIndex];
     NSLog(@"Old column: %ld\tNew column: %ld", currentColumnIndex, newColumnIndex);
     if (currentColumnIndex == newColumnIndex) {
-        unichar u = [[[self sourceView] string] characterAtIndex:newCharIndex];
-        NSString* charToInsert = [NSString stringWithFormat:@"%c", u];
-        [[self sourceView] insertText:charToInsert];
+        unichar u = [self.sourceView.string characterAtIndex:newCharIndex];
+        let charToInsert = [NSString stringWithFormat:@"%c", u];
+        [self.sourceView insertText:charToInsert];
     }
 }
 

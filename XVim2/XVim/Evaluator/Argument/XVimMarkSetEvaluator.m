@@ -24,12 +24,12 @@
 - (XVimEvaluator*)eval:(XVimKeyStroke*)keyStroke
 {
     if (keyStroke.modifier) {
-        return [XVimEvaluator invalidEvaluator];
+        return XVimEvaluator.invalidEvaluator;
     }
 
-    let mark = [self.window currentPositionMark];
+    let mark = self.window.currentPositionMark;
     if (nil != mark) {
-        [XVIM.marks setMark:mark forName:keyStroke.xvimString];
+        [XVim.instance.marks setMark:mark forName:keyStroke.xvimString];
     }
     return nil;
 }

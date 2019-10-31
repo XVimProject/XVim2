@@ -38,10 +38,10 @@
     // 'cc' should obey the repeat specifier
     // '3cc' should delete/cut the current line and the 2 lines below it
 
-    if ([self numericArg] < 1)
+    if (self.numericArg < 1)
         return nil;
 
-    let m = [XVimMotion motion:MOTION_LINE_FORWARD type:LINEWISE count:[self numericArg] - 1];
+    let m = [XVimMotion motion:MOTION_LINE_FORWARD type:LINEWISE count:self.numericArg - 1];
     return [self _motionFixed:m];
 }
 
@@ -53,10 +53,10 @@
     // 'dd' should obey the repeat specifier
     // '3dd' should delete/cut the current line and the 2 lines below it
 
-    if ([self numericArg] < 1)
+    if (self.numericArg < 1)
         return nil;
 
-    let m = [XVimMotion motion:MOTION_LINE_FORWARD type:LINEWISE count:[self numericArg] - 1];
+    let m = [XVimMotion motion:MOTION_LINE_FORWARD type:LINEWISE count:self.numericArg - 1];
     return [self _motionFixed:m];
 }
 
@@ -75,7 +75,7 @@
     if (_insertModeAtCompletion) {
         // Do not repeat the insert, that is how vim works so for
         // example 'c3wWord<ESC>' results in Word not WordWordWord
-        if (![[self sourceView] xvim_change:motion]) {
+        if (![self.sourceView xvim_change:motion]) {
             return nil;
         }
         [self resetNumericArg];
@@ -84,7 +84,7 @@
         return [[XVimInsertEvaluator alloc] initWithWindow:self.window];
     }
     else {
-        [[self sourceView] xvim_delete:motion andYank:YES];
+        [self.sourceView xvim_delete:motion andYank:YES];
     }
     return nil;
 }

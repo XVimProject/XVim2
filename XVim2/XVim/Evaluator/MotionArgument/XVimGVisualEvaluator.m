@@ -13,7 +13,7 @@
 
 @implementation XVimGVisualEvaluator
 
-- (XVimEvaluator*)defaultNextEvaluator { return [XVimEvaluator popEvaluator]; }
+- (XVimEvaluator*)defaultNextEvaluator { return XVimEvaluator.popEvaluator; }
 
 - (NSString*)modeString { return self.parent.modeString; }
 
@@ -26,23 +26,23 @@
 - (XVimEvaluator*)e
 {
     let motion = [XVimMotion motion:MOTION_END_OF_WORD_BACKWARD type:CHARWISE_EXCLUSIVE count:self.numericArg];
-    [[self sourceView] xvim_move:motion];
+    [self.sourceView xvim_move:motion];
     [self.parent resetNumericArg];
-    return [XVimEvaluator popEvaluator];
+    return XVimEvaluator.popEvaluator;
 }
 
 - (XVimEvaluator*)E
 {
     let motion = [XVimMotion motion:MOTION_END_OF_WORD_BACKWARD type:CHARWISE_EXCLUSIVE option:MOPT_BIGWORD count: self.numericArg];
-    [[self sourceView] xvim_move:motion];
+    [self.sourceView xvim_move:motion];
     [self.parent resetNumericArg];
-    return [XVimEvaluator popEvaluator];
+    return XVimEvaluator.popEvaluator;
 }
 
 - (XVimEvaluator*)f
 {
     [self.window errorMessage:@"{visual}gf unimplemented" ringBell:NO];
-    return [XVimEvaluator popEvaluator];
+    return XVimEvaluator.popEvaluator;
 }
 
 - (XVimEvaluator*)F { return [self f]; }
@@ -50,31 +50,31 @@
 - (XVimEvaluator*)C_g
 {
     [self.window errorMessage:@"{Visual}g CTRL-G unimplemented" ringBell:NO];
-    return [XVimEvaluator popEvaluator];
+    return XVimEvaluator.popEvaluator;
 }
 
 - (XVimEvaluator*)g
 {
     let motion = [XVimMotion motion:MOTION_LINENUMBER type:CHARWISE_EXCLUSIVE count:1];
     motion.line = self.numericArg;
-    [[self sourceView] xvim_move:motion];
-    return [XVimEvaluator popEvaluator];
+    [self.sourceView xvim_move:motion];
+    return XVimEvaluator.popEvaluator;
 }
 
 - (XVimEvaluator*)j
 {
     let motion = [XVimMotion motion:MOTION_LINE_FORWARD type:CHARWISE_EXCLUSIVE option:MOPT_DISPLAY_LINE count:self.numericArg];
-    [[self sourceView] xvim_move:motion];
+    [self.sourceView xvim_move:motion];
     [self.parent resetNumericArg];
-    return [XVimEvaluator popEvaluator];
+    return XVimEvaluator.popEvaluator;
 }
 
 - (XVimEvaluator*)k
 {
     let motion = [XVimMotion motion:MOTION_LINE_BACKWARD type:CHARWISE_EXCLUSIVE option:MOPT_DISPLAY_LINE count: self.numericArg];
-    [[self sourceView] xvim_move:motion];
+    [self.sourceView xvim_move:motion];
     [self.parent resetNumericArg];
-    return [XVimEvaluator popEvaluator];
+    return XVimEvaluator.popEvaluator;
 }
 
 - (XVimEvaluator*)J
@@ -107,20 +107,20 @@
 - (XVimEvaluator*)w
 {
     [self.window errorMessage:@"{visual}gq unimplemented" ringBell:NO];
-    return [XVimEvaluator popEvaluator];
+    return XVimEvaluator.popEvaluator;
 }
 
 - (XVimEvaluator*)QUESTION
 {
     [self.window errorMessage:@"{visual}g? unimplemented" ringBell:NO];
-    return [XVimEvaluator popEvaluator];
+    return XVimEvaluator.popEvaluator;
 }
 
 - (XVimEvaluator*)TILDE
 {
-    let view = [self sourceView];
+    let view = self.sourceView;
     [view xvim_swapCase:[XVimMotion motion:MOTION_NONE type:CHARWISE_EXCLUSIVE count:1]];
-    return [XVimEvaluator invalidEvaluator];
+    return XVimEvaluator.invalidEvaluator;
 }
 
 @end

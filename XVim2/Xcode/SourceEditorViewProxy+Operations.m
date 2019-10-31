@@ -625,7 +625,7 @@
 
     if (right) {
         NSString* s;
-        if (XVIM.options.expandtab) {
+        if (XVim.instance.options.expandtab) {
             s = [NSString stringMadeOfSpaces:shiftWidth];
         }
         else {

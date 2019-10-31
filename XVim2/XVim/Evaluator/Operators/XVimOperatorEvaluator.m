@@ -70,22 +70,28 @@
         let view = self.window.sourceView;
         NSString* className = NSStringFromClass([self class]);
         if (![className isEqualToString:@"XVimYankEvaluator"]) {
-            [[XVim instance] fixOperationCommands];
+            [XVim.instance fixOperationCommands];
             XVimMark* mark = nil;
             if ([className isEqualToString:@"XVimJoinEvaluator"]) {
                 // This is specical case for join operation.
                 // The mark is set at the head of next line of the insertion point after the operation
-				mark = [XVimMark markWithLine:[self.sourceView insertionLine] + 1 column:0 document:view.documentURL.path];
+                mark = [XVimMark markWithLine:self.sourceView.insertionLine + 1
+                                       column:0
+                                     document:view.documentURL.path];
             }
             else if ([className isEqualToString:@"XVimShiftEvaluator"]) {
-				mark = [XVimMark markWithLine:[self.sourceView insertionLine] column: 0 document: view.documentURL.path];
+                mark = [XVimMark markWithLine:self.sourceView.insertionLine
+                                       column:0
+                                     document:view.documentURL.path];
             }
             else {
-				mark = [XVimMark markWithLine:[self.sourceView insertionLine] column: [self.sourceView insertionColumn] document:view.documentURL.path];
+                mark = [XVimMark markWithLine:self.sourceView.insertionLine
+                                       column:self.sourceView.insertionColumn
+                                     document:view.documentURL.path];
             }
 
             if (nil != mark.document) {
-                [[XVim instance].marks setMark:mark forName:@"."];
+                [XVim.instance.marks setMark:mark forName:@"."];
             }
         }
     }

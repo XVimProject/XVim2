@@ -29,11 +29,11 @@
 - (XVimEvaluator*)GREATERTHAN
 {
     if (!_unshift) {
-        if ([self numericArg] < 1) {
+        if (self.numericArg < 1) {
             return nil;
         }
 
-        let m = [XVimMotion motion:MOTION_LINE_FORWARD type:LINEWISE count:[self numericArg] - 1];
+        let m = [XVimMotion motion:MOTION_LINE_FORWARD type:LINEWISE count:self.numericArg - 1];
         return [self _motionFixed:m];
     }
     return nil;
@@ -42,10 +42,10 @@
 - (XVimEvaluator*)LESSTHAN
 {
     if (_unshift) {
-        if ([self numericArg] < 1)
+        if (self.numericArg < 1)
             return nil;
 
-        let m = [XVimMotion motion:MOTION_LINE_FORWARD type:LINEWISE count:[self numericArg] - 1];
+        let m = [XVimMotion motion:MOTION_LINE_FORWARD type:LINEWISE count:self.numericArg - 1];
         return [self _motionFixed:m];
     }
     return nil;
@@ -54,10 +54,10 @@
 - (XVimEvaluator*)motionFixedCore:(XVimMotion*)motion
 {
     if (_unshift) {
-        [[self sourceView] xvim_shiftLeft:motion];
+        [self.sourceView xvim_shiftLeft:motion];
     }
     else {
-        [[self sourceView] xvim_shiftRight:motion];
+        [self.sourceView xvim_shiftRight:motion];
     }
     return nil;
 }

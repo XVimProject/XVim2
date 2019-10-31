@@ -26,7 +26,7 @@
 
 - (void)xvim_cursorBlinkTimerFired:(id)arg1
 {
-    if (!XVIM.options.blinkcursor) {
+    if (!XVim.instance.options.blinkcursor) {
       return;
     }
 

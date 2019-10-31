@@ -12,15 +12,15 @@
 
 - (XVimEvaluator*)EQUAL
 {
-    if ([self numericArg] < 1)
+    if (self.numericArg < 1)
         return nil;
-    let m = [XVimMotion motion:MOTION_LINE_FORWARD type:LINEWISE count:[self numericArg] - 1];
+    let m = [XVimMotion motion:MOTION_LINE_FORWARD type:LINEWISE count:self.numericArg - 1];
     return [self _motionFixed:m];
 }
 
 - (XVimEvaluator*)motionFixedCore:(XVimMotion*)motion
 {
-    [[self sourceView] xvim_filter:motion];
+    [self.sourceView xvim_filter:motion];
     return nil;
 }
 

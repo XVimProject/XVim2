@@ -199,7 +199,7 @@ static const NSString* s_enum_registers = @"\"0123456789abcdefghijklmnopqrstuvwx
 {
     NSAssert(name == nil || name.length == 1, @"name must be nil or one character string");
     if (nil == name) {
-        if (XVIM.options.clipboardHasUnnamed) {
+        if (XVim.instance.options.clipboardHasUnnamed) {
             name = @"*";
         }
         else {
@@ -262,7 +262,7 @@ static const NSString* s_enum_registers = @"\"0123456789abcdefghijklmnopqrstuvwx
         // "" register should point to "0
         [self.registers setObject:[self registerByName:@"0"] forKey:@"\""];
 
-        if (XVIM.options.clipboardHasUnnamed) {
+        if (XVim.instance.options.clipboardHasUnnamed) {
             // Update clipboard register too
             [self setXVimString:string type:type forReg:@"*"];
         }
@@ -300,7 +300,7 @@ static const NSString* s_enum_registers = @"\"0123456789abcdefghijklmnopqrstuvwx
     }
 
     if (nil == name) {
-        if (XVIM.options.clipboardHasUnnamed) {
+        if (XVim.instance.options.clipboardHasUnnamed) {
             // Update clipboard register too
             [self setXVimString:string type:type forReg:@"*"];
         }

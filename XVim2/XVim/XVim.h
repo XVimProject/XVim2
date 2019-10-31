@@ -96,6 +96,3 @@ extern NSString* const XVimDocumentPathKey;
 - (void)sourceRcFile;
 
 @end
-
-NS_INLINE XVim* SharedXVim(void) { return [XVim instance]; }
-#define XVIM (SharedXVim())

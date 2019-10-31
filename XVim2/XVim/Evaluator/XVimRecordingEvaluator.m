@@ -31,11 +31,11 @@
 
 - (void)becameHandler{
     [super becameHandler];
-    [[[XVim instance] registerManager] startRecording:self.reg];
+    [XVim.instance.registerManager startRecording:self.reg];
 }
 
 - (BOOL)insertModeActive {
-    return [(XVimEvaluator*)[self.evaluatorStack lastObject] mode] == XVIM_MODE_INSERT;
+    return ((XVimEvaluator*)self.evaluatorStack.lastObject).mode == XVIM_MODE_INSERT;
 }
 
 - (XVimKeymap*)selectKeymapWithProvider:(id<XVimKeymapProvider>)keymapProvider {
@@ -48,25 +48,25 @@
 }
 
 - (XVimEvaluator*)eval:(XVimKeyStroke*)keyStroke{
-    if( ![self insertModeActive] && keyStroke.modifier == 0 && keyStroke.character == 'q' ){
-        [[[XVim instance] registerManager] stopRecording:NO];
+    if( !self.insertModeActive && keyStroke.modifier == 0 && keyStroke.character == 'q' ){
+        [XVim.instance.registerManager stopRecording:NO];
         return nil;
     }
-    [[[XVim instance] registerManager] record:[keyStroke xvimString]];
+    [XVim.instance.registerManager record:keyStroke.xvimString];
     [self.window handleKeyStroke:keyStroke onStack:self.evaluatorStack];
     return self;
 }
 
 - (float)insertionPointHeightRatio{
-    return [[self.evaluatorStack lastObject] insertionPointHeightRatio];
+    return [self.evaluatorStack.lastObject insertionPointHeightRatio];
 }
 
 - (float)insertionPointWidthRatio{
-    return [[self.evaluatorStack lastObject] insertionPointWidthRatio];
+    return [self.evaluatorStack.lastObject insertionPointWidthRatio];
 }
 
 - (float)insertionPointAlphaRatio{
-    return [[self.evaluatorStack lastObject] insertionPointAlphaRatio];
+    return [self.evaluatorStack.lastObject insertionPointAlphaRatio];
 }
 
 - (NSString*)modeString{
@@ -75,7 +75,7 @@
 }
 
 - (XVIM_MODE)mode{
-    return [(XVimEvaluator*)[self.evaluatorStack lastObject] mode];
+    return ((XVimEvaluator*)self.evaluatorStack.lastObject).mode;
 }
 
 @end

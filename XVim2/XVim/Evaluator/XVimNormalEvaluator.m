@@ -149,8 +149,8 @@
 
 - (XVimEvaluator*)C_r
 {
-    let view = [self sourceView];
-    for (NSUInteger i = 0; i < [self numericArg]; i++) {
+    let view = self.sourceView;
+    for (NSUInteger i = 0; i < self.numericArg; i++) {
         [view.undoManager redo];
     }
     return nil;
@@ -158,8 +158,8 @@
 
 - (XVimEvaluator*)u
 {
-    let view = [self sourceView];
-    for (NSUInteger i = 0; i < [self numericArg]; i++) {
+    let view = self.sourceView;
+    for (NSUInteger i = 0; i < self.numericArg; i++) {
         [view.undoManager undo];
     }
     return nil;
@@ -171,36 +171,36 @@
 
 - (XVimEvaluator*)C_b
 {
-    [[self sourceView] xvim_scrollPageBackward:[self numericArg]];
+    [self.sourceView xvim_scrollPageBackward:self.numericArg];
     return nil;
 }
 
 - (XVimEvaluator*)C_d
 {
-    [[self sourceView] xvim_scrollHalfPageForward:[self numericArg]];
+    [self.sourceView xvim_scrollHalfPageForward:self.numericArg];
     return nil;
 }
 
 - (XVimEvaluator*)C_e
 {
-    [[self sourceView] xvim_scrollLineForward:[self numericArg]];
+    [self.sourceView xvim_scrollLineForward:self.numericArg];
     return nil;
 }
 
 - (XVimEvaluator*)C_u
 {
-    [[self sourceView] xvim_scrollHalfPageBackward:[self numericArg]];
+    [self.sourceView xvim_scrollHalfPageBackward:self.numericArg];
     return nil;
 }
 
 - (XVimEvaluator*)C_f
 {
-    [[self sourceView] xvim_scrollPageForward:[self numericArg]];
+    [self.sourceView xvim_scrollPageForward:self.numericArg];
     return nil;
 }
 
 - (XVimEvaluator*)C_y {
-    [[self sourceView] xvim_scrollLineBackward:[self numericArg]];
+    [self.sourceView xvim_scrollLineBackward:self.numericArg];
     return nil;
 }
 
@@ -228,7 +228,7 @@
 - (XVimEvaluator*)onComplete_g:(XVimGActionEvaluator*)childEvaluator
 {
     if (childEvaluator.key.selector == @selector(SEMICOLON)) {
-        let mark = [[XVim instance].marks markForName:@"." forDocument:[self.sourceView documentURL].path];
+        let mark = [XVim.instance.marks markForName:@"." forDocument:self.sourceView.documentURL.path];
         return [self jumpToMark:mark firstOfLine:NO KeepJumpMarkIndex:NO NeedUpdateMark:YES];
     }
     else {
@@ -275,19 +275,19 @@
 
 - (XVimEvaluator*)p
 {
-    let view = [self sourceView];
-    let reg = [XVIM.registerManager registerByName:self.yankRegister];
-    [view xvim_put:reg.string type:reg.type afterCursor:YES count:[self numericArg]];
+    let view = self.sourceView;
+    let reg = [XVim.instance.registerManager registerByName:self.yankRegister];
+    [view xvim_put:reg.string type:reg.type afterCursor:YES count:self.numericArg];
     [[XVim instance] fixOperationCommands];
     return nil;
 }
 
 - (XVimEvaluator*)P
 {
-    let view = [self sourceView];
-    let reg = [[[XVim instance] registerManager] registerByName:self.yankRegister];
-    [view xvim_put:reg.string type:reg.type afterCursor:NO count:[self numericArg]];
-    [[XVim instance] fixOperationCommands];
+    let view = self.sourceView;
+    let reg = [XVim.instance.registerManager registerByName:self.yankRegister];
+    [view xvim_put:reg.string type:reg.type afterCursor:NO count:self.numericArg];
+    [XVim.instance fixOperationCommands];
     return nil;
 }
 
@@ -413,7 +413,7 @@
 - (XVimEvaluator*)C_o
 {
     BOOL needUpdateMark;
-    let mark = [[XVim instance].marks decrementJumpMark:&needUpdateMark];
+    let mark = [XVim.instance.marks decrementJumpMark:&needUpdateMark];
     if (mark != nil) {
         [self jumpToMark:mark firstOfLine:NO KeepJumpMarkIndex:YES NeedUpdateMark:needUpdateMark];
     }
@@ -422,7 +422,7 @@
 
 - (XVimEvaluator*)C_i
 {
-    let mark = [[XVim instance].marks incrementJumpMark];
+    let mark = [XVim.instance.marks incrementJumpMark];
     if (mark != nil) {
         [self jumpToMark:mark firstOfLine:NO KeepJumpMarkIndex:YES NeedUpdateMark:NO];
     }
@@ -451,13 +451,13 @@
     __block XVimEvaluator* eval = [[XVimCommandLineEvaluator alloc]
                 initWithWindow:self.window
                    firstLetter:@":"
-                       history:[[XVim instance] exCommandHistory]
+                       history:XVim.instance.exCommandHistory
                     completion:^XVimEvaluator*(NSString* command, XVimMotion** result) {
-                        let excmd = [[XVim instance] excmd];
+                        let excmd = XVim.instance.excmd;
                         let commandExecuted = [excmd executeCommand:command inWindow:self.window];
 
                         if ([commandExecuted isEqualToString:@"substitute"]) {
-                            let searcher = [[XVim instance] searcher];
+                            let searcher = XVim.instance.searcher;
                             if (searcher.confirmEach && searcher.lastFoundRange.location != NSNotFound) {
                                 [eval didEndHandler];
                                 return [[XVimReplacePromptEvaluator alloc]
@@ -487,25 +487,25 @@
 
 - (XVimEvaluator*)C_a
 {
-    let view = [self sourceView];
+    let view = self.sourceView;
     if ([view xvim_incrementNumber:(int64_t)self.numericArg]) {
-        [[XVim instance] fixOperationCommands];
+        [XVim.instance fixOperationCommands];
     }
     else {
-        [[XVim instance] cancelOperationCommands];
+        [XVim.instance cancelOperationCommands];
     }
     return nil;
 }
 
 - (XVimEvaluator*)C_x
 {
-    let view = [self sourceView];
+    let view = self.sourceView;
 
     if ([view xvim_incrementNumber:-(int64_t)self.numericArg]) {
-        [[XVim instance] fixOperationCommands];
+        [XVim.instance fixOperationCommands];
     }
     else {
-        [[XVim instance] cancelOperationCommands];
+        [XVim.instance cancelOperationCommands];
     }
     return nil;
 }
@@ -514,7 +514,7 @@
 
 // Should be moved to XVimMotionEvaluator
 - (XVimEvaluator*)q{
-    if( [XVim instance].isExecuting ){
+    if( XVim.instance.isExecuting ){
         return nil;
     }
     [self.argumentString appendString:@"q"];
@@ -524,11 +524,11 @@
 }
 
 - (XVimEvaluator*)onComplete_q:(XVimRegisterEvaluator*)childEvaluator{
-    if( [[[XVim instance] registerManager] isValidForRecording:childEvaluator.reg] ){
+    if( [XVim.instance.registerManager isValidForRecording:childEvaluator.reg] ){
         self.onChildCompleteHandler = @selector(onComplete_Recording:);
         return [[XVimRecordingEvaluator alloc] initWithWindow:self.window withRegister:childEvaluator.reg];
     }
-    [[XVim instance] ringBell];
+    [XVim.instance ringBell];
     return nil;
 }
 
@@ -537,7 +537,7 @@
 }
 
 - (XVimEvaluator*)AT{
-    if( [XVim instance].isExecuting ){
+    if( XVim.instance.isExecuting ){
         return nil;
     }
     [self.argumentString appendString:@"@"];
@@ -548,9 +548,9 @@
 
 - (XVimEvaluator*)onComplete_AT:(XVimRecordingRegisterEvaluator*)childEvaluator{
     self.onChildCompleteHandler = @selector(onChildComplete:);
-    XVimRegister* reg = [[[XVim instance] registerManager] registerByName:childEvaluator.reg];
+    XVimRegister* reg = [XVim.instance.registerManager registerByName:childEvaluator.reg];
 
-    [XVim instance].isExecuting = YES;
+    XVim.instance.isExecuting = YES;
     NSUInteger count = self.numericArg;
     [self resetNumericArg];
     for( NSUInteger repeat = 0 ; repeat < count; repeat++ ){
@@ -558,8 +558,8 @@
             [self.window handleKeyStroke:stroke onStack:nil];
         }
     }
-    [[XVim instance].registerManager registerExecuted:childEvaluator.reg];
-    [XVim instance].isExecuting = NO;
+    [XVim.instance.registerManager registerExecuted:childEvaluator.reg];
+    XVim.instance.isExecuting = NO;
     return [XVimEvaluator noOperationEvaluator];
 }
 
@@ -570,7 +570,7 @@
 
 
 - (XVimEvaluator*)HT{
-    [[self sourceView] xvim_selectNextPlaceholder];
+    [self.sourceView xvim_selectNextPlaceholder];
     return nil;
 }
 #endif
@@ -586,7 +586,7 @@
 
 - (XVimEvaluator*)onComplete_DQUOTE:(XVimRegisterEvaluator*)childEvaluator
 {
-    let m = [[XVim instance] registerManager];
+    let m = XVim.instance.registerManager;
     if ([m isValidRegister:childEvaluator.reg]) {
         self.yankRegister = childEvaluator.reg;
         [self.argumentString appendString:childEvaluator.reg];
@@ -600,11 +600,11 @@
 
 - (XVimEvaluator*)DOT
 {
-    [[XVim instance] startRepeat];
+    [XVim.instance startRepeat];
     [self.sourceView xvim_beginEditTransaction];
     xvim_on_exit { [self.sourceView xvim_endEditTransaction]; };
 
-    let repeatRegister = [[XVim instance] lastOperationCommands];
+    let repeatRegister = XVim.instance.lastOperationCommands;
 
     var stack = [NSMutableArray<XVimEvaluator*> new];
 
@@ -621,14 +621,14 @@
         // TODO: This skips numeric args in repeat regisger if numericArg is specified.
         //       But if numericArg is not begining of the input (such as d3w) this never skips it.
         //       We have to also correctly handle "df3" not to skip the number.
-        if (!nonNumFound && self.numericMode && [stroke isNumeric]) {
+        if (!nonNumFound && self.numericMode && stroke.isNumeric) {
             // Skip numeric arg
             continue;
         }
         nonNumFound = YES;
         [self.window handleKeyStroke:stroke onStack:stack];
     }
-    [[XVim instance] endRepeat];
+    [XVim.instance endRepeat];
     return nil;
 }
 
@@ -637,12 +637,12 @@
 {
     // process
     let window = self.window;
-    let range = [[window sourceView] selectedRange];
+    let range = window.sourceView.selectedRange;
     let numberOfLines = [window.sourceView.textStorage xvim_numberOfLines];
-    let lineNumber = [window.sourceView currentLineNumber];
+    let lineNumber = window.sourceView.currentLineNumber;
     let columnNumber = [window.sourceView.textStorage xvim_columnOfIndex:range.location];
-    let documentURL = [[window sourceView] documentURL];
-    if ([documentURL isFileURL]) {
+    let documentURL = window.sourceView.documentURL;
+    if (documentURL.isFileURL) {
         NSString* filename = [documentURL path];
         NSString* text = [NSString
                     stringWithFormat:@"%@   line %ld of %ld --%d%%-- col %ld", filename, lineNumber, numberOfLines,
@@ -662,7 +662,7 @@
 - (XVimEvaluator*)motionFixedCore:(XVimMotion*)motion
 {
     [self.window preMotion:motion];
-    [[self sourceView] xvim_move:motion];
+    [self.sourceView xvim_move:motion];
     return nil;
 }
 

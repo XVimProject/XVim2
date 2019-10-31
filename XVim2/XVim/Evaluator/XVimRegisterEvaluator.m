@@ -50,7 +50,7 @@
 @implementation XVimRecordingRegisterEvaluator
 - (XVimEvaluator*)AT
 {
-    self.reg = [[[XVim instance] registerManager] lastExecutedRegister];
+    self.reg = XVim.instance.registerManager.lastExecutedRegister;
     return nil;
 }
 @end

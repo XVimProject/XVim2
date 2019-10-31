@@ -13,8 +13,8 @@
 BOOL isDigit(unichar ch) { return ch >= '0' && ch <= '9'; }
 BOOL isOctDigit(unichar ch) { return ch >= '0' && ch <= '7'; }
 BOOL isHexDigit(unichar ch) { return isDigit(ch) || (ch >= 'a' && ch <= 'f') || (ch >= 'A' && ch <= 'F'); }
-BOOL isWhitespace(unichar ch) { return [[NSCharacterSet whitespaceCharacterSet] characterIsMember:ch]; }
-BOOL isNewline(unichar ch) { return [[NSCharacterSet newlineCharacterSet] characterIsMember:ch]; }
+BOOL isWhitespace(unichar ch) { return [NSCharacterSet.whitespaceCharacterSet characterIsMember:ch]; }
+BOOL isNewline(unichar ch) { return [NSCharacterSet.newlineCharacterSet characterIsMember:ch]; }
 BOOL isAlpha(unichar ch) { return (ch >= 'A' && ch <= 'Z') || (ch >= 'a' && ch <= 'z') || ch == '_'; }
 BOOL isDelimeter(unichar ch)
 {
@@ -52,7 +52,7 @@ static NSString* precomputed[9] = {
     // Word boundary
     // Vim : \<, \>
     // ICU : \b
-    NSString* tmp = [self stringByReplacingOccurrencesOfString:@"\\<" withString:@"\\b"];
+    var tmp = [self stringByReplacingOccurrencesOfString:@"\\<" withString:@"\\b"];
     tmp = [tmp stringByReplacingOccurrencesOfString:@"\\>" withString:@"\\b"];
 
     // Ignorecase
@@ -82,7 +82,7 @@ static NSString* precomputed[9] = {
 
 + (NSMutableString*)mutableStringMadeOfSpaces:(NSUInteger)count
 {
-    NSMutableString* s = [[NSMutableString alloc] initWithCapacity:count];
+    let s = [[NSMutableString alloc] initWithCapacity:count];
 
     for (; count >= 8; count -= 8) {
         [s appendString:precomputed[8]];

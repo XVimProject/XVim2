@@ -8,14 +8,14 @@ int gNSStringGeometricsTypesetterBehavior = NSTypesetterLatestBehavior;
 
 - (NSSize)sizeForWidth:(float)width height:(float)height
 {
-    NSSize answer = NSZeroSize;
+    var answer = NSZeroSize;
     if ([self length] > 0) {
         // Checking for empty string is necessary since Layout Manager will give the nominal
         // height of one line if length is 0.  Our API specifies 0.0 for an empty string.
-        NSSize size = NSMakeSize(width, height);
-        NSTextContainer* textContainer = [[NSTextContainer alloc] initWithContainerSize:size];
-        NSTextStorage* textStorage = [[NSTextStorage alloc] initWithAttributedString:self];
-        NSLayoutManager* layoutManager = [[NSLayoutManager alloc] init];
+        let size = NSMakeSize(width, height);
+        let textContainer = [[NSTextContainer alloc] initWithContainerSize:size];
+        let textStorage = [[NSTextStorage alloc] initWithAttributedString:self];
+        let layoutManager = [[NSLayoutManager alloc] init];
         [layoutManager addTextContainer:textContainer];
         [textStorage addLayoutManager:layoutManager];
         [layoutManager setHyphenationFactor:0.0];
@@ -48,11 +48,8 @@ int gNSStringGeometricsTypesetterBehavior = NSTypesetterLatestBehavior;
 
 - (NSSize)sizeForWidth:(float)width height:(float)height attributes:(NSDictionary*)attributes
 {
-    NSSize answer;
-
-    NSAttributedString* astr = [[NSAttributedString alloc] initWithString:self attributes:attributes];
-    answer = [astr sizeForWidth:width height:height];
-
+    let astr = [[NSAttributedString alloc] initWithString:self attributes:attributes];
+    let answer = [astr sizeForWidth:width height:height];
     return answer;
 }
 
@@ -70,7 +67,7 @@ int gNSStringGeometricsTypesetterBehavior = NSTypesetterLatestBehavior;
 
 - (NSSize)sizeForWidth:(float)width height:(float)height font:(NSFont*)font
 {
-    NSSize answer = NSZeroSize;
+    var answer = NSZeroSize;
 
     if (font == nil) {
         NSLog(@"[%@ %@]: Error: cannot compute size with nil font", [self class], NSStringFromSelector(_cmd));

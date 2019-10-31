@@ -57,7 +57,7 @@
 
 - (XVimEvaluator*)i
 {
-    let mark = [[XVim instance].marks markForName:@"^" forDocument:self.sourceView.documentURL.path];
+    let mark = [XVim.instance.marks markForName:@"^" forDocument:self.sourceView.documentURL.path];
     var insertMode = XVIM_INSERT_DEFAULT;
 
     if (mark.line != NSNotFound) {

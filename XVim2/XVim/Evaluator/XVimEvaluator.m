@@ -110,7 +110,7 @@ static XVimEvaluator* s_popEvaluator = nil;
     return [keymapProvider keymapForMode:XVIM_MODE_NORMAL];
 }
 
-- (XVimEvaluator*)defaultNextEvaluator { return [XVimEvaluator invalidEvaluator]; }
+- (XVimEvaluator*)defaultNextEvaluator { return XVimEvaluator.invalidEvaluator; }
 
 - (NSString*)modeString { return @""; }
 
@@ -180,7 +180,7 @@ static XVimEvaluator* s_popEvaluator = nil;
         return _numericArg;
     }
     else {
-        return [self.parent numericArg] * _numericArg;
+        return self.parent.numericArg * _numericArg;
     }
 }
 
@@ -188,25 +188,25 @@ static XVimEvaluator* s_popEvaluator = nil;
 
 - (void)textView:(id)view didYank:(NSString*)yankedText type:(XVimTextType)textType
 {
-    [XVIM.registerManager yank:yankedText type:textType onRegister:self.yankRegister];
+    [XVim.instance.registerManager yank:yankedText type:textType onRegister:self.yankRegister];
 }
 
 - (void)textView:(id)view didDelete:(NSString*)deletedText type:(XVimTextType)type shouldReplaceRegister:(BOOL)isReplacing
 {
-    [XVIM.registerManager delete:deletedText type:type onRegister:self.yankRegister shouldReplaceRegister:isReplacing];
+    [XVim.instance.registerManager delete:deletedText type:type onRegister:self.yankRegister shouldReplaceRegister:isReplacing];
 }
 
 - (XVimCommandLineEvaluator*)searchEvaluatorForward:(BOOL)forward
 {
     return [[XVimCommandLineEvaluator alloc] initWithWindow:self.window
                 firstLetter:forward ? @"/" : @"?"
-                history:[[XVim instance] searchHistory]
+                history:XVim.instance.searchHistory
                 completion:^XVimEvaluator*(NSString* command, XVimMotion** result) {
                     if (command.length == 0) {
                         return nil;
                     }
                     XVim.instance.foundRangesHidden = NO;
-                    let view = [self.window sourceView];
+                    let view = self.window.sourceView;
                     view.needsUpdateFoundRanges = YES;
 
                     let forward2 = [command characterAtIndex:0] == '/';

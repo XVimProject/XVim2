@@ -391,7 +391,7 @@
             parsing += 2;
         }
         else {
-            XVimMark* m = [XVIM.marks markForName:[NSString stringWithFormat:@"%c", mark]
+            let m = [XVim.instance.marks markForName:[NSString stringWithFormat:@"%c", mark]
                                       forDocument:window.sourceView.documentURL.path];
             if (m != nil) {
                 addr = m.line;
@@ -721,7 +721,7 @@ xvim_ignore_warning_undeclared_selector_push
 
 - (void)highlight:(XVimExArg*)args inWindow:(XVimWindow*)window
 {
-    XVimOptions* options = [XVIM options];
+    XVimOptions* options = XVim.instance.options;
     NSString* argString = args.arg;
     NSScanner* scanner = [NSScanner scannerWithString:argString];
 
@@ -802,9 +802,9 @@ xvim_ignore_warning_undeclared_selector_push
 - (void)writeMapsToConsoleWithFirstLetter:(NSString*)f forMapMode:(XVIM_MODE)mode
 {
     // Show map list in console
-    XVimKeymap* map = [XVIM keymapForMode:mode];
+    XVimKeymap* map = [XVim.instance keymapForMode:mode];
     [map enumerateKeymaps:^(NSString* mapFrom, NSString* mapTo){
-                // TODO: [XVIM writeToConsole:[NSString stringWithFormat:@"%@ %-10s %s",f, [mapFrom UTF8String], [mapTo
+                // TODO: [XVim.instance writeToConsole:[NSString stringWithFormat:@"%@ %-10s %s",f, [mapFrom UTF8String], [mapTo
                 // UTF8String]] ];
     }];
 }
@@ -873,7 +873,7 @@ xvim_ignore_warning_undeclared_selector_push
         NSString* toString = [subStrings componentsJoinedByString:@" "]; // get all args seperate by space
 
         if (fromString.length > 0 && toString.length > 0) {
-            XVimKeymap* keymap = [XVIM keymapForMode:mode];
+            XVimKeymap* keymap = [XVim.instance keymapForMode:mode];
             [keymap map:XVimStringFromKeyNotation(fromString) to:XVimStringFromKeyNotation(toString) withRemap:remap];
         }
     }
@@ -899,7 +899,7 @@ xvim_ignore_warning_undeclared_selector_push
     if (subStrings.count >= 1) {
         NSString* fromString = [subStrings objectAtIndex:0];
         if (fromString.length > 0) {
-            XVimKeymap* keymap = [XVIM keymapForMode:mode];
+            XVimKeymap* keymap = [XVim.instance keymapForMode:mode];
             [keymap unmap:XVimStringFromKeyNotation(fromString)];
         }
     }
@@ -907,15 +907,15 @@ xvim_ignore_warning_undeclared_selector_push
 
 - (void)mapClearMode:(XVIM_MODE)mode
 {
-    XVimKeymap* keymap = [XVIM keymapForMode:mode];
+    XVimKeymap* keymap = [XVim.instance keymapForMode:mode];
     [keymap clear];
 }
 
 - (void)marks:(XVimExArg*)args inWindow:(XVimWindow*)window
 { // This is currently impelemented for debugging purpose
-    NSString* local = [XVIM.marks dumpMarksForDocument:window.sourceView.documentURL.path];
-    NSString* file = [XVIM.marks dumpFileMarks];
-    [XVIM writeToConsole:@"Mark Line Column File\n%@%@", local, file];
+    NSString* local = [XVim.instance.marks dumpMarksForDocument:window.sourceView.documentURL.path];
+    NSString* file = [XVim.instance.marks dumpFileMarks];
+    [XVim.instance writeToConsole:@"Mark Line Column File\n%@%@", local, file];
 }
 
 - (void)ncounterpart:(XVimExArg*)args inWindow:(XVimWindow*)window
@@ -1106,9 +1106,9 @@ xvim_ignore_warning_undeclared_selector_push
 
 - (void)reg:(XVimExArg*)args inWindow:(XVimWindow*)window
 {
-    [[XVIM registerManager] enumerateRegisters:^(NSString* name, XVimRegister* reg) {
+    [XVim.instance.registerManager enumerateRegisters:^(NSString* name, XVimRegister* reg) {
         if (reg.string.length != 0) {
-            [XVIM writeToConsole:@"\"%@   %@", name, XVimKeyNotationFromXVimString(reg.string)];
+            [XVim.instance writeToConsole:@"\"%@   %@", name, XVimKeyNotationFromXVimString(reg.string)];
         }
     }];
 }
@@ -1132,7 +1132,7 @@ xvim_ignore_warning_undeclared_selector_push
 - (void)set:(XVimExArg*)args inWindow:(XVimWindow*)window
 {
     NSString* setCommand = [args.arg stringByTrimmingCharactersInSet:[NSCharacterSet whitespaceCharacterSet]];
-    XVimOptions* options = [XVIM options];
+    XVimOptions* options = XVim.instance.options;
 
     if ([setCommand rangeOfString:@"="].location != NSNotFound) {
         // "set XXX=YYY" form
@@ -1194,7 +1194,7 @@ xvim_ignore_warning_undeclared_selector_push
 }
 
 - (void)source:(XVimExArg*)args inWindow:(XVimWindow*)window{
-	[XVIM sourceRcFile];
+	[XVim.instance sourceRcFile];
 }
 
 - (void)splitview:(XVimExArg*)args inWindow:(XVimWindow*)window
@@ -1204,7 +1204,7 @@ xvim_ignore_warning_undeclared_selector_push
 
 - (void)sub:(XVimExArg*)args inWindow:(XVimWindow*)window
 {
-    XVimSearch* searcher = [XVIM searcher];
+    XVimSearch* searcher = XVim.instance.searcher;
     [searcher substitute:args.arg from:args.lineBegin to:args.lineEnd inWindow:window];
 }
 
@@ -1232,8 +1232,8 @@ xvim_ignore_warning_undeclared_selector_push
 - (void)test:(XVimExArg*)args inWindow:(XVimWindow*)window
 {
 #ifdef TODO
-    [XVIM.testRunner selectCategories:@[ args.arg ]];
-    [XVIM.testRunner runTest];
+    [XVim.instance.testRunner selectCategories:@[ args.arg ]];
+    [XVim.instance.testRunner runTest];
 #endif
 }
 
@@ -1596,7 +1596,7 @@ xvim_ignore_warning_pop
 
 - (void)jumps:(XVimExArg*)args inWindow:(XVimWindow*)window
 {
-    XVim* xvim = XVIM;
+    XVim* xvim = XVim.instance;
     NSString* str = [xvim.marks dumpJumpList];
     [xvim writeToConsole:str];
 }

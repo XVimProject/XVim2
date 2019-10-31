@@ -112,7 +112,7 @@
         [commandField handleKeyStroke:keyStroke inWindow:self.window];
 
         // If the user deletes the : (or /?) character, bail
-        NSString* text = [commandField string];
+        var text = commandField.string;
         if ([text length] == 0) {
             next = nil;
         }
@@ -120,8 +120,8 @@
     }
 
     if (_onKeyPress != nil) {
-        _onKeyPress([[commandField string]
-                    stringByTrimmingCharactersInSet:[NSCharacterSet whitespaceAndNewlineCharacterSet]]);
+        _onKeyPress([commandField.string
+                    stringByTrimmingCharactersInSet:NSCharacterSet.whitespaceAndNewlineCharacterSet]);
     }
 
     return next;
@@ -131,7 +131,7 @@
 
 - (float)insertionPointHeightRatio { return 0.0; }
 
-- (NSString*)modeString { return [self.parent modeString]; }
+- (NSString*)modeString { return self.parent.modeString; }
 
 - (XVIM_MODE)mode { return XVIM_MODE_CMDLINE; }
 
@@ -145,8 +145,8 @@
 
 - (XVimEvaluator*)ESC
 {
-    let sourceView = [self sourceView];
-    [sourceView xvim_scrollTo:[sourceView insertionPoint]];
+    let sourceView = self.sourceView;
+    [sourceView xvim_scrollTo:sourceView.insertionPoint];
     return nil;
 }
 
@@ -157,10 +157,10 @@
 - (XVimEvaluator*)Up
 {
     let commandField = self.window.commandLine.commandField;
-    let xvim = [XVim instance];
+    let xvim = XVim.instance;
 
     if (_historyNo == 0) {
-        _currentCmd = [[commandField string] copy];
+        _currentCmd = commandField.string.copy;
     }
 
     _historyNo++;
@@ -181,7 +181,7 @@
 - (XVimEvaluator*)Down
 {
     let commandField = self.window.commandLine.commandField;
-    let xvim = [XVim instance];
+    let xvim = XVim.instance;
 
     if (_historyNo == 0) {
         // Nothing
@@ -193,7 +193,7 @@
             [commandField moveToEndOfLine:self];
         }
         else {
-            NSString* cmd = [_history entry:_historyNo withPrefix:_currentCmd];
+            let cmd = [_history entry:_historyNo withPrefix:_currentCmd];
             if (nil == cmd) {
                 [xvim ringBell];
             }

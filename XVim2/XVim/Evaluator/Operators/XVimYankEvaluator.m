@@ -18,10 +18,10 @@
 {
     // 'yy' should obey the repeat specifier
     // e.g., '3yy' should yank/copy the current line and the two lines below it
-    if ([self numericArg] < 1)
+    if (self.numericArg < 1)
         return nil;
 
-    let m = [XVimMotion motion:MOTION_LINE_FORWARD type:LINEWISE option:MOPT_NONE count:[self numericArg] - 1];
+    let m = [XVimMotion motion:MOTION_LINE_FORWARD type:LINEWISE option:MOPT_NONE count:self.numericArg - 1];
     return [self _motionFixed:m];
 }
 
@@ -29,7 +29,7 @@
 
 - (XVimEvaluator*)motionFixedCore:(XVimMotion*)motion
 {
-    [[self sourceView] xvim_yank:motion];
+    [self.sourceView xvim_yank:motion];
     return nil;
 }
 @end

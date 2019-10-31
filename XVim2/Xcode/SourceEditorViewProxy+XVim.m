@@ -181,7 +181,7 @@
             if (self.selectionMode == XVIM_VISUAL_BLOCK && self.selectionToEOL) {
                 r.end = [self xvim_endOfLine:r.end];
             }
-            else if (XVIM.options.startofline) {
+            else if (XVim.instance.options.startofline) {
                 // only jump to nonblank line for last line or line number
                 if (motion.motion == MOTION_LASTLINE || motion.motion == MOTION_LINENUMBER) {
                     r.end = [self.textStorage xvim_firstNonblankInLineAtIndex:r.end allowEOL:YES];

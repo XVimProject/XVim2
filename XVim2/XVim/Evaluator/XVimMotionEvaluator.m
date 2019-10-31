@@ -86,7 +86,7 @@
 - (XVimEvaluator*)B
 {
     return [self _motionFixed:[XVimMotion motion:MOTION_WORD_BACKWARD type:CHARWISE_EXCLUSIVE option:MOPT_BIGWORD
-                                           count:[self numericArg]]];
+                                           count:self.numericArg]];
 }
 
 /*
@@ -97,14 +97,14 @@
 - (XVimEvaluator*)e
 {
     let motion = [XVimMotion motion:MOTION_END_OF_WORD_FORWARD type:CHARWISE_INCLUSIVE count:
-                                          [self numericArg]];
+                                          self.numericArg];
     return [self _motionFixed:motion];
 }
 
 - (XVimEvaluator*)E
 {
     let motion
-    = [XVimMotion motion:MOTION_END_OF_WORD_FORWARD type:CHARWISE_INCLUSIVE option:MOPT_BIGWORD count:[self numericArg]];
+    = [XVimMotion motion:MOTION_END_OF_WORD_FORWARD type:CHARWISE_INCLUSIVE option:MOPT_BIGWORD count:self .numericArg];
     return [self _motionFixed:motion];
 }
 
@@ -121,7 +121,7 @@ if( childEvaluator.keyStroke.toString.length != 1 ){
 
     self.motion.count = self.numericArg;
     self.motion.character = childEvaluator.keyStroke.character;
-    [XVim instance].lastCharacterSearchMotion = self.motion;
+    XVim.instance.lastCharacterSearchMotion = self.motion;
     return [self _motionFixed:self.motion];
 }
 
@@ -152,7 +152,7 @@ if( childEvaluator.keyStroke.toString.length != 1 ){
 
 - (XVimEvaluator*)onComplete_g:(XVimGMotionEvaluator*)childEvaluator{
     if( childEvaluator.key.selector == @selector(SEMICOLON) ){
-        XVimMark* mark = [[XVim instance].marks markForName:@"." forDocument:[self.sourceView documentURL].path];
+        let mark = [XVim.instance.marks markForName:@"." forDocument:self.sourceView.documentURL.path];
         return [self jumpToMark:mark firstOfLine:NO KeepJumpMarkIndex:NO NeedUpdateMark:YES];
     }else{
         return [self _motionFixed:childEvaluator.motion];
@@ -161,9 +161,9 @@ if( childEvaluator.keyStroke.toString.length != 1 ){
 
 - (XVimEvaluator*)G
 {
-    var m = [XVimMotion motion:MOTION_LINENUMBER type:LINEWISE option:MOPT_LEFT_RIGHT_NOWRAP count:[self numericArg]];
-    if ([self numericMode]) {
-        m.line = [self numericArg];
+    var m = [XVimMotion motion:MOTION_LINENUMBER type:LINEWISE option:MOPT_LEFT_RIGHT_NOWRAP count:self.numericArg];
+    if (self.numericMode) {
+        m.line = self.numericArg;
     }
     else {
         m.motion = MOTION_LASTLINE;
@@ -173,55 +173,55 @@ if( childEvaluator.keyStroke.toString.length != 1 ){
 
 - (XVimEvaluator*)h
 {
-    return [self _motionFixed:[XVimMotion motion:MOTION_BACKWARD type:CHARWISE_EXCLUSIVE option:MOPT_LEFT_RIGHT_NOWRAP count:[self numericArg]]];
+    return [self _motionFixed:[XVimMotion motion:MOTION_BACKWARD type:CHARWISE_EXCLUSIVE option:MOPT_LEFT_RIGHT_NOWRAP count:self.numericArg]];
 }
 
 - (XVimEvaluator*)H
 {
-    return [self _motionFixed:[XVimMotion motion:MOTION_HOME type:LINEWISE count:[self numericArg]]];
+    return [self _motionFixed:[XVimMotion motion:MOTION_HOME type:LINEWISE count:self.numericArg]];
 }
 
 - (XVimEvaluator*)j
 {
-    return [self _motionFixed:[XVimMotion motion:MOTION_LINE_FORWARD type:LINEWISE count:[self numericArg]]];
+    return [self _motionFixed:[XVimMotion motion:MOTION_LINE_FORWARD type:LINEWISE count:self.numericArg]];
 }
 - (XVimEvaluator*)J
 {
-    return [self _motionFixed:[XVimMotion motion:MOTION_LINE_FORWARD type:LINEWISE option:MOPT_EXTEND_SELECTION count:[self numericArg]]];
+    return [self _motionFixed:[XVimMotion motion:MOTION_LINE_FORWARD type:LINEWISE option:MOPT_EXTEND_SELECTION count:self.numericArg]];
 }
 
 - (XVimEvaluator*)k
 {
-    return [self _motionFixed:[XVimMotion motion:MOTION_LINE_BACKWARD type:LINEWISE count:[self numericArg]]];
+    return [self _motionFixed:[XVimMotion motion:MOTION_LINE_BACKWARD type:LINEWISE count:self.numericArg]];
 }
 - (XVimEvaluator*)K
 {
-    return [self _motionFixed:[XVimMotion motion:MOTION_LINE_BACKWARD type:LINEWISE option:MOPT_EXTEND_SELECTION count:[self numericArg]]];
+    return [self _motionFixed:[XVimMotion motion:MOTION_LINE_BACKWARD type:LINEWISE option:MOPT_EXTEND_SELECTION count:self.numericArg]];
 }
 
 - (XVimEvaluator*)l
 {
     return [self _motionFixed:[XVimMotion motion:MOTION_FORWARD type:CHARWISE_EXCLUSIVE option:MOPT_LEFT_RIGHT_NOWRAP
-                                           count:[self numericArg]]];
+                                           count:self.numericArg]];
 }
 
 - (XVimEvaluator*)L
 {
-    return [self _motionFixed:[XVimMotion motion:MOTION_BOTTOM type:LINEWISE count:[self numericArg]]];
+    return [self _motionFixed:[XVimMotion motion:MOTION_BOTTOM type:LINEWISE count:self.numericArg]];
 }
 
 - (XVimEvaluator*)M
 {
-    return [self _motionFixed:[XVimMotion motion:MOTION_MIDDLE type:LINEWISE count:[self numericArg]]];
+    return [self _motionFixed:[XVimMotion motion:MOTION_MIDDLE type:LINEWISE count:self.numericArg]];
 }
 
 - (XVimEvaluator*)nN_impl:(BOOL)opposite
 {
     XVim.instance.foundRangesHidden = NO;
-    let view = [self.window sourceView];
+    let view = self.window.sourceView;
     view.needsUpdateFoundRanges = YES;
 
-    XVimMotion* m = [XVIM.searcher motionForRepeatSearch];
+    XVimMotion* m = [XVim.instance.searcher motionForRepeatSearch];
     if (opposite) {
         m.motion = (m.motion == MOTION_SEARCH_FORWARD) ? MOTION_SEARCH_BACKWARD : MOTION_SEARCH_FORWARD;
     }
@@ -286,19 +286,19 @@ if( childEvaluator.keyStroke.toString.length != 1 ){
 - (XVimEvaluator*)w
 {
     return [self _motionFixed:[XVimMotion motion:MOTION_WORD_FORWARD type:CHARWISE_EXCLUSIVE count:
-                                               [self numericArg]]];
+                                               self.numericArg]];
 }
 
 - (XVimEvaluator*)W
 {
     return [self _motionFixed:[XVimMotion motion:MOTION_WORD_FORWARD type:CHARWISE_EXCLUSIVE option:MOPT_BIGWORD
-                                           count:[self numericArg]]];
+                                           count:self.numericArg]];
 }
 
 - (XVimEvaluator*)NUM0
 {
     return [self _motionFixed:[XVimMotion motion:MOTION_BEGINNING_OF_LINE type:CHARWISE_INCLUSIVE count:
-                                               [self numericArg]]];
+                                               self.numericArg]];
 }
 
 // SEARCH
@@ -319,12 +319,12 @@ if( childEvaluator.keyStroke.toString.length != 1 ){
                NeedUpdateMark:(BOOL)needUpdateMark
 {
     if (mark == nil)
-        return [XVimEvaluator invalidEvaluator];
+        return XVimEvaluator.invalidEvaluator;
 
     let motionType = fol ? LINEWISE : CHARWISE_EXCLUSIVE;
 
     if (mark.line == NSNotFound) {
-        return [XVimEvaluator invalidEvaluator];
+        return XVimEvaluator.invalidEvaluator;
     }
 
     var jumpToAnotherFile = NO;
@@ -335,7 +335,7 @@ if( childEvaluator.keyStroke.toString.length != 1 ){
 
     var to = [self.sourceView xvim_indexOfLineNumber:mark.line column:mark.column];
     if (NSNotFound == to) {
-        return [XVimEvaluator invalidEvaluator];
+        return XVimEvaluator.invalidEvaluator;
     }
 
     if (fol) {
@@ -372,7 +372,7 @@ if( childEvaluator.keyStroke.toString.length != 1 ){
     // This will work for Ctrl-c as register c but it should not
     // NSString* key = [childEvaluator.keyStroke toString];
     let key = [NSString stringWithFormat:@"%c", childEvaluator.keyStroke.character];
-    let mark = [[XVim instance].marks markForName:key forDocument:[self.sourceView documentURL].path];
+    let mark = [XVim.instance.marks markForName:key forDocument:self.sourceView.documentURL.path];
     return [self jumpToMark:mark firstOfLine:YES KeepJumpMarkIndex:NO NeedUpdateMark:YES];
 }
 
@@ -395,7 +395,7 @@ if( childEvaluator.keyStroke.toString.length != 1 ){
     // This will work for Ctrl-c as register c but it should not
     // NSString* key = [childEvaluator.keyStroke toString];
     let key = [NSString stringWithFormat:@"%c", childEvaluator.keyStroke.character];
-    let mark = [[XVim instance].marks markForName:key forDocument:[self.sourceView documentURL].path];
+    let mark = [XVim.instance.marks markForName:key forDocument:self.sourceView.documentURL.path];
     return [self jumpToMark:mark firstOfLine:NO KeepJumpMarkIndex:NO NeedUpdateMark:YES];
 }
 
@@ -404,13 +404,13 @@ if( childEvaluator.keyStroke.toString.length != 1 ){
 - (XVimEvaluator*)CARET
 {
     return [self _motionFixed:[XVimMotion motion:MOTION_FIRST_NONBLANK type:CHARWISE_EXCLUSIVE count:
-                                               [self numericArg]]];
+                                               self.numericArg]];
 }
 
 - (XVimEvaluator*)DOLLAR
 {
     return [self _motionFixed:[XVimMotion motion:MOTION_END_OF_LINE type:CHARWISE_EXCLUSIVE count:
-                                               [self numericArg]]];
+                                               self.numericArg]];
 }
 
 // Underscore ( "_") moves the cursor to the start of the line (past leading whitespace)
@@ -419,7 +419,7 @@ if( childEvaluator.keyStroke.toString.length != 1 ){
 - (XVimEvaluator*)UNDERSCORE
 {
     // TODO add this motion interface to NSTextView
-    let view = [self.window sourceView];
+    let view = self.window.sourceView;
     let r = [view selectedRange];
     let repeat = self.numericArg;
     let linesUpCursorloc =
@@ -439,11 +439,11 @@ if( childEvaluator.keyStroke.toString.length != 1 ){
 - (XVimEvaluator*)PERCENT
 {
     if (self.numericMode) {
-        return [self _motionFixed:[XVimMotion motion:MOTION_PERCENT type:LINEWISE count:[self numericArg]]];
+        return [self _motionFixed:[XVimMotion motion:MOTION_PERCENT type:LINEWISE count:self.numericArg]];
     }
     else {
         return [self _motionFixed:[XVimMotion motion:MOTION_NEXT_MATCHED_ITEM type:CHARWISE_INCLUSIVE
-                                                count:[self numericArg]]];
+                                                count:self.numericArg]];
     }
 }
 /*
@@ -459,7 +459,7 @@ if( childEvaluator.keyStroke.toString.length != 1 ){
 - (XVimEvaluator*)PLUS
 {
     return [self _motionFixed:[XVimMotion motion:MOTION_NEXT_FIRST_NONBLANK type:LINEWISE count:
-                                               [self numericArg]]];
+                                               self.numericArg]];
 }
 /*
  * CR (return) acts like PLUS in vi
@@ -469,7 +469,7 @@ if( childEvaluator.keyStroke.toString.length != 1 ){
 - (XVimEvaluator*)MINUS
 {
     return [self _motionFixed:[XVimMotion motion:MOTION_PREV_FIRST_NONBLANK type:LINEWISE count:
-                                               [self numericArg]]];
+                                               self.numericArg]];
 }
 
 
@@ -488,33 +488,33 @@ if( childEvaluator.keyStroke.toString.length != 1 ){
 - (XVimEvaluator*)LBRACE
 { // {
     return [self _motionFixed:[XVimMotion motion:MOTION_PARAGRAPH_BACKWARD type:CHARWISE_EXCLUSIVE count:
-                                               [self numericArg]]];
+                                               self.numericArg]];
 }
 
 - (XVimEvaluator*)RBRACE
 { // }
     return [self _motionFixed:[XVimMotion motion:MOTION_PARAGRAPH_FORWARD type:CHARWISE_EXCLUSIVE count:
-                                               [self numericArg]]];
+                                               self.numericArg]];
 }
 
 
 - (XVimEvaluator*)LPARENTHESIS
 { // (
     return [self _motionFixed:[XVimMotion motion:MOTION_SENTENCE_BACKWARD type:CHARWISE_EXCLUSIVE count:
-                                               [self numericArg]]];
+                                               self.numericArg]];
 }
 
 - (XVimEvaluator*)RPARENTHESIS
 { // )
     return [self _motionFixed:[XVimMotion motion:MOTION_SENTENCE_FORWARD type:CHARWISE_EXCLUSIVE count:
-                                               [self numericArg]]];
+                                               self.numericArg]];
 }
 
 - (XVimEvaluator*)COMMA
 {
-    let m = [XVim instance].lastCharacterSearchMotion;
+    let m = XVim.instance.lastCharacterSearchMotion;
     if (m == nil) {
-        return [XVimEvaluator invalidEvaluator];
+        return XVimEvaluator.invalidEvaluator;
     }
     MOTION new_motion = MOTION_PREV_CHARACTER;
     var new_option = m.option;
@@ -537,19 +537,19 @@ if( childEvaluator.keyStroke.toString.length != 1 ){
         NSAssert(NO, @"Should not reach here");
         break;
     }
-    let n = [XVimMotion motion:new_motion type:m.type option:new_option count:[self numericArg]];
+    let n = [XVimMotion motion:new_motion type:m.type option:new_option count:self.numericArg];
     n.character = m.character;
     return [self _motionFixed:n];
 }
 
 - (XVimEvaluator*)SEMICOLON
 {
-    let m = [XVim instance].lastCharacterSearchMotion;
+    let m = XVim.instance.lastCharacterSearchMotion;
     if (nil == m) {
-        return [XVimEvaluator invalidEvaluator];
+        return XVimEvaluator.invalidEvaluator;
     }
 
-    let n = [XVimMotion motion:m.motion type:m.type option:m.option | MOPT_SKIP_ADJACENT_CHAR count:[self numericArg]];
+    let n = [XVimMotion motion:m.motion type:m.type option:m.option | MOPT_SKIP_ADJACENT_CHAR count:self.numericArg];
     n.character = m.character;
     return [self _motionFixed:n];
 }
