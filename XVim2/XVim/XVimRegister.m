@@ -207,7 +207,7 @@ static const NSString* s_enum_registers = @"\"0123456789abcdefghijklmnopqrstuvwx
         }
     }
     // Always lowercase
-    name = [name lowercaseString];
+    name = name.lowercaseString;
     return [self.registers objectForKey:name];
 }
 

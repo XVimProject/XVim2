@@ -194,15 +194,15 @@
             return YES;
         }
         else {
-            return [self handleXVimString:[event toXVimString]];
+            return [self handleXVimString:event.toXVimString];
         }
     }
-    return [self handleXVimString:[event toXVimString]];
+    return [self handleXVimString:event.toXVimString];
 }
 
 - (BOOL)handleOneXVimString:(XVimString*)oneChar
 {
-    let keymap = [self.currentEvaluator selectKeymapWithProvider:[XVim instance]];
+    let keymap = [self.currentEvaluator selectKeymapWithProvider:XVim.instance];
     let mapped = [keymap mapKeys:oneChar withContext:_keymapContext forceFix:NO];
 
     [NSObject cancelPreviousPerformRequestsWithTarget:self selector:@selector(handleTimeout) object:nil];
@@ -215,13 +215,13 @@
         }
     }
     else {
-        NSTimeInterval delay = [XVim.instance.options.timeoutlen integerValue] / 1000.0;
+        NSTimeInterval delay = XVim.instance.options.timeoutlen.integerValue / 1000.0;
         if (delay > 0) {
             [self performSelector:@selector(handleTimeout) withObject:nil afterDelay:delay];
         }
     }
 
-    [self.commandLine setArgumentString:[self.currentEvaluator argumentDisplayString]];
+    [self.commandLine setArgumentString:self.currentEvaluator.argumentDisplayString];
     [self.commandLine setNeedsDisplay:YES];
     return YES;
 }
@@ -231,14 +231,14 @@
 {
     var last = NO;
     for (XVimKeyStroke* stroke in XVimKeyStrokesFromXVimString(strokes)) {
-        last = [self handleOneXVimString:[stroke xvimString]];
+        last = [self handleOneXVimString:stroke.xvimString];
     }
     return last;
 }
 
 - (void)handleTimeout
 {
-    let keymap = [self.currentEvaluator selectKeymapWithProvider:[XVim instance]];
+    let keymap = [self.currentEvaluator selectKeymapWithProvider:XVim.instance];
     let mapped = [keymap mapKeys:@"" withContext:_keymapContext forceFix:YES];
     for (XVimKeyStroke* keyStroke in XVimKeyStrokesFromXVimString(mapped)) {
         [self handleKeyStroke:keyStroke onStack:_currentEvaluatorStack];
@@ -259,7 +259,7 @@
 
     // Record the event
     let xvim = [XVim instance];
-    [xvim appendOperationKeyStroke:[keyStroke xvimString]];
+    [xvim appendOperationKeyStroke:keyStroke.xvimString];
 
     // Evaluate key stroke
     var currentEvaluator = [_currentEvaluatorStack lastObject];
@@ -284,14 +284,14 @@
 
     // Manipulate evaluator stack
     while (YES) {
-        if (nextEvaluator == nil || nextEvaluator == [XVimEvaluator popEvaluator]) {
+        if (nextEvaluator == nil || nextEvaluator == XVimEvaluator.popEvaluator) {
 
             // current evaluator finished its task
-            let completeEvaluator = [_currentEvaluatorStack lastObject]; // We have to retain here not to be dealloced in didEndHandler method.
+            let completeEvaluator = _currentEvaluatorStack.lastObject; // We have to retain here not to be dealloced in didEndHandler method.
             [_currentEvaluatorStack removeLastObject]; // remove current evaluator from the stack
             [completeEvaluator didEndHandler];
 
-            if ([_currentEvaluatorStack count] == 0) {
+            if (_currentEvaluatorStack.count == 0) {
                 // Current Evaluator is the root evaluator of the stack
                 [xvim cancelOperationCommands];
                 [self resetEvaluatorStack:_currentEvaluatorStack activateNormalHandler:YES];
@@ -299,7 +299,7 @@
             }
             else {
                 // Pass current evaluator to the evaluator below the current evaluator
-                currentEvaluator = [_currentEvaluatorStack lastObject];
+                currentEvaluator = _currentEvaluatorStack.lastObject;
                 [currentEvaluator becameHandler];
 
                 if (nextEvaluator) {
@@ -313,13 +313,13 @@
                 [currentEvaluator resetCompletionHandler];
             }
         }
-        else if (nextEvaluator == [XVimEvaluator invalidEvaluator]) {
+        else if (nextEvaluator == XVimEvaluator.invalidEvaluator) {
             [xvim cancelOperationCommands];
             [XVim.instance ringBell];
             [self resetEvaluatorStack:_currentEvaluatorStack activateNormalHandler:YES];
             break;
         }
-        else if (nextEvaluator == [XVimEvaluator noOperationEvaluator]) {
+        else if (nextEvaluator == XVimEvaluator.noOperationEvaluator) {
             // Do nothing
             // This is only used by XVimNormalEvaluator AT handler.
             break;
@@ -339,10 +339,10 @@
         }
     }
 
-    currentEvaluator = [_currentEvaluatorStack lastObject];
+    currentEvaluator = _currentEvaluatorStack.lastObject;
 
-    [self.commandLine setModeString:[[currentEvaluator modeString] stringByAppendingString:_staticString]];
-    [self.commandLine setArgumentString:[currentEvaluator argumentDisplayString]];
+    [self.commandLine setModeString:[currentEvaluator.modeString stringByAppendingString:_staticString]];
+    [self.commandLine setArgumentString:currentEvaluator.argumentDisplayString];
 
     _currentEvaluatorStack = _defaultEvaluatorStack;
 }
@@ -355,7 +355,7 @@
 
     [self.currentEvaluator cancelHandler];
     [self resetEvaluatorStack:_currentEvaluatorStack activateNormalHandler:!needsVisual];
-    [[XVim instance] cancelOperationCommands];
+    [XVim.instance cancelOperationCommands];
 
     if (needsVisual) {
         // FIXME:JAS this doesn't work if v is remaped (yeah I know it's silly but...)
@@ -413,7 +413,7 @@
         [self handleXVimString:aString];
     }
     @catch (NSException* exception) {
-        ERROR_LOG("Exception %s: %s", [exception name], [exception reason]);
+        ERROR_LOG("Exception %s: %s", exception.name, exception.reason);
     }
 }
 
@@ -424,7 +424,7 @@
         self.event = nil;
     }
     @catch (NSException* exception) {
-        ERROR_LOG("Exception %s: %s", [exception name], [exception reason]);
+        ERROR_LOG("Exception %s: %s", exception.name, exception.reason);
     }
 }
 
@@ -446,20 +446,20 @@
     }
 }
 
-- (void)unmarkText { return [self.inputView unmarkText]; }
+- (void)unmarkText { [self.inputView unmarkText]; }
 
-- (NSRange)selectedRange { return [self.inputView selectedRange]; }
+- (NSRange)selectedRange { return self.inputView.selectedRange; }
 
-- (NSRange)markedRange { return [self.inputView markedRange]; }
+- (NSRange)markedRange { return self.inputView.markedRange; }
 
-- (BOOL)hasMarkedText { return [self.inputView hasMarkedText]; }
+- (BOOL)hasMarkedText { return self.inputView.hasMarkedText; }
 
 - (NSAttributedString*)attributedSubstringForProposedRange:(NSRange)aRange actualRange:(NSRangePointer)actualRange
 {
     return [self.inputView attributedSubstringForProposedRange:aRange actualRange:actualRange];
 }
 
-- (NSArray*)validAttributesForMarkedText { return [self.inputView validAttributesForMarkedText]; }
+- (NSArray*)validAttributesForMarkedText { return self.inputView.validAttributesForMarkedText; }
 
 - (NSRect)firstRectForCharacterRange:(NSRange)aRange actualRange:(NSRangePointer)actualRange
 {
@@ -473,8 +473,8 @@
 - (XVimMark*)currentPositionMark
 {
     let mark = [[XVimMark alloc] init];
-    let r = [self.sourceView selectedRange];
-    mark.document = [[self.sourceView documentURL] path];
+    let r = self.sourceView.selectedRange;
+    mark.document = self.sourceView.documentURL.path;
     if (nil == mark.document) {
         return nil;
     }
@@ -485,10 +485,10 @@
 
 - (void)preMotion:(XVimMotion*)motion
 {
-    if (![motion isJumpMotion])
+    if (!motion.isJumpMotion)
         return;
 
-    let mark = [self currentPositionMark];
+    let mark = self.currentPositionMark;
     if (mark == nil)
         return;
 

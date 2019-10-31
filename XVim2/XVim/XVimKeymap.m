@@ -163,7 +163,7 @@
         nextNode = [node.dict objectForKey:stroke];
         if (nil != nextNode) {
             // If there is a node to follow
-            [context.inputKeys appendString:[stroke xvimString]];
+            [context.inputKeys appendString:stroke.xvimString];
             if (nextNode.target != nil) {
                 [context.lastMappedKeys setString:context.inputKeys];
                 context.lastMappedNode = nextNode;
@@ -229,7 +229,7 @@
 {
     if (aStr.length > 0) {
         let notation = XVimKeyNotationFromXVimString(aStr);
-        if ([[notation lowercaseString] hasPrefix:@"<nop>"]) {
+        if ([notation.lowercaseString hasPrefix:@"<nop>"]) {
             return @"";
         }
     }
@@ -249,7 +249,7 @@
     [node.dict enumerateKeysAndObjectsUsingBlock:^(id key, id obj, BOOL* stop) {
         XVimKeyStroke* stroke = key;
         [self enumerateKeymapsImpl:obj
-                                 forKeys:[XVimString stringWithFormat:@"%@%@", keys, [stroke keyNotation]]
+                                 forKeys:[XVimString stringWithFormat:@"%@%@", keys, stroke.keyNotation]
                                withBlock:block];
     }];
 }

@@ -184,14 +184,14 @@
 
 + (NSString*)xvimrc
 {
-    NSString* homeDir = NSHomeDirectoryForUser(NSUserName());
-    NSString* keymapPath = [homeDir stringByAppendingString:@"/.xvimrc"];
+    let homeDir = NSHomeDirectoryForUser(NSUserName());
+    let keymapPath = [homeDir stringByAppendingString:@"/.xvimrc"];
     return [[NSString alloc] initWithContentsOfFile:keymapPath encoding:NSUTF8StringEncoding error:NULL];
 }
 
 - (void)parseRcFile
 {
-    NSString* rc = [XVim xvimrc];
+    let rc = XVim.xvimrc;
     for (NSString* string in [rc componentsSeparatedByString:@"\n"]) {
         [self.excmd executeCommand:[@":" stringByAppendingString:string] inWindow:nil];
     }
@@ -214,13 +214,13 @@
                            context:(void*)context
 {
     if ([keyPath isEqualToString:@"debug"]) {
-        if ([[XVim instance] options].debug) {
-            NSString* homeDir = NSHomeDirectoryForUser(NSUserName());
-            NSString* logPath = [homeDir stringByAppendingString:@"/.xvimlog"];
-            [[Logger defaultLogger] setLogFile:logPath];
+        if (XVim.instance.options.debug) {
+            let homeDir = NSHomeDirectoryForUser(NSUserName());
+            let logPath = [homeDir stringByAppendingString:@"/.xvimlog"];
+            [Logger.defaultLogger setLogFile:logPath];
         }
         else {
-            [[Logger defaultLogger] setLogFile:nil];
+            [Logger.defaultLogger setLogFile:nil];
         }
     }
 }
@@ -286,10 +286,10 @@
     [keyset insertObject:binding inKeyBindingsAtIndex:0];
 #endif
 
-    NSMenu* menu = [[NSApplication sharedApplication] menu];
+    NSMenu* menu = NSApplication.sharedApplication.menu;
 
     NSMenuItem* editorMenuItem = [menu itemWithTitle:@"Edit"];
-    NSMenuItem* xvimMenuItem = [self xvimMenuItem];
+    NSMenuItem* xvimMenuItem = self.xvimMenuItem;
     [editorMenuItem.submenu addItem:NSMenuItem.separatorItem];
     [editorMenuItem.submenu addItem:xvimMenuItem];
 }
@@ -299,9 +299,9 @@
 - (NSMenuItem*)xvimMenuItem
 {
     // Add XVim menu
-    NSMenuItem* item = [[NSMenuItem alloc] init];
+    let item = [[NSMenuItem alloc] init];
     item.title = @"XVim";
-    NSMenu* m = [[NSMenu alloc] initWithTitle:@"XVim"];
+    let m = [[NSMenu alloc] initWithTitle:@"XVim"];
     [item setSubmenu:m];
 
     {
@@ -309,7 +309,7 @@
         subitem.title = @"Enable";
         [subitem setEnabled:YES];
         [subitem setState:NSControlStateValueOn];
-        subitem.target = [XVim instance];
+        subitem.target = XVim.instance;
         subitem.action = @selector(toggleXVim:);
         subitem.representedObject = XVIM_MENU_TOGGLE_IDENTIFIER;
         self.enabledMenuItem = subitem;
@@ -319,7 +319,7 @@
         NSMenuItem* subitem = [[NSMenuItem alloc] init];
         subitem.title = @"About XVim";
         [subitem setEnabled:YES];
-        subitem.target = [XVim class];
+        subitem.target = XVim.class;
         subitem.action = @selector(about:);
         [m addItem:subitem];
     }
@@ -335,14 +335,14 @@
         // Menu for run all test
         NSMenuItem* subitem = [[NSMenuItem alloc] init];
         subitem.title = @"All";
-        subitem.target = [XVim instance];
+        subitem.target = XVim.instance;
         subitem.action = @selector(runTest:);
         [cat_menu addItem:subitem];
-        [cat_menu addItem:[NSMenuItem separatorItem]];
-        for (NSString* c in [[XVim instance].testRunner categories]) {
+        [cat_menu addItem:NSMenuItem.separatorItem];
+        for (NSString* c in XVim.instance.testRunner.categories) {
             subitem = [[NSMenuItem alloc] init];
             subitem.title = c;
-            subitem.target = [XVim instance];
+            subitem.target = XVim.instance;
             subitem.action = @selector(runTest:);
             [subitem setEnabled:YES];
             [cat_menu addItem:subitem];
@@ -358,7 +358,7 @@
 + (void)about:(id)sender
 {
     XVimAboutDialog* p = [[XVimAboutDialog alloc] initWithWindowNibName:@"about"];
-    NSWindow* win = [p window];
+    NSWindow* win = p.window;
     [[NSApplication sharedApplication] runModalForWindow:win];
 }
 
@@ -368,13 +368,13 @@
     self.enabledMenuItem.state = NSControlStateValueOn;
     [self postEnabledChanged];
 }
+
 - (void)disableXVim
 {
     self.enabled = NO;
     self.enabledMenuItem.state = NSControlStateValueOff;
     [self postEnabledChanged];
 }
-
 
 - (void)postEnabledChanged
 {

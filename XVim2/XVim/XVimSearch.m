@@ -147,10 +147,10 @@
         return NO;
     }
 
-    var options = [[XVim instance] options];
+    let options = XVim.instance.options;
     var ignorecase = options.ignorecase;
     if (ignorecase && options.smartcase) {
-        ignorecase = [self.lastSearchCmd isEqualToString:[self.lastSearchCmd lowercaseString]];
+        ignorecase = [self.lastSearchCmd isEqualToString:self.lastSearchCmd.lowercaseString];
     }
     return ignorecase;
 }
@@ -165,9 +165,9 @@
 
 
     NSRange found = { NSNotFound, 0 };
-    var options = [[XVim instance] options];
+    var options = XVim.instance.options;
 
-    let srcView = [window sourceView];
+    let srcView = window.sourceView;
     NSUInteger search_base = from;
 
     var r_opts = NSRegularExpressionAnchorsMatchLines | NSRegularExpressionUseUnicodeWordBoundaries;
@@ -190,14 +190,14 @@
         found = [regex rangeOfFirstMatchInString:[srcView string]
                                          options:0
                                            range:NSMakeRange(search_base + 1,
-                                                             [[srcView string] length] - search_base - 1)];
+                                                             srcView.string.length - search_base - 1)];
     }
 
     // if wrapscan is on, wrap to the top and search
-    if (found.location == NSNotFound && options.wrapscan == TRUE) {
-        found = [regex rangeOfFirstMatchInString:[srcView string]
+    if (found.location == NSNotFound && options.wrapscan) {
+        found = [regex rangeOfFirstMatchInString:srcView.string
                                          options:0
-                                           range:NSMakeRange(0, [[srcView string] length])];
+                                           range:NSMakeRange(0, srcView.string.length)];
         [window errorMessage:[NSString stringWithFormat:@"Search wrapped for '%@'", self.lastSearchDisplayString]
                         ringBell:TRUE];
     }
@@ -217,8 +217,8 @@
     // optimization is warranted until slowness is experienced at the user level.
 
     NSRange found = { NSNotFound, 0 };
-    var options = [[XVim instance] options];
-    let srcView = [window sourceView];
+    var options = XVim.instance.options;
+    let srcView = window.sourceView;
     NSUInteger search_base = from;
 
     var r_opts = NSRegularExpressionAnchorsMatchLines;
@@ -236,12 +236,12 @@
         return NSMakeRange(NSNotFound, 0);
     }
 
-    var matches = [regex matchesInString:[srcView string] options:0 range:NSMakeRange(0, [[srcView string] length])];
+    var matches = [regex matchesInString:srcView.string options:0 range:NSMakeRange(0, srcView.string.length)];
 
     // search above base
     if (search_base > 0) {
         for (NSTextCheckingResult* match in matches) { // get last match in area before search_base
-            NSRange tmp = [match range];
+            NSRange tmp = match.range;
             // handle the case where the search string includes a . or : in the first location
             if (tmp.location >= search_base || (self.matchStart && tmp.location + 1 >= search_base))
                 break;
@@ -286,10 +286,10 @@
                          inWindow:(XVimWindow*)window
 {
     NSRange found = { NSNotFound, 0 };
-    let view = [window sourceView];
+    let view = window.sourceView;
 
-    let begin = [view selectedRange];
-    let string = [view string];
+    let begin = view.selectedRange;
+    let string = view.string;
     NSUInteger searchStart = NSNotFound;
     NSUInteger firstNonblank = NSNotFound;
 
@@ -338,7 +338,7 @@
 
     // Search for the word
     var wordRange = NSMakeRange(wordStart, wordEnd - wordStart + 1);
-    var searchWord = [[view string] substringWithRange:wordRange];
+    var searchWord = [view.string substringWithRange:wordRange];
     var escapedSearchWord = [NSRegularExpression escapedPatternForString:searchWord];
 
     if (wholeWord) {
@@ -394,7 +394,7 @@
     if (str == nil){ return; }
     self.lastFoundRange = [regex rangeOfFirstMatchInString:str
                                                    options:NSMatchingWithoutAnchoringBounds
-                                                     range:NSMakeRange(from, [str length] - from)];
+                                                     range:NSMakeRange(from, str.length - from)];
 
     if (self.lastFoundRange.location >= to) {
         self.lastFoundRange = NSMakeRange(NSNotFound, 0);
@@ -410,7 +410,7 @@
 
 - (NSRange)replaceForwardFrom:(NSUInteger)from to:(NSUInteger)to inWindow:(XVimWindow*)window
 {
-    let srcView = [window sourceView];
+    let srcView = window.sourceView;
 
     [self findForwardFrom:from to:to inWindow:window];
 
@@ -435,9 +435,9 @@
     int component = 0;
     var global = options.gdefault;
     var confirmation = NO;
-    if ([ex_command length] >= 3) {
+    if (ex_command.length >= 3) {
         unichar delimiter = [ex_command characterAtIndex:0];
-        for (NSUInteger i = 1; i < [ex_command length]; ++i) {
+        for (NSUInteger i = 1; i < ex_command.length; ++i) {
             unichar current = [ex_command characterAtIndex:i];
             if (current == delimiter && previous != '\\') {
                 component++;
@@ -486,7 +486,7 @@
                 [window.sourceView xvim_indexOfLineNumber:to + 1
                                                                column:0]; // Next line of the end of range.
     if (NSNotFound == self.replaceEndLocation) {
-        self.replaceEndLocation = [[[window sourceView] string] length];
+        self.replaceEndLocation = window.sourceView.string.length;
     }
 
     [self findForwardFrom:self.replaceStartLocation to:self.replaceEndLocation inWindow:window];
@@ -519,12 +519,12 @@
 
 - (void)updateEndLocationInWindow:(XVimWindow*)window
 {
-    self.replaceEndLocation += ([self.lastReplacementString length] - self.lastFoundRange.length);
+    self.replaceEndLocation += (self.lastReplacementString.length - self.lastFoundRange.length);
 }
 
 - (void)replaceCurrentInWindow:(XVimWindow*)window findNext:(BOOL)findNext
 {
-    let srcView = [window sourceView];
+    let srcView = window.sourceView;
 
     [srcView insertText:self.lastReplacementString replacementRange:self.lastFoundRange];
     [srcView xvim_moveCursor:self.lastFoundRange.location + self.lastReplacementString.length preserveColumn:NO];

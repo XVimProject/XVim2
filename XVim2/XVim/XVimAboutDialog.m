@@ -30,10 +30,11 @@
     if (nil == rc)
         rc = @"N/A";
 
-    NSString* info = [NSString
-                stringWithFormat:format, GIT_REVISION, [[NSProcessInfo processInfo] operatingSystemVersionString],
-                                 [[[NSBundle mainBundle] infoDictionary] objectForKey:@"CFBundleShortVersionString"],
-                                 rc];
+    NSString* info = [NSString stringWithFormat:format,
+                      GIT_REVISION,
+                      NSProcessInfo.processInfo.operatingSystemVersionString,
+                      [NSBundle.mainBundle.infoDictionary objectForKey:@"CFBundleShortVersionString"],
+                      rc];
 
     return info;
 }
@@ -49,7 +50,7 @@
 
 - (BOOL)windowShouldClose:(id)sender
 {
-    [[NSApplication sharedApplication] stopModal];
+    [NSApplication.sharedApplication stopModal];
     return YES;
 }
 
@@ -62,9 +63,9 @@
                                                 @"```\n",
                                                 self.infoTextView.string];
     NSString* urlencoded =
-                [body stringByAddingPercentEncodingWithAllowedCharacters:[NSCharacterSet URLQueryAllowedCharacterSet]];
+                [body stringByAddingPercentEncodingWithAllowedCharacters:NSCharacterSet.URLQueryAllowedCharacterSet];
     NSString* url = [NSString stringWithFormat:@"https://github.com/XVimProject/XVim2/issues/new?body=%@", urlencoded];
-    [[NSWorkspace sharedWorkspace] openURL:[NSURL URLWithString:url]];
+    [NSWorkspace.sharedWorkspace openURL:[NSURL URLWithString:url]];
 }
 
 @end

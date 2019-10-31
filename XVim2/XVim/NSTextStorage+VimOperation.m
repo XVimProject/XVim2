@@ -2206,7 +2206,7 @@ NSInteger xv_findChar(NSString* string, NSInteger index, int repeatCount, char c
 
 - (NSRange)rangeOfCamelcaseSurrundingCharacterWithFromIndex:(NSInteger)index
 {
-    let string = [self xvim_string];
+    let string = self.xvim_string;
 
     if ((NSUInteger)index >= self.length) {
         return NSMakeRange(NSNotFound, 0);
@@ -2268,11 +2268,11 @@ NSInteger xv_findChar(NSString* string, NSInteger index, int repeatCount, char c
     else {
         // numbers, symbols
 
-        let tempCharSet = [NSMutableCharacterSet whitespaceAndNewlineCharacterSet];
+        let tempCharSet = NSMutableCharacterSet.whitespaceAndNewlineCharacterSet;
         [tempCharSet formUnionWithCharacterSet:upperCharSet];
         [tempCharSet formUnionWithCharacterSet:lowerCharSet];
         [tempCharSet formUnionWithCharacterSet:numberCharSet];
-        let allSymbolCharSet = [tempCharSet invertedSet];
+        let allSymbolCharSet = tempCharSet.invertedSet;
 
         let otherCharSets = @[ numberCharSet, allSymbolCharSet ];
         __block NSRange result = NSMakeRange(NSNotFound, 0);
@@ -2399,7 +2399,7 @@ NSInteger xv_findChar(NSString* string, NSInteger index, int repeatCount, char c
                                beginPos:(NSUInteger)beginPos
                              delimiters:(NSCharacterSet*)delimiters
 {
-    let string = [self xvim_string];
+    let string = self.xvim_string;
 
     NSUInteger index = MIN(beginPos, string.length - 1);
     NSUInteger result = NSNotFound;
@@ -2420,14 +2420,14 @@ NSInteger xv_findChar(NSString* string, NSInteger index, int repeatCount, char c
 
 - (BOOL)isHighSurrogate:(NSUInteger)index
 {
-    let string = [self xvim_string];
+    let string = self.xvim_string;
     const unichar uc = [self safetyCharacterAtIndex:index fromString:string];
     return (0xd800 <= uc && uc <= 0xdbff);
 }
 
 - (BOOL)isLowSurrogate:(NSUInteger)index
 {
-    let string = [self xvim_string];
+    let string = self.xvim_string;
     const unichar uc = [self safetyCharacterAtIndex:index fromString:string];
     return (0xdc00 <= uc && uc <= 0xdfff);
 }
