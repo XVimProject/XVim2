@@ -161,7 +161,7 @@
         else {
             // Text object expands one text object ( the text object under insertion point + 1 )
             if (![self.textStorage isEOF:self.insertionPoint + 1]) {
-                if (motion.motion != TEXTOBJECT_UNDERSCORE) {
+                if (motion.style != TEXTOBJECT_UNDERSCORE) {
                     r = [self xvim_getMotionRange:self.insertionPoint + 1 Motion:motion];
                 }
             }
@@ -172,7 +172,7 @@
         }
     }
     else { // VISUAL MODE
-        switch (motion.motion) {
+        switch (motion.style) {
         case MOTION_LINE_BACKWARD:
         case MOTION_LINE_FORWARD:
         case MOTION_LASTLINE:
@@ -183,7 +183,7 @@
             }
             else if (XVim.instance.options.startofline) {
                 // only jump to nonblank line for last line or line number
-                if (motion.motion == MOTION_LASTLINE || motion.motion == MOTION_LINENUMBER) {
+                if (motion.style == MOTION_LASTLINE || motion.style == MOTION_LINENUMBER) {
                     r.end = [self.textStorage xvim_firstNonblankInLineAtIndex:r.end allowEOL:YES];
                 }
             }
@@ -491,7 +491,7 @@
     NSUInteger start = NSNotFound;
     NSUInteger starts_end = NSNotFound;
 
-    switch (motion.motion) {
+    switch (motion.style) {
     case MOTION_NONE:
         // Do nothing
         break;
@@ -679,7 +679,7 @@
         break;
     case MOTION_SEARCH_MATCHED_FORWARD:
     case MOTION_SEARCH_MATCHED_BACKWARD:
-        if (motion.motion == MOTION_SEARCH_MATCHED_FORWARD) {
+        if (motion.style == MOTION_SEARCH_MATCHED_FORWARD) {
             range = [self.textStorage searchRegexForward:motion.regex from:self.insertionPoint count:motion.count option:motion.option];
         } else {
             range = [self.textStorage searchRegexBackward:motion.regex from:self.insertionPoint count:motion.count option:motion.option];
@@ -1008,7 +1008,7 @@
         SourceEditorViewProxy* SELF = weakSelf;
         if (!SELF)
             return;
-        XVimMotion* m = [XVimMotion motion:MOTION_POSITION type:DEFAULT_MOTION_TYPE
+        XVimMotion* m = [XVimMotion style:MOTION_POSITION type:DEFAULT_MOTION_TYPE
                                          count:1];
         m.position = pos;
         [SELF xvim_move:m];

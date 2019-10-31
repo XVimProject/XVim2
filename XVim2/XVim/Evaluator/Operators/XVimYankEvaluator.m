@@ -21,7 +21,7 @@
     if (self.numericArg < 1)
         return nil;
 
-    let m = [XVimMotion motion:MOTION_LINE_FORWARD type:LINEWISE option:MOPT_NONE count:self.numericArg - 1];
+    let m = [XVimMotion style:MOTION_LINE_FORWARD type:LINEWISE option:MOPT_NONE count:self.numericArg - 1];
     return [self _motionFixed:m];
 }
 

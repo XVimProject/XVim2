@@ -32,46 +32,46 @@
 - (XVimEvaluator*)e
 {
     // Select previous word end
-    self.motion = [XVimMotion motion:MOTION_END_OF_WORD_BACKWARD type:CHARWISE_INCLUSIVE count:self.numericArg];
+    self.motion = [XVimMotion style:MOTION_END_OF_WORD_BACKWARD type:CHARWISE_INCLUSIVE count:self.numericArg];
     return nil;
 }
 
 - (XVimEvaluator*)E
 {
     // Select previous WORD end
-    self.motion = [XVimMotion motion:MOTION_END_OF_WORD_BACKWARD type:CHARWISE_INCLUSIVE option:MOPT_BIGWORD count:self.numericArg];
+    self.motion = [XVimMotion style:MOTION_END_OF_WORD_BACKWARD type:CHARWISE_INCLUSIVE option:MOPT_BIGWORD count:self.numericArg];
     return nil;
 }
 
 - (XVimEvaluator*)g
 {
-    self.motion = [XVimMotion motion:MOTION_LINENUMBER type:LINEWISE count:1];
+    self.motion = [XVimMotion style:MOTION_LINENUMBER type:LINEWISE count:1];
     self.motion.line = self.numericArg;
     return nil;
 }
 
 - (XVimEvaluator*)j
 {
-    self.motion = [XVimMotion motion:MOTION_LINE_FORWARD type:CHARWISE_EXCLUSIVE option:MOPT_DISPLAY_LINE count: self.numericArg];
+    self.motion = [XVimMotion style:MOTION_LINE_FORWARD type:CHARWISE_EXCLUSIVE option:MOPT_DISPLAY_LINE count: self.numericArg];
     return nil;
 }
 
 - (XVimEvaluator*)k
 {
-    self.motion = [XVimMotion motion:MOTION_LINE_BACKWARD type:CHARWISE_EXCLUSIVE option:MOPT_DISPLAY_LINE count: self.numericArg];
+    self.motion = [XVimMotion style:MOTION_LINE_BACKWARD type:CHARWISE_EXCLUSIVE option:MOPT_DISPLAY_LINE count: self.numericArg];
     return nil;
 }
 
 - (XVimEvaluator*)n{
     self.motion = XVim.instance.searcher.motionForRepeatSearch;
-    self.motion.motion = MOTION_SEARCH_MATCHED_FORWARD;
+    self.motion.style = MOTION_SEARCH_MATCHED_FORWARD;
 
     return nil;
 }
 
 - (XVimEvaluator*)N{
     self.motion = XVim.instance.searcher.motionForRepeatSearch;
-    self.motion.motion = MOTION_SEARCH_MATCHED_BACKWARD;
+    self.motion.style = MOTION_SEARCH_MATCHED_BACKWARD;
 
     return nil;
 }

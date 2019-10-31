@@ -27,7 +27,7 @@
 
 - (BOOL)isJumpMotion
 {
-    switch (_motion) {
+    switch (_style) {
     case MOTION_SENTENCE_FORWARD: // )
     case MOTION_SENTENCE_BACKWARD: // (
     case MOTION_PARAGRAPH_FORWARD: // }
@@ -49,10 +49,10 @@
     return NO;
 }
 
-- (nonnull XVimMotion*)initWithMotion:(MOTION)motion type:(MOTION_TYPE)type option:(MOTION_OPTION)option count:(NSUInteger)count
+- (nonnull XVimMotion*)initWithStyle:(MOTION_STYLE)style type:(MOTION_TYPE)type option:(MOTION_OPTION)option count:(NSUInteger)count
 {
     if (self = [super init]) {
-        _motion = motion;
+        _style = style;
         _type = type;
         _option = option;
         _count = count;
@@ -64,35 +64,35 @@
     return self;
 }
 
-- (nonnull XVimMotion*)initWithMotion:(MOTION)motion type:(MOTION_TYPE)type option:(MOTION_OPTION)option
+- (nonnull XVimMotion*)initWithStyle:(MOTION_STYLE)style type:(MOTION_TYPE)type option:(MOTION_OPTION)option
 {
-    return [self initWithMotion:motion type:type option:option count:1];
+    return [self initWithStyle:style type:type option:option count:1];
 }
 
-- (nonnull XVimMotion*)initWithMotion:(MOTION)motion type:(MOTION_TYPE)type count:(NSUInteger)count
+- (nonnull XVimMotion*)initWithStyle:(MOTION_STYLE)style type:(MOTION_TYPE)type count:(NSUInteger)count
 {
-    return [self initWithMotion:motion type:type option:MOPT_NONE count:count];
+    return [self initWithStyle:style type:type option:MOPT_NONE count:count];
 }
 
-+ (nonnull XVimMotion*)motion:(MOTION)motion type:(MOTION_TYPE)type option:(MOTION_OPTION)option count:(NSUInteger)count
++ (nonnull XVimMotion*)style:(MOTION_STYLE)style type:(MOTION_TYPE)type option:(MOTION_OPTION)option count:(NSUInteger)count
 {
-    return [[XVimMotion alloc] initWithMotion:motion type:type option:option count:count];
+    return [[XVimMotion alloc] initWithStyle:style type:type option:option count:count];
 }
 
-+ (nonnull XVimMotion*)motion:(MOTION)motion type:(MOTION_TYPE)type option:(MOTION_OPTION)option
++ (nonnull XVimMotion*)style:(MOTION_STYLE)style type:(MOTION_TYPE)type option:(MOTION_OPTION)option
 {
-    return [[XVimMotion alloc] initWithMotion:motion type:type option:option];
+    return [[XVimMotion alloc] initWithStyle:style type:type option:option];
 }
 
-+ (nonnull XVimMotion*)motion:(MOTION)motion type:(MOTION_TYPE)type count:(NSUInteger)count
++ (nonnull XVimMotion*)style:(MOTION_STYLE)style type:(MOTION_TYPE)type count:(NSUInteger)count
 {
-    return [[XVimMotion alloc] initWithMotion:motion type:type count:count];
+    return [[XVimMotion alloc] initWithStyle:style type:type count:count];
 }
 
-- (BOOL)isTextObject { return TEXTOBJECT_WORD <= self.motion && self.motion <= TEXTOBJECT_UNDERSCORE; }
+- (BOOL)isTextObject { return TEXTOBJECT_WORD <= self.style && self.style <= TEXTOBJECT_UNDERSCORE; }
 + (NSArray<NSString*>*)uncodablePropertyKeys { return @[ @"info" ]; }
 - (NSString *)debugDescription {
-	return [NSString stringWithFormat:@"motion: %d type: %d option: %d count: %d line: %d column: %d position %d info %@",
-			(int)_motion, (int)_type, (int)_option, (int)_count, (int)_line, (int)_column, (int)_position, _motionInfo];
+	return [NSString stringWithFormat:@"style: %d type: %d option: %d count: %d line: %d column: %d position %d info %@",
+			(int)_style, (int)_type, (int)_option, (int)_count, (int)_line, (int)_column, (int)_position, _motionInfo];
 }
 @end

@@ -210,7 +210,7 @@ static NSString* MODE_STRINGS[] = { @"", @"-- VISUAL --", @"-- VISUAL LINE --", 
     XVimMotion* m = childEvaluator.motion;
 
     self.onChildCompleteHandler = nil;
-    if (m.motion != MOTION_NONE) {
+    if (m.style != MOTION_NONE) {
         return [self _motionFixed:m];
     }
     return self;
@@ -223,7 +223,7 @@ static NSString* MODE_STRINGS[] = { @"", @"-- VISUAL --", @"-- VISUAL LINE --", 
         return [[XVimInsertEvaluator alloc] initWithWindow:self.window insertMode:XVIM_INSERT_BLOCK_KILL];
     }
     XVimDeleteEvaluator* eval = [[XVimDeleteEvaluator alloc] initWithWindow:self.window insertModeAtCompletion:YES];
-    return [eval executeOperationWithMotion:[XVimMotion motion:MOTION_NONE type:CHARWISE_EXCLUSIVE count:1]];
+    return [eval executeOperationWithMotion:[XVimMotion style:MOTION_NONE type:CHARWISE_EXCLUSIVE count:1]];
 }
 
 - (XVimEvaluator*)C
@@ -252,7 +252,7 @@ static NSString* MODE_STRINGS[] = { @"", @"-- VISUAL --", @"-- VISUAL LINE --", 
 - (XVimEvaluator*)d
 {
     XVimDeleteEvaluator* eval = [[XVimDeleteEvaluator alloc] initWithWindow:self.window];
-    return [eval executeOperationWithMotion:[XVimMotion motion:MOTION_NONE type:CHARWISE_INCLUSIVE count:0]];
+    return [eval executeOperationWithMotion:[XVimMotion style:MOTION_NONE type:CHARWISE_INCLUSIVE count:0]];
 }
 
 - (XVimEvaluator*)DEL { return [self d]; }
@@ -310,7 +310,7 @@ static NSString* MODE_STRINGS[] = { @"", @"-- VISUAL --", @"-- VISUAL LINE --", 
 - (XVimEvaluator*)J
 {
     XVimJoinEvaluator* eval = [[XVimJoinEvaluator alloc] initWithWindow:self.window addSpace:YES];
-    return [eval executeOperationWithMotion:[XVimMotion motion:MOTION_NONE type:CHARWISE_EXCLUSIVE count: self.numericArg]];
+    return [eval executeOperationWithMotion:[XVimMotion style:MOTION_NONE type:CHARWISE_EXCLUSIVE count: self.numericArg]];
 }
 
 - (XVimEvaluator*)m
@@ -386,14 +386,14 @@ static NSString* MODE_STRINGS[] = { @"", @"-- VISUAL --", @"-- VISUAL LINE --", 
 {
     [self beginUndoGrouping];
     XVimLowercaseEvaluator* eval = [[XVimLowercaseEvaluator alloc] initWithWindow:self.window];
-    return [eval executeOperationWithMotion:[XVimMotion motion:MOTION_NONE type:CHARWISE_INCLUSIVE count:self.numericArg]];
+    return [eval executeOperationWithMotion:[XVimMotion style:MOTION_NONE type:CHARWISE_INCLUSIVE count:self.numericArg]];
 }
 
 - (XVimEvaluator*)U
 {
     [self beginUndoGrouping];
     XVimUppercaseEvaluator* eval = [[XVimUppercaseEvaluator alloc] initWithWindow:self.window];
-    return [eval executeOperationWithMotion:[XVimMotion motion:MOTION_NONE type:CHARWISE_INCLUSIVE count:self.numericArg]];
+    return [eval executeOperationWithMotion:[XVimMotion style:MOTION_NONE type:CHARWISE_INCLUSIVE count:self.numericArg]];
 }
 
 - (XVimEvaluator*)C_u
@@ -509,7 +509,7 @@ contextWithArgument:@"\""] parent:self completion:^ XVimEvaluator* (NSString* rn
 - (XVimEvaluator*)EQUAL
 {
     XVimEqualEvaluator* eval = [[XVimEqualEvaluator alloc] initWithWindow:self.window];
-    return [eval executeOperationWithMotion:[XVimMotion motion:MOTION_NONE type:CHARWISE_EXCLUSIVE count:[self numericArg]]];
+    return [eval executeOperationWithMotion:[XVimMotion style:MOTION_NONE type:CHARWISE_EXCLUSIVE count:[self numericArg]]];
     return nil;
 }
 
@@ -567,13 +567,13 @@ contextWithArgument:@"\""] parent:self completion:^ XVimEvaluator* (NSString* rn
 - (XVimEvaluator*)GREATERTHAN
 {
     XVimShiftEvaluator* eval = [[XVimShiftEvaluator alloc] initWithWindow:self.window unshift:NO];
-    return [eval executeOperationWithMotion:[XVimMotion motion:MOTION_NONE type:CHARWISE_INCLUSIVE count:self.numericArg]];
+    return [eval executeOperationWithMotion:[XVimMotion style:MOTION_NONE type:CHARWISE_INCLUSIVE count:self.numericArg]];
 }
 
 - (XVimEvaluator*)LESSTHAN
 {
     XVimShiftEvaluator* eval = [[XVimShiftEvaluator alloc] initWithWindow:self.window unshift:YES];
-    return [eval executeOperationWithMotion:[XVimMotion motion:MOTION_NONE type:CHARWISE_INCLUSIVE count:self.numericArg]];
+    return [eval executeOperationWithMotion:[XVimMotion style:MOTION_NONE type:CHARWISE_INCLUSIVE count:self.numericArg]];
 }
 
 - (XVimEvaluator*)executeSearch:(XVimWindow*)window firstLetter:(NSString*)firstLetter
@@ -649,7 +649,7 @@ return eval;
 - (XVimEvaluator*)TILDE
 {
     let eval = [[XVimTildeEvaluator alloc] initWithWindow:self.window];
-    return [eval executeOperationWithMotion:[XVimMotion motion:MOTION_NONE type:CHARWISE_EXCLUSIVE count:[self numericArg]]];
+    return [eval executeOperationWithMotion:[XVimMotion style:MOTION_NONE type:CHARWISE_EXCLUSIVE count:[self numericArg]]];
 }
 
 - (XVimEvaluator*)motionFixedCore:(XVimMotion*)motion

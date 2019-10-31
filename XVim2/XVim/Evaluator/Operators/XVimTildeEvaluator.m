@@ -15,7 +15,7 @@
 
 - (XVimEvaluator*)fixWithNoMotion:(NSUInteger)count
 {
-    return [self _motionFixed:[XVimMotion motion:MOTION_NONE type:CHARWISE_EXCLUSIVE count:count]];
+    return [self _motionFixed:[XVimMotion style:MOTION_NONE type:CHARWISE_EXCLUSIVE count:count]];
 }
 
 - (XVimEvaluator*)TILDE
@@ -23,7 +23,7 @@
     if (self.numericArg < 1)
         return nil;
 
-    let m = [XVimMotion motion:MOTION_LINE_FORWARD type:LINEWISE count:self.numericArg - 1];
+    let m = [XVimMotion style:MOTION_LINE_FORWARD type:LINEWISE count:self.numericArg - 1];
     return [self _motionFixed:m];
 }
 

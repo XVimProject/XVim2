@@ -126,7 +126,7 @@
                 // We have to treat some special cases
                 // When a cursor get end of line with "l" motion, make the motion type to inclusive.
                 // This make you to delete the last character. (if its exclusive last character never deleted with "dl")
-                if (motion.motion == MOTION_FORWARD && motion.motionInfo.reachedEndOfLine) {
+                if (motion.style == MOTION_FORWARD && motion.motionInfo.reachedEndOfLine) {
                     if (motion.type == CHARWISE_EXCLUSIVE) {
                         motion.type = CHARWISE_INCLUSIVE;
                     }
@@ -134,7 +134,7 @@
                         motion.type = CHARWISE_EXCLUSIVE;
                     }
                 }
-                if (motion.motion == MOTION_WORD_FORWARD) {
+                if (motion.style == MOTION_WORD_FORWARD) {
                     if ((motion.motionInfo.isFirstWordInLine && motion.motionInfo.lastEndOfLine != NSNotFound)) {
                         // Special cases for word move over a line break.
                         motionRange.end = motion.motionInfo.lastEndOfLine;
@@ -154,10 +154,10 @@
                     [self _xvim_yankRange:r withType:motion.type];
                 }
                 [self insertText:@"" replacementRange:r];
-                if (motion.motion == TEXTOBJECT_SQUOTE || motion.motion == TEXTOBJECT_DQUOTE
-                    || motion.motion == TEXTOBJECT_BACKQUOTE || motion.motion == TEXTOBJECT_PARENTHESES
-                    || motion.motion == TEXTOBJECT_BRACES || motion.motion == TEXTOBJECT_SQUAREBRACKETS
-                    || motion.motion == TEXTOBJECT_ANGLEBRACKETS) {
+                if (motion.style == TEXTOBJECT_SQUOTE || motion.style == TEXTOBJECT_DQUOTE
+                    || motion.style == TEXTOBJECT_BACKQUOTE || motion.style == TEXTOBJECT_PARENTHESES
+                    || motion.style == TEXTOBJECT_BRACES || motion.style == TEXTOBJECT_SQUAREBRACKETS
+                    || motion.style == TEXTOBJECT_ANGLEBRACKETS) {
                     newPos = r.location;
                 }
                 else if (motion.type == LINEWISE) {
@@ -332,8 +332,8 @@
     }
 
     // "cw" is like "ce" if the cursor is on a word ( in this case blank line is not treated as a word )
-    if (motion.motion == MOTION_WORD_FORWARD && [self.textStorage isNonblank:self.insertionPoint]) {
-        motion.motion = MOTION_END_OF_WORD_FORWARD;
+    if (motion.style == MOTION_WORD_FORWARD && [self.textStorage isNonblank:self.insertionPoint]) {
+        motion.style = MOTION_END_OF_WORD_FORWARD;
         motion.type = CHARWISE_INCLUSIVE;
         motion.option |= MOPT_CHANGE_WORD;
     }
@@ -391,8 +391,8 @@
     }
 
     if (self.selectionMode == XVIM_VISUAL_NONE) {
-        if (motion.motion == MOTION_NONE) {
-            XVimMotion* m = [XVimMotion motion:MOTION_FORWARD type:CHARWISE_EXCLUSIVE option:MOPT_LEFT_RIGHT_NOWRAP count:motion.count];
+        if (motion.style == MOTION_NONE) {
+            XVimMotion* m = [XVimMotion style:MOTION_FORWARD type:CHARWISE_EXCLUSIVE option:MOPT_LEFT_RIGHT_NOWRAP count:motion.count];
             XVimRange r = [self xvim_getMotionRange:self.insertionPoint Motion:m];
             if (r.end == NSNotFound) {
                 return;

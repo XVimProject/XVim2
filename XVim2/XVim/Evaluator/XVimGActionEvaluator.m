@@ -63,7 +63,7 @@
     if (mark.line != NSNotFound) {
         NSUInteger newPos = [self.sourceView xvim_indexOfLineNumber:mark.line column:mark.column];
         if (NSNotFound != newPos) {
-            let m = [XVimMotion motion:MOTION_POSITION type:CHARWISE_EXCLUSIVE count:0];
+            let m = [XVimMotion style:MOTION_POSITION type:CHARWISE_EXCLUSIVE count:0];
             m.position = newPos;
 
             [self.window preMotion:m];
@@ -77,7 +77,7 @@
 - (XVimEvaluator*)J
 {
     let eval = [[XVimJoinEvaluator alloc] initWithWindow:self.window addSpace:NO];
-    return [eval executeOperationWithMotion:[XVimMotion motion:MOTION_NONE type:CHARWISE_EXCLUSIVE count: self.numericArg]];
+    return [eval executeOperationWithMotion:[XVimMotion style:MOTION_NONE type:CHARWISE_EXCLUSIVE count: self.numericArg]];
 }
 
 

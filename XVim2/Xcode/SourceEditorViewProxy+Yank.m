@@ -61,10 +61,10 @@
             return;
         }
         // We have to treat some special cases (same as delete)
-        if (motion.motion == MOTION_FORWARD && motion.motionInfo.reachedEndOfLine) {
+        if (motion.style == MOTION_FORWARD && motion.motionInfo.reachedEndOfLine) {
             motion.type = CHARWISE_INCLUSIVE;
         }
-        if (motion.motion == MOTION_WORD_FORWARD) {
+        if (motion.style == MOTION_WORD_FORWARD) {
             if ((motion.motionInfo.isFirstWordInLine && motion.motionInfo.lastEndOfLine != NSNotFound)) {
                 // Special cases for word move over a line break.
                 to.end = motion.motionInfo.lastEndOfLine;
@@ -112,7 +112,7 @@
         // FIXME: Make them not to change text from register...
         text = [NSString stringWithString:text]; // copy string because the text may be changed with folloing delete if
                                                  // it is from the same register...
-        [self xvim_delete:[XVimMotion motion:MOTION_NONE type:CHARWISE_INCLUSIVE count:1] andYank:YES];
+        [self xvim_delete:[XVimMotion style:MOTION_NONE type:CHARWISE_INCLUSIVE count:1] andYank:YES];
         after = NO;
     }
 

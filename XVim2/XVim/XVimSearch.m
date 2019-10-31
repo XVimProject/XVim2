@@ -41,11 +41,11 @@
     XVimMotion* m = nil;
     if (forward) {
         XVim.instance.searcher.lastSearchBackword = NO;
-        m = [XVimMotion motion:MOTION_SEARCH_FORWARD type:CHARWISE_EXCLUSIVE count:1];
+        m = [XVimMotion style:MOTION_SEARCH_FORWARD type:CHARWISE_EXCLUSIVE count:1];
     }
     else {
         XVim.instance.searcher.lastSearchBackword = YES;
-        m = [XVimMotion motion:MOTION_SEARCH_BACKWARD type:CHARWISE_EXCLUSIVE count:1];
+        m = [XVimMotion style:MOTION_SEARCH_BACKWARD type:CHARWISE_EXCLUSIVE count:1];
     }
     m.regex = string;
 

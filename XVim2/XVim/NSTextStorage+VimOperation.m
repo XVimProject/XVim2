@@ -2167,7 +2167,7 @@ NSInteger xv_findChar(NSString* string, NSInteger index, int repeatCount, char c
 
 #ifdef TODO
     NSTextView* view = [(NSLayoutManager*)[self.layoutManagers firstObject] firstTextView];
-    XVimMotion* m = [XVimMotion motion:MOTION_POSITION type:DEFAULT_MOTION_TYPE count:1];
+    XVimMotion* m = [XVimMotion style:MOTION_POSITION type:DEFAULT_MOTION_TYPE count:1];
     m.position = num.unsignedIntegerValue;
     [view xvim_move:m];
 #endif

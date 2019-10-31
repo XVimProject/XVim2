@@ -213,7 +213,7 @@ static XVimEvaluator* s_popEvaluator = nil;
                     if (command.length == 1) {
                         // Repeat search
                         let m = [XVim.instance.searcher motionForRepeatSearch];
-                        m.motion = forward2 ? MOTION_SEARCH_FORWARD : MOTION_SEARCH_BACKWARD;
+                        m.style = forward2 ? MOTION_SEARCH_FORWARD : MOTION_SEARCH_BACKWARD;
                         m.count = self.numericArg;
                         *result = m;
                     }

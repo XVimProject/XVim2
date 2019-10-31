@@ -12,7 +12,7 @@
 
 @interface XVimTextObjectEvaluator () {
     BOOL _inner;
-    MOTION _textobject;
+    MOTION_STYLE _textobject;
     BOOL _bigword;
 }
 @end
@@ -33,7 +33,7 @@
 {
     var opt = _inner ? MOPT_TEXTOBJECT_INNER : MOPT_NONE;
     opt |= _bigword ? MOPT_BIGWORD : MOPT_NONE;
-    return [XVimMotion motion:_textobject type:CHARWISE_INCLUSIVE option:opt count:[self numericArg]];
+    return [XVimMotion style:_textobject type:CHARWISE_INCLUSIVE option:opt count:[self numericArg]];
 }
 
 - (XVimEvaluator*)defaultNextEvaluator { return nil; }

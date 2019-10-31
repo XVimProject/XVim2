@@ -337,7 +337,7 @@
 - (XVimEvaluator*)J
 {
     let eval = [[XVimJoinEvaluator alloc] initWithWindow:self.window addSpace:YES];
-    return [eval executeOperationWithMotion:[XVimMotion motion:MOTION_NONE type:CHARWISE_EXCLUSIVE count: self.numericArg]];
+    return [eval executeOperationWithMotion:[XVimMotion style:MOTION_NONE type:CHARWISE_EXCLUSIVE count: self.numericArg]];
 }
 
 
@@ -435,7 +435,7 @@
 - (XVimEvaluator*)C_RSQUAREBRACKET
 {
     // Add current position/file to jump list
-    let motion = [XVimMotion motion:MOTION_POSITION_JUMP type:DEFAULT_MOTION_TYPE count:0];
+    let motion = [XVimMotion style:MOTION_POSITION_JUMP type:DEFAULT_MOTION_TYPE count:0];
     motion.jumpToAnotherFile = YES;
     [self.window preMotion:motion];
 
