@@ -15,6 +15,7 @@
 #import <IDEKit/IDEEditorCoordinator.h>
 #import <DVTFoundation/DVTDocumentLocation.h>
 #import <objc/runtime.h>
+#import "XVimTestResultTableView.h"
 
 /**
  * How to run test:
@@ -67,17 +68,18 @@
  * Test cases you wrote automatically included and run.
  **/
 
+DVTTextPreferences* XcodeTextPreferences(void) { return [DVTTextPreferencesClass() preferences]; }
 
 @interface XVimTester () {
     NSWindow* results;
-    NSTableView* _tableView;
+    XVimTestResultTableView* _tableView;
     NSTextField* resultsString;
     BOOL showPassing;
     NSNumber* totalTests;
     NSNumber* passingTests;
 }
-@property NSMutableArray* testCases;
-@property NSArray* currentTestsCases;
+@property NSMutableArray<XVimTestCase *>* testCases;
+@property NSArray<XVimTestCase *>* currentTestsCases;
 @property (weak) NSWindow* testWindow;
 @property NSUInteger currentTestCaseIndex;
 @end
@@ -201,9 +203,10 @@
 - (void)showResultsTable
 {
     // Setup Table view to show result
-    _tableView = [[NSTableView alloc] init];
+    _tableView = [[XVimTestResultTableView alloc] init];
     [_tableView setDelegate:self];
     [_tableView setDataSource:self];
+    [_tableView setTestResultDelegate:self];
 
     // Create Columns
     NSTableColumn* column1 = [[NSTableColumn alloc] initWithIdentifier:@"Description"];
@@ -323,22 +326,26 @@
     }
 }
 
+- (XVimTestCase* )testCaseFromRowIndex:(NSUInteger)rowIndex
+{
+    if (showPassing) {
+        return (XVimTestCase*)[self.testCases objectAtIndex:(NSUInteger)rowIndex];
+    }
+    else {
+        NSInteger index = [self getIndexOfNthFailingTestcase:rowIndex];
+        return (XVimTestCase*)[self.testCases objectAtIndex:(NSUInteger)index];
+    }
+}
+
 - (NSView *)tableView:(NSTableView *)tableView viewForTableColumn:(NSTableColumn *)aTableColumn row:(NSInteger)rowIndex
 {
-    XVimTestCase * resultRow = nil;
     NSTextField *cellView = [tableView makeViewWithIdentifier:aTableColumn.identifier owner:self];
     if (!cellView) {
         cellView = [NSTextField wrappingLabelWithString:@""];
         cellView.editable = YES;
     }
     
-    if (showPassing) {
-        resultRow = (XVimTestCase*)[self.testCases objectAtIndex:(NSUInteger)rowIndex];
-    }
-    else {
-        NSInteger index = [self getIndexOfNthFailingTestcase:rowIndex];
-        resultRow = (XVimTestCase*)[self.testCases objectAtIndex:(NSUInteger)index];
-    }
+    XVimTestCase * testCase = [self testCaseFromRowIndex:rowIndex];
     NSString *string = @"";
     
     if ([aTableColumn.identifier isEqualToString:@"Description"]
@@ -353,7 +360,7 @@
     
     if ([aTableColumn.identifier isEqualToString:@"Pass/Fail"]) {
         cellView.alignment = NSTextAlignmentCenter;
-        cellView.textColor = (resultRow.success ? NSColor.greenColor : NSColor.redColor);
+        cellView.textColor = (testCase.success ? NSColor.greenColor : NSColor.redColor);
     }
     else {
         cellView.alignment = NSTextAlignmentLeft;
@@ -361,19 +368,19 @@
     }
     
     if ([aTableColumn.identifier isEqualToString:@"Description"]) {
-        string = resultRow.desc;
+        string = testCase.desc;
     }
     else if ([aTableColumn.identifier isEqualToString:@"Pass/Fail"]) {
-		string = resultRow.resultDescription;
+		string = testCase.resultDescription;
     }
     else if ([aTableColumn.identifier isEqualToString:@"Message"]) {
-        string = resultRow.message;
+        string = testCase.message;
     }
     else if ([aTableColumn.identifier isEqualToString:@"Expected"]) {
-        string = [NSString stringWithFormat:@"'%@'", resultRow.expectedText];
+        string = [NSString stringWithFormat:@"'%@'", testCase.expectedText];
     }
     else if ([aTableColumn.identifier isEqualToString:@"Actual"]) {
-        string = [NSString stringWithFormat:@"'%@'", resultRow.actualText];
+        string = [NSString stringWithFormat:@"'%@'", testCase.actualText];
     }
     cellView.stringValue = string;
     return cellView;
@@ -408,7 +415,11 @@
 		}
 	}
 }
+
+- (XVimTestCase *)objectAtIndex:(NSUInteger)index
+{
+    return [self testCaseFromRowIndex:index];
+}
+
 @end
 
-
-DVTTextPreferences* XcodeTextPreferences(void) { return [DVTTextPreferencesClass() preferences]; }

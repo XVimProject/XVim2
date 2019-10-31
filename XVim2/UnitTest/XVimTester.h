@@ -9,8 +9,16 @@
 #import "XVimTestCase.h"
 #import "XVimWindow.h"
 #import <Foundation/Foundation.h>
+#import "XVimTestResultTableView.h"
 
-@interface XVimTester : NSObject <NSTableViewDataSource, NSTableViewDelegate>
+@class DVTTextPreferences;
+DVTTextPreferences* XcodeTextPreferences(void);
+
+
+@interface XVimTester : NSObject
+<NSTableViewDataSource
+, NSTableViewDelegate
+, XVimTestResultTableViewDelegate>
 
 // Get all the caregory of tests
 - (NSArray*)categories;
@@ -22,5 +30,3 @@
 - (void)runTest;
 @end
 
-@class DVTTextPreferences;
-DVTTextPreferences* XcodeTextPreferences(void);
