@@ -6,22 +6,33 @@
 //  Copyright © 2017 Shuichiro Suzuki. All rights reserved.
 //
 
-// cd XcodeHeader/DVTSourceEditor
-// class-dump -H /Applications/Xcode.app/Contents/SharedFrameworks/DVTSourceEditor.framework/DVTSourceEditor
-// cd XcodeHeader/IDESourceEditor 
-// class-dump -H /Applications/Xcode.app/Contents/Plugins/IDESourceEditor.framework/IDESourceEditor
-// cd XcodeHeader/SourceEditor
-// class-dump -H /Applications/Xcode.app/Contents/SharedFrameworks/SourceEditor.framework/SourceEditor
-// cd XcodeHeader/DVTFoundation
-// class-dump -H /Applications/Xcode.app/Contents/SharedFrameworks/DVTFoundation.framework/DVTFoundation
-// cd XcodeHeader/DVTKit
-// class-dump -H /Applications/Xcode.app/Contents/SharedFrameworks/DVTKit.framework/DVTKit
-// cd XcodeHeader/IDEKit
-// class-dump -H /Applications/Xcode.app/Contents/Frameworks/IDEKit.framework/IDEKit
-// cd XcodeHeader/DVTViewControllerKit
-// class-dump -H /Applications/Xcode.app/Contents/SharedFrameworks/DVTViewControllerKit.framework/DVTViewControllerKit
-// cd XcodeHeader/DVTCocoaAdditionsKit
-// class-dump -H /Applications/Xcode.app/Contents/SharedFrameworks/DVTCocoaAdditionsKit.framework/DVTCocoaAdditionsKit
+/**
+ 
+ cd XcodeHeader/IDEKit
+ class-dump -H /Applications/Xcode.app/Contents/Frameworks/IDEKit.framework/IDEKit
+ 
+ cd XcodeHeader/IDESourceEditor
+ class-dump -H /Applications/Xcode.app/Contents/Plugins/IDESourceEditor.framework/IDESourceEditor
+
+ cd XcodeHeader/DVTCocoaAdditionsKit
+ class-dump -H /Applications/Xcode.app/Contents/SharedFrameworks/DVTCocoaAdditionsKit.framework/DVTCocoaAdditionsKit
+ 
+ cd XcodeHeader/DVTFoundation
+ class-dump -H /Applications/Xcode.app/Contents/SharedFrameworks/DVTFoundation.framework/DVTFoundation
+
+ cd XcodeHeader/DVTKit
+ class-dump -H /Applications/Xcode.app/Contents/SharedFrameworks/DVTKit.framework/DVTKit
+ 
+ cd XcodeHeader/DVTSourceEditor
+ class-dump -H /Applications/Xcode.app/Contents/SharedFrameworks/DVTSourceEditor.framework/DVTSourceEditor
+
+ cd XcodeHeader/DVTViewControllerKit
+ class-dump -H /Applications/Xcode.app/Contents/SharedFrameworks/DVTViewControllerKit.framework/DVTViewControllerKit
+
+ cd XcodeHeader/SourceEditor
+ class-dump -H /Applications/Xcode.app/Contents/SharedFrameworks/SourceEditor.framework/SourceEditor
+
+ */
 //
 //
 // demangle prefix
