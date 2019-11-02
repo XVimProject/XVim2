@@ -8,32 +8,19 @@
 
 #import <AppKit/AppKit.h>
 
-#define XVimMakeTestCase(initText, initRangeLoc, initRangeLen, inputText, expcText, expcRangeLoc, expcRangeLen)        \
-    [XVimTestCase testCaseWithInitialText:initText                                                                     \
-                             initialRange:NSMakeRange(initRangeLoc, initRangeLen)                                      \
-                                    input:inputText                                                                    \
-                             expectedText:expcText                                                                     \
-                            expectedRange:NSMakeRange(expcRangeLoc, expcRangeLen)                                      \
-                                     file:[NSString stringWithUTF8String:__FILE__]                                     \
-                                     line:__LINE__]
-
-#define XVimMakeTestCaseWithDesc(initText, initRangeLoc, initRangeLen, inputText, expcText, expcRangeLoc,              \
-                                 expcRangeLen, desc)                                                                   \
-    [XVimTestCase testCaseWithInitialText:initText                                                                     \
-                             initialRange:NSMakeRange(initRangeLoc, initRangeLen)                                      \
-                                    input:inputText                                                                    \
-                             expectedText:expcText                                                                     \
-                            expectedRange:NSMakeRange(expcRangeLoc, expcRangeLen)                                      \
-                              description:desc                                                                         \
-                                     file:[NSString stringWithUTF8String:__FILE__]                                     \
-                                     line:__LINE__]
+#define XVimMakeTestCase(initialText, initialRangeLoc, initialRangeLen, \
+    inputText, expectedText, expectedRangeLoc, expectedrangeLen) \
+    [XVimTestCase testCaseWithInitialText:initialText \
+        :NSMakeRange(initialRangeLoc, initialRangeLen) :inputText :expectedText \
+        :NSMakeRange(expectedRangeLoc, expectedrangeLen) \
+        :[NSString stringWithUTF8String:__FILE__] :__LINE__]
 
 @interface XVimTestCase : NSObject
 @property NSString* initialText;
 @property NSRange initialRange;
-@property NSString* input;
+@property NSString* inputText;
 @property NSString* expectedText;
-@property (copy) NSString* actualText;
+@property NSString* actualText;
 @property NSRange expectedRange;
 @property NSString* desc; // description is declared in NSObject and readonly.
 @property NSString* message;
@@ -42,26 +29,14 @@
 @property BOOL finished;
 @property NSString* file;
 @property NSUInteger line;
-@property (readonly) BOOL isFinishedAndFailed; 
+@property (readonly) BOOL isFinishedAndFailed;
 @property (readonly) NSString* resultDescription;
-
-
-+ (XVimTestCase*)testCaseWithInitialText:(NSString*)it
-                            initialRange:(NSRange)ir
-                                   input:(NSString*)in
-                            expectedText:(NSString*)et
-                           expectedRange:(NSRange)er
-                             description:(NSString*)desc
-                                    file:(NSString*)file
-                                    line:(NSUInteger)line;
-
-+ (XVimTestCase*)testCaseWithInitialText:(NSString*)it
-                            initialRange:(NSRange)ir
-                                   input:(NSString*)in
-                            expectedText:(NSString*)et
-                           expectedRange:(NSRange)er
-                                    file:(NSString*)file
-                                    line:(NSUInteger)line;
-
++ (XVimTestCase*)testCaseWithInitialText:(NSString*)initialText
+                                        :(NSRange)initialRange
+                                        :(NSString*)inputText
+                                        :(NSString*)expectedText
+                                        :(NSRange)expectedRange
+                                        :(NSString*)file
+                                        :(NSUInteger)line;
 - (void)runInWindow:(NSWindow*)window withContinuation:(void(^)(void))continuation;
 @end

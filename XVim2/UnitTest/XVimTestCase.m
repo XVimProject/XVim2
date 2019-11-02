@@ -15,6 +15,7 @@
 #import "XcodeUtils.h"
 #import <stdatomic.h>
 
+
 @interface XVimTestCase()
 @property (class, readonly) NSOperationQueue * keySendQueue;
 @property (weak) NSWindow * window;
@@ -51,57 +52,30 @@ static atomic_uint dispatchQueueCount = ATOMIC_VAR_INIT(0);
     return _testCompletionDispatchQueue;
 }
 
-+ (XVimTestCase*)testCaseWithInitialText:(NSString*)it
-                            initialRange:(NSRange)ir
-                                   input:(NSString*)in
-                            expectedText:(NSString*)et
-                           expectedRange:(NSRange)er
-                                    file:(NSString*)file
-                                    line:(NSUInteger)line
-{
-    return [self testCaseWithInitialText:it
-                            initialRange:ir
-                                   input:in
-                            expectedText:et
-                           expectedRange:er
-                             description:in
-                                    file:file
-                                    line:line];
-}
-
-+ (XVimTestCase*)testCaseWithInitialText:(NSString*)it
-                            initialRange:(NSRange)ir
-                                   input:(NSString*)in
-                            expectedText:(NSString*)et
-                           expectedRange:(NSRange)er
-                             description:(NSString*)desc
-                                    file:(NSString*)file
-                                    line:(NSUInteger)line
++ (XVimTestCase*)testCaseWithInitialText:(NSString*)initialText
+                                        :(NSRange)initialRange
+                                        :(NSString*)inputText
+                                        :(NSString*)expectedText
+                                        :(NSRange)expectedRange
+                                        :(NSString*)file
+                                        :(NSUInteger)line
 
 {
     XVimTestCase* test = [[XVimTestCase alloc] init];
-    test.initialText = it;
-    test.initialRange = ir;
-    test.input = in;
-    test.expectedText = et;
-    test.expectedRange = er;
+    test.initialText = initialText;
+    test.initialRange = initialRange;
+    test.inputText = inputText;
+    test.expectedText = expectedText;
+    test.expectedRange = expectedRange;
     test.message = @"";
     test.exception = NO;
     test.keyStrokesCount = 0;
     test.finished = NO;
-    
-    if (nil != desc) {
-        test.desc = desc;
-    }
-    else {
-        test.desc = in;
-    }
+    test.desc = inputText;
     test.file = file;
     test.line = line;
-
     return test;
 }
-
 
 - (void)setUp
 {
@@ -116,7 +90,7 @@ static atomic_uint dispatchQueueCount = ATOMIC_VAR_INIT(0);
         self.message = @"Exception raiesed.";
         return NO;
     }
-    NSString * editorString = [XVimLastActiveSourceView() string];
+    NSString * editorString = XVimLastActiveSourceView().string;
     
     // Xcode9 ALWAYS adds an extra \n
     if (editorString.length
@@ -128,13 +102,12 @@ static atomic_uint dispatchQueueCount = ATOMIC_VAR_INIT(0);
     self.actualText = editorString;
     
     if (![self.expectedText isEqualToString:editorString]) {
-        self.message = [NSString stringWithFormat:@"Result text is different from expected text.\n[%@:%ld]\n",
-                                                  self.file,
-                                                  self.line];
+        self.message = [NSString stringWithFormat:@"Result text is different from expected text. %@:%ld\n",
+                                                  self.file, self.line];
         return NO;
     }
 
-    NSRange resultRange = [XVimLastActiveSourceView() selectedRange];
+    NSRange resultRange = XVimLastActiveSourceView().selectedRange;
     if (self.expectedRange.location != resultRange.location || self.expectedRange.length != resultRange.length) {
         self.message = [NSString
                     stringWithFormat:@"Result range(%lu,%lu) is different from expected range(%lu,%lu) [%@:%ld]",
@@ -147,7 +120,7 @@ static atomic_uint dispatchQueueCount = ATOMIC_VAR_INIT(0);
 
 - (void)executeInput
 {
-    NSString *notation = [self.input stringByAppendingString:@"<ESC>:mapclear<CR>"];
+    NSString *notation = [self.inputText stringByAppendingString:@"<ESC>:mapclear<CR>"];
     NSArray* strokes = XVimKeyStrokesFromKeyNotation(notation);
     self.keySemaphore = dispatch_semaphore_create(0);
     self.keyStrokesCount = strokes.count;
@@ -207,7 +180,7 @@ static atomic_uint dispatchQueueCount = ATOMIC_VAR_INIT(0);
     
     [self waitForCompletionWithConinuation:^{
         self.finished = (self.window != nil && self.window.isVisible);
-        self.success = self.finished && [self assert];
+        self.success = self.finished && self.assert;
         [self tearDown];
         continuation();
     }];
