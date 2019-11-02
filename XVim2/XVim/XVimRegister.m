@@ -47,7 +47,7 @@
 
 - (void)setXVimString:(XVimString*)string { return; }
 
-- (XVimString*)string { return [[XVim instance] document]; }
+- (XVimString*)string { return XVim.instance.document; }
 
 @end
 
@@ -63,11 +63,11 @@
 
 - (void)setXVimString:(XVimString*)string
 {
-    [[NSPasteboard generalPasteboard] declareTypes:[NSArray arrayWithObject:NSPasteboardTypeString] owner:nil];
-    [[NSPasteboard generalPasteboard] setString:string forType:NSPasteboardTypeString];
+    [NSPasteboard.generalPasteboard declareTypes:@[NSPasteboardTypeString] owner:nil];
+    [NSPasteboard.generalPasteboard setString:string forType:NSPasteboardTypeString];
 }
 
-- (XVimString*)string { return [[NSPasteboard generalPasteboard] stringForType:NSPasteboardTypeString]; }
+- (XVimString*)string { return [NSPasteboard.generalPasteboard stringForType:NSPasteboardTypeString]; }
 
 @end
 
@@ -151,7 +151,7 @@ static const NSString* s_enum_registers = @"\"0123456789abcdefghijklmnopqrstuvwx
 - (BOOL)isReadonly:(NSString*)name
 {
     NSAssert(nil != name && name.length == 1, @"Must be one character");
-    XVimRegister* reg = [self registerByName:name];
+    let reg = [self registerByName:name];
     if (nil == reg) {
         ERROR_LOG(@"Specified register(%@) can not be found.", name);
         return NO;
@@ -367,7 +367,7 @@ static const NSString* s_enum_registers = @"\"0123456789abcdefghijklmnopqrstuvwx
 - (void)stopRecording:(BOOL)cancel
 {
     NSAssert(self.recordingRegister != nil, @"Must be called when recording.");
-    XVimRegister* reg = [self registerByName:self.recordingRegisterName];
+    let reg = [self registerByName:self.recordingRegisterName];
     if (!cancel) {
         if ([self isApendingRegister:self.recordingRegisterName]) {
             [reg appendXVimString:[self.recordingRegister string]];
@@ -383,7 +383,7 @@ static const NSString* s_enum_registers = @"\"0123456789abcdefghijklmnopqrstuvwx
 - (void)enumerateRegisters:(void (^)(NSString* name, XVimRegister* reg))block
 {
     for (NSUInteger i = 0; i < s_enum_registers.length; i++) {
-        NSString* key = [s_enum_registers substringWithRange:NSMakeRange(i, 1)];
+        let key = [s_enum_registers substringWithRange:NSMakeRange(i, 1)];
         block(key, [self.registers objectForKey:key]);
     }
 }
