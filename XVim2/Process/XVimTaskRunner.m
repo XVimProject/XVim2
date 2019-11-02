@@ -26,13 +26,13 @@ NSString* expandTabs(NSString* inStr);
     NSUInteger waitCount = 0;
     BOOL taskKilled = NO;
 
-    while ([task isRunning] && waitCount < 7)
+    while (task.isRunning && waitCount < 7)
     {
         waitCount++;
-        [ NSThread sleepForTimeInterval:0.25 ];
+        [NSThread sleepForTimeInterval:0.25];
     }
 
-    if ([task isRunning])
+    if (task.isRunning)
     {
         [task terminate];
         taskKilled = YES;
@@ -50,7 +50,7 @@ NSString* expandTabs(NSString* inStr);
     NSMutableString* returnString = [NSMutableString string];
     __block BOOL outputReceived   = NO;
 
-    if (!scriptAndArgs || [ scriptAndArgs length ] == 0)
+    if (!scriptAndArgs || scriptAndArgs.length == 0)
     {
         return nil;
     }
@@ -58,9 +58,9 @@ NSString* expandTabs(NSString* inStr);
     if (input !=nil)
     {
         // We have input, write it to a temporary file ready to be re-directed to the command
-        if ((inputFile = [ self _createTempFileWithContents:input shell:nil ]) && [inputFile length])
+        if ((inputFile = [self _createTempFileWithContents:input shell:nil ]) && inputFile.length)
         {
-            scriptAndArgs = [ NSString stringWithFormat:@"%@ < \"%@\"",scriptAndArgs,inputFile ];
+            scriptAndArgs = [NSString stringWithFormat:@"%@ < \"%@\"",scriptAndArgs,inputFile ];
         }
         else
         {
@@ -69,16 +69,16 @@ NSString* expandTabs(NSString* inStr);
         }
     }
     
-    ProcessRunner *task   = [ProcessRunner task];
-    task.launchPath  = @"/bin/bash";
+    ProcessRunner *task = ProcessRunner.task;
+    task.launchPath = @"/bin/bash";
     task.workingDirectory = rundir ? rundir : @"/";
     task.outputColWidth = colWidth;
 
-    NSString* commandFile = [ self _createTempFileWithContents:scriptAndArgs shell:task.launchPath ];
+    NSString* commandFile = [self _createTempFileWithContents:scriptAndArgs shell:task.launchPath];
 
-    if (commandFile && [commandFile length])
+    if (commandFile && commandFile.length)
     {
-        DEBUG_LOG(@"Created temporary command file %@ for command %@", commandFile, scriptAndArgs );
+        DEBUG_LOG(@"Created temporary command file %@ for command %@", commandFile, scriptAndArgs);
         
         if (input == nil)
         {
@@ -86,36 +86,36 @@ NSString* expandTabs(NSString* inStr);
         }
         else
         {
-            [task.arguments addObjectsFromArray:[ NSArray arrayWithObjects:@"-l",commandFile, nil]];
+            [task.arguments addObjectsFromArray:[NSArray arrayWithObjects:@"-l",commandFile, nil]];
         }
 
         task.receivedOutputString = ^void (NSString *output) {
             if (usePty)
             {
-                [ output enumerateLinesUsingBlock: ^(NSString *line, BOOL *stop) {
-                      [ returnString appendFormat:@"%@\n", expandTabs(line) ];
+                [output enumerateLinesUsingBlock: ^(NSString *line, BOOL *stop) {
+                      [returnString appendFormat:@"%@\n", expandTabs(line)];
                   }
                 ];
             }
             else
             {
-                [ returnString appendString:output ];
+                [returnString appendString:output];
             }
 
             outputReceived = YES;
         };
 
         @try {
-            [ task launchUsingPty:usePty ];
-            [ task waitUntilExitWithTimeout:timeout ];
+            [task launchUsingPty:usePty];
+            [task waitUntilExitWithTimeout:timeout];
         }
         @catch (NSException *exception) {
-            ERROR_LOG(@"Exception %@: %@", [exception name], [exception reason]);
+            ERROR_LOG(@"Exception %@: %@", exception.name, exception.reason);
         }
 
         if (!usePty && task.terminationStatus != 0)
         {
-            ERROR_LOG(@"Command %@ returned with error code %ld", scriptAndArgs, task.terminationStatus );
+            ERROR_LOG(@"Command %@ returned with error code %ld", scriptAndArgs, task.terminationStatus);
             outputReceived = NO;
         }
     }
@@ -129,17 +129,17 @@ NSString* expandTabs(NSString* inStr);
 
 + (NSString*)runScript:(NSString *)scriptName withInput:(NSString *)input
 {
-    return [ self runScript:scriptName withInput:input withTimeout:0 runDirectory:@"/" colWidth:80 ];
+    return [self runScript:scriptName withInput:input withTimeout:0 runDirectory:@"/" colWidth:80];
 }
 
 + (NSString*)runScript:(NSString *)scriptName
 {
-    return [ self runScript:scriptName withInput:nil ];
+    return [self runScript:scriptName withInput:nil];
 }
 
 + (NSString*)runScript:(NSString *)scriptName withTimeout:(NSTimeInterval)timeout
 {
-    return [ self runScript:scriptName withInput:nil withTimeout:timeout runDirectory:@"/" colWidth:80 ];
+    return [self runScript:scriptName withInput:nil withTimeout:timeout runDirectory:@"/" colWidth:80];
 }
 
 static NSString* commandSuffix = @".command";
@@ -147,12 +147,12 @@ static NSString* dataSuffix = @".txt";
 
 + (NSString*)_createTempFileWithContents:(NSString*)contents shell:(NSString *)shell
 {
-    NSString *tempFileTemplate     = [@"xvim.XXXXXX" stringByAppendingString:(shell?commandSuffix:dataSuffix)];
-    NSString *tempFilePath    = [NSTemporaryDirectory () stringByAppendingPathComponent:tempFileTemplate];
-    const char *tempFileTemplateCString = [tempFilePath fileSystemRepresentation];
+    NSString *tempFileTemplate = [@"xvim.XXXXXX" stringByAppendingString:(shell?commandSuffix:dataSuffix)];
+    NSString *tempFilePath = [NSTemporaryDirectory() stringByAppendingPathComponent:tempFileTemplate];
+    const char *tempFileTemplateCString = tempFilePath.fileSystemRepresentation;
     char *tempFileNameCString = (char *)malloc(strlen(tempFileTemplateCString) + 1);
     strcpy(tempFileNameCString, tempFileTemplateCString);
-    int fileDescriptor = mkstemps(tempFileNameCString, (int)[commandSuffix length]);
+    int fileDescriptor = mkstemps(tempFileNameCString, (int)commandSuffix.length);
 
     if (fileDescriptor == -1)
     {
@@ -161,22 +161,22 @@ static NSString* dataSuffix = @".txt";
         return nil;
     }
 
-    NSFileHandle* fh  = [[NSFileHandle alloc] initWithFileDescriptor:fileDescriptor closeOnDealloc:NO];
-    NSString* command = shell ? [ NSString stringWithFormat:@"#!%@\n%@\n", shell,contents] : contents;
-    [ fh writeData:[ command dataUsingEncoding:NSUTF8StringEncoding]];
-    [ fh closeFile ];
+    NSFileHandle* fh = [[NSFileHandle alloc] initWithFileDescriptor:fileDescriptor closeOnDealloc:NO];
+    NSString* command = shell ? [NSString stringWithFormat:@"#!%@\n%@\n", shell,contents] : contents;
+    [fh writeData:[command dataUsingEncoding:NSUTF8StringEncoding]];
+    [fh closeFile];
 
     NSFileManager* fileManager = [[NSFileManager alloc] init];
 
-    NSString* filePath = [ fileManager stringWithFileSystemRepresentation:tempFileNameCString length:strlen(tempFileNameCString)];
+    NSString* filePath = [fileManager stringWithFileSystemRepresentation:tempFileNameCString length:strlen(tempFileNameCString)];
     free(tempFileNameCString);
 
-    NSError* error     = nil;
+    NSError* error = nil;
 
     // If this is a shell command, try to turn on execute file permissions for the temp file
-    if (shell && ![ fileManager setAttributes:[NSDictionary dictionaryWithObject:[NSNumber numberWithShort:0700] forKey:NSFilePosixPermissions] ofItemAtPath:filePath error:&error ])
+    if (shell && ![fileManager setAttributes:[NSDictionary dictionaryWithObject:[NSNumber numberWithShort:0700] forKey:NSFilePosixPermissions] ofItemAtPath:filePath error:&error])
     {
-        ERROR_LOG(@"Could not set execute permissions on temporary file for command. Error code = %lu, reason = %@", [error code], [ error localizedDescription ]);
+        ERROR_LOG(@"Could not set execute permissions on temporary file for command. Error code = %lu, reason = %@", error.code, error.localizedDescription);
         return nil;
     }
 
@@ -200,12 +200,12 @@ spaces(NSUInteger num)
 NSString*
 expandTabs(NSString* inStr)
 {
-    NSMutableString* outStr = [ NSMutableString string ];
-    NSArray* strs = [ inStr componentsSeparatedByCharactersInSet:[NSCharacterSet characterSetWithCharactersInString:@"\t"]];
+    NSMutableString* outStr = [NSMutableString string];
+    NSArray* strs = [inStr componentsSeparatedByCharactersInSet:[NSCharacterSet characterSetWithCharactersInString:@"\t"]];
 
     for (NSString* str in strs)
     {
-        NSUInteger remainder = SPACES_PER_TAB - ( [ str length ] % SPACES_PER_TAB );
+        NSUInteger remainder = SPACES_PER_TAB - (str.length % SPACES_PER_TAB);
         [outStr appendFormat:@"%@%s", str, spaces(remainder)];
     }
 

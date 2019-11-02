@@ -43,11 +43,11 @@
     if (!self)
         return nil;
 
-    arguments   = [[NSMutableArray alloc] init];
+    arguments = [[NSMutableArray alloc] init];
     environment = [[NSMutableDictionary alloc] init];
     outputColWidth = 100;
 
-    self.workingDirectory = [[NSFileManager defaultManager] currentDirectoryPath];
+    self.workingDirectory = NSFileManager.defaultManager.currentDirectoryPath;
 
     priority = NSIntegerMax;
 
@@ -57,7 +57,7 @@
 static const char*
 CHAllocateCopyString(NSString *str) {
     char *newString = NULL;
-    const char* originalString = [str fileSystemRepresentation];
+    const char* originalString = str.fileSystemRepresentation;
 
     if (originalString)
     {
@@ -68,32 +68,31 @@ CHAllocateCopyString(NSString *str) {
 }
 
 - (void)populateWithCurrentEnvironment {
-    [environment addEntriesFromDictionary:[[NSProcessInfo processInfo] environment]];
+    [environment addEntriesFromDictionary:NSProcessInfo.processInfo.environment];
 }
 
 static const int EXEC_FAILED=122; // as in os_unix.c
 
 - (BOOL)launchUsingPty:(BOOL)usePty
 {
-
-    if ( launchPath == nil || [ launchPath length ] == 0)
+    if (launchPath == nil || launchPath.length == 0)
     {
         return NO;
     }
 
-    self.launchPath = [launchPath stringByStandardizingPath];
+    self.launchPath = launchPath.stringByStandardizingPath;
 
-    if (![[NSFileManager defaultManager] isExecutableFileAtPath:launchPath])
+    if (![NSFileManager.defaultManager isExecutableFileAtPath:launchPath])
     {
-        [ NSException raise:@"ProcessRunnerCommandIsNotExecutable" format:@"%@ is not executable", launchPath ];
+        [ NSException raise:@"ProcessRunnerCommandIsNotExecutable" format:@"%@ is not executable", launchPath];
     }
 
     [arguments insertObject:launchPath atIndex:0];
 
-    if ([arguments count] + [environment count] + 2 > ARG_MAX)
+    if (arguments.count + environment.count + 2 > ARG_MAX)
     {
-        [ NSException raise:@"ProcessRunnerTooManyArguments"
-                     format:@"Number of arguments (%lu) is greater than ARG_MAX (%u)", [arguments count] + [environment count] + 2, ARG_MAX ];
+        [NSException raise:@"ProcessRunnerTooManyArguments"
+                     format:@"Number of arguments (%lu) is greater than ARG_MAX (%u)", arguments.count + environment.count + 2, ARG_MAX ];
     }
 
 // Set up
@@ -102,7 +101,7 @@ static const int EXEC_FAILED=122; // as in os_unix.c
 
     if (!executablePath)
     {
-        [ NSException raise:@"ProcessRunnerMemoryError"
+        [NSException raise:@"ProcessRunnerMemoryError"
                      format:@"Could not allocate memory for executable path string"];
     }
 
@@ -110,7 +109,7 @@ static const int EXEC_FAILED=122; // as in os_unix.c
 
     if (!workingDirectoryPath)
     {
-        [ NSException raise:@"ProcessRunnerMemoryError"
+        [NSException raise:@"ProcessRunnerMemoryError"
                      format:@"Could not allocate memory for executable path string"];
     }
 
@@ -146,25 +145,25 @@ static const int EXEC_FAILED=122; // as in os_unix.c
         _ttyName = [[NSString alloc] initWithCString:devname encoding:NSASCIIStringEncoding ];
         ioctl(masterfd, TIOCFLUSH, NULL);
 
-        processOutputFileHandleRead = [[ NSFileHandle alloc ] initWithFileDescriptor:masterfd ];
+        processOutputFileHandleRead = [[NSFileHandle alloc] initWithFileDescriptor:masterfd ];
     }
     else
     {
-        processOutputPipe = [ NSPipe new ];
-        processOutputFileHandleWrite = [ processOutputPipe fileHandleForWriting ];
-        processOutputFileHandleRead = [ processOutputPipe fileHandleForReading ];
+        processOutputPipe = [NSPipe new];
+        processOutputFileHandleWrite = processOutputPipe.fileHandleForWriting;
+        processOutputFileHandleRead = processOutputPipe.fileHandleForReading;
     }
 
     processInputPipe = [ NSPipe new ];
-    NSFileHandle* processInputFileHandleWrite = [ processInputPipe fileHandleForWriting ];
-    NSFileHandle* processInputFileHandleRead  = [ processInputPipe fileHandleForReading ];
+    NSFileHandle* processInputFileHandleWrite = processInputPipe.fileHandleForWriting;
+    NSFileHandle* processInputFileHandleRead  = processInputPipe.fileHandleForReading;
 
     if (receivedOutputData || receivedOutputString)
     {
         CFRetain((__bridge CFTypeRef)(self));
         hasRetainedForOutput = YES;
 
-        [[NSNotificationCenter defaultCenter] addObserver:self
+        [NSNotificationCenter.defaultCenter addObserver:self
                                                  selector:@selector( asyncFileHandleReadCompletion: )
                                                      name:NSFileHandleReadToEndOfFileCompletionNotification
                                                    object:processOutputFileHandleRead ];
@@ -205,14 +204,14 @@ static const int EXEC_FAILED=122; // as in os_unix.c
         }
         else
         {
-            close([processOutputFileHandleRead fileDescriptor]);
-            dup2([processOutputFileHandleWrite fileDescriptor], STDOUT_FILENO);
-            close([processOutputFileHandleWrite fileDescriptor]);
+            close(processOutputFileHandleRead.fileDescriptor);
+            dup2(processOutputFileHandleWrite.fileDescriptor, STDOUT_FILENO);
+            close(processOutputFileHandleWrite.fileDescriptor);
 
             close(STDERR_FILENO);
         }
 
-        [[NSFileManager defaultManager] changeCurrentDirectoryPath:self.workingDirectory ];
+        [NSFileManager.defaultManager changeCurrentDirectoryPath:self.workingDirectory ];
 
         execvp(executablePath, (char * const *)argumentsArray);
 
@@ -220,8 +219,7 @@ static const int EXEC_FAILED=122; // as in os_unix.c
         _exit(EXEC_FAILED);
 
     }
-    else
-    if (p == -1)
+    else if (p == -1)
     {
         [ NSException raise:@"ProcessRunnerForkFailed"
                      format:@"Could not fork process. Error %s", strerror(errno)];
@@ -240,8 +238,8 @@ static const int EXEC_FAILED=122; // as in os_unix.c
         }
         else
         {
-            [ processInputFileHandleRead closeFile ];
-            [ processOutputFileHandleWrite closeFile ];
+            [processInputFileHandleRead closeFile];
+            [processOutputFileHandleWrite closeFile];
         }
     }
 
@@ -262,14 +260,12 @@ static const int EXEC_FAILED=122; // as in os_unix.c
     // We want to open stdin on p and write our input
     NSData *inputData = input ? : [inputString dataUsingEncoding:NSUTF8StringEncoding];
 
-    if (inputData)
-    {
+    if (inputData) {
         [ processInputFileHandleWrite writeData:inputData];
         [ processInputFileHandleWrite closeFile ];
     }
 
-    if (usePty)
-    {
+    if (usePty) {
         close(masterfd);
     }
     return YES;
@@ -277,16 +273,14 @@ static const int EXEC_FAILED=122; // as in os_unix.c
 
 - (BOOL)isRunning {
 
-    if (!isRunning)
-    {
+    if (!isRunning) {
         return NO;
     }
 
     waitpid_status = 0;
     pid_t wp = waitpid(pid, &waitpid_status, WNOHANG);
 
-    if (!wp)
-    {
+    if (!wp) {
         return YES;
     }
 
@@ -320,22 +314,22 @@ static const int EXEC_FAILED=122; // as in os_unix.c
 }
 
 - (NSInteger)terminationSignal {
-    if (WIFSIGNALED(waitpid_status))
+    if (WIFSIGNALED(waitpid_status)) {
         return WTERMSIG(waitpid_status);
-
+    }
     return 0;
 }
 
 - (void)interrupt // Not always possible. Sends SIGINT.
 {
-    if ([self isRunning])
+    if (self.isRunning) {
         kill(pid, SIGINT);
+    }
 }
 
 - (void)terminate // Not always possible. Sends SIGTERM.
 {
-    if ([self isRunning])
-    {
+    if (self.isRunning) {
         kill(pid, SIGTERM);
         [self isRunning];
     }
@@ -345,8 +339,7 @@ static const int EXEC_FAILED=122; // as in os_unix.c
 {
     [self terminate];
 
-    if ([self isRunning])
-    {
+    if (self.isRunning) {
         kill(pid, SIGKILL);
         [self isRunning];
     }
@@ -354,24 +347,24 @@ static const int EXEC_FAILED=122; // as in os_unix.c
 
 - (BOOL)suspend
 {
-    if ([self isRunning])
+    if (self.isRunning)
         kill(pid, SIGSTOP);
 
-    return [self isRunning];
+    return self.isRunning;
 }
 
 - (BOOL)resume
 {
-    if ([self isRunning])
+    if (self.isRunning)
         kill(pid, SIGCONT);
 
-    return [self isRunning];
+    return self.isRunning;
 }
 
 #pragma mark Blocking methods
 
 - (void)reapOnExit {
-    if (pid > 0 && [self isRunning])
+    if (pid > 0 && self.isRunning)
     {
         dispatch_source_t source = dispatch_source_create(DISPATCH_SOURCE_TYPE_PROC, (uintptr_t)pid, DISPATCH_PROC_EXIT, dispatch_get_main_queue());
         CFRetain((__bridge CFTypeRef)(self));
@@ -390,10 +383,10 @@ static const int EXEC_FAILED=122; // as in os_unix.c
 
 - (void)waitUntilExit {
 
-    NSRunLoop *runloop   = [NSRunLoop currentRunLoop];
+    let runloop = NSRunLoop.currentRunLoop;
     NSTimeInterval delay = 0.01;
 
-    while ([self isRunning])
+    while (self.isRunning)
     {
         [runloop runMode:@"taskitwait" beforeDate:[NSDate dateWithTimeIntervalSinceNow:delay]];
 
@@ -408,15 +401,15 @@ static const int EXEC_FAILED=122; // as in os_unix.c
 
     BOOL hitTimeout = NO;
 
-    if (timeout != 0 )
+    if (timeout != 0)
     {
-        NSRunLoop *runloop = [NSRunLoop currentRunLoop];
+        let runloop = NSRunLoop.currentRunLoop;
         NSTimeInterval delay = 0.01;
-        NSTimeInterval startTime = [NSDate timeIntervalSinceReferenceDate];
+        NSTimeInterval startTime = NSDate.timeIntervalSinceReferenceDate;
 
-        while ([self isRunning])
+        while (self.isRunning)
         {
-            NSTimeInterval currentTime = [NSDate timeIntervalSinceReferenceDate];
+            NSTimeInterval currentTime = NSDate.timeIntervalSinceReferenceDate;
 
             if (timeout > 0 && currentTime - startTime > timeout)
             {
@@ -437,7 +430,7 @@ static const int EXEC_FAILED=122; // as in os_unix.c
     }
     else
     {
-        [ self waitUntilExit ];
+        [self waitUntilExit];
     }
 
     return hitTimeout;
@@ -472,13 +465,13 @@ static const int EXEC_FAILED=122; // as in os_unix.c
     return ret;
 }
 
-- (void)asyncFileHandleReadCompletion:(NSNotification *)notif {
+- (void)asyncFileHandleReadCompletion:(NSNotification *)notification {
 
-    NSData *data = [[notif userInfo] valueForKey:NSFileHandleNotificationDataItem];
+    NSData *data = [notification.userInfo valueForKey:NSFileHandleNotificationDataItem];
 
-    [[NSNotificationCenter defaultCenter] removeObserver:self name:[notif name] object:[notif object]];
+    [NSNotificationCenter.defaultCenter removeObserver:self name:notification.name object:notification.object];
 
-    if ([[notif object] isEqual:processOutputFileHandleRead])
+    if ([notification.object isEqual:processOutputFileHandleRead])
     {
         hasFinishedReadingOutput = YES;
         [processOutputFileHandleRead closeFile];
@@ -507,7 +500,7 @@ static const int EXEC_FAILED=122; // as in os_unix.c
     NSMutableData *outdata = [NSMutableData data];
     NSMutableData *errdata = [NSMutableData data];
 
-    BOOL hadWhoopsie = [self waitForIntoOutputData:outdata ];
+    BOOL hadWhoopsie = [self waitForIntoOutputData:outdata];
 
     if (output)
         *output = outdata;
@@ -520,16 +513,16 @@ static const int EXEC_FAILED=122; // as in os_unix.c
 
 - (BOOL)waitForIntoOutputData:(NSMutableData *)outdata
 {
-    if (receivedOutputData || receivedOutputString )
-        @throw [[NSException alloc] initWithName : @"TaskitAsyncSyncCombination" reason : @
-                "-waitForOutputData:errorData: called when async output is in use. These two features are mutually exclusive!" userInfo :[NSDictionary dictionary]];
+    if (receivedOutputData || receivedOutputString)
+        @throw [[NSException alloc] initWithName: @"TaskitAsyncSyncCombination" reason: @
+                "-waitForOutputData:errorData: called when async output is in use. These two features are mutually exclusive!" userInfo:NSDictionary.dictionary];
 
-    if (![self isRunning])
+    if (!self.isRunning)
     {
         return YES;
     }
 
-    int outfd  = [processOutputFileHandleRead fileDescriptor];
+    int outfd = processOutputFileHandleRead.fileDescriptor;
     int outflags = fcntl(outfd, F_GETFL, 0);
     fcntl(outfd, F_SETFL, outflags | O_NONBLOCK);
 
@@ -539,7 +532,7 @@ static const int EXEC_FAILED=122; // as in os_unix.c
     BOOL hasFinishedOutput  = NO;
     BOOL outputHadAWhoopsie = NO;
 
-    while (1)
+    while (TRUE)
     {
         if (!hasFinishedOutput)
         {
@@ -589,7 +582,7 @@ static const int EXEC_FAILED=122; // as in os_unix.c
 #pragma mark Goodbye!
 
 - (void)dealloc {
-    [[NSNotificationCenter defaultCenter] removeObserver:self];
+    [NSNotificationCenter.defaultCenter removeObserver:self];
 }
 
 @end
