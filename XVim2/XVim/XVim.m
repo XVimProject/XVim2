@@ -146,7 +146,7 @@
         _registerManager = [[XVimRegisterManager alloc] init];
         _marks = [[XVimMarks alloc] init];
         self.tempRepeatRegister = [[XVimMutableString alloc] init];
-        self.isRepeating = NO;
+        self.isProcessingDOT = NO;
         self.isExecuting = NO;
         self.enabled = YES;
         self.foundRangesHidden = NO;
@@ -240,7 +240,7 @@
 
 - (void)fixOperationCommands
 {
-    if (!self.isRepeating) {
+    if (!self.isProcessingDOT) {
         [self.lastOperationCommands setString:self.tempRepeatRegister];
         [self.tempRepeatRegister setString:@""];
     }
@@ -248,9 +248,9 @@
 
 - (void)cancelOperationCommands { [self.tempRepeatRegister setString:@""]; }
 
-- (void)startRepeat { self.isRepeating = YES; }
+- (void)startDOT { self.isProcessingDOT = YES; }
 
-- (void)endRepeat { self.isRepeating = NO; }
+- (void)endDOT { self.isProcessingDOT = NO; }
 
 - (void)ringBell
 {

@@ -371,7 +371,7 @@
 
 - (XVimEvaluator*)v
 {
-    if (XVim.instance.isRepeating) {
+    if (XVim.instance.isProcessingDOT) {
         return [[XVimVisualEvaluator alloc] initWithLastVisualStateWithWindow:self.window];
     }
     else {
@@ -381,7 +381,7 @@
 
 - (XVimEvaluator*)V
 {
-    if (XVim.instance.isRepeating) {
+    if (XVim.instance.isProcessingDOT) {
         return [[XVimVisualEvaluator alloc] initWithLastVisualStateWithWindow:self.window];
     }
     else {
@@ -391,7 +391,7 @@
 
 - (XVimEvaluator*)C_v
 {
-    if (XVim.instance.isRepeating) {
+    if (XVim.instance.isProcessingDOT) {
         return [[XVimVisualEvaluator alloc] initWithLastVisualStateWithWindow:self.window];
     }
     else {
@@ -600,7 +600,7 @@
 
 - (XVimEvaluator*)DOT
 {
-    [XVim.instance startRepeat];
+    [XVim.instance startDOT];
     [self.sourceView xvim_beginEditTransaction];
     xvim_on_exit { [self.sourceView xvim_endEditTransaction]; };
 
@@ -628,7 +628,7 @@
         nonNumFound = YES;
         [self.window handleKeyStroke:stroke onStack:stack];
     }
-    [XVim.instance endRepeat];
+    [XVim.instance endDOT];
     return nil;
 }
 

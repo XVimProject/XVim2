@@ -43,7 +43,7 @@ extern NSString* const XVimDocumentPathKey;
 @property XVimPosition lastVisualPosition;
 @property XVimPosition lastVisualSelectionBegin;
 @property BOOL lastVisualSelectionToEOL;
-@property (nonatomic) BOOL isRepeating; // For dot(.) command repeat
+@property (nonatomic) BOOL isProcessingDOT; // For dot(.) command repeat
 
 @property (copy) NSString* lastPlaybackRegister;
 @property (copy) NSString* document;
@@ -74,16 +74,16 @@ extern NSString* const XVimDocumentPathKey;
  * finished XVimWindow calls cancelRepeatCommand not to store the
  * key input recorded in repeat regisger so far.
  *
- * When repeating you must call startRepeat first and
- * call endRepeat after you finish repeating.
+ * When repeating you must call startDOT first and
+ * call endDOT after you finish repeating.
  * When in repeating the key input never recorded into
  * repeat register
  **/
 - (void)appendOperationKeyStroke:(XVimString*)stroke;
 - (void)fixOperationCommands;
 - (void)cancelOperationCommands;
-- (void)startRepeat;
-- (void)endRepeat;
+- (void)startDOT;
+- (void)endDOT;
 - (void)ringBell;
 /**
  * Write string to debuger console.

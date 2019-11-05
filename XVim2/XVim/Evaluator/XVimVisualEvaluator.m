@@ -109,7 +109,7 @@ static NSString* MODE_STRINGS[] = { @"", @"-- VISUAL --", @"-- VISUAL LINE --", 
 {
     [super becameHandler];
     if (self.initialToPos.line != NSNotFound) {
-        if (XVim.instance.isRepeating) {
+        if (XVim.instance.isProcessingDOT) {
             [self.sourceView xvim_changeSelectionMode:_visual_mode];
             // When repeating we have to set initial selected range
             if (_visual_mode == XVIM_VISUAL_CHARACTER) {
@@ -654,7 +654,7 @@ return eval;
 
 - (XVimEvaluator*)motionFixedCore:(XVimMotion*)motion
 {
-    if (!XVim.instance.isRepeating) {
+    if (!XVim.instance.isProcessingDOT) {
         [self.window preMotion:motion];
         [[self sourceView] xvim_move:motion];
         [self resetNumericArg];
