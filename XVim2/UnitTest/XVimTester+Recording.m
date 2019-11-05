@@ -10,6 +10,7 @@
 
 @implementation XVimTester (Recording)
 
+#if 0 // TTODO: macro(q command) feature
 - (NSArray*)recording_testcases
 {
 
@@ -58,6 +59,6 @@
          XVimMakeTestCase(@"l@aq", 0, 0, @"\"ayW@a<ESC>", @"l@qaq", 2, 0),
      ];
 }
-
+#endif
 
 @end
