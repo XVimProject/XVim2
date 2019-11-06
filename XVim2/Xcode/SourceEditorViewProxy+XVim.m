@@ -10,9 +10,10 @@
 #import <IDEKit/IDEEditorDocument.h>
 #import "NSString+VimHelper.h"
 #import "NSTextStorage+VimOperation.h"
-#import "SourceEditorViewProxy+XVim.h"
 #import "SourceEditorViewProxy.h"
 #import "SourceEditorViewProxy+Scrolling.h"
+#import "SourceEditorViewProxy+XVim.h"
+#import "SourceEditorViewProxy+Yank.h"
 #import "XVim.h"
 #import "XVim2-Swift.h"
 #import "XVimMotion.h"
@@ -22,17 +23,6 @@
 
 @interface SourceEditorViewProxy ()
 @property (weak) _TtC15IDESourceEditor19IDESourceEditorView* sourceEditorView;
-@property NSUInteger selectionBegin;
-@property XVIM_VISUAL_MODE selectionMode;
-@property NSUInteger insertionPoint;
-@property NSUInteger preservedColumn;
-@property BOOL selectionToEOL;
-@property NSString* lastYankedText;
-@property NSInteger editTransactionDepth;
-@property NSInteger undoGroupingDepth;
-@property XVimTextType lastYankedType;
-- (void)_xvim_yankSelection:(XVimSelection)sel;
-- (void)_xvim_killSelection:(XVimSelection)sel;
 @end
 
 

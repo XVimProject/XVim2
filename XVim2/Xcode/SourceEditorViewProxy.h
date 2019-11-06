@@ -70,15 +70,15 @@ static inline XVimSourceEditorRange XvimMakeSourceEditorRange(XVimSourceEditorPo
 @class SourceEditorViewWrapper, SourceEditorDataSourceWrapper;
 
 @interface SourceEditorViewProxy : NSObject <SourceViewProtocol>
-@property (readonly) XVIM_VISUAL_MODE selectionMode;
-@property (readonly) NSUInteger insertionPoint;
+@property (nonatomic) XVIM_VISUAL_MODE selectionMode;
+@property NSUInteger insertionPoint;
 @property (readonly) XVimPosition insertionPosition;
 @property (readonly) NSUInteger insertionColumn;
 @property (readonly) NSUInteger insertionLine;
-@property (readonly) NSUInteger preservedColumn;
-@property (readonly) NSUInteger selectionBegin;
+@property NSUInteger preservedColumn;
+@property NSUInteger selectionBegin;
 @property (readonly) XVimPosition selectionBeginPosition;
-@property (readonly) BOOL selectionToEOL;
+@property BOOL selectionToEOL;
 @property XVIM_CURSOR_MODE cursorMode;
 @property (readonly, nullable) NSURL* documentURL;
 @property (nonatomic) BOOL needsUpdateFoundRanges;
@@ -253,5 +253,10 @@ static inline XVimSourceEditorRange XvimMakeSourceEditorRange(XVimSourceEditorPo
 
 - (void)beginEditTransaction;
 - (void)endEditTransaction;
+
+@property XVimTextType lastYankedType;
+@property (nullable) NSString* lastYankedText;
+@property NSInteger editTransactionDepth;
+@property NSInteger undoGroupingDepth;
 
 @end

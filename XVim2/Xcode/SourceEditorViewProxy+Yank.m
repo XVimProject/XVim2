@@ -13,24 +13,6 @@
 #import "SourceEditorViewProxy+Operations.h"
 #import "XVimMotion.h"
 
-@interface SourceEditorViewProxy ()
-@property NSUInteger selectionBegin;
-@property NSUInteger insertionPoint;
-@property NSUInteger preservedColumn;
-@property BOOL selectionToEOL;
-@property NSString* lastYankedText;
-@property XVimTextType lastYankedType;
-- (void)xvim_moveCursor:(NSUInteger)pos preserveColumn:(BOOL)preserve;
-- (void)xvim_syncStateWithScroll:(BOOL)scroll;
-- (XVimRange)xvim_getMotionRange:(NSUInteger)current Motion:(XVimMotion*)motion;
-- (XVimSelection)_xvim_selectedBlock;
-- (NSRange)_xvim_selectedRange;
-- (void)xvim_changeSelectionMode:(XVIM_VISUAL_MODE)mode;
-- (void)xvim_registerInsertionPointForUndo;
-- (NSRange)xvim_getOperationRangeFrom:(NSUInteger)from To:(NSUInteger)to Type:(MOTION_TYPE)type;
-- (void)_xvim_insertSpaces:(NSUInteger)count replacementRange:(NSRange)replacementRange;
-@end
-
 @implementation SourceEditorViewProxy (Yank)
 
 - (NSRange)_xvim_getYankRange:(XVimMotion*)motion withRange:(XVimRange)to

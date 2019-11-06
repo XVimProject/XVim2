@@ -15,25 +15,6 @@
 #import "XVimMotion.h"
 #import "XVimOptions.h"
 
-@interface SourceEditorViewProxy ()
-@property NSUInteger selectionBegin;
-@property NSUInteger insertionPoint;
-@property NSUInteger preservedColumn;
-@property BOOL selectionToEOL;
-@property NSString* lastYankedText;
-@property XVimTextType lastYankedType;
-- (XVimRange)_xvim_selectedLines;
-- (void)xvim_moveCursor:(NSUInteger)pos preserveColumn:(BOOL)preserve;
-- (void)xvim_syncStateWithScroll:(BOOL)scroll;
-- (XVimRange)xvim_getMotionRange:(NSUInteger)current Motion:(XVimMotion*)motion;
-- (NSRange)_xvim_getYankRange:(XVimMotion*)motion withRange:(XVimRange)to;
-- (XVimSelection)_xvim_selectedBlock;
-- (NSRange)_xvim_selectedRange;
-- (void)xvim_registerInsertionPointForUndo;
-- (void)xvim_registerPositionForUndo:(NSUInteger)pos;
-- (NSRange)xvim_currentNumber;
-@end
-
 @implementation SourceEditorViewProxy (Operations)
 
 #pragma mark - COPYMOVE

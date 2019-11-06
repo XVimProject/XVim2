@@ -12,15 +12,6 @@
 #import "SourceEditorViewProxy+XVim.h"
 #import "SourceEditorViewProxy+Yank.h"
 
-@interface SourceEditorViewProxy ()
-@property NSUInteger selectionBegin;
-@property NSUInteger insertionPoint;
-@property NSUInteger preservedColumn;
-@property BOOL selectionToEOL;
-- (void)xvim_moveCursor:(NSUInteger)pos preserveColumn:(BOOL)preserve;
-- (void)xvim_syncStateWithScroll:(BOOL)scroll;
-@end
-
 @implementation SourceEditorViewProxy (Scrolling)
 
 // This is used by scrollBottom,Top,Center as a common method

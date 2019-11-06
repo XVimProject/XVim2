@@ -15,4 +15,5 @@
 - (void)_xvim_yankRange:(NSRange)range withType:(MOTION_TYPE)type;
 - (void)_xvim_yankSelection:(XVimSelection)sel;
 - (void)_xvim_killSelection:(XVimSelection)sel;
+- (NSRange)_xvim_getYankRange:(XVimMotion*)motion withRange:(XVimRange)to;
 @end

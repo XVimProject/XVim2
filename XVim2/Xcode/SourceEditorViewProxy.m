@@ -35,15 +35,7 @@
 
 @interface SourceEditorViewProxy ()
 @property (weak) _TtC15IDESourceEditor19IDESourceEditorView* sourceEditorView;
-@property NSUInteger selectionBegin;
-@property NSUInteger insertionPoint;
-@property NSUInteger preservedColumn;
-@property BOOL selectionToEOL;
-@property NSInteger editTransactionDepth;
-@property NSInteger undoGroupingDepth;
-@property NSString* lastYankedText;
 @property NSLayoutConstraint* cmdLineBottomAnchor;
-@property XVimTextType lastYankedType;
 @end
 
 @implementation SourceEditorViewProxy {
