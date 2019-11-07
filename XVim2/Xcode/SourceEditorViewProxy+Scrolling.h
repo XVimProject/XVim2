@@ -9,6 +9,7 @@
 #import "SourceEditorViewProxy.h"
 #import <Foundation/Foundation.h>
 
-@interface SourceEditorViewProxy (Scrolling) <SourceViewScrollingProtocol>
-@property (readonly) NSInteger linesPerPage;
+@interface SourceEditorViewProxy (Scrolling)
+- (void)xvim_scrollTo:(NSUInteger)insertionPoint;
 @end
+

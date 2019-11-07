@@ -27,7 +27,7 @@
         return;
     }
     NSUInteger motionPointLine = [self xvim_lineNumberAtIndex:motionPoint];
-    NSRange r = [self _xvim_getYankRange:motion withRange:to];
+    NSRange r = [self xvim_getYankRange:motion withRange:to];
     NSString* s = [self.string substringWithRange:r];
     
     // Handle the paste
@@ -132,7 +132,7 @@
                 }
                 NSRange r = [self _xvim_getDeleteRange:motion withRange:motionRange];
                 if (yank) {
-                    [self _xvim_yankRange:r withType:motion.type];
+                    [self xvim_yankRange:r withType:motion.type];
                 }
                 [self insertText:@"" replacementRange:r];
                 if (motion.style == TEXTOBJECT_SQUOTE || motion.style == TEXTOBJECT_DQUOTE
@@ -148,12 +148,12 @@
 			break;
 		case XVIM_VISUAL_BLOCK:
     		{
-    			XVimSelection sel = [self _xvim_selectedBlock];
+    			XVimSelection sel = [self xvim_selectedBlock];
     			if (yank) {
                     isYankingFromVisual = true;
-    				[self _xvim_yankSelection:sel];
+    				[self xvim_yankSelection:sel];
     			}
-    			[self _xvim_killSelection:sel];
+    			[self xvim_killSelection:sel];
     			newPos = [self xvim_indexOfLineNumber:sel.top column:sel.left];			
     		}
 			break;
@@ -161,14 +161,14 @@
 		case XVIM_VISUAL_LINE:
     		{
                 BOOL toFirstNonBlank = (self.selectionMode == XVIM_VISUAL_LINE);
-                NSRange range = [self _xvim_selectedRange];
+                NSRange range = [self xvim_selectedRange];
 
                 // Currently not supportin deleting EOF with selection mode.
                 // This is because of the fact that NSTextView does not allow select EOF
 
                 if (yank) {
                     isYankingFromVisual = true;
-                    [self _xvim_yankRange:range withType:DEFAULT_MOTION_TYPE];
+                    [self xvim_yankRange:range withType:DEFAULT_MOTION_TYPE];
                 }
                 [self insertText:@"" replacementRange:range];
                 if (toFirstNonBlank) {
@@ -526,7 +526,7 @@
         line = self.insertionLine;
     }
     else {
-        XVimRange lines = [self _xvim_selectedLines];
+        XVimRange lines = [self xvim_selectedLines];
 
         line = lines.begin;
         count = MAX((NSUInteger)1, UNSIGNED_DECREMENT(lines.end, lines.begin));
@@ -586,14 +586,14 @@
         shiftWidth *= count;
     }
     else if (self.selectionMode != XVIM_VISUAL_BLOCK) {
-        lines = [self _xvim_selectedLines];
+        lines = [self xvim_selectedLines];
         shiftWidth *= motion.count;
     }
     else {
-        XVimSelection sel = [self _xvim_selectedBlock];
+        XVimSelection selection = [self xvim_selectedBlock];
 
-        column = sel.left;
-        lines = XVimMakeRange(sel.top, sel.bottom);
+        column = selection.left;
+        lines = XVimMakeRange(selection.top, selection.bottom);
         blockMode = YES;
         shiftWidth *= motion.count;
     }
@@ -667,7 +667,7 @@
         filterRange = [self xvim_getOperationRangeFrom:to.begin To:to.end Type:LINEWISE];
     }
     else {
-        XVimRange lines = [self _xvim_selectedLines];
+        XVimRange lines = [self xvim_selectedLines];
         NSUInteger from = [self xvim_indexOfLineNumber:lines.begin];
         NSUInteger to = [self xvim_indexOfLineNumber:lines.end];
         filterRange = [self xvim_getOperationRangeFrom:from To:to Type:LINEWISE];

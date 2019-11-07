@@ -25,13 +25,13 @@
 - (void)xvim_syncStateFromView;
 - (void)xvim_syncStateWithScroll:(BOOL)scroll;
 - (void)xvim_changeSelectionMode:(XVIM_VISUAL_MODE)mode;
-- (NSRange)_xvim_selectedRange;
+- (NSRange)xvim_selectedRange;
 - (NSRange)xvim_currentNumber;
 - (void)xvim_registerPositionForUndo:(NSUInteger)pos;
 - (void)xvim_registerInsertionPointForUndo;
-- (XVimSelection)_xvim_selectedBlock;
+- (XVimSelection)xvim_selectedBlock;
 - (XVimRange)xvim_getMotionRange:(NSUInteger)current Motion:(XVimMotion*)motion;
 - (void)xvim_moveCursor:(NSUInteger)pos preserveColumn:(BOOL)preserve;
-- (XVimRange)_xvim_selectedLines;
-- (void)_xvim_insertSpaces:(NSUInteger)count replacementRange:(NSRange)replacementRange;
+- (XVimRange)xvim_selectedLines;
+- (void)xvim_insertSpaces:(NSUInteger)count replacementRange:(NSRange)replacementRange;
 @end

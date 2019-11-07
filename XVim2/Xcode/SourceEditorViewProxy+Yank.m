@@ -15,7 +15,7 @@
 
 @implementation SourceEditorViewProxy (Yank)
 
-- (NSRange)_xvim_getYankRange:(XVimMotion*)motion withRange:(XVimRange)to
+- (NSRange)xvim_getYankRange:(XVimMotion*)motion withRange:(XVimRange)to
 {
     var r = [self xvim_getOperationRangeFrom:to.begin To:to.end Type:motion.type];
     let eof = [self.textStorage isEOF:to.end];
@@ -61,20 +61,20 @@
                 }
             }
         }
-        let r = [self _xvim_getYankRange:motion withRange:to];
-        [self _xvim_yankRange:r withType:motion.type];
+        let r = [self xvim_getYankRange:motion withRange:to];
+        [self xvim_yankRange:r withType:motion.type];
     }
     else if (self.selectionMode != XVIM_VISUAL_BLOCK) {
-        let range = [self _xvim_selectedRange];
+        let range = [self xvim_selectedRange];
 
         newPos = range.location;
-        [self _xvim_yankRange:range withType:DEFAULT_MOTION_TYPE];
+        [self xvim_yankRange:range withType:DEFAULT_MOTION_TYPE];
     }
     else {
-        let sel = [self _xvim_selectedBlock];
+        let sel = [self xvim_selectedBlock];
 
         newPos = [self xvim_indexOfLineNumber:sel.top column:sel.left];
-        [self _xvim_yankSelection:sel];
+        [self xvim_yankSelection:sel];
     }
 
     [self.xvimTextViewDelegate textView:self didYank:self.lastYankedText type:self.lastYankedType];
@@ -163,7 +163,7 @@
                     // If the line does not have enough column pad it with spaces
                     let end = [self xvim_endOfLine:head];
 
-                    [self _xvim_insertSpaces:column - max replacementRange:NSMakeRange(end, 0)];
+                    [self xvim_insertSpaces:column - max replacementRange:NSMakeRange(end, 0)];
                 }
                 for (NSUInteger j = 0; j < count; j++) {
                     [self xvim_insertText:line line:targetLine column:column];
@@ -199,7 +199,7 @@
     }
 }
 
-- (void)_xvim_yankRange:(NSRange)range withType:(MOTION_TYPE)type
+- (void)xvim_yankRange:(NSRange)range withType:(MOTION_TYPE)type
 {
     [self __xvim_startYankWithType:type];
 
@@ -221,7 +221,7 @@
     self.lastYankedText = s;
 }
 
-- (void)_xvim_yankSelection:(XVimSelection)sel
+- (void)xvim_yankSelection:(XVimSelection)sel
 {
     let ts = self.textStorage;
     let s = self.string;
@@ -295,7 +295,7 @@
     self.lastYankedText = ybuf;
 }
 
-- (void)_xvim_killSelection:(XVimSelection)sel
+- (void)xvim_killSelection:(XVimSelection)sel
 {
     NSString* s = self.string;
     NSUInteger tabWidth = self.textStorage.xvim_tabWidth;

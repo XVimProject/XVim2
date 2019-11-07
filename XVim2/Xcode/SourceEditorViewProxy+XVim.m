@@ -349,12 +349,12 @@
 - (NSArray<NSValue *>*)xvim_selectedRanges
 {
     if (self.selectionMode != XVIM_VISUAL_BLOCK) {
-        return [NSArray arrayWithObject:[NSValue valueWithRange:[self _xvim_selectedRange]]];
+        return [NSArray arrayWithObject:[NSValue valueWithRange:[self xvim_selectedRange]]];
     }
 
     NSMutableArray* rangeArray = [[NSMutableArray alloc] init];
     NSTextStorage* ts = self.textStorage;
-    XVimSelection sel = [self _xvim_selectedBlock];
+    XVimSelection sel = [self xvim_selectedBlock];
 
     for (NSUInteger line = sel.top; line <= sel.bottom; line++) {
         let begin = [self xvim_indexOfLineNumber:line column:sel.left];
@@ -374,7 +374,7 @@
     return rangeArray;
 }
 
-- (XVimRange)_xvim_selectedLines
+- (XVimRange)xvim_selectedLines
 {
     if (self.selectionMode == XVIM_VISUAL_NONE) { // its not in selecting mode
         return (XVimRange){ NSNotFound, NSNotFound };
@@ -387,7 +387,7 @@
     }
 }
 
-- (NSRange)_xvim_selectedRange
+- (NSRange)xvim_selectedRange
 {
     if (self.selectionMode == XVIM_VISUAL_NONE) {
         return NSMakeRange(self.insertionPoint, 0);
@@ -406,7 +406,7 @@
     }
 
     if (self.selectionMode == XVIM_VISUAL_LINE) {
-        let lines = [self _xvim_selectedLines];
+        let lines = [self xvim_selectedLines];
         let begin = [self xvim_indexOfLineNumber:lines.begin];
         var end = [self xvim_indexOfLineNumber:lines.end];
 
@@ -420,7 +420,7 @@
     return NSMakeRange(NSNotFound, 0);
 }
 
-- (XVimSelection)_xvim_selectedBlock
+- (XVimSelection)xvim_selectedBlock
 {
     XVimSelection result = {};
 
@@ -768,14 +768,14 @@
         *lines = XVimMakeRange(NSNotFound, NSNotFound);
 
     if (self.selectionMode == XVIM_VISUAL_BLOCK) {
-        XVimSelection sel = [self _xvim_selectedBlock];
+        XVimSelection sel = [self xvim_selectedBlock];
 
         if (lines)
             *lines = XVimMakeRange(sel.top, sel.bottom);
         switch (insertMode) {
         case XVIM_INSERT_BLOCK_KILL:
-            [self _xvim_yankSelection:sel];
-            [self _xvim_killSelection:sel];
+            [self xvim_yankSelection:sel];
+            [self xvim_killSelection:sel];
         /* falltrhough */
         case XVIM_INSERT_DEFAULT:
             self.insertionPoint = [self xvim_indexOfLineNumber:sel.top column:sel.left];
@@ -827,7 +827,7 @@
 // UTILITY
 #pragma MARK - UTILITY
 
-- (void)_xvim_insertSpaces:(NSUInteger)count replacementRange:(NSRange)replacementRange
+- (void)xvim_insertSpaces:(NSUInteger)count replacementRange:(NSRange)replacementRange
 {
     if (count || replacementRange.length) {
         [self insertText:[NSString stringMadeOfSpaces:count] replacementRange:replacementRange];
@@ -919,14 +919,14 @@
                 if (insertMode != XVIM_INSERT_APPEND) {
                     continue;
                 }
-                [self _xvim_insertSpaces:column - [ts xvim_columnOfIndex:pos] replacementRange:NSMakeRange(pos, 0)];
+                [self xvim_insertSpaces:column - [ts xvim_columnOfIndex:pos] replacementRange:NSMakeRange(pos, 0)];
             }
         }
         if (tabWidth && [self.string characterAtIndex:pos] == '\t') {
             NSUInteger col = [ts xvim_columnOfIndex:pos];
 
             if (col < column) {
-                [self _xvim_insertSpaces:tabWidth - (col % tabWidth) replacementRange:NSMakeRange(pos, 1)];
+                [self xvim_insertSpaces:tabWidth - (col % tabWidth) replacementRange:NSMakeRange(pos, 1)];
                 pos += column - col;
             }
         }
@@ -1016,7 +1016,7 @@
     if (XVIM_VISUAL_NONE == self.selectionMode) {
         return 0;
     }
-    let lines = [self _xvim_selectedLines];
+    let lines = [self xvim_selectedLines];
     return lines.end - lines.begin + 1;
 }
 
