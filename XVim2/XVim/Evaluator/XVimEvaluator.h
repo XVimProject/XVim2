@@ -34,7 +34,7 @@ XVimMotionEvaluator
 
 */
 
-#import "SourceViewProtocol.h"
+#import "SourceEditorViewProtocol.h"
 #import <Cocoa/Cocoa.h>
 
 
@@ -131,8 +131,8 @@ XVimMotionEvaluator
 
 - (XVimKeymap*)selectKeymapWithProvider:(id<XVimKeymapProvider>)keymapProvider;
 
-@property (readonly, nonatomic) id<SourceViewProtocol, SourceViewScrollingProtocol, SourceViewOperationsProtocol,
-                                   SourceViewYankProtocol, SourceViewControlProtocol>
+@property (readonly, nonatomic) id<SourceEditorViewProtocol, SourceEditorViewScrollingProtocol, SourceEditorViewOperationsProtocol,
+                                   SourceEditorViewYankProtocol, SourceEditorViewControlProtocol>
             sourceView;
 
 - (void)resetCompletionHandler;

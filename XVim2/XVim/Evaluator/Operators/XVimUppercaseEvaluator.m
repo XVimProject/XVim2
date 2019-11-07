@@ -7,7 +7,7 @@
 //
 
 #import "XVimUppercaseEvaluator.h"
-#import "SourceViewProtocol.h"
+#import "SourceEditorViewProtocol.h"
 #import "XVim.h"
 #import "XVimWindow.h"
 

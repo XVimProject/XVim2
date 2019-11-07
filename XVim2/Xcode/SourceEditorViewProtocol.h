@@ -1,13 +1,13 @@
 //
-//  SourceViewProtocol.h
+//  SourceEditorViewProtocol.h
 //  XVim2
 //
 //  Created by Ant on 30/09/2017.
 //  Copyright © 2017 Shuichiro Suzuki. All rights reserved.
 //
 
-#ifndef SourceViewProtocol_h
-#define SourceViewProtocol_h
+#ifndef SourceEditorViewProtocol_h
+#define SourceEditorViewProtocol_h
 #import "XVimMotionOption.h"
 #import "XVimTextStoring.h"
 #import <AppKit/AppKit.h>
@@ -27,7 +27,7 @@ typedef NS_ENUM(char, CursorStyle) {
 - (void)textView:(id)view didDelete:(NSString*)deletedText type:(XVimTextType)type shouldReplaceRegister:(BOOL)isReplacing;
 @end
 
-@protocol SourceViewProtocol <NSObject>
+@protocol SourceEditorViewProtocol <NSObject>
 - (void)showCommandLine;
 - (void)hideCommandLine;
 - (BOOL)isShowingCommandLine;
@@ -69,7 +69,7 @@ typedef NS_ENUM(char, CursorStyle) {
 @end
 
 // XVim extensions
-@protocol SourceViewControlProtocol <NSObject, XVimTextStoring>
+@protocol SourceEditorViewControlProtocol <NSObject, XVimTextStoring>
 - (void)xvim_beginUndoGrouping;
 - (void)xvim_endUndoGrouping;
 
@@ -111,7 +111,7 @@ typedef NS_ENUM(char, CursorStyle) {
 @end
 
 // Scrolling
-@protocol SourceViewScrollingProtocol <NSObject>
+@protocol SourceEditorViewScrollingProtocol <NSObject>
 - (void)xvim_scroll:(XVIM_SCROLL_TYPE)type direction:(XVIM_SCROLL_DIRECTION)direction count:(NSUInteger)count;
 - (void)xvim_pageForward:(NSUInteger)index count:(NSUInteger)count;
 - (void)xvim_pageBackward:(NSUInteger)index count:(NSUInteger)count;
@@ -130,7 +130,7 @@ typedef NS_ENUM(char, CursorStyle) {
 @end
 
 // Mutate Operations
-@protocol SourceViewOperationsProtocol <NSObject>
+@protocol SourceEditorViewOperationsProtocol <NSObject>
 - (void)xvim_copymove:(XVimMotion*)motion withMotionPoint:(NSUInteger)motionPoint withInsertionPoint:(NSUInteger)insertionPoint after:(BOOL)after onlyCopy:(BOOL)onlyCopy;
 - (BOOL)xvim_delete:(XVimMotion*)motion withMotionPoint:(NSUInteger)motionPoint andYank:(BOOL)yank;
 - (BOOL)xvim_delete:(XVimMotion*)motion andYank:(BOOL)yank;
@@ -163,10 +163,10 @@ typedef NS_ENUM(char, CursorStyle) {
 @end
 
 // Yank + Put
-@protocol SourceViewYankProtocol <NSObject>
+@protocol SourceEditorViewYankProtocol <NSObject>
 - (void)xvim_yank:(XVimMotion*)motion;
 - (void)xvim_yank:(XVimMotion*)motion withMotionPoint:(NSUInteger)motionPoint;
 - (void)xvim_put:(NSString*)text type:(XVimTextType)type afterCursor:(BOOL)after count:(NSUInteger)count;
 @end
 
-#endif /* SourceViewProtocol_h */
+#endif /* SourceEditorViewProtocol_h */

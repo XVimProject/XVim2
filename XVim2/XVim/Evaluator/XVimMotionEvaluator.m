@@ -10,7 +10,7 @@
 #import "XVimMotionEvaluator.h"
 #import "NSString+VimHelper.h"
 #import "NSTextStorage+VimOperation.h"
-#import "SourceViewProtocol.h"
+#import "SourceEditorViewProtocol.h"
 #import "XVim.h"
 #import "XVimArgumentEvaluator.h"
 #import "XVimCommandLineEvaluator.h"

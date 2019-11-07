@@ -6,7 +6,7 @@
 #import "XVimVisualEvaluator.h"
 #import "Logger.h"
 #import "NSTextStorage+VimOperation.h"
-#import "SourceViewProtocol.h"
+#import "SourceEditorViewProtocol.h"
 #import "XVim.h"
 #import "XVimCommandLineEvaluator.h"
 #import "XVimDeleteEvaluator.h"

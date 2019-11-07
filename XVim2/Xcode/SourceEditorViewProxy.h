@@ -6,7 +6,7 @@
 //  Copyright © 2017 Shuichiro Suzuki. All rights reserved.
 //
 
-#import "SourceViewProtocol.h"
+#import "SourceEditorViewProtocol.h"
 #import <Foundation/Foundation.h>
 
 @class _TtC15IDESourceEditor19IDESourceEditorView;
@@ -69,7 +69,7 @@ static inline XVimSourceEditorRange XvimMakeSourceEditorRange(XVimSourceEditorPo
 @protocol XVimTextViewDelegateProtocol;
 @class SourceEditorViewWrapper, SourceEditorDataSourceWrapper;
 
-@interface SourceEditorViewProxy : NSObject <SourceViewProtocol>
+@interface SourceEditorViewProxy : NSObject <SourceEditorViewProtocol>
 @property (nonatomic) XVIM_VISUAL_MODE selectionMode;
 @property NSUInteger insertionPoint;
 @property (readonly) XVimPosition insertionPosition;

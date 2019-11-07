@@ -10,7 +10,7 @@
 #import "Logger.h"
 #import "NSString+VimHelper.h"
 #import "NSTextStorage+VimOperation.h"
-#import "SourceViewProtocol.h"
+#import "SourceEditorViewProtocol.h"
 #import "XVim.h"
 #import "XVimOptions.h"
 #import "XVimWindow.h"

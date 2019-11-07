@@ -122,7 +122,6 @@
 		5DAD89FF227455F000D01D9F /* XVimSourceEditorSelectionDisplay.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; name = XVimSourceEditorSelectionDisplay.m; path = XVim2/Xcode/XVimSourceEditorSelectionDisplay.m; sourceTree = SOURCE_ROOT; };
 		A20FB79A21BB7FF2001FDC62 /* about.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = about.xib; sourceTree = "<group>"; };
 		A20FB79B21BB7FF2001FDC62 /* XVimAboutDialog.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = XVimAboutDialog.h; sourceTree = "<group>"; };
-		A20FB79C21BB7FF2001FDC62 /* SourceViewProtocol.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SourceViewProtocol.h; sourceTree = "<group>"; };
 		A20FB79D21BB7FF2001FDC62 /* XVimAboutDialog.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = XVimAboutDialog.m; sourceTree = "<group>"; };
 		A2482F2D1F72435D00FEF4DE /* ProcessRunner.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ProcessRunner.h; sourceTree = "<group>"; };
 		A2482F2E1F72435D00FEF4DE /* ProcessRunner.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ProcessRunner.m; sourceTree = "<group>"; };
@@ -166,6 +165,7 @@
 		A2B537B01F51C94400D83C0A /* NSObject+Swizzle.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "NSObject+Swizzle.m"; sourceTree = "<group>"; };
 		A2B5D78C2243319A00BD289D /* XcodeHeader */ = {isa = PBXFileReference; lastKnownFileType = folder; path = XcodeHeader; sourceTree = "<group>"; };
 		A2D464BB20D4042B00A43EC7 /* SwiftLogger.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = SwiftLogger.swift; path = XVim2/Helper/SwiftLogger.swift; sourceTree = SOURCE_ROOT; };
+		A2ED76F823743EC700C81258 /* SourceEditorViewProtocol.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = SourceEditorViewProtocol.h; path = XVim2/Xcode/SourceEditorViewProtocol.h; sourceTree = SOURCE_ROOT; };
 		A2FB1EE02077B65100D3E634 /* File.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = File.swift; sourceTree = "<group>"; };
 		ED0DED5D1F8C2CDD00886F6B /* XVimZEvaluator.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = XVimZEvaluator.m; sourceTree = "<group>"; };
 		ED0DED5E1F8C2CDD00886F6B /* XVimZEvaluator.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = XVimZEvaluator.h; sourceTree = "<group>"; };
@@ -385,6 +385,8 @@
 				A2A9F92E2070A84600E7BB53 /* _TtC15IDESourceEditor19IDESourceEditorView+XVim.h */,
 				A2A9F9272070A84600E7BB53 /* IDEWorkspaceTabController+XVim.h */,
 				A2A9F9322070A84600E7BB53 /* IDEWorkspaceTabController+XVim.m */,
+				A29BA5702243D6160032C3E2 /* SourceEditorDataSourceWrapper.swift */,
+				A2ED76F823743EC700C81258 /* SourceEditorViewProtocol.h */,
 				A2A9F9282070A84600E7BB53 /* SourceEditorViewProxy.h */,
 				A2A9F9292070A84600E7BB53 /* SourceEditorViewProxy.m */,
 				A2A9F92F2070A84600E7BB53 /* SourceEditorViewProxy+Operations.h */,
@@ -397,7 +399,6 @@
 				A2A9F9342070A84600E7BB53 /* SourceEditorViewProxy+Yank.m */,
 				A29BA56F2243D6160032C3E2 /* SourceEditorViewWrapper.s */,
 				A29BA5712243D6160032C3E2 /* SourceEditorViewWrapper.swift */,
-				A29BA5702243D6160032C3E2 /* SourceEditorDataSourceWrapper.swift */,
 				A2A298DA2070A962001B5F9E /* XcodeUtils.h */,
 				A2A298DB2070A962001B5F9E /* XcodeUtils.m */,
 				A2A9F93D2070A85200E7BB53 /* XVimIDESourceEditorView.h */,
@@ -540,7 +541,6 @@
 				ED6B8E4A1F80F896002F4A47 /* NSTextStorage+VimOperation.m */,
 				ED0DED7D1F8C41EF00886F6B /* NSURL+XVimXcodeModule.h */,
 				ED0DED7E1F8C41F000886F6B /* NSURL+XVimXcodeModule.m */,
-				A20FB79C21BB7FF2001FDC62 /* SourceViewProtocol.h */,
 				EDF010751F6EF16600461B2C /* XVim.h */,
 				EDF010761F6EF16600461B2C /* XVim.m */,
 				A20FB79B21BB7FF2001FDC62 /* XVimAboutDialog.h */,

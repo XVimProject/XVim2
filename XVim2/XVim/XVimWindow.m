@@ -7,7 +7,7 @@
 
 #import "XVimWindow.h"
 #import "NSTextStorage+VimOperation.h"
-#import "SourceViewProtocol.h"
+#import "SourceEditorViewProtocol.h"
 #import "XVim.h"
 #import "XVimCommandLine.h"
 #import "XVimEvaluator.h"
@@ -30,7 +30,7 @@
     id _enabledNotificationObserver;
 }
 @property (atomic) NSEvent* event;
-@property id<SourceViewProtocol> lastTextView;
+@property id<SourceEditorViewProtocol> lastTextView;
 
 - (void)resetEvaluatorStack:(NSMutableArray*)stack activateNormalHandler:(BOOL)activate;
 
@@ -40,7 +40,11 @@
 @synthesize event = _event;
 
 - (instancetype)initWithSourceView:
-            (id<SourceViewProtocol, SourceViewControlProtocol, SourceViewScrollingProtocol, SourceViewOperationsProtocol, NSTextInputClient>)
+            (id<SourceEditorViewProtocol,
+             SourceEditorViewControlProtocol,
+             SourceEditorViewScrollingProtocol,
+             SourceEditorViewOperationsProtocol,
+             NSTextInputClient>)
                         sourceView
 {
     if (self = [super init]) {

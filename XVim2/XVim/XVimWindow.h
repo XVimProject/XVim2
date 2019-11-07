@@ -19,13 +19,13 @@
 @class XVimEvaluator;
 @class XVimMark;
 @class XVimCommandLine;
-@protocol SourceViewProtocol;
-@protocol SourceViewControlProtocol;
-@protocol SourceViewOperationsProtocol;
-@protocol SourceViewScrollingProtocol;
+@protocol SourceEditorViewProtocol;
+@protocol SourceEditorViewControlProtocol;
+@protocol SourceEditorViewOperationsProtocol;
+@protocol SourceEditorViewScrollingProtocol;
 
 @interface XVimWindow : NSObject <NSTextInputClient, NSTextFieldDelegate>
-@property (readonly) id<SourceViewProtocol, SourceViewControlProtocol, SourceViewScrollingProtocol, SourceViewOperationsProtocol, NSTextInputClient> sourceView; // This represents currently focused sourceView
+@property (readonly) id<SourceEditorViewProtocol, SourceEditorViewControlProtocol, SourceEditorViewScrollingProtocol, SourceEditorViewOperationsProtocol, NSTextInputClient> sourceView; // This represents currently focused sourceView
 @property (weak, readonly) NSTextView* inputView;
 @property (weak, readonly) XVimEvaluator* currentEvaluator;
 @property (weak, readonly) CommandResponder* commandResponder;
@@ -34,7 +34,7 @@
 @property (nonatomic) XVimMark* currentPositionMark;
 @property BOOL scrollHalt;
 
-- (instancetype)initWithSourceView:(id<SourceViewProtocol>)sourceView;
+- (instancetype)initWithSourceView:(id<SourceEditorViewProtocol>)sourceView;
 - (void)setupAfterEditorViewSetup;
 - (void)handleKeyStroke:(XVimKeyStroke*)keyStroke onStack:(NSMutableArray<XVimEvaluator*>*)stack;
 - (BOOL)handleKeyEvent:(NSEvent*)event;

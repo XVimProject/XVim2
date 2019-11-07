@@ -9,7 +9,7 @@
 #import "XVimCommandLineEvaluator.h"
 #import "Logger.h"
 #import "SourceEditorViewProxy.h"
-#import "SourceViewProtocol.h"
+#import "SourceEditorViewProtocol.h"
 #import "XVim.h"
 #import "XVimCommandField.h"
 #import "XVimCommandLine.h"

@@ -10,7 +10,7 @@
 #import "XVimMotionType.h"
 #import <Foundation/Foundation.h>
 
-@interface SourceEditorViewProxy (Yank) <SourceViewYankProtocol>
+@interface SourceEditorViewProxy (Yank) <SourceEditorViewYankProtocol>
 - (void)xvim_yankRange:(NSRange)range withType:(MOTION_TYPE)type;
 - (void)xvim_yankSelection:(XVimSelection)sel;
 - (void)xvim_killSelection:(XVimSelection)sel;

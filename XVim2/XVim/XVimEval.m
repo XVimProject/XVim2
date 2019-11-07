@@ -8,7 +8,7 @@
 
 #import "XVimEval.h"
 #import "Logger.h"
-#import "SourceViewProtocol.h"
+#import "SourceEditorViewProtocol.h"
 #import "XVimWindow.h"
 
 //

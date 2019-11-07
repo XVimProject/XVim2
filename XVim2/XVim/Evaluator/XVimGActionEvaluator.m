@@ -8,7 +8,7 @@
 
 #import "XVimGActionEvaluator.h"
 #import "NSTextStorage+VimOperation.h"
-#import "SourceViewProtocol.h"
+#import "SourceEditorViewProtocol.h"
 #import "XVim.h"
 #import "XVimInsertEvaluator.h"
 #import "XVimJoinEvaluator.h"

@@ -66,7 +66,7 @@ static XVimEvaluator* s_popEvaluator = nil;
 
 - (void)dealloc { [self endUndoGrouping]; }
 
-- (id<SourceViewProtocol>)sourceView { return self.window.sourceView; }
+- (id<SourceEditorViewProtocol>)sourceView { return self.window.sourceView; }
 
 - (XVimEvaluator*)eval:(XVimKeyStroke*)keyStroke
 {

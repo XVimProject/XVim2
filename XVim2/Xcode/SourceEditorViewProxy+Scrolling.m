@@ -7,7 +7,7 @@
 //
 
 #import "NSTextStorage+VimOperation.h"
-#import "SourceViewProtocol.h"
+#import "SourceEditorViewProtocol.h"
 #import "SourceEditorViewProxy+Scrolling.h"
 #import "SourceEditorViewProxy+XVim.h"
 #import "SourceEditorViewProxy+Yank.h"

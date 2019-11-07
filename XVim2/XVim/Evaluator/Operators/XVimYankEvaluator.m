@@ -8,7 +8,7 @@
 
 #import "XVimYankEvaluator.h"
 #import "Logger.h"
-#import "SourceViewProtocol.h"
+#import "SourceEditorViewProtocol.h"
 #import "XVim.h"
 #import "XVimWindow.h"
 
