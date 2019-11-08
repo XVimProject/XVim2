@@ -1376,7 +1376,7 @@ xvim_ignore_warning_pop
 
 - (void)bang:(XVimExArg*)args inWindow:(XVimWindow*)window
 {
-    NSString* selectedText = nil;
+    NSString* text = nil;
     NSUInteger inputStartLocation = 0;
     NSUInteger inputEndLocation;
 
@@ -1393,7 +1393,7 @@ xvim_ignore_warning_pop
         if (NSNotFound == inputEndLocation) {
             inputEndLocation = [[[window sourceView] string] length];
         }
-        selectedText = [[window.sourceView.textStorage string]
+        text = [[window.sourceView.textStorage string]
                     substringWithRange:NSMakeRange(inputStartLocation, inputEndLocation - inputStartLocation)];
         [window.sourceView setSelectedRange:NSMakeRange(inputStartLocation, inputEndLocation - inputStartLocation)];
     }
@@ -1434,12 +1434,12 @@ xvim_ignore_warning_pop
     }
 	
 #if true
-	[XVimTaskRunner runScript:args.arg withInput:selectedText];
+	[XVimTaskRunner runScript:args.arg withInput:text];
 #else 
 	// TODO:quickfix
     NSUInteger firstFilteredLine = args.lineBegin;
     NSString* scriptReturn = [XVimTaskRunner runScript:args.arg
-                                             withInput:selectedText
+                                             withInput:text
 										   withTimeout:EXTERNAL_COMMAND_TIMEOUT_SECS
                                           runDirectory:runDir
 											  colWidth:window.commandLine.quickFixColWidth];
