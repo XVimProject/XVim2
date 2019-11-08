@@ -420,7 +420,7 @@ if( childEvaluator.keyStroke.toString.length != 1 ){
 {
     // TODO add this motion interface to NSTextView
     let view = self.window.sourceView;
-    let r = [view selectedRange];
+    let r = view.selectedRange;
     let repeat = self.numericArg;
     let linesUpCursorloc =
                 [view.textStorage nextLine:r.location column:0 count:(repeat - 1) option:MOPT_NONE];

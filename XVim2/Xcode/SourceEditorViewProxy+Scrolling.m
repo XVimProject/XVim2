@@ -15,7 +15,7 @@
 @implementation SourceEditorViewProxy (Scrolling)
 
 // This is used by scrollBottom,Top,Center as a common method
-- (void)xvim_scrollCommon_moveCursorPos:(NSUInteger)lineNumber firstNonblank:(BOOL)fnb
+- (void)xvim_scrollCommon_moveCursorPos:(NSUInteger)lineNumber firstNonblank:(BOOL)firstNonblank
 {
     if (lineNumber != 0) {
         var pos = [self xvim_indexOfLineNumber:lineNumber];
@@ -25,7 +25,7 @@
         [self xvim_moveCursor:pos preserveColumn:NO];
         [self xvim_syncStateWithScroll:YES];
     }
-    if (fnb) {
+    if (firstNonblank) {
         let pos = [self.textStorage xvim_firstNonblankInLineAtIndex:self.insertionPoint allowEOL:YES];
         [self xvim_moveCursor:pos preserveColumn:NO];
         [self xvim_syncStateWithScroll:YES];
@@ -116,24 +116,24 @@ typedef struct {
 }
 
 - (NSInteger)linesPerPage {
-    let linerange = [self xvim_visibleLineRange];
+    let linerange = self.xvim_visibleLineRange;
     return linerange.bottomLine - linerange.topLine;
 }
 
-- (void)xvim_scrollBottom:(NSUInteger)lineNumber firstNonblank:(BOOL)fnb
+- (void)xvim_scrollBottom:(NSUInteger)lineNumber firstNonblank:(BOOL)firstNonblank
 { // zb / z-
     
-    [self xvim_scrollCenter:lineNumber firstNonblank:fnb];
+    [self xvim_scrollCenter:lineNumber firstNonblank:firstNonblank];
     
-    let linesPerPage = [self linesPerPage];
+    let linesPerPage = self.linesPerPage;
     for (int i = 0; i < linesPerPage/2; ++i){
         [self scrollLineUp:self];
     }
 }
 
-- (void)xvim_scrollCenter:(NSUInteger)lineNumber firstNonblank:(BOOL)fnb
+- (void)xvim_scrollCenter:(NSUInteger)lineNumber firstNonblank:(BOOL)firstNonblank
 { // zz / z.
-    if (fnb) {
+    if (firstNonblank) {
         let cursorIndexAfterScroll =
                     [self.textStorage xvim_firstNonblankInLineAtIndex:self.selectedRange.location allowEOL:YES];
         if (cursorIndexAfterScroll != self.selectedRange.location) {
@@ -144,13 +144,13 @@ typedef struct {
     [self centerSelectionInVisibleArea:self];
 }
 
-- (void)xvim_scrollTop:(NSUInteger)lineNumber firstNonblank:(BOOL)fnb
+- (void)xvim_scrollTop:(NSUInteger)lineNumber firstNonblank:(BOOL)firstNonblank
 { // zt / z<CR>
     
     // first, scroll for cursor visible
-    [self xvim_scrollCenter:lineNumber firstNonblank:fnb];
+    [self xvim_scrollCenter:lineNumber firstNonblank:firstNonblank];
 
-    let linesPerPage = [self linesPerPage];
+    let linesPerPage = self.linesPerPage;
     for (int i = 0; i < linesPerPage/2; ++i){
         [self scrollLineDown:self];
     }

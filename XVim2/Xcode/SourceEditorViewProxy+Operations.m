@@ -691,14 +691,14 @@
 - (BOOL)xvim_incrementNumber:(int64_t)offset
 {
     NSUInteger ip = self.insertionPoint;
-    NSRange range = [self xvim_currentNumber];
+    NSRange range = self.xvim_currentNumber;
     if (range.location == NSNotFound) {
         NSUInteger pos = [self.textStorage xvim_nextDigitInLine:ip];
         if (pos == NSNotFound) {
             return NO;
         }
         self.insertionPoint = pos;
-        range = [self xvim_currentNumber];
+        range = self.xvim_currentNumber;
         if (range.location == NSNotFound) {
             // should not happen
             self.insertionPoint = ip;
@@ -708,7 +708,7 @@
 
     [self xvim_registerPositionForUndo:ip];
 
-    const char* s = [[self.string substringWithRange:range] UTF8String];
+    const char* s = [self.string substringWithRange:range].UTF8String;
     NSString* repl;
     uint64_t u = strtoull(s, NULL, 0);
     int64_t i = strtoll(s, NULL, 0);

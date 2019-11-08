@@ -133,7 +133,8 @@ static atomic_uint dispatchQueueCount = ATOMIC_VAR_INIT(0);
                         return;
                     }
                     @try {
-                        NSEvent* event = [stroke toEventwithWindowNumber:self.window.windowNumber context:self.window.graphicsContext];
+                        NSEvent* event = [stroke toEventwithWindowNumber:self.window.windowNumber
+                                                                 context:self.window.graphicsContext];
                         [self.window makeKeyAndOrderFront:self];
                         [NSApp sendEvent:event];
                         dispatch_semaphore_signal(self.keySemaphore);

@@ -243,17 +243,17 @@
     if (nil == self.textStorage) {
         return;
     }
-    if (![self.textStorage isValidCursorPosition:[self selectedRange].location]) {
-        NSRange currentRange = [self selectedRange];
+    if (![self.textStorage isValidCursorPosition:self.selectedRange.location]) {
+        NSRange currentRange = self.selectedRange;
         // TODO: [self selectPreviousPlaceholder];
-        NSRange prevPlaceHolder = [self selectedRange];
+        NSRange prevPlaceHolder = self.selectedRange;
         if (currentRange.location != prevPlaceHolder.location
             && currentRange.location == (prevPlaceHolder.location + prevPlaceHolder.length)) {
             // The condition here means that just before current insertion point is a placeholder.
             // So we select the the place holder and its already selected by "selectedPreviousPlaceholder" above
         }
         else {
-            if ([[self string] length] > currentRange.location) {
+            if (self.string.length > currentRange.location) {
                 [self setSelectedRange:NSMakeRange(UNSIGNED_DECREMENT(currentRange.location, 1), 0)];
             }
         }
@@ -294,7 +294,7 @@
         [self _adjustCursorPosition];
     }
 
-    [self setSelectedRanges:[self xvim_selectedRanges] affinity:NSSelectionAffinityDownstream stillSelecting:NO];
+    [self setSelectedRanges:self.xvim_selectedRanges affinity:NSSelectionAffinityDownstream stillSelecting:NO];
 
     if (scroll) {
         [self xvim_scrollTo:self.insertionPoint];
@@ -308,10 +308,10 @@
     if (self.xvim_lockSyncStateFromView) {
         return;
     }
-    let r = [self selectedRange];
-    //DEBUG_LOG(@"Selected Range(TotalLen:%d): Loc:%d Len:%d", self.string.length, r.location, r.length);
+    let range = self.selectedRange;
+    //DEBUG_LOG(@"Selected Range(TotalLen:%d): Loc:%d Len:%d", self.string.length, range.location, range.length);
     self.selectionMode = XVIM_VISUAL_NONE;
-    [self xvim_moveCursor:r.location preserveColumn:NO];
+    [self xvim_moveCursor:range.location preserveColumn:NO];
     self.selectionBegin = self.insertionPoint;
 }
 
@@ -354,7 +354,7 @@
 
     NSMutableArray* rangeArray = [[NSMutableArray alloc] init];
     NSTextStorage* ts = self.textStorage;
-    XVimSelection sel = [self xvim_selectedBlock];
+    XVimSelection sel = self.xvim_selectedBlock;
 
     for (NSUInteger line = sel.top; line <= sel.bottom; line++) {
         let begin = [self xvim_indexOfLineNumber:line column:sel.left];
@@ -406,7 +406,7 @@
     }
 
     if (self.selectionMode == XVIM_VISUAL_LINE) {
-        let lines = [self xvim_selectedLines];
+        let lines = self.xvim_selectedLines;
         let begin = [self xvim_indexOfLineNumber:lines.begin];
         var end = [self xvim_indexOfLineNumber:lines.end];
 
