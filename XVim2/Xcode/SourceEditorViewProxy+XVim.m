@@ -198,9 +198,9 @@
     [self xvim_syncStateWithScroll:YES];
 }
 
-- (void)xvim_moveToPosition:(XVimPosition)pos
+- (void)xvim_moveToLocation:(XVimLocation)location
 {
-    [self xvim_moveCursor:[self xvim_indexOfLineNumber:pos.line column:pos.column] preserveColumn:NO];
+    [self xvim_moveCursor:[self xvim_indexOfLineNumber:location.line column:location.column] preserveColumn:NO];
     [self xvim_syncStateWithScroll:YES];
 }
 

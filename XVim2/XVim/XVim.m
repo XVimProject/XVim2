@@ -141,8 +141,8 @@
         self.excmd = [[XVimExCommand alloc] init];
         self.lastPlaybackRegister = nil;
         self.lastOperationCommands = [[XVimMutableString alloc] init];
-        self.lastVisualPosition = XVimMakePosition(NSNotFound, NSNotFound);
-        self.lastVisualSelectionBegin = XVimMakePosition(NSNotFound, NSNotFound);
+        self.lastVisualLocation = XVimMakeLocation(NSNotFound, NSNotFound);
+        self.lastVisualSelectionBeginLocation = XVimMakeLocation(NSNotFound, NSNotFound);
         _registerManager = [[XVimRegisterManager alloc] init];
         _marks = [[XVimMarks alloc] init];
         self.tempRepeatRegister = [[XVimMutableString alloc] init];

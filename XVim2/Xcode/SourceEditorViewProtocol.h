@@ -53,9 +53,9 @@ typedef NS_ENUM(char, CursorStyle) {
 @property (readonly) NSInteger currentLineNumber;
 @property (readonly) NSArray<NSValue*>* selectedRanges;
 @property (readonly) NSTextStorage* textStorage;
-@property (readonly) XVimPosition insertionPosition;
+@property (readonly) XVimLocation insertionLocation;
 @property NSUInteger selectionBegin;
-@property (readonly) XVimPosition selectionBeginPosition;
+@property (readonly) XVimLocation selectionBeginLocation;
 @property (nonatomic) BOOL needsUpdateFoundRanges;
 @property BOOL selectionToEOL;
 @property (readonly) NSUInteger insertionColumn;
@@ -91,7 +91,7 @@ typedef NS_ENUM(char, CursorStyle) {
 - (void)xvim_escapeFromInsert;
 - (void)xvim_moveCursor:(NSUInteger)pos preserveColumn:(BOOL)preserve;
 - (void)xvim_move:(XVimMotion*)motion;
-- (void)xvim_moveToPosition:(XVimPosition)pos;
+- (void)xvim_moveToLocation:(XVimLocation)location;
 - (NSUInteger)numberOfSelectedLines;
 - (NSArray<NSValue *>*)xvim_selectedRanges;
 - (void)xvim_setSelectedRange:(NSRange)range;

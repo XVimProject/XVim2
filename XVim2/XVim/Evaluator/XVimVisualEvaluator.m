@@ -37,8 +37,8 @@ static NSString* MODE_STRINGS[] = { @"", @"-- VISUAL --", @"-- VISUAL LINE --", 
     BOOL _waitForArgument;
     NSRange _operationRange;
     XVIM_VISUAL_MODE _visual_mode;
-    XVimPosition _initialFromPos;
-    XVimPosition _initialToPos;
+    XVimLocation _initialFromLocation;
+    XVimLocation _initialToLocation;
     BOOL _initialToEOL;
 }
 @end
@@ -47,8 +47,8 @@ static NSString* MODE_STRINGS[] = { @"", @"-- VISUAL --", @"-- VISUAL LINE --", 
 - (id)initWithLastVisualStateWithWindow:(XVimWindow*)window
 {
     if (self = [self initWithWindow:window mode:XVim.instance.lastVisualMode]) {
-        _initialFromPos = XVim.instance.lastVisualSelectionBegin;
-        _initialToPos = XVim.instance.lastVisualPosition;
+        _initialFromLocation = XVim.instance.lastVisualSelectionBeginLocation;
+        _initialToLocation = XVim.instance.lastVisualLocation;
         _initialToEOL = XVim.instance.lastVisualSelectionToEOL;
     }
     return self;
@@ -64,18 +64,18 @@ static NSString* MODE_STRINGS[] = { @"", @"-- VISUAL --", @"-- VISUAL LINE --", 
             let range = window.sourceView.selectedRange;
             if (range.length == 0) {
                 NSUInteger start = window.sourceView.selectedRange.location;
-                _initialFromPos = XVimMakePosition([window.sourceView.textStorage xvim_lineNumberAtIndex:start],
+                _initialFromLocation = XVimMakeLocation([window.sourceView.textStorage xvim_lineNumberAtIndex:start],
                                                        [window.sourceView.textStorage xvim_columnOfIndex:start]);
-                _initialToPos = XVimMakePosition([window.sourceView.textStorage xvim_lineNumberAtIndex:start],
+                _initialToLocation = XVimMakeLocation([window.sourceView.textStorage xvim_lineNumberAtIndex:start],
                                                      [window.sourceView.textStorage xvim_columnOfIndex:start]);
             }
             else {
                 NSUInteger start = window.sourceView.selectedRange.location;
                 NSUInteger end = window.sourceView.selectedRange.location
                                + window.sourceView.selectedRange.length - 1;
-                _initialFromPos = XVimMakePosition([window.sourceView.textStorage xvim_lineNumberAtIndex:start],
+                _initialFromLocation = XVimMakeLocation([window.sourceView.textStorage xvim_lineNumberAtIndex:start],
                                                        [window.sourceView.textStorage xvim_columnOfIndex:start]);
-                _initialToPos = XVimMakePosition([window.sourceView.textStorage xvim_lineNumberAtIndex:end],
+                _initialToLocation = XVimMakeLocation([window.sourceView.textStorage xvim_lineNumberAtIndex:end],
                                                      [window.sourceView.textStorage xvim_columnOfIndex:end]);
             }
         }
@@ -85,9 +85,9 @@ static NSString* MODE_STRINGS[] = { @"", @"-- VISUAL --", @"-- VISUAL LINE --", 
             NSUInteger start = window.sourceView.selectedRanges.firstObject.rangeValue.location;
             NSUInteger end = window.sourceView.selectedRanges.lastObject.rangeValue.location
                            + window.sourceView.selectedRanges.lastObject.rangeValue.length - 1;
-            _initialFromPos = XVimMakePosition([window.sourceView.textStorage xvim_lineNumberAtIndex:start],
+            _initialFromLocation = XVimMakeLocation([window.sourceView.textStorage xvim_lineNumberAtIndex:start],
                                                    [window.sourceView.textStorage xvim_columnOfIndex:start]);
-            _initialToPos = XVimMakePosition([window.sourceView.textStorage xvim_lineNumberAtIndex:end],
+            _initialToLocation = XVimMakeLocation([window.sourceView.textStorage xvim_lineNumberAtIndex:end],
                                                  [window.sourceView.textStorage xvim_columnOfIndex:end]);
         }
     }
@@ -99,50 +99,50 @@ static NSString* MODE_STRINGS[] = { @"", @"-- VISUAL --", @"-- VISUAL LINE --", 
 - (XVIM_MODE)mode { return XVIM_MODE_VISUAL; }
 
 - (NSUInteger)initialNumberOfColumns {
-    return labs((NSInteger)_initialToPos.column - (NSInteger)_initialFromPos.column);
+    return labs((NSInteger)_initialToLocation.column - (NSInteger)_initialFromLocation.column);
 }
 - (NSUInteger)initialNumberOfLines {
-    return labs((NSInteger)_initialToPos.line - (NSInteger)_initialFromPos.line);
+    return labs((NSInteger)_initialToLocation.line - (NSInteger)_initialFromLocation.line);
 }
 
 - (void)becameHandler
 {
     [super becameHandler];
-    if (_initialToPos.line != NSNotFound) {
+    if (_initialToLocation.line != NSNotFound) {
         if (XVim.instance.isProcessingDOT) {
             [self.sourceView xvim_changeSelectionMode:_visual_mode];
             // When repeating we have to set initial selected range
             if (_visual_mode == XVIM_VISUAL_CHARACTER) {
-                if (_initialFromPos.line == _initialToPos.line) {
+                if (_initialFromLocation.line == _initialToLocation.line) {
                     // Same number of character if in one line
-                    [self.sourceView xvim_moveToPosition:
-                         XVimMakePosition(self.sourceView.insertionLine,
+                    [self.sourceView xvim_moveToLocation:
+                         XVimMakeLocation(self.sourceView.insertionLine,
                                           self.sourceView.insertionColumn + self.initialNumberOfColumns)];
                 }
                 else {
-                    [self.sourceView xvim_moveToPosition:
-                         XVimMakePosition(self.sourceView.insertionLine + self.initialNumberOfLines,
-                                          _initialToPos.column)];
+                    [self.sourceView xvim_moveToLocation:
+                         XVimMakeLocation(self.sourceView.insertionLine + self.initialNumberOfLines,
+                                          _initialToLocation.column)];
                     
                 }
             }
             else if (_visual_mode == XVIM_VISUAL_LINE) {
                 // Same number of lines
-                [self.sourceView xvim_moveToPosition:
-                    XVimMakePosition(self.sourceView.insertionLine + self.initialNumberOfLines,
+                [self.sourceView xvim_moveToLocation:
+                    XVimMakeLocation(self.sourceView.insertionLine + self.initialNumberOfLines,
                                      self.sourceView.insertionColumn)];
             }
             else if (_visual_mode == XVIM_VISUAL_BLOCK) {
                 // Use same number of lines/colums
-                [self.sourceView xvim_moveToPosition:
-                    XVimMakePosition(self.sourceView.insertionLine + self.initialNumberOfLines,
+                [self.sourceView xvim_moveToLocation:
+                    XVimMakeLocation(self.sourceView.insertionLine + self.initialNumberOfLines,
                                      self.sourceView.insertionColumn + self.initialNumberOfColumns)];
             }
         }
         else {
-            [self.sourceView xvim_moveToPosition:_initialFromPos];
+            [self.sourceView xvim_moveToLocation:_initialFromLocation];
             [self.sourceView xvim_changeSelectionMode:_visual_mode];
-            [self.sourceView xvim_moveToPosition:_initialToPos];
+            [self.sourceView xvim_moveToLocation:_initialToLocation];
         }
     }
     else {
@@ -172,8 +172,8 @@ static NSString* MODE_STRINGS[] = { @"", @"-- VISUAL --", @"-- VISUAL LINE --", 
 - (XVimEvaluator*)eval:(XVimKeyStroke*)keyStroke
 {
     XVim.instance.lastVisualMode = self.sourceView.selectionMode;
-    XVim.instance.lastVisualPosition = self.sourceView.insertionPosition;
-    XVim.instance.lastVisualSelectionBegin = self.sourceView.selectionBeginPosition;
+    XVim.instance.lastVisualLocation = self.sourceView.insertionLocation;
+    XVim.instance.lastVisualSelectionBeginLocation = self.sourceView.selectionBeginLocation;
     XVim.instance.lastVisualSelectionToEOL = self.sourceView.selectionToEOL;
 
     let nextEvaluator = [super eval:keyStroke];

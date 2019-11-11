@@ -386,26 +386,20 @@
 
 - (NSInteger)currentLineNumber
 {
-    let ln = [self.sourceEditorView lineRangeForCharacterRange:self.sourceEditorView.selectedTextRange]
+    let l = [self.sourceEditorView lineRangeForCharacterRange:self.sourceEditorView.selectedTextRange]
                            .location;
-    return ln == NSNotFound ? 1 : (NSInteger)ln + 1;
+    return l == NSNotFound ? 1 : (NSInteger)l + 1;
 }
 
-- (XVimPosition)insertionPosition { return XVimMakePosition(self.insertionLine, self.insertionColumn); }
-
-- (void)setInsertionPosition:(XVimPosition)pos
-{
-    // Not implemented yet (Just update corresponding insertionPoint)
-}
+- (XVimLocation)insertionLocation { return XVimMakeLocation(self.insertionLine, self.insertionColumn); }
 
 - (NSUInteger)insertionColumn { return self.sourceEditorView.accessibilityColumnIndexRange.location; }
 
 - (NSUInteger)insertionLine { return [self.textStorage xvim_lineNumberAtIndex:self.insertionPoint]; }
 
-
-- (XVimPosition)selectionBeginPosition
+- (XVimLocation)selectionBeginLocation
 {
-    return XVimMakePosition([self.textStorage xvim_lineNumberAtIndex:self.selectionBegin],
+    return XVimMakeLocation([self.textStorage xvim_lineNumberAtIndex:self.selectionBegin],
                             [self.textStorage xvim_columnOfIndex:self.selectionBegin]);
 }
 

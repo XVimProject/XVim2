@@ -40,8 +40,8 @@ extern NSString* const XVimDocumentPathKey;
 @property (readonly) XVimHistoryHandler* searchHistory;
 @property (readonly) XVimMutableString* lastOperationCommands;
 @property XVIM_VISUAL_MODE lastVisualMode;
-@property XVimPosition lastVisualPosition;
-@property XVimPosition lastVisualSelectionBegin;
+@property XVimLocation lastVisualLocation;
+@property XVimLocation lastVisualSelectionBeginLocation;
 @property BOOL lastVisualSelectionToEOL;
 @property (nonatomic) BOOL isProcessingDOT; // For dot(.) command repeat
 

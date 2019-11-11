@@ -72,12 +72,12 @@ static inline XVimSourceEditorRange XvimMakeSourceEditorRange(XVimSourceEditorPo
 @interface SourceEditorViewProxy : NSObject <SourceEditorViewProtocol>
 @property (nonatomic) XVIM_VISUAL_MODE selectionMode;
 @property NSUInteger insertionPoint;
-@property (readonly) XVimPosition insertionPosition;
+@property (readonly) XVimLocation insertionLocation;
 @property (readonly) NSUInteger insertionColumn;
 @property (readonly) NSUInteger insertionLine;
 @property NSUInteger preservedColumn;
 @property NSUInteger selectionBegin;
-@property (readonly) XVimPosition selectionBeginPosition;
+@property (readonly) XVimLocation selectionBeginLocation;
 @property BOOL selectionToEOL;
 @property XVIM_CURSOR_MODE cursorMode;
 @property (readonly, nullable) NSURL* documentURL;

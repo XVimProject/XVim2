@@ -18,8 +18,8 @@
  * "index"
  *   This is the 0-based location of a given character within -xvim_string.
  *
- * "Position"
- *   This is an XVimPosition (line + column)
+ * "Location"
+ *   This is an XVimLocation (line + column)
  *
  * "EOF"
  *   EOF is the position of the end of the document (-length),

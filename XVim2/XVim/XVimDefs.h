@@ -86,7 +86,7 @@ typedef struct {
 typedef struct {
     NSUInteger line;
     NSUInteger column;
-} XVimPosition;
+} XVimLocation;
 
 typedef struct {
     XVIM_VISUAL_CORNER corner;
@@ -106,9 +106,9 @@ NS_INLINE XVimRange XVimMakeRange(NSUInteger begin, NSUInteger end)
     return r;
 }
 
-NS_INLINE XVimPosition XVimMakePosition(NSUInteger line, NSUInteger column)
+NS_INLINE XVimLocation XVimMakeLocation(NSUInteger line, NSUInteger column)
 {
-    XVimPosition p;
+    XVimLocation p;
     p.line = line;
     p.column = column;
     return p;
