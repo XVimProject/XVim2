@@ -99,7 +99,7 @@
 
 #pragma mark - Handling keystrokes and evaluation stack
 
-- (XVimEvaluator*)currentEvaluator { return [_currentEvaluatorStack lastObject]; }
+- (XVimEvaluator*)currentEvaluator { return _currentEvaluatorStack.lastObject; }
 
 - (void)resetEvaluatorStack:(NSMutableArray*)stack activateNormalHandler:(BOOL)activate
 {
@@ -262,7 +262,7 @@
     [self clearErrorMessage];
 
     // Record the event
-    let xvim = [XVim instance];
+    let xvim = XVim.instance;
     [xvim appendOperationKeyStroke:keyStroke.xvimString];
 
     // Evaluate key stroke
@@ -424,7 +424,7 @@
 - (void)doCommandBySelector:(SEL)aSelector
 {
     @try {
-        [self handleXVimString:[self.event toXVimString]];
+        [self handleXVimString:self.event.toXVimString];
         self.event = nil;
     }
     @catch (NSException* exception) {

@@ -59,20 +59,20 @@ static NSString* MODE_STRINGS[] = { @"", @"-- VISUAL --", @"-- VISUAL LINE --", 
     if (self = [self initWithWindow:window]) {
         _waitForArgument = NO;
         _visual_mode = mode;
-        let ranges = [window.sourceView selectedRanges];
+        let ranges = window.sourceView.selectedRanges;
         if (ranges.count == 1) {
-            let range = [window.sourceView selectedRange];
+            let range = window.sourceView.selectedRange;
             if (range.length == 0) {
-                NSUInteger start = [window.sourceView selectedRange].location;
+                NSUInteger start = window.sourceView.selectedRange.location;
                 _initialFromPos = XVimMakePosition([window.sourceView.textStorage xvim_lineNumberAtIndex:start],
                                                        [window.sourceView.textStorage xvim_columnOfIndex:start]);
                 _initialToPos = XVimMakePosition([window.sourceView.textStorage xvim_lineNumberAtIndex:start],
                                                      [window.sourceView.textStorage xvim_columnOfIndex:start]);
             }
             else {
-                NSUInteger start = [window.sourceView selectedRange].location;
-                NSUInteger end = [window.sourceView selectedRange].location
-                               + [window.sourceView selectedRange].length - 1;
+                NSUInteger start = window.sourceView.selectedRange.location;
+                NSUInteger end = window.sourceView.selectedRange.location
+                               + window.sourceView.selectedRange.length - 1;
                 _initialFromPos = XVimMakePosition([window.sourceView.textStorage xvim_lineNumberAtIndex:start],
                                                        [window.sourceView.textStorage xvim_columnOfIndex:start]);
                 _initialToPos = XVimMakePosition([window.sourceView.textStorage xvim_lineNumberAtIndex:end],
@@ -82,9 +82,9 @@ static NSString* MODE_STRINGS[] = { @"", @"-- VISUAL --", @"-- VISUAL LINE --", 
         else {
             // Treat it as block selection
             _visual_mode = XVIM_VISUAL_BLOCK;
-            NSUInteger start = [[[window.sourceView selectedRanges] objectAtIndex:0] rangeValue].location;
-            NSUInteger end = [[[window.sourceView selectedRanges] lastObject] rangeValue].location
-                           + [[[window.sourceView selectedRanges] lastObject] rangeValue].length - 1;
+            NSUInteger start = window.sourceView.selectedRanges.firstObject.rangeValue.location;
+            NSUInteger end = window.sourceView.selectedRanges.lastObject.rangeValue.location
+                           + window.sourceView.selectedRanges.lastObject.rangeValue.length - 1;
             _initialFromPos = XVimMakePosition([window.sourceView.textStorage xvim_lineNumberAtIndex:start],
                                                    [window.sourceView.textStorage xvim_columnOfIndex:start]);
             _initialToPos = XVimMakePosition([window.sourceView.textStorage xvim_lineNumberAtIndex:end],
@@ -271,13 +271,13 @@ static NSString* MODE_STRINGS[] = { @"", @"-- VISUAL --", @"-- VISUAL LINE --", 
 
 - (XVimEvaluator*)C_e
 {
-    [[self sourceView] xvim_scrollLineForward:[self numericArg]];
+    [self.sourceView xvim_scrollLineForward:self.numericArg];
     return self;
 }
 
 - (XVimEvaluator*)C_f
 {
-    [[self sourceView] xvim_scrollPageForward:[self numericArg]];
+    [self.sourceView xvim_scrollPageForward:self.numericArg];
     return self;
 }
 
@@ -349,7 +349,7 @@ static NSString* MODE_STRINGS[] = { @"", @"-- VISUAL --", @"-- VISUAL LINE --", 
 {
     let view = [self sourceView];
     XVimRegister* reg = [XVim.instance.registerManager registerByName:self.yankRegister];
-    [view xvim_put:reg.string type:reg.type afterCursor:YES count:[self numericArg]];
+    [view xvim_put:reg.string type:reg.type afterCursor:YES count:self.numericArg];
     return nil;
 }
 
@@ -398,13 +398,13 @@ static NSString* MODE_STRINGS[] = { @"", @"-- VISUAL --", @"-- VISUAL LINE --", 
 
 - (XVimEvaluator*)C_u
 {
-    [[self sourceView] xvim_scrollHalfPageBackward:[self numericArg]];
+    [[self sourceView] xvim_scrollHalfPageBackward:self.numericArg];
     return self;
 }
 
 - (XVimEvaluator*)v
 {
-    let view = [self sourceView];
+    let view = self.sourceView;
     if (view.selectionMode == XVIM_VISUAL_CHARACTER) {
         return [self ESC];
     }
@@ -414,7 +414,7 @@ static NSString* MODE_STRINGS[] = { @"", @"-- VISUAL --", @"-- VISUAL LINE --", 
 
 - (XVimEvaluator*)V
 {
-    let view = [self sourceView];
+    let view = self.sourceView;
     if (view.selectionMode == XVIM_VISUAL_LINE) {
         return [self ESC];
     }
@@ -424,7 +424,7 @@ static NSString* MODE_STRINGS[] = { @"", @"-- VISUAL --", @"-- VISUAL LINE --", 
 
 - (XVimEvaluator*)C_v
 {
-    let view = [self sourceView];
+    let view = self.sourceView;
     if (view.selectionMode == XVIM_VISUAL_BLOCK) {
         return [self ESC];
     }
@@ -444,7 +444,7 @@ static NSString* MODE_STRINGS[] = { @"", @"-- VISUAL --", @"-- VISUAL LINE --", 
 
 - (XVimEvaluator*)y
 {
-    [[self sourceView] xvim_yank:nil];
+    [self.sourceView xvim_yank:nil];
     return nil;
 }
 
@@ -458,7 +458,7 @@ static NSString* MODE_STRINGS[] = { @"", @"-- VISUAL --", @"-- VISUAL LINE --", 
 
 - (XVimEvaluator*)C_y
 {
-    [[self sourceView] xvim_scrollLineBackward:[self numericArg]];
+    [self.sourceView xvim_scrollLineBackward:self.numericArg];
     return self;
 }
 
@@ -479,7 +479,7 @@ static NSString* MODE_STRINGS[] = { @"", @"-- VISUAL --", @"-- VISUAL LINE --", 
         self.onChildCompleteHandler = @selector(onChildComplete:);
     }
     else {
-        return [XVimEvaluator invalidEvaluator];
+        return XVimEvaluator.invalidEvaluator;
     }
     _waitForArgument = NO;
     return self;
@@ -515,7 +515,7 @@ contextWithArgument:@"\""] parent:self completion:^ XVimEvaluator* (NSString* rn
 
 - (XVimEvaluator*)ESC
 {
-    [[self sourceView] xvim_changeSelectionMode:XVIM_VISUAL_NONE];
+    [self.sourceView xvim_changeSelectionMode:XVIM_VISUAL_NONE];
     return nil;
 }
 
@@ -534,15 +534,15 @@ contextWithArgument:@"\""] parent:self completion:^ XVimEvaluator* (NSString* rn
     __block XVimEvaluator* eval = [[XVimCommandLineEvaluator alloc]
                 initWithWindow:self.window
                    firstLetter:@":'<,'>"
-                       history:[[XVim instance] exCommandHistory]
+                       history:XVim.instance.exCommandHistory
                     completion:^XVimEvaluator*(NSString* command, XVimMotion** result) {
-                        XVimExCommand* excmd = [[XVim instance] excmd];
+                        XVimExCommand* excmd = XVim.instance.excmd;
                         NSString* commandExecuted = [excmd executeCommand:command inWindow:self.window];
 
-                        [[self sourceView] xvim_changeSelectionMode:XVIM_VISUAL_NONE];
+                        [self.sourceView xvim_changeSelectionMode:XVIM_VISUAL_NONE];
 
                         if ([commandExecuted isEqualToString:@"substitute"]) {
-                            XVimSearch* searcher = [[XVim instance] searcher];
+                            XVimSearch* searcher = XVim.instance.searcher;
                             if (searcher.confirmEach && searcher.lastFoundRange.location != NSNotFound) {
                                 [eval didEndHandler];
                                 return [[XVimReplacePromptEvaluator alloc]
@@ -582,14 +582,14 @@ contextWithArgument:@"\""] parent:self completion:^ XVimEvaluator* (NSString* rn
 XVimEvaluator *eval = [[XVimCommandLineEvaluator alloc] initWithContext:[[XVimEvaluatorContext alloc] init]
                                                                  parent:self
                                                            firstLetter:firstLetter
-                                                               history:[[XVim instance] searchHistory]
+                                                               history:XVim.instance.searchHistory
                                                             completion:^ XVimEvaluator* (NSString *command)
                        {
-                           XVimSearch *searcher = [[XVim instance] searcher];
-                           NSTextView *sourceView = [window sourceView];
+                           XVimSearch *searcher = XVim.instance.searcher;
+                           NSTextView *sourceView = window.sourceView;
                            NSRange found = [searcher executeSearch:command
                                                            display:[command substringFromIndex:1]
-                                                              from:[window insertionPoint]
+                                                              from:window.insertionPoint
                                                           inWindow:window];
                            //Move cursor and show the found string
                            if (found.location != NSNotFound) {
@@ -600,7 +600,7 @@ XVimEvaluator *eval = [[XVimCommandLineEvaluator alloc] initWithContext:[[XVimEv
                                    _insertion = found.location + command.length - 1;
                                }
                                [self updateSelectionInWindow:window];
-                               [sourceView scrollTo:[window insertionPoint]];
+                               [sourceView scrollTo:window.insertionPoint];
                                [sourceView showFindIndicatorForRange:found];
                            } else {
                                [window errorMessage:[NSString stringWithFormat: @"Cannot find
@@ -610,13 +610,13 @@ XVimEvaluator *eval = [[XVimCommandLineEvaluator alloc] initWithContext:[[XVimEv
                        }
                                                             onKeyPress:^void(NSString *command)
                        {
-                           XVimOptions *options = [[XVim instance] options];
+                           XVimOptions *options = XVim.instance.options;
                            if (options.incsearch){
                                XVimSearch *searcher = [[XVim instance] searcher];
-                               NSTextView *sourceView = [window sourceView];
+                               NSTextView *sourceView = window.sourceView;
                                NSRange found = [searcher executeSearch:command
                                                                display:[command substringFromIndex:1]
-                                                                  from:[window insertionPoint]
+                                                                  from:window.insertionPoint
                                                               inWindow:window];
                                //Move cursor and show the found string
                                if (found.location != NSNotFound) {
@@ -656,7 +656,7 @@ return eval;
 {
     if (!XVim.instance.isProcessingDOT) {
         [self.window preMotion:motion];
-        [[self sourceView] xvim_move:motion];
+        [self.sourceView xvim_move:motion];
         [self resetNumericArg];
     }
     [self.argumentString setString:@""];
