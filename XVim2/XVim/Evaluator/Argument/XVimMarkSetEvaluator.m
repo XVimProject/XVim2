@@ -10,9 +10,9 @@
 #import "XVim.h"
 #import "XVimKeyStroke.h"
 #import "XVimKeymapProvider.h"
-#import "XVimMark.h"
 #import "XVimMarks.h"
 #import "XVimWindow.h"
+#import "XVim2-Swift.h"
 
 @implementation XVimMarkSetEvaluator
 

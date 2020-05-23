@@ -10,6 +10,7 @@
 		3B53601A211495F4008BFF2B /* XVimRecordingEvaluator.m in Sources */ = {isa = PBXBuildFile; fileRef = 3B536018211495F4008BFF2B /* XVimRecordingEvaluator.m */; };
 		A20FB79E21BB7FF2001FDC62 /* about.xib in Resources */ = {isa = PBXBuildFile; fileRef = A20FB79A21BB7FF2001FDC62 /* about.xib */; };
 		A20FB79F21BB7FF2001FDC62 /* XVimAboutDialog.m in Sources */ = {isa = PBXBuildFile; fileRef = A20FB79D21BB7FF2001FDC62 /* XVimAboutDialog.m */; };
+		A21B82F324794C88002F162A /* XVimMark.swift in Sources */ = {isa = PBXBuildFile; fileRef = A21B82F224794C88002F162A /* XVimMark.swift */; };
 		A2482F311F72435D00FEF4DE /* ProcessRunner.m in Sources */ = {isa = PBXBuildFile; fileRef = A2482F2E1F72435D00FEF4DE /* ProcessRunner.m */; };
 		A2482F321F72435D00FEF4DE /* XVimTaskRunner.m in Sources */ = {isa = PBXBuildFile; fileRef = A2482F301F72435D00FEF4DE /* XVimTaskRunner.m */; };
 		A2482F4C1F725B6500FEF4DE /* NSString+Util.m in Sources */ = {isa = PBXBuildFile; fileRef = A2482F4B1F725B6500FEF4DE /* NSString+Util.m */; };
@@ -96,7 +97,6 @@
 		EDF010731F6EF05E00461B2C /* NSString+VimHelper.m in Sources */ = {isa = PBXBuildFile; fileRef = EDF010711F6EF05E00461B2C /* NSString+VimHelper.m */; };
 		EDF010741F6EF05E00461B2C /* NSEvent+VimHelper.m in Sources */ = {isa = PBXBuildFile; fileRef = EDF010721F6EF05E00461B2C /* NSEvent+VimHelper.m */; };
 		EDF010771F6EF16600461B2C /* XVim.m in Sources */ = {isa = PBXBuildFile; fileRef = EDF010761F6EF16600461B2C /* XVim.m */; };
-		EDFA14951F8564DB0039B439 /* XVimMark.m in Sources */ = {isa = PBXBuildFile; fileRef = EDFA148F1F8564D90039B439 /* XVimMark.m */; };
 		EDFA14961F8564DB0039B439 /* XVimMarks.m in Sources */ = {isa = PBXBuildFile; fileRef = EDFA14941F8564DA0039B439 /* XVimMarks.m */; };
 		EDFAA30C1F85660A002100CE /* XVimMarkSetEvaluator.m in Sources */ = {isa = PBXBuildFile; fileRef = EDFAA3081F8565F2002100CE /* XVimMarkSetEvaluator.m */; };
 /* End PBXBuildFile section */
@@ -123,6 +123,7 @@
 		A20FB79A21BB7FF2001FDC62 /* about.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = about.xib; sourceTree = "<group>"; };
 		A20FB79B21BB7FF2001FDC62 /* XVimAboutDialog.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = XVimAboutDialog.h; sourceTree = "<group>"; };
 		A20FB79D21BB7FF2001FDC62 /* XVimAboutDialog.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = XVimAboutDialog.m; sourceTree = "<group>"; };
+		A21B82F224794C88002F162A /* XVimMark.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = XVimMark.swift; sourceTree = "<group>"; };
 		A2482F2D1F72435D00FEF4DE /* ProcessRunner.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ProcessRunner.h; sourceTree = "<group>"; };
 		A2482F2E1F72435D00FEF4DE /* ProcessRunner.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ProcessRunner.m; sourceTree = "<group>"; };
 		A2482F2F1F72435D00FEF4DE /* XVimTaskRunner.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = XVimTaskRunner.h; sourceTree = "<group>"; };
@@ -289,9 +290,7 @@
 		EDF010721F6EF05E00461B2C /* NSEvent+VimHelper.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = "NSEvent+VimHelper.m"; sourceTree = "<group>"; };
 		EDF010751F6EF16600461B2C /* XVim.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = XVim.h; sourceTree = "<group>"; };
 		EDF010761F6EF16600461B2C /* XVim.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = XVim.m; sourceTree = "<group>"; };
-		EDFA148F1F8564D90039B439 /* XVimMark.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = XVimMark.m; sourceTree = "<group>"; };
 		EDFA14921F8564DA0039B439 /* XVimMarks.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = XVimMarks.h; sourceTree = "<group>"; };
-		EDFA14931F8564DA0039B439 /* XVimMark.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = XVimMark.h; sourceTree = "<group>"; };
 		EDFA14941F8564DA0039B439 /* XVimMarks.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = XVimMarks.m; sourceTree = "<group>"; };
 		EDFAA3081F8565F2002100CE /* XVimMarkSetEvaluator.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = XVimMarkSetEvaluator.m; sourceTree = "<group>"; };
 		EDFAA30B1F8565F2002100CE /* XVimMarkSetEvaluator.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = XVimMarkSetEvaluator.h; sourceTree = "<group>"; };
@@ -560,8 +559,7 @@
 				EDF010511F6EEF0F00461B2C /* XVimKeyStroke.h */,
 				EDF0105D1F6EEF1000461B2C /* XVimKeyStroke.m */,
 				EDF010571F6EEF0F00461B2C /* XVimMacros.h */,
-				EDFA14931F8564DA0039B439 /* XVimMark.h */,
-				EDFA148F1F8564D90039B439 /* XVimMark.m */,
+				A21B82F224794C88002F162A /* XVimMark.swift */,
 				EDFA14921F8564DA0039B439 /* XVimMarks.h */,
 				EDFA14941F8564DA0039B439 /* XVimMarks.m */,
 				EDF0105E1F6EEF1000461B2C /* XVimMotion.h */,
@@ -704,6 +702,7 @@
 				ED548FE01F8280B700A8069D /* XVimRegisterEvaluator.m in Sources */,
 				EDD27BAC1F9B5EB30006471C /* XVimTester+Options.m in Sources */,
 				ED0DED7C1F8C418300886F6B /* XVimEval.m in Sources */,
+				A21B82F324794C88002F162A /* XVimMark.swift in Sources */,
 				EDD27BAD1F9B5EB30006471C /* XVimTester+TextObject.m in Sources */,
 				EDD27BA71F9B5EB30006471C /* XVimTester+Mark.m in Sources */,
 				A29BA5732243D6160032C3E2 /* SourceEditorDataSourceWrapper.swift in Sources */,
@@ -725,7 +724,6 @@
 				EDFA14961F8564DB0039B439 /* XVimMarks.m in Sources */,
 				EDF010691F6EEFFC00461B2C /* XVimKeymap.m in Sources */,
 				EDD27BA51F9B5EB30006471C /* XVimTester+Operator.m in Sources */,
-				EDFA14951F8564DB0039B439 /* XVimMark.m in Sources */,
 				EDCAF9A41F8CC33C003F1C58 /* XVimEqualEvaluator.m in Sources */,
 				ED60EB8A1F82E5B9000CBF9C /* XVimUppercaseEvaluator.m in Sources */,
 				A2482F321F72435D00FEF4DE /* XVimTaskRunner.m in Sources */,

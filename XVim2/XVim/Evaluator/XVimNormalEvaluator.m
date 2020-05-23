@@ -21,7 +21,6 @@
 #import "XVimInsertEvaluator.h"
 #import "XVimJoinEvaluator.h"
 #import "XVimKeymapProvider.h"
-#import "XVimMark.h"
 #import "XVimMarkSetEvaluator.h"
 #import "XVimMarks.h"
 #import "XVimMotion.h"
@@ -39,6 +38,7 @@
 #import "XVimYankEvaluator.h"
 #import "XVimKeyStroke.h"
 #import "XVimRecordingEvaluator.h"
+#import "XVim2-Swift.h"
 
 @interface XVimNormalEvaluator () {
 }

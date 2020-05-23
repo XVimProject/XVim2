@@ -21,7 +21,6 @@
 #import "XVimEval.h"
 #import "XVimKeyStroke.h"
 #import "XVimKeymap.h"
-#import "XVimMark.h"
 #import "XVimMarks.h"
 #import "XVimRegister.h"
 #import "XcodeUtils.h"
@@ -29,6 +28,7 @@
 #import "NSURL+XVimXcodeModule.h"
 #import "NSString+Util.h"
 #import "XVimTaskRunner.h"
+#import "XVim2-Swift.h"
 
 @implementation XVimExArg
 @end

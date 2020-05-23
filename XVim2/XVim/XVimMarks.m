@@ -9,7 +9,7 @@
 #import "XVimMarks.h"
 #import "Logger.h"
 #import "XVim.h"
-#import "XVimMark.h"
+#import "XVim2-Swift.h"
 
 static NSString* LOCAL_MARKS = @"abcdefghijklmnopqrstuvwxyz'^.<>";
 static NSString* FILE_MARKS = @"ABCDEFGHIJKLMNOPQRSTUVWXYZ";

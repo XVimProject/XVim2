@@ -12,10 +12,10 @@
 #import "XVim.h"
 #import "XVimKeyStroke.h"
 #import "XVimKeymapProvider.h"
-#import "XVimMark.h"
 #import "XVimMarks.h"
 #import "XVimTextObjectEvaluator.h"
 #import "XVimWindow.h"
+#import "XVim2-Swift.h"
 
 @interface XVimOperatorEvaluator () {
 }
@@ -75,17 +75,17 @@
             if ([className isEqualToString:@"XVimJoinEvaluator"]) {
                 // This is specical case for join operation.
                 // The mark is set at the head of next line of the insertion point after the operation
-                mark = [XVimMark markWithLine:self.sourceView.insertionLine + 1
+                mark = [[XVimMark alloc] initWithLine:self.sourceView.insertionLine + 1
                                        column:0
                                      document:view.documentURL.path];
             }
             else if ([className isEqualToString:@"XVimShiftEvaluator"]) {
-                mark = [XVimMark markWithLine:self.sourceView.insertionLine
+                mark = [[XVimMark alloc] initWithLine:self.sourceView.insertionLine
                                        column:0
                                      document:view.documentURL.path];
             }
             else {
-                mark = [XVimMark markWithLine:self.sourceView.insertionLine
+                mark = [[XVimMark alloc] initWithLine:self.sourceView.insertionLine
                                        column:self.sourceView.insertionColumn
                                      document:view.documentURL.path];
             }

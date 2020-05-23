@@ -13,10 +13,10 @@
 #import "XVim.h"
 #import "XVimKeyStroke.h"
 #import "XVimKeymapProvider.h"
-#import "XVimMark.h"
 #import "XVimMarks.h"
 #import "XVimNormalEvaluator.h"
 #import "XVimWindow.h"
+#import "XVim2-Swift.h"
 
 @interface XVimInsertEvaluator ()
 @property (nonatomic) NSRange startRange;
@@ -182,7 +182,7 @@
 
     // Position for "^" is before escaped from insert mode
     NSUInteger pos = sourceView.insertionPoint;
-    var mark = [XVimMark markWithLine:[self.sourceView.textStorage xvim_lineNumberAtIndex:pos]
+    var mark = [[XVimMark alloc] initWithLine:[self.sourceView.textStorage xvim_lineNumberAtIndex:pos]
 					  column: [self.sourceView.textStorage xvim_columnOfIndex:pos] document: self.sourceView.documentURL.path];
     if (nil != mark.document) {
         [xvim.marks setMark:mark forName:@"^"];
@@ -191,7 +191,7 @@
 
     // Position for "." is after escaped from insert mode
     pos = sourceView.insertionPoint;
-	mark = [XVimMark markWithLine:[sourceView.textStorage xvim_lineNumberAtIndex:pos] column:
+	mark = [[XVimMark alloc] initWithLine:[sourceView.textStorage xvim_lineNumberAtIndex:pos] column:
 			[sourceView.textStorage xvim_columnOfIndex:pos] document: sourceView.documentURL.path];
     if (nil != mark.document) {
         [xvim.marks setMark:mark forName:@"."];

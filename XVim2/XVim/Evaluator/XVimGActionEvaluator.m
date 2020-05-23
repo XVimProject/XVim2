@@ -13,12 +13,12 @@
 #import "XVimInsertEvaluator.h"
 #import "XVimJoinEvaluator.h"
 #import "XVimLowercaseEvaluator.h"
-#import "XVimMark.h"
 #import "XVimMarks.h"
 #import "XVimTildeEvaluator.h"
 #import "XVimUppercaseEvaluator.h"
 #import "XVimVisualEvaluator.h"
 #import "XVimWindow.h"
+#import "XVim2-Swift.h"
 
 @implementation XVimGActionEvaluator
 

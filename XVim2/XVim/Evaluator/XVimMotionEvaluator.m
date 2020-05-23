@@ -15,13 +15,13 @@
 #import "XVimArgumentEvaluator.h"
 #import "XVimCommandLineEvaluator.h"
 #import "XVimKeyStroke.h"
-#import "XVimMark.h"
 #import "XVimMarks.h"
 #import "XVimSearch.h"
 #import "XVimWindow.h"
 #import "XVimZEvaluator.h"
 #import "XcodeUtils.h"
 #import "XVimGMotionEvaluator.h"
+#import "XVim2-Swift.h"
 
 @interface XVimMotionEvaluator () {
     MOTION_TYPE _forcedMotionType;

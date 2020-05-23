@@ -13,11 +13,11 @@
 #import "XVimEvaluator.h"
 #import "XVimKeyStroke.h"
 #import "XVimKeymap.h"
-#import "XVimMark.h"
 #import "XVimMarks.h"
 #import "XVimNormalEvaluator.h"
 #import "XVimOptions.h"
 #import <objc/runtime.h>
+#import "XVim2-Swift.h"
 
 
 @interface XVimWindow () {
