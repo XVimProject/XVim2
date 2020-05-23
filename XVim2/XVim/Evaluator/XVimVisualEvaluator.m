@@ -30,6 +30,7 @@
 #import "XVimUppercaseEvaluator.h"
 #import "XVimWindow.h"
 #import "XVimYankEvaluator.h"
+#import "XVim2-Swift.h"
 
 static NSString* MODE_STRINGS[] = { @"", @"-- VISUAL --", @"-- VISUAL LINE --", @"-- VISUAL BLOCK --" };
 

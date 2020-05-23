@@ -10,11 +10,11 @@
 #import "NSString+VimHelper.h"
 #import "NSTextStorage+VimOperation.h"
 #import "XVim.h"
-#import "XVim2-Swift.h"
 #import "XVimCommandLine.h"
-#import "XVimMotion.h"
 #import "XVimOptions.h"
 #import "XVimWindow.h"
+#import "XVim2-Swift.h"
+
 #import "rd_route.h"
 #import <IDEKit/IDEEditorArea.h>
 #import "XcodeUtils.h"

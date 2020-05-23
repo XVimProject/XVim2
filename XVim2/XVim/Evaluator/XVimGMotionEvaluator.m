@@ -11,11 +11,11 @@
 #import "XVim.h"
 #import "XVimCommandLineEvaluator.h"
 #import "XVimKeyStroke.h"
-#import "XVimMotion.h"
 #import "XVimMotionEvaluator.h"
 #import "XVimMotionOption.h"
 #import "XVimWindow.h"
 #import "XVimSearch.h"
+#import "XVim2-Swift.h"
 
 #ifdef TODO
 #import "XVimCommandLineEvaluator.h"

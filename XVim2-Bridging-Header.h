@@ -13,4 +13,7 @@
 #import "XVim2/Helper/rd_route.h"
 #import "XVim2/Helper/Logger.h"
 
+#import "XVimMotionOption.h"
+#import "XVimMotionStyle.h"
+
 #endif /* XVim2_Bridging_Header_h */

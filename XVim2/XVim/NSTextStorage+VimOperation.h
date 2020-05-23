@@ -8,8 +8,8 @@
 
 
 #import "XVimDefs.h"
-#import "XVimMotion.h"
 #import "XVimTextStoring.h"
+#import "XVim2-Swift.h"
 
 NS_ASSUME_NONNULL_BEGIN
 

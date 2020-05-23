@@ -7,8 +7,8 @@
 //
 
 #import "XVimEvaluator.h"
-#import "XVimMotion.h"
 #import "XVimNumericEvaluator.h"
+#import "XVim2-Swift.h"
 
 @class XVimMark;
 

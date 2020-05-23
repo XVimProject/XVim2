@@ -11,6 +11,7 @@
 #import "SourceEditorViewProtocol.h"
 #import "XVim.h"
 #import "XVimWindow.h"
+#import "XVim2-Swift.h"
 
 @implementation XVimYankEvaluator
 
@@ -21,7 +22,7 @@
     if (self.numericArg < 1)
         return nil;
 
-    let m = [XVimMotion style:MOTION_LINE_FORWARD type:LINEWISE option:MOPT_NONE count:self.numericArg - 1];
+    let m = [[XVimMotion alloc] initWithStyle:MOTION_LINE_FORWARD type:LINEWISE count:self.numericArg - 1];
     return [self _motionFixed:m];
 }
 

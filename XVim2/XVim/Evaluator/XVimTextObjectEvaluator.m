@@ -9,6 +9,7 @@
 #import "XVimKeymapProvider.h"
 #import "XVimMotionOption.h"
 #import "XVimWindow.h"
+#import "XVim2-Swift.h"
 
 @interface XVimTextObjectEvaluator () {
     BOOL _inner;
@@ -33,7 +34,7 @@
 {
     var opt = _inner ? MOPT_TEXTOBJECT_INNER : MOPT_NONE;
     opt |= _bigword ? MOPT_BIGWORD : MOPT_NONE;
-    return [XVimMotion style:_textobject type:CHARWISE_INCLUSIVE option:opt count:[self numericArg]];
+    return [[XVimMotion alloc] initWithStyle:_textobject type:CHARWISE_INCLUSIVE option:opt count:[self numericArg]];
 }
 
 - (XVimEvaluator*)defaultNextEvaluator { return nil; }

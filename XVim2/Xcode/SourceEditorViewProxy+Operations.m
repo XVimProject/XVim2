@@ -12,8 +12,8 @@
 #import "SourceEditorViewProxy+Yank.h"
 #import "SourceEditorViewProxy+XVim.h"
 #import "XVim.h"
-#import "XVimMotion.h"
 #import "XVimOptions.h"
+#import "XVim2-Swift.h"
 
 @implementation SourceEditorViewProxy (Operations)
 

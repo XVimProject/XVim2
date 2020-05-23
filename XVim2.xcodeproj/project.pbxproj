@@ -33,6 +33,7 @@
 		A2B52D3F1F514CC600D83C0A /* Logger.m in Sources */ = {isa = PBXBuildFile; fileRef = A2B52D3B1F514CC600D83C0A /* Logger.m */; };
 		A2B537B11F51C94400D83C0A /* NSObject+Swizzle.m in Sources */ = {isa = PBXBuildFile; fileRef = A2B537B01F51C94400D83C0A /* NSObject+Swizzle.m */; };
 		A2B5D78D2243319A00BD289D /* XcodeHeader in Resources */ = {isa = PBXBuildFile; fileRef = A2B5D78C2243319A00BD289D /* XcodeHeader */; };
+		A2C359962479552C00259730 /* XVimMotion.swift in Sources */ = {isa = PBXBuildFile; fileRef = A2C359952479552C00259730 /* XVimMotion.swift */; };
 		A2D464BC20D4042B00A43EC7 /* SwiftLogger.swift in Sources */ = {isa = PBXBuildFile; fileRef = A2D464BB20D4042B00A43EC7 /* SwiftLogger.swift */; };
 		A2FB1EE12077B65100D3E634 /* File.swift in Sources */ = {isa = PBXBuildFile; fileRef = A2FB1EE02077B65100D3E634 /* File.swift */; };
 		ED0DED611F8C2CEC00886F6B /* XVimZEvaluator.m in Sources */ = {isa = PBXBuildFile; fileRef = ED0DED5D1F8C2CDD00886F6B /* XVimZEvaluator.m */; };
@@ -90,7 +91,6 @@
 		EDF010681F6EEFFC00461B2C /* XVimEvaluator.m in Sources */ = {isa = PBXBuildFile; fileRef = EDF010551F6EEF0F00461B2C /* XVimEvaluator.m */; };
 		EDF010691F6EEFFC00461B2C /* XVimKeymap.m in Sources */ = {isa = PBXBuildFile; fileRef = EDF010661F6EEF1000461B2C /* XVimKeymap.m */; };
 		EDF0106A1F6EEFFC00461B2C /* XVimKeyStroke.m in Sources */ = {isa = PBXBuildFile; fileRef = EDF0105D1F6EEF1000461B2C /* XVimKeyStroke.m */; };
-		EDF0106B1F6EEFFC00461B2C /* XVimMotion.m in Sources */ = {isa = PBXBuildFile; fileRef = EDF0105B1F6EEF1000461B2C /* XVimMotion.m */; };
 		EDF0106C1F6EEFFC00461B2C /* XVimMotionEvaluator.m in Sources */ = {isa = PBXBuildFile; fileRef = EDF010601F6EEF1000461B2C /* XVimMotionEvaluator.m */; };
 		EDF0106D1F6EEFFC00461B2C /* XVimNumericEvaluator.m in Sources */ = {isa = PBXBuildFile; fileRef = EDF0105A1F6EEF1000461B2C /* XVimNumericEvaluator.m */; };
 		EDF0106E1F6EEFFC00461B2C /* XVimWindow.m in Sources */ = {isa = PBXBuildFile; fileRef = EDF010581F6EEF0F00461B2C /* XVimWindow.m */; };
@@ -165,6 +165,7 @@
 		A2B537AF1F51C94400D83C0A /* NSObject+Swizzle.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "NSObject+Swizzle.h"; sourceTree = "<group>"; };
 		A2B537B01F51C94400D83C0A /* NSObject+Swizzle.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "NSObject+Swizzle.m"; sourceTree = "<group>"; };
 		A2B5D78C2243319A00BD289D /* XcodeHeader */ = {isa = PBXFileReference; lastKnownFileType = folder; path = XcodeHeader; sourceTree = "<group>"; };
+		A2C359952479552C00259730 /* XVimMotion.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = XVimMotion.swift; sourceTree = "<group>"; };
 		A2D464BB20D4042B00A43EC7 /* SwiftLogger.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = SwiftLogger.swift; path = XVim2/Helper/SwiftLogger.swift; sourceTree = SOURCE_ROOT; };
 		A2ED76F823743EC700C81258 /* SourceEditorViewProtocol.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = SourceEditorViewProtocol.h; path = XVim2/Xcode/SourceEditorViewProtocol.h; sourceTree = SOURCE_ROOT; };
 		A2FB1EE02077B65100D3E634 /* File.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = File.swift; sourceTree = "<group>"; };
@@ -272,10 +273,9 @@
 		EDF010581F6EEF0F00461B2C /* XVimWindow.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = XVimWindow.m; sourceTree = "<group>"; };
 		EDF010591F6EEF1000461B2C /* XVimMotionEvaluator.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = XVimMotionEvaluator.h; sourceTree = "<group>"; };
 		EDF0105A1F6EEF1000461B2C /* XVimNumericEvaluator.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = XVimNumericEvaluator.m; sourceTree = "<group>"; };
-		EDF0105B1F6EEF1000461B2C /* XVimMotion.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = XVimMotion.m; sourceTree = "<group>"; };
 		EDF0105C1F6EEF1000461B2C /* XVimKeymap.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = XVimKeymap.h; sourceTree = "<group>"; };
 		EDF0105D1F6EEF1000461B2C /* XVimKeyStroke.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = XVimKeyStroke.m; sourceTree = "<group>"; };
-		EDF0105E1F6EEF1000461B2C /* XVimMotion.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = XVimMotion.h; sourceTree = "<group>"; };
+		EDF0105E1F6EEF1000461B2C /* XVimMotionStyle.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = XVimMotionStyle.h; sourceTree = "<group>"; };
 		EDF0105F1F6EEF1000461B2C /* XVimNumericEvaluator.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = XVimNumericEvaluator.h; sourceTree = "<group>"; };
 		EDF010601F6EEF1000461B2C /* XVimMotionEvaluator.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = XVimMotionEvaluator.m; sourceTree = "<group>"; };
 		EDF010611F6EEF1000461B2C /* XVimMotionOption.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = XVimMotionOption.h; sourceTree = "<group>"; };
@@ -562,8 +562,8 @@
 				A21B82F224794C88002F162A /* XVimMark.swift */,
 				EDFA14921F8564DA0039B439 /* XVimMarks.h */,
 				EDFA14941F8564DA0039B439 /* XVimMarks.m */,
-				EDF0105E1F6EEF1000461B2C /* XVimMotion.h */,
-				EDF0105B1F6EEF1000461B2C /* XVimMotion.m */,
+				EDF0105E1F6EEF1000461B2C /* XVimMotionStyle.h */,
+				A2C359952479552C00259730 /* XVimMotion.swift */,
 				EDF010611F6EEF1000461B2C /* XVimMotionOption.h */,
 				EDF010541F6EEF0F00461B2C /* XVimMotionType.h */,
 				ED0DED761F8C3BF100886F6B /* XVimOptions.h */,
@@ -601,6 +601,7 @@
 				A26E5C701F5145AB000BCC66 /* Frameworks */,
 				A26E5C711F5145AB000BCC66 /* Resources */,
 				A26E5C7F1F51466B000BCC66 /* CopyFiles */,
+				A2C359972479554F00259730 /* SwiftLint */,
 			);
 			buildRules = (
 			);
@@ -657,6 +658,24 @@
 /* End PBXResourcesBuildPhase section */
 
 /* Begin PBXShellScriptBuildPhase section */
+		A2C359972479554F00259730 /* SwiftLint */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputFileListPaths = (
+			);
+			inputPaths = (
+			);
+			name = SwiftLint;
+			outputFileListPaths = (
+			);
+			outputPaths = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "if which swiftlint >/dev/null; then\n  swiftlint\nfi\n";
+		};
 		ED1286541F90B268007B6FC7 /* Write git revision */ = {
 			isa = PBXShellScriptBuildPhase;
 			buildActionMask = 2147483647;
@@ -731,7 +750,6 @@
 				A2B537B11F51C94400D83C0A /* NSObject+Swizzle.m in Sources */,
 				EDF0106E1F6EEFFC00461B2C /* XVimWindow.m in Sources */,
 				EDD27BAE1F9B5EB30006471C /* XVimTester+Jump.m in Sources */,
-				EDF0106B1F6EEFFC00461B2C /* XVimMotion.m in Sources */,
 				ED548FDF1F8280B700A8069D /* XVimRegister.m in Sources */,
 				EDD27BA61F9B5EB30006471C /* XVimTester+Issues.m in Sources */,
 				EDD27BB11F9B5EB30006471C /* XVimTester+ExCmd.m in Sources */,
@@ -743,6 +761,7 @@
 				ED548FDA1F827EEC00A8069D /* XVimYankEvaluator.m in Sources */,
 				A29BA5722243D6160032C3E2 /* SourceEditorViewWrapper.s in Sources */,
 				A2D464BC20D4042B00A43EC7 /* SwiftLogger.swift in Sources */,
+				A2C359962479552C00259730 /* XVimMotion.swift in Sources */,
 				EDD27BAA1F9B5EB30006471C /* XVimTester+Register.m in Sources */,
 				A27AB88C236AAEBF00803BE1 /* XVimTestResultTableView.m in Sources */,
 				EDB8EF4F1F91F8DA004188F5 /* XVimConstants.m in Sources */,

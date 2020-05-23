@@ -7,7 +7,7 @@
 //
 
 #import "XVimEvaluator.h"
-#import "XVimMotion.h"
+#import "XVim2-Swift.h"
 
 @class XVimOperatorAction;
 

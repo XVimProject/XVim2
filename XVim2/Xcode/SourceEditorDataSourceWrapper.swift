@@ -5,6 +5,8 @@
 //  Created by Ant on 22/10/2017.
 //  Copyright © 2017 Shuichiro Suzuki. All rights reserved.
 //
+// swiftlint:disable identifier_name
+// swiftlint:disable line_length
 
 import Cocoa
 
@@ -12,7 +14,7 @@ typealias InternalCharOffset = Int
 
 @_silgen_name("seds_wrapper_call") func _positionFromInternalCharOffset (_: UnsafeRawPointer, _: InternalCharOffset, lineHint: Int) -> (XVimSourceEditorPosition)
 @_silgen_name("seds_wrapper_call2") func _internalCharOffsetFromPosition (_: UnsafeRawPointer, _: XVimSourceEditorPosition) -> (Int)
-@_silgen_name("seds_wrapper_call3") func _voidToVoid (_: UnsafeRawPointer) -> Void
+@_silgen_name("seds_wrapper_call3") func _voidToVoid (_: UnsafeRawPointer)
 @_silgen_name("seds_wrapper_call4") func _voidToInt(_: UnsafeRawPointer) -> (Int)
 @_silgen_name("seds_wrapper_call5") func _getUndoManager(_: UnsafeRawPointer) -> (UnsafeMutableRawPointer)
 @_silgen_name("seds_wrapper_call6") func _leadingWhitespaceWithForLine(_: UnsafeRawPointer, _: Int, expandTabs: Bool) -> (Int)
@@ -27,9 +29,9 @@ public struct XVimLineData {
     var isHidden: Bool
 }
 
-fileprivate struct SourceEditorDataSourceInvoker {
+private struct SourceEditorDataSourceInvoker {
     let contextPtr = UnsafeMutablePointer<UnsafeMutableRawPointer>.allocate(capacity: 8)
-    
+
     public init?(_ dataSrc: AnyObject?, _ functionPtr: UnsafeMutableRawPointer?) {
         guard let dataSource = dataSrc,
             let functionPtr = functionPtr
@@ -38,31 +40,31 @@ fileprivate struct SourceEditorDataSourceInvoker {
         contextPtr[0] = Unmanaged.passRetained(dataSource).toOpaque()
         contextPtr[1] = functionPtr
     }
-    
+
     var undoManager: AnyObject? {
         return Unmanaged.fromOpaque(_getUndoManager(contextPtr).assumingMemoryBound(to: AnyObject?.self)).takeRetainedValue()
     }
-    
+
     func voidToVoid() {
         _voidToVoid(contextPtr)
     }
-    
+
     func voidToInt() -> Int {
         return _voidToInt(contextPtr)
     }
-    
+
     func intToInt(_ arg: Int) -> Int {
         return _intToInt(contextPtr, arg)
     }
-    
+
     func positionFromInternalCharOffset(_ pos: Int, lineHint: Int = 0) -> XVimSourceEditorPosition {
         return _positionFromInternalCharOffset(contextPtr, pos, lineHint: lineHint)
     }
-    
+
     func internalCharOffsetFromPosition(_ pos: XVimSourceEditorPosition) -> Int {
         return _internalCharOffsetFromPosition(contextPtr, pos)
     }
-    
+
     func leadingWhitespaceWidthForLine(_ line: Int, expandTabs: Bool) -> Int {
         return _leadingWhitespaceWithForLine(contextPtr, line, expandTabs: expandTabs)
     }
@@ -89,60 +91,60 @@ class SourceEditorDataSourceWrapper: NSObject {
         = function_ptr_from_name("_$s12SourceEditor0ab4DataA0C27lineTerminatorLengthForLineyS2iF", nil)
 
     private weak var sourceEditorViewWrapper: SourceEditorViewWrapper?
-	
+
     private var dataSource: AnyObject? {
         return sourceEditorViewWrapper?.dataSource
     }
-    
+
     @objc
     public init(sourceEditorViewWrapper: SourceEditorViewWrapper) {
         self.sourceEditorViewWrapper = sourceEditorViewWrapper
     }
-    
+
     @objc
     public var undoManager: AnyObject? {
         return SourceEditorDataSourceInvoker(dataSource, fpGetUndoManager)?.undoManager ?? nil
     }
-    
+
     @objc
     public func beginEditTransaction() {
         SourceEditorDataSourceInvoker(dataSource, fpBeginEditingTransaction)?.voidToVoid()
     }
-    
+
     @objc
     public func endEditTransaction() {
         SourceEditorDataSourceInvoker(dataSource, fpEndEditingTransaction)?.voidToVoid()
     }
-    
+
     @objc
     public func positionFromInternalCharOffset(_ pos: Int, lineHint: Int = 0) -> XVimSourceEditorPosition {
         return SourceEditorDataSourceInvoker(dataSource, fpPositionFromIndexLineHint)?
             .positionFromInternalCharOffset(pos, lineHint: lineHint)
             ?? XVimSourceEditorPosition()
     }
-    
+
     @objc
     public func internalCharOffsetFromPosition(_ pos: XVimSourceEditorPosition) -> Int {
         return SourceEditorDataSourceInvoker(dataSource, fpIndexFromPosition)?
             .internalCharOffsetFromPosition(pos)
             ?? 0
     }
-    
+
     @objc
     public var lineCount: Int {
         return SourceEditorDataSourceInvoker(dataSource, fpLineCount)?.voidToInt() ?? 0
     }
-    
+
     @objc
     public func lineContentLength(forLine: Int) -> Int {
         return SourceEditorDataSourceInvoker(dataSource, fpLineContentLength)?.intToInt(forLine) ?? 0
     }
-    
+
     @objc
     public func lineTerminatorLength(forLine: Int) -> Int {
         return SourceEditorDataSourceInvoker(dataSource, fpLineTerminatorLength)?.intToInt(forLine) ?? 0
     }
-    
+
     @objc
     public func leadingWhitespaceWidthForLine(_ line: Int, expandTabs: Bool) -> Int {
         return SourceEditorDataSourceInvoker(dataSource, fpLeadingWhitespaceWidthForLine)?

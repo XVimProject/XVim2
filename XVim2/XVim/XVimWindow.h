@@ -5,9 +5,10 @@
 //  Created by Tomas Lundell on 9/04/12.
 //
 
-#import "XVimKeyStroke.h"
-#import "XVimMotion.h"
 @import Cocoa;
+
+#import "XVimKeyStroke.h"
+#import "XVim2-Swift.h"
 
 NS_ASSUME_NONNULL_BEGIN
 

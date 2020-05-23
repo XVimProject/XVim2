@@ -23,7 +23,6 @@
 #import "XVimKeymapProvider.h"
 #import "XVimMarkSetEvaluator.h"
 #import "XVimMarks.h"
-#import "XVimMotion.h"
 #import "XVimOptions.h"
 #import "XVimRegister.h"
 #import "XVimRegisterEvaluator.h"

@@ -9,7 +9,6 @@
 import Foundation
 
 // global function
-func log(_ s: String)
-{
-    Logger.default().log(with: s)
+func debugLog(_ str: String) {
+    Logger.default().log(with: str)
 }

@@ -15,10 +15,9 @@
 #import "SourceEditorViewProxy+XVim.h"
 #import "SourceEditorViewProxy+Yank.h"
 #import "XVim.h"
-#import "XVim2-Swift.h"
-#import "XVimMotion.h"
 #import "XVimOptions.h"
 #import "XVimXcode.h"
+#import "XVim2-Swift.h"
 #import <IDESourceEditor/_TtC15IDESourceEditor19IDESourceEditorView.h>
 
 @interface SourceEditorViewProxy ()

@@ -12,11 +12,11 @@ import Foundation
     @objc public var line: Int = NSNotFound
     @objc public var column: Int = NSNotFound
     @objc public var document: String?
-    
+
     public override init() {
         super.init()
     }
-    
+
     @objc public init(line: Int, column: Int, document: String? = nil) {
         super.init()
         self.line = line
@@ -31,7 +31,7 @@ import Foundation
             self.init(line: NSNotFound, column: NSNotFound)
         }
     }
-    
+
     @objc public func setMark(_ mark: XVimMark?) {
         if let mark = mark {
             self.line = mark.line
@@ -43,5 +43,4 @@ import Foundation
             document = nil
         }
     }
-    
 }
