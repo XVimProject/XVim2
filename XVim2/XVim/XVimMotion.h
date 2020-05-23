@@ -10,6 +10,8 @@
 #import "XVimMotionType.h"
 #import <Foundation/Foundation.h>
 
+NS_ASSUME_NONNULL_BEGIN
+
 @interface XVimMotionInfo : NSObject
 @property (nonatomic) BOOL reachedEndOfLine;
 @property (nonatomic) BOOL isFirstWordInLine;
@@ -93,3 +95,5 @@ typedef NS_ENUM(NSInteger, MOTION_STYLE) {
 - (BOOL)isTextObject;
 - (BOOL)isJumpMotion;
 @end
+
+NS_ASSUME_NONNULL_END

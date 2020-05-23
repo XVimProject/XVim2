@@ -10,6 +10,8 @@
 #import "XVimMotionOption.h"
 #import <Foundation/Foundation.h>
 
+NS_ASSUME_NONNULL_BEGIN
+
 @interface SourceEditorViewProxy (XVim)
 - (NSUInteger)xvim_indexOfLineNumber:(NSUInteger)line;
 - (NSUInteger)xvim_indexOfLineNumber:(NSUInteger)line column:(NSUInteger)col;
@@ -35,3 +37,5 @@
 - (XVimRange)xvim_selectedLines;
 - (void)xvim_insertSpaces:(NSUInteger)count replacementRange:(NSRange)replacementRange;
 @end
+
+NS_ASSUME_NONNULL_END

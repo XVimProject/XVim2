@@ -10,6 +10,7 @@
 #import "XVimKeyStroke.h"
 #import <Foundation/Foundation.h>
 
+NS_ASSUME_NONNULL_BEGIN
 
 @interface XVimRegister : NSObject
 - (void)appendXVimString:(XVimString*)string;
@@ -89,3 +90,5 @@
 
 @interface XVimBlackholeRegister : XVimRegister
 @end
+
+NS_ASSUME_NONNULL_END

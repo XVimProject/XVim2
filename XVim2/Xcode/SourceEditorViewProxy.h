@@ -69,6 +69,8 @@ static inline XVimSourceEditorRange XvimMakeSourceEditorRange(XVimSourceEditorPo
 @protocol XVimTextViewDelegateProtocol;
 @class SourceEditorViewWrapper, SourceEditorDataSourceWrapper;
 
+NS_ASSUME_NONNULL_BEGIN
+
 @interface SourceEditorViewProxy : NSObject <SourceEditorViewProtocol>
 @property (nonatomic) XVIM_VISUAL_MODE selectionMode;
 @property NSUInteger insertionPoint;
@@ -260,3 +262,5 @@ static inline XVimSourceEditorRange XvimMakeSourceEditorRange(XVimSourceEditorPo
 @property NSInteger undoGroupingDepth;
 
 @end
+
+NS_ASSUME_NONNULL_END

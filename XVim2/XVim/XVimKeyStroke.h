@@ -10,6 +10,7 @@
 #import <Foundation/Foundation.h>
 #include "XVimDefs.h"
 
+NS_ASSUME_NONNULL_BEGIN
 
 #define KS_MODIFIER 0xF8 // This value is not the same as Vim's one
 // Following values are differed from Vim's definition in keymap.h
@@ -47,7 +48,7 @@ NSString* XVimKeyNotationFromXVimString(XVimString* string);
 @property (nonatomic, readonly) BOOL isPrintable;
 @property (nonatomic, readonly) BOOL isWhitespace;
 
-- (id)initWithCharacter:(unichar)c modifier:(unsigned char)mod event:(NSEvent*)e;
+- (id)initWithCharacter:(unichar)c modifier:(unsigned char)mod event:(nullable NSEvent*)e;
 
 - (XVimString*)xvimString;
 
@@ -64,8 +65,10 @@ NSString* XVimKeyNotationFromXVimString(XVimString* string);
 // Following methods are for to be a key in NSDictionary
 - (NSUInteger)hash;
 - (BOOL)isEqual:(id)object;
-- (id)copyWithZone:(NSZone*)zone;
+- (id)copyWithZone:(nullable NSZone*)zone;
 
 - (BOOL)isCTRLModifier;
-- (NSEvent*)toEventwithWindowNumber:(NSInteger)num context:(NSGraphicsContext*)context;
+- (NSEvent*)toEventwithWindowNumber:(NSInteger)num context:(nullable NSGraphicsContext*)context;
 @end
+
+NS_ASSUME_NONNULL_END

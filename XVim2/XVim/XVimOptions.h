@@ -8,6 +8,8 @@
 
 #import <Foundation/Foundation.h>
 
+NS_ASSUME_NONNULL_BEGIN
+
 @interface XVimOptions : NSObject
 @property BOOL ignorecase;
 @property BOOL wrapscan;
@@ -36,3 +38,5 @@
 - (void)setOptionBool:(NSString*)name value:(BOOL)value;
 - (BOOL)clipboardHasUnnamed;
 @end
+
+NS_ASSUME_NONNULL_END

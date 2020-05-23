@@ -8,6 +8,10 @@
 
 #import <Foundation/Foundation.h>
 
+NS_ASSUME_NONNULL_BEGIN
+
 @interface NSString (Util)
 + (NSUInteger)lineWithPath:(NSString*)path pos:(NSUInteger)pos;
 @end
+
+NS_ASSUME_NONNULL_END

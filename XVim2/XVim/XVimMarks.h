@@ -8,6 +8,8 @@
 
 #import <Foundation/Foundation.h>
 
+NS_ASSUME_NONNULL_BEGIN
+
 @class XVimMark;
 
 /**
@@ -95,3 +97,5 @@
 - (XVimMark*)incrementJumpMark;
 - (XVimMark*)decrementJumpMark:(BOOL*)pNeedUpdateMark;
 @end
+
+NS_ASSUME_NONNULL_END

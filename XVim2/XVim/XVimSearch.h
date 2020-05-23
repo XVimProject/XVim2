@@ -11,6 +11,8 @@
 
 #import <Foundation/Foundation.h>
 
+NS_ASSUME_NONNULL_BEGIN
+
 @class XVimWindow;
 @class XVimMotion;
 
@@ -58,3 +60,5 @@ typedef NS_ENUM(NSInteger, XVimSearchCase) {
 - (void)substitute:(NSString*)searchCmd from:(NSUInteger)from to:(NSUInteger)to inWindow:(XVimWindow*)window;
 
 @end
+
+NS_ASSUME_NONNULL_END

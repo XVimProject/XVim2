@@ -9,6 +9,8 @@
 #import "XVimKeymapProvider.h"
 #import <AppKit/AppKit.h>
 
+NS_ASSUME_NONNULL_BEGIN
+
 @class XVimOptions;
 @class XVimSearch;
 @class XVimExCommand;
@@ -45,7 +47,7 @@ extern NSString* const XVimDocumentPathKey;
 @property BOOL lastVisualSelectionToEOL;
 @property (nonatomic) BOOL isProcessingDOT; // For dot(.) command repeat
 
-@property (copy) NSString* lastPlaybackRegister;
+@property (copy, nullable) NSString* lastPlaybackRegister;
 @property (copy) NSString* document;
 @property (nonatomic) BOOL isExecuting; // For @x command executing
 @property (nonatomic) BOOL foundRangesHidden;
@@ -96,3 +98,5 @@ extern NSString* const XVimDocumentPathKey;
 - (void)sourceRcFile;
 
 @end
+
+NS_ASSUME_NONNULL_END

@@ -9,6 +9,8 @@
 #import "XVimKeyStroke.h"
 #import <Foundation/Foundation.h>
 
+NS_ASSUME_NONNULL_BEGIN
+
 @class XVimKeymapNode;
 
 @interface XVimKeymapContext : NSObject
@@ -21,8 +23,8 @@
 // When there is no input for "timeoutlen" it should be treated as "l" + "c" and
 // anc "c" must be also taken as mappable key input. (if "c" maps to "l" "abc" results in "ll")
 @property (nonatomic) XVimMutableString* lastMappedKeys;
-@property (nonatomic) XVimKeymapNode* lastMappedNode;
-@property (nonatomic) XVimKeymapNode* node;
+@property (nonatomic, nullable) XVimKeymapNode* lastMappedNode;
+@property (nonatomic, nullable) XVimKeymapNode* node;
 
 - (void)clear;
 
@@ -63,3 +65,5 @@
 - (void)enumerateKeymaps:(void (^)(NSString* mapFrom, NSString* mapTo))block;
 
 @end
+
+NS_ASSUME_NONNULL_END

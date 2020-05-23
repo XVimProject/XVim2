@@ -8,6 +8,8 @@
 
 #import <Foundation/Foundation.h>
 
+NS_ASSUME_NONNULL_BEGIN
+
 @class XVimWindow;
 
 // @ref eval.c in original vim
@@ -28,3 +30,5 @@
 }
 - (void)evaluateWhole:(nonnull XVimEvalArg*)args inWindow:(nonnull XVimWindow*)window;
 @end
+
+NS_ASSUME_NONNULL_END

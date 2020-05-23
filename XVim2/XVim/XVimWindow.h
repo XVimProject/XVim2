@@ -7,7 +7,9 @@
 
 #import "XVimKeyStroke.h"
 #import "XVimMotion.h"
-#import <Cocoa/Cocoa.h>
+@import Cocoa;
+
+NS_ASSUME_NONNULL_BEGIN
 
 /*
  * This class manages 1 window. (The term "window" here is different from NSWindow)
@@ -36,7 +38,7 @@
 
 - (instancetype)initWithSourceView:(id<SourceEditorViewProtocol>)sourceView;
 - (void)setupAfterEditorViewSetup;
-- (void)handleKeyStroke:(XVimKeyStroke*)keyStroke onStack:(NSMutableArray<XVimEvaluator*>*)stack;
+- (void)handleKeyStroke:(XVimKeyStroke*)keyStroke onStack:(nullable NSMutableArray<XVimEvaluator*>*)stack;
 - (BOOL)handleKeyEvent:(NSEvent*)event;
 - (BOOL)shouldAutoCompleteAtLocation:(unsigned long long)location;
 - (void)errorMessage:(NSString*)message ringBell:(BOOL)ringBell;
@@ -48,3 +50,5 @@
 - (void)syncEvaluatorStack;
 - (void)preMotion:(XVimMotion*)motion;
 @end
+
+NS_ASSUME_NONNULL_END

@@ -9,7 +9,10 @@
 #import "SourceEditorViewProxy.h"
 #import <Foundation/Foundation.h>
 
+NS_ASSUME_NONNULL_BEGIN
+
 @interface SourceEditorViewProxy (Scrolling)
 - (void)xvim_scrollTo:(NSUInteger)insertionPoint;
 @end
 
+NS_ASSUME_NONNULL_END

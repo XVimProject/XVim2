@@ -11,6 +11,7 @@
 #import "XVimMotion.h"
 #import "XVimTextStoring.h"
 
+NS_ASSUME_NONNULL_BEGIN
 
 /**
  VimOperation category on NSTextStorage
@@ -235,3 +236,5 @@ NSInteger xv_findChar(NSString* string, NSInteger index, int repeatCount, char c
 #pragma mark undo
 - (void)xvim_undoCursorPos:(NSNumber*)num;
 @end
+
+NS_ASSUME_NONNULL_END

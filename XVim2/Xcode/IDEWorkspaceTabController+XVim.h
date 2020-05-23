@@ -14,6 +14,8 @@ typedef NS_ENUM(NSInteger, EditorMode) {
     VERSION
 };
 
+NS_ASSUME_NONNULL_BEGIN
+
 @interface IDEWorkspaceTabController_XVim : NSObject
 + (void)xvim_hook;
 - (void)xvim_jumpFocus:(NSInteger)count relative:(BOOL)relative;
@@ -28,3 +30,5 @@ typedef NS_ENUM(NSInteger, EditorMode) {
 - (void)xvim_closeOtherEditors;
 - (void)xvim_closeCurrentEditor;
 @end
+
+NS_ASSUME_NONNULL_END

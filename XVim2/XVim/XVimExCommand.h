@@ -6,8 +6,10 @@
 //  Copyright (c) 2012 JugglerShu.Net. All rights reserved.
 //
 
-#import <Foundation/Foundation.h>
+@import Foundation;
 // TODO: #import "XVimTaskRunner.h"
+
+NS_ASSUME_NONNULL_BEGIN
 
 // This file corresponds Vim's ex_cmds.h
 // Wondering if we can reuse ex_*.* files in Vim...
@@ -56,8 +58,8 @@
 @class XVimWindow;
 
 @interface XVimExArg : NSObject
-@property NSString* arg;
-@property NSString* cmd;
+@property (nullable) NSString* arg;
+@property (nullable) NSString* cmd;
 @property BOOL forceit;
 @property BOOL noRangeSpecified;
 @property NSUInteger lineBegin; // line1
@@ -75,5 +77,7 @@
 @interface XVimExCommand : NSObject {
     NSArray* _excommands;
 }
-- (NSString*)executeCommand:(NSString*)cmd inWindow:(XVimWindow*)window;
+- (NSString*)executeCommand:(NSString*)cmd inWindow:(nullable XVimWindow*)window;
 @end
+
+NS_ASSUME_NONNULL_END
