@@ -33,8 +33,6 @@
 
 - (void)xvim_yank:(XVimMotion*)motion withMotionPoint:(NSUInteger)motionPoint
 {
-    NSAssert(!(self.selectionMode == XVIM_VISUAL_NONE && motion == nil),
-             @"motion must be specified if current selection mode is not visual");
     NSUInteger newPos = NSNotFound;
 
     if (self.selectionMode == XVIM_VISUAL_NONE) {
