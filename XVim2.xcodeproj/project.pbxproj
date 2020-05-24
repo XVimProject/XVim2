@@ -124,6 +124,7 @@
 		5DAD89FF227455F000D01D9F /* XVimSourceEditorSelectionDisplay.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; name = XVimSourceEditorSelectionDisplay.m; path = XVim2/Xcode/XVimSourceEditorSelectionDisplay.m; sourceTree = SOURCE_ROOT; };
 		A2053343247A969400412C8B /* XVimExArg.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = XVimExArg.swift; sourceTree = "<group>"; };
 		A2053345247A973D00412C8B /* XVimExCmdname.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = XVimExCmdname.swift; sourceTree = "<group>"; };
+		A2053347247A99ED00412C8B /* XVimModifier.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = XVimModifier.h; sourceTree = "<group>"; };
 		A20FB79A21BB7FF2001FDC62 /* about.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = about.xib; sourceTree = "<group>"; };
 		A20FB79B21BB7FF2001FDC62 /* XVimAboutDialog.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = XVimAboutDialog.h; sourceTree = "<group>"; };
 		A20FB79D21BB7FF2001FDC62 /* XVimAboutDialog.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = XVimAboutDialog.m; sourceTree = "<group>"; };
@@ -562,6 +563,7 @@
 				EDF0105C1F6EEF1000461B2C /* XVimKeymap.h */,
 				EDF010661F6EEF1000461B2C /* XVimKeymap.m */,
 				EDF010651F6EEF1000461B2C /* XVimKeymapProvider.h */,
+				A2053347247A99ED00412C8B /* XVimModifier.h */,
 				EDF010511F6EEF0F00461B2C /* XVimKeyStroke.h */,
 				EDF0105D1F6EEF1000461B2C /* XVimKeyStroke.m */,
 				EDF010571F6EEF0F00461B2C /* XVimMacros.h */,

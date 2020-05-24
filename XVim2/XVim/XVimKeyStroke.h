@@ -9,18 +9,12 @@
 #import <Cocoa/Cocoa.h>
 #import <Foundation/Foundation.h>
 #include "XVimDefs.h"
+#include "XVimModifier.h"
 
 NS_ASSUME_NONNULL_BEGIN
 
 #define KS_MODIFIER 0xF8 // This value is not the same as Vim's one
 // Following values are differed from Vim's definition in keymap.h
-typedef NS_OPTIONS(NSUInteger, XVimModifier) {
-    XVIM_MOD_SHIFT = 1 << 1,
-    XVIM_MOD_CTRL = 1 << 2,
-    XVIM_MOD_ALT = 1 << 3,
-    XVIM_MOD_CMD = 1 << 4,
-    XVIM_MOD_FUNC = 1 << 7  // XVim Original
-};
 
 #define XVimMakeKeyCode(modifier, character) ((modifier << 16) | character)
 
