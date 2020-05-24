@@ -8,6 +8,8 @@
 
 #import <Cocoa/Cocoa.h>
 
+NS_ASSUME_NONNULL_BEGIN
+
 /** @brief Protocol that must be implemented by the NSTextStorage you intend to hook
  *
  * Note that the terms here do not have the usual Cocoah meaning
@@ -97,7 +99,7 @@
  *   - {NSNotFound, 0} if the index is beyond the end of the document.
  *   - the range of indexes forming the line, excluding trailing newLine characters
  */
-- (NSRange)xvim_indexRangeForLineNumber:(NSUInteger)num newLineLength:(NSUInteger*)newLineLength;
+- (NSRange)xvim_indexRangeForLineNumber:(NSUInteger)num newLineLength:(nullable NSUInteger*)newLineLength;
 
 /** @brief returns the index range for the given line range
  *
@@ -123,7 +125,7 @@
  *   the range of indexes forming the line, exclugint trailing newLine characters
  *   Note that if the index is within a CRLF for example, the range may end before index
  */
-- (NSRange)xvim_indexRangeForLineAtIndex:(NSUInteger)index newLineLength:(NSUInteger*)newLineLength;
+- (NSRange)xvim_indexRangeForLineAtIndex:(NSUInteger)index newLineLength:(nullable NSUInteger*)newLineLength;
 
 /** @brief starting position of line @a num within -xvim_string.
  * @returns the starting index for that line number or NSNotFound.
@@ -241,3 +243,5 @@
 - (NSUInteger)xvim_nextDigitInLine:(NSUInteger)index;
 
 @end
+
+NS_ASSUME_NONNULL_END
