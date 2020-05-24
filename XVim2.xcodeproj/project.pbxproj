@@ -8,6 +8,8 @@
 
 /* Begin PBXBuildFile section */
 		3B53601A211495F4008BFF2B /* XVimRecordingEvaluator.m in Sources */ = {isa = PBXBuildFile; fileRef = 3B536018211495F4008BFF2B /* XVimRecordingEvaluator.m */; };
+		A2053344247A969400412C8B /* XVimExArg.swift in Sources */ = {isa = PBXBuildFile; fileRef = A2053343247A969400412C8B /* XVimExArg.swift */; };
+		A2053346247A973D00412C8B /* XVimExCmdname.swift in Sources */ = {isa = PBXBuildFile; fileRef = A2053345247A973D00412C8B /* XVimExCmdname.swift */; };
 		A20FB79E21BB7FF2001FDC62 /* about.xib in Resources */ = {isa = PBXBuildFile; fileRef = A20FB79A21BB7FF2001FDC62 /* about.xib */; };
 		A20FB79F21BB7FF2001FDC62 /* XVimAboutDialog.m in Sources */ = {isa = PBXBuildFile; fileRef = A20FB79D21BB7FF2001FDC62 /* XVimAboutDialog.m */; };
 		A21B82F324794C88002F162A /* XVimMark.swift in Sources */ = {isa = PBXBuildFile; fileRef = A21B82F224794C88002F162A /* XVimMark.swift */; };
@@ -120,6 +122,8 @@
 		5D1DDA6E227444B600CB3B74 /* _TtC12SourceEditor28SourceEditorSelectionDisplay.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = _TtC12SourceEditor28SourceEditorSelectionDisplay.h; path = XVim2/Xcode/_TtC12SourceEditor28SourceEditorSelectionDisplay.h; sourceTree = SOURCE_ROOT; };
 		5D322FF1227467D400D22078 /* XVimSourceEditorSelectionDisplay.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = XVimSourceEditorSelectionDisplay.h; path = XVim2/Xcode/XVimSourceEditorSelectionDisplay.h; sourceTree = SOURCE_ROOT; };
 		5DAD89FF227455F000D01D9F /* XVimSourceEditorSelectionDisplay.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; name = XVimSourceEditorSelectionDisplay.m; path = XVim2/Xcode/XVimSourceEditorSelectionDisplay.m; sourceTree = SOURCE_ROOT; };
+		A2053343247A969400412C8B /* XVimExArg.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = XVimExArg.swift; sourceTree = "<group>"; };
+		A2053345247A973D00412C8B /* XVimExCmdname.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = XVimExCmdname.swift; sourceTree = "<group>"; };
 		A20FB79A21BB7FF2001FDC62 /* about.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = about.xib; sourceTree = "<group>"; };
 		A20FB79B21BB7FF2001FDC62 /* XVimAboutDialog.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = XVimAboutDialog.h; sourceTree = "<group>"; };
 		A20FB79D21BB7FF2001FDC62 /* XVimAboutDialog.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = XVimAboutDialog.m; sourceTree = "<group>"; };
@@ -549,7 +553,9 @@
 				EDF010521F6EEF0F00461B2C /* XVimDefs.h */,
 				ED0DED7B1F8C418200886F6B /* XVimEval.h */,
 				ED0DED7A1F8C418100886F6B /* XVimEval.m */,
+				A2053343247A969400412C8B /* XVimExArg.swift */,
 				ED0DED6F1F8C3B0600886F6B /* XVimExCommand.h */,
+				A2053345247A973D00412C8B /* XVimExCmdname.swift */,
 				ED0DED701F8C3B0700886F6B /* XVimExCommand.m */,
 				ED0DED6C1F8C37D000886F6B /* XVimHistoryHandler.h */,
 				ED0DED6D1F8C37D100886F6B /* XVimHistoryHandler.m */,
@@ -752,6 +758,7 @@
 				EDD27BAE1F9B5EB30006471C /* XVimTester+Jump.m in Sources */,
 				ED548FDF1F8280B700A8069D /* XVimRegister.m in Sources */,
 				EDD27BA61F9B5EB30006471C /* XVimTester+Issues.m in Sources */,
+				A2053344247A969400412C8B /* XVimExArg.swift in Sources */,
 				EDD27BB11F9B5EB30006471C /* XVimTester+ExCmd.m in Sources */,
 				ED0DED621F8C2E1D00886F6B /* XVimGVisualEvaluator.m in Sources */,
 				A2A9F9372070A84600E7BB53 /* SourceEditorViewProxy+XVim.m in Sources */,
@@ -771,6 +778,7 @@
 				EDF010741F6EF05E00461B2C /* NSEvent+VimHelper.m in Sources */,
 				EDEF0F241F84DB570087D30B /* XVimShiftEvaluator.m in Sources */,
 				A2A9F9362070A84600E7BB53 /* SourceEditorViewProxy+Operations.m in Sources */,
+				A2053346247A973D00412C8B /* XVimExCmdname.swift in Sources */,
 				ED6331D81F83862600E9E6B0 /* XVimCommandLine.m in Sources */,
 				ED4382B11F85340200975127 /* XVimVisualEvaluator.m in Sources */,
 				A29BA5742243D6160032C3E2 /* SourceEditorViewWrapper.swift in Sources */,

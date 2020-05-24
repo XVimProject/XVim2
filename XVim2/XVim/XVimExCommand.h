@@ -7,6 +7,7 @@
 //
 
 @import Foundation;
+#import "XVim2-Swift.h"
 // TODO: #import "XVimTaskRunner.h"
 
 NS_ASSUME_NONNULL_BEGIN
@@ -57,25 +58,8 @@ NS_ASSUME_NONNULL_BEGIN
 
 @class XVimWindow;
 
-@interface XVimExArg : NSObject
-@property (nullable) NSString* arg;
-@property (nullable) NSString* cmd;
-@property BOOL forceit;
-@property BOOL noRangeSpecified;
-@property NSUInteger lineBegin; // line1
-@property NSUInteger lineEnd; // line2
-@property NSUInteger addr_count;
-@end
-
-// XVimExCmd corresponds cmdname struct in ex_cmds.h
-@interface XVimExCmdname : NSObject
-@property (weak, readonly) NSString* cmdName;
-@property (weak, readonly) NSString* methodName;
-@end
-
-
 @interface XVimExCommand : NSObject {
-    NSArray* _excommands;
+    NSArray<XVimExCmdname *>* _excommands;
 }
 - (NSString*)executeCommand:(NSString*)cmd inWindow:(nullable XVimWindow*)window;
 @end

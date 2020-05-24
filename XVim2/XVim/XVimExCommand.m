@@ -30,24 +30,8 @@
 #import "XVimTaskRunner.h"
 #import "XVim2-Swift.h"
 
-@implementation XVimExArg
-@end
-
 // Maximum time in seconds for a 'bang' command to run before being killed as taking too long
 // static const NSTimeInterval EXTERNAL_COMMAND_TIMEOUT_SECS = 5.0;
-
-@implementation XVimExCmdname
-
-- (id)initWithCmd:(NSString*)cmd method:(NSString*)method
-{
-    if (self = [super init]) {
-        _cmdName = cmd;
-        _methodName = method;
-    }
-    return self;
-}
-@end
-
 
 @implementation XVimExCommand
 #define CMD(cmd, mtd) [[XVimExCmdname alloc] initWithCmd:cmd method:mtd]
