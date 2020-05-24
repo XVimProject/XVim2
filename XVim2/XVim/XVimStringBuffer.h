@@ -9,6 +9,9 @@
 #import "XVimMacros.h"
 #import <Foundation/Foundation.h>
 
+NS_ASSUME_NONNULL_BEGIN
+
+
 /** @brief structure used for fast search in an NSString
  *
  * This has complex invariants:
@@ -163,30 +166,4 @@ NS_INLINE BOOL xvim_sb_find_forward(xvim_string_buffer_t* sb, NSCharacterSet* se
     return NO;
 }
 
-/* go back until start of string or peek_prev() not in set */
-NS_INLINE BOOL xvim_sb_skip_backward(xvim_string_buffer_t* sb, NSCharacterSet* set)
-{
-    if (!xvim_sb_at_start(sb)) {
-        do {
-            if (![set characterIsMember:xvim_sb_peek_prev(sb)]) {
-                return YES;
-            }
-        } while (xvim_sb_prev(sb));
-    }
-
-    return NO;
-}
-
-/* go back until start of string or peek_prev() not in set */
-NS_INLINE BOOL xvim_sb_find_backward(xvim_string_buffer_t* sb, NSCharacterSet* set)
-{
-    if (!xvim_sb_at_start(sb)) {
-        do {
-            if ([set characterIsMember:xvim_sb_peek_prev(sb)]) {
-                return YES;
-            }
-        } while (xvim_sb_prev(sb));
-    }
-
-    return NO;
-}
+NS_ASSUME_NONNULL_END
