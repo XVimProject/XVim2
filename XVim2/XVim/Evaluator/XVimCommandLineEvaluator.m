@@ -13,11 +13,11 @@
 #import "XVim.h"
 #import "XVimCommandField.h"
 #import "XVimCommandLine.h"
-#import "XVimHistoryHandler.h"
 #import "XVimKeyStroke.h"
 #import "XVimKeymapProvider.h"
 #import "XVimWindow.h"
 #import "XcodeUtils.h"
+#import "XVim2-Swift.h"
 #import <IDEKit/IDEEditorArea.h>
 //#import "IDEEditorArea+XVim.h"
 
@@ -164,7 +164,7 @@
     }
 
     _historyNo++;
-    NSString* cmd = [_history entry:_historyNo withPrefix:_currentCmd];
+    NSString* cmd = [_history entry:_historyNo prefix:_currentCmd];
     if (nil == cmd) {
         [xvim ringBell];
         _historyNo--;
@@ -193,7 +193,7 @@
             [commandField moveToEndOfLine:self];
         }
         else {
-            let cmd = [_history entry:_historyNo withPrefix:_currentCmd];
+            let cmd = [_history entry:_historyNo prefix:_currentCmd];
             if (nil == cmd) {
                 [xvim ringBell];
             }

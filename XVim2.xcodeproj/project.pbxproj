@@ -10,6 +10,7 @@
 		3B53601A211495F4008BFF2B /* XVimRecordingEvaluator.m in Sources */ = {isa = PBXBuildFile; fileRef = 3B536018211495F4008BFF2B /* XVimRecordingEvaluator.m */; };
 		A2053344247A969400412C8B /* XVimExArg.swift in Sources */ = {isa = PBXBuildFile; fileRef = A2053343247A969400412C8B /* XVimExArg.swift */; };
 		A2053346247A973D00412C8B /* XVimExCmdname.swift in Sources */ = {isa = PBXBuildFile; fileRef = A2053345247A973D00412C8B /* XVimExCmdname.swift */; };
+		A2053349247A9D8100412C8B /* XVimHistoryHandler.swift in Sources */ = {isa = PBXBuildFile; fileRef = A2053348247A9D8100412C8B /* XVimHistoryHandler.swift */; };
 		A20FB79E21BB7FF2001FDC62 /* about.xib in Resources */ = {isa = PBXBuildFile; fileRef = A20FB79A21BB7FF2001FDC62 /* about.xib */; };
 		A20FB79F21BB7FF2001FDC62 /* XVimAboutDialog.m in Sources */ = {isa = PBXBuildFile; fileRef = A20FB79D21BB7FF2001FDC62 /* XVimAboutDialog.m */; };
 		A21B82F324794C88002F162A /* XVimMark.swift in Sources */ = {isa = PBXBuildFile; fileRef = A21B82F224794C88002F162A /* XVimMark.swift */; };
@@ -41,7 +42,6 @@
 		ED0DED611F8C2CEC00886F6B /* XVimZEvaluator.m in Sources */ = {isa = PBXBuildFile; fileRef = ED0DED5D1F8C2CDD00886F6B /* XVimZEvaluator.m */; };
 		ED0DED621F8C2E1D00886F6B /* XVimGVisualEvaluator.m in Sources */ = {isa = PBXBuildFile; fileRef = ED0DED601F8C2CDF00886F6B /* XVimGVisualEvaluator.m */; };
 		ED0DED681F8C31FA00886F6B /* XVimCommandLineEvaluator.m in Sources */ = {isa = PBXBuildFile; fileRef = ED0DED661F8C31F900886F6B /* XVimCommandLineEvaluator.m */; };
-		ED0DED6E1F8C37D200886F6B /* XVimHistoryHandler.m in Sources */ = {isa = PBXBuildFile; fileRef = ED0DED6D1F8C37D100886F6B /* XVimHistoryHandler.m */; };
 		ED0DED711F8C3B0800886F6B /* XVimExCommand.m in Sources */ = {isa = PBXBuildFile; fileRef = ED0DED701F8C3B0700886F6B /* XVimExCommand.m */; };
 		ED0DED741F8C3B6C00886F6B /* XVimSearch.m in Sources */ = {isa = PBXBuildFile; fileRef = ED0DED721F8C3B6B00886F6B /* XVimSearch.m */; };
 		ED0DED771F8C3BF100886F6B /* XVimOptions.m in Sources */ = {isa = PBXBuildFile; fileRef = ED0DED751F8C3BF000886F6B /* XVimOptions.m */; };
@@ -125,6 +125,7 @@
 		A2053343247A969400412C8B /* XVimExArg.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = XVimExArg.swift; sourceTree = "<group>"; };
 		A2053345247A973D00412C8B /* XVimExCmdname.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = XVimExCmdname.swift; sourceTree = "<group>"; };
 		A2053347247A99ED00412C8B /* XVimModifier.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = XVimModifier.h; sourceTree = "<group>"; };
+		A2053348247A9D8100412C8B /* XVimHistoryHandler.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = XVimHistoryHandler.swift; sourceTree = "<group>"; };
 		A20FB79A21BB7FF2001FDC62 /* about.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = about.xib; sourceTree = "<group>"; };
 		A20FB79B21BB7FF2001FDC62 /* XVimAboutDialog.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = XVimAboutDialog.h; sourceTree = "<group>"; };
 		A20FB79D21BB7FF2001FDC62 /* XVimAboutDialog.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = XVimAboutDialog.m; sourceTree = "<group>"; };
@@ -180,8 +181,6 @@
 		ED0DED601F8C2CDF00886F6B /* XVimGVisualEvaluator.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = XVimGVisualEvaluator.m; sourceTree = "<group>"; };
 		ED0DED661F8C31F900886F6B /* XVimCommandLineEvaluator.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = XVimCommandLineEvaluator.m; sourceTree = "<group>"; };
 		ED0DED671F8C31FA00886F6B /* XVimCommandLineEvaluator.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = XVimCommandLineEvaluator.h; sourceTree = "<group>"; };
-		ED0DED6C1F8C37D000886F6B /* XVimHistoryHandler.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = XVimHistoryHandler.h; sourceTree = "<group>"; };
-		ED0DED6D1F8C37D100886F6B /* XVimHistoryHandler.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = XVimHistoryHandler.m; sourceTree = "<group>"; };
 		ED0DED6F1F8C3B0600886F6B /* XVimExCommand.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = XVimExCommand.h; sourceTree = "<group>"; };
 		ED0DED701F8C3B0700886F6B /* XVimExCommand.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = XVimExCommand.m; sourceTree = "<group>"; };
 		ED0DED721F8C3B6B00886F6B /* XVimSearch.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = XVimSearch.m; sourceTree = "<group>"; };
@@ -555,24 +554,23 @@
 				ED0DED7B1F8C418200886F6B /* XVimEval.h */,
 				ED0DED7A1F8C418100886F6B /* XVimEval.m */,
 				A2053343247A969400412C8B /* XVimExArg.swift */,
-				ED0DED6F1F8C3B0600886F6B /* XVimExCommand.h */,
 				A2053345247A973D00412C8B /* XVimExCmdname.swift */,
+				ED0DED6F1F8C3B0600886F6B /* XVimExCommand.h */,
 				ED0DED701F8C3B0700886F6B /* XVimExCommand.m */,
-				ED0DED6C1F8C37D000886F6B /* XVimHistoryHandler.h */,
-				ED0DED6D1F8C37D100886F6B /* XVimHistoryHandler.m */,
+				A2053348247A9D8100412C8B /* XVimHistoryHandler.swift */,
 				EDF0105C1F6EEF1000461B2C /* XVimKeymap.h */,
 				EDF010661F6EEF1000461B2C /* XVimKeymap.m */,
 				EDF010651F6EEF1000461B2C /* XVimKeymapProvider.h */,
-				A2053347247A99ED00412C8B /* XVimModifier.h */,
 				EDF010511F6EEF0F00461B2C /* XVimKeyStroke.h */,
 				EDF0105D1F6EEF1000461B2C /* XVimKeyStroke.m */,
 				EDF010571F6EEF0F00461B2C /* XVimMacros.h */,
 				A21B82F224794C88002F162A /* XVimMark.swift */,
 				EDFA14921F8564DA0039B439 /* XVimMarks.h */,
 				EDFA14941F8564DA0039B439 /* XVimMarks.m */,
-				EDF0105E1F6EEF1000461B2C /* XVimMotionStyle.h */,
+				A2053347247A99ED00412C8B /* XVimModifier.h */,
 				A2C359952479552C00259730 /* XVimMotion.swift */,
 				EDF010611F6EEF1000461B2C /* XVimMotionOption.h */,
+				EDF0105E1F6EEF1000461B2C /* XVimMotionStyle.h */,
 				EDF010541F6EEF0F00461B2C /* XVimMotionType.h */,
 				ED0DED761F8C3BF100886F6B /* XVimOptions.h */,
 				ED0DED751F8C3BF000886F6B /* XVimOptions.m */,
@@ -707,7 +705,6 @@
 			files = (
 				EDF0106C1F6EEFFC00461B2C /* XVimMotionEvaluator.m in Sources */,
 				ED6331DC1F83864E00E9E6B0 /* NSAttributedString+Geometrics.m in Sources */,
-				ED0DED6E1F8C37D200886F6B /* XVimHistoryHandler.m in Sources */,
 				EDFAA30C1F85660A002100CE /* XVimMarkSetEvaluator.m in Sources */,
 				ED0DED611F8C2CEC00886F6B /* XVimZEvaluator.m in Sources */,
 				ED5282A51F825974000794A1 /* XVimDeleteEvaluator.m in Sources */,
@@ -728,6 +725,7 @@
 				A2A298DC2070A962001B5F9E /* XcodeUtils.m in Sources */,
 				ED548FE01F8280B700A8069D /* XVimRegisterEvaluator.m in Sources */,
 				EDD27BAC1F9B5EB30006471C /* XVimTester+Options.m in Sources */,
+				A2053349247A9D8100412C8B /* XVimHistoryHandler.swift in Sources */,
 				ED0DED7C1F8C418300886F6B /* XVimEval.m in Sources */,
 				A21B82F324794C88002F162A /* XVimMark.swift in Sources */,
 				EDD27BAD1F9B5EB30006471C /* XVimTester+TextObject.m in Sources */,

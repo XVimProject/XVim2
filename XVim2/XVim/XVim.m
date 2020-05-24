@@ -26,7 +26,6 @@
 #import "Logger.h"
 #import "XVimAboutDialog.h"
 #import "XVimExCommand.h"
-#import "XVimHistoryHandler.h"
 #import "XVimKeymap.h"
 #import "XVimMarks.h"
 #import "XVimOptions.h"
@@ -37,6 +36,7 @@
 #import "XVimXcode.h"
 #import "XVimIDESourceEditorView.h"
 #import "XVimSourceEditorSelectionDisplay.h"
+#import "XVim2-Swift.h"
 
 @interface XVim () {
     XVimKeymap* _keymaps[XVIM_MODE_COUNT];
