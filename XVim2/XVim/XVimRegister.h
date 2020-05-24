@@ -9,16 +9,9 @@
 #import "XVimDefs.h"
 #import "XVimKeyStroke.h"
 #import <Foundation/Foundation.h>
+#import "XVim2-Swift.h"
 
 NS_ASSUME_NONNULL_BEGIN
-
-@interface XVimRegister : NSObject
-- (void)appendXVimString:(XVimString*)string;
-- (void)setXVimString:(XVimString*)string;
-- (void)clear;
-@property XVimTextType type;
-@property (readonly) XVimMutableString* string;
-@end
 
 // Never implement direct access to XVimRegister object.
 // XVimRegisterManager must handle all the requests.
@@ -77,18 +70,6 @@ NS_ASSUME_NONNULL_BEGIN
 - (BOOL)isValidForRecording:(NSString*)name;
 
 - (void)enumerateRegisters:(void (^)(NSString* name, XVimRegister* reg))block;
-@end
-
-@interface XVimReadonlyRegister : XVimRegister
-@end
-
-@interface XVimCurrentFileRegister : XVimReadonlyRegister
-@end
-
-@interface XVimClipboardRegister : XVimRegister
-@end
-
-@interface XVimBlackholeRegister : XVimRegister
 @end
 
 NS_ASSUME_NONNULL_END

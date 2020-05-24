@@ -12,73 +12,7 @@
 #import "XVimEvaluator.h"
 #import "XVimKeyStroke.h"
 #import "XVimOptions.h"
-
-@interface XVimRegister ()
-@property (nonatomic) XVimMutableString* string;
-@end
-
-@implementation XVimRegister
-
-- (id)init
-{
-    if (self = [super init]) {
-        _string = [[XVimMutableString alloc] init];
-        _type = XVimTextTypeCharacters;
-    }
-    return self;
-}
-
-
-- (void)appendXVimString:(XVimString*)string { [self.string appendString:string]; }
-
-- (void)setXVimString:(XVimString*)string { [self.string setString:string ?: @""]; }
-
-- (void)clear
-{
-    [self.string setString:@""];
-    self.type = XVimTextTypeCharacters;
-}
-
-@end
-
-@implementation XVimCurrentFileRegister
-
-- (void)appendXVimString:(XVimString*)string { return; }
-
-- (void)setXVimString:(XVimString*)string { return; }
-
-- (XVimString*)string { return XVim.instance.document; }
-
-@end
-
-@implementation XVimReadonlyRegister
-@end
-
-@implementation XVimClipboardRegister
-
-- (void)appendXVimString:(XVimString*)string
-{
-    NSAssert(false, @"Clipboard register should never be called as appending string");
-}
-
-- (void)setXVimString:(XVimString*)string
-{
-    [NSPasteboard.generalPasteboard declareTypes:@[NSPasteboardTypeString] owner:nil];
-    [NSPasteboard.generalPasteboard setString:string forType:NSPasteboardTypeString];
-}
-
-- (XVimString*)string { return [NSPasteboard.generalPasteboard stringForType:NSPasteboardTypeString]; }
-
-@end
-
-@implementation XVimBlackholeRegister
-- (void)appendXVimString:(XVimString*)string { return; }
-
-- (void)setXVimString:(XVimString*)string { return; }
-
-- (XVimString*)string { return @""; }
-@end
-
+#import "XVim2-Swift.h"
 
 /**
  * Implementation Note:

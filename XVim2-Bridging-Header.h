@@ -15,5 +15,7 @@
 
 #import "XVimMotionOption.h"
 #import "XVimMotionStyle.h"
+#import "XVimDefs.h"
+#import "XVim.h"
 
 #endif /* XVim2_Bridging_Header_h */
