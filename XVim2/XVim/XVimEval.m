@@ -10,33 +10,14 @@
 #import "Logger.h"
 #import "SourceEditorViewProtocol.h"
 #import "XVimWindow.h"
+#import "XVim2-Swift.h"
 
-//
-@implementation XVimEvalArg
-@end
-
-//
-@implementation XVimEvalFunc
-
-- (id)initWithFuncName:(NSString*)aFuncName MethodName:(NSString*)aMethodName
-{
-    self = [super init];
-    if (self) {
-        _funcName = aFuncName;
-        _methodName = aMethodName;
-    }
-    return self;
-}
-
-@end
-
-//
 @implementation XVimEval
 - (id)init
 {
     self = [super init];
     if (self) {
-        let func = [[XVimEvalFunc alloc] initWithFuncName:@"line"  MethodName:@"line:inWindow:"];
+        let func = [[XVimEvalFunc alloc] initWithFuncName:@"line" methodName:@"line:inWindow:"];
         _evalFuncs = @[func];
     }
     return self;

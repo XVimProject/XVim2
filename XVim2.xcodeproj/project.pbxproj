@@ -19,6 +19,8 @@
 		A2482F321F72435D00FEF4DE /* XVimTaskRunner.m in Sources */ = {isa = PBXBuildFile; fileRef = A2482F301F72435D00FEF4DE /* XVimTaskRunner.m */; };
 		A2482F4C1F725B6500FEF4DE /* NSString+Util.m in Sources */ = {isa = PBXBuildFile; fileRef = A2482F4B1F725B6500FEF4DE /* NSString+Util.m */; };
 		A26E5C801F514686000BCC66 /* XVim2.xcplugin in CopyFiles */ = {isa = PBXBuildFile; fileRef = A26E5C731F5145AB000BCC66 /* XVim2.xcplugin */; };
+		A2753929247D372D001608F3 /* XVimEvalArg.swift in Sources */ = {isa = PBXBuildFile; fileRef = A2753928247D372D001608F3 /* XVimEvalArg.swift */; };
+		A275392B247D3826001608F3 /* XVimEvalFunc.swift in Sources */ = {isa = PBXBuildFile; fileRef = A275392A247D3826001608F3 /* XVimEvalFunc.swift */; };
 		A27A7AEB2077BD68006A0E4F /* XVimRangeUtil.m in Sources */ = {isa = PBXBuildFile; fileRef = A27A7AEA2077BD68006A0E4F /* XVimRangeUtil.m */; };
 		A27AB88C236AAEBF00803BE1 /* XVimTestResultTableView.m in Sources */ = {isa = PBXBuildFile; fileRef = A27AB88B236AAEBF00803BE1 /* XVimTestResultTableView.m */; };
 		A287A8C71F55D637009378BC /* NSObject+ExtraData.m in Sources */ = {isa = PBXBuildFile; fileRef = A287A8C61F55D636009378BC /* NSObject+ExtraData.m */; };
@@ -139,6 +141,9 @@
 		A2482F4A1F725B6500FEF4DE /* NSString+Util.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "NSString+Util.h"; sourceTree = "<group>"; };
 		A2482F4B1F725B6500FEF4DE /* NSString+Util.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = "NSString+Util.m"; sourceTree = "<group>"; };
 		A26E5C731F5145AB000BCC66 /* XVim2.xcplugin */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = XVim2.xcplugin; sourceTree = BUILT_PRODUCTS_DIR; };
+		A2753927247D36A4001608F3 /* XVimSearchCase.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = XVimSearchCase.h; sourceTree = "<group>"; };
+		A2753928247D372D001608F3 /* XVimEvalArg.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = XVimEvalArg.swift; sourceTree = "<group>"; };
+		A275392A247D3826001608F3 /* XVimEvalFunc.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = XVimEvalFunc.swift; sourceTree = "<group>"; };
 		A27A7AE92077BD68006A0E4F /* XVimRangeUtil.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = XVimRangeUtil.h; sourceTree = "<group>"; };
 		A27A7AEA2077BD68006A0E4F /* XVimRangeUtil.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = XVimRangeUtil.m; sourceTree = "<group>"; };
 		A27AB88A236AAEBF00803BE1 /* XVimTestResultTableView.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = XVimTestResultTableView.h; sourceTree = "<group>"; };
@@ -343,6 +348,7 @@
 		A2753926247D34E2001608F3 /* C */ = {
 			isa = PBXGroup;
 			children = (
+				A2753927247D36A4001608F3 /* XVimSearchCase.h */,
 				EDF010541F6EEF0F00461B2C /* XVimMotionType.h */,
 				EDF0105E1F6EEF1000461B2C /* XVimMotionStyle.h */,
 				EDF010611F6EEF1000461B2C /* XVimMotionOption.h */,
@@ -566,6 +572,8 @@
 				EDB8EF4E1F91F8DA004188F5 /* XVimConstants.m */,
 				EDF010521F6EEF0F00461B2C /* XVimDefs.h */,
 				ED0DED7B1F8C418200886F6B /* XVimEval.h */,
+				A275392A247D3826001608F3 /* XVimEvalFunc.swift */,
+				A2753928247D372D001608F3 /* XVimEvalArg.swift */,
 				ED0DED7A1F8C418100886F6B /* XVimEval.m */,
 				A2053343247A969400412C8B /* XVimExArg.swift */,
 				A2053345247A973D00412C8B /* XVimExCmdname.swift */,
@@ -715,6 +723,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				EDF0106C1F6EEFFC00461B2C /* XVimMotionEvaluator.m in Sources */,
+				A2753929247D372D001608F3 /* XVimEvalArg.swift in Sources */,
 				ED6331DC1F83864E00E9E6B0 /* NSAttributedString+Geometrics.m in Sources */,
 				EDFAA30C1F85660A002100CE /* XVimMarkSetEvaluator.m in Sources */,
 				ED0DED611F8C2CEC00886F6B /* XVimZEvaluator.m in Sources */,
@@ -802,6 +811,7 @@
 				A2933D0622AFB7AE0095378C /* XVimSourceEditorSelectionDisplay.m in Sources */,
 				A2482F311F72435D00FEF4DE /* ProcessRunner.m in Sources */,
 				A2A9F93E2070A85200E7BB53 /* XVimIDESourceEditorView.m in Sources */,
+				A275392B247D3826001608F3 /* XVimEvalFunc.swift in Sources */,
 				EDF010681F6EEFFC00461B2C /* XVimEvaluator.m in Sources */,
 				EDB7F6031F6D8CE5007E0C41 /* rd_route.c in Sources */,
 				A2A9F9352070A84600E7BB53 /* SourceEditorViewProxy.m in Sources */,

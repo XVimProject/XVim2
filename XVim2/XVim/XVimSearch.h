@@ -10,17 +10,12 @@
 // This may be also used in range specifier in the future.
 
 #import <Foundation/Foundation.h>
+#import "XVimSearchCase.h"
 
 NS_ASSUME_NONNULL_BEGIN
 
 @class XVimWindow;
 @class XVimMotion;
-
-typedef NS_ENUM(NSInteger, XVimSearchCase) {
-    XVimSearchCaseDefault,
-    XVimSearchCaseSensitive,
-    XVimSearchCaseInsensitive
-};
 
 @interface XVimSearch : NSObject
 @property BOOL lastSearchBackword; // If the last search was '?' command this is true
