@@ -20,7 +20,7 @@
 #import "XVimLowercaseEvaluator.h"
 #import "XVimMarkSetEvaluator.h"
 #import "XVimOptions.h"
-#import "XVimRegister.h"
+#import "XVimRegisterManager.h"
 #import "XVimRegisterEvaluator.h"
 #import "XVimReplacePromptEvaluator.h"
 #import "XVimSearch.h"

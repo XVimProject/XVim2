@@ -24,7 +24,7 @@
 #import "XVimMarkSetEvaluator.h"
 #import "XVimMarks.h"
 #import "XVimOptions.h"
-#import "XVimRegister.h"
+#import "XVimRegisterManager.h"
 #import "XVimRegisterEvaluator.h"
 #import "XVimReplaceEvaluator.h"
 #import "XVimReplacePromptEvaluator.h"

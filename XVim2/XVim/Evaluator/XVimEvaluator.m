@@ -12,7 +12,7 @@
 #import "XVimKeyStroke.h"
 #import "XVimKeymapProvider.h"
 #import "XVimNormalEvaluator.h"
-#import "XVimRegister.h"
+#import "XVimRegisterManager.h"
 #import "XVimSearch.h"
 #import "XVimWindow.h"
 

@@ -22,7 +22,7 @@
 #import "XVimKeyStroke.h"
 #import "XVimKeymap.h"
 #import "XVimMarks.h"
-#import "XVimRegister.h"
+#import "XVimRegisterManager.h"
 #import "XcodeUtils.h"
 #import "NSTextStorage+VimOperation.h"
 #import "NSURL+XVimXcodeModule.h"

@@ -56,7 +56,7 @@
 		ED5282A81F8259CB000794A1 /* XVimOperatorEvaluator.m in Sources */ = {isa = PBXBuildFile; fileRef = ED5282A71F8259CB000794A1 /* XVimOperatorEvaluator.m */; };
 		ED5282AB1F8259F5000794A1 /* XVimTextObjectEvaluator.m in Sources */ = {isa = PBXBuildFile; fileRef = ED5282AA1F8259F5000794A1 /* XVimTextObjectEvaluator.m */; };
 		ED548FDA1F827EEC00A8069D /* XVimYankEvaluator.m in Sources */ = {isa = PBXBuildFile; fileRef = ED548FD91F827EEC00A8069D /* XVimYankEvaluator.m */; };
-		ED548FDF1F8280B700A8069D /* XVimRegister.m in Sources */ = {isa = PBXBuildFile; fileRef = ED548FDD1F8280B700A8069D /* XVimRegister.m */; };
+		ED548FDF1F8280B700A8069D /* XVimRegisterManager.m in Sources */ = {isa = PBXBuildFile; fileRef = ED548FDD1F8280B700A8069D /* XVimRegisterManager.m */; };
 		ED548FE01F8280B700A8069D /* XVimRegisterEvaluator.m in Sources */ = {isa = PBXBuildFile; fileRef = ED548FDE1F8280B700A8069D /* XVimRegisterEvaluator.m */; };
 		ED548FE61F82A9C900A8069D /* XVimReplaceEvaluator.m in Sources */ = {isa = PBXBuildFile; fileRef = ED548FE41F82A9C900A8069D /* XVimReplaceEvaluator.m */; };
 		ED60EB871F82E4D4000CBF9C /* XVimTildeEvaluator.m in Sources */ = {isa = PBXBuildFile; fileRef = ED60EB861F82E4D4000CBF9C /* XVimTildeEvaluator.m */; };
@@ -210,8 +210,8 @@
 		ED548FD81F827EEC00A8069D /* XVimYankEvaluator.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = XVimYankEvaluator.h; sourceTree = "<group>"; };
 		ED548FD91F827EEC00A8069D /* XVimYankEvaluator.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = XVimYankEvaluator.m; sourceTree = "<group>"; };
 		ED548FDB1F8280B600A8069D /* XVimRegisterEvaluator.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = XVimRegisterEvaluator.h; sourceTree = "<group>"; };
-		ED548FDC1F8280B700A8069D /* XVimRegister.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = XVimRegister.h; sourceTree = "<group>"; };
-		ED548FDD1F8280B700A8069D /* XVimRegister.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = XVimRegister.m; sourceTree = "<group>"; };
+		ED548FDC1F8280B700A8069D /* XVimRegisterManager.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = XVimRegisterManager.h; sourceTree = "<group>"; };
+		ED548FDD1F8280B700A8069D /* XVimRegisterManager.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = XVimRegisterManager.m; sourceTree = "<group>"; };
 		ED548FDE1F8280B700A8069D /* XVimRegisterEvaluator.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = XVimRegisterEvaluator.m; sourceTree = "<group>"; };
 		ED548FE41F82A9C900A8069D /* XVimReplaceEvaluator.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = XVimReplaceEvaluator.m; sourceTree = "<group>"; };
 		ED548FE51F82A9C900A8069D /* XVimReplaceEvaluator.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = XVimReplaceEvaluator.h; sourceTree = "<group>"; };
@@ -338,6 +338,17 @@
 				A26E5C731F5145AB000BCC66 /* XVim2.xcplugin */,
 			);
 			name = Products;
+			sourceTree = "<group>";
+		};
+		A2753926247D34E2001608F3 /* C */ = {
+			isa = PBXGroup;
+			children = (
+				EDF010541F6EEF0F00461B2C /* XVimMotionType.h */,
+				EDF0105E1F6EEF1000461B2C /* XVimMotionStyle.h */,
+				EDF010611F6EEF1000461B2C /* XVimMotionOption.h */,
+				A2053347247A99ED00412C8B /* XVimModifier.h */,
+			);
+			path = C;
 			sourceTree = "<group>";
 		};
 		A28D4128207E5695001E0E13 /* Evaluator */ = {
@@ -537,6 +548,7 @@
 		EDF010501F6EEEF600461B2C /* XVim */ = {
 			isa = PBXGroup;
 			children = (
+				A2753926247D34E2001608F3 /* C */,
 				A20FB79A21BB7FF2001FDC62 /* about.xib */,
 				ED6331CD1F83797E00E9E6B0 /* CommandLine */,
 				A28D4128207E5695001E0E13 /* Evaluator */,
@@ -569,16 +581,12 @@
 				A21B82F224794C88002F162A /* XVimMark.swift */,
 				EDFA14921F8564DA0039B439 /* XVimMarks.h */,
 				EDFA14941F8564DA0039B439 /* XVimMarks.m */,
-				A2053347247A99ED00412C8B /* XVimModifier.h */,
 				A2C359952479552C00259730 /* XVimMotion.swift */,
-				EDF010611F6EEF1000461B2C /* XVimMotionOption.h */,
-				EDF0105E1F6EEF1000461B2C /* XVimMotionStyle.h */,
-				EDF010541F6EEF0F00461B2C /* XVimMotionType.h */,
 				ED0DED761F8C3BF100886F6B /* XVimOptions.h */,
 				ED0DED751F8C3BF000886F6B /* XVimOptions.m */,
 				A205334A247AA06900412C8B /* XVimRegister.swift */,
-				ED548FDC1F8280B700A8069D /* XVimRegister.h */,
-				ED548FDD1F8280B700A8069D /* XVimRegister.m */,
+				ED548FDC1F8280B700A8069D /* XVimRegisterManager.h */,
+				ED548FDD1F8280B700A8069D /* XVimRegisterManager.m */,
 				ED0DED731F8C3B6C00886F6B /* XVimSearch.h */,
 				ED0DED721F8C3B6B00886F6B /* XVimSearch.m */,
 				EDF010621F6EEF1000461B2C /* XVimStringBuffer.h */,
@@ -760,7 +768,7 @@
 				A2B537B11F51C94400D83C0A /* NSObject+Swizzle.m in Sources */,
 				EDF0106E1F6EEFFC00461B2C /* XVimWindow.m in Sources */,
 				EDD27BAE1F9B5EB30006471C /* XVimTester+Jump.m in Sources */,
-				ED548FDF1F8280B700A8069D /* XVimRegister.m in Sources */,
+				ED548FDF1F8280B700A8069D /* XVimRegisterManager.m in Sources */,
 				EDD27BA61F9B5EB30006471C /* XVimTester+Issues.m in Sources */,
 				A2053344247A969400412C8B /* XVimExArg.swift in Sources */,
 				EDD27BB11F9B5EB30006471C /* XVimTester+ExCmd.m in Sources */,

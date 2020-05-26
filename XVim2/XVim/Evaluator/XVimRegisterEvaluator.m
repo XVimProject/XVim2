@@ -11,7 +11,7 @@
 #import "XVim.h"
 #import "XVimKeyStroke.h"
 #import "XVimNormalEvaluator.h"
-#import "XVimRegister.h"
+#import "XVimRegisterManager.h"
 #import "XVimWindow.h"
 
 @interface XVimRegisterEvaluator () {

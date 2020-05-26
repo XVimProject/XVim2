@@ -6,7 +6,7 @@
 //  Copyright (c) 2012 __MyCompanyName__. All rights reserved.
 //
 
-#import "XVimRegister.h"
+#import "XVimRegisterManager.h"
 #import "Logger.h"
 #import "XVim.h"
 #import "XVimEvaluator.h"

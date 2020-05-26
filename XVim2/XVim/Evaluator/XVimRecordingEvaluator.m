@@ -9,7 +9,7 @@
 #import "XVimRecordingEvaluator.h"
 #import "XVimWindow.h"
 #import "XVimNormalEvaluator.h"
-#import "XVimRegister.h"
+#import "XVimRegisterManager.h"
 #import "XVim.h"
 
 @interface XVimRecordingEvaluator()

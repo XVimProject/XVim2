@@ -29,7 +29,7 @@
 #import "XVimKeymap.h"
 #import "XVimMarks.h"
 #import "XVimOptions.h"
-#import "XVimRegister.h"
+#import "XVimRegisterManager.h"
 #import "XVimSearch.h"
 #import "XVimTester.h"
 #import <IDESourceEditor/_TtC15IDESourceEditor19IDESourceEditorView.h>
