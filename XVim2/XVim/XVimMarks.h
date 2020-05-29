@@ -67,12 +67,12 @@ NS_ASSUME_NONNULL_BEGIN
  * Returns list of XVimMarks object for a document.(Local Marks)
  * documentPath must be a full path since it identifies the XVimMarks object for the document by it.
  **/
-- (NSDictionary*)marksForDocument:(NSString*)documentPath;
+- (nonnull NSDictionary<NSString*, XVimMark*>*)marksForDocument:(NSString*)documentPath;
 
 /**
  * Returns list of XVimMarks object for file marks.
  **/
-@property (readonly) NSDictionary* fileMarks;
+@property (readonly) NSDictionary<NSString*, XVimMark*>* fileMarks;
 
 /**
  * Set file mark or local mark.
@@ -82,20 +82,20 @@ NS_ASSUME_NONNULL_BEGIN
  *     A-Z for file marks
  * Otherwise they are just ignored
  **/
-- (void)setLocalMark:(XVimMark*)mark forName:(NSString*)name;
-- (void)setFileMark:(XVimMark*)mark forName:(NSString*)name;
+- (void)setLocalMark:(nonnull XVimMark*)mark forName:(nonnull NSString*)name;
+- (void)setFileMark:(nonnull XVimMark*)mark forName:(nonnull NSString*)name;
 
 /**
  * Dump marks as a string
  **/
-- (NSString*)dumpMarksForDocument:(NSString*)document;
-- (NSString*)dumpFileMarks;
+- (nonnull NSString*)dumpMarksForDocument:(NSString*)document;
+- (nonnull NSString*)dumpFileMarks;
 
-- (NSArray*)jumplist;
-- (NSString*)dumpJumpList;
-- (void)addToJumpListWithMark:(XVimMark*)mark KeepJumpMarkIndex:(BOOL)keepJumpMarkIndex;
-- (XVimMark*)incrementJumpMark;
-- (XVimMark*)decrementJumpMark:(BOOL*)pNeedUpdateMark;
+- (nonnull NSArray<XVimMark*>*)jumplist;
+- (nonnull NSString*)dumpJumpList;
+- (void)addToJumpListWithMark:(nonnull XVimMark*)mark KeepJumpMarkIndex:(BOOL)keepJumpMarkIndex;
+- (nullable XVimMark*)incrementJumpMark;
+- (nullable XVimMark*)decrementJumpMark:(BOOL*)pNeedUpdateMark;
 @end
 
 NS_ASSUME_NONNULL_END

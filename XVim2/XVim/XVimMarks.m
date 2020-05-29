@@ -27,7 +27,7 @@ static const int kJumpListMax = 100;
 
 @synthesize fileMarks = _fileMarks;
 
-+ (NSDictionary*)createEmptyLocalMarkDictionary
++ (NSDictionary<NSString*, XVimMark*>*)createEmptyLocalMarkDictionary
 {
     NSMutableDictionary* dic = [[NSMutableDictionary alloc] init];
     for (NSUInteger i = 0; i < LOCAL_MARKS.length; i++) {
@@ -38,7 +38,7 @@ static const int kJumpListMax = 100;
     return dic;
 }
 
-+ (NSMutableDictionary*)createEmptyFileMarkDictionary
++ (NSMutableDictionary<NSString*, XVimMark*>*)createEmptyFileMarkDictionary
 {
     NSMutableDictionary* dic = [[NSMutableDictionary alloc] init];
     for (NSUInteger i = 0; i < FILE_MARKS.length; i++) {
@@ -62,13 +62,13 @@ static const int kJumpListMax = 100;
     return self;
 }
 
-+ (NSString*)markDescriptionWithName:(NSString*)name Mark:(XVimMark*)mark
++ (nonnull NSString*)markDescriptionWithName:(nonnull NSString*)name Mark:(nonnull XVimMark*)mark
 {
     return [NSString stringWithFormat:@"%@    %-5d%-7d%20@\n", (NSString*)name, (int)mark.line, (int)mark.column,
                                       mark.document];
 }
 
-- (NSString*)dumpMarksForDocument:(NSString*)document
+- (nonnull NSString*)dumpMarksForDocument:(NSString*)document
 {
     NSDictionary* marks = [self marksForDocument:document];
     NSMutableString* str = [[NSMutableString alloc] init];
@@ -85,7 +85,7 @@ static const int kJumpListMax = 100;
     return str;
 }
 
-- (NSString*)dumpFileMarks
+- (nonnull NSString*)dumpFileMarks
 {
     NSDictionary* marks = _fileMarks;
     NSMutableString* str = [[NSMutableString alloc] init];
@@ -102,13 +102,9 @@ static const int kJumpListMax = 100;
     return str;
 }
 
-- (XVimMark*)markForName:(NSString*)name forDocument:(NSString*)documentPath
+- (XVimMark*)markForName:(nonnull NSString*)name forDocument:(nonnull NSString*)documentPath
 {
-    NSAssert(nil != name, @"name can not be nil");
-    NSAssert(nil != documentPath, @"documentPath can not be nil");
-
-    if ([name length] == 0) {
-        DEBUG_LOG(@"The length of name is 0");
+    if (name.length == 0) {
         return nil;
     }
 
@@ -123,19 +119,15 @@ static const int kJumpListMax = 100;
         return [_fileMarks objectForKey:name];
     }
     else {
-        DEBUG_LOG(@"Unsupported name for mark is passed");
         return nil;
     }
 }
 
-- (void)setMark:(XVimMark*)mark forName:(NSString*)name
+- (void)setMark:(nonnull XVimMark*)mark forName:(nonnull NSString*)name
 {
-    NSAssert(nil != mark, @"mark can not be nil");
-    NSAssert(nil != name, @"name can not be nil");
     NSAssert(nil != mark.document, @"documentPath can not be nil");
 
-    if ([name length] == 0) {
-        DEBUG_LOG(@"The length of name is 0");
+    if (name.length == 0) {
         return;
     }
     unichar c = [name characterAtIndex:0];
@@ -148,32 +140,21 @@ static const int kJumpListMax = 100;
     else if ([_fileMarkSet characterIsMember:c]) {
         [self setFileMark:mark forName:name];
     }
-    else {
-        DEBUG_LOG(@"Unsupported name for mark is passed");
-    }
 }
 
-- (NSDictionary*)marksForDocument:(NSString*)documentPath
+- (nonnull NSDictionary<NSString*, XVimMark*>*)marksForDocument:(nonnull NSString*)documentPath
 {
-    NSAssert(nil != documentPath, @"documentPath can not be nil");
     if (nil == [_localMarksDictionary objectForKey:documentPath]) {
         [_localMarksDictionary setObject:[XVimMarks createEmptyLocalMarkDictionary] forKey:documentPath];
     }
-    NSDictionary* marks = [_localMarksDictionary objectForKey:documentPath];
-
-    NSAssert(nil != marks, @"This should not happen");
-    return marks;
+    return [_localMarksDictionary objectForKey:documentPath];
 }
 
-
-- (void)setLocalMark:(XVimMark*)mark forName:(NSString*)name
+- (void)setLocalMark:(nonnull XVimMark*)mark forName:(nonnull NSString*)name
 {
-    NSAssert(nil != mark, @"mark can not be nil");
-    NSAssert(nil != name, @"name can not be nil");
     NSAssert(nil != mark.document, @"documentPath can not be nil");
 
-    if ([name length] == 0) {
-        DEBUG_LOG(@"The length of name is 0");
+    if (name.length == 0) {
         return;
     }
     unichar c = [name characterAtIndex:0];
@@ -189,14 +170,11 @@ static const int kJumpListMax = 100;
     [[marks objectForKey:[NSString stringWithFormat:@"%C", c]] setMark:mark];
 }
 
-- (void)setFileMark:(XVimMark*)mark forName:(NSString*)name
+- (void)setFileMark:(nonnull XVimMark*)mark forName:(nonnull NSString*)name
 {
-    NSAssert(nil != mark, @"mark can not be nil");
-    NSAssert(nil != name, @"name can not be nil");
     NSAssert(nil != mark.document, @"documentPath can not be nil");
 
-    if ([name length] == 0) {
-        DEBUG_LOG(@"The length of name is 0");
+    if (name.length == 0) {
         return;
     }
     unichar c = [name characterAtIndex:0];
@@ -210,17 +188,16 @@ static const int kJumpListMax = 100;
 }
 
 #pragma mark - JumpList
-- (NSArray*)jumplist { return _jumplist; }
+- (nonnull NSArray<XVimMark*>*)jumplist {
+    return _jumplist;
+}
 
 /**
  * support motion: "'", "`", "/", "?", "n", "N", "%", "(", ")", "{", "}", ":s", "L", "M", "H"
  * not support motion: "[[", "]]", ":tag", the commands that start editing a new file
  */
-- (void)addToJumpListWithMark:(XVimMark*)aMark KeepJumpMarkIndex:(BOOL)keepJumpMarkIndex
+- (void)addToJumpListWithMark:(nonnull XVimMark*)aMark KeepJumpMarkIndex:(BOOL)keepJumpMarkIndex
 {
-    NSAssert(aMark, @"Mark cannot be nil");
-    // DEBUG_LOG( @"line[%d] keepjump[%d]", aMark.line, keepJumpMarkIndex );
-
     NSMutableArray* aryDel = [NSMutableArray array];
     for (XVimMark* jump in _jumplist) {
         if (jump.line == aMark.line && [jump.document isEqualToString:aMark.document]) {
@@ -240,10 +217,11 @@ static const int kJumpListMax = 100;
     }
 }
 
-- (XVimMark*)incrementJumpMark
+- (nullable XVimMark*)incrementJumpMark
 {
-    if (_jumpMarkIndex <= 1)
+    if (_jumpMarkIndex <= 1) {
         return nil;
+    }
     NSUInteger count = _jumplist.count;
     --_jumpMarkIndex;
     XVimMark* mark;
@@ -256,11 +234,12 @@ static const int kJumpListMax = 100;
     return mark;
 }
 
-- (XVimMark*)decrementJumpMark:(BOOL*)pNeedUpdateMark
+- (nullable XVimMark*)decrementJumpMark:(BOOL*)pNeedUpdateMark
 {
     NSUInteger count = _jumplist.count;
-    if (_jumpMarkIndex >= count)
+    if (_jumpMarkIndex >= count) {
         return nil;
+    }
     *pNeedUpdateMark = (_jumpMarkIndex == 0);
     ++_jumpMarkIndex;
     XVimMark* mark;
@@ -276,7 +255,7 @@ static const int kJumpListMax = 100;
     return mark;
 }
 
-- (NSString*)dumpJumpList
+- (nonnull NSString*)dumpJumpList
 {
     NSMutableString* str = [NSMutableString string];
     XVim* xvim = [XVim instance];
