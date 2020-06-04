@@ -101,7 +101,7 @@
 	switch (textType){
 		case XVimTextTypeCharacters:
             // Forward insertion point +1 if after flag if on
-            if (0 != text.length) {
+            if (text.length > 0) {
                 if (![self.textStorage isNewline:self.insertionPoint] && after) {
                     targetPos++;
                 }
@@ -121,14 +121,16 @@
                 targetPos = [self.textStorage xvim_startOfLine:self.insertionPoint];
             }
             insertionPointAfterPut = targetPos;
-            for (NSUInteger i = 0; i < count; i++) {
-                if (after && i == 0) {
-                    // delete newline at the end. (TEXT_TYPE_LINES always have newline at the end of the text)
-                    NSString* t = [text substringToIndex:text.length - 1];
-                    [self insertText:t replacementRange:NSMakeRange(targetPos, 0)];
-                }
-                else {
-                    [self insertText:text replacementRange:NSMakeRange(targetPos, 0)];
+            if (text.length > 0) {
+                for (NSUInteger i = 0; i < count; i++) {
+                    if (after && i == 0) {
+                        // delete newline at the end. (TEXT_TYPE_LINES always have newline at the end of the text)
+                        NSString* t = [text substringToIndex:text.length - 1];
+                        [self insertText:t replacementRange:NSMakeRange(targetPos, 0)];
+                    }
+                    else {
+                        [self insertText:text replacementRange:NSMakeRange(targetPos, 0)];
+                    }
                 }
             }
 			break;
