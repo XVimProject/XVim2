@@ -659,6 +659,7 @@ static CGFloat XvimCommandLineAnimationDuration = 0.1;
         height.priority = 250;
         height.active = YES;
 
+        /* TODO:Xcode12
         [NSAnimationContext runAnimationGroup:^(NSAnimationContext* _Nonnull context) {
             context.duration = XvimCommandLineAnimationDuration;
             NSEdgeInsets insets = scrollView.additionalContentInsets;
@@ -670,6 +671,7 @@ static CGFloat XvimCommandLineAnimationDuration = 0.1;
                     completionHandler:^{
                         self.commandLine.needsDisplay = YES;
                     }];
+        */
     }
 }
 
@@ -678,6 +680,7 @@ static CGFloat XvimCommandLineAnimationDuration = 0.1;
     if (!self.isShowingCommandLine)
         return;
 
+    /* TODO:Xcode12
     let scrollView = [self.sourceEditorView scrollView];
     if ([self.sourceEditorView.class isEqual:NSClassFromString(IDESourceEditorViewClassName)]) {
         NSEdgeInsets insets = scrollView.additionalContentInsets;
@@ -694,6 +697,7 @@ static CGFloat XvimCommandLineAnimationDuration = 0.1;
                         self->_cmdLineBottomAnchor = nil;
                     }];
     }
+    */
 }
 
 - (NSMutableArray<NSValue*>*)foundRanges
