@@ -134,4 +134,4 @@ Delete the following directory:
   https://github.com/XVimProject/XVim2/contributors
 
 ## License
-  MIT License
+  MIT License'
