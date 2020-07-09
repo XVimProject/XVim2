@@ -91,6 +91,7 @@ Delete the following directory:
    * **The text you were manipulating**.
    * **Xcode version**.
    * **XVim version**. The version number of the revision you built.
+   * **.xvimrc**. If you have it.
   
   When it is hard to solve a problem with information above, take debug log according to the following movie please.
   
