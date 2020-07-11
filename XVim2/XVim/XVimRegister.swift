@@ -55,7 +55,7 @@ import Foundation
 
     @objc override public func setXVimString(_ str: String?) {
         NSPasteboard.general.declareTypes([NSPasteboard.PasteboardType.string], owner: nil)
-        NSPasteboard.general.setString(string, forType: NSPasteboard.PasteboardType.string)
+        NSPasteboard.general.setString(str ?? "", forType: NSPasteboard.PasteboardType.string)
     }
 
     @objc override public var string: String {
