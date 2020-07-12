@@ -57,6 +57,7 @@
  - `develop`: for the next beta Xcode and develop.
 
  - tags
+   - `xcode11.5`
    - `xcode11.2`
    - `xcode10.3`
    - `xcode10.2`
