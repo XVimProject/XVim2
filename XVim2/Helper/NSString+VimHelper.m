@@ -40,6 +40,22 @@ static NSString* precomputed[9] = {
 - (BOOL)isDelimeter:(NSUInteger)index { return isDelimeter([self characterAtIndex:index]); }
 - (BOOL)isNewline:(NSUInteger)index { return isNewline([self characterAtIndex:index]); }
 - (BOOL)isKeyword:(NSUInteger)index { return isKeyword([self characterAtIndex:index]); }
+- (NSString *)escapedString {
+    NSMutableString* result = [[NSMutableString alloc] init];
+    for (int index = 0; index < self.length; ++index) {
+        unichar uc = [self characterAtIndex:index];
+        NSString* str;
+        if (uc == 0x9) {
+            str = @"<TAB>";
+        } else if (uc == 0xA) {
+            str = @"<CR>";
+        } else {
+            str = [NSString stringWithFormat:@"%C", uc];
+        }
+        [result appendString:str];
+    }
+    return result;
+}
 
 - (NSString*)convertToICURegex:(NSRegularExpressionOptions*)options
 {

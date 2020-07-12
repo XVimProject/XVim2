@@ -12,6 +12,7 @@
 #import "XVimKeyStroke.h"
 #import "XVimTestCase.h"
 #import "XcodeUtils.h"
+#import "NSString+VimHelper.h"
 #import <IDEKit/IDEEditorCoordinator.h>
 #import <DVTFoundation/DVTDocumentLocation.h>
 #import <objc/runtime.h>
@@ -377,10 +378,10 @@ DVTTextPreferences* XcodeTextPreferences(void) { return [DVTTextPreferencesClass
         string = testCase.message;
     }
     else if ([aTableColumn.identifier isEqualToString:@"Expected"]) {
-        string = [NSString stringWithFormat:@"'%@'", testCase.expectedText];
+        string = [NSString stringWithFormat:@"'%@'", [testCase.expectedText escapedString]];
     }
     else if ([aTableColumn.identifier isEqualToString:@"Actual"]) {
-        string = [NSString stringWithFormat:@"'%@'", testCase.actualText];
+        string = [NSString stringWithFormat:@"'%@'", [testCase.actualText escapedString]];
     }
     cellView.stringValue = string;
     return cellView;

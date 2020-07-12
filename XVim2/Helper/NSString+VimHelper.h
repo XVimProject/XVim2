@@ -27,6 +27,7 @@ BOOL isKeyword(unichar ch);
 - (BOOL)isDelimeter:(NSUInteger)index;
 - (BOOL)isNewline:(NSUInteger)index;
 - (BOOL)isKeyword:(NSUInteger)index;
+- (NSString *)escapedString;
 
 /**
  * Convert Vim regex to ICU regex.
