@@ -51,9 +51,13 @@ BOOL XVimOpenDocumentAtPath(NSString* path)
                                                                                                         workspace]
                                                               error:&error];
         if (error == nil) {
+            /* TOOD: Xcode12
+            // #311 prevent crash
             [XVimLastActiveEditorArea() _openEditorOpenSpecifier:spec
                                                    editorContext:[XVimLastActiveEditorArea() lastActiveEditorContext]
                                                        takeFocus:YES];
+             */
+            return NO;
         }
         else {
             ERROR_LOG(@"Failed to create IDEEditorOpenSpecifier from %@. Error = %@", path, error.localizedDescription);
