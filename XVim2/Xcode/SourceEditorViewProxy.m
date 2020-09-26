@@ -659,19 +659,17 @@ static CGFloat XvimCommandLineAnimationDuration = 0.1;
         height.priority = 250;
         height.active = YES;
 
-        /* TODO:Xcode12
         [NSAnimationContext runAnimationGroup:^(NSAnimationContext* _Nonnull context) {
             context.duration = XvimCommandLineAnimationDuration;
-            NSEdgeInsets insets = scrollView.additionalContentInsets;
+            NSEdgeInsets insets = scrollView.contentInsets;
             self->_cmdLineBottomAnchor.animator.constant = 0;
             insets.bottom += XvimCommandLineHeight;
-            scrollView.animator.additionalContentInsets = insets;
-            [scrollView updateAutomaticContentInsets];
+            scrollView.animator.contentInsets = insets;
+            [scrollView setUpdatingAutoContentInsets:YES];
         }
                     completionHandler:^{
                         self.commandLine.needsDisplay = YES;
                     }];
-        */
     }
 }
 
@@ -680,24 +678,22 @@ static CGFloat XvimCommandLineAnimationDuration = 0.1;
     if (!self.isShowingCommandLine)
         return;
 
-    /* TODO:Xcode12
     let scrollView = [self.sourceEditorView scrollView];
     if ([self.sourceEditorView.class isEqual:NSClassFromString(IDESourceEditorViewClassName)]) {
-        NSEdgeInsets insets = scrollView.additionalContentInsets;
-        insets.bottom = 0;
+        NSEdgeInsets insets = scrollView.contentInsets;
+        insets.bottom -= XvimCommandLineHeight;
 
         [NSAnimationContext runAnimationGroup:^(NSAnimationContext* _Nonnull context) {
             context.duration = XvimCommandLineAnimationDuration;
             self->_cmdLineBottomAnchor.animator.constant = -XvimCommandLineHeight;
-            scrollView.animator.additionalContentInsets = insets;
-            [scrollView updateAutomaticContentInsets];
+            scrollView.animator.contentInsets = insets;
+            [scrollView setUpdatingAutoContentInsets:YES];
         }
                     completionHandler:^{
                         [self.commandLine removeFromSuperview];
                         self->_cmdLineBottomAnchor = nil;
                     }];
     }
-    */
 }
 
 - (NSMutableArray<NSValue*>*)foundRanges

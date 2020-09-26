@@ -25,7 +25,6 @@
 }
 
 @property BOOL updatingAutoContentInsets; // @synthesize updatingAutoContentInsets=_updatingAutoContentInsets;
-@property struct NSEdgeInsets additionalContentInsets; // @synthesize additionalContentInsets=_additionalContentInsets;
 @property BOOL isLiveScrolling; // @synthesize isLiveScrolling=_isLiveScrolling;
 @property __weak id <SourceEditorScrollViewScrollerMoved> scrollerMovedDelegate; // @synthesize scrollerMovedDelegate=_scrollerMovedDelegate;
 @property __weak id <SourceEditorPrivateScrollViewDelegate> privateScrollViewDelegate; // @synthesize privateScrollViewDelegate=_privateScrollViewDelegate;
@@ -41,7 +40,6 @@
 - (void)_notifyDelegateOfUserScroll:(id)arg1;
 - (void)_doScroller:(id)arg1 hitPart:(long long)arg2 multiplier:(double)arg3;
 - (void)_updateAutomaticContentInsets;
-- (void)updateAutomaticContentInsets;
 - (void)didEndLiveScrolling;
 - (void)didLiveScrolling;
 - (void)didStartLiveScrolling;
