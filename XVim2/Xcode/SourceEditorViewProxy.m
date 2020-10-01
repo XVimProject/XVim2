@@ -28,10 +28,10 @@
 #import "_TtC12SourceEditor16SourceEditorView+XVim.h"
 #import "XVimXcode.h"
 #import <IDESourceEditor/_TtC15IDESourceEditor19IDESourceEditorView-IDESourceEditor.h>
-#import <IDESourceEditor/_TtC15IDESourceEditor19IDESourceEditorView-IDESourceEditor1.h>
-#import <IDESourceEditor/_TtC15IDESourceEditor19IDESourceEditorView-IDESourceEditor2.h>
-#import <IDESourceEditor/_TtC15IDESourceEditor19IDESourceEditorView-IDESourceEditor3.h>
-#import <IDESourceEditor/_TtC15IDESourceEditor19IDESourceEditorView-IDESourceEditor4.h>
+//#import <IDESourceEditor/_TtC15IDESourceEditor19IDESourceEditorView-IDESourceEditor1.h>
+//#import <IDESourceEditor/_TtC15IDESourceEditor19IDESourceEditorView-IDESourceEditor2.h>
+//#import <IDESourceEditor/_TtC15IDESourceEditor19IDESourceEditorView-IDESourceEditor3.h>
+//#import <IDESourceEditor/_TtC15IDESourceEditor19IDESourceEditorView-IDESourceEditor4.h>
 
 @interface SourceEditorViewProxy ()
 @property (weak) _TtC15IDESourceEditor19IDESourceEditorView* sourceEditorView;
