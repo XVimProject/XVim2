@@ -4,7 +4,8 @@
 //  Copyright (C) 1997-2019 Steve Nygard.
 //
 
-#import <DVTKit/NSControlTextEditingDelegate-Protocol.h>
+//#import <DVTKit/NSControlTextEditingDelegate-Protocol.h>
+#import <AppKit/AppKit.h>
 
 @class NSArray, NSCell, NSEvent, NSIndexSet, NSNotification, NSString, NSTableColumn, NSTableRowView, NSTableView, NSView;
 

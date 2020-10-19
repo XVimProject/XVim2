@@ -4,7 +4,8 @@
 //  Copyright (C) 1997-2019 Steve Nygard.
 //
 
-#import <DVTKit/NSObject-Protocol.h>
+//#import <DVTKit/NSObject-Protocol.h>
+#import <AppKit/AppKit.h>
 
 @class NSArray, NSControl, NSNotification, NSString, NSText, NSTextView;
 

@@ -48,7 +48,7 @@
     MISSING_TYPE *_appendInterval;
 }
 
-- (void).cxx_destruct;
+//- (void).cxx_destruct;
 - (id)contextForCompletionStrategiesAtWordStartLocation:(unsigned long long)arg1;
 - (void)setViewController:(id)arg1;
 - (void)setCompletionStrategies:(id)arg1;

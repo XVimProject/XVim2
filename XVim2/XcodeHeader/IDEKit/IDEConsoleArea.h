@@ -11,7 +11,7 @@
 #import <IDEKit/DVTScopeBarHost-Protocol.h>
 #import <IDEKit/IDEConsoleTextViewObjectiveCExpressionRangeDelegate-Protocol.h>
 #import <IDEKit/IDEConsoleTextViewStandardIODelegate-Protocol.h>
-#import <IDEKit/NSTouchBarProvider-Protocol.h>
+//#import <IDEKit/NSTouchBarProvider-Protocol.h>
 
 @class DVTFindBar, DVTNotificationToken, DVTObservingToken, DVTScopeBarController, DVTScopeBarView, DVTScopeBarsManager, DVTScrollView, DVTSearchField, IDEConsoleTextView, IDELayoutControlView, IDEWorkspaceDocument, NSButton, NSMapTable, NSMutableArray, NSMutableSet, NSPopUpButton, NSScrollView, NSSet, NSString, NSTimer, NSTouchBar, NSUndoManager, NSView;
 @protocol DVTConsoleTextViewProtocol;

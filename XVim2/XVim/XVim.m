@@ -32,11 +32,14 @@
 #import "XVimRegisterManager.h"
 #import "XVimSearch.h"
 #import "XVimTester.h"
-#import <IDESourceEditor/_TtC15IDESourceEditor19IDESourceEditorView.h>
+#import <IDESourceEditor/_TtC15IDESourceEditor20IDEConsoleEditorView.h>
+#import <IDEKit/IDEDefaultDebugArea.h>
+#import <IDEKit/IDEConsoleArea.h>
 #import "XVimXcode.h"
 #import "XVimIDESourceEditorView.h"
 #import "XVimSourceEditorSelectionDisplay.h"
 #import "XVim2-Swift.h"
+#import "XcodeUtils.h"
 
 @interface XVim () {
     XVimKeymap* _keymaps[XVIM_MODE_COUNT];
@@ -399,7 +402,6 @@
 
 - (void)writeToConsole:(NSString*)fmt, ...
 {
-#ifdef TODO
     IDEDefaultDebugArea* debugArea = (IDEDefaultDebugArea*)[XVimLastActiveEditorArea() activeDebuggerArea];
     // On playgorund activateConsole call cause crash.
     if (![debugArea canActivateConsole]) {
@@ -408,19 +410,15 @@
     [XVimLastActiveEditorArea() activateConsole:self];
     IDEConsoleArea* console = [debugArea consoleArea];
 
-    // IDEConsoleArea has IDEConsoleTextView as its view but we do not have public method to access it.
-    // It has the view as instance variable named "_consoleView"
-    // So use obj-c runtime method to get instance varialbe by its name.
-    IDEConsoleTextView* pView = [console valueForKey:@"_consoleView"];
+    _TtC15IDESourceEditor20IDEConsoleEditorView *consoleEditorView = (_TtC15IDESourceEditor20IDEConsoleEditorView *)[console valueForKey:@"_consoleViewSwift"];
 
     va_list argumentList;
     va_start(argumentList, fmt);
     NSString* string = [[NSString alloc] initWithFormat:fmt arguments:argumentList];
-    pView.logMode = 1; // I do not know well about this value. But we have to set this to write text into the console.
-    [pView insertText:string];
-    [pView insertNewline:self];
+    consoleEditorView.logMode = 1; // I do not know well about this value. But we have to set this to write text into the console.
+    [consoleEditorView insertNewline:self];
+    [consoleEditorView insertText:string];
     va_end(argumentList);
-#endif
 }
 
 - (void)runTest:(id)sender

@@ -4,7 +4,7 @@
 //  Copyright (C) 1997-2019 Steve Nygard.
 //
 
-#import <IDEKit/NSTextViewDelegate-Protocol.h>
+//#import <IDEKit/NSTextViewDelegate-Protocol.h>
 
 @class DVTCompletingTextView, DVTTextDocumentLocation, NSColor, NSDictionary, NSLayoutManager, NSMenu, NSMutableDictionary, NSPasteboard, NSString, NSTextAttachmentCell;
 
