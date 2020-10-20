@@ -20,7 +20,7 @@
     BOOL _shouldOnlyAllowConsole;
 }
 
-- (void).cxx_destruct;
+//- (void).cxx_destruct;
 @property(nonatomic) BOOL shouldOnlyAllowConsole; // @synthesize shouldOnlyAllowConsole=_shouldOnlyAllowConsole;
 - (void)replacementView:(id)arg1 didInstallViewController:(id)arg2;
 @property(readonly) IDEConsoleArea *consoleArea;

@@ -32,7 +32,7 @@
 
 + (long long)version;
 + (void)configureStateSavingObjectPersistenceByName:(id)arg1;
-- (void).cxx_destruct;
+//- (void).cxx_destruct;
 @property(retain) DVTReplacementView *rightReplacementView; // @synthesize rightReplacementView=_rightReplacementView;
 @property(retain) DVTReplacementView *leftReplacementView; // @synthesize leftReplacementView=_leftReplacementView;
 @property(retain) DVTSplitView *splitView; // @synthesize splitView=_splitView;

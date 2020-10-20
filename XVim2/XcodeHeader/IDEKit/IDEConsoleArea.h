@@ -61,7 +61,7 @@
 + (void)configureStateSavingObjectPersistenceByName:(id)arg1;
 + (id)consoleStateSavingString;
 + (void)initialize;
-- (void).cxx_destruct;
+//- (void).cxx_destruct;
 @property(retain) NSString *consoleFilterString; // @synthesize consoleFilterString=_consoleFilterString;
 @property __weak DVTScrollView *consoleScrollView; // @synthesize consoleScrollView=_consoleScrollView;
 @property(readonly) DVTScopeBarView *scopeBarView; // @synthesize scopeBarView=_scopeBar;
