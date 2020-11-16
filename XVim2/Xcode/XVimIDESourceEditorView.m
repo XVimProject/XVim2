@@ -26,6 +26,7 @@
 #import "NSString+Util.h"
 #import "XVimXcode.h"
 #import "XcodeUtils.h"
+#import "NSView+ViewRecursion.h"
 
 CONST_STR(EDLastEvent);
 CONST_STR(EDMode);
@@ -57,12 +58,73 @@ CONST_STR(EDWindow);
     
 }
 
+
+
 - (void)xvim_scrollRangeToVisible:(NSRange)range
 {
     if (self.xvim_window != nil && self.xvim_window.scrollHalt){
         // skip to prevent crash in Xcode9.3
     } else {
         [self xvim_scrollRangeToVisible:range];
+    }
+    
+    NSView *this = (NSView *) self;
+    NSArray *subviews = [this allSubViews];
+    NSView *gutterMarginContentView;
+    for (NSView *v in subviews) {
+        if ([[v className] isEqualToString:@"SourceEditor.SourceEditorGutterMarginContentView"]) {
+            gutterMarginContentView = v;
+            break;
+        }
+    }
+    
+    if (gutterMarginContentView == nil) return;
+    
+    long pos = [[self.xvim_window currentPositionMark] line];
+    long numberOfLines = [self.xvim_window numberOfLines];
+    long max = numberOfLines - pos;
+    long min =  pos - 1 < 0 ? 0 : - (pos - 1);
+
+    CALayer *superLayer;
+    for (CALayer *layer in [gutterMarginContentView.layer sublayers]) {
+        if ([[layer className] containsString:@"LineNumbersHostingLayer"]) {
+            superLayer = layer;
+            break;
+        }
+    }
+    if (superLayer == nil) return;
+    
+    CGRect referenceFrame = [[[superLayer sublayers] firstObject] frame];
+    referenceFrame.size.width = referenceFrame.size.width + referenceFrame.origin.x;
+    referenceFrame.origin.x = 0;
+    CGFloat frameYPosition = referenceFrame.origin.y;
+    CGFloat frameStep = referenceFrame.size.height + 5;
+
+    NSArray *numberLayers = [superLayer sublayers];
+    for (long i = [numberLayers count] - 1; i >= 0; i--) {
+        CALayer *layer = [numberLayers objectAtIndex:i];
+        [layer removeFromSuperlayer];
+    }
+    
+    
+    for (long i = min; i < max; i++) {
+        CGRect frame = referenceFrame;
+        frame.origin.y = frameYPosition;
+
+        long number = min < 0 ? -(min) : min;
+        NSString *text = [NSString stringWithFormat: @"%ld", number];
+
+        CATextLayer *label = [[CATextLayer alloc] init];
+        [label setFont:@"SFMono-Medium"];
+        [label setFontSize:12];
+        [label setFrame:frame];
+        [label setString:text];
+        [label setAlignmentMode:kCAAlignmentRight];
+        [label setForegroundColor: [[NSColor colorWithWhite:0.7 alpha:1.0] CGColor]];
+        [superLayer addSublayer:label];
+
+        frameYPosition += frameStep;
+        min++;
     }
 }
 

@@ -484,7 +484,13 @@
     }
     mark.line = [self.sourceView.textStorage xvim_lineNumberAtIndex:r.location];
     mark.column = [self.sourceView.textStorage xvim_columnOfIndex:r.location];
+    
     return mark;
+}
+
+- (long)numberOfLines
+{
+    return [self.sourceView.textStorage xvim_numberOfLines];
 }
 
 - (void)preMotion:(XVimMotion*)motion

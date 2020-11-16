@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		28DF293E255FDDD30064CE54 /* NSView+ViewRecursion.m in Sources */ = {isa = PBXBuildFile; fileRef = 28DF293D255FDDD30064CE54 /* NSView+ViewRecursion.m */; };
 		3B53601A211495F4008BFF2B /* XVimRecordingEvaluator.m in Sources */ = {isa = PBXBuildFile; fileRef = 3B536018211495F4008BFF2B /* XVimRecordingEvaluator.m */; };
 		A2053344247A969400412C8B /* XVimExArg.swift in Sources */ = {isa = PBXBuildFile; fileRef = A2053343247A969400412C8B /* XVimExArg.swift */; };
 		A2053346247A973D00412C8B /* XVimExCmdname.swift in Sources */ = {isa = PBXBuildFile; fileRef = A2053345247A973D00412C8B /* XVimExCmdname.swift */; };
@@ -120,6 +121,8 @@
 /* End PBXCopyFilesBuildPhase section */
 
 /* Begin PBXFileReference section */
+		28DF293C255FDDD30064CE54 /* NSView+ViewRecursion.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "NSView+ViewRecursion.h"; sourceTree = "<group>"; };
+		28DF293D255FDDD30064CE54 /* NSView+ViewRecursion.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = "NSView+ViewRecursion.m"; sourceTree = "<group>"; };
 		3B536018211495F4008BFF2B /* XVimRecordingEvaluator.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = XVimRecordingEvaluator.m; sourceTree = "<group>"; };
 		3B536019211495F4008BFF2B /* XVimRecordingEvaluator.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = XVimRecordingEvaluator.h; sourceTree = "<group>"; };
 		5D1DDA6E227444B600CB3B74 /* _TtC12SourceEditor28SourceEditorSelectionDisplay.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = _TtC12SourceEditor28SourceEditorSelectionDisplay.h; path = XVim2/Xcode/_TtC12SourceEditor28SourceEditorSelectionDisplay.h; sourceTree = SOURCE_ROOT; };
@@ -474,6 +477,8 @@
 				ED9CF2D81F6EFB6100908DFB /* Macros.h */,
 				A27A7AE92077BD68006A0E4F /* XVimRangeUtil.h */,
 				A27A7AEA2077BD68006A0E4F /* XVimRangeUtil.m */,
+				28DF293C255FDDD30064CE54 /* NSView+ViewRecursion.h */,
+				28DF293D255FDDD30064CE54 /* NSView+ViewRecursion.m */,
 			);
 			path = Helper;
 			sourceTree = "<group>";
@@ -771,6 +776,7 @@
 				EDF010691F6EEFFC00461B2C /* XVimKeymap.m in Sources */,
 				EDD27BA51F9B5EB30006471C /* XVimTester+Operator.m in Sources */,
 				EDCAF9A41F8CC33C003F1C58 /* XVimEqualEvaluator.m in Sources */,
+				28DF293E255FDDD30064CE54 /* NSView+ViewRecursion.m in Sources */,
 				ED60EB8A1F82E5B9000CBF9C /* XVimUppercaseEvaluator.m in Sources */,
 				A2482F321F72435D00FEF4DE /* XVimTaskRunner.m in Sources */,
 				A2482F4C1F725B6500FEF4DE /* NSString+Util.m in Sources */,
