@@ -35,7 +35,6 @@ NS_ASSUME_NONNULL_BEGIN
 @property (readonly) XVimCommandLine* commandLine;
 @property (nonatomic, getter=isEnabled) BOOL enabled;
 @property (nonatomic) XVimMark* currentPositionMark;
-@property (nonatomic) long numberOfLines;
 @property BOOL scrollHalt;
 
 - (instancetype)initWithSourceView:(id<SourceEditorViewProtocol>)sourceView;

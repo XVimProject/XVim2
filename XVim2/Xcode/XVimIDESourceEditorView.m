@@ -16,8 +16,6 @@
 #import "SourceEditorViewProxy.h"
 #import "XVimKeyStroke.h"
 #import "XVimWindow.h"
-#import "XVim.h"
-#import "XVimOptions.h"
 #import <QuartzCore/QuartzCore.h>
 
 #import "NSObject+ExtraData.h"
@@ -57,8 +55,6 @@ CONST_STR(EDWindow);
     [XVimIDESourceEditorView xvim_addInstanceMethod: @selector(xvim_setupOnFirstAppearance)
          toClassName:IDESourceEditorViewClassName];
 }
-
-
 
 - (void)xvim_scrollRangeToVisible:(NSRange)range
 {
