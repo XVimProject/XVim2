@@ -28,7 +28,6 @@
 #import "NSString+Util.h"
 #import "XVimXcode.h"
 #import "XcodeUtils.h"
-#import "NSView+ViewRecursion.h"
 
 CONST_STR(EDLastEvent);
 CONST_STR(EDMode);
@@ -57,9 +56,6 @@ CONST_STR(EDWindow);
          toClassName:IDESourceEditorViewClassName];
     [XVimIDESourceEditorView xvim_addInstanceMethod: @selector(xvim_setupOnFirstAppearance)
          toClassName:IDESourceEditorViewClassName];
-    [XVimIDESourceEditorView xvim_addInstanceMethod: @selector(xvim_setupRelativeNumbers)
-         toClassName:IDESourceEditorViewClassName];
-    
 }
 
 
@@ -71,7 +67,6 @@ CONST_STR(EDWindow);
     } else {
         [self xvim_scrollRangeToVisible:range];
     }
-    [self xvim_setupRelativeNumbers];
 }
 
 - (void)xvim_viewWillMoveToWindow:(id)window
@@ -107,64 +102,6 @@ CONST_STR(EDWindow);
         [self setExtraData:w forName:EDWindow];
     }
     return w;
-}
-
-- (void)xvim_setupRelativeNumbers
-{
-    if (!XVim.instance.options.relativenumber) return;
-    NSView *this = (NSView *) self;
-    NSArray *subviews = [this allSubViews];
-    NSView *gutterMarginContentView;
-    for (NSView *v in subviews) {
-        if ([[v className] isEqualToString:@"SourceEditor.SourceEditorGutterMarginContentView"]) {
-            gutterMarginContentView = v;
-            break;
-        }
-    }
-    
-    if (gutterMarginContentView == nil) return;
-    
-    long pos = [[self.xvim_window currentPositionMark] line];
-    long numberOfLines = [self.xvim_window numberOfLines];
-
-    CALayer *superLayer;
-    for (CALayer *layer in [gutterMarginContentView.layer sublayers]) {
-        if ([[layer className] containsString:@"LineNumbersHostingLayer"]) {
-            superLayer = layer;
-            break;
-        }
-    }
-    if (superLayer == nil) return;
-    
-    CGRect referenceFrame = [[[superLayer sublayers] firstObject] frame];
-    referenceFrame.size.width = referenceFrame.size.width + referenceFrame.origin.x;
-
-    NSMutableArray *relativeLayers = [[NSMutableArray alloc] initWithCapacity:numberOfLines];
-    NSArray *numberLayers = [superLayer sublayers];
-    for (long i = [numberLayers count] - 1; i >= 0; i--) {
-        CALayer *layer = [numberLayers objectAtIndex:i];
-        CGRect frame = [layer frame];
-        frame.size.width = referenceFrame.size.width;
-        frame.origin.x = 0;
-        NSUInteger currentNumber = (frame.origin.y - 4) / (frame.size.height + 5) + 1; // 4 = first top padding, 5 = padding between numbers
-        NSUInteger relativeLineNumber = (NSUInteger)llabs(((long long)currentNumber - pos));
-        NSString *text = [NSString stringWithFormat: @"%ld", relativeLineNumber];
-        
-        CATextLayer *label = [[CATextLayer alloc] init];
-        [label setFont:@"SFMono-Medium"];
-        [label setFontSize:11];
-        [label setFrame:frame];
-        [label setString:text];
-        [label setAlignmentMode:kCAAlignmentRight];
-        [label setForegroundColor: [[NSColor colorWithWhite:0.7 alpha:1.0] CGColor]];
-        [relativeLayers addObject:label];
-        
-        [layer removeFromSuperlayer];
-    }
-    
-    for (CALayer *layer in relativeLayers) {
-        [superLayer addSublayer:layer];
-    }
 }
 
 @end

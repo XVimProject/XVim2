@@ -18,6 +18,8 @@
 #import "XVimOptions.h"
 #import <objc/runtime.h>
 #import "XVim2-Swift.h"
+#import "NSView+ViewRecursion.h"
+#import <QuartzCore/QuartzCore.h>
 
 
 @interface XVimWindow () {
@@ -110,6 +112,7 @@
     if (activate) {
         [firstEvaluator becameHandler];
     }
+    [self handleRelativeNumbers];
 }
 
 - (void)_documentChangedNotification:(NSNotification*)notification
@@ -513,6 +516,69 @@
     [XVim.instance.marks addToJumpListWithMark:mark KeepJumpMarkIndex:motion.keepJumpMarkIndex];
 }
 
+- (void)handleRelativeNumbers
+{
+    if (!XVim.instance.options.relativenumber) return;
+    NSView *view = self.sourceView.view;
+    NSArray *subviews = [view allSubViews];
+    NSView *gutterMarginContentView;
+    for (NSView *v in subviews) {
+        if ([[v className] isEqualToString:@"SourceEditor.SourceEditorGutterMarginContentView"]) {
+            gutterMarginContentView = v;
+            break;
+        }
+    }
+    
+    if (gutterMarginContentView == nil) return;
+    
+    long pos = [[self currentPositionMark] line];
+    long numberOfLines = [self numberOfLines];
 
+    CALayer *superLayer;
+    for (CALayer *layer in [gutterMarginContentView.layer sublayers]) {
+        if ([[layer className] containsString:@"LineNumbersHostingLayer"]) {
+            superLayer = layer;
+            break;
+        }
+    }
+    if (superLayer == nil) return;
+    
+    CGRect referenceFrame = [[[superLayer sublayers] firstObject] frame];
+    referenceFrame.size.width = referenceFrame.size.width + referenceFrame.origin.x;
+
+    NSMutableArray *relativeLayers = [[NSMutableArray alloc] initWithCapacity:numberOfLines];
+    NSArray *numberLayers = [superLayer sublayers];
+    for (long i = [numberLayers count] - 1; i >= 0; i--) {
+        
+        // I think these layers are CATextLayers because it was printed out as that one
+        // time when I debugged, and I got to just set the line number string directly on
+        // the layer. But it only happened once, all other times it as been
+        // _TtC12SourceEditor34SourceEditorFontSmoothingTextLayer
+        
+        CALayer *layer = [numberLayers objectAtIndex:i];
+        CGRect frame = [layer frame];
+        frame.size.width = referenceFrame.size.width;
+        frame.origin.x = 0;
+        NSUInteger currentNumber = (frame.origin.y - 4) / (frame.size.height + 5) + 1; // 4 = first top padding, 5 = padding between numbers
+        NSUInteger relativeLineNumber = (NSUInteger)llabs(((long long)currentNumber - pos));
+        NSString *text = [NSString stringWithFormat: @"%ld", relativeLineNumber];
+        
+        CATextLayer *label = [[CATextLayer alloc] init];
+        [label setFont:@"SFMono-Medium"];
+        [label setFontSize:11];
+        [label setFrame:frame];
+        [label setString:text];
+        [label setAlignmentMode:kCAAlignmentRight];
+        [label setForegroundColor: [[NSColor colorWithWhite:0.7 alpha:1.0] CGColor]];
+        [label setContentsScale:2];
+        [relativeLayers addObject:label];
+        
+        [layer removeFromSuperlayer];
+    }
+    
+    for (CALayer *layer in relativeLayers) {
+        [superLayer addSublayer:layer];
+    }
+}
 
 @end
