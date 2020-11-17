@@ -59,7 +59,7 @@
         _hlsearch = NO;
         _number = NO;
         _vimregex = NO;
-        _relativenumber = YES;
+        _relativenumber = NO;
         _alwaysuseinputsource = NO;
         _blinkcursor = NO;
         _startofline = YES;
