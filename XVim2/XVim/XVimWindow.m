@@ -20,6 +20,7 @@
 #import "XVim2-Swift.h"
 #import "NSView+ViewRecursion.h"
 #import <QuartzCore/QuartzCore.h>
+#import "XcodeUtils.h"
 
 
 @interface XVimWindow () {
@@ -491,11 +492,6 @@
     return mark;
 }
 
-- (long)numberOfLines
-{
-    return [self.sourceView.textStorage xvim_numberOfLines];
-}
-
 - (void)preMotion:(XVimMotion*)motion
 {
     if (!motion.isJumpMotion)
@@ -519,6 +515,7 @@
 - (void)handleRelativeNumbers
 {
     if (!XVim.instance.options.relativenumber) return;
+
     NSView *view = self.sourceView.view;
     NSArray *subviews = [view allSubViews];
     NSView *gutterMarginContentView;
@@ -531,8 +528,10 @@
     
     if (gutterMarginContentView == nil) return;
     
-    long pos = [[self currentPositionMark] line];
-    long numberOfLines = [self numberOfLines];
+    long pos = self.sourceView.currentLineNumber - 1;
+    long pos2 = [self.currentPositionMark line] - 1;
+    NSLog(@"Pos1: %d, Pos2: %d", pos, pos2);
+    long numberOfLines = [self.sourceView.textStorage xvim_numberOfLines];
 
     CALayer *superLayer;
     for (CALayer *layer in [gutterMarginContentView.layer sublayers]) {
@@ -542,40 +541,47 @@
         }
     }
     if (superLayer == nil) return;
-    
-    CGRect referenceFrame = [[[superLayer sublayers] firstObject] frame];
-    referenceFrame.size.width = referenceFrame.size.width + referenceFrame.origin.x;
+
+    id theme = [NSClassFromString(@"DVTFontAndColorTheme") performSelector:@selector(currentTheme)];
+    NSFont *font =  [theme valueForKey:@"_sourcePlainTextFont"];
+    NSColor *fontColor = [theme valueForKey:@"_sourcePlainTextColor"];
+    CGFloat width = superLayer.frame.size.width - 3;
+    CGFloat padding = 5;
 
     NSMutableArray *relativeLayers = [[NSMutableArray alloc] initWithCapacity:numberOfLines];
-    NSArray *numberLayers = [superLayer sublayers];
-    for (long i = [numberLayers count] - 1; i >= 0; i--) {
-        
-        // I think these layers are CATextLayers because it was printed out as that one
-        // time when I debugged, and I got to just set the line number string directly on
-        // the layer. But it only happened once, all other times it as been
-        // _TtC12SourceEditor34SourceEditorFontSmoothingTextLayer
+    NSArray *numberLayers = [[superLayer sublayers] sortedArrayUsingComparator:^NSComparisonResult(id a, id b) {
+        CGFloat first = [(CALayer *)a frame].origin.y;
+        CGFloat second = [(CALayer *)b frame].origin.y;
+        return first == second;
+    }];
+    for (long i = 0; i < [numberLayers count]; i++) {
         
         CALayer *layer = [numberLayers objectAtIndex:i];
+        if (i == 0) {
+            CALayer *nextLayer = [numberLayers objectAtIndex:i+1];
+            padding = nextLayer.frame.origin.y - layer.frame.origin.y - nextLayer.frame.size.height;
+        }
+
         CGRect frame = [layer frame];
-        frame.size.width = referenceFrame.size.width;
+        frame.size.width = width;
         frame.origin.x = 0;
-        NSUInteger currentNumber = (frame.origin.y - 4) / (frame.size.height + 5) + 1; // 4 = first top padding, 5 = padding between numbers
+        long currentNumber = lroundf((frame.origin.y - padding) / (frame.size.height + padding));
         NSUInteger relativeLineNumber = (NSUInteger)llabs(((long long)currentNumber - pos));
         NSString *text = [NSString stringWithFormat: @"%ld", relativeLineNumber];
         
         CATextLayer *label = [[CATextLayer alloc] init];
-        [label setFont:@"SFMono-Medium"];
-        [label setFontSize:11];
+        [label setFont:CFBridgingRetain([font fontName])];
+        [label setFontSize:[font pointSize] - 1];
         [label setFrame:frame];
         [label setString:text];
         [label setAlignmentMode:kCAAlignmentRight];
-        [label setForegroundColor: [[NSColor colorWithWhite:0.7 alpha:1.0] CGColor]];
-        [label setContentsScale:2];
+        [label setForegroundColor: relativeLineNumber == 0 ? [fontColor CGColor] : [[fontColor colorWithAlphaComponent:0.5] CGColor]];
+        [label setContentsScale:layer.contentsScale];
         [relativeLayers addObject:label];
         
         [layer removeFromSuperlayer];
     }
-    
+
     for (CALayer *layer in relativeLayers) {
         [superLayer addSublayer:layer];
     }
