@@ -295,7 +295,7 @@
 
     [self setSelectedRanges:self.xvim_selectedRanges affinity:NSSelectionAffinityDownstream stillSelecting:NO];
 
-    if (scroll) {
+    if (scroll && !XVim.instance.options.relativenumber) { // Relative numbers bugs with scroll to
         [self xvim_scrollTo:self.insertionPoint];
     }
     self.xvim_lockSyncStateFromView = NO;

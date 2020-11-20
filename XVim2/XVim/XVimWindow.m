@@ -529,8 +529,6 @@
     if (gutterMarginContentView == nil) return;
     
     long pos = self.sourceView.currentLineNumber - 1;
-    long pos2 = [self.currentPositionMark line] - 1;
-    NSLog(@"Pos1: %d, Pos2: %d", pos, pos2);
     long numberOfLines = [self.sourceView.textStorage xvim_numberOfLines];
 
     CALayer *superLayer;
@@ -546,28 +544,34 @@
     NSFont *font =  [theme valueForKey:@"_sourcePlainTextFont"];
     NSColor *fontColor = [theme valueForKey:@"_sourcePlainTextColor"];
     CGFloat width = superLayer.frame.size.width - 3;
+    CGFloat firstPadding = 4;
     CGFloat padding = 5;
 
-    NSMutableArray *relativeLayers = [[NSMutableArray alloc] initWithCapacity:numberOfLines];
     NSArray *numberLayers = [[superLayer sublayers] sortedArrayUsingComparator:^NSComparisonResult(id a, id b) {
         CGFloat first = [(CALayer *)a frame].origin.y;
         CGFloat second = [(CALayer *)b frame].origin.y;
         return first == second;
     }];
-    for (long i = 0; i < [numberLayers count]; i++) {
+    NSUInteger numberOfLayers = [numberLayers count];
+    NSMutableArray *relativeLayers = [[NSMutableArray alloc] initWithCapacity:numberOfLines];
+    for (long i = 0; i < numberOfLayers; i++) {
         
         CALayer *layer = [numberLayers objectAtIndex:i];
-        if (i == 0) {
+        if (i < 4 && layer.frame.origin.y > 0) {
             CALayer *nextLayer = [numberLayers objectAtIndex:i+1];
             padding = nextLayer.frame.origin.y - layer.frame.origin.y - nextLayer.frame.size.height;
+            firstPadding = padding - 1;
         }
 
         CGRect frame = [layer frame];
         frame.size.width = width;
         frame.origin.x = 0;
-        long currentNumber = lroundf((frame.origin.y - padding) / (frame.size.height + padding));
-        NSUInteger relativeLineNumber = (NSUInteger)llabs(((long long)currentNumber - pos));
+        CGFloat currentNumberF = (frame.origin.y - firstPadding) / (frame.size.height + padding);
+        NSInteger currentNumber = lroundf(currentNumberF);
+        NSInteger relativeLineNumber = llabs(currentNumber - pos);
         NSString *text = [NSString stringWithFormat: @"%ld", relativeLineNumber];
+        
+//        NSLog(@"Frame: %@, currentNumberF: %f, currentNumber: %ld, pos: %ld, padding: %f, numberOfLines: %ld, numberOfLayers: %ld", NSStringFromRect(frame), currentNumberF, currentNumber, pos, padding, numberOfLines, numberOfLayers);
         
         CATextLayer *label = [[CATextLayer alloc] init];
         [label setFont:CFBridgingRetain([font fontName])];
