@@ -557,7 +557,7 @@
     for (long i = 0; i < numberOfLayers; i++) {
         
         CALayer *layer = [numberLayers objectAtIndex:i];
-        if (i < 4 && layer.frame.origin.y > 0) {
+        if (i < 4 && layer.frame.origin.y > 0 && i < numberOfLayers - 1) {
             CALayer *nextLayer = [numberLayers objectAtIndex:i+1];
             padding = nextLayer.frame.origin.y - layer.frame.origin.y - nextLayer.frame.size.height;
             firstPadding = padding - 1;
