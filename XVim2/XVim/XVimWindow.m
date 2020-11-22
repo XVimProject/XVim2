@@ -628,7 +628,7 @@
 {
     CGFloat currentNumberF = (frame.origin.y - firstPadding) / (frame.size.height + padding);
     NSInteger currentNumber = lroundf(currentNumberF);
-    NSLog(@"currentNumberF: %f, currentNumber: %ld", currentNumberF, currentNumber);
+//    NSLog(@"currentNumberF: %f, currentNumber: %ld, frame: %@", currentNumberF, currentNumber, NSStringFromRect(frame));
     NSInteger relativeLineNumber = llabs(currentNumber - currentPosition);
     NSString *text = [NSString stringWithFormat: @"%ld", relativeLineNumber];
     return text;
