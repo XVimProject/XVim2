@@ -18,6 +18,9 @@
 #import "XVimOptions.h"
 #import <objc/runtime.h>
 #import "XVim2-Swift.h"
+#import "NSView+ViewRecursion.h"
+#import <QuartzCore/QuartzCore.h>
+#import "XcodeUtils.h"
 
 
 @interface XVimWindow () {
@@ -110,6 +113,7 @@
     if (activate) {
         [firstEvaluator becameHandler];
     }
+    [self handleRelativeNumbers];
 }
 
 - (void)_documentChangedNotification:(NSNotification*)notification
@@ -484,6 +488,7 @@
     }
     mark.line = [self.sourceView.textStorage xvim_lineNumberAtIndex:r.location];
     mark.column = [self.sourceView.textStorage xvim_columnOfIndex:r.location];
+    
     return mark;
 }
 
@@ -505,6 +510,128 @@
     }
 
     [XVim.instance.marks addToJumpListWithMark:mark KeepJumpMarkIndex:motion.keepJumpMarkIndex];
+}
+
+#pragma mark - Relative numbers
+
+- (void)handleRelativeNumbers
+{
+    if (!XVim.instance.options.relativenumber) return;
+
+    NSView *gutterMarginContentView = [self getGutterMarginView];
+    if (gutterMarginContentView == nil) return;
+
+    CALayer *lineNumbersHostingLayer = [self getLineNumbersHostingLayer:gutterMarginContentView];
+    if (lineNumbersHostingLayer == nil) return;
+    
+    NSInteger currentPositionZeroIndexed = self.sourceView.currentLineNumber - 1;
+    NSInteger numberOfLines = [self.sourceView.textStorage xvim_numberOfLines];
+
+    id theme = [NSClassFromString(@"DVTFontAndColorTheme") performSelector:@selector(currentTheme)];
+    NSFont *font =  [theme valueForKey:@"_sourcePlainTextFont"];
+    NSColor *fontColor = [theme valueForKey:@"_sourcePlainTextColor"];
+    
+    CGFloat width = lineNumbersHostingLayer.frame.size.width - 3;
+    CGFloat firstPadding = 4;
+    CGFloat padding = 5;
+
+    NSArray *lineNumberLayers = [self getLineNumberLayersSortedByYCoord:lineNumbersHostingLayer];
+    NSUInteger numberOfLayers = [lineNumberLayers count];
+    NSMutableArray *relativeLayers = [[NSMutableArray alloc] initWithCapacity:numberOfLines];
+    for (long i = 0; i < numberOfLayers; i++) {
+        
+        CALayer *layer = [lineNumberLayers objectAtIndex:i];
+        if (i < 4 && layer.frame.origin.y > 0 && i < numberOfLayers - 1) {
+            CALayer *nextLayer = [lineNumberLayers objectAtIndex:i+1];
+            padding = nextLayer.frame.origin.y - layer.frame.origin.y - nextLayer.frame.size.height;
+            firstPadding = padding - 1;
+        }
+
+        CGRect frame = [layer frame];
+        frame.size.width = width;
+        frame.origin.x = 0;
+        NSString *text = [self getRelativeLineTextWithFrame:frame
+                                               firstPadding:firstPadding
+                                                    padding:padding
+                                            currentPosition:currentPositionZeroIndexed];
+        CGColorRef textColor = [text isEqualToString:@"0"]
+            ? [fontColor CGColor]
+            : [[fontColor colorWithAlphaComponent:0.5] CGColor];
+
+        CATextLayer *label = [self createLineNumberTextLabelWithFont:font
+                                                           fontColor:textColor
+                                                               frame:frame
+                                                                text:text
+                                                        contentScale:layer.contentsScale];
+        [relativeLayers addObject:label];
+        
+        [layer removeFromSuperlayer];
+    }
+
+    for (CALayer *layer in relativeLayers) {
+        [lineNumbersHostingLayer addSublayer:layer];
+    }
+}
+
+- (NSView *)getGutterMarginView
+{
+    NSView *view = self.sourceView.view;
+    NSArray *subviews = [view allSubViews];
+    for (NSView *v in subviews) {
+        if ([[v className] isEqualToString:@"SourceEditor.SourceEditorGutterMarginContentView"]) {
+            return v;
+        }
+    }
+    return nil;
+}
+
+- (CALayer *)getLineNumbersHostingLayer:(NSView *)gutterMarginView
+{
+    for (CALayer *layer in [gutterMarginView.layer sublayers]) {
+        if ([[layer className] containsString:@"LineNumbersHostingLayer"]) {
+            return layer;
+        }
+    }
+    return nil;
+}
+
+- (NSArray *)getLineNumberLayersSortedByYCoord:(CALayer *)lineNumbersHostingLayer
+{
+    return [[lineNumbersHostingLayer sublayers] sortedArrayUsingComparator:^NSComparisonResult(id a, id b) {
+        CGFloat first = [(CALayer *)a frame].origin.y;
+        CGFloat second = [(CALayer *)b frame].origin.y;
+        return first == second;
+    }];
+}
+
+- (CATextLayer *)createLineNumberTextLabelWithFont:(NSFont *)font
+                                         fontColor:(CGColorRef)fontColor
+                                             frame:(CGRect)frame
+                                              text:(NSString *)text
+                                      contentScale:(CGFloat)contentScale
+{
+    CATextLayer *label = [[CATextLayer alloc] init];
+    [label setFont:CFBridgingRetain([font fontName])];
+    [label setFontSize:[font pointSize] - 1];
+    [label setFrame:frame];
+    [label setString:text];
+    [label setAlignmentMode:kCAAlignmentRight];
+    [label setForegroundColor: fontColor];
+    [label setContentsScale:contentScale];
+    return label;
+}
+
+- (NSString *)getRelativeLineTextWithFrame:(CGRect)frame
+                              firstPadding:(CGFloat)firstPadding
+                                   padding:(CGFloat)padding
+                           currentPosition:(NSInteger)currentPosition
+{
+    CGFloat currentNumberF = (frame.origin.y - firstPadding) / (frame.size.height + padding);
+    NSInteger currentNumber = lroundf(currentNumberF);
+//    NSLog(@"currentNumberF: %f, currentNumber: %ld, frame: %@", currentNumberF, currentNumber, NSStringFromRect(frame));
+    NSInteger relativeLineNumber = llabs(currentNumber - currentPosition);
+    NSString *text = [NSString stringWithFormat: @"%ld", relativeLineNumber];
+    return text;
 }
 
 @end

@@ -50,11 +50,10 @@ CONST_STR(EDWindow);
      selector:@selector(scrollRangeToVisible:)
      with:@selector(xvim_scrollRangeToVisible:)];
     
-    [XVimIDESourceEditorView xvim_addInstanceMethod:@selector(xvim_window)
+    [XVimIDESourceEditorView xvim_addInstanceMethod: @selector(xvim_window)
          toClassName:IDESourceEditorViewClassName];
     [XVimIDESourceEditorView xvim_addInstanceMethod: @selector(xvim_setupOnFirstAppearance)
          toClassName:IDESourceEditorViewClassName];
-    
 }
 
 - (void)xvim_scrollRangeToVisible:(NSRange)range
@@ -87,7 +86,6 @@ CONST_STR(EDWindow);
 - (void)xvim_setupOnFirstAppearance
 {
     [self.xvim_window setupAfterEditorViewSetup];
-    
 }
 
 - (XVimWindow*)xvim_window
