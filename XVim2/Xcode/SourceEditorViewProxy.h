@@ -243,6 +243,7 @@ NS_ASSUME_NONNULL_BEGIN
 - (NSRect)bounds;
 - (NSRect)frame;
 - (NSSize)contentSize;
+- (NSSize)sourceEditorViewSize;
 // Utilities
 - (void)scrollRangeToVisible:(NSRange)arg1;
 @property (readonly) NSInteger lineCount;

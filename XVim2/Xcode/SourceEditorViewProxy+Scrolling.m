@@ -97,10 +97,12 @@ typedef struct {
 // zero index
 - (LineRange)xvim_visibleLineRange
 {
-    let bottomPoint = NSMakePoint(0.0, self.contentSize.height);
-    
+    let xcode12_workaround_offset = 20.0;
+    let topPoint = NSMakePoint(0.0, self.sourceEditorViewSize.height - self.contentSize.height - xcode12_workaround_offset);
+    let bottomPoint = NSMakePoint(0.0, self.sourceEditorViewSize.height - xcode12_workaround_offset);
+
     NSInteger topLine =
-    [self lineRangeForCharacterRange:NSMakeRange([self characterIndexForInsertionAtPoint:NSZeroPoint], 0)]
+    [self lineRangeForCharacterRange:NSMakeRange([self characterIndexForInsertionAtPoint:topPoint], 0)]
     .location;
     clamp(topLine, 0, self.lineCount - 1);
     

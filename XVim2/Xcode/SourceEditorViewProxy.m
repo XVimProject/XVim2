@@ -621,6 +621,7 @@
 - (NSRect)bounds { return self.sourceEditorView.bounds; }
 - (NSRect)frame { return self.sourceEditorView.frame; }
 - (NSSize)contentSize { return self.sourceEditorView.visibleTextRect.size; }
+- (NSSize)sourceEditorViewSize { return self.sourceEditorView.bounds.size; }
 
 - (XVimCommandLine*)commandLine
 {
