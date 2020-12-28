@@ -1,54 +1,52 @@
 # XVim2
 
-  XVim2 is a Vim plugin for Xcode. The plugin intends to offer a compelling Vim experience without the need to give up any Xcode features.
+  XVim2 is a Vim plugin for Xcode intending to offer a compelling Vim experience without the need to give up any Xcode features.
   
   - Xcode 9 or above, follow the installation instructions below.
   - Xcode 8 or below, you should use [XVim](https://github.com/XVimProject/XVim)
   - [Google Group for XVim developers](https://groups.google.com/d/forum/xvim-developers) has been created.
 
-## INSTALL
+## Install
 
   1. Sign Xcode with your own certificate. You can [read the instructions for how to do this](SIGNING_Xcode.md) and if you have questions or concerns about what this means you can [read the FAQ on why you need to resign Xcode to use XVim2](why_resign_xcode.md).
   
-  2. Clone the repo. 
+  2. Clone the repo:
   ```bash
   $ git clone https://github.com/XVimProject/XVim2.git
   ```
   
-  3. Confirm `xcode-select` points to your Xcode
+  3. Confirm `xcode-select` points to your Xcode:
   ```bash
   $ xcode-select -p
   /Applications/Xcode.app/Contents/Developer
   ```
   
-  If this doesn't show your Xcode application path, use `xcode-select -s` to set.
+  If this doesn't show your Xcode application path, use `xcode-select -s /path/to/Xcode.app/Contents/Developer` to set the correct path.
 
-  4. Check out a branch for your Xcode version. See [Branches and Releases](#branches-and-releases) section for more information.
+  4. `git checkout` a branch for your Xcode version. See [Branches and Releases](#branches-and-releases) section for more information.
   
-  5. `make`
+  5. `make`:
   ```bash
   $ cd XVim2
   $ make
   ```
 
-  If you see something like 
-  
+  If you see something like the following:
   ```
   XVim hasn't confirmed the compatibility with your Xcode, Version X.X
   Do you want to compile XVim with support Xcode Version X.X at your own risk? 
   ```
-  Press y if you want to use XVim with your Xcode version (even it is not confirmed it works)
+  Press `y` to use XVim with your Xcode version (even if XVim is not confirmed to work with that version of Xcode).
   
   6. Create `.xvimrc` as you need. 
 
-  7. Launch Xcode. You'll be asked if you load XVim. Press 'Yes' to it.
-     If you press 'No' by mistake, close the Xcode and execute the following from a terminal
+  7. Launch Xcode, where you'll be asked if you want to load XVim. Press 'Yes' to do so.
+     If you press 'No' by mistake, close Xcode and execute the following from a terminal:
 
   ```
   defaults delete  com.apple.dt.Xcode DVTPlugInManagerNonApplePlugIns-Xcode-X.X     (X.X is your Xcode version)
   ```
-    
-  8. Relaunch Xcode.
+  Then relaunch Xcode and choose 'Yes' to load XVim.
     
 ## Branches and Releases
  
@@ -69,8 +67,9 @@
 
  Please use appropriate tags or branches.
 
- Please pull request to the master branch for easy bugfix and typo, or 
-     to develop branch for new feature or beta Xcode support.
+ For easy bugfixes and typo fixes, please open a pull request to the `master` branch. 
+ For a new feature or adding support for a beta version of Xcode, please open a pull request
+ to the `develop` branch.
      
 ## Uninstall
   ```bash
