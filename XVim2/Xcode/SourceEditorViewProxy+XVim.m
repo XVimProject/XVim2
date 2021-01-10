@@ -867,8 +867,7 @@
 - (NSUInteger)xvim_lineNumberFromBottom:(NSUInteger)count
 {
     NSAssert(0 != count, @"count starts from 1");
-    let bottomPoint = NSMakePoint(0.0, self.contentSize.height);
-    NSInteger bottomLine = [self lineRangeForCharacterRange:NSMakeRange([self characterIndexForInsertionAtPoint:bottomPoint], 0)].location;
+    var bottomLine = [self xvim_visibleLineRange].bottomLine;
     clamp(bottomLine, 0, self.lineCount - 1);
     if (count > 1) {
         bottomLine -= (count - 1);
@@ -887,7 +886,7 @@
 - (NSUInteger)xvim_lineNumberFromTop:(NSUInteger)count
 {
     NSAssert(0 != count, @"count starts from 1");
-    NSInteger topLine = [self lineRangeForCharacterRange:NSMakeRange([self characterIndexForInsertionAtPoint:NSZeroPoint], 0)].location;
+    var topLine = [self xvim_visibleLineRange].topLine;
     clamp(topLine, 0, self.lineCount - 1);
     if (count > 1) {
         topLine += (count - 1);
