@@ -12,6 +12,11 @@
 
 NS_ASSUME_NONNULL_BEGIN
 
+typedef struct {
+    NSInteger topLine;
+    NSInteger bottomLine;
+} LineRange;
+
 @interface SourceEditorViewProxy (XVim)
 - (NSUInteger)xvim_indexOfLineNumber:(NSUInteger)line;
 - (NSUInteger)xvim_indexOfLineNumber:(NSUInteger)line column:(NSUInteger)col;
@@ -36,6 +41,7 @@ NS_ASSUME_NONNULL_BEGIN
 - (void)xvim_moveCursor:(NSUInteger)pos preserveColumn:(BOOL)preserve;
 - (XVimRange)xvim_selectedLines;
 - (void)xvim_insertSpaces:(NSUInteger)count replacementRange:(NSRange)replacementRange;
+- (LineRange)xvim_visibleLineRange;
 @end
 
 NS_ASSUME_NONNULL_END

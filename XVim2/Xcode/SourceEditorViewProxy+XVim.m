@@ -826,6 +826,29 @@
 // UTILITY
 #pragma MARK - UTILITY
 
+// zero index
+- (LineRange)xvim_visibleLineRange
+{
+    let xcode12_workaround_offset = 20.0;
+    let topPoint = NSMakePoint(0.0, self.sourceEditorViewSize.height - self.contentSize.height - xcode12_workaround_offset);
+    let bottomPoint = NSMakePoint(0.0, self.sourceEditorViewSize.height - xcode12_workaround_offset);
+
+    NSInteger topLine =
+    [self lineRangeForCharacterRange:NSMakeRange([self characterIndexForInsertionAtPoint:topPoint], 0)]
+    .location;
+    clamp(topLine, 0, self.lineCount - 1);
+
+    NSInteger bottomLine =
+    [self lineRangeForCharacterRange:NSMakeRange([self characterIndexForInsertionAtPoint:bottomPoint], 0)]
+    .location;
+    clamp(bottomLine, 0, self.lineCount - 1);
+
+    LineRange r;
+    r.topLine = topLine;
+    r.bottomLine = bottomLine;
+    return r;
+}
+
 - (void)xvim_insertSpaces:(NSUInteger)count replacementRange:(NSRange)replacementRange
 {
     if (count || replacementRange.length) {
