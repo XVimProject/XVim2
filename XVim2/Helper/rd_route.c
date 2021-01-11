@@ -65,7 +65,10 @@ void* function_ptr_from_name(const char *function_name)
 		uintptr_t vmaddr_slide = _dyld_get_image_vmaddr_slide(i);
 
 		void *ptr = _function_ptr_within_image(function_name, header, vmaddr_slide);
-		if (ptr) return ptr;
+		if (ptr) {
+			printf("got function pointer %s, %x\n", function_name, ptr);
+			return ptr;
+		}
 	}
 	RDErrorLog("Failed to find symbol `%s` in the current address space.", function_name);
 
