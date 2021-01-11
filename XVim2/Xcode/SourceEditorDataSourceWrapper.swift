@@ -103,52 +103,54 @@ class SourceEditorDataSourceWrapper: NSObject {
 
     @objc
     public var undoManager: AnyObject? {
-        return SourceEditorDataSourceInvoker(dataSource, fpGetUndoManager)?.undoManager ?? nil
+        nil
+//        return SourceEditorDataSourceInvoker(dataSource, fpGetUndoManager)?.undoManager ?? nil
     }
 
     @objc
     public func beginEditTransaction() {
-        SourceEditorDataSourceInvoker(dataSource, fpBeginEditingTransaction)?.voidToVoid()
+//        SourceEditorDataSourceInvoker(dataSource, fpBeginEditingTransaction)?.voidToVoid()
     }
 
     @objc
     public func endEditTransaction() {
-        SourceEditorDataSourceInvoker(dataSource, fpEndEditingTransaction)?.voidToVoid()
+//        SourceEditorDataSourceInvoker(dataSource, fpEndEditingTransaction)?.voidToVoid()
     }
 
     @objc
     public func positionFromInternalCharOffset(_ pos: Int, lineHint: Int = 0) -> XVimSourceEditorPosition {
-        return SourceEditorDataSourceInvoker(dataSource, fpPositionFromIndexLineHint)?
-            .positionFromInternalCharOffset(pos, lineHint: lineHint)
-            ?? XVimSourceEditorPosition()
+        return .init()
+//        return SourceEditorDataSourceInvoker(dataSource, fpPositionFromIndexLineHint)?
+//            .positionFromInternalCharOffset(pos, lineHint: lineHint)
+//            ?? XVimSourceEditorPosition()
     }
 
     @objc
     public func internalCharOffsetFromPosition(_ pos: XVimSourceEditorPosition) -> Int {
-        return SourceEditorDataSourceInvoker(dataSource, fpIndexFromPosition)?
-            .internalCharOffsetFromPosition(pos)
-            ?? 0
+        return 0 //SourceEditorDataSourceInvoker(dataSource, fpIndexFromPosition)?
+//            .internalCharOffsetFromPosition(pos)
+//            ?? 0
     }
 
     @objc
     public var lineCount: Int {
-        return SourceEditorDataSourceInvoker(dataSource, fpLineCount)?.voidToInt() ?? 0
+        return 0 // SourceEditorDataSourceInvoker(dataSource, fpLineCount)?.voidToInt() ?? 0
     }
 
     @objc
     public func lineContentLength(forLine: Int) -> Int {
-        return SourceEditorDataSourceInvoker(dataSource, fpLineContentLength)?.intToInt(forLine) ?? 0
+        return 0//SourceEditorDataSourceInvoker(dataSource, fpLineContentLength)?.intToInt(forLine) ?? 0
     }
 
     @objc
     public func lineTerminatorLength(forLine: Int) -> Int {
-        return SourceEditorDataSourceInvoker(dataSource, fpLineTerminatorLength)?.intToInt(forLine) ?? 0
+        return 0 //SourceEditorDataSourceInvoker(dataSource, fpLineTerminatorLength)?.intToInt(forLine) ?? 0
     }
 
     @objc
     public func leadingWhitespaceWidthForLine(_ line: Int, expandTabs: Bool) -> Int {
-        return SourceEditorDataSourceInvoker(dataSource, fpLeadingWhitespaceWidthForLine)?
-            .leadingWhitespaceWidthForLine(line, expandTabs: expandTabs)
-            ?? 0
+        return 0 //SourceEditorDataSourceInvoker(dataSource, fpLeadingWhitespaceWidthForLine)?
+//            .leadingWhitespaceWidthForLine(line, expandTabs: expandTabs)
+//            ?? 0
     }
 }
