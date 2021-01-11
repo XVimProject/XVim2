@@ -72,23 +72,23 @@ private struct SourceEditorDataSourceInvoker {
 
 class SourceEditorDataSourceWrapper: NSObject {
     private let fpBeginEditingTransaction
-        = function_ptr_from_name("_$s12SourceEditor0ab4DataA0C20beginEditTransactionyyF", nil)
+        = function_ptr_from_name("_$s12SourceEditor0ab4DataA0C20beginEditTransactionyyF")
     private let fpEndEditingTransaction
-        = function_ptr_from_name("_$s12SourceEditor0ab4DataA0C18endEditTransactionyyF", nil)
+        = function_ptr_from_name("_$s12SourceEditor0ab4DataA0C18endEditTransactionyyF")
     private let fpPositionFromIndexLineHint
-        = function_ptr_from_name("_$s12SourceEditor0ab4DataA0C30positionFromInternalCharOffset_8lineHintAA0aB8PositionVSi_SitF", nil)
+        = function_ptr_from_name("_$s12SourceEditor0ab4DataA0C30positionFromInternalCharOffset_8lineHintAA0aB8PositionVSi_SitF")
     private let fpIndexFromPosition
-        = function_ptr_from_name("_$s12SourceEditor0ab4DataA0C30internalCharOffsetFromPositionySiAA0abH0VF", nil)
+        = function_ptr_from_name("_$s12SourceEditor0ab4DataA0C30internalCharOffsetFromPositionySiAA0abH0VF")
     private let fpGetUndoManager
-        = function_ptr_from_name("_$s12SourceEditor0ab4DataA0C11undoManagerAA0ab4UndoE0Cvg", nil)
+        = function_ptr_from_name("_$s12SourceEditor0ab4DataA0C11undoManagerAA0ab4UndoE0Cvg")
     private let fpLeadingWhitespaceWidthForLine
-        = function_ptr_from_name("_$s12SourceEditor0ab4DataA0C29leadingWhitespaceWidthForLine_10expandTabsS2i_SbtF", nil)
+        = function_ptr_from_name("_$s12SourceEditor0ab4DataA0C29leadingWhitespaceWidthForLine_10expandTabsS2i_SbtF")
     private let fpLineCount
-        = function_ptr_from_name("_$s12SourceEditor0ab4DataA0C9lineCountSivg", nil)
+        = function_ptr_from_name("_$s12SourceEditor0ab4DataA0C9lineCountSivg")
     private let fpLineContentLength
-        = function_ptr_from_name("_$s12SourceEditor0ab4DataA0C24lineContentLengthForLineyS2iF", nil)
+        = function_ptr_from_name("_$s12SourceEditor0ab4DataA0C24lineContentLengthForLineyS2iF")
     private let fpLineTerminatorLength
-        = function_ptr_from_name("_$s12SourceEditor0ab4DataA0C27lineTerminatorLengthForLineyS2iF", nil)
+        = function_ptr_from_name("_$s12SourceEditor0ab4DataA0C27lineTerminatorLengthForLineyS2iF")
 
     private weak var sourceEditorViewWrapper: SourceEditorViewWrapper?
 

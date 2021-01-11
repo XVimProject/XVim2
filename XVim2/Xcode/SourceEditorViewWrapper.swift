@@ -99,11 +99,11 @@ private struct SourceEditorViewInvoker {
 }
 
 class SourceEditorViewWrapper: NSObject {
-    private let fpSetCursorStyle = function_ptr_from_name("_$s12SourceEditor0aB4ViewC11cursorStyleAA0ab6CursorE0Ovs", nil)
-    private let fpGetCursorStyle = function_ptr_from_name("_$s12SourceEditor0aB4ViewC11cursorStyleAA0ab6CursorE0Ovg", nil)
-    private let fpGetDataSource = function_ptr_from_name("_$s12SourceEditor0aB4ViewC04dataA0AA0ab4DataA0Cvg", nil)
-    private let fpSetSelectedRangeWithModifiers = function_ptr_from_name("_$s12SourceEditor0aB4ViewC16setSelectedRange_9modifiersySnyAA0aB8PositionVG_AA0aB18SelectionModifiersVtF", nil)
-    private let fpAddSelectedRangeWithModifiers = function_ptr_from_name("_$s12SourceEditor0aB4ViewC16addSelectedRange_9modifiers15scrollPlacement12alwaysScrollySnyAA0aB8PositionVG_AA0aB18SelectionModifiersVAA0kI0OSgSbtF", nil)
+    private let fpSetCursorStyle = function_ptr_from_name("_$s12SourceEditor0aB4ViewC11cursorStyleAA0ab6CursorE0Ovs")
+    private let fpGetCursorStyle = function_ptr_from_name("_$s12SourceEditor0aB4ViewC11cursorStyleAA0ab6CursorE0Ovg")
+    private let fpGetDataSource = function_ptr_from_name("_$s12SourceEditor0aB4ViewC04dataA0AA0ab4DataA0Cvg")
+    private let fpSetSelectedRangeWithModifiers = function_ptr_from_name("_$s12SourceEditor0aB4ViewC16setSelectedRange_9modifiersySnyAA0aB8PositionVG_AA0aB18SelectionModifiersVtF")
+    private let fpAddSelectedRangeWithModifiers = function_ptr_from_name("_$s12SourceEditor0aB4ViewC16addSelectedRange_9modifiers15scrollPlacement12alwaysScrollySnyAA0aB8PositionVG_AA0aB18SelectionModifiersVAA0kI0OSgSbtF")
     private weak var sourceEditorViewProxy: SourceEditorViewProxy?
 
     @objc
