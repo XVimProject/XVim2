@@ -104,5 +104,42 @@ _seds_wrapper_call9:
     ret
 
 #else
-    // TODO: Support ARM64 assembly
+
+    // ARM64
+    // Integer registers
+    //
+    // x0-7  : Integer arguments (volatile)
+    // x8    : Struct return pointer (volatile)
+    // x9-15 : Corruptible Register (volatile)
+    // x16-17 : intra-procedure-call corruptible register (volatile)
+    // x18: PR (volatile)
+    // x19-28: Callee-save register (non-volatile)
+    //     x20 : swift self
+    //     x21 : Error return register
+    // x29: Frame pointer
+    // x30: Link register
+
+// Save callee-save
+    // store x29, x30 (LR) on stack
+    // x29 will not used but need to keeping 16-byte SP alignment
+    stp x29, x30, [sp, #-16]!
+
+    ldr x20, [x0]     // Load swift self
+    ldr x30, [x0, #8] // Load target function pointer
+
+# Slide up arguments
+    mov x0, x1
+    mov x1, x2
+    mov x2, x3
+    mov x3, x4
+    mov x4, x5
+    mov x5, x6
+    mov x6, x7
+
+# Call
+    blr x30
+
+# Cleanup
+    ldp x29, x30, [sp], #16      // restore x29, x30 (LR)
+    ret
 #endif
