@@ -74,11 +74,11 @@ private struct SourceEditorViewInvoker {
     }
 
     func voidToInt() -> Int {
-        return _scev_voidToInt(contextPtr)
+        _scev_voidToInt(contextPtr)
     }
 
     func getCursorStyle() -> CursorStyle {
-        return _get_cursor_style(contextPtr)
+        _get_cursor_style(contextPtr)
     }
 
     func setCursorStyle(_ style: CursorStyle) {
@@ -86,7 +86,7 @@ private struct SourceEditorViewInvoker {
     }
 
     func getDataSource() -> AnyObject? {
-        return Unmanaged.fromOpaque(_get_data_source(contextPtr).assumingMemoryBound(to: AnyObject?.self)).takeRetainedValue()
+        Unmanaged.fromOpaque(_get_data_source(contextPtr).assumingMemoryBound(to: AnyObject?.self)).takeRetainedValue()
     }
 
     func setSelectedRange(_ range: XVimSourceEditorRange, modifiers: XVimSelectionModifiers) {
@@ -108,7 +108,7 @@ class SourceEditorViewWrapper: NSObject {
 
     @objc
     lazy public var dataSourceWrapper = {
-        return SourceEditorDataSourceWrapper(sourceEditorViewWrapper: self)
+        SourceEditorDataSourceWrapper(sourceEditorViewWrapper: self)
     }()
 
     @objc
@@ -117,36 +117,36 @@ class SourceEditorViewWrapper: NSObject {
     }
 
     private var view: AnyObject? {
-        return sourceEditorViewProxy?.view
+        sourceEditorViewProxy?.view
     }
 
     @objc
     var cursorStyle: CursorStyle {
         get {
-//            if let invoker = SourceEditorViewInvoker(view, fpGetCursorStyle) {
-//                return invoker.getCursorStyle()
-//            }
+            if let invoker = SourceEditorViewInvoker(view, fpGetCursorStyle) {
+                return invoker.getCursorStyle()
+            }
             return CursorStyle.block
         }
         set {
-//            SourceEditorViewInvoker(view, fpSetCursorStyle)?.setCursorStyle(newValue)
+            SourceEditorViewInvoker(view, fpSetCursorStyle)?.setCursorStyle(newValue)
         }
     }
 
     @objc
     var dataSource: AnyObject? {
-        return nil//SourceEditorViewInvoker(view, fpGetDataSource)?.getDataSource()
+        SourceEditorViewInvoker(view, fpGetDataSource)?.getDataSource()
     }
 
     @objc
     public func addSelectedRange(_ range: XVimSourceEditorRange, modifiers: XVimSelectionModifiers) {
-//        SourceEditorViewInvoker(view, fpAddSelectedRangeWithModifiers)?
-//            .addSelectedRange(range, modifiers: modifiers)
+        SourceEditorViewInvoker(view, fpAddSelectedRangeWithModifiers)?
+            .addSelectedRange(range, modifiers: modifiers)
     }
 
     @objc
     public func setSelectedRange(_ range: XVimSourceEditorRange, modifiers: XVimSelectionModifiers) {
-//        SourceEditorViewInvoker(view, fpSetSelectedRangeWithModifiers)?
-//            .setSelectedRange(range, modifiers: modifiers)
+        SourceEditorViewInvoker(view, fpSetSelectedRangeWithModifiers)?
+            .setSelectedRange(range, modifiers: modifiers)
     }
 }
