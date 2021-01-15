@@ -23,6 +23,7 @@
     NSString* format = @"XVim2 revision : %@\n"
                        @"OS Version : %@\n"
                        @"Xcode Version : %@\n"
+                       @"CPU : %@\n"
                        @"Rosetta: %@\n"
                        @"\n"
                        @"--- .xvimrc ---\n"
@@ -37,6 +38,7 @@
                       GIT_REVISION,
                       NSProcessInfo.processInfo.operatingSystemVersionString,
                       [NSBundle.mainBundle.infoDictionary objectForKey:@"CFBundleShortVersionString"],
+                      self.cpuBrand,
                       self.isRunningInRosetta ? @"YES" : @"NO",
                       rc];
 
@@ -55,6 +57,16 @@
     if (errno == ENOENT)
         return NO;
     return NO;
+}
+
+// https://stackoverflow.com/a/7379560
+- (NSString *)cpuBrand
+{
+    char buf[100];
+    size_t buflen = 100;
+    if (sysctlbyname("machdep.cpu.brand_string", &buf, &buflen, NULL, 0) != -1)
+        return [NSString stringWithCString:buf encoding:NSUTF8StringEncoding];
+    return @"unknown";
 }
 
 - (void)windowDidLoad
