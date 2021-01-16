@@ -92,8 +92,6 @@ v, V, Ctrl-v
 
 (v, V in visual mode to toggle or escape from visual mode is supported)
 
-Inserting with visual block is not supported currently (Ctrl-v + Shift-I does not work.)
-
 ## Operation in Visual
 
 ## Window manipulation
