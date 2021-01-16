@@ -59,10 +59,9 @@ _seds_wrapper_call9:
 
 # Body
 
-    # We passed UnsafeMutablePointer that allocate 8 byte * 8 memory as 1st argument from Invoker.
+    # We passed UnsafeMutablePointer that allocate 8 byte * 2 memory as 1st argument from Invoker.
     # %rdi = contextPtr[0] = self (view)
     # %rdi + 8 = contextPtr[1] = target function pointer
-    # %rdi + 16~56 is reserved for future use case. It can be passed as contextPtr[2~7]
 
     # Load the target 'self', this is Swift function calling convensions
     # https://github.com/apple/swift/blob/main/docs/ABI/RegisterUsage.md

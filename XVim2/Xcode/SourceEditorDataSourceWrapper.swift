@@ -51,7 +51,7 @@ public struct XVimLineData {
 }
 
 private struct SourceEditorDataSourceInvoker {
-    let contextPtr = UnsafeMutablePointer<UnsafeMutableRawPointer>.allocate(capacity: 8)
+    let contextPtr = UnsafeMutablePointer<UnsafeMutableRawPointer>.allocate(capacity: 2)
 
     public init?(_ dataSrc: AnyObject?, _ functionPtr: UnsafeMutableRawPointer?) {
         guard let dataSource = dataSrc,

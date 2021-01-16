@@ -71,7 +71,7 @@ private let fpSetSelectedRangeWithModifiers = function_ptr_from_name("_$s12Sourc
 private let fpAddSelectedRangeWithModifiers = function_ptr_from_name("_$s12SourceEditor0aB4ViewC16addSelectedRange_9modifiers15scrollPlacement12alwaysScrollySnyAA0aB8PositionVG_AA0aB18SelectionModifiersVAA0kI0OSgSbtF")
 
 private struct SourceEditorViewInvoker {
-    let contextPtr = UnsafeMutablePointer<UnsafeMutableRawPointer>.allocate(capacity: 8)
+    let contextPtr = UnsafeMutablePointer<UnsafeMutableRawPointer>.allocate(capacity: 2)
     init?(_ view: AnyObject?, _ functionPtr: UnsafeMutableRawPointer?) {
 
         guard let view = view,
