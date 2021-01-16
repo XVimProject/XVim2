@@ -20,6 +20,27 @@ typealias InternalCharOffset = Int
 @_silgen_name("seds_wrapper_call6") func _leadingWhitespaceWithForLine(_: UnsafeRawPointer, _: Int, expandTabs: Bool) -> (Int)
 @_silgen_name("seds_wrapper_call7") func _intToInt(_: UnsafeRawPointer, _: Int) -> (Int)
 
+// NOTE: global variable is automatically lazy in swift.
+// Getting function address only once because function address is fixed value when after allocation.
+private let fpBeginEditingTransaction
+    = function_ptr_from_name("_$s12SourceEditor0ab4DataA0C20beginEditTransactionyyF")
+private let fpEndEditingTransaction
+    = function_ptr_from_name("_$s12SourceEditor0ab4DataA0C18endEditTransactionyyF")
+private let fpPositionFromIndexLineHint
+    = function_ptr_from_name("_$s12SourceEditor0ab4DataA0C30positionFromInternalCharOffset_8lineHintAA0aB8PositionVSi_SitF")
+private let fpIndexFromPosition
+    = function_ptr_from_name("_$s12SourceEditor0ab4DataA0C30internalCharOffsetFromPositionySiAA0abH0VF")
+private let fpGetUndoManager
+    = function_ptr_from_name("_$s12SourceEditor0ab4DataA0C11undoManagerAA0ab4UndoE0Cvg")
+private let fpLeadingWhitespaceWidthForLine
+    = function_ptr_from_name("_$s12SourceEditor0ab4DataA0C29leadingWhitespaceWidthForLine_10expandTabsS2i_SbtF")
+private let fpLineCount
+    = function_ptr_from_name("_$s12SourceEditor0ab4DataA0C9lineCountSivg")
+private let fpLineContentLength
+    = function_ptr_from_name("_$s12SourceEditor0ab4DataA0C24lineContentLengthForLineyS2iF")
+private let fpLineTerminatorLength
+    = function_ptr_from_name("_$s12SourceEditor0ab4DataA0C27lineTerminatorLengthForLineyS2iF")
+
 public struct XVimLineData {
     var reserved1: Int64
     var reserved2: Int64
@@ -71,25 +92,6 @@ private struct SourceEditorDataSourceInvoker {
 }
 
 class SourceEditorDataSourceWrapper: NSObject {
-    private let fpBeginEditingTransaction
-        = function_ptr_from_name("_$s12SourceEditor0ab4DataA0C20beginEditTransactionyyF")
-    private let fpEndEditingTransaction
-        = function_ptr_from_name("_$s12SourceEditor0ab4DataA0C18endEditTransactionyyF")
-    private let fpPositionFromIndexLineHint
-        = function_ptr_from_name("_$s12SourceEditor0ab4DataA0C30positionFromInternalCharOffset_8lineHintAA0aB8PositionVSi_SitF")
-    private let fpIndexFromPosition
-        = function_ptr_from_name("_$s12SourceEditor0ab4DataA0C30internalCharOffsetFromPositionySiAA0abH0VF")
-    private let fpGetUndoManager
-        = function_ptr_from_name("_$s12SourceEditor0ab4DataA0C11undoManagerAA0ab4UndoE0Cvg")
-    private let fpLeadingWhitespaceWidthForLine
-        = function_ptr_from_name("_$s12SourceEditor0ab4DataA0C29leadingWhitespaceWidthForLine_10expandTabsS2i_SbtF")
-    private let fpLineCount
-        = function_ptr_from_name("_$s12SourceEditor0ab4DataA0C9lineCountSivg")
-    private let fpLineContentLength
-        = function_ptr_from_name("_$s12SourceEditor0ab4DataA0C24lineContentLengthForLineyS2iF")
-    private let fpLineTerminatorLength
-        = function_ptr_from_name("_$s12SourceEditor0ab4DataA0C27lineTerminatorLengthForLineyS2iF")
-
     private weak var sourceEditorViewWrapper: SourceEditorViewWrapper?
 
     private var dataSource: AnyObject? {

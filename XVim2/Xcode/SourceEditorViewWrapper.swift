@@ -62,6 +62,14 @@ import Cocoa
 @_silgen_name("scev_wrapper_call5") func _add_selected_range(_: UnsafeRawPointer, _: XVimSourceEditorRange, modifiers: Int)
 @_silgen_name("scev_wrapper_call6") func _scev_voidToInt(_: UnsafeRawPointer) -> (Int)
 
+// NOTE: global variable is automatically lazy in swift.
+// Getting function address only once because function address is fixed value when after allocation.
+private let fpSetCursorStyle = function_ptr_from_name("_$s12SourceEditor0aB4ViewC11cursorStyleAA0ab6CursorE0Ovs")
+private let fpGetCursorStyle = function_ptr_from_name("_$s12SourceEditor0aB4ViewC11cursorStyleAA0ab6CursorE0Ovg")
+private let fpGetDataSource = function_ptr_from_name("_$s12SourceEditor0aB4ViewC04dataA0AA0ab4DataA0Cvg")
+private let fpSetSelectedRangeWithModifiers = function_ptr_from_name("_$s12SourceEditor0aB4ViewC16setSelectedRange_9modifiersySnyAA0aB8PositionVG_AA0aB18SelectionModifiersVtF")
+private let fpAddSelectedRangeWithModifiers = function_ptr_from_name("_$s12SourceEditor0aB4ViewC16addSelectedRange_9modifiers15scrollPlacement12alwaysScrollySnyAA0aB8PositionVG_AA0aB18SelectionModifiersVAA0kI0OSgSbtF")
+
 private struct SourceEditorViewInvoker {
     let contextPtr = UnsafeMutablePointer<UnsafeMutableRawPointer>.allocate(capacity: 8)
     init?(_ view: AnyObject?, _ functionPtr: UnsafeMutableRawPointer?) {
@@ -99,11 +107,6 @@ private struct SourceEditorViewInvoker {
 }
 
 class SourceEditorViewWrapper: NSObject {
-    private let fpSetCursorStyle = function_ptr_from_name("_$s12SourceEditor0aB4ViewC11cursorStyleAA0ab6CursorE0Ovs")
-    private let fpGetCursorStyle = function_ptr_from_name("_$s12SourceEditor0aB4ViewC11cursorStyleAA0ab6CursorE0Ovg")
-    private let fpGetDataSource = function_ptr_from_name("_$s12SourceEditor0aB4ViewC04dataA0AA0ab4DataA0Cvg")
-    private let fpSetSelectedRangeWithModifiers = function_ptr_from_name("_$s12SourceEditor0aB4ViewC16setSelectedRange_9modifiersySnyAA0aB8PositionVG_AA0aB18SelectionModifiersVtF")
-    private let fpAddSelectedRangeWithModifiers = function_ptr_from_name("_$s12SourceEditor0aB4ViewC16addSelectedRange_9modifiers15scrollPlacement12alwaysScrollySnyAA0aB8PositionVG_AA0aB18SelectionModifiersVAA0kI0OSgSbtF")
     private weak var sourceEditorViewProxy: SourceEditorViewProxy?
 
     @objc
