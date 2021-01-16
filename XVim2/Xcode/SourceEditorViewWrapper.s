@@ -119,6 +119,10 @@ _seds_wrapper_call9:
     // x29: Frame pointer
     // x30: Link register
 
+    // 4 byte alignment to suppress linker warning
+    // "ld: warning: arm64 function not 4-byte aligned"
+    .p2align 2
+
 // Save callee-save
     // store x29, x30 (LR) on stack
     // x29 will not used but need to keeping 16-byte SP alignment
