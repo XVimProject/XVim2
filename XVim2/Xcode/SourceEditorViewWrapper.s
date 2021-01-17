@@ -124,9 +124,8 @@ _seds_wrapper_call9:
     .p2align 2
 
 // Save callee-save
-    // store x29, x30 (LR) on stack
-    // x29 will not used but need to keeping 16-byte SP alignment
-    stp x29, x30, [sp, #-16]!
+    // store x20, x30 (LR) on stack
+    stp x20, x30, [sp, #-16]!
 
     ldr x20, [x0]     // Load swift self
     ldr x30, [x0, #8] // Load target function pointer
@@ -144,6 +143,6 @@ _seds_wrapper_call9:
     blr x30
 
 # Cleanup
-    ldp x29, x30, [sp], #16      // restore x29, x30 (LR)
+    ldp x20, x30, [sp], #16      // restore x20, x30 (LR)
     ret
 #endif
