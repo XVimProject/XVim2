@@ -57,6 +57,9 @@ _seds_wrapper_call9:
 
     leaq    -8(%rsp), %rsp # allocate 8 byte on stack
 
+# Save callee-save
+    movq %r13, (%rsp)
+
 # Body
 
     # We passed UnsafeMutablePointer that allocate 8 byte * 2 memory as 1st argument from Invoker.
@@ -87,7 +90,9 @@ _seds_wrapper_call9:
 
     addq $8, %rsp
 
-# Restore stack pointer position
+# Restore registers from stack
+
+    movq (%rsp), %r13
 
     // RAX, RDX Used for return values
     // RCX Used for return values
