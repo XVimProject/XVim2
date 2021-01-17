@@ -111,7 +111,8 @@ _seds_wrapper_call9:
     // x8    : Struct return pointer (volatile)
     // x9-15 : Corruptible Register (volatile)
     // x16-17 : intra-procedure-call corruptible register (volatile)
-    // x18: PR (volatile)
+    // https://developer.apple.com/documentation/xcode/writing_arm64_code_for_apple_platforms
+    // x18: Platform reserve register. DON'T USE THIS REGISTER (volatile)
     // x19-28: Callee-save register (non-volatile)
     //     x20 : swift self
     //     x21 : Error return register
