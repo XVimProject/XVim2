@@ -9,6 +9,8 @@
 #import "XVimAboutDialog.h"
 #import "../../gitrevision.h"
 #import "XVim.h"
+#import <sys/types.h>
+#import <sys/sysctl.h>
 
 @interface XVimAboutDialog ()
 
@@ -21,6 +23,8 @@
     NSString* format = @"XVim2 revision : %@\n"
                        @"OS Version : %@\n"
                        @"Xcode Version : %@\n"
+                       @"CPU : %@\n"
+                       @"Rosetta: %@\n"
                        @"\n"
                        @"--- .xvimrc ---\n"
                        @"%@\n"
@@ -34,9 +38,35 @@
                       GIT_REVISION,
                       NSProcessInfo.processInfo.operatingSystemVersionString,
                       [NSBundle.mainBundle.infoDictionary objectForKey:@"CFBundleShortVersionString"],
+                      self.cpuBrand,
+                      self.isRunningInRosetta ? @"YES" : @"NO",
                       rc];
 
     return info;
+}
+
+// https://developer.apple.com/videos/play/wwdc2020/10686/?time=870
+- (BOOL)isRunningInRosetta
+{
+    int ret = 0;
+    size_t size = sizeof(ret);
+    // Call the sysctl and if successful return the result
+    if (sysctlbyname("sysctl.proc_translated", &ret, &size, NULL, 0) != -1)
+        return ret == 1;
+    // If "sysctl.proc_translated" is not present then must be native
+    if (errno == ENOENT)
+        return NO;
+    return NO;
+}
+
+// https://stackoverflow.com/a/7379560
+- (NSString *)cpuBrand
+{
+    char buf[100];
+    size_t buflen = 100;
+    if (sysctlbyname("machdep.cpu.brand_string", &buf, &buflen, NULL, 0) != -1)
+        return [NSString stringWithCString:buf encoding:NSUTF8StringEncoding];
+    return @"unknown";
 }
 
 - (void)windowDidLoad

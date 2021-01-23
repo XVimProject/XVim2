@@ -80,6 +80,10 @@ static atomic_uint dispatchQueueCount = ATOMIC_VAR_INIT(0);
 - (void)setUp
 {
     [XVimLastActiveSourceView() xvim_changeSelectionMode:XVIM_VISUAL_NONE];
+    // in some case, setString:@"" will be ignored.
+    // this selectAll then delete pair is workaround to remove all strings before set initial string.
+    [XVimLastActiveSourceView() selectAll:nil];
+    [XVimLastActiveSourceView() delete:nil];
     [XVimLastActiveSourceView() setString:self.initialText];
     [XVimLastActiveSourceView() setSelectedRange:self.initialRange];
 }

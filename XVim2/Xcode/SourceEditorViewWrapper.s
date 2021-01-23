@@ -47,6 +47,8 @@ _seds_wrapper_call7:
 _seds_wrapper_call8:
 _seds_wrapper_call9:
 
+#ifdef __x86_64__
+
 # Prolog
     pushq %rbp
     movq  %rsp, %rbp
@@ -60,10 +62,9 @@ _seds_wrapper_call9:
 
 # Body
 
-    # We passed UnsafeMutablePointer that allocate 8 byte * 8 memory as 1st argument from Invoker.
+    # We passed UnsafeMutablePointer that allocate 8 byte * 2 memory as 1st argument from Invoker.
     # %rdi = contextPtr[0] = self (view)
     # %rdi + 8 = contextPtr[1] = target function pointer
-    # %rdi + 16~56 is reserved for future use case. It can be passed as contextPtr[2~7]
 
     # Load the target 'self', this is Swift function calling convensions
     # https://github.com/apple/swift/blob/main/docs/ABI/RegisterUsage.md
@@ -105,3 +106,48 @@ _seds_wrapper_call9:
     movq %rbp, %rsp
     popq %rbp
     ret
+
+#else
+
+    // ARM64
+    // Integer registers
+    //
+    // x0-7  : Integer arguments (volatile)
+    // x8    : Struct return pointer (volatile)
+    // x9-15 : Corruptible Register (volatile)
+    // x16-17 : intra-procedure-call corruptible register (volatile)
+    // https://developer.apple.com/documentation/xcode/writing_arm64_code_for_apple_platforms
+    // x18: Platform reserve register. DON'T USE THIS REGISTER (volatile)
+    // x19-28: Callee-save register (non-volatile)
+    //     x20 : swift self
+    //     x21 : Error return register
+    // x29: Frame pointer
+    // x30: Link register
+
+    // 4 byte alignment to suppress linker warning
+    // "ld: warning: arm64 function not 4-byte aligned"
+    .p2align 2
+
+// Save callee-save
+    // store x20, x30 (LR) on stack
+    stp x20, x30, [sp, #-16]!
+
+    ldr x20, [x0]     // Load swift self
+    ldr x30, [x0, #8] // Load target function pointer
+
+# Slide up arguments
+    mov x0, x1
+    mov x1, x2
+    mov x2, x3
+    mov x3, x4
+    mov x4, x5
+    mov x5, x6
+    mov x6, x7
+
+# Call
+    blr x30
+
+# Cleanup
+    ldp x20, x30, [sp], #16      // restore x20, x30 (LR)
+    ret
+#endif

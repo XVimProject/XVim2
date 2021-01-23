@@ -52,7 +52,7 @@
 
 
     static NSString* issue_776_text = @"";
-    static NSString* issue_776_result = @"\n";
+    static NSString* issue_776_result = @"\n\n"; // NOTE: Xcode 12 could not create single blank line file.
     static NSString* issue_805_text = @"aaaa bbbb cccc dddd eeee ffff gggg\n"
                                       @"hhhh iiii jjjj kkkk llll\n"
                                       @"mmmm nnnn oooo pppp qqqq\n";
@@ -84,7 +84,7 @@
                      ? XVimMakeTestCase(text0, 0, 0, @"i<TAB><ESC>.", issue_606_result_tabs, 1, 0) // Issue #606. Repeating tab insertion crashes Xcode.
                      : XVimMakeTestCase( text0, 0, 0, @"i<TAB><ESC>.", issue_606_result_spaces, 7, 0), // Issue #606. Repeating tab insertion crashes Xcode.
 
-         XVimMakeTestCase(issue_776_text, 0, 0, @"O<ESC>", issue_776_result, 0, 0), // Issue #776 crash // FIXME: expected text
+         XVimMakeTestCase(issue_776_text, 0, 0, @"O<ESC>", issue_776_result, 0, 0), // Issue #776 crash
          //XVimMakeTestCase(issue_805_text, 33, 0, @"dd", issue_805_result, 0, 0), // Issue #805 // FIXME: expected text
          XVimMakeTestCase(issue_809_a_text, 5, 0, @"dw", issue_809_a_result, 4, 0),
          XVimMakeTestCase(issue_809_b_text, 5, 0, @"dw", issue_809_b_result, 4, 0),
