@@ -24,6 +24,7 @@
 
 - (NSUInteger)xvim_indentWidth { return XVim.instance.options.indentWidth; }
 - (NSUInteger)xvim_tabWidth { return XVim.instance.options.tabWidth; }
+- (BOOL)xvim_useTabsToIndent { return XVim.instance.options.useTabsToIndent; }
 
 #pragma mark Converting between Indexes and Line Numbers
 
@@ -148,16 +149,20 @@
 
 #pragma mark Converting between Indexes and Line Numbers + Columns
 
-static NSUInteger xvim_sb_count_columns(xvim_string_buffer_t* sb, NSUInteger tabWidth)
+static NSUInteger xvim_sb_count_columns(xvim_string_buffer_t* sb, NSUInteger tabWidth, BOOL useTabToIndent)
 {
     NSUInteger col = 0;
 
     if (!xvim_sb_at_end(sb)) {
         do {
             if (xvim_sb_peek(sb) == '\t') {
-                col += tabWidth;
-                if (tabWidth)
-                    col -= col % tabWidth;
+					if (useTabToIndent) {
+						col += 1;
+					} else {
+						col += tabWidth;
+						if (tabWidth)
+							col -= col % tabWidth;
+					}
             }
             else {
                 col++;
@@ -181,7 +186,7 @@ static NSUInteger xvim_sb_count_columns(xvim_string_buffer_t* sb, NSUInteger tab
     }
 
     xvim_sb_init(&sb, self.xvim_string, range.location, range);
-    return xvim_sb_count_columns(&sb, self.xvim_tabWidth);
+    return xvim_sb_count_columns(&sb, self.xvim_tabWidth, self.xvim_useTabsToIndent);
 }
 
 - (NSUInteger)xvim_numberOfColumnsInLineAtIndex:(NSUInteger)index
@@ -190,7 +195,7 @@ static NSUInteger xvim_sb_count_columns(xvim_string_buffer_t* sb, NSUInteger tab
     xvim_string_buffer_t sb;
 
     xvim_sb_init(&sb, self.xvim_string, range.location, range);
-    return xvim_sb_count_columns(&sb, self.xvim_tabWidth);
+    return xvim_sb_count_columns(&sb, self.xvim_tabWidth, self.xvim_useTabsToIndent);
 }
 
 - (NSUInteger)xvim_indexOfLineNumber:(NSUInteger)num column:(NSUInteger)column

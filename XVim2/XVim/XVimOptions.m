@@ -172,4 +172,12 @@
     }
 }
 
+- (BOOL)useTabsToIndent {
+	@try {
+		return [[NSClassFromString(@"DVTTextPreferences") preferences] useTabsToIndent];
+	}
+	@catch (NSException* e){
+		return NO;
+	}
+}
 @end
