@@ -156,13 +156,13 @@ static NSUInteger xvim_sb_count_columns(xvim_string_buffer_t* sb, NSUInteger tab
     if (!xvim_sb_at_end(sb)) {
         do {
             if (xvim_sb_peek(sb) == '\t') {
-					if (useTabToIndent) {
-						col += 1;
-					} else {
-						col += tabWidth;
-						if (tabWidth)
-							col -= col % tabWidth;
-					}
+                if (useTabToIndent) {
+                    col += 1;
+                } else {
+                    col += tabWidth;
+                if (tabWidth)
+                    col -= col % tabWidth;
+                }
             }
             else {
                 col++;
