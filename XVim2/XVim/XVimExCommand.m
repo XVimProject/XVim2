@@ -553,7 +553,7 @@
         exarg.lineBegin = exarg.lineEnd;
         exarg.lineEnd = tmp;
     }
-
+	// tesst
     // 4. parse command
     // In window command and its argument must be separeted by space
     unichar* tmp = parsing;
@@ -1417,34 +1417,26 @@ xvim_ignore_warning_pop
         }
     }
 	
-#if true
-	[XVimTaskRunner runScript:args.arg withInput:text];
-#else 
-	// TODO:quickfix
     NSUInteger firstFilteredLine = args.lineBegin;
-    NSString* scriptReturn = [XVimTaskRunner runScript:args.arg
-                                             withInput:text
-										   withTimeout:EXTERNAL_COMMAND_TIMEOUT_SECS
-                                          runDirectory:runDir
-											  colWidth:window.commandLine.quickFixColWidth];
-    if (scriptReturn != nil) {
+    NSString* scriptReturn = [XVimTaskRunner runScript:args.arg withInput:text];
+//    NSString* scriptReturn = [XVimTaskRunner runScript:args.arg
+//                                             withInput:text
+//										   withTimeout:EXTERNAL_COMMAND_TIMEOUT_SECS
+//                                          runDirectory:runDir
+//											  colWidth:window.commandLine.quickFixColWidth];
+	 if (scriptReturn != nil) {
         if (args.noRangeSpecified) {
-            // No text range was specified -- open quickfix window to display the result
-            [window showQuickfixWithString:scriptReturn
-                             completionHandler:^{
-                                 [window.currentWorkspaceWindow makeFirstResponder:window.sourceView];
-                             }];
+            // Without text range just display result of a command as status message
+			  [window statusMessage:args.arg];
         }
         else {
             // A text range was specified -- replace the range with the output of the command
             [window.sourceView insertText:scriptReturn];
-
             if (firstFilteredLine != NSNotFound) {
                 [window.sourceView setSelectedRange:NSMakeRange(inputStartLocation, 1)];
             }
         }
     }
-#endif
 }
 
 // Really rubbish way of getting the alt filename
