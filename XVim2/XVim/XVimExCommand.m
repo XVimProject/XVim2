@@ -553,7 +553,6 @@
         exarg.lineBegin = exarg.lineEnd;
         exarg.lineEnd = tmp;
     }
-	// tesst
     // 4. parse command
     // In window command and its argument must be separeted by space
     unichar* tmp = parsing;
