@@ -162,11 +162,17 @@ static inline BOOL xvim_horizontallyStackingModeForMode(GeniusLayoutMode mode)
         return;
     }
 
-    IDEEditorArea* editorArea = [SELF editorArea];
-    if ([editorArea editorMode] != GENIUS) {
-        DEBUG_LOG(@"editor not in genius mode, nothing to jump to");
-        return;
-    }
+    /**
+     I have no idea what is `GENIUS`µ Mode but once I cancel this pre-condition,
+     we can do the relative jump.
+     I don't want to change something I don't know, maybe there is something
+     wrong somewhere 🤔
+     IDEEditorArea* editorArea = [SELF editorArea];
+     if ([editorArea editorMode] != GENIUS) {
+         DEBUG_LOG(@"editor not in genius mode, nothing to jump to");
+         return;
+     }
+     */
 
     IDEViewController* current = [SELF _currentFirstResponderArea];
     NSArray* allEditors = [self xvim_allEditorArea];
