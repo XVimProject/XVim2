@@ -1418,15 +1418,10 @@ xvim_ignore_warning_pop
 	
     NSUInteger firstFilteredLine = args.lineBegin;
     NSString* scriptReturn = [XVimTaskRunner runScript:args.arg withInput:text];
-//    NSString* scriptReturn = [XVimTaskRunner runScript:args.arg
-//                                             withInput:text
-//										   withTimeout:EXTERNAL_COMMAND_TIMEOUT_SECS
-//                                          runDirectory:runDir
-//											  colWidth:window.commandLine.quickFixColWidth];
 	 if (scriptReturn != nil) {
         if (args.noRangeSpecified) {
             // Without text range just display result of a command as status message
-			  [window statusMessage:args.arg];
+            [window statusMessage:args.arg];
         }
         else {
             // A text range was specified -- replace the range with the output of the command
