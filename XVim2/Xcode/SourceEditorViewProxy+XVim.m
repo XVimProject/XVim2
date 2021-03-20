@@ -18,6 +18,7 @@
 #import "XVimOptions.h"
 #import "XVimXcode.h"
 #import "XVim2-Swift.h"
+#import <SourceEditor/SourceEditorScrollView.h>
 #import <IDESourceEditor/_TtC15IDESourceEditor19IDESourceEditorView.h>
 
 @interface SourceEditorViewProxy ()
@@ -829,9 +830,10 @@
 // zero index
 - (LineRange)xvim_visibleLineRange
 {
-    let xcode12_workaround_offset = 20.0;
-    let topPoint = NSMakePoint(0.0, self.sourceEditorViewSize.height - self.contentSize.height - xcode12_workaround_offset);
-    let bottomPoint = NSMakePoint(0.0, self.sourceEditorViewSize.height - xcode12_workaround_offset);
+    // This is 20.0 for command line bar height that defined as `XvimCommandLineHeight` in SourceEditorViewProxy.m
+    let bottomInset = self.sourceEditorView.scrollView.contentInsets.bottom;
+    let topPoint = NSMakePoint(0.0, self.sourceEditorViewSize.height - self.contentSize.height - bottomInset);
+    let bottomPoint = NSMakePoint(0.0, self.sourceEditorViewSize.height - bottomInset);
 
     NSInteger topLine =
     [self lineRangeForCharacterRange:NSMakeRange([self characterIndexForInsertionAtPoint:topPoint], 0)]
