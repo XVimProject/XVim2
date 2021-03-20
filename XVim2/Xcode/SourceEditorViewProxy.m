@@ -667,10 +667,13 @@ static CGFloat XvimCommandLineAnimationDuration = 0.1;
             insets.bottom += XvimCommandLineHeight;
             scrollView.animator.contentInsets = insets;
             [scrollView setUpdatingAutoContentInsets:YES];
-        }
-                    completionHandler:^{
-                        self.commandLine.needsDisplay = YES;
-                    }];
+        } completionHandler:^{
+            self.commandLine.needsDisplay = YES;
+            // XVim added contentInsets.bottom value for command line bar will discard by Xcode
+            // when add tab, change fullscreen state etc.
+            // This observe is for re-add it.
+            [scrollView addObserver:self forKeyPath:@"contentInsets" options:NSKeyValueObservingOptionNew context:nil];
+        }];
     }
 }
 
@@ -681,6 +684,7 @@ static CGFloat XvimCommandLineAnimationDuration = 0.1;
 
     let scrollView = [self.sourceEditorView scrollView];
     if ([self.sourceEditorView.class isEqual:NSClassFromString(IDESourceEditorViewClassName)]) {
+        [scrollView removeObserver:self forKeyPath:@"contentInsets"];
         NSEdgeInsets insets = scrollView.contentInsets;
         insets.bottom -= XvimCommandLineHeight;
 
@@ -689,11 +693,25 @@ static CGFloat XvimCommandLineAnimationDuration = 0.1;
             self->_cmdLineBottomAnchor.animator.constant = -XvimCommandLineHeight;
             scrollView.animator.contentInsets = insets;
             [scrollView setUpdatingAutoContentInsets:YES];
+        } completionHandler:^{
+            [self.commandLine removeFromSuperview];
+            self->_cmdLineBottomAnchor = nil;
+        }];
+    }
+}
+
+- (void)observeValueForKeyPath:(NSString *)keyPath
+                      ofObject:(id)object
+                        change:(NSDictionary<NSKeyValueChangeKey, id> *)change
+                       context:(void *)context
+{
+    if ([keyPath isEqualToString:@"contentInsets"]) {
+        let scrollView = self.sourceEditorView.scrollView;
+        NSEdgeInsets insets = scrollView.contentInsets;
+        if (self.isShowingCommandLine && insets.bottom == 0) {
+            insets.bottom += XvimCommandLineHeight;
+            scrollView.contentInsets = insets;
         }
-                    completionHandler:^{
-                        [self.commandLine removeFromSuperview];
-                        self->_cmdLineBottomAnchor = nil;
-                    }];
     }
 }
 
