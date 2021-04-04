@@ -166,7 +166,9 @@
                                                        object:nil];
         }
         else {
-            [self addMenuItem];
+            dispatch_async(dispatch_get_main_queue(), ^{
+                [self addMenuItem];
+            });
         }
     }
     return self;
