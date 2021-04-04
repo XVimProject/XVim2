@@ -1,10 +1,12 @@
 xcodebuild:=xcodebuild -configuration
+xcode_plugin_path:=$(HOME)/Library/Application Support/Developer/Shared/Xcode/Plug-ins
+simbl_plugin_path:=/Library/Application Support/MacEnhance/Plugins
 
 ifdef BUILDLOG
 REDIRECT=>> $(BUILDLOG)
 endif
 
-.PHONY: release debug clean clean-release clean-debug uninstall uuid build-test
+.PHONY: release debug clean clean-release clean-debug simbl move-to-simbl uninstall uuid build-test
 
 release: uuid
 	$(xcodebuild) Release $(REDIRECT)
@@ -21,9 +23,21 @@ clean-release:
 clean-debug:
 	$(xcodebuild) Debug clean
 
+simbl: release move-to-simbl
+
+move-to-simbl:
+	rm -rf "$(simbl_plugin_path)/XVim2.bundle"; \
+	if [ -d "$(simbl_plugin_path)" ]; then \
+		mv "$(xcode_plugin_path)/XVim2.xcplugin" "$(simbl_plugin_path)/XVim2.bundle"; \
+		printf "\nInstall to SIMBL plugin directory succeeded.\n"; \
+	else \
+		printf "\n$(simbl_plugin_path) directory not found.\n"; \
+		printf "\nPlease setup MacForge.\n"; \
+	fi;
 
 uninstall:
-	rm -rf "$(HOME)/Library/Application Support/Developer/Shared/Xcode/Plug-ins/XVim2.xcplugin"
+	rm -rf "$(xcode_plugin_path)/XVim2.xcplugin"; \
+	rm -rf "$(simbl_plugin_path)/XVim2.bundle";
 
 uuid:
 	@xcode_path=`xcode-select -p`; \
