@@ -8,14 +8,13 @@
 
 ## Install
 
-  1. Sign Xcode with your own certificate. You can [read the instructions for how to do this](SIGNING_Xcode.md) and if you have questions or concerns about what this means you can [read the FAQ on why you need to resign Xcode to use XVim2](why_resign_xcode.md).
-  
-  2. Clone the repo:
+  1. Clone the repo:
   ```bash
   $ git clone https://github.com/XVimProject/XVim2.git
+  $ cd XVim2
   ```
   
-  3. Confirm `xcode-select` points to your Xcode:
+  2. Confirm `xcode-select` points to your Xcode:
   ```bash
   $ xcode-select -p
   /Applications/Xcode.app/Contents/Developer
@@ -23,13 +22,25 @@
   
   If this doesn't show your Xcode application path, use `xcode-select -s /path/to/Xcode.app/Contents/Developer` to set the correct path.
 
-  4. `git checkout` a branch for your Xcode version. See [Branches and Releases](#branches-and-releases) section for more information.
+  3. `git checkout` a branch for your Xcode version. See [Branches and Releases](#branches-and-releases) section for more information.
   
-  5. `make`:
+  4. `make`:
   ```bash
-  $ cd XVim2
   $ make
   ```
+
+  5. XVim2 support some code injection system to load XVim2 into Xcode.
+
+  - [Xcode plugin system](#xcode-plugin-system)
+  - [SIMBL plugin system](#simbl-plugin-system)
+
+  6. Create `.xvimrc` as you need.
+
+### Xcode plugin system
+
+  NOTE: This method have issue for sign-in to Apple ID via Xcode on Big Sur. [#340](/issues/340)
+
+  1. Sign Xcode with your own certificate. You can [read the instructions for how to do this](SIGNING_Xcode.md) and if you have questions or concerns about what this means you can [read the FAQ on why you need to resign Xcode to use XVim2](why_resign_xcode.md).
 
   If you see something like the following:
   ```
@@ -38,9 +49,7 @@
   ```
   Press `y` to use XVim with your Xcode version (even if XVim is not confirmed to work with that version of Xcode).
   
-  6. Create `.xvimrc` as you need. 
-
-  7. Launch Xcode, where you'll be asked if you want to load XVim. Press 'Yes' to do so.
+  2. Launch Xcode, where you'll be asked if you want to load XVim. Press 'Yes' to do so.
      If you press 'No' by mistake, close Xcode and execute the following from a terminal:
 
   ```
@@ -48,6 +57,17 @@
   ```
   Then relaunch Xcode and choose 'Yes' to load XVim.
     
+### SIMBL plugin system
+
+  NOTE: SIMBL plugin system required disabling some security feature to work on recently macOS.
+
+  1. Setup [MacForge](https://github.com/MacEnhance/MacForge) with disabling Library Validation and System Integrity Protection (SIP).
+
+  2. make:
+  ```bash
+  $ make simbl
+  ```
+
 ## Branches and Releases
  
  - `master`: for the lastest GM Xcode.
@@ -77,8 +97,9 @@
   ```
 
 ### Manual uninstall 
-Delete the following directory:
-`$HOME/Library/Application\ Support/Developer/Shared/Xcode/Plug-ins/XVim2.xcplugin`
+Delete the following directories:
+- `$HOME/Library/Application\ Support/Developer/Shared/Xcode/Plug-ins/XVim2.xcplugin`
+- `/Library/Application\ Support/MacEnhance/Plugins/XVim2.bundle`
 
 ## Feature list
   See separate [FeatureList.md](Documents/FeatureList.md)
