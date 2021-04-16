@@ -26,7 +26,6 @@
 #import "XcodeUtils.h"
 #import "NSTextStorage+VimOperation.h"
 #import "NSURL+XVimXcodeModule.h"
-#import "NSString+Util.h"
 #import "XVimTaskRunner.h"
 #import "XVim2-Swift.h"
 

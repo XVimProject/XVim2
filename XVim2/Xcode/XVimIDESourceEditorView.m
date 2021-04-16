@@ -23,7 +23,6 @@
 #import <IDEKit/IDEEditorContext.h>
 #import <IDEKit/IDEEditorDocument.h>
 #import "XVimTaskRunner.h"
-#import "NSString+Util.h"
 #import "XVimXcode.h"
 #import "XcodeUtils.h"
 

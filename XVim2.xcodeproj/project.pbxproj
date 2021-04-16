@@ -18,7 +18,6 @@
 		A21B82F324794C88002F162A /* XVimMark.swift in Sources */ = {isa = PBXBuildFile; fileRef = A21B82F224794C88002F162A /* XVimMark.swift */; };
 		A2482F311F72435D00FEF4DE /* ProcessRunner.m in Sources */ = {isa = PBXBuildFile; fileRef = A2482F2E1F72435D00FEF4DE /* ProcessRunner.m */; };
 		A2482F321F72435D00FEF4DE /* XVimTaskRunner.m in Sources */ = {isa = PBXBuildFile; fileRef = A2482F301F72435D00FEF4DE /* XVimTaskRunner.m */; };
-		A2482F4C1F725B6500FEF4DE /* NSString+Util.m in Sources */ = {isa = PBXBuildFile; fileRef = A2482F4B1F725B6500FEF4DE /* NSString+Util.m */; };
 		A26E5C801F514686000BCC66 /* XVim2.xcplugin in CopyFiles */ = {isa = PBXBuildFile; fileRef = A26E5C731F5145AB000BCC66 /* XVim2.xcplugin */; settings = {ATTRIBUTES = (CodeSignOnCopy, ); }; };
 		A2753929247D372D001608F3 /* XVimEvalArg.swift in Sources */ = {isa = PBXBuildFile; fileRef = A2753928247D372D001608F3 /* XVimEvalArg.swift */; };
 		A275392B247D3826001608F3 /* XVimEvalFunc.swift in Sources */ = {isa = PBXBuildFile; fileRef = A275392A247D3826001608F3 /* XVimEvalFunc.swift */; };
@@ -26,6 +25,7 @@
 		A27AB88C236AAEBF00803BE1 /* XVimTestResultTableView.m in Sources */ = {isa = PBXBuildFile; fileRef = A27AB88B236AAEBF00803BE1 /* XVimTestResultTableView.m */; };
 		A287A8C71F55D637009378BC /* NSObject+ExtraData.m in Sources */ = {isa = PBXBuildFile; fileRef = A287A8C61F55D636009378BC /* NSObject+ExtraData.m */; };
 		A2933D0622AFB7AE0095378C /* XVimSourceEditorSelectionDisplay.m in Sources */ = {isa = PBXBuildFile; fileRef = 5DAD89FF227455F000D01D9F /* XVimSourceEditorSelectionDisplay.m */; };
+		A2988E042629B1E700D83D22 /* NSString+Util.swift in Sources */ = {isa = PBXBuildFile; fileRef = A2988E032629B1E700D83D22 /* NSString+Util.swift */; };
 		A29BA5722243D6160032C3E2 /* SourceEditorViewWrapper.s in Sources */ = {isa = PBXBuildFile; fileRef = A29BA56F2243D6160032C3E2 /* SourceEditorViewWrapper.s */; };
 		A29BA5732243D6160032C3E2 /* SourceEditorDataSourceWrapper.swift in Sources */ = {isa = PBXBuildFile; fileRef = A29BA5702243D6160032C3E2 /* SourceEditorDataSourceWrapper.swift */; };
 		A29BA5742243D6160032C3E2 /* SourceEditorViewWrapper.swift in Sources */ = {isa = PBXBuildFile; fileRef = A29BA5712243D6160032C3E2 /* SourceEditorViewWrapper.swift */; };
@@ -141,8 +141,6 @@
 		A2482F2E1F72435D00FEF4DE /* ProcessRunner.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ProcessRunner.m; sourceTree = "<group>"; };
 		A2482F2F1F72435D00FEF4DE /* XVimTaskRunner.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = XVimTaskRunner.h; sourceTree = "<group>"; };
 		A2482F301F72435D00FEF4DE /* XVimTaskRunner.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = XVimTaskRunner.m; sourceTree = "<group>"; };
-		A2482F4A1F725B6500FEF4DE /* NSString+Util.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "NSString+Util.h"; sourceTree = "<group>"; };
-		A2482F4B1F725B6500FEF4DE /* NSString+Util.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = "NSString+Util.m"; sourceTree = "<group>"; };
 		A26E5C731F5145AB000BCC66 /* XVim2.xcplugin */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = XVim2.xcplugin; sourceTree = BUILT_PRODUCTS_DIR; };
 		A2753927247D36A4001608F3 /* XVimSearchCase.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = XVimSearchCase.h; sourceTree = "<group>"; };
 		A2753928247D372D001608F3 /* XVimEvalArg.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = XVimEvalArg.swift; sourceTree = "<group>"; };
@@ -153,6 +151,7 @@
 		A27AB88B236AAEBF00803BE1 /* XVimTestResultTableView.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = XVimTestResultTableView.m; sourceTree = "<group>"; };
 		A287A8C51F55D636009378BC /* NSObject+ExtraData.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "NSObject+ExtraData.h"; sourceTree = "<group>"; };
 		A287A8C61F55D636009378BC /* NSObject+ExtraData.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "NSObject+ExtraData.m"; sourceTree = "<group>"; };
+		A2988E032629B1E700D83D22 /* NSString+Util.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "NSString+Util.swift"; sourceTree = "<group>"; };
 		A29BA56F2243D6160032C3E2 /* SourceEditorViewWrapper.s */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.asm; name = SourceEditorViewWrapper.s; path = XVim2/Xcode/SourceEditorViewWrapper.s; sourceTree = SOURCE_ROOT; };
 		A29BA5702243D6160032C3E2 /* SourceEditorDataSourceWrapper.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = SourceEditorDataSourceWrapper.swift; path = XVim2/Xcode/SourceEditorDataSourceWrapper.swift; sourceTree = SOURCE_ROOT; };
 		A29BA5712243D6160032C3E2 /* SourceEditorViewWrapper.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = SourceEditorViewWrapper.swift; path = XVim2/Xcode/SourceEditorViewWrapper.swift; sourceTree = SOURCE_ROOT; };
@@ -563,8 +562,7 @@
 				A20FB79A21BB7FF2001FDC62 /* about.xib */,
 				ED6331CD1F83797E00E9E6B0 /* CommandLine */,
 				A28D4128207E5695001E0E13 /* Evaluator */,
-				A2482F4A1F725B6500FEF4DE /* NSString+Util.h */,
-				A2482F4B1F725B6500FEF4DE /* NSString+Util.m */,
+				A2988E032629B1E700D83D22 /* NSString+Util.swift */,
 				ED6B8E4D1F80F896002F4A47 /* NSTextStorage+VimOperation.h */,
 				ED6B8E4A1F80F896002F4A47 /* NSTextStorage+VimOperation.m */,
 				ED0DED7D1F8C41EF00886F6B /* NSURL+XVimXcodeModule.h */,
@@ -742,6 +740,7 @@
 				A2A9F9392070A84600E7BB53 /* SourceEditorViewProxy+Scrolling.m in Sources */,
 				EDD27BB01F9B5EB30006471C /* XVimTester+Visual.m in Sources */,
 				ED6276921F817CD5005F8274 /* XVimGMotionEvaluator.m in Sources */,
+				A2988E042629B1E700D83D22 /* NSString+Util.swift in Sources */,
 				ED0DED681F8C31FA00886F6B /* XVimCommandLineEvaluator.m in Sources */,
 				A20FB79F21BB7FF2001FDC62 /* XVimAboutDialog.m in Sources */,
 				A2A9F9382070A84600E7BB53 /* IDEWorkspaceTabController+XVim.m in Sources */,
@@ -779,7 +778,6 @@
 				28DF293E255FDDD30064CE54 /* NSView+ViewRecursion.m in Sources */,
 				ED60EB8A1F82E5B9000CBF9C /* XVimUppercaseEvaluator.m in Sources */,
 				A2482F321F72435D00FEF4DE /* XVimTaskRunner.m in Sources */,
-				A2482F4C1F725B6500FEF4DE /* NSString+Util.m in Sources */,
 				A2B537B11F51C94400D83C0A /* NSObject+Swizzle.m in Sources */,
 				EDF0106E1F6EEFFC00461B2C /* XVimWindow.m in Sources */,
 				EDD27BAE1F9B5EB30006471C /* XVimTester+Jump.m in Sources */,

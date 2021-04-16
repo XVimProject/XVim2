@@ -11,9 +11,9 @@ import Foundation
 @objc class XVimExArg: NSObject {
     @objc public var arg: String?
     @objc public var cmd: String?
-    //@objc public var forceit: Bool = false
+    // @objc public var forceit: Bool = false
     @objc public var noRangeSpecified: Bool = false
     @objc public var lineBegin: Int = NSNotFound// line1
     @objc public var lineEnd: Int = NSNotFound // line2
-    //@objc public var addressCount: Int = NSNotFound
+    // @objc public var addressCount: Int = NSNotFound
 }
