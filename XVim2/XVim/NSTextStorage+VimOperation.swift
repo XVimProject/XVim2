@@ -10,15 +10,15 @@ import Foundation
 
 extension NSTextStorage {
     @objc func validIndex(_ index: UInt) -> UInt {
-        if index > self.string.count {
-            return UInt(self.string.count)
+        if index > self.length {
+            return UInt(self.length)
         }
         return index
     }
 
     @objc func isEOF(_ index: UInt) -> Bool {
         let index = validIndex(index)
-        return self.string.count == index
+        return self.length == index
     }
 
     @objc func isLOL(_ index: UInt) -> Bool {
@@ -46,7 +46,7 @@ extension NSTextStorage {
 
     @objc func isNewline(_ index: UInt) -> Bool {
         let index = self.validIndex(index)
-        if  index == self.string.count {
+        if  index == self.length {
             return false // EOF is not a newline
         }
 
