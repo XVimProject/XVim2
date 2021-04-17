@@ -380,8 +380,8 @@
             }
             if (m.motionInfo.reachedEndOfLine) {
                 [self xvim_swapCaseForRange:[self xvim_getOperationRangeFrom:r.begin
-                                                                                To:r.end
-                                                                              Type:CHARWISE_INCLUSIVE]];
+                                                                          To:r.end
+                                                                        Type:CHARWISE_INCLUSIVE]];
             }
             else {
                 [self xvim_swapCaseForRange:[self xvim_getOperationRangeFrom:r.begin

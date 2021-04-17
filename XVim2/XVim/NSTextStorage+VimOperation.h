@@ -9,7 +9,9 @@
 
 #import "XVimDefs.h"
 #import "XVimTextStoring.h"
-#import "XVim2-Swift.h"
+#import "XVimMotionOption.h"
+
+@class XVimMotionInfo;
 
 NS_ASSUME_NONNULL_BEGIN
 
@@ -74,21 +76,6 @@ NS_ASSUME_NONNULL_BEGIN
 - (NSUInteger)xvim_numberOfColumnsInLineAtIndex:(NSUInteger)index;
 
 #pragma mark Definitions
-
-// Determine if the position specified with "index" is EOF.
-- (BOOL)isEOF:(NSUInteger)index;
-
-// Determine if the position specified with "index" is LOL.
-- (BOOL)isLOL:(NSUInteger)index;
-
-// Determine if the position specified with "index" is EOL.
-- (BOOL)isEOL:(NSUInteger)index;
-
-// Determine if the position is a beginning of line
-- (BOOL)isBOL:(NSUInteger)index;
-
-// Determine if the position specified with "index" is newline.
-- (BOOL)isNewline:(NSUInteger)index;
 
 // Determine if the position specified with "index" is white space.
 - (BOOL)isWhitespace:(NSUInteger)index;
@@ -235,6 +222,7 @@ NSInteger xv_findChar(NSString* string, NSInteger index, int repeatCount, char c
 
 #pragma mark undo
 - (void)xvim_undoCursorPos:(NSNumber*)num;
+
 @end
 
 NS_ASSUME_NONNULL_END

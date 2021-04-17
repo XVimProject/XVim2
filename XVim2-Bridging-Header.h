@@ -17,5 +17,6 @@
 #import "XVimMotionStyle.h"
 #import "XVimDefs.h"
 #import "XVim.h"
+#import "NSString+VimHelper.h"
 
 #endif /* XVim2_Bridging_Header_h */

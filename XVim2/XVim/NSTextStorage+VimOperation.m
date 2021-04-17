@@ -12,6 +12,7 @@
 #import "XVimStringBuffer.h"
 #import "XVim.h"
 #import "XVimOptions.h"
+#import "XVim2-Swift.h"
 
 @implementation NSTextStorage (VimOperation)
 
@@ -60,14 +61,6 @@
     }
 
     return NSMakeRange(NSNotFound, 0);
-}
-
-- (NSUInteger)validIndex:(NSUInteger)index
-{
-    if (index > self.length){
-        return self.length;
-    }
-    return index;
 }
 
 - (NSRange)xvim_indexRangeForLineAtIndex:(NSUInteger)index newLineLength:(NSUInteger*)newLineLength
@@ -301,38 +294,6 @@ static NSUInteger xvim_sb_count_columns(xvim_string_buffer_t* sb, NSUInteger tab
 
 #pragma mark Definitions
 
-- (BOOL)isEOF:(NSUInteger)index
-{
-    index = [self validIndex:index];
-    return [[self xvim_string] length] == index;
-}
-
-- (BOOL)isLOL:(NSUInteger)index
-{
-    index = [self validIndex:index];
-    return [self isEOF:index] == NO && [self isNewline:index] == NO && [self isNewline:index + 1];
-}
-
-- (BOOL)isEOL:(NSUInteger)index
-{
-    index = [self validIndex:index];
-    return [self isNewline:index] || [self isEOF:index];
-}
-
-- (BOOL)isBOL:(NSUInteger)index
-{
-    index = [self validIndex:index];
-    if (0 == index) {
-        return YES;
-    }
-
-    if ([self isNewline:index - 1]) {
-        return YES;
-    }
-
-    return NO;
-}
-
 - (BOOL)isLastCharacter:(NSUInteger)index
 {
     index = [self validIndex:index];
@@ -340,15 +301,6 @@ static NSUInteger xvim_sb_count_columns(xvim_string_buffer_t* sb, NSUInteger tab
         return NO;
     }
     return [[self xvim_string] length] - 1 == index;
-}
-
-- (BOOL)isNewline:(NSUInteger)index
-{
-    index = [self validIndex:index];
-    if (index == [[self xvim_string] length]) {
-        return NO; // EOF is not a newline
-    }
-    return isNewline([[self xvim_string] characterAtIndex:index]);
 }
 
 - (BOOL)isWhitespace:(NSUInteger)index
