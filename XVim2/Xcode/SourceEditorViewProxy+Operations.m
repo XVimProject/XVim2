@@ -226,6 +226,7 @@
 
 - (void)xvim_insertNewlineBelowCurrentLineWithIndent
 {
+    [self xvim_fixInsertionPoint];
     NSUInteger tail = [self xvim_endOfLine:self.insertionPoint];
     [self setSelectedRange:NSMakeRange(tail, 0)];
     [self insertNewline:self];
