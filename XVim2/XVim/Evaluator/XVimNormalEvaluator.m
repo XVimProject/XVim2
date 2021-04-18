@@ -67,6 +67,15 @@
     return [keymapProvider keymapForMode:XVIM_MODE_NORMAL];
 }
 
+- (XVimEvaluator*)eval:(XVimKeyStroke*)keyStroke
+{
+    // fix insertionPoint before perform keyStroke method.
+    let view = self.sourceView;
+    [view xvim_fixInsertionPoint];
+
+    return [super eval:keyStroke];
+}
+
 /////////////////////////////////////////////////////////////////////////////////////////
 // Keep command implementation alphabetical order please(Except specical characters).  //
 /////////////////////////////////////////////////////////////////////////////////////////
@@ -216,15 +225,11 @@
 - (XVimEvaluator*)i
 {
     // Go to insert
-    let view = self.sourceView;
-    [view xvim_fixInsertionPoint];
     return [[XVimInsertEvaluator alloc] initWithWindow:self.window];
 }
 
 - (XVimEvaluator*)I
 {
-    let view = self.sourceView;
-    [view xvim_fixInsertionPoint];
     return [[XVimInsertEvaluator alloc] initWithWindow:self.window insertMode:XVIM_INSERT_BEFORE_FIRST_NONBLANK];
 }
 
@@ -245,7 +250,6 @@
 - (XVimEvaluator*)o
 {
     let view = [self sourceView];
-    [view xvim_fixInsertionPoint];
     [view xvim_insertNewlineBelowAndInsertWithIndent];
     return [[XVimInsertEvaluator alloc] initWithWindow:self.window];
 }
