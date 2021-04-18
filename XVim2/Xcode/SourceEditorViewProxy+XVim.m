@@ -131,6 +131,16 @@
     }
 }
 
+/// XVim last set insertionPoint is wrong when Xcode trim whitespace.
+/// If insertionPoint is wrong, wired position cursor jump will occur when some motions.
+/// This method fixing insertionPoint for that motions.
+- (void)xvim_fixInsertionPoint
+{
+    if (self.selectionMode == XVIM_VISUAL_NONE && self.insertionPoint > self.selectedRange.location) {
+        self.insertionPoint = self.selectedRange.location;
+    }
+}
+
 - (void)xvim_move:(XVimMotion*)motion
 {
     var r = [self xvim_getMotionRange:self.insertionPoint Motion:motion];

@@ -88,6 +88,7 @@ typedef NS_ENUM(char, CursorStyle) {
                                    column:(NSUInteger)column
                                     lines:(XVimRange)lines;
 - (void)xvim_adjustCursorPosition;
+- (void)xvim_fixInsertionPoint;
 - (void)xvim_escapeFromInsert;
 - (void)xvim_moveCursor:(NSUInteger)pos preserveColumn:(BOOL)preserve;
 - (void)xvim_move:(XVimMotion*)motion;

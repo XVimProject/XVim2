@@ -67,6 +67,15 @@
     return [keymapProvider keymapForMode:XVIM_MODE_NORMAL];
 }
 
+- (XVimEvaluator*)eval:(XVimKeyStroke*)keyStroke
+{
+    // fix insertionPoint before perform keyStroke method.
+    let view = self.sourceView;
+    [view xvim_fixInsertionPoint];
+
+    return [super eval:keyStroke];
+}
+
 /////////////////////////////////////////////////////////////////////////////////////////
 // Keep command implementation alphabetical order please(Except specical characters).  //
 /////////////////////////////////////////////////////////////////////////////////////////
