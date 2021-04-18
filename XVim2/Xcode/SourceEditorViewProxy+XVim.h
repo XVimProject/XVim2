@@ -42,7 +42,6 @@ typedef struct {
 - (XVimRange)xvim_selectedLines;
 - (void)xvim_insertSpaces:(NSUInteger)count replacementRange:(NSRange)replacementRange;
 - (LineRange)xvim_visibleLineRange;
-- (void)xvim_fixInsertionPoint;
 @end
 
 NS_ASSUME_NONNULL_END

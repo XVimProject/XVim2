@@ -132,7 +132,7 @@
 }
 
 /// XVim last set insertionPoint is wrong when Xcode trim whitespace.
-/// If insertionPoint is wrong, wired position cursor jump will occur when `j` and `o` operation.
+/// If insertionPoint is wrong, wired position cursor jump will occur when `i`, `I`, `j` and `o` operation.
 /// This method fixing insertionPoint for that operation.
 - (void)xvim_fixInsertionPoint
 {
