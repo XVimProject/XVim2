@@ -9,4 +9,7 @@ jobs:
 
     steps:
     - uses: actions/checkout@v2
+    - run: |
+        ./Tools/add_plugin_filed_to_preference.sh
+        defaults read com.apple.dt.Xcode
     - run: make
