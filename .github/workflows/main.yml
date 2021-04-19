@@ -10,6 +10,13 @@ jobs:
     steps:
     - uses: actions/checkout@v2
     - run: |
+        #./Tools/create_cert.sh
+        XCODE_PATH=$(xcode-select -p)
+        codesign -dvvv ${XCODE_PATH%%/Contents*}
+        #sudo codesign -f -s XcodeSigner ${XCODE_PATH%%/Contents*} &
+        sudo codesign --remove-signature ${XCODE_PATH%%/Contents*}
+        codesign -dvvv ${XCODE_PATH%%/Contents*} || true
+    - run: |
         ./Tools/add_plugin_filed_to_preference.sh
         defaults read com.apple.dt.Xcode
     - run: make
