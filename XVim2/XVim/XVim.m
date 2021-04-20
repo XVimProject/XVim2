@@ -354,6 +354,13 @@
         }
         [m addItem:subm];
         [subm setSubmenu:cat_menu];
+
+#if defined UNIT_TEST
+        NSMenuItem *testItem = [[NSMenuItem alloc] init];
+        testItem.title = @"All";
+        [XVim.instance performSelector:@selector(runTest:) withObject:testItem afterDelay:10.0];
+        UNIT_TEST_LOG(@"did performSelector.");
+#endif
     }
 
     return item;

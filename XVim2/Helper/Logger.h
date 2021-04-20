@@ -23,6 +23,13 @@
 #define ERROR_LOG(fmt, ...)
 #endif
 
+#if defined UNIT_TEST
+#define UNIT_TEST_LOG(fmt, ...)                                                                                            \
+[Logger logWithLevel:LogDebug format:@"%s:%d " fmt, __PRETTY_FUNCTION__, __LINE__, ##__VA_ARGS__]
+#else
+#define UNIT_TEST_LOG(fmt, ...)
+#endif
+
 typedef NS_ENUM(NSInteger, LogLevel) {
     LogDebug,
     LogError,

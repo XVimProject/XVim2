@@ -9,14 +9,33 @@ jobs:
 
     steps:
     - uses: actions/checkout@v2
-    - run: |
-        #./Tools/create_cert.sh
+    - name: Build XVim with UNIT_TEST flag
+      run: make unit-test
+    - name: Remove codesign
+      run: |
         XCODE_PATH=$(xcode-select -p)
         codesign -dvvv ${XCODE_PATH%%/Contents*}
-        #sudo codesign -f -s XcodeSigner ${XCODE_PATH%%/Contents*} &
         sudo codesign --remove-signature ${XCODE_PATH%%/Contents*}
         codesign -dvvv ${XCODE_PATH%%/Contents*} || true
-    - run: |
+    - name: Register XVim as lodable plugin
+      run: |
         ./Tools/add_plugin_filed_to_preference.sh
         defaults read com.apple.dt.Xcode
-    - run: make
+    - name: Run unit test
+      timeout-minutes: 5
+      run: |
+        echo "set debug" > ~/.xvimrc
+        touch ~/.xvimlog
+        XCODE_PATH=$(xcode-select -p)
+        open -a ${XCODE_PATH%%/Contents*} XVim2.xcodeproj
+        tail -f ~/.xvimlog &
+        while :
+        do
+          result=$(grep "unit test finished" ~/.xvimlog || true)
+          if [ -n "${result}" ]; then
+            # automatically exit non-zero if grep exit code is non-zero by -e option of running shell
+            grep "^0 Failing Tests$" ~/.xvimlog > /dev/null 2>&1
+            exit 0
+          fi
+          sleep 1
+        done

@@ -14,6 +14,8 @@ release: uuid
 debug: uuid
 	$(xcodebuild) Debug $(REDIRECT)
 
+unit-test:
+	$(xcodebuild) Release GCC_PREPROCESSOR_DEFINITIONS=UNIT_TEST=1 $(REDIRECT)
 
 clean: clean-release clean-debug
 

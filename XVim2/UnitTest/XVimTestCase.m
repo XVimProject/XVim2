@@ -178,6 +178,7 @@ static atomic_uint dispatchQueueCount = ATOMIC_VAR_INIT(0);
 
 - (void)runInWindow:(NSWindow*)window withContinuation:(void(^)(void))continuation
 {
+    UNIT_TEST_LOG(@"testing case: %@", self.desc);
     self.window = window;
 
     [self setUp];
