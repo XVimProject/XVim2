@@ -156,6 +156,7 @@ DVTTextPreferences* XcodeTextPreferences(void) { return [DVTTextPreferencesClass
     id lastActiveWorkspace = [(IDEWorkspaceTabController*)XVimLastActiveWorkspaceTabController() workspace];
     if (lastActiveWorkspace == nil) {
         NSBeep();
+        UNIT_TEST_LOG(@"Fail to open xvimtest.cpp");
         return;
     }
     IDEEditorOpenSpecifier* spec =
@@ -190,6 +191,21 @@ DVTTextPreferences* XcodeTextPreferences(void) { return [DVTTextPreferencesClass
         [self.testWindow performClose:self];
         [self showResultsTable];
 		[self dump];				
+#if defined UNIT_TEST
+        for (XVimTestCase *tc in self.testCases) {
+            if (!tc.success) {
+                UNIT_TEST_LOG(@"[Description] %@, [Pass/Fail] %@, [Message] %@, [Expected] %@, [Actual] %@",
+                              tc.desc,
+                              tc.resultDescription,
+                              tc.message,
+                              [NSString stringWithFormat:@"'%@'", [tc.expectedText escapedString]],
+                              [NSString stringWithFormat:@"'%@'", [tc.actualText escapedString]]
+                              );
+            }
+        }
+        UNIT_TEST_LOG(@"%@", [resultsString stringValue]);
+        UNIT_TEST_LOG(@"unit test finished");
+#endif
         return;
     }
     
