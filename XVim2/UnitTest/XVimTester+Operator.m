@@ -406,7 +406,7 @@
                                       @"        ccc\n" // 16
                                       @"    ddd\n" // 28
                                       @"    eee\n" // 38
-                                      @"        fff"; // 46
+                                      @"        ffftest"; // 46
 
     static NSString* lshift_result5_2 = @"\taaa\n"
                                         @"\tbbb\n";
