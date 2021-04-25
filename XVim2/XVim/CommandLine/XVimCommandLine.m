@@ -10,7 +10,6 @@
 #import "XVimCommandField.h"
 //#import "XVimQuickFixView.h"
 #import "Logger.h"
-#import "NSAttributedString+Geometrics.h"
 #import "XVimWindow.h"
 // TODO:Xcode11
 //#import <DVTKit/DVTFontAndColorTheme.h>

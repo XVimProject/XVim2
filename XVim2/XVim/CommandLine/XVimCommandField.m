@@ -8,7 +8,6 @@
 
 #import "XVimCommandField.h"
 #import "Logger.h"
-#import "NSAttributedString+Geometrics.h"
 #import "XVim.h"
 #import "XVimKeyStroke.h"
 #import "XVimOptions.h"
