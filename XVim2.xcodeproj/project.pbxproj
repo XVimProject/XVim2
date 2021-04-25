@@ -21,7 +21,6 @@
 		A26E5C801F514686000BCC66 /* XVim2.xcplugin in CopyFiles */ = {isa = PBXBuildFile; fileRef = A26E5C731F5145AB000BCC66 /* XVim2.xcplugin */; settings = {ATTRIBUTES = (CodeSignOnCopy, ); }; };
 		A2753929247D372D001608F3 /* XVimEvalArg.swift in Sources */ = {isa = PBXBuildFile; fileRef = A2753928247D372D001608F3 /* XVimEvalArg.swift */; };
 		A275392B247D3826001608F3 /* XVimEvalFunc.swift in Sources */ = {isa = PBXBuildFile; fileRef = A275392A247D3826001608F3 /* XVimEvalFunc.swift */; };
-		A27A7AEB2077BD68006A0E4F /* XVimRangeUtil.m in Sources */ = {isa = PBXBuildFile; fileRef = A27A7AEA2077BD68006A0E4F /* XVimRangeUtil.m */; };
 		A27AB88C236AAEBF00803BE1 /* XVimTestResultTableView.m in Sources */ = {isa = PBXBuildFile; fileRef = A27AB88B236AAEBF00803BE1 /* XVimTestResultTableView.m */; };
 		A287A8C71F55D637009378BC /* NSObject+ExtraData.m in Sources */ = {isa = PBXBuildFile; fileRef = A287A8C61F55D636009378BC /* NSObject+ExtraData.m */; };
 		A2933D0622AFB7AE0095378C /* XVimSourceEditorSelectionDisplay.m in Sources */ = {isa = PBXBuildFile; fileRef = 5DAD89FF227455F000D01D9F /* XVimSourceEditorSelectionDisplay.m */; };
@@ -146,8 +145,6 @@
 		A2753927247D36A4001608F3 /* XVimSearchCase.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = XVimSearchCase.h; sourceTree = "<group>"; };
 		A2753928247D372D001608F3 /* XVimEvalArg.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = XVimEvalArg.swift; sourceTree = "<group>"; };
 		A275392A247D3826001608F3 /* XVimEvalFunc.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = XVimEvalFunc.swift; sourceTree = "<group>"; };
-		A27A7AE92077BD68006A0E4F /* XVimRangeUtil.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = XVimRangeUtil.h; sourceTree = "<group>"; };
-		A27A7AEA2077BD68006A0E4F /* XVimRangeUtil.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = XVimRangeUtil.m; sourceTree = "<group>"; };
 		A27AB88A236AAEBF00803BE1 /* XVimTestResultTableView.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = XVimTestResultTableView.h; sourceTree = "<group>"; };
 		A27AB88B236AAEBF00803BE1 /* XVimTestResultTableView.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = XVimTestResultTableView.m; sourceTree = "<group>"; };
 		A287A8C51F55D636009378BC /* NSObject+ExtraData.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "NSObject+ExtraData.h"; sourceTree = "<group>"; };
@@ -476,8 +473,6 @@
 				A2B52D3B1F514CC600D83C0A /* Logger.m */,
 				A2D464BB20D4042B00A43EC7 /* SwiftLogger.swift */,
 				ED9CF2D81F6EFB6100908DFB /* Macros.h */,
-				A27A7AE92077BD68006A0E4F /* XVimRangeUtil.h */,
-				A27A7AEA2077BD68006A0E4F /* XVimRangeUtil.m */,
 				28DF293C255FDDD30064CE54 /* NSView+ViewRecursion.h */,
 				28DF293D255FDDD30064CE54 /* NSView+ViewRecursion.m */,
 			);
@@ -771,7 +766,6 @@
 				ED0DED7F1F8C41F100886F6B /* NSURL+XVimXcodeModule.m in Sources */,
 				ED6BCEE21F83F019003517EB /* XVimJoinEvaluator.m in Sources */,
 				A2FB1EE12077B65100D3E634 /* File.swift in Sources */,
-				A27A7AEB2077BD68006A0E4F /* XVimRangeUtil.m in Sources */,
 				EDD27BB51F9B5F140006471C /* XVimTester+Recording.m in Sources */,
 				ED31C0C61F8164B800BE97B9 /* XVimInsertEvaluator.m in Sources */,
 				EDFA14961F8564DB0039B439 /* XVimMarks.m in Sources */,
