@@ -5,7 +5,6 @@
 //
 
 #import "XVimKeyStroke.h"
-#import "NSEvent+VimHelper.h"
 #import "XVimStringBuffer.h"
 #import <wctype.h>
 #import <xlocale.h>

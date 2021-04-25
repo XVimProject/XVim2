@@ -101,7 +101,6 @@
 		EDF0106D1F6EEFFC00461B2C /* XVimNumericEvaluator.m in Sources */ = {isa = PBXBuildFile; fileRef = EDF0105A1F6EEF1000461B2C /* XVimNumericEvaluator.m */; };
 		EDF0106E1F6EEFFC00461B2C /* XVimWindow.m in Sources */ = {isa = PBXBuildFile; fileRef = EDF010581F6EEF0F00461B2C /* XVimWindow.m */; };
 		EDF010731F6EF05E00461B2C /* NSString+VimHelper.m in Sources */ = {isa = PBXBuildFile; fileRef = EDF010711F6EF05E00461B2C /* NSString+VimHelper.m */; };
-		EDF010741F6EF05E00461B2C /* NSEvent+VimHelper.m in Sources */ = {isa = PBXBuildFile; fileRef = EDF010721F6EF05E00461B2C /* NSEvent+VimHelper.m */; };
 		EDF010771F6EF16600461B2C /* XVim.m in Sources */ = {isa = PBXBuildFile; fileRef = EDF010761F6EF16600461B2C /* XVim.m */; };
 		EDFA14961F8564DB0039B439 /* XVimMarks.m in Sources */ = {isa = PBXBuildFile; fileRef = EDFA14941F8564DA0039B439 /* XVimMarks.m */; };
 		EDFAA30C1F85660A002100CE /* XVimMarkSetEvaluator.m in Sources */ = {isa = PBXBuildFile; fileRef = EDFAA3081F8565F2002100CE /* XVimMarkSetEvaluator.m */; };
@@ -296,10 +295,8 @@
 		EDF010641F6EEF1000461B2C /* XVimArgumentEvaluator.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = XVimArgumentEvaluator.h; sourceTree = "<group>"; };
 		EDF010651F6EEF1000461B2C /* XVimKeymapProvider.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = XVimKeymapProvider.h; sourceTree = "<group>"; };
 		EDF010661F6EEF1000461B2C /* XVimKeymap.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = XVimKeymap.m; sourceTree = "<group>"; };
-		EDF0106F1F6EF05E00461B2C /* NSEvent+VimHelper.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "NSEvent+VimHelper.h"; sourceTree = "<group>"; };
 		EDF010701F6EF05E00461B2C /* NSString+VimHelper.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "NSString+VimHelper.h"; sourceTree = "<group>"; };
 		EDF010711F6EF05E00461B2C /* NSString+VimHelper.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = "NSString+VimHelper.m"; sourceTree = "<group>"; };
-		EDF010721F6EF05E00461B2C /* NSEvent+VimHelper.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = "NSEvent+VimHelper.m"; sourceTree = "<group>"; };
 		EDF010751F6EF16600461B2C /* XVim.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = XVim.h; sourceTree = "<group>"; };
 		EDF010761F6EF16600461B2C /* XVim.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = XVim.m; sourceTree = "<group>"; };
 		EDFA14921F8564DA0039B439 /* XVimMarks.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = XVimMarks.h; sourceTree = "<group>"; };
@@ -455,8 +452,6 @@
 			isa = PBXGroup;
 			children = (
 				ED6331C01F83719200E9E6B0 /* Geometry.h */,
-				EDF0106F1F6EF05E00461B2C /* NSEvent+VimHelper.h */,
-				EDF010721F6EF05E00461B2C /* NSEvent+VimHelper.m */,
 				EDF010701F6EF05E00461B2C /* NSString+VimHelper.h */,
 				EDF010711F6EF05E00461B2C /* NSString+VimHelper.m */,
 				ED6331DB1F83864E00E9E6B0 /* NSAttributedString+Geometrics.h */,
@@ -797,7 +792,6 @@
 				EDF010731F6EF05E00461B2C /* NSString+VimHelper.m in Sources */,
 				ED0DED711F8C3B0800886F6B /* XVimExCommand.m in Sources */,
 				EDF010671F6EEFFC00461B2C /* XVimArgumentEvaluator.m in Sources */,
-				EDF010741F6EF05E00461B2C /* NSEvent+VimHelper.m in Sources */,
 				EDEF0F241F84DB570087D30B /* XVimShiftEvaluator.m in Sources */,
 				A2A9F9362070A84600E7BB53 /* SourceEditorViewProxy+Operations.m in Sources */,
 				A2053346247A973D00412C8B /* XVimExCmdname.swift in Sources */,
