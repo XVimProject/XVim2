@@ -6,13 +6,6 @@
 	<array>
 		<string>com.apple.dt.Xcode</string>
 	</array>
-	<key>SIMBLTargetApplications</key>
-	<array>
-		<dict>
-			<key>BundleIdentifier</key>
-			<string>com.apple.dt.Xcode</string>
-		</dict>
-	</array>
 	<key>CFBundleDevelopmentRegion</key>
 	<string>$(DEVELOPMENT_LANGUAGE)</string>
 	<key>CFBundleExecutable</key>
@@ -31,6 +24,7 @@
 	<string>1</string>
 	<key>DVTPlugInCompatibilityUUIDs</key>
 	<array>
+		<string>F56A1938-53DE-493D-9D64-87EE6C415E4D</string>
 		<string>2F1A5FFF-BFEB-4498-B2AC-1296A7454F81</string>
 		<string>3928AC50-EA32-404F-9CAF-49710A35483C</string>
 		<string>DF12405B-55B4-4E00-8029-6AEFA7DBAD0F</string>
@@ -63,6 +57,13 @@
 	<string>Copyright © 2017 Shuichiro Suzuki. All rights reserved.</string>
 	<key>NSPrincipalClass</key>
 	<string>XVim</string>
+	<key>SIMBLTargetApplications</key>
+	<array>
+		<dict>
+			<key>BundleIdentifier</key>
+			<string>com.apple.dt.Xcode</string>
+		</dict>
+	</array>
 	<key>XC4Compatible</key>
 	<true/>
 	<key>XCPluginHasUI</key>
