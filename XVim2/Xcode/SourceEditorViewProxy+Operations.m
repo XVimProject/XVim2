@@ -256,10 +256,17 @@
 {
     NSUInteger head = [self.textStorage xvim_startOfLine:self.insertionPoint];
     if (0 != head) {
+        // https://github.com/XVimProject/XVim2/issues/144
+        // Current cursor charactor will be temporary invisible
+        // when set `selectedRange` property to move cursor to above line of tail position with insert mode. (Why)
+        // Cursor move up to above line with normal mode is workaround for its issue.
+        [self setSelectedRange:NSMakeRange(head - 1, 0)];
+        self.cursorMode = XVIM_CURSOR_MODE_INSERT;
         [self setSelectedRange:NSMakeRange(head - 1, 0)];
         [self insertNewline:self];
     }
     else {
+        self.cursorMode = XVIM_CURSOR_MODE_INSERT;
         [self setSelectedRange:NSMakeRange(head, 0)];
         [self insertNewline:self];
         [self setSelectedRange:NSMakeRange(0, 0)];
@@ -268,7 +275,7 @@
 
 - (void)xvim_insertNewlineAboveAndInsertWithIndent
 {
-    self.cursorMode = XVIM_CURSOR_MODE_INSERT;
+    // set `cursorMode` inside this method to workaround https://github.com/XVimProject/XVim2/issues/144
     [self xvim_insertNewlineAboveCurrentLineWithIndent];
 }
 
