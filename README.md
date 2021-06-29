@@ -6,6 +6,8 @@
   - Xcode 8 or below, you should use [XVim](https://github.com/XVimProject/XVim)
   - [Google Group for XVim developers](https://groups.google.com/d/forum/xvim-developers) has been created.
 
+ Use https://github.com/XVimProject/XcodeIssues to keep track **Xcode** Vim keybinding issues
+
 ## Install
 
   1. Clone the repo:
