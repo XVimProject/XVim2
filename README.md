@@ -63,12 +63,46 @@
 
   NOTE: SIMBL plugin system required disabling some security feature to work on recently macOS.
 
-  1. Setup [MacForge](https://github.com/MacEnhance/MacForge) with disabling Library Validation and System Integrity Protection (SIP).
+  1. Setup [MacForge](https://github.com/MacEnhance/MacForge) with disabling Library-Validation and System Integrity Protection (SIP).
 
-  2. make:
+  2. Reboot your mac to take effect disabling Library-Validation.
+
+  3. make:
   ```bash
   $ make simbl
   ```
+
+### Compatibility matrix
+
+
+<table>
+<tr>
+  <th>Xcode</th>
+  <th>OS security configuration</th>
+  <th>loading system</th>
+  <th>x64</th>
+  <th>arm64</th>
+</tr>
+<tr>
+  <td>re-codesign (occur <a href="https://github.com/XVimProject/XVim2/issues/340">Apple ID login problem on BigSur</a>)</td>
+  <td>any</td>
+  <td rowspan=2>Xcode Plugin</td>
+  <td>✅</td>
+  <td>✅</td>
+</tr>
+<tr>
+  <td rowspan=2>original</td>
+  <td rowspan=2>disable Library-Validation and SIP</td>
+  <td>✅</td>
+  <td>✅</td>
+</tr>
+<tr>
+  <td>SIMBL</td>
+  <td>✅</td>
+  <td>MacForge 1.1.0 not yet support M1</td>
+</tr>
+</table>
+Tested on macOS 11.2.3, Xcode 12.4
 
 ## Branches and Releases
  
