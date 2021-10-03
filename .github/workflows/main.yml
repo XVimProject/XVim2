@@ -10,7 +10,6 @@ jobs:
       matrix:
         xcode-version:
         - /Applications/Xcode_13.0.app
-        - default
 
     steps:
     - uses: actions/checkout@v2
