@@ -38,3 +38,4 @@ static inline Class DVTDocumentLocationClass() { return NSClassFromString(@"DVTD
 static inline Class IDEWorkspaceWindowClass() { return NSClassFromString(@"IDEWorkspaceWindow"); }
 static inline Class DVTTextPreferencesClass() { return NSClassFromString(@"DVTTextPreferences"); }
 static inline Class IDEEditorCoordinatorClass() { return NSClassFromString(@"IDEEditorCoordinator"); }
+static inline Class IDEEditorAreaClass() { return NSClassFromString(@"IDEEditorArea"); }

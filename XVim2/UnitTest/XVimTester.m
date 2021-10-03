@@ -171,7 +171,7 @@ DVTTextPreferences* XcodeTextPreferences(void) { return [DVTTextPreferencesClass
                 _doOpenIn_NewWindow_withWorkspaceTabController:XVimLastActiveWorkspaceTabController()
                                                    documentURL:doc
                                                     usingBlock:^(IDEEditorContext* context) {
-                                                        [context openEditorOpenSpecifier:spec updateHistory:NO];
+                                                        [IDEEditorAreaClass() _openEditorOpenSpecifier:spec editorContext:context options:nil];
                                                     }];
 
     // Close NSWindow to make test run properly
