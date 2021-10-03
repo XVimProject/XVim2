@@ -36,6 +36,7 @@
 @interface SourceEditorViewProxy ()
 @property (weak) _TtC15IDESourceEditor19IDESourceEditorView* sourceEditorView;
 @property NSLayoutConstraint* cmdLineBottomAnchor;
+@property NSEdgeInsets originalScrollViewInsets;
 @end
 
 @implementation SourceEditorViewProxy {
@@ -632,6 +633,7 @@
 }
 static CGFloat XvimCommandLineHeight = 20;
 static CGFloat XvimCommandLineAnimationDuration = 0.1;
+static CGFloat IDEKit_BottomBarViewHeight = 27;
 
 - (BOOL)isShowingCommandLine { return self.commandLine.superview != nil; }
 
@@ -645,7 +647,7 @@ static CGFloat XvimCommandLineAnimationDuration = 0.1;
         NSView* layoutView = [scrollView superview];
         [layoutView addSubview:self.commandLine];
         _cmdLineBottomAnchor = [layoutView.bottomAnchor constraintEqualToAnchor:self.commandLine.bottomAnchor
-                                                                       constant:-XvimCommandLineHeight];
+                                                                       constant:0];
         _cmdLineBottomAnchor.active = YES;
         [layoutView.widthAnchor constraintEqualToAnchor:self.commandLine.widthAnchor multiplier:1.0].active = YES;
         [layoutView.leftAnchor constraintEqualToAnchor:self.commandLine.leftAnchor].active = YES;
@@ -663,7 +665,8 @@ static CGFloat XvimCommandLineAnimationDuration = 0.1;
         [NSAnimationContext runAnimationGroup:^(NSAnimationContext* _Nonnull context) {
             context.duration = XvimCommandLineAnimationDuration;
             NSEdgeInsets insets = scrollView.contentInsets;
-            self->_cmdLineBottomAnchor.animator.constant = 0;
+            self->_originalScrollViewInsets = insets;
+            self->_cmdLineBottomAnchor.animator.constant = IDEKit_BottomBarViewHeight;
             insets.bottom += XvimCommandLineHeight;
             scrollView.animator.contentInsets = insets;
             [scrollView setUpdatingAutoContentInsets:YES];
@@ -696,6 +699,7 @@ static CGFloat XvimCommandLineAnimationDuration = 0.1;
         } completionHandler:^{
             [self.commandLine removeFromSuperview];
             self->_cmdLineBottomAnchor = nil;
+            self->_originalScrollViewInsets = NSEdgeInsetsZero;
         }];
     }
 }
@@ -708,7 +712,8 @@ static CGFloat XvimCommandLineAnimationDuration = 0.1;
     if ([keyPath isEqualToString:@"contentInsets"]) {
         let scrollView = self.sourceEditorView.scrollView;
         NSEdgeInsets insets = scrollView.contentInsets;
-        if (self.isShowingCommandLine && insets.bottom == 0) {
+        // NOTE: insets.bottom value sometimes 1pt difference to original.
+        if (self.isShowingCommandLine && insets.bottom <= self->_originalScrollViewInsets.bottom + 1) {
             insets.bottom += XvimCommandLineHeight;
             scrollView.contentInsets = insets;
         }
