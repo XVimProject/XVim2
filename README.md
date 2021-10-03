@@ -109,6 +109,7 @@ Tested on macOS 11.2.3, Xcode 12.4
  - `develop`: for the next beta Xcode and develop.
 
  - tags
+   - `xcode12`
    - `xcode11.7`
    - `xcode11.5`
    - `xcode11.2`
