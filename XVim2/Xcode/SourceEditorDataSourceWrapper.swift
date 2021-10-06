@@ -53,7 +53,10 @@ public struct XVimLineData {
 private struct SourceEditorDataSourceInvoker {
     let contextPtr = UnsafeMutablePointer<UnsafeMutableRawPointer>.allocate(capacity: 2)
 
-    public init?(_ dataSrc: AnyObject?, _ functionPtr: UnsafeMutableRawPointer?) {
+    public init?(_ dataSrc: AnyObject?, _ functionPtr: UnsafeMutableRawPointer?, line: Int = #line) {
+
+        assert(functionPtr != nil, "line: \(line): demangled name has been changed")
+
         guard let dataSource = dataSrc,
             let functionPtr = functionPtr
             else { return nil }

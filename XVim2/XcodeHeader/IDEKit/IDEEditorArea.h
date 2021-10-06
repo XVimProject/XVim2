@@ -80,6 +80,7 @@
 + (BOOL)automaticallyNotifiesObserversOfLastActiveEditorContext;
 + (id)keyPathsForValuesAffectingLastActiveEditorAreaSplit;
 + (BOOL)_newEditorsHaveEmptyContent;
++ (BOOL)_openEditorOpenSpecifier:(id)arg1 editorContext:(id)arg2 options:(id)arg3;
 //- (void).cxx_destruct;
 @property BOOL isRestoringState; // @synthesize isRestoringState=_isRestoringState;
 @property long long maximizedState; // @synthesize maximizedState=_maximizedState;

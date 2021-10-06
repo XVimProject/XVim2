@@ -5,10 +5,15 @@ on: [push, pull_request]
 jobs:
   test:
 
-    runs-on: macOS-latest
+    runs-on: macOS-11
+    strategy:
+      matrix:
+        xcode-version:
+        - /Applications/Xcode_13.0.app
 
     steps:
     - uses: actions/checkout@v2
+    - run: if [ "default" != "${{ matrix.xcode-version }}" ]; then sudo xcode-select -s "${{ matrix.xcode-version }}"; fi
     - name: Build XVim with UNIT_TEST flag
       run: make unit-test
     - name: Remove codesign

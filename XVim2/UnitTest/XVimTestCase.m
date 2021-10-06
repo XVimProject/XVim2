@@ -19,9 +19,8 @@
 @interface XVimTestCase()
 @property (class, readonly) NSOperationQueue * keySendQueue;
 @property (weak) NSWindow * window;
-@property dispatch_semaphore_t keySemaphore;
+@property dispatch_group_t group;
 @property (readonly) dispatch_queue_t testCompletionDispatchQueue;
-@property NSInteger keyStrokesCount;
 @end
 
 static NSOperationQueue *_keySendQueue = nil;
@@ -69,11 +68,11 @@ static atomic_uint dispatchQueueCount = ATOMIC_VAR_INIT(0);
     test.expectedRange = expectedRange;
     test.message = @"";
     test.exception = NO;
-    test.keyStrokesCount = 0;
     test.finished = NO;
     test.desc = inputText;
     test.file = file;
     test.line = line;
+    test.group = dispatch_group_create();
     return test;
 }
 
@@ -126,28 +125,28 @@ static atomic_uint dispatchQueueCount = ATOMIC_VAR_INIT(0);
 {
     NSString *notation = [self.inputText stringByAppendingString:@"<ESC>:mapclear<CR>"];
     NSArray* strokes = XVimKeyStrokesFromKeyNotation(notation);
-    self.keySemaphore = dispatch_semaphore_create(0);
-    self.keyStrokesCount = strokes.count;
-    
+
     for (XVimKeyStroke* stroke in strokes) {
+        dispatch_group_enter(self.group);
         [XVimTestCase.keySendQueue addOperationWithBlock:^{
-                [NSOperationQueue.mainQueue addOperationWithBlock:^{
-                    if (self.window == nil || !self.window.isVisible) {
-                        dispatch_semaphore_signal(self.keySemaphore);
-                        return;
-                    }
-                    @try {
-                        NSEvent* event = [stroke toEventwithWindowNumber:self.window.windowNumber
-                                                                 context:self.window.graphicsContext];
-                        [self.window makeKeyAndOrderFront:self];
-                        [NSApp sendEvent:event];
-                        dispatch_semaphore_signal(self.keySemaphore);
-                    }
-                    @catch (NSException* ex) {
-                        self.exception = YES;
-                    }
-                }];
-            [NSThread sleepForTimeInterval:0.01];
+            [NSOperationQueue.mainQueue addOperationWithBlock:^{
+                if (self.window == nil || !self.window.isVisible) {
+                    dispatch_group_leave(self.group);
+                    return;
+                }
+                @try {
+                    NSEvent* event = [stroke toEventwithWindowNumber:self.window.windowNumber
+                                                             context:self.window.graphicsContext];
+                    [self.window makeKeyAndOrderFront:self];
+                    [NSApp sendEvent:event];
+                    dispatch_group_leave(self.group);
+                }
+                @catch (NSException* ex) {
+                    self.exception = YES;
+                    dispatch_group_leave(self.group);
+                }
+                [NSThread sleepForTimeInterval:0.01];
+            }];
         }];
 
         // Tells NSUndoManager to end grouping (Little hacky)
@@ -164,15 +163,9 @@ static atomic_uint dispatchQueueCount = ATOMIC_VAR_INIT(0);
 
 - (void)waitForCompletionWithConinuation:(void(^)(void))continuation
 {
-    if (self.keyStrokesCount == 0) {
-        [NSOperationQueue.mainQueue addOperationWithBlock:continuation];
-        return;
-    }
-    
     dispatch_async(self.testCompletionDispatchQueue, ^{
-        dispatch_semaphore_wait(self.keySemaphore, DISPATCH_TIME_FOREVER);
-        self.keyStrokesCount--;
-        [self waitForCompletionWithConinuation:continuation];
+        dispatch_group_wait(self.group, DISPATCH_TIME_FOREVER);
+        [NSOperationQueue.mainQueue addOperationWithBlock:continuation];
     });
 }
 
