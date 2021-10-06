@@ -59,7 +59,14 @@ import Cocoa
 @_silgen_name("scev_wrapper_call2") func _set_cursor_style(_: UnsafeRawPointer, _: CursorStyle)
 @_silgen_name("scev_wrapper_call3") func _get_data_source(_: UnsafeRawPointer) -> (UnsafeMutableRawPointer)
 @_silgen_name("scev_wrapper_call4") func _set_selected_range(_: UnsafeRawPointer, _: XVimSourceEditorRange, modifiers: Int)
-@_silgen_name("scev_wrapper_call5") func _add_selected_range(_: UnsafeRawPointer, _: XVimSourceEditorRange, modifiers: Int)
+@_silgen_name("scev_wrapper_call5") func _add_selected_range(
+    _: UnsafeRawPointer,
+    _: XVimSourceEditorRange,
+    anchor: XVimSourceEditorRange?,
+    modifiers: Int,
+    scrollPlacement: Any?,
+    alwaysScroll: Bool
+)
 @_silgen_name("scev_wrapper_call6") func _scev_voidToInt(_: UnsafeRawPointer) -> (Int)
 
 // NOTE: global variable is automatically lazy in swift.
@@ -68,11 +75,13 @@ private let fpSetCursorStyle = function_ptr_from_name("_$s12SourceEditor0aB4View
 private let fpGetCursorStyle = function_ptr_from_name("_$s12SourceEditor0aB4ViewC11cursorStyleAA0ab6CursorE0Ovg")
 private let fpGetDataSource = function_ptr_from_name("_$s12SourceEditor0aB4ViewC04dataA0AA0ab4DataA0Cvg")
 private let fpSetSelectedRangeWithModifiers = function_ptr_from_name("_$s12SourceEditor0aB4ViewC16setSelectedRange_9modifiersySnyAA0aB8PositionVG_AA0aB18SelectionModifiersVtF")
-private let fpAddSelectedRangeWithModifiers = function_ptr_from_name("_$s12SourceEditor0aB4ViewC16addSelectedRange_9modifiers15scrollPlacement12alwaysScrollySnyAA0aB8PositionVG_AA0aB18SelectionModifiersVAA0kI0OSgSbtF")
+private let fpAddSelectedRangeWithModifiers = function_ptr_from_name("_$s12SourceEditor0aB4ViewC16addSelectedRange_6anchor9modifiers15scrollPlacement12alwaysScrollySnyAA0aB8PositionVG_AKSgAA0aB18SelectionModifiersVAA0lJ0OSgSbtF")
 
 private struct SourceEditorViewInvoker {
     let contextPtr = UnsafeMutablePointer<UnsafeMutableRawPointer>.allocate(capacity: 2)
-    init?(_ view: AnyObject?, _ functionPtr: UnsafeMutableRawPointer?) {
+    init?(_ view: AnyObject?, _ functionPtr: UnsafeMutableRawPointer?, line: Int = #line) {
+
+        assert(functionPtr != nil, "line: \(line): demangled name has been changed")
 
         guard let view = view,
             let functionPtr = functionPtr else { return nil }
@@ -102,7 +111,14 @@ private struct SourceEditorViewInvoker {
     }
 
     func addSelectedRange(_ range: XVimSourceEditorRange, modifiers: XVimSelectionModifiers) {
-        _add_selected_range(contextPtr, range, modifiers: modifiers.rawValue)
+        _add_selected_range(
+            contextPtr,
+            range,
+            anchor: nil,
+            modifiers: modifiers.rawValue,
+            scrollPlacement: nil,
+            alwaysScroll: false
+        )
     }
 }
 
