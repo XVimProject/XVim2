@@ -1,4 +1,4 @@
-xcodebuild:=xcodebuild -configuration
+xcodebuild:=xcodebuild -arch x86_64 -arch arm64 -configuration
 xcode_plugin_path:=$(HOME)/Library/Application Support/Developer/Shared/Xcode/Plug-ins
 simbl_plugin_path:=/Library/Application Support/MacEnhance/Plugins
 
