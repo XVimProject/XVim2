@@ -488,7 +488,7 @@
     }
     mark.line = [self.sourceView.textStorage xvim_lineNumberAtIndex:r.location];
     mark.column = [self.sourceView.textStorage xvim_columnOfIndex:r.location];
-    
+
     return mark;
 }
 
@@ -523,14 +523,14 @@
 
     CALayer *lineNumbersHostingLayer = [self getLineNumbersHostingLayer:gutterMarginContentView];
     if (lineNumbersHostingLayer == nil) return;
-    
+
     NSInteger currentPositionZeroIndexed = self.sourceView.currentLineNumber - 1;
     NSInteger numberOfLines = [self.sourceView.textStorage xvim_numberOfLines];
 
     id theme = [NSClassFromString(@"DVTFontAndColorTheme") performSelector:@selector(currentTheme)];
     NSFont *font =  [theme valueForKey:@"_sourcePlainTextFont"];
     NSColor *fontColor = [theme valueForKey:@"_sourcePlainTextColor"];
-    
+
     CGFloat width = lineNumbersHostingLayer.frame.size.width - 3;
     CGFloat firstPadding = 4;
     CGFloat padding = 5;
@@ -539,7 +539,7 @@
     NSUInteger numberOfLayers = [lineNumberLayers count];
     NSMutableArray *relativeLayers = [[NSMutableArray alloc] initWithCapacity:numberOfLines];
     for (long i = 0; i < numberOfLayers; i++) {
-        
+
         CALayer *layer = [lineNumberLayers objectAtIndex:i];
         if (i < 4 && layer.frame.origin.y > 0 && i < numberOfLayers - 1) {
             CALayer *nextLayer = [lineNumberLayers objectAtIndex:i+1];
@@ -564,7 +564,7 @@
                                                                 text:text
                                                         contentScale:layer.contentsScale];
         [relativeLayers addObject:label];
-        
+
         [layer removeFromSuperlayer];
     }
 
@@ -628,9 +628,14 @@
 {
     CGFloat currentNumberF = (frame.origin.y - firstPadding) / (frame.size.height + padding);
     NSInteger currentNumber = lroundf(currentNumberF);
-//    NSLog(@"currentNumberF: %f, currentNumber: %ld, frame: %@", currentNumberF, currentNumber, NSStringFromRect(frame));
     NSInteger relativeLineNumber = llabs(currentNumber - currentPosition);
-    NSString *text = [NSString stringWithFormat: @"%ld", relativeLineNumber];
+    NSString *text = NULL;
+
+    if (relativeLineNumber == 0 && XVim.instance.options.number) {
+      text = [NSString stringWithFormat: @"%ld", currentNumber];
+    } else {
+      text = [NSString stringWithFormat: @"%ld", relativeLineNumber];
+    }
     return text;
 }
 
