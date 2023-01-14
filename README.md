@@ -1,7 +1,12 @@
 # XVim2
 
+**Unfortunately, Apple discontinued loading plugins in Xcode 14.  
+Until software like SIMBL is available to load libraries, XVim cannot be made to work with Xcode 14+.**
+
+---
+
   XVim2 is a Vim plugin for Xcode intending to offer a compelling Vim experience without the need to give up any Xcode features.
-  
+
   - Xcode 9 or above, follow the installation instructions below.
   - Xcode 8 or below, you should use [XVim](https://github.com/XVimProject/XVim)
   - [Google Group for XVim developers](https://groups.google.com/d/forum/xvim-developers) has been created.
@@ -15,17 +20,17 @@
   $ git clone https://github.com/XVimProject/XVim2.git
   $ cd XVim2
   ```
-  
+
   2. Confirm `xcode-select` points to your Xcode:
   ```bash
   $ xcode-select -p
   /Applications/Xcode.app/Contents/Developer
   ```
-  
+
   If this doesn't show your Xcode application path, use `xcode-select -s /path/to/Xcode.app/Contents/Developer` to set the correct path.
 
   3. `git checkout` a branch for your Xcode version. See [Branches and Releases](#branches-and-releases) section for more information.
-  
+
   4. `make`:
   ```bash
   $ make
@@ -47,10 +52,10 @@
   If you see something like the following:
   ```
   XVim hasn't confirmed the compatibility with your Xcode, Version X.X
-  Do you want to compile XVim with support Xcode Version X.X at your own risk? 
+  Do you want to compile XVim with support Xcode Version X.X at your own risk?
   ```
   Press `y` to use XVim with your Xcode version (even if XVim is not confirmed to work with that version of Xcode).
-  
+
   2. Launch Xcode, where you'll be asked if you want to load XVim. Press 'Yes' to do so.
      If you press 'No' by mistake, close Xcode and execute the following from a terminal:
 
@@ -58,7 +63,7 @@
   defaults delete  com.apple.dt.Xcode DVTPlugInManagerNonApplePlugIns-Xcode-X.X     (X.X is your Xcode version)
   ```
   Then relaunch Xcode and choose 'Yes' to load XVim.
-    
+
 ### SIMBL plugin system
 
   NOTE: SIMBL plugin system required disabling some security feature to work on recently macOS.
@@ -105,9 +110,9 @@
 Tested on macOS 11.2.3, Xcode 12.4
 
 ## Branches and Releases
- 
+
  - `master`: for the lastest GM Xcode.
-             
+
  - `develop`: for the next beta Xcode and develop.
 
  - tags
@@ -124,16 +129,16 @@ Tested on macOS 11.2.3, Xcode 12.4
 
  Please use appropriate tags or branches.
 
- For easy bugfixes and typo fixes, please open a pull request to the `master` branch. 
+ For easy bugfixes and typo fixes, please open a pull request to the `master` branch.
  For a new feature or adding support for a beta version of Xcode, please open a pull request
  to the `develop` branch.
-     
+
 ## Uninstall
   ```bash
   $ make uninstall
   ```
 
-### Manual uninstall 
+### Manual uninstall
 Delete the following directories:
 - `$HOME/Library/Application\ Support/Developer/Shared/Xcode/Plug-ins/XVim2.xcplugin`
 - `/Library/Application\ Support/MacEnhance/Plugins/XVim2.bundle`
@@ -151,9 +156,9 @@ Delete the following directories:
    * **Xcode version**.
    * **XVim version**. The version number of the revision you built.
    * **.xvimrc**. If you have it.
-  
+
   When it is hard to solve a problem with information above, take debug log according to the following movie please.
-  
+
   [How to get XVim debug log](http://www.youtube.com/watch?v=50Bhu8setlc&feature=youtu.be)
 
   We appreciate if you write test case for the bug. Read "Write test" section in Documents/Developsers/PullRequest.md how to write test case. You do not need to update any source code but just write 7 items explained there in an issue you create.
@@ -164,15 +169,15 @@ Delete the following directories:
   [Contributing.md](Documents/Contributing.md)
 
 ## Bountysource
-  XVim supports Bountysource. If you want to solve your issue sooner make bounty on your issue is one option. A contributer should work on it preferentially (not guaranteed though). To make bounty visit following link and go to "Issue" tab. Select your issue and make bounty on it. 
-  
+  XVim supports Bountysource. If you want to solve your issue sooner make bounty on your issue is one option. A contributer should work on it preferentially (not guaranteed though). To make bounty visit following link and go to "Issue" tab. Select your issue and make bounty on it.
+
   https://www.bountysource.com/teams/xvimproject (XVim2)
   https://www.bountysource.com/teams/xvim (XVim)
 
 ## Donations
   If you think the plugin is useful, please donate.
   There are two options you can take. Donate for Japan Earthquake and Tsunami Relief or back the project via [BountySource](https://www.bountysource.com/teams/xvim). There is no rule that you cannot take both :) .
-  
+
 ### Japan Earthquake and Tsunami Relief
   Since I do not intend make money from this project, I am directing donations
   to the people suffering from the damage of the 2011 Tohoku earthquake and tsunami in Japan.
@@ -188,7 +193,7 @@ Delete the following directories:
 
 ### BountySource
   If you like to help and enhance the project directly consider backing this project via [BountySource](https://www.bountysource.com/teams/xvim). You can back the team (which means you support the entire project) or you can make bounty on a specific issue. (If you have any bugs to be fixed or features to be implemented not in issues yet you can make one.)
-  
+
 ## Contributors
   See contributors page in github repository.
   https://github.com/XVimProject/XVim2/contributors
